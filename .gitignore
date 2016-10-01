@@ -33,6 +33,7 @@ test-classes/
 .settings/
 
 #project
+.project
 .classpath
 
 #old GWT (1.5) created this dir
