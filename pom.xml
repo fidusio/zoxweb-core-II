@@ -26,7 +26,6 @@
     </build>
 
 
-
     <!-- Version definition -->
     <properties>
         <gwt.version>2.6.1</gwt.version>
