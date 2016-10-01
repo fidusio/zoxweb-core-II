@@ -21,7 +21,7 @@ war/WEB-INF/favicon.ico
 .gwt/
 
 #caching for already compiled files
-gwt-unitCache/
+
 
 #gwt junit compilation files
 www-test/
@@ -31,6 +31,9 @@ test-classes/
 
 #.settings
 .settings/
+.idea
+.project
+target
 
 #project
 *.project
