@@ -31,9 +31,9 @@ test-classes/
 
 #.settings
 .settings/
-.idea
+
 .project
-target
+
 
 #project
 *.project
