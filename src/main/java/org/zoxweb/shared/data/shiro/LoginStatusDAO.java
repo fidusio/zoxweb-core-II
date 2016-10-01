@@ -1,0 +1,185 @@
+/*
+ * Copyright (c) 2012-2015 ZoxWeb.com LLC.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
+package org.zoxweb.shared.data.shiro;
+
+
+import java.util.List;
+
+import org.zoxweb.shared.data.DomainInfoDAO;
+
+import org.zoxweb.shared.util.DomainID;
+import org.zoxweb.shared.util.GetNVConfig;
+import org.zoxweb.shared.util.NVConfig;
+import org.zoxweb.shared.util.NVConfigEntity;
+import org.zoxweb.shared.util.NVConfigEntityLocal;
+import org.zoxweb.shared.util.NVConfigManager;
+import org.zoxweb.shared.util.NVPair;
+import org.zoxweb.shared.util.SharedUtil;
+
+@SuppressWarnings("serial")
+public class LoginStatusDAO
+	extends DomainInfoDAO
+	implements DomainID<String>
+{
+	public enum Params
+		implements GetNVConfig
+	{
+		
+		//NVC_DOMAIN_ID(NVConfigManager.createNVConfig("domain_id", "The domain id","DomainID", true, false, String.class)),
+		NVC_APPLICATION_ID(NVConfigManager.createNVConfig("application_id", "The application id trying to login to","ApplicationID", false, true, String.class)),
+		NVC_REALM(NVConfigManager.createNVConfig("realm", "The realm","realm", false, false, String.class)),
+		NVC_PRINCIPAL(NVConfigManager.createNVConfig("principal", "The user","Principal", true, false, String.class)),
+		NVC_LOGIN_STATUS(NVConfigManager.createNVConfig("login_status", "The login status", "LoginStatus", true, false, boolean.class)),
+		NVC_SESSION_TIMEOUT_MILLIS(NVConfigManager.createNVConfig("session_timeout_millis", "The session timeout in millis", "SessionTimeoutMillis", true, false, long.class)),
+		NVC_ROLE_LIST(NVConfigManager.createNVConfig("roles", "The user roles","UserRoles", true, false, String[].class)),
+		NVC_PERMISSION_LIST(NVConfigManager.createNVConfig("permissions", "The user permissions","UserPermissions", true, false, String[].class)),
+		NVC_EXTRA_INFO(NVConfigManager.createNVConfig("extra_info", "login extra information","ExtraInfo", true, false, String[].class)),
+		
+		;
+		private final NVConfig cType;
+		
+		Params(NVConfig c)
+		{
+			cType = c;
+		}
+		
+		public NVConfig getNVConfig() 
+		{
+			return cType;
+		}
+	}
+	
+	
+	
+	
+	
+	
+	private static final NVConfigEntity NVC_LOGIN_STATUS_DAO = new NVConfigEntityLocal("login_status_dao", "The login status dao", "LoginStatusDAO", true, false, false, false, LoginStatusDAO.class, SharedUtil.extractNVConfigs(Params.values()), null, false, DomainInfoDAO.NVC_DOMAIN_INFO_DAO);
+	
+	
+	
+	
+	
+	public LoginStatusDAO()
+	{
+		super(NVC_LOGIN_STATUS_DAO);
+	}
+	
+	public LoginStatusDAO(final String domainID, final String appID,final String userID, final boolean loggedIn, long sessionTimeoutMillis)
+	{
+		this();
+		setDomainID(domainID);
+		setApplicationID( appID);
+		setUserID(userID);
+		setLoggedIn(loggedIn);
+		setSessionTimeoutInMillis(sessionTimeoutMillis);
+	}
+
+	
+
+	
+	public String getPrincipal()
+	{
+		return lookupValue(Params.NVC_PRINCIPAL);
+	}
+	
+	public void setPrincipal(String principal)
+	{
+		setValue(Params.NVC_PRINCIPAL, principal);
+	}
+	
+	
+
+	public String getRealm()
+	{
+		return lookupValue(Params.NVC_REALM);
+	}
+	
+	public void setRealm(String realm)
+	{
+		setValue(Params.NVC_REALM, realm);
+	}
+	
+	
+	public long getSessionTimeoutInMillis()
+	{
+		return lookupValue(Params.NVC_SESSION_TIMEOUT_MILLIS);
+	}
+	
+	public void setSessionTimeoutInMillis(long timeout)
+	{
+		setValue(Params.NVC_SESSION_TIMEOUT_MILLIS, timeout);
+	}
+	
+	
+	public boolean isLoggedIn()
+	{
+		return lookupValue(Params.NVC_LOGIN_STATUS);
+	}
+	
+	public void setLoggedIn(boolean status)
+	{
+		setValue(Params.NVC_LOGIN_STATUS, status);
+	}
+	
+	
+	public List<NVPair> getUserRoles()
+	{
+		return lookupValue(Params.NVC_ROLE_LIST);
+	}
+	
+	public void setUserRoles( List<NVPair> roles)
+	{
+		setValue(Params.NVC_ROLE_LIST, roles);
+	}
+	
+	
+	public List<NVPair> getUserPermissions()
+	{
+		return lookupValue(Params.NVC_PERMISSION_LIST);
+	}
+
+	public void setUserPermissions(List<NVPair> permissions)
+	{
+		setValue(Params.NVC_PERMISSION_LIST, permissions);
+	}
+	
+	
+	public List<NVPair> getExtaInformations()
+	{
+		return lookupValue(Params.NVC_EXTRA_INFO);
+	}
+
+	public void setExtraInformations(List<NVPair> extraInfo)
+	{
+		setValue(Params.NVC_EXTRA_INFO, extraInfo);
+	}
+	
+	public String getApplicationID()
+	{
+		return lookupValue(Params.NVC_APPLICATION_ID);
+	}
+	
+	public void setApplicationID(String appID)
+	{
+		setValue(Params.NVC_APPLICATION_ID, appID);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.zoxweb.shared.util.SetDescription#setDescription(java.lang.String)
+	 */
+	
+}

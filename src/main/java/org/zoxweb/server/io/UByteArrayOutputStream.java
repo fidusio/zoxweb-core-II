@@ -1,0 +1,504 @@
+/*
+ * Copyright 2012 ZoxWeb.com LLC.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
+package org.zoxweb.server.io;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
+import java.util.Arrays;
+
+import org.zoxweb.shared.util.SharedStringUtil;
+import org.zoxweb.shared.util.SharedUtil;
+
+/**
+ * The UByteArrayOutputStream class.
+ * 
+ */
+public class UByteArrayOutputStream 
+	extends ByteArrayOutputStream 
+	implements Externalizable, InternalBufferAccess
+{
+	
+
+	/**
+	 * Create a byte array output stream.
+	 * 
+	 */
+	public UByteArrayOutputStream() 
+	{
+		super();
+	}
+
+	/**
+	 * 
+	 * @param size
+	 */
+	public UByteArrayOutputStream(int size)
+	{
+		super(size);
+	}
+	
+	
+	
+	
+	public UByteArrayOutputStream(String str)
+	{
+		this(SharedStringUtil.getBytes(str));
+	}
+	
+	/**
+	 * 
+	 * @param buffer
+	 * @param offset
+	 * @param len
+	 */
+	public UByteArrayOutputStream(byte buffer[])
+	{
+		this(buffer, 0, buffer.length);
+	}
+	
+	
+//	public NVGetNameValueGenericMap getProperties()
+//	{
+//		return props;
+//	}
+	
+	/**
+	 * 
+	 * @param buffer
+	 * @param offset
+	 * @param len
+	 */
+	public UByteArrayOutputStream(byte buffer[] , int offset, int len)
+	{
+		super(buffer.length);
+		write(buffer, offset, len);
+	}
+	
+	
+	
+	/**
+	 * 
+	 */
+	public synchronized void writeExternal(ObjectOutput out) throws IOException 
+	{
+		out.writeInt(count);
+		byte newBuffer[] = new byte[ count];
+		System.arraycopy( buf, 0, newBuffer, 0, count);
+		((ObjectOutputStream)out).writeUnshared( newBuffer);
+		
+		out.flush();		
+	}
+
+	public synchronized void readExternal(ObjectInput in) 
+			throws IOException, ClassNotFoundException 
+	{
+		count = in.readInt();
+		buf = (byte[])((ObjectInputStream)in).readUnshared();
+		
+	}
+	
+	/**
+	 * This method will transfer the data to ByteArrayInputStream and reset the UByteArrayOutputStream
+	 * @return
+	 */
+	public synchronized ByteArrayInputStream toByteArrayInputStream()
+	{
+		byte tempBuf[] = buf;
+		int tempCount = size();
+		buf = new byte[32];
+		reset();
+		
+		return new ByteArrayInputStream(tempBuf, 0 , tempCount);
+		
+	}
+
+	/**
+	 * @return the char at index.
+	 */
+	public char charAt(int index) 
+	{
+		return (char) buf[index];
+	}
+
+	/**
+	 * @return the byte at index.
+	 */
+	public byte byteAt(int index) 
+	{
+		return buf[index];
+	}
+	
+	/**
+	 * Return the first index of matching bytes in contained within the stream
+	 * @param match
+	 * @return index of the match, -1 no match found
+	 */
+	public int indexOf(byte match[])
+	{
+		return SharedUtil.indexOf(getInternalBuffer(), 0, size(), match, 0, match.length);
+	}
+	
+	/**
+	 * 
+	 * @param startAt
+	 * @param match
+	 * @param offset
+	 * @param len
+	 * @return
+	 */
+	public int indexOf(int startAt, byte match[], int offset, int length)
+	{
+		return SharedUtil.indexOf(getInternalBuffer(), startAt, size(), match, offset, length);
+	}
+	
+	/**
+	 * 
+	 * @param str
+	 * @return
+	 */
+	public int indexOf(String str)
+	{
+		return SharedUtil.indexOf(getInternalBuffer(), 0, size(), str, 0, str.length(), false);
+	}
+	
+	/**
+	 * 
+	 * @param str
+	 * @return
+	 */
+	public int indexOfIgnoreCase(String str)
+	{
+		return SharedUtil.indexOf(getInternalBuffer(), 0, size(), str, 0, str.length(), true);
+	}
+	
+	/**
+	 * @return the integer at index.
+	 */
+	public int intAt(int index)
+	{
+		return buf[index];
+	}
+	
+	
+	public static UByteArrayOutputStream diff(UByteArrayOutputStream baos1, UByteArrayOutputStream baos2)
+	{
+		UByteArrayOutputStream ret = new UByteArrayOutputStream();
+		// check condition
+		{
+			byte buff1[] = baos1.getInternalBuffer();
+			byte buff2[] = baos2.getInternalBuffer();
+			for (int i = 0; i < baos2.size(); i++)
+			{
+				byte diff = buff2[i];
+				
+				if (i < baos1.size())
+				{
+					diff =  (byte) ((byte)diff-(byte)buff1[i]);
+				}
+				
+				ret.write((byte) diff);
+			}
+			
+		}
+		
+		return ret;
+	}
+	
+	/**
+	 * 
+	 * @param baos1
+	 * @param baos2
+	 * @return
+	 */
+	public static boolean areEqual(UByteArrayOutputStream baos1, UByteArrayOutputStream baos2)
+	{
+		if (baos1 == baos2)
+		{
+			return true;
+		}
+		
+		if (baos1 != null && baos2!= null)
+		{
+			if (baos1.size() == baos2.size())
+			{
+				int len = baos1.size();
+				
+				for (int i =0; i < len; i++)
+				{
+					if (baos1.buf[i] !=  baos2.buf[i])
+					{
+						return false;
+					}
+				}
+				
+				return true;
+			}
+		}
+		
+		return false;
+	}
+
+	/**
+	 * Write a string to the data buffer
+	 * 
+	 * @param str
+	 */
+	public synchronized void write(String str)
+	{
+		write(SharedStringUtil.getBytes(str), 0, str.length());
+	}
+	
+	/**
+	 * 
+	 * @param buf
+	 */
+	public synchronized void write(byte buf[])
+	{
+		write(buf, 0, buf.length);
+	}
+	
+//	public synchronized void write(ByteBuffer bb)
+//	{
+//		bb.flip();
+//		for (int i = 0; i < bb.limit(); i++)
+//		{
+//			write(bb.get());
+//		}
+//	}
+	
+	
+//	public synchronized ByteBuffer toByteBuffer()
+//	{
+//		ByteBuffer bb = ByteBuffer.allocate(size());
+//		bb.put(getInternalBuffer(), 0, size());
+//		return bb;
+//	}
+
+	/**
+	 * Insert a string at the specified location
+	 * 
+	 * @param index
+	 * @param str
+	 */
+	public synchronized void insertAt(int index, String str)
+			throws IndexOutOfBoundsException 
+	{
+		insertAt(index, str.getBytes());
+	}
+
+	/**
+	 * Insert a byte at the specified location
+	 * 
+	 * @param index
+	 * @param str
+	 */
+	public synchronized void writeAt(int index, byte b)
+			throws IndexOutOfBoundsException 
+	{
+		if (index < 0)
+			throw new IndexOutOfBoundsException("Index " + index);
+		
+		if (index >= buf.length)
+		{
+			int newcount = index; 
+			buf = Arrays.copyOf(buf, Math.max(buf.length << 1, newcount+1));
+	        
+	        //buf[index] = b;
+	        count = newcount;
+		}
+		
+		buf[index] = b;
+		
+	}
+	
+	/**
+	 * 
+	 */
+	public UByteArrayOutputStream clone()
+	{
+		return new UByteArrayOutputStream(getInternalBuffer(), 0, size()); 
+	}
+	
+		
+	/**
+	 * Insert a byte array at the specified location
+	 * 
+	 * @param index
+	 * @param array
+	 */
+	public synchronized void insertAt(int index, byte array[])
+			throws IndexOutOfBoundsException 
+	{
+		if (index < 0)
+			throw new IndexOutOfBoundsException("Invalid index " + index);
+		
+		if (index > size()) 
+		{
+			throw new IndexOutOfBoundsException("Index " + index
+					+ "bigger than size " + size());
+		}
+
+		if (array.length == 0)
+			return;
+		// set the new size
+		int newCount = count + array.length;
+		
+		if (newCount > buf.length) 
+		{
+			byte newbuf[] = new byte[Math.max(buf.length << 1, newCount)];
+			System.arraycopy(buf, 0, newbuf, 0, count);
+			buf = newbuf;
+		}
+
+		int remainderLength = count - index;
+		byte remainderBuf[] = null;
+		// copy the remainder
+
+		if (remainderLength > 0) 
+		{
+			remainderBuf = new byte[count - index];
+			System.arraycopy(buf, index, remainderBuf, 0, remainderBuf.length);
+		}
+
+		// copy the array
+		System.arraycopy(array, 0, buf, index, array.length);
+
+		// copy remainder;
+		if (remainderLength > 0)
+			System.arraycopy(remainderBuf, 0, buf, index + array.length,
+					remainderBuf.length);
+
+		count = newCount;
+	}
+
+	/**
+	 * 
+	 * @param obj
+	 */
+	public synchronized boolean equals(Object obj) 
+	{
+		if (obj != null && obj instanceof UByteArrayOutputStream)
+		{
+			synchronized (obj) 
+			{
+				UByteArrayOutputStream boas = (UByteArrayOutputStream) obj;
+
+				if (size() == boas.size()) 
+				{
+					for (int i = 0; i < size(); i++) 
+					{
+						if (byteAt(i) != boas.byteAt(i)) 
+						{
+							return false;
+						}
+					}
+					
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Remove from the output stream at index the specified length
+	 * 
+	 * @param index
+	 *            where to start removing data
+	 * @param length
+	 *            to be removed
+	 * @throws IndexOutOfBoundsException
+	 *             if the index or length are out of bound
+	 */
+	public synchronized void removeAt(int index, int length)
+			throws IndexOutOfBoundsException 
+	{
+		if (index < 0 || length < 0 || index >= count
+				|| (index + length) > count)
+			throw new IndexOutOfBoundsException("Size " + count + " index "
+					+ index + " length " + length);
+
+		if (length == 0)
+			return;
+
+		int newCount = count - length;
+
+		System.arraycopy(buf, index + length, buf, index, count
+				- (index + length));
+		
+		count = newCount;
+	}
+	
+	/**
+	 * Shit the data left from->to
+	 * @param from index
+	 * @param to index
+	 */
+	public synchronized void shiftLeft(int from, int to)
+	{
+
+		if (from < 0 || to < 0 || from > count || to > count
+				|| to > from)
+		{
+			throw new IndexOutOfBoundsException("Size " + count + " from "
+					+ from + " to " + to);
+		}
+		
+		if (from == count && to == 0)
+		{
+			count = 0;
+			return;
+		}
+		
+		
+		if (from == to)
+			return;
+		
+		System.arraycopy(buf, from, buf, to, count - from);
+		
+		count = count - (from-to);
+		
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public byte[] getInternalBuffer()
+	{
+		return buf;
+	}
+
+	/**
+	 * 
+	 * @param baos
+	 */
+	public static void printInfo(UByteArrayOutputStream baos) 
+	{
+		System.out.println("*************************************");
+		System.out.println("Size  " + baos.size());
+		System.out.println("Buffer Length " + baos.buf.length);
+		System.out.println( new String(baos.buf, 0, baos.size()));
+	}
+ 
+}

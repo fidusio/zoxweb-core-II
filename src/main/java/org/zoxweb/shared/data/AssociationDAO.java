@@ -1,0 +1,106 @@
+/*
+ * Copyright (c) 2012-2016 ZoxWeb.com LLC.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
+package org.zoxweb.shared.data;
+
+import org.zoxweb.shared.util.Const;
+import org.zoxweb.shared.util.GetNVConfig;
+import org.zoxweb.shared.util.NVConfig;
+import org.zoxweb.shared.util.NVConfigEntity;
+import org.zoxweb.shared.util.NVConfigEntityLocal;
+import org.zoxweb.shared.util.NVConfigManager;
+import org.zoxweb.shared.util.NVEntity;
+import org.zoxweb.shared.util.SharedUtil;
+import org.zoxweb.shared.util.NVConfigEntity.ArrayType;
+
+/**
+ * 
+ * @author mzebib
+ *
+ */
+@SuppressWarnings("serial")
+public class AssociationDAO
+	extends SetNameDescriptionDAO	
+{
+	public enum Params
+	implements GetNVConfig
+	{
+		ASSOCIATED(NVConfigManager.createNVConfigEntity("associated", "The mapped reference", "Mapped", false, true, NVEntity.class, ArrayType.NOT_ARRAY)),
+		MAPPED(NVConfigManager.createNVConfigEntity("mapped", "The mapped to reference", "MappedTo", false, true, NVEntity.class, ArrayType.NOT_ARRAY)),
+		MAP_TYPE(NVConfigManager.createNVConfig("map_type", "Mapping type", "MapType", false, true, false, String.class, Const.ASSOCIATION_TYPE)),
+		;
+	
+		private final NVConfig cType;
+		Params( NVConfig c)
+		{
+			cType = c;
+		}
+		
+		public NVConfig getNVConfig() 
+		{
+			return cType;
+		}
+	}
+	
+	/**
+	 * This NVConfigEntity type constant is set to an instantiation of a NVConfigEntityLocal object based on AddressDAO.
+	 */
+	public static final NVConfigEntity NVC_ASSOCIATION_DAO = new NVConfigEntityLocal("association_dao", null , "AssociationDAO", true, false, false, false, AssociationDAO.class, SharedUtil.extractNVConfigs(Params.values()), null, false, SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO);//,SharedUtil.extractNVConfigs( new Params[]{Params.REFERENCE_ID, Params.NAME, Params.LENGTH}));
+
+
+	/**
+	 * [Optional - Please state the purpose of this constructor; especially if multiple constructors exist.].
+	 * 
+	 * @param nvce
+	 */
+	public AssociationDAO()
+	{
+		super(NVC_ASSOCIATION_DAO);
+		// TODO Auto-generated constructor stub
+	}
+	
+	
+	public NVEntity getAssociated()
+	{
+		return lookupValue(Params.ASSOCIATED);
+	}
+	
+	public void setAssociated(NVEntity associated)
+	{
+		setValue(Params.ASSOCIATED, associated);
+	}
+	
+	public NVEntity getMapped()
+	{
+		return lookupValue(Params.MAPPED);
+	}
+	
+	public void setMapped(NVEntity mapped)
+	{
+		setValue(Params.MAPPED, mapped);
+	}
+	
+	
+	public String getAssociationType()
+	{
+		return lookupValue(Params.MAP_TYPE);
+	}
+	
+	public void setAssociationType(String mapType)
+	{
+		setValue(Params.MAP_TYPE, mapType);
+	}
+	
+}

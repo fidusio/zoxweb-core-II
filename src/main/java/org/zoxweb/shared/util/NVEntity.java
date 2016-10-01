@@ -1,0 +1,391 @@
+/*
+ * Copyright 2012 ZoxWeb.com LLC.
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
+package org.zoxweb.shared.util;
+
+
+import java.util.Arrays;
+import java.util.HashMap;
+//import java.util.List;
+
+import java.util.List;
+
+import org.zoxweb.shared.filters.ValueFilter;
+import org.zoxweb.shared.util.ReferenceID;
+
+/**
+ * This is a meta defined object which can be represented as a bean object. 
+ * This class is declared abstract, therefore it cannot be instantiated. 
+ * @author mzebib
+ *
+ */
+@SuppressWarnings("serial")
+abstract public class NVEntity
+	implements ReferenceID<String>,
+			   AccountID<String>,
+			   UserID<String>,
+			   GetNVConfig,
+			   GetName
+{
+	
+	static class NVCB<V>
+	{
+		final NVConfig nvc;
+		final NVBase<V> nvb;
+		
+		NVCB(NVConfig nvc, NVBase<V> nvb)
+		{
+			this.nvc = nvc;
+			this.nvb = nvb;
+		}
+	}
+	
+	protected transient NVConfigEntity config;
+
+	protected HashMap<String, NVBase<?>> attributes;
+	
+	protected NVEntity(NVConfigEntity nvce)
+	{
+//		config = nvce;
+//		attributes = SharedUtil.toData( config.getAttributes());
+		this(nvce, SharedUtil.toData(nvce.getAttributes()));
+	}
+	
+	
+	/**
+	 * 
+	 * @param c
+	 * @param a
+	 */
+	protected NVEntity(NVConfigEntity c, HashMap<String, NVBase<?>>  a)
+	{
+		config = c;
+		attributes = a;
+	}
+	
+	
+	/**
+	 * This method returns NVConfig.
+	 */
+	public NVConfig getNVConfig()
+	{
+		return config;
+	}
+
+	/**
+	 * This method returns the attributes.
+	 * @return
+	 */
+	public HashMap<String, NVBase<?>> getAttributes()
+	{
+		return attributes;
+	}
+	
+	/**
+	 * This method sets the attributes.
+	 * @param attr
+	 */
+	public void setAttributes(HashMap<String, NVBase<?>> attr)
+	{
+		attributes = attr;
+	}
+	
+	/**
+	 * This method looks up the NVBase object by name.
+	 * @param name
+	 * @return
+	 */
+	public NVBase<?> lookup(String name)
+	{
+		return attributes.get(name);
+	}
+
+	public NVBase<?> lookup(GetNVConfig gnvc)
+	{
+		return attributes.get(gnvc.getNVConfig().getName());
+	}
+	
+	public NVBase<?> lookup(GetName gName)
+	{
+		return attributes.get(gName.getName());
+	}
+	
+	
+	/**
+	 * This method looks up the NVBase object of generic type
+	 * by given parameter of NVConfig type.
+	 * @param nvc
+	 * @return
+	 */
+	public <V> V lookupValue(NVConfig nvc)
+	{	
+		
+		@SuppressWarnings("unchecked")
+		NVBase<V> ret = (NVBase<V>) attributes.get(nvc.getName());
+		if ( ret != null)
+			return ret.getValue();
+		return null;
+	}
+	
+	/**
+	 * 
+	 * This method looks up the NVBase object of generic type
+	 * by given parameter of GetName type.
+	 * @param gName
+	 * @return
+	 */
+	public <V> V lookupValue(GetName gName)
+	{	
+		
+		@SuppressWarnings("unchecked")
+		NVBase<V> ret = (NVBase<V>) attributes.get(gName.getName());
+		if ( ret != null)
+			return ret.getValue();
+		return null;
+	}
+	
+	
+	
+	/**
+	 * This method looks up the NVBase object of generic 
+	 * type object by name. 
+	 * the name and return its value.
+	 * @param name
+	 * @return
+	 */
+	public <V> V lookupValue(String name)
+	{	
+		@SuppressWarnings("unchecked")
+		NVBase<V> ret = (NVBase<V>) attributes.get(name);
+		
+		if ( ret != null)
+			return ret.getValue();
+		
+		return null;
+	}
+	
+	/**
+	 * This method looks up the NVBase object of generic type
+	 * by given parameter of GetNVConfig type.
+	 * return its value.
+	 * @param gnvc
+	 * @return
+	 */
+	public <V> V lookupValue(GetNVConfig gnvc)
+	{	
+		return lookupValue(gnvc.getNVConfig());
+	}
+	
+	
+	/**
+	 * This method will set the value for the NVBase
+	 * object.
+	 * @param name
+	 * @param v
+	 */
+	@SuppressWarnings("unchecked")
+	public <V> void setValue(String name, V v)
+	{	
+		NVCB<V> nvcb = lookupNVCB(name);
+		if (nvcb != null)
+		{
+			//NVBase<V> ret = (NVBase<V>) attributes.get(name);
+		
+			//if (ret != null)
+			{
+				//NVConfig nvc = config.lookup(name);
+				if (config.isAttributesValidationRequired() && v == null && nvcb.nvc.isMandatory())
+				{
+					throw new NullPointerException("attibute " + nvcb.nvc + " is a required value can't be null");
+				}
+				
+				ValueFilter<Object, Object> vf = (ValueFilter<Object, Object>) nvcb.nvc.getValueFilter();
+				
+				if (vf != null)
+				{	
+					//If an array object has a value filter, the value filter will be applied 
+					//to the contained object not to the array.
+					if (nvcb.nvc.isArray() && v instanceof List)
+					{
+						List<Object> list = (List<Object>) v; 
+						for (int i = 0; i < list.size(); i++)
+						{
+							Object value = list.get(i);
+							if (value instanceof NVPair)
+							{
+								((NVPair) value).setValue((String) vf.validate(((NVPair) value).getValue())); 
+							}
+							else
+							{
+								value = vf.validate(value);
+							}
+							
+							list.set(i, value);
+							 
+						}
+	
+					}
+					else
+					{
+						if (nvcb.nvc.isMandatory() || v != null)
+							v = (V) vf.validate(v);
+	
+					}
+					
+				}
+				
+				
+				nvcb.nvb.setValue(v);
+			}
+		}
+		
+	}
+	
+	/**
+	 * This method will set the value for the NVBase
+	 * object.
+	 * @param gnvc
+	 * @param v
+	 */
+	public <V> void setValue(GetNVConfig gnvc, V v)
+	{	
+		setValue(gnvc.getNVConfig(), v);
+	}
+	
+	/**
+	 * This method will set the value for the NVBase
+	 * object.
+	 * @param nvc
+	 * @param v
+	 */
+	public <V> void setValue(NVConfig nvc, V v)
+	{	
+		setValue( nvc.getName(), v);
+	}
+	
+	
+	/**
+	 * This method returns the string representation of the object.
+	 */
+	@SuppressWarnings("rawtypes")
+	public String toString()
+	{
+		if (attributes != null)
+		{
+			StringBuilder sb = new StringBuilder();
+			
+			if (config.getDisplayAttributes() == null)
+			{
+				for (int i = 0; i < config.getAttributes().size(); i++)
+				{
+					NVBase<?> nvb = attributes.get( config.getAttributes().get(i).getName());
+					
+					if (nvb != null && nvb.getValue() != null)
+					{
+						if ( i > 0)
+							sb.append(",");
+						
+						if (nvb instanceof ArrayValues)
+						{	
+							sb.append( nvb.getName() + ":" + Arrays.toString(((ArrayValues)nvb).values()));
+						}
+						else
+						{
+							sb.append( nvb.getName() + ":" + nvb.getValue());
+						}
+					}
+				}
+			}
+			else 
+			{
+				for (int i = 0; i < config.getDisplayAttributes().size(); i++)
+				{
+					NVConfig confAttr = config.getDisplayAttributes().get(i);
+					NVBase<?> nvb = lookup( confAttr.getName());
+					
+					if (nvb != null && nvb.getValue() != null)
+					{
+						if (i > 0)
+							sb.append(",");
+						
+						if (nvb instanceof ArrayValues)
+						{
+							sb.append( nvb.getName() + ":" + Arrays.toString(((ArrayValues)nvb).values()));
+						}
+						else
+						{
+							sb.append( nvb.getName() + ":" + nvb.getValue());
+						}
+					}
+				}
+			}
+			
+			return sb.toString();
+		}
+		
+		return super.toString();
+	}
+	
+	@SuppressWarnings("unchecked")
+	private <V> NVCB<V> lookupNVCB(String name)
+	{
+		NVBase<?> retNVB = (NVBase<?>) attributes.get(name);
+		NVConfig  retNVC = config.lookup(name);
+		
+		
+		if (retNVB == null && name.indexOf('.') != -1)
+		{
+			
+			String subNames [] = name.split("\\.");
+			NVEntity nve = this;
+			for (int i = 0; i < subNames.length; i++)
+			{
+				
+				if (nve != null)
+				{
+					retNVB = nve.lookup(subNames[i]);
+					if (retNVB != null && retNVB instanceof NVEntityReference)
+					{
+						nve = (NVEntity) retNVB.getValue();
+					}
+					else if (i+1 < subNames.length)
+					{
+						return null;
+					}
+					else
+					{
+						// we have a match	
+						retNVC = ((NVConfigEntity)nve.getNVConfig()).lookup(subNames[i]);
+					}
+				}
+				else
+				{
+					return null;
+				}
+				
+
+			}
+			
+		}
+		
+		
+		if (retNVB != null)
+		{
+			return new NVCB<V>(retNVC, (NVBase<V>)retNVB); 
+		}
+		
+		return null;
+	}
+}

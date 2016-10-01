@@ -1,0 +1,555 @@
+package org.zoxweb.server.api.provider.notification.smtp;
+
+import java.util.List;
+import java.util.Properties;
+import java.util.logging.Logger;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
+import org.zoxweb.server.api.APIServiceProviderBase;
+import org.zoxweb.server.http.HTTPUtil;
+import org.zoxweb.server.task.RunnableTask;
+import org.zoxweb.server.task.TaskEvent;
+import org.zoxweb.server.task.TaskExecutor;
+import org.zoxweb.server.task.TaskUtil;
+import org.zoxweb.shared.util.AppointmentDefault;
+import org.zoxweb.shared.util.GetName;
+import org.zoxweb.shared.util.GetValue;
+import org.zoxweb.shared.util.NVPair;
+import org.zoxweb.shared.util.SharedStringUtil;
+import org.zoxweb.shared.util.SharedUtil;
+import org.zoxweb.shared.api.APIException;
+import org.zoxweb.shared.api.APIExceptionHandler;
+import org.zoxweb.shared.api.APIMessage;
+import org.zoxweb.shared.api.APINotification;
+import org.zoxweb.shared.api.APINotificationDelivery;
+import org.zoxweb.shared.api.APINotificationMessage;
+import org.zoxweb.shared.api.APITransactionInfo;
+import org.zoxweb.shared.filters.MessageContentFilter;
+
+
+
+
+
+/**
+ * The Simple Mail Transfer Protocol (SMTP) provider class is used an email from
+ * the server.
+ * @author mzebib
+ *
+ */
+@SuppressWarnings("serial")
+public class SMTPProvider
+extends APIServiceProviderBase<Void>
+	implements APINotification<Void>
+{
+	
+	
+	private static final transient Logger log = Logger.getLogger("SMTPProvider");
+	
+	/**
+	 * This enum contains SMTP message parameters.
+	 * @author mzebib
+	 *
+	 */
+	public enum SMTPMessageParam 
+		implements GetValue<String>
+	{
+		
+		SENDER_ID_NAME("sender_id_name"),
+		CC("cc"),
+		BCC("bcc"),
+		TEXT("text"),
+		HTML("html"),
+		TEXT_HTML("text/html; charset=UTF-8"),
+		MESSAGE_ID("Message-ID"),
+		
+		;
+
+		private String name;
+		
+		SMTPMessageParam(String name)
+		{
+			this.name = name;
+		}
+		
+		@Override
+		public String getValue() 
+		{
+			return name;
+		}
+		
+	}
+	
+	
+	class SMTPSenderTask 
+	extends RunnableTask
+	{
+
+		
+		
+		@Override
+		public void  run() 
+		{
+			// TODO Auto-generated method stub
+			//sendAPIMessageInternal((APIMessage) event.getTaskExecutorParameters()[0]);
+			TaskEvent event = getTaskEvent();
+			int index = 0;
+			SMTPProvider smtpProvider =  (SMTPProvider) event.getTaskExecutorParameters()[index++];
+			APINotificationMessage notificationMessage = (APINotificationMessage) event.getTaskExecutorParameters()[index++];
+			
+			
+			final String USER_NAME = SharedUtil.lookupValue(getAPIConfigInfo().getConfigParameters().get(SMTPCreator.Param.USERNAME.getName()));
+			final String PASSWORD  = SharedUtil.lookupValue(getAPIConfigInfo().getConfigParameters().get(SMTPCreator.Param.PASSWORD.getName()));
+			
+			
+			
+			 Session session = smtpProvider.createSession(smtpProvider.createProperties(true, true, SharedUtil.lookupValue(getAPIConfigInfo().getConfigParameters().get(SMTPCreator.Param.HOST.getName())), SharedUtil.lookupValue(getAPIConfigInfo().getConfigParameters().get(SMTPCreator.Param.PORT.getName()))),
+					                         			   USER_NAME, PASSWORD);
+
+		      try 
+		      {
+		         // Default MimeMessage object.
+		         MimeMessage msg = new MimeMessage(session);
+		         
+		         // Set From
+		         String from = SharedUtil.lookupValue(notificationMessage.getExtraAttribues().get(SMTPMessageParam.SENDER_ID_NAME.getValue()));
+		         
+		         if (from != null)
+		         {
+			         from = from + " <" + notificationMessage.getSenderID() + ">";
+		         }
+		         
+		         else 
+		         {
+			         from = notificationMessage.getSenderID();
+		         }
+		        	 
+		         msg.setFrom(new InternetAddress(from));
+		         
+		         // Set To
+		         StringBuilder sb = new StringBuilder();
+		      
+		         for (String to : notificationMessage.getRecipientIDs())
+		         {
+		        	if (sb.length() > 0)
+		        		sb.append(",");
+		        		
+		        	sb.append(to);
+		         }
+		         
+		         msg.addRecipients(Message.RecipientType.TO, sb.toString());
+		         
+		         //msg.setHeader("Content-Type", "text/plain; charset=UTF-8");
+		         // Set Cc
+		         @SuppressWarnings("unchecked")
+		         List<NVPair> ccList = (List<NVPair>) SharedUtil.lookupArrayValues(notificationMessage.getExtraAttribues(), SMTPMessageParam.CC.getValue());
+		         
+		         if (ccList != null)
+		         {
+		        	 for (NVPair nvp : ccList)
+		        	 {
+		        		 msg.addRecipient(Message.RecipientType.CC, new InternetAddress(nvp.getValue()));
+		        	 }
+		         }
+		         
+		         //	Set Bcc
+		         @SuppressWarnings("unchecked")
+		         List<NVPair> bccList = (List<NVPair>) SharedUtil.lookupArrayValues(notificationMessage.getExtraAttribues(), SMTPMessageParam.BCC.getValue());
+		         
+		         if (bccList != null)
+		         {
+		        	 for (NVPair nvp : bccList)
+		        	 {
+		        		 msg.addRecipient(Message.RecipientType.BCC, new InternetAddress(nvp.getValue()));
+		        	 }
+		         }
+		         
+		         // Set Subject
+		         msg.setSubject(notificationMessage.getTitle());
+
+		         // Set Message
+		         String bodyContent = MessageContentFilter.SINGLETON.validate(notificationMessage);
+		         
+		         
+		         
+		         if (HTTPUtil.isHTML(bodyContent))
+		         {
+		        	 //System.out.println("WE have HTML message\n" + bodyContent);
+		        	 msg.setContent(bodyContent, SMTPMessageParam.TEXT_HTML.getValue());
+		         }
+		         
+		         else
+		         { 
+		        	 
+		        	 //System.out.println("WE have TEXT message\b" + bodyContent);
+		        	 //msg.setHeader("Content-Type", "text/plain; charset=UTF-8");
+		        	 msg.setText(bodyContent, SharedStringUtil.UTF_8);
+		         }
+		         
+		         
+		         
+		         // Send Message
+		         Transport.send(msg);
+		         
+		         
+		        log.info(SMTPMessageIDFilter.SINGLETON.validate(msg.getHeader(SMTPMessageParam.MESSAGE_ID.getValue())));
+		      } 
+		      
+		      catch (MessagingException e) 
+		      {
+		            throw new RuntimeException(e);
+		      }
+		}
+		
+	}
+	
+	//private APIConfigInfo configInfo;
+	private String name;
+	private String description;
+	private APIExceptionHandler exceptionHandler;
+	//private Properties properties;
+	//private Session session;
+	
+	/**
+	 * 
+	 */
+	
+
+	/**
+	 * 
+	 */
+	@Override
+	public Void connect() 
+			throws APIException
+	{
+		return null;
+	}
+	
+	/**
+	 * 
+	 */
+	@Override
+	public void close() 
+			throws APIException 
+	{
+		
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	public boolean isProviderActive()
+	{
+		return false;
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	public APIExceptionHandler getAPIExceptionHandler() 
+	{
+		return exceptionHandler;
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	public void setAPIExceptionHandler(APIExceptionHandler exceptionHandler) 
+	{
+		this.exceptionHandler = exceptionHandler;
+	}
+	
+	/**
+	 * 
+	 */
+	@Override
+	public void setDescription(String str) 
+	{
+		description = str;
+	}
+
+	/**
+	 * 
+	 */
+	@Override
+	public String getDescription() 
+	{
+		return description;
+	}
+	
+	/**
+	 * 
+	 */
+	@Override
+	public void setName(String name) 
+	{
+		this.name = name;
+	}
+	
+	/**
+	 * 
+	 */
+	@Override
+	public String getName() 
+	{
+		return name;
+	}
+	
+	/**
+	 * 
+	 */
+	@Override
+	public String toCanonicalID() 
+	{
+		
+		return null;
+	}
+
+	/**
+	 * 
+	 * @param message
+	 */
+	@Override
+	public APITransactionInfo sendAPIMessage(APIMessage message, APINotificationDelivery apind)
+			throws NullPointerException, IllegalArgumentException, APIException 
+	{
+		//		check the message if not null
+		//		message must be of type email
+		//		if not throw IllegalArgumentException
+		//		validate parameters (from, to (at least one recipient), bcc (later), cc (later))
+		//		set body
+		//		tags (later)
+		//		Process tags
+		//		Extract APIConfigInfo set them to transport
+		//		Support dynamic enum later (hard coded for now).
+		//		Set notifications
+		
+		if (getAPIConfigInfo() == null)
+		{
+			throw new APIException("Missing configuration information");
+		}
+		
+		SharedUtil.checkIfNulls("APINotificationMessage is null", message);
+		
+		if (!(message instanceof APINotificationMessage))
+		{
+			throw new IllegalArgumentException("Message is not an instance of APINotificationMessage");
+		}
+		
+		if (!getAPIConfigInfo().isServiceTypeSupported(message.getMessageType()))
+		{
+			throw new IllegalArgumentException("Message is not an email type.");
+		}
+		
+		
+		TaskExecutor td = new SMTPSenderTask();
+		TaskEvent    te = new TaskEvent(this, td, this, message);
+		
+		
+		
+		switch(apind)
+		{
+		case NOW:
+			td.executeTask(te);
+			//return sendAPIMessageInternal(message);
+			break;
+			
+		case QUEUED:
+			TaskUtil.getDefaultTaskScheduler().queue(new AppointmentDefault(), te);
+		default:
+			break;
+		
+		
+		}
+		return null;
+	}
+		
+	
+	
+//	private APITransactionInfo sendAPIMessageInternal(APIMessage message)
+//						throws NullPointerException, IllegalArgumentException, APIException
+//	{
+//		APINotificationMessage notificationMessage = (APINotificationMessage) message;
+//		
+//		final String USER_NAME = SharedUtil.lookupValue(configInfo.getConfigParameters().get(SMTPCreator.Param.USERNAME.getName()));
+//		final String PASSWORD  = SharedUtil.lookupValue(configInfo.getConfigParameters().get(SMTPCreator.Param.PASSWORD.getName()));
+//		
+//		createProperties(
+//				true,
+//				true,
+//				SharedUtil.lookupValue(configInfo.getConfigParameters().get(SMTPCreator.Param.HOST.getName())),
+//				SharedUtil.lookupValue(configInfo.getConfigParameters().get(SMTPCreator.Param.PORT.getName())));
+//		
+//		 Session session = createSession(createProperties(true, true, SharedUtil.lookupValue(configInfo.getConfigParameters().get(SMTPCreator.Param.HOST.getName())), SharedUtil.lookupValue(configInfo.getConfigParameters().get(SMTPCreator.Param.PORT.getName()))),
+//				                         USER_NAME, PASSWORD);
+//
+//	      try 
+//	      {
+//	         // Default MimeMessage object.
+//	         MimeMessage msg = new MimeMessage(session);
+//	         
+//	         // Set From
+//	         String from = SharedUtil.lookupValue(notificationMessage.getExtraAttribues(), SMTPMessageParam.SENDER_ID_NAME);
+//	         
+//	         if (from != null)
+//	         {
+//		         from = from + " <" + notificationMessage.getSenderID() + ">";
+//	         }
+//	         
+//	         else 
+//	         {
+//		         from = notificationMessage.getSenderID();
+//	         }
+//	        	 
+//	         msg.setFrom(new InternetAddress(from));
+//	         
+//	         // Set To
+//	         StringBuilder sb = new StringBuilder();
+//	      
+//	         for (String to : notificationMessage.getRecipientIDs())
+//	         {
+//	        	if (sb.length() > 0)
+//	        		sb.append(",");
+//	        		
+//	        	sb.append(to);
+//	         }
+//	         
+//	         msg.addRecipients(Message.RecipientType.TO, sb.toString());
+//	         
+//	         //msg.setHeader("Content-Type", "text/plain; charset=UTF-8");
+//	         // Set Cc
+//	         @SuppressWarnings("unchecked")
+//	         List<NVPair> ccList = (List<NVPair>) SharedUtil.lookupAllNV(notificationMessage.getExtraAttribues(), SMTPMessageParam.CC.getValue());
+//	         
+//	         if (ccList != null)
+//	         {
+//	        	 for (NVPair nvp : ccList)
+//	        	 {
+//	        		 msg.addRecipient(Message.RecipientType.CC, new InternetAddress(nvp.getValue()));
+//	        	 }
+//	         }
+//	         
+//	         //	Set Bcc
+//	         @SuppressWarnings("unchecked")
+//	         List<NVPair> bccList = (List<NVPair>) SharedUtil.lookupAllNV(notificationMessage.getExtraAttribues(), SMTPMessageParam.BCC.getValue());
+//	         
+//	         if (bccList != null)
+//	         {
+//	        	 for (NVPair nvp : bccList)
+//	        	 {
+//	        		 msg.addRecipient(Message.RecipientType.BCC, new InternetAddress(nvp.getValue()));
+//	        	 }
+//	         }
+//	         
+//	         // Set Subject
+//	         msg.setSubject(notificationMessage.getTitle());
+//
+//	         // Set Message
+//	         String bodyContent = MessageContentFilter.SINGLETON.validate(notificationMessage);
+//	         
+//	         if (HTMLFilter.isHtml(bodyContent))
+//	         {
+//	        	 
+//	        	 msg.setContent(bodyContent, SMTPMessageParam.TEXT_HTML.getValue());
+//	         }
+//	         
+//	         else
+//	         { 
+//	        	 //msg.setHeader("Content-Type", "text/plain; charset=UTF-8");
+//	        	 msg.setText(bodyContent, "utf-8");
+//	         }
+//	         
+//	         
+//	         
+//	         // Send Message
+//	         Transport.send(msg);
+//	         
+//	         
+//	        // System.out.println(SMTPMessageIDFilter.SINGLETON.validate(msg.getHeader("Message-ID")));
+//	      } 
+//	      
+//	      catch (MessagingException e) 
+//	      {
+//	            throw new RuntimeException(e);
+//	      }
+//		
+//		
+//		return null;
+//	}
+	
+	/**
+	 * 
+	 * @param authentication
+	 * @param encrypt
+	 * @param host
+	 * @param port
+	 */
+	private Properties  createProperties(boolean authentication, boolean encrypt, String host, String port)
+	{		
+	      Properties properties = new Properties();
+	      properties.put("mail.smtp.auth", "" + authentication);
+	      properties.put("mail.smtp.ssl.enable", "" + encrypt);
+	      properties.put("mail.smtp.host", host);
+	      properties.put("mail.smtp.port", port);
+	      
+	      return properties;
+	}
+
+	
+	/**
+	 * 
+	 * @param properties
+	 * @param userName
+	 * @param password
+	 */
+	private Session createSession(Properties properties, final String userName, final String password)
+	{
+	   Session session = Session.getInstance(properties, 
+			   new javax.mail.Authenticator() 
+	   			{
+			       protected PasswordAuthentication getPasswordAuthentication()
+			       {
+			          return new PasswordAuthentication(userName, password);
+			       }
+	   			});
+	   
+	   
+	   return session;
+	}
+	
+	
+	
+	/**
+	 * 
+	 * @param transaction
+	 */
+	@Override
+	public APITransactionInfo updateTransactionInfo(APITransactionInfo transaction) 
+			throws NullPointerException, IllegalArgumentException, APIException 
+	{
+
+		return null;
+	}
+
+	@Override
+	public Void newConnection() throws APIException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <T> T lookupProperty(GetName propertyName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}
