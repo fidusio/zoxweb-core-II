@@ -15,7 +15,7 @@ gwt-unitCache/
 war/WEB-INF/deploy/
 war/WEB-INF/classes/
 war/WEB-INF/lib/
-war/rubuspi_iot/
+war/WEB-INF/favicon.ico
 
 #compilation logs
 .gwt/
