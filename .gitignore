@@ -33,10 +33,17 @@ test-classes/
 .settings/
 
 #project
-.project
-.classpath
+*.project
+*.classpath
 
 #old GWT (1.5) created this dir
 .gwt-tmp/
 /bin/
 /target/
+
+# idea
+*.idea/
+*.iml
+*.log
+*.swp
+
