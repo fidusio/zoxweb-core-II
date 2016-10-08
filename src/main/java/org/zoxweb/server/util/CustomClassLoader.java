@@ -16,6 +16,7 @@ import sun.misc.URLClassPath;
 import sun.misc.Unsafe;
 
 
+@SuppressWarnings("restriction")
 public class CustomClassLoader extends ClassLoader 
 {
 	private static final transient Logger log = Logger.getLogger(CustomClassLoader.class.getName());

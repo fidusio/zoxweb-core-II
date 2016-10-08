@@ -34,7 +34,6 @@ implements APIServiceProvider<V>
 	protected APIServiceProviderBase()
 	{
 		touch();
-		
 	}
 	
 
