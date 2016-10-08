@@ -108,17 +108,16 @@
             <version>${javax-mail.version}</version>
         </dependency>
         <dependency>
-		    <groupId>commons-codec</groupId>
-		    <artifactId>commons-codec</artifactId>
-		    <version>${common-codec.version}</version>
+        	<groupId>commons-codec</groupId>
+        	<artifactId>commons-codec</artifactId>
+        	<version>${common-codec.version}</version>
 		</dependency>
         <dependency>
             <groupId>com.rabbitmq</groupId>
             <artifactId>amqp-client</artifactId>
             <version>${rabbitmq-client.version}</version>
         </dependency>
-
-
+        
     </dependencies>
 
 </project>
