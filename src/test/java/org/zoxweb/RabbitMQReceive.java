@@ -9,6 +9,7 @@ import com.rabbitmq.client.Envelope;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
@@ -34,8 +35,10 @@ public class RabbitMQReceive {
 		    
 		    Connection connection = factory.newConnection();
 		    Channel channel = connection.createChannel();
+		    channel.basicQos(1, false);
 		    Map<String, Object> argsRM = new HashMap<String, Object>();
 		    argsRM.put("x-max-priority", 10);
+		    argsRM.put("x-max-length", 10000000);//10000000
 		    channel.queueDeclare(EXCHANGE, true, false, false, argsRM);
 		    //channel.queueDeclarePassive(QUEUE_NAME);
 		    
@@ -55,20 +58,25 @@ public class RabbitMQReceive {
 		    
 		    System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
 		    Consumer consumer = new DefaultConsumer(channel) {
+		    	String uuid = UUID.randomUUID().toString();
 		        @Override
 		        public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body)
 		            throws IOException {
 		          String message = new String(body, "UTF-8");
-		          System.out.println( "[" +(++counter) +"] Received '" + message + "'" + properties.getPriority() + "," + properties.getMessageId());
+		          //if (counter++ % 10 == 0)
+		        	  System.out.println( uuid + " [" +(++counter) +"] Received '" + message + "'" + properties.getPriority() + "," + properties.getMessageId());
 //		          try {
 //					Thread.sleep(50);
 //				} catch (InterruptedException e) {
 //					// TODO Auto-generated catch block
 //					e.printStackTrace();
 //				}
+		          
+		          getChannel().basicAck(envelope.getDeliveryTag(), true);
 		        }
+		        
 		      };
-		      channel.basicConsume(EXCHANGE, true, argsRM, consumer);
+		      channel.basicConsume(EXCHANGE, false, argsRM, consumer);
 		    
 		   
 //		      channel.close();
