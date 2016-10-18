@@ -35,7 +35,7 @@ public class RabbitMQReceive {
 		    
 		    Connection connection = factory.newConnection();
 		    Channel channel = connection.createChannel();
-		    channel.basicQos(1, false);
+		    channel.basicQos(5, false);
 		    Map<String, Object> argsRM = new HashMap<String, Object>();
 		    argsRM.put("x-max-priority", 10);
 		    argsRM.put("x-max-length", 10000000);//10000000
@@ -63,8 +63,8 @@ public class RabbitMQReceive {
 		        public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body)
 		            throws IOException {
 		          String message = new String(body, "UTF-8");
-		          //if (counter++ % 10 == 0)
-		        	  System.out.println( uuid + " [" +(++counter) +"] Received '" + message + "'" + properties.getPriority() + "," + properties.getMessageId());
+		          //if (counter++ % 10000 == 0)
+		        	  System.out.println( Thread.currentThread().getName() + ":" + uuid + " [" +(++counter) +"] Received '" + message + "'" + properties.getPriority() + "," + properties.getMessageId());
 //		          try {
 //					Thread.sleep(50);
 //				} catch (InterruptedException e) {
@@ -87,6 +87,10 @@ public class RabbitMQReceive {
 			e.printStackTrace();
 			System.exit(-1);
 		}
+		
+		
+		
+		System.out.println("end of main");
 		
 	}
 

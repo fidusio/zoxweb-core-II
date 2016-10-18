@@ -34,7 +34,8 @@ public class PhoneTest
 		PhoneDAO phone = new PhoneDAO();
 		
 		phone.setPhoneType("Mobile");
-		phone.setCountryCode("1");
+		phone.setCountryCode("+1");
+		
 		phone.setAreaCode("310");
 		phone.setNumber("3027883");
 		
