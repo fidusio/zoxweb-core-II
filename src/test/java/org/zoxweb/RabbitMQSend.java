@@ -2,13 +2,9 @@ package org.zoxweb;
 
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
-import com.rabbitmq.client.MessageProperties;
-
 import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
-
 import org.zoxweb.shared.util.Const.Bool;
 
 import com.rabbitmq.client.AMQP.BasicProperties;
