@@ -432,7 +432,7 @@ extends ProtocolSessionProcessor
 	    				log.info(new String(requestRawBuffer.toByteArray()));
 	    			
 	    			
-	    			remoteChannelSK = getSelectorController().register(NIOChannelCleaner.DEFAULT, remoteChannel, SelectionKey.OP_READ, new ChannelRelayTunnel(getReadBufferSize(), remoteChannel, clientChannel, clientChannelSK, false, getSelectorController()), FACTORY.isBlocking());
+	    			remoteChannelSK = getSelectorController().register(/*NIOChannelCleaner.DEFAULT*/ null, remoteChannel, SelectionKey.OP_READ, new ChannelRelayTunnel(getReadBufferSize(), remoteChannel, clientChannel, clientChannelSK, false, getSelectorController()), FACTORY.isBlocking());
 
 				}
 				else

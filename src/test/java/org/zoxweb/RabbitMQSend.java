@@ -44,7 +44,7 @@ public class RabbitMQSend {
 		    Map<String, Object> argsRM = new HashMap<String, Object>();
 		    argsRM.put("x-max-priority", 10);
 		    argsRM.put("x-max-length", 10000000);
-		    argsRM.put("x-delayed-type", "direct");
+		   // argsRM.put("x-delayed-type", "direct");
 		   // channel.exchangeDeclare(EXCHANGE, "fanout", true, true, argsRM);
 		  
 		    channel.queueDeclare(EXCHANGE, true, false, false, argsRM);
@@ -62,7 +62,7 @@ public class RabbitMQSend {
 		    	BasicProperties bp = new BasicProperties();
 		    	// delivery mode 2 make messages persistent
 		    	HashMap<String, Object> headers = new HashMap<String, Object>();
-		    	headers.put("x-delay", 10000);
+		    	//headers.put("x-delay", 10000);
 		    	bp = bp.builder().priority(priority).messageId("" + i).deliveryMode(persistent ? 2 : 1).headers(headers).build();
 		    	//bp = bp.builder().priority(priority).messageId("" + i).build();
 		    	

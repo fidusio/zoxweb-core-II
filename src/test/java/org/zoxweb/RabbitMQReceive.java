@@ -38,7 +38,7 @@ public class RabbitMQReceive {
 		    channel.basicQos(5, false);
 		    Map<String, Object> argsRM = new HashMap<String, Object>();
 		    argsRM.put("x-max-priority", 10);
-		    argsRM.put("x-delayed-type", "direct");
+		    //argsRM.put("x-delayed-type", "direct");
 		    argsRM.put("x-max-length", 10000000);//10000000
 		    channel.queueDeclare(EXCHANGE, true, false, false, argsRM);
 		    //channel.queueDeclarePassive(QUEUE_NAME);
