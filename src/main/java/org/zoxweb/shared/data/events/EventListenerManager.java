@@ -28,7 +28,7 @@ abstract public class EventListenerManager<L extends EventListener,E extends Eve
 	
 	public synchronized EventListener[] getAllListeners()
 	{
-		return set.toArray( new EventListener[0]);
+		return set.toArray(new EventListener[0]);
 	}
 	
 	abstract public void dispatch(E event);
