@@ -545,7 +545,7 @@ extends ProtocolSessionProcessor
 	private void tryToConnectRemote2(UByteArrayOutputStream requestRawBuffer, int lastRead) throws IOException
 	{
 		
-		
+	
 		// new code 
 		if (requestMCCI == null)
 		{
