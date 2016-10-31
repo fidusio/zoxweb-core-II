@@ -44,7 +44,7 @@ public class ShiroProxyAuthentication
 		hcc.setURL(httpUrl);
 		hcc.setURI(AUTHENTICATION_URI);
 		hcc.setMethod(HTTPMethod.POST);
-		hcc.setContent(GSONUtil.toJSON( new ShiroLoginTokenDAO(domainID, appID, realm, username, password), false));
+		hcc.setContent(GSONUtil.toJSON(new ShiroLoginTokenDAO(domainID, appID, realm, username, password), false));
 		HTTPCall call = new HTTPCall( hcc, sslCheckOff ? SSLCheckDisabler.SINGLETON : null);
 		HTTPResponseData rd = null;
 		
