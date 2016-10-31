@@ -51,7 +51,8 @@ public class NVEnumArrayWidget
 	{
 		super(null, nvc);
 				
-		lbFullList = new ListBox(true);
+		lbFullList = new ListBox();
+		lbFullList.setMultipleSelect(true);
 		initWidget(uiBinder.createAndBindUi(this));
 		
 		if (!nvc.isEditable())
