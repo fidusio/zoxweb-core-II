@@ -325,38 +325,46 @@ public class ClamAVClient
 		  ClamAVClient cavc = new ClamAVClient(hostInfo.getInetAddress(), hostInfo.getPort(), 0);
 		  InputStream is = null;
 		  byte buffer[] = new byte[CHUNK_SIZE];
+		  
 		  for(; index < args.length; index++)
 		  {
 			  String filename = args[index];
-			  is = null;
-			  System.out.println("[" + index + "]Scanning:" + filename);
-			  try
+			  if (filename.equalsIgnoreCase("-p"))
 			  {
+				  System.out.println("ping:" + cavc.ping());
+			  }
+			  else
+			  {
+				  is = null;
+				  System.out.println("[" + index + "]Scanning:" + filename);
 				  try
 				  {
-					  is = new URL(filename).openConnection().getInputStream();
+					  try
+					  {
+						  is = new URL(filename).openConnection().getInputStream();
+					  }
+					  catch(Exception e)
+					  {
+						  //e.printStackTrace();
+						  is = new FileInputStream(filename);
+					  }
+					  
+					  System.out.println(cavc.ping());
+					  
+					  ClamAVScanResult cavsr = cavc.initScan(filename, is);
+					  while((cavsr.read(buffer)) >= 0);
+					  cavsr.close();
+					  System.out.println(cavsr);
 				  }
 				  catch(Exception e)
 				  {
-					  //e.printStackTrace();
-					  is = new FileInputStream(filename);
+					  e.printStackTrace();
+					  System.out.println("Processing error:" + e);
 				  }
-				  
-				  System.out.println(cavc.ping());
-				  
-				  ClamAVScanResult cavsr = cavc.initScan(filename, is);
-				  while((cavsr.read(buffer)) >= 0);
-				  cavsr.close();
-				  System.out.println(cavsr);
-			  }
-			  catch(Exception e)
-			  {
-				  e.printStackTrace();
-				  System.out.println("Processing error:" + e);
-			  }
-			  finally
-			  {
-				  IOUtil.close(is);
+				  finally
+				  {
+					  IOUtil.close(is);
+				  }
 			  }
 
 		  }
@@ -364,7 +372,7 @@ public class ClamAVClient
 	  }
 	  catch(Exception e)
 	  {
-		  System.out.println("ClamAVClient host:port <list of file or urls>");
+		  System.out.println("ClamAVClient host:port <-p ping> | <list of file or urls>");
 	  }
   }
 }

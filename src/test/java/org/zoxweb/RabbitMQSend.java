@@ -44,7 +44,7 @@ public class RabbitMQSend {
 		    Map<String, Object> argsRM = new HashMap<String, Object>();
 		    argsRM.put("x-max-priority", 10);
 		    argsRM.put("x-max-length", 10000000);
-		   // argsRM.put("x-delayed-type", "direct");
+		    //args.argsRM.put("x-delayed-type", "direct");
 		   // channel.exchangeDeclare(EXCHANGE, "fanout", true, true, argsRM);
 		  
 		    channel.queueDeclare(EXCHANGE, true, false, false, argsRM);
