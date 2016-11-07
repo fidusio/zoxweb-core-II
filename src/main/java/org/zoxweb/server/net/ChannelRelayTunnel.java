@@ -17,7 +17,7 @@ public class  ChannelRelayTunnel
 	extends ProtocolSessionProcessor
 {
 
-	private static boolean debug = true;
+	private static boolean debug = false;
 	private static final transient Logger log = Logger.getLogger(ChannelRelayTunnel.class.getName());
 	
 	
