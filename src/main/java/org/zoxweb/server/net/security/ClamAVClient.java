@@ -434,11 +434,7 @@ public class ClamAVClient
 						  is = new FileInputStream(filename);
 					  }
 					  
-					  System.out.println(cavc.ping());
-					  
-//					  ClamAVScanResult cavsr = cavc.initScan(filename, is);
-//					  while((cavsr.read(buffer)) >= 0);
-//					  cavsr.close();
+
 					  ClamAVScanResult cavsr = cavc.scan2(filename, is);
 					  
 					  System.out.println(cavsr);
