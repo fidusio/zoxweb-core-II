@@ -21,6 +21,12 @@ public class IOStreamInfo
 	{
 		this(socket.getInputStream(), socket.getOutputStream());
 	}
+	
+	public IOStreamInfo(Socket socket, int timeout) throws IOException
+	{
+		this(socket.getInputStream(), socket.getOutputStream());
+		socket.setSoTimeout(timeout);
+	}
 
 	@Override
 	public void close() throws IOException

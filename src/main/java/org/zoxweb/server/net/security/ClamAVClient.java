@@ -8,11 +8,12 @@ import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.nio.charset.StandardCharsets;
 import java.net.Socket;
 import java.net.URL;
 import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+
 
 import org.zoxweb.server.io.IOStreamInfo;
 import org.zoxweb.server.io.IOUtil;
@@ -24,6 +25,7 @@ import org.zoxweb.shared.net.InetSocketAddressDAO;
  */
 public class ClamAVClient
 {
+	//private static final transient Logger log = Logger.getLogger(ClamAVClient.class.getName());
 	
 	public static class ClamAVScanResult
 		extends FilterInputStream
@@ -34,11 +36,11 @@ public class ClamAVClient
 		IOStreamInfo ci;
 		long duration = 0;
 		boolean isClean;
-		String filename;
-		ClamAVScanResult(IOStreamInfo ci, InputStream is, String filename)
+		String scanName;
+		ClamAVScanResult(IOStreamInfo ci, InputStream is, String scanName)
 		{
 			super(is);
-			this.filename = filename;
+			this.scanName = scanName;
 			this.ci = ci;
 		}
 		
@@ -48,6 +50,7 @@ public class ClamAVClient
 		{
 			return response;
 		}
+		
 		
 		public IOStreamInfo getConnectionInfo()
 		{
@@ -61,7 +64,7 @@ public class ClamAVClient
 		
 		public String getFilename()
 		{
-			return filename;
+			return scanName;
 		}
 		
 		public boolean isClean()
@@ -89,7 +92,7 @@ public class ClamAVClient
 			}
 			catch(Exception e)
 			{
-				
+				e.printStackTrace();
 			}
 			return read;
 		}
@@ -109,7 +112,7 @@ public class ClamAVClient
 		}
 		public String toString()
 		{
-			return (filename != null ? filename +"," : "") + "Data size:" + size + ",Scan duration:" + duration + " millis" +",Is Clean:" + isClean + ".\n" + response;
+			return (scanName != null ? scanName +"," : "") + "Data size:" + size + ",Scan duration:" + duration + " millis" +",Is Clean:" + isClean + ".\n" + response;
 		}
 
 		@Override
@@ -194,6 +197,7 @@ public class ClamAVClient
 		  byte[] chunkSizeBuffer = ByteBuffer.allocate(4).putInt(chunkSize).array();
 		  cavsr.ci.os.write(chunkSizeBuffer);
 		  cavsr.ci.os.write(buffer, offset+i, chunkSize);
+		  cavsr.ci.os.flush();
 		  cavsr.size += chunkSize;
 		  
 	  }
@@ -206,14 +210,18 @@ public class ClamAVClient
 		  throws IOException
   {
 	  long delta = System.currentTimeMillis();
+	 
 	  cavsr.ci.os.write(new byte[]{0,0,0,0});
+	 
 	  cavsr.ci.os.flush();
+
 
       // read reply
      
 	  byte[] result = readAll(cavsr.ci.is);
+
 	  cavsr.response = new String(result);
-	  cavsr.ci.close();
+	  cavsr.close();
 	  delta = System.currentTimeMillis() - delta;
 	  cavsr.duration += delta;
 	  cavsr.isClean = isCleanReply(result);
@@ -235,44 +243,121 @@ public class ClamAVClient
 		  throws IOException
   {
 	  ClamAVScanResult  ret = new   ClamAVScanResult(null, is, null);
-    try (Socket s = new Socket(hostName,port); OutputStream outs = new BufferedOutputStream(s.getOutputStream())) {
-      s.setSoTimeout(timeout); 
-      long delta = System.currentTimeMillis();
-      // handshake
-      outs.write(asBytes("zINSTREAM\0"));
-      outs.flush();
-      byte[] chunk = new byte[CHUNK_SIZE];
-
-      // send data
-      int read = ret.read(chunk);
-      while (read >= 0) 
-      {
-    	ret.size += read;
-        // The format of the chunk is: '<length><data>' where <length> is the size of the following data in bytes expressed as a 4 byte unsigned
-        // integer in network byte order and <data> is the actual chunk. Streaming is terminated by sending a zero-length chunk.
-        byte[] chunkSize = ByteBuffer.allocate(4).putInt(read).array();
-        outs.write(chunkSize);
-        outs.write(chunk, 0, read);
-        read = is.read(chunk);
-        
-        
-      }
-
-      // terminate scan
-      outs.write(new byte[]{0,0,0,0});
-      outs.flush();
-
-      // read reply
-      try (InputStream clamIs = s.getInputStream()) 
-      {
-    	byte result[] = readAll(clamIs);
-        ret.response = new String(result);
-        delta = System.currentTimeMillis() - delta;
-        ret.duration = delta;
-        ret.isClean = isCleanReply(result);
-        return ret;
-      }
-    } 
+	  try (Socket s = new Socket(hostName,port); OutputStream outs = new BufferedOutputStream(s.getOutputStream()))
+	  {
+	      s.setSoTimeout(timeout); 
+	      long delta = System.currentTimeMillis();
+	      // handshake
+	      System.out.println("before start");
+	      outs.write(asBytes("zINSTREAM\0"));
+	      outs.flush();
+	      System.out.println("after start");
+	      byte[] chunk = new byte[CHUNK_SIZE];
+	
+	      // send data
+	      int read = ret.read(chunk);
+	      while (read >= 0) 
+	      {
+	    	ret.size += read;
+	        // The format of the chunk is: '<length><data>' where <length> is the size of the following data in bytes expressed as a 4 byte unsigned
+	        // integer in network byte order and <data> is the actual chunk. Streaming is terminated by sending a zero-length chunk.
+	        byte[] chunkSize = ByteBuffer.allocate(4).putInt(read).array();
+	        outs.write(chunkSize);
+	        outs.write(chunk, 0, read);
+	        outs.flush();
+	      
+	        read = is.read(chunk);
+	        
+	        
+	      }
+	
+	      // terminate scan
+	      outs.write(new byte[]{0,0,0,0});
+	      outs.flush();
+	
+	      // read reply
+	      try (InputStream clamIs = s.getInputStream()) 
+	      {
+	    	  System.out.println("before read all");
+	    	byte result[] = readAll(clamIs);
+	    	System.out.println("after  read all");
+	        ret.response = new String(result);
+	        delta = System.currentTimeMillis() - delta;
+	        ret.duration = delta;
+	        ret.isClean = isCleanReply(result);
+	        return ret;
+	      }
+	  } 
+  }
+  
+  
+  
+  public ClamAVScanResult scan2(String scanName, InputStream is)
+		  throws IOException
+  {
+	  
+	  ClamAVScanResult ret = null;
+	  try
+	  {
+		  ret = initScan(scanName, is);
+		  byte[] chunk = new byte[CHUNK_SIZE];
+		  while(ret.read(chunk) >= 0);
+		  ret.close();
+	  }
+	  finally
+	  {
+		  IOUtil.close(ret);
+	  }
+	  
+	  
+	  return ret;
+	  
+//	  ClamAVScanResult  ret = new   ClamAVScanResult(null, is, null);
+//	  try (Socket s = new Socket(hostName,port); OutputStream outs = new BufferedOutputStream(s.getOutputStream()))
+//	  {
+//	      s.setSoTimeout(timeout); 
+//	      long delta = System.currentTimeMillis();
+//	      // handshake
+//	      System.out.println("before start");
+//	      outs.write(asBytes("zINSTREAM\0"));
+//	      outs.flush();
+//	      System.out.println("after start");
+//	      byte[] chunk = new byte[CHUNK_SIZE];
+//	
+//	      // send data
+//	      int read = ret.read(chunk);
+//	      while (read >= 0) 
+//	      {
+//	    	ret.size += read;
+//	        // The format of the chunk is: '<length><data>' where <length> is the size of the following data in bytes expressed as a 4 byte unsigned
+//	        // integer in network byte order and <data> is the actual chunk. Streaming is terminated by sending a zero-length chunk.
+//	        byte[] chunkSize = ByteBuffer.allocate(4).putInt(read).array();
+//	        outs.write(chunkSize);
+//	        outs.write(chunk, 0, read);
+//	        outs.flush();
+//	      
+//	        read = is.read(chunk);
+//	        
+//	        
+//	      }
+//	
+//	      // terminate scan
+//	      outs.write(new byte[]{0,0,0,0});
+//	      outs.flush();
+//	
+//	      // read reply
+//	      try (InputStream clamIs = s.getInputStream()) 
+//	      {
+//	    	  System.out.println("before read all");
+//	    	byte result[] = readAll(clamIs);
+//	    	System.out.println("after  read all");
+//	        ret.response = new String(result);
+//	        delta = System.currentTimeMillis() - delta;
+//	        ret.duration = delta;
+//	        ret.isClean = isCleanReply(result);
+//	        return ret;
+//	      }
+//	  } 
   }
 
   /**
@@ -306,11 +391,11 @@ public class ClamAVClient
   private static byte[] readAll(InputStream is) throws IOException {
     ByteArrayOutputStream tmp = new ByteArrayOutputStream();
 
-    byte[] buf = new byte[2000];
-    int read = is.read(buf);
-    while (read > 0) {
+    byte[] buf = new byte[512];
+    int read;
+    while ((read = is.read(buf)) != -1) {
       tmp.write(buf, 0, read);
-      read = is.read(buf);
+     
     }
     return tmp.toByteArray();
   }
@@ -324,7 +409,7 @@ public class ClamAVClient
 		  InetSocketAddressDAO hostInfo = new InetSocketAddressDAO(args[index++]);
 		  ClamAVClient cavc = new ClamAVClient(hostInfo.getInetAddress(), hostInfo.getPort(), 0);
 		  InputStream is = null;
-		  byte buffer[] = new byte[CHUNK_SIZE];
+		  
 		  
 		  for(; index < args.length; index++)
 		  {
@@ -351,9 +436,11 @@ public class ClamAVClient
 					  
 					  System.out.println(cavc.ping());
 					  
-					  ClamAVScanResult cavsr = cavc.initScan(filename, is);
-					  while((cavsr.read(buffer)) >= 0);
-					  cavsr.close();
+//					  ClamAVScanResult cavsr = cavc.initScan(filename, is);
+//					  while((cavsr.read(buffer)) >= 0);
+//					  cavsr.close();
+					  ClamAVScanResult cavsr = cavc.scan2(filename, is);
+					  
 					  System.out.println(cavsr);
 				  }
 				  catch(Exception e)

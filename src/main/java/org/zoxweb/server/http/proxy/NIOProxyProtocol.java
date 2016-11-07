@@ -48,6 +48,7 @@ import org.zoxweb.shared.net.InetSocketAddressDAO;
 import org.zoxweb.shared.protocol.MessageStatus;
 import org.zoxweb.shared.protocol.ProtocolDelimiter;
 import org.zoxweb.shared.security.SecurityStatus;
+import org.zoxweb.shared.util.Const.SourceOrigin;
 import org.zoxweb.shared.util.NVPair;
 import org.zoxweb.shared.util.SharedStringUtil;
 
@@ -432,7 +433,7 @@ extends ProtocolSessionProcessor
 	    				log.info(new String(requestRawBuffer.toByteArray()));
 	    			
 	    			
-	    			remoteChannelSK = getSelectorController().register(/*NIOChannelCleaner.DEFAULT*/ null, remoteChannel, SelectionKey.OP_READ, new ChannelRelayTunnel(getReadBufferSize(), remoteChannel, clientChannel, clientChannelSK, false, getSelectorController()), FACTORY.isBlocking());
+	    			remoteChannelSK = getSelectorController().register(/*NIOChannelCleaner.DEFAULT*/ null, remoteChannel, SelectionKey.OP_READ, new ChannelRelayTunnel(SourceOrigin.REMOTE, getReadBufferSize(), remoteChannel, clientChannel, clientChannelSK, true, getSelectorController()), FACTORY.isBlocking());
 
 				}
 				else
@@ -503,7 +504,7 @@ extends ProtocolSessionProcessor
 				
 					if(remoteChannelSK == null || !remoteChannelSK.isValid())
 					{
-						channelRelay = new ChannelRelayTunnel(getReadBufferSize(), remoteChannel, clientChannel, clientChannelSK, false, getSelectorController());
+						channelRelay = new ChannelRelayTunnel(SourceOrigin.REMOTE, getReadBufferSize(), remoteChannel, clientChannel, clientChannelSK, true, getSelectorController());
 						remoteChannelSK = getSelectorController().register(NIOChannelCleaner.DEFAULT, remoteChannel, SelectionKey.OP_READ, channelRelay, FACTORY.isBlocking());
 					}
 					
@@ -614,7 +615,7 @@ extends ProtocolSessionProcessor
     				log.info(new String(requestRawBuffer.toByteArray()));
     			
     			
-    			remoteChannelSK = getSelectorController().register(NIOChannelCleaner.DEFAULT, remoteChannel, SelectionKey.OP_READ, new ChannelRelayTunnel(getReadBufferSize(), remoteChannel, clientChannel, clientChannelSK, false, getSelectorController()), FACTORY.isBlocking());
+    			remoteChannelSK = getSelectorController().register(NIOChannelCleaner.DEFAULT, remoteChannel, SelectionKey.OP_READ, new ChannelRelayTunnel(SourceOrigin.REMOTE, getReadBufferSize(), remoteChannel, clientChannel, clientChannelSK, true, getSelectorController()), FACTORY.isBlocking());
     			requestInfo = null;
     			
 			}
@@ -710,7 +711,7 @@ extends ProtocolSessionProcessor
 				
 				if(remoteChannelSK == null || !remoteChannelSK.isValid())
 				{
-					channelRelay = new ChannelRelayTunnel(getReadBufferSize(), remoteChannel, clientChannel, clientChannelSK, false, getSelectorController());
+					channelRelay = new ChannelRelayTunnel(SourceOrigin.REMOTE, getReadBufferSize(), remoteChannel, clientChannel, clientChannelSK, true, getSelectorController());
 					remoteChannelSK = getSelectorController().register(NIOChannelCleaner.DEFAULT, remoteChannel, SelectionKey.OP_READ, channelRelay, FACTORY.isBlocking());
 				}
 				

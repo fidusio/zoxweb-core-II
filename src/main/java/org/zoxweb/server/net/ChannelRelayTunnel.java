@@ -10,13 +10,14 @@ import java.util.logging.Logger;
 
 import org.zoxweb.server.io.ByteBufferUtil;
 import org.zoxweb.server.io.IOUtil;
+import org.zoxweb.shared.util.Const.SourceOrigin;
 
 
 public class  ChannelRelayTunnel
 	extends ProtocolSessionProcessor
 {
 
-	private static boolean debug = false;
+	private static boolean debug = true;
 	private static final transient Logger log = Logger.getLogger(ChannelRelayTunnel.class.getName());
 	
 	
@@ -27,22 +28,24 @@ public class  ChannelRelayTunnel
 	private final boolean autoCloseDesticantion;
 	//private ByteBuffer bBuffer = null;
 	private Closeable closeInterface = null;
+	private SourceOrigin origin = null;
 	
 	
 	
-	public ChannelRelayTunnel(int bufferSize, SocketChannel readSource, 
+	public ChannelRelayTunnel(SourceOrigin origin, int bufferSize, SocketChannel readSource, 
 			  				  SocketChannel writeDestination, SelectionKey writeChannelSK, boolean autoCloseDesticantion,
 			  				  SelectorController sc)
 	{
-		this(bufferSize, readSource, writeDestination, writeChannelSK, autoCloseDesticantion, sc, null);
+		this(origin, bufferSize, readSource, writeDestination, writeChannelSK, autoCloseDesticantion, sc, null);
 	}
 	
 	
 	
-	public ChannelRelayTunnel(int bufferSize, SocketChannel readSource, 
+	public ChannelRelayTunnel(SourceOrigin origin, int bufferSize, SocketChannel readSource, 
 							  SocketChannel writeDestination, SelectionKey writeChannelSK,boolean autoCloseDesticantion,
 							  SelectorController sc, Closeable closeInterface)
 	{
+		this.origin = origin;
 		bBuffer = ByteBufferUtil.allocateByteBuffer(bufferSize);
 		this.readSource = readSource;
 		this.writeDestination = writeDestination;
@@ -66,19 +69,31 @@ public class  ChannelRelayTunnel
 		return "NIO Channel Relay Tunnel";
 	}
 	
+	public SourceOrigin getSourceOrigin()
+	{
+		return origin;
+	}
+	
 	@Override
 	public void close() throws IOException 
 	{
 		
 		// TODO Auto-generated method stub
-		IOUtil.close(readSource);
-		getSelectorController().cancelSelectionKey(currentSK);
-		IOUtil.close(closeInterface);
-		if (autoCloseDesticantion && !writeChannelSK.isValid())
+		if (closeInterface != null)
 		{
-			IOUtil.close(writeDestination);
+			IOUtil.close(closeInterface);
 		}
-		postOp();
+		else
+		{
+			IOUtil.close(readSource);
+			getSelectorController().cancelSelectionKey(currentSK);
+			
+			if (autoCloseDesticantion)
+			{
+				IOUtil.close(writeDestination);
+			}
+			postOp();
+		}
 	}
 	
 	@Override
@@ -100,7 +115,7 @@ public class  ChannelRelayTunnel
 				}
 			}while(read > 0);
 			
-	    	if(read == -1)
+	    	if(read < 0)
 	    	{
 	    		// we have to close 
 	    		close();
@@ -112,7 +127,7 @@ public class  ChannelRelayTunnel
 			
 			if (debug)
 			{
-				log.info("error:" + key + ":" + writeChannelSK);
+				log.info("error:" + key + ":" + writeChannelSK + ":" +System.currentTimeMillis());
 				e.printStackTrace();
 			}
 			IOUtil.close(this);

@@ -89,7 +89,12 @@ public class Const
 		
 	}
 	
-	
+	public enum SourceOrigin
+	{
+		LOCAL,
+		REMOTE,
+		UNKNOWN,
+	}
 	
 	
 	

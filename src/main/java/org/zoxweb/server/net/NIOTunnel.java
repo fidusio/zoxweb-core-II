@@ -1,5 +1,6 @@
 package org.zoxweb.server.net;
 
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
 
@@ -20,6 +21,7 @@ import org.zoxweb.server.net.ProtocolSessionFactory;
 import org.zoxweb.server.net.ProtocolSessionProcessor;
 import org.zoxweb.server.task.TaskUtil;
 import org.zoxweb.shared.net.InetSocketAddressDAO;
+import org.zoxweb.shared.util.Const.SourceOrigin;
 
 
 public class NIOTunnel 
@@ -54,8 +56,47 @@ extends ProtocolSessionProcessor
 		
 	}
 	
-	
-	
+//	
+//	class ClosePolicy
+//		implements AutoCloseable
+//	{
+//
+//		private SourceOrigin source = SourceOrigin.UNKNOWN;
+//		
+//		public synchronized void updateOrigin(SourceOrigin origin)
+//		{
+//			if (SourceOrigin.UNKNOWN == source)
+//			{
+//				source = origin;
+//			}
+//		}
+//		
+//		
+//		
+//		@Override
+//		public void close()
+//		{
+//			switch (source) 
+//			{
+//			case LOCAL:
+//				// original disconnection was local
+//				// we need to write data to remote 
+//				
+//				
+//				break;
+//			case REMOTE:
+//				// original disonnection remote
+//				break;
+//			case UNKNOWN:
+//				
+//				break;
+//			default:
+//				break;
+//			
+//			}
+//		}
+//		
+//	}
 	
 	
 	
@@ -94,9 +135,12 @@ extends ProtocolSessionProcessor
 	{
 		
 		// TODO Auto-generated method stub
-		IOUtil.close(clientChannel);
+		getSelectorController().cancelSelectionKey(clientChannelSK);
 		IOUtil.close(remoteChannel);
+		IOUtil.close(clientChannel);
+		
 		postOp();
+		log.info("close ended");
 	}
 	
 
@@ -112,7 +156,7 @@ extends ProtocolSessionProcessor
 				clientChannelSK = key;
 				
 				remoteChannel = SocketChannel.open((new InetSocketAddress(remoteAddress.getInetAddress(), remoteAddress.getPort())));
-				relay = new ChannelRelayTunnel(getReadBufferSize(), remoteChannel, clientChannel, clientChannelSK,  true,  getSelectorController());
+				relay = new ChannelRelayTunnel(SourceOrigin.REMOTE, getReadBufferSize(), remoteChannel, clientChannel, clientChannelSK,  true,  getSelectorController());
 				
 				getSelectorController().register(NIOChannelCleaner.DEFAULT, remoteChannel, SelectionKey.OP_READ, relay, false);
 			}
@@ -144,7 +188,14 @@ extends ProtocolSessionProcessor
     			getSelectorController().cancelSelectionKey(key);
 				if (relay != null)
 				{
-					relay.processRead(null);
+//					try
+//					{
+//						relay.processRead(null);
+//					}
+//					catch(Exception e)
+//					{
+//						e.printStackTrace();
+//					}
 					relay.close();
 
 				}
@@ -163,6 +214,8 @@ extends ProtocolSessionProcessor
     		if(debug)
     			e.printStackTrace();
     		IOUtil.close(this);
+    		if(debug)
+    			log.info(System.currentTimeMillis() + ":Connection end " + key + ":" + key.isValid()+ " " + Thread.currentThread() + " " + TaskUtil.getDefaultTaskProcessor().availableExecutorThreads());
     		
     	}
     	
