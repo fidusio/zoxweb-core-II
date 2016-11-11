@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import org.zoxweb.server.io.ByteBufferParser;
 import org.zoxweb.server.io.ByteBufferUtil;
+import org.zoxweb.server.io.ByteBufferUtil.BufferType;
 import org.zoxweb.server.io.UByteArrayOutputStream;
 import org.zoxweb.shared.util.Const;
 import org.zoxweb.shared.util.SharedUtil;
@@ -75,7 +76,7 @@ public class BufferTest {
 				byte buffer[] = new byte[1000000];
 				bufferOutput.write(buffer);
 				buffer = bufferOutput.toByteArray();
-				ByteBuffer bb =  ByteBufferUtil.allocateByteBuffer(buffer, 0, buffer.length, true);
+				ByteBuffer bb =  ByteBufferUtil.allocateByteBuffer(BufferType.HEAP, buffer, 0, buffer.length, true);
 				bufferOutput.reset();
 				long delta = System.nanoTime();
 				ByteBufferUtil.write(bufferOutput, bb);
@@ -84,7 +85,7 @@ public class BufferTest {
 				System.out.println("fastwrite:" + bufferOutput.size() +" it took:" + Const.TimeInMillis.nanosToString(delta));
 				 
 				
-				bb =  ByteBufferUtil.allocateByteBuffer(buffer, 0, buffer.length, true);
+				bb =  ByteBufferUtil.allocateByteBuffer(BufferType.HEAP, buffer, 0, buffer.length, true);
 				bufferOutput.reset();
 				
 				delta = System.currentTimeMillis();
@@ -93,7 +94,7 @@ public class BufferTest {
 				
 				System.out.println(bufferOutput.size() + " millis " + delta);
 				
-				bb =  ByteBufferUtil.allocateByteBuffer(buffer, 0, buffer.length, true);
+				bb =  ByteBufferUtil.allocateByteBuffer(BufferType.HEAP, buffer, 0, buffer.length, true);
 				System.out.println(bb.getClass().getName());
 				
 				

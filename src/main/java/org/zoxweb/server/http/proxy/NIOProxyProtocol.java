@@ -28,6 +28,7 @@ import org.zoxweb.server.http.HTTPUtil;
 import org.zoxweb.server.io.ByteBufferUtil;
 import org.zoxweb.server.io.IOUtil;
 import org.zoxweb.server.io.UByteArrayOutputStream;
+import org.zoxweb.server.io.ByteBufferUtil.BufferType;
 import org.zoxweb.server.net.ChannelRelayTunnel;
 import org.zoxweb.server.net.InetFilterRulesManager;
 import org.zoxweb.server.net.NIOChannelCleaner;
@@ -175,7 +176,7 @@ extends ProtocolSessionProcessor
 	
 	private NIOProxyProtocol()
 	{
-		bBuffer =  ByteBufferUtil.allocateByteBuffer(getReadBufferSize());
+		bBuffer =  ByteBufferUtil.allocateByteBuffer(BufferType.HEAP, getReadBufferSize());
 	}
 	
 	
