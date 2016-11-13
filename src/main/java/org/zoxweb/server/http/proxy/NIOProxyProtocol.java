@@ -1,4 +1,5 @@
 /*
+ /*
  * Copyright 2016 ZoxWeb.com LLC.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
@@ -238,6 +239,7 @@ extends ProtocolSessionProcessor
     				if (ssl)
     				{
     					ByteBufferUtil.write(remoteChannel, bBuffer);
+    					//System.out.println(ByteBufferUtil.toString(bBuffer));
     				}
     				else
     				{
@@ -561,7 +563,8 @@ extends ProtocolSessionProcessor
 			//InetSocketAddressDAO remoteAddress = HTTPUtil.parseHost(requestMCCI.getURI());
 			if (requestMCCI.getMethod() == HTTPMethod.CONNECT)
 			{
-				
+//				System.out.println("" + requestRawBuffer);
+//				System.out.println("" + requestMCCI);
 				ssl = true;
 				if (NetUtil.validateRemoteAccess(getInetFilterRulesManager(), requestInfo.remoteAddress.getInetAddress(), remoteChannel) !=  SecurityStatus.ALLOW)
 				{
@@ -607,8 +610,15 @@ extends ProtocolSessionProcessor
 				
     			requestRawBuffer.reset();
     			
-    			requestRawBuffer.write(HTTPVersion.HTTP_1_1.getValue() + " 200 Connection established" + ProtocolDelimiter.CRLF);
-    			requestRawBuffer.write(HTTPHeaderName.PROXY_AGENT + ": " +getName() + ProtocolDelimiter.CRLFCRLF);
+    			requestRawBuffer.write(requestMCCI.getHTTPVersion().getValue() + " 200 Connection established" + ProtocolDelimiter.CRLF);
+    			//if (requestInfo.remoteAddress.getPort() != 80)
+    				requestRawBuffer.write(HTTPHeaderName.PROXY_AGENT + ": " +getName() + ProtocolDelimiter.CRLFCRLF);
+    			//else
+    			//	requestRawBuffer.write(ProtocolDelimiter.CRLF.getBytes());
+    			
+    			// tobe tested
+    			//remoteChannelSK = getSelectorController().register(NIOChannelCleaner.DEFAULT, remoteChannel, SelectionKey.OP_READ, new ChannelRelayTunnel(SourceOrigin.REMOTE, getReadBufferSize(), remoteChannel, clientChannel, clientChannelSK, true, getSelectorController()), FACTORY.isBlocking());
+    			
     			ByteBufferUtil.write(clientChannel, requestRawBuffer);
     			requestRawBuffer.reset();
     			requestMCCI = null;
@@ -807,5 +817,4 @@ extends ProtocolSessionProcessor
 			log.info(""+hmci.getContentLength() + ", " +hmci.getContentType());
 		}
 	}
-	
 }

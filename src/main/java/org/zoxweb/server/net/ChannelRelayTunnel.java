@@ -112,7 +112,8 @@ public class  ChannelRelayTunnel
 				read = ((SocketChannel)currentSK.channel()).read(bBuffer);
 				if (read > 0)
 				{
-					ByteBufferUtil.write(writeDestination, bBuffer);	
+					ByteBufferUtil.write(writeDestination, bBuffer);
+					//log.info(ByteBufferUtil.toString(bBuffer));
 				}
 			}while(read > 0);
 			

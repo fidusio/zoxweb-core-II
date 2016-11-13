@@ -33,7 +33,7 @@ public class ByteBufferUtil
 	private Map<Integer, SimpleQueue<ByteBuffer>> cachedBuffers = new HashMap<Integer, SimpleQueue<ByteBuffer>>();
 	
 	
-	public static final int DEFAULT_BUFFER_SIZE = 2048;
+	public static final int DEFAULT_BUFFER_SIZE = 4096;
 	public static final int CACHE_LIMIT = 256;
 	
 	private ByteBufferUtil()
@@ -273,6 +273,20 @@ public class ByteBufferUtil
 		bb.flip();
 		while(bb.hasRemaining())
 			bc.write(bb);
+	}
+	
+	
+	
+	public static String toString(ByteBuffer bb) throws IOException
+	{
+		
+		
+		
+		UByteArrayOutputStream ubaos = new UByteArrayOutputStream();
+		write(ubaos, bb);
+		;
+
+		return ubaos.toString();
 	}
 	
 //	public static void fastWrite(UByteArrayOutputStream ubaos, ByteBuffer bb) throws IOException

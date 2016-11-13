@@ -23,22 +23,29 @@ import org.zoxweb.shared.util.SharedUtil;
 public class MessageFirstLine
 implements Serializable
 {
-	private String tokens[];
+	private String tokens[] = null;
 	
 	
 	public MessageFirstLine(String fullRequestLine)
 	{
-		SharedUtil.checkIfNulls("Can't parse a null rtps line", fullRequestLine);
-		tokens = fullRequestLine.split(" ");
-		if ( tokens == null || tokens.length < 3)
+		SharedUtil.checkIfNulls("Can't parse a null line", fullRequestLine);
+		String tokensTemp[] = fullRequestLine.split(" ");
+		if ( tokensTemp == null || tokensTemp.length < 3)
 		{
 			throw new IllegalArgumentException("illegal tokens");
 		}
-		if (tokens.length > 3)
+		tokens = new String[3];
+		int index = 0;
+		for (int i = 0; i < tokens.length; i++)
 		{
-			for (int i=3; i < tokens.length; i++)
+			tokens[index] = tokensTemp[index++];
+		}
+		
+		if (tokensTemp.length > 3)
+		{
+			for (int i=index; i < tokensTemp.length; i++)
 			{
-				tokens[2]= " " + tokens[i];
+				tokens[tokens.length -1]= " " + tokensTemp[i];
 			}
 		}
 	}
