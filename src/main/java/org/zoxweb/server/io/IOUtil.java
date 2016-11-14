@@ -1,5 +1,6 @@
 package org.zoxweb.server.io;
 
+import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
 import java.io.File;
@@ -212,7 +213,7 @@ public class IOUtil
 	public static PrintWriter createPrintWriter(File f) throws IOException
 	{
 		FileWriter fw = new FileWriter(f, true);
-		return new PrintWriter(fw, true);
+		return new PrintWriter(new BufferedWriter(fw), true);
 	}
 	
 	
