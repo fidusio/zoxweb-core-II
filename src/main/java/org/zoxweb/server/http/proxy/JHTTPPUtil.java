@@ -226,6 +226,7 @@ public class JHTTPPUtil
 //		ipf.setNetworkMask("255.255.255.255");
 		TaskUtil.setThreadMultiplier(4);
 		int port = 8080;
+		String proxyLogFile = null;
 		
 		// load the proxy rules
 		if (acd != null)
@@ -275,15 +276,16 @@ public class JHTTPPUtil
 				{
 					e.printStackTrace();
 				}
-				
 			}
+			
+			proxyLogFile = acd.lookupValue("proxy_log_file");
 		}
 		else
 		{
 			return null;
 		}
 			
-		NIOSocket nsio = new NIOSocket(NIOProxyProtocol.FACTORY, new InetSocketAddress(port), ifrm, null, TaskUtil.getDefaultTaskProcessor());	
+		NIOSocket nsio = new NIOSocket(NIOProxyProtocol.FACTORY, new InetSocketAddress(port), ifrm, null, TaskUtil.getDefaultTaskProcessor(), proxyLogFile);	
 		
 		
 	
