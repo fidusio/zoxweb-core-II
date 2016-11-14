@@ -57,14 +57,14 @@ public class NetUtil
 	}
 	
 	
-	public static SecurityStatus validateRemoteAccess(InetFilterRulesManager ifrm, String host, Closeable sc) throws IOException
+	public static SecurityStatus checkSecurityStatus(InetFilterRulesManager ifrm, String host, Closeable sc) throws IOException
 	{
 		
 		SecurityStatus ret =  SecurityStatus.ALLOW;
 		if (ifrm != null) 
 			
 		{
-			ret = ifrm.checkIPSecurityStatus(host);
+			ret = ifrm.lookupSecurityStatus(host);
 			
 			if (ret != SecurityStatus.ALLOW)
 			{
@@ -77,13 +77,12 @@ public class NetUtil
 	}
 	
 	
-	public static SecurityStatus validateRemoteAccess(InetFilterRulesManager ifrm, SocketAddress host, Closeable sc) throws IOException
+	public static SecurityStatus checkSecurityStatus(InetFilterRulesManager ifrm, SocketAddress host, Closeable sc) throws IOException
 	{
 		SecurityStatus ret =  SecurityStatus.ALLOW;
-		if (ifrm != null) 
-			
+		if (ifrm != null) 	
 		{
-			ret = ifrm.checkIPSecurityStatus(host);
+			ret = ifrm.lookupSecurityStatus(host);
 			if (ret != SecurityStatus.ALLOW)
 			{
 				IOUtil.close(sc);
@@ -94,13 +93,13 @@ public class NetUtil
 		return ret;
 	}
 	
-	public static SecurityStatus validateRemoteAccess(InetFilterRulesManager ifrm, InetAddress host, Closeable sc) throws IOException
+	public static SecurityStatus validateAccess(InetFilterRulesManager ifrm, InetAddress host, Closeable sc) throws IOException
 	{
 		SecurityStatus ret =  SecurityStatus.ALLOW;
 		if (ifrm != null) 
 			
 		{
-			ret = ifrm.checkIPSecurityStatus(host); 
+			ret = ifrm.lookupSecurityStatus(host); 
 			if (ret != SecurityStatus.ALLOW)
 			{
 				IOUtil.close(sc);

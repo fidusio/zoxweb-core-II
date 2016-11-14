@@ -2,7 +2,7 @@ package org.zoxweb.server.net;
 
 import java.io.Closeable;
 import java.io.IOException;
-
+import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.nio.channels.DatagramChannel;
 import java.nio.channels.SelectionKey;
@@ -46,7 +46,7 @@ implements Runnable, DaemonController, Closeable
 	private long dispatchCounter = 0;
 	private long selectedCountTotal = 0;
 	private long statLogCounter = 0;
-	//private PrintWriter pw = null;
+	private PrintWriter pw = null;
 	
 	
 	public NIOSocket(ProtocolSessionFactory<?> psf, InetSocketAddress sa, InetFilterRulesManager ifrm, InetFilterRulesManager outgoingIFRM, TaskProcessor tsp) throws IOException
@@ -71,7 +71,7 @@ implements Runnable, DaemonController, Closeable
 		{
 			try
 			{
-				IOUtil.loggerToFile(log, logFileName);
+				pw = IOUtil.createPrintWriter(logFileName);
 			}
 			catch(Exception e)
 			{
@@ -188,9 +188,17 @@ implements Runnable, DaemonController, Closeable
 							    	
 							    	SocketChannel sc = ((ServerSocketChannel)key.channel()).accept();
 							    	
-							    	if (NetUtil.validateRemoteAccess(getIncomingInetFilterRulesManager(), sc.getRemoteAddress(), sc) !=  SecurityStatus.ALLOW)
+							    	if (NetUtil.checkSecurityStatus(getIncomingInetFilterRulesManager(), sc.getRemoteAddress(), null) !=  SecurityStatus.ALLOW)
 							    	{
-							    		log.info("access denied:" + sc.getRemoteAddress());
+							    		try
+							    		{
+							    			log.info("access denied:" + sc.getRemoteAddress());
+							    			IOUtil.logToFile(pw, "access denied:" + sc.getRemoteAddress());
+							    		}
+							    		finally
+							    		{
+							    			IOUtil.close(sc);
+							    		}
 							    		
 							    	}
 							    	else
@@ -202,6 +210,7 @@ implements Runnable, DaemonController, Closeable
 								    	selectorController.register(NIOChannelCleaner.DEFAULT, sc, SelectionKey.OP_READ, psp, psf.isBlocking());
 								    	
 								    	connectionCount.incrementAndGet();
+								    	
 								    
 							    	}
 	
@@ -305,6 +314,8 @@ implements Runnable, DaemonController, Closeable
 				
 			}
 		}
+		
+		IOUtil.close(pw);
 	
 	}
 	

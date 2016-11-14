@@ -279,7 +279,7 @@ public class InetFilterRulesManager
 	
 	
 	
-	public  SecurityStatus checkIPSecurityStatus(InetAddress address)
+	public  SecurityStatus lookupSecurityStatus(InetAddress address)
 	{
 		//log.info("address " + address);
 		if(address.isLoopbackAddress())
@@ -309,17 +309,12 @@ public class InetFilterRulesManager
 	
 	
 	
-	public  SecurityStatus checkIPSecurityStatus(SocketAddress address)
+	public  SecurityStatus lookupSecurityStatus(SocketAddress address)
 	{
-		//.info("" + address );
 		if (address instanceof InetSocketAddress)
 		{
-			return checkIPSecurityStatus(((InetSocketAddress)address).getAddress());
-		}
-		
-		
-
-		
+			return lookupSecurityStatus(((InetSocketAddress)address).getAddress());
+		}	
 		//log.info("we have ip v6 deny access:" + address);
 		// we ip v6
 		return SecurityStatus.DENY;
@@ -327,9 +322,9 @@ public class InetFilterRulesManager
 	}
 	
 	
-	public  SecurityStatus checkIPSecurityStatus(String ipAddress) throws IOException
+	public  SecurityStatus lookupSecurityStatus(String ipAddress) throws IOException
 	{
-		return checkIPSecurityStatus(InetAddress.getByName(ipAddress));
+		return lookupSecurityStatus(InetAddress.getByName(ipAddress));
 	}
 	
 	

@@ -383,7 +383,7 @@ extends ProtocolSessionProcessor
 					
 					ssl = true;
 						
-					if (NetUtil.validateRemoteAccess(getInetFilterRulesManager(), remoteAddress.getInetAddress(), remoteChannel) !=  SecurityStatus.ALLOW)
+					if (NetUtil.checkSecurityStatus(getInetFilterRulesManager(), remoteAddress.getInetAddress(), remoteChannel) !=  SecurityStatus.ALLOW)
 					{
 						HTTPMessageConfigInterface hccError = createErrorMSG(403, "Access Denied", requestMCCI.getURI());
 						
@@ -445,7 +445,7 @@ extends ProtocolSessionProcessor
 					if (debug)
 						log.info(new String(requestRawBuffer.toByteArray()));
 					
-					if (NetUtil.validateRemoteAccess(getInetFilterRulesManager(), remoteAddress.getInetAddress(), remoteChannel) !=  SecurityStatus.ALLOW)
+					if (NetUtil.checkSecurityStatus(getInetFilterRulesManager(), remoteAddress.getInetAddress(), remoteChannel) !=  SecurityStatus.ALLOW)
 					{
 						HTTPMessageConfigInterface hccError = createErrorMSG(403, "Access Denied", requestMCCI.getURI());
 					
@@ -567,7 +567,7 @@ extends ProtocolSessionProcessor
 //				System.out.println("" + requestRawBuffer);
 //				System.out.println("" + requestMCCI);
 				ssl = true;
-				if (NetUtil.validateRemoteAccess(getInetFilterRulesManager(), requestInfo.remoteAddress.getInetAddress(), remoteChannel) !=  SecurityStatus.ALLOW)
+				if (NetUtil.checkSecurityStatus(getInetFilterRulesManager(), requestInfo.remoteAddress.getInetAddress(), remoteChannel) !=  SecurityStatus.ALLOW)
 				{
 					HTTPMessageConfigInterface hccError = createErrorMSG(403, "Access Denied", requestMCCI.getURI());
 					
@@ -637,7 +637,7 @@ extends ProtocolSessionProcessor
 					log.info(new String(requestRawBuffer.toByteArray()));
 				
 				
-				if (NetUtil.validateRemoteAccess(getInetFilterRulesManager(), requestInfo.remoteAddress.getInetAddress(), remoteChannel) !=  SecurityStatus.ALLOW)
+				if (NetUtil.checkSecurityStatus(getInetFilterRulesManager(), requestInfo.remoteAddress.getInetAddress(), remoteChannel) !=  SecurityStatus.ALLOW)
 				{
 					HTTPMessageConfigInterface hccError = createErrorMSG(403, "Access Denied", requestMCCI.getURI());
 				

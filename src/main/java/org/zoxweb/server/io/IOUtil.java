@@ -17,6 +17,8 @@ import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.FileHandler;
@@ -29,6 +31,7 @@ import org.zoxweb.shared.util.SharedStringUtil;
 public class IOUtil 
 {
 	
+	public static final SimpleDateFormat SDF = new SimpleDateFormat("[yyyy-MM-dd HH:mm:ss.SSS] ");
 	
 	/**
 	 * Close an AutoCloseable object if c is null the action is discarded, while closing catch any exception silently
@@ -56,6 +59,14 @@ public class IOUtil
 		return br;
 	}
 	
+	
+	public static void logToFile(PrintWriter pw, String msg)
+	{
+		if (pw != null)
+		{
+			pw.println(SDF.format(new Date()) + msg);
+		}
+	}
 	
 	/**
 	 * 
