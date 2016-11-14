@@ -5,15 +5,24 @@ import java.io.Closeable;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.io.RandomAccessFile;
+
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.FileHandler;
+import java.util.logging.Handler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 import org.zoxweb.shared.util.SharedStringUtil;
 
@@ -38,6 +47,13 @@ public class IOUtil
 				
 			}
 		}
+	}
+	
+	
+	public static RandomAccessFile endOfFile(RandomAccessFile br) throws IOException
+	{
+		br.seek(br.length());
+		return br;
 	}
 	
 	
@@ -159,6 +175,34 @@ public class IOUtil
 				
 	}
 	
+	
+	public static Logger  loggerToFile(Logger logger, String filename) throws SecurityException, IOException
+	{
+		FileHandler  fh = new FileHandler(filename);
+		
+		Logger rootLogger = Logger.getLogger("");
+        Handler[] handlers = rootLogger.getHandlers();
+        if (handlers[0] instanceof ConsoleHandler) {
+                rootLogger.removeHandler(handlers[0]);
+        }
+        logger.addHandler(fh);
+        SimpleFormatter formatter = new SimpleFormatter();  
+        fh.setFormatter(formatter);  
+        logger.info("file logging started");
+        return logger;
+	}
+	
+	
+	public static PrintWriter createPrintWriter(String filename) throws IOException
+	{
+		return createPrintWriter(new File(filename));
+	}
+	
+	public static PrintWriter createPrintWriter(File f) throws IOException
+	{
+		FileWriter fw = new FileWriter(f, true);
+		return new PrintWriter(fw, true);
+	}
 	
 	
 	

@@ -17,6 +17,7 @@
 package org.zoxweb.server.http.proxy;
 
 
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
 
@@ -777,22 +778,35 @@ extends ProtocolSessionProcessor
 			InetFilterRulesManager clientIFRM = null;
 			TaskUtil.setThreadMultiplier(4);
 			
+			String filename = null;
+			
 			for(; index < args.length; index++)
 			{
-				if(clientIFRM == null)
+				
+				
+				if ("-f".equalsIgnoreCase(args[index]))
 				{
-					clientIFRM = new InetFilterRulesManager();
+					filename = args[++index];
 				}
-				try
+				else
 				{
-					clientIFRM.addInetFilterProp(args[index]);
-				}
-				catch(Exception e)
-				{
-					e.printStackTrace();
+					
+					if(clientIFRM == null)
+					{
+						clientIFRM = new InetFilterRulesManager();
+					}
+					try
+					{
+						clientIFRM.addInetFilterProp(args[index]);
+					}
+					catch(Exception e)
+					{
+						e.printStackTrace();
+					}
 				}
 			}
-			NIOSocket nsio = new NIOSocket(FACTORY, new InetSocketAddress(port), clientIFRM, null, TaskUtil.getDefaultTaskProcessor());
+			log.info("filename:" + filename);
+			NIOSocket nsio = new NIOSocket(FACTORY, new InetSocketAddress(port), clientIFRM, null, TaskUtil.getDefaultTaskProcessor(), filename);
 			nsio.setStatLogCounter(0);
 			
 			//nios.addSeverSocket(2401, new NIOTunnelFactory(new InetSocketAddressDAO("10.0.0.1:2401")));

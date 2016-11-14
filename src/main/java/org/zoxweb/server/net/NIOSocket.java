@@ -2,12 +2,14 @@ package org.zoxweb.server.net;
 
 import java.io.Closeable;
 import java.io.IOException;
+
 import java.net.InetSocketAddress;
 import java.nio.channels.DatagramChannel;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
+
 import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
@@ -17,6 +19,7 @@ import org.zoxweb.server.io.IOUtil;
 import org.zoxweb.server.task.TaskEvent;
 import org.zoxweb.server.task.TaskProcessor;
 import org.zoxweb.server.task.TaskUtil;
+
 import org.zoxweb.shared.net.InetSocketAddressDAO;
 import org.zoxweb.shared.security.SecurityStatus;
 import org.zoxweb.shared.util.Const.TimeInMillis;
@@ -28,7 +31,7 @@ public class NIOSocket
 implements Runnable, DaemonController, Closeable
 {
 	
-	private static final transient Logger log = Logger.getLogger(NIOSocket.class.getName());
+	private static  final transient Logger log = Logger.getLogger(NIOSocket.class.getName());
 	
 	private boolean live = true;
 	
@@ -43,8 +46,15 @@ implements Runnable, DaemonController, Closeable
 	private long dispatchCounter = 0;
 	private long selectedCountTotal = 0;
 	private long statLogCounter = 0;
+	//private PrintWriter pw = null;
+	
 	
 	public NIOSocket(ProtocolSessionFactory<?> psf, InetSocketAddress sa, InetFilterRulesManager ifrm, InetFilterRulesManager outgoingIFRM, TaskProcessor tsp) throws IOException
+	{
+		this(psf, sa, ifrm, outgoingIFRM, tsp, null);
+	}
+	
+	public NIOSocket(ProtocolSessionFactory<?> psf, InetSocketAddress sa, InetFilterRulesManager ifrm, InetFilterRulesManager outgoingIFRM, TaskProcessor tsp, String logFileName) throws IOException
 	{
 		SharedUtil.checkIfNulls("Null value", psf, sa);
 		selectorController = new SelectorController(Selector.open());
@@ -57,6 +67,17 @@ implements Runnable, DaemonController, Closeable
 		if (sa != null)
 			addServerSocket(sa, psf);
 		
+		if (logFileName != null)
+		{
+			try
+			{
+				IOUtil.loggerToFile(log, logFileName);
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
 		log.info("outgoingIFRM  " + (outgoingIFRM != null ? outgoingIFRM.getAll() : null));
 		log.info("incomingIFRM  " + (ifrm != null ? ifrm.getAll() : null));
 		new Thread(this).start();
@@ -170,6 +191,7 @@ implements Runnable, DaemonController, Closeable
 							    	if (NetUtil.validateRemoteAccess(getIncomingInetFilterRulesManager(), sc.getRemoteAddress(), sc) !=  SecurityStatus.ALLOW)
 							    	{
 							    		log.info("access denied:" + sc.getRemoteAddress());
+							    		
 							    	}
 							    	else
 							    	{
@@ -283,8 +305,7 @@ implements Runnable, DaemonController, Closeable
 				
 			}
 		}
-		//IOUtil.close(ssc);
-		//sk.cancel();
+	
 	}
 	
 	

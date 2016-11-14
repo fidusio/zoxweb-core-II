@@ -68,11 +68,7 @@ implements DaemonController
 	}
 	
 	
-	private RandomAccessFile readTillEnd(RandomAccessFile br) throws IOException
-	{
-		br.seek(br.length());
-		return br;
-	}
+	
 
 
 	@Override
@@ -82,7 +78,7 @@ implements DaemonController
 		
 		try
 		{
-			bufferedReader = readTillEnd(bufferedReader);
+			bufferedReader = IOUtil.endOfFile(bufferedReader);
 			do
 			{
 				try
@@ -111,7 +107,7 @@ implements DaemonController
 							if (creationTime != IOUtil.fileCreationTime(file))
 							{
 								bufferedReader = openFile(file);
-								readTillEnd(bufferedReader);
+								 IOUtil.endOfFile(bufferedReader);
 							}
 						}
 						catch(Exception e)

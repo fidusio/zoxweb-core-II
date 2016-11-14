@@ -39,6 +39,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 
+
 import org.zoxweb.server.io.IOUtil;
 
 import org.zoxweb.server.net.NetUtil;
@@ -306,7 +307,20 @@ public final class ServerUtil
 	
 	
 	
-	
+//	public static void configureLogger(Logger logger, String filename) throws SecurityException, IOException
+//	{
+//		 // This block configure the logger with handler and formatter  
+//		FileHandler  fh = new FileHandler(filename);  
+//		
+//		
+//		
+//		
+//		
+//        logger.addHandler(fh);
+//        SimpleFormatter formatter = new SimpleFormatter();  
+//        fh.setFormatter(formatter); 
+//        logger.info("Logger activated");
+//	}
 	
 	
 	
