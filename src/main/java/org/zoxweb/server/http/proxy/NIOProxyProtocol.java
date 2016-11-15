@@ -45,10 +45,9 @@ import org.zoxweb.shared.http.HTTPMessageConfigInterface;
 import org.zoxweb.shared.http.HTTPHeaderName;
 import org.zoxweb.shared.http.HTTPMethod;
 
-import org.zoxweb.shared.http.HTTPVersion;
+
 import org.zoxweb.shared.http.HTTPStatusCode;
 import org.zoxweb.shared.net.InetSocketAddressDAO;
-import org.zoxweb.shared.protocol.MessageStatus;
 import org.zoxweb.shared.protocol.ProtocolDelimiter;
 import org.zoxweb.shared.security.SecurityStatus;
 import org.zoxweb.shared.util.Const.SourceOrigin;
@@ -247,7 +246,7 @@ extends ProtocolSessionProcessor
 
     					ByteBufferUtil.write(requestBuffer, bBuffer);
     					//log.info(new String(requestBuffer.getInternalBuffer(), 0, requestBuffer.size()));
-    					tryToConnectRemote2(requestBuffer, read);
+    					tryToConnectRemote(requestBuffer, read);
 
     					
     				}	
@@ -357,197 +356,10 @@ extends ProtocolSessionProcessor
 
 
 	
-	@SuppressWarnings("unused")
-	private void tryToConnectRemote(UByteArrayOutputStream requestRawBuffer, int lastRead) throws IOException
-	{
-		requestMCCI = HTTPUtil.parseRawHTTPRequest(requestRawBuffer, requestMCCI, false);
-		if (requestMCCI != null)
-		{
-			
-			MessageStatus ms = HTTPUtil.checkRequestStatus(requestMCCI);
-			if(debug)
-				log.info("MS:" + ms + " len " + requestMCCI.getContentLength() + " " + requestMCCI.getMethod() + ":" + (requestMCCI.getContent() != null ? requestMCCI.getContent().length : 0) + ":" + requestMCCI.getURI());
-			switch(ms)
-			{
-			case COMPLETE:
-				if (debug)
-					log.info(new String(requestRawBuffer.toByteArray()));
-				
-				InetSocketAddressDAO remoteAddress = HTTPUtil.parseHost(requestMCCI.getURI());
-				
-				
-				
-				if (requestMCCI.getMethod() == HTTPMethod.CONNECT)
-				{
-					// this is an HTTPS connection
-					
-					ssl = true;
-						
-					if (NetUtil.checkSecurityStatus(getInetFilterRulesManager(), remoteAddress.getInetAddress(), remoteChannel) !=  SecurityStatus.ALLOW)
-					{
-						HTTPMessageConfigInterface hccError = createErrorMSG(403, "Access Denied", requestMCCI.getURI());
-						
-						ByteBufferUtil.write(clientChannel, HTTPUtil.formatResponse(hccError, requestRawBuffer));
-						close();
-						return;	
-						// we must reply with an error
-					}
-					
-					if(remoteChannel != null && !NetUtil.areInetSocketAddressDAOEquals(remoteAddress, lastRemoteAddress))
-					{
-						if(debug)
-							log.info("NOT supposed to happen");
-						//IOUtil.close(remoteChannel);
-						if (channelRelay != null)
-						{
-							// try to read any pending data
-							// very very nasty bug
-							channelRelay.processRead(remoteChannelSK);
-							channelRelay.waitThenStopReading();
-						}
-						else
-							getSelectorController().cancelSelectionKey(remoteChannelSK);
-					}
-					
-					
-					try
-					{
-						remoteChannel = SocketChannel.open((new InetSocketAddress(remoteAddress.getInetAddress(), remoteAddress.getPort())));
-					}
-					catch(Exception e)
-					{
-						
-						HTTPMessageConfigInterface hccError = createErrorMSG(404, "Host Not Found", requestMCCI.getURI());
-						
-						ByteBufferUtil.write(clientChannel, HTTPUtil.formatResponse(hccError, requestRawBuffer));
-						close();
-						return;	
-					}
-					
-					
-					
-	    			requestRawBuffer.reset();
-	    			
-	    			requestRawBuffer.write(HTTPVersion.HTTP_1_1.getValue() + " 200 Connection established" + ProtocolDelimiter.CRLF);
-	    			requestRawBuffer.write(HTTPHeaderName.PROXY_AGENT + ": " +getName() + ProtocolDelimiter.CRLFCRLF);
-	    			ByteBufferUtil.write(clientChannel, requestRawBuffer);
-	    			requestRawBuffer.reset();
-	    			requestMCCI = null;
-	    			if(debug)
-	    				log.info(new String(requestRawBuffer.toByteArray()));
-	    			
-	    			
-	    			remoteChannelSK = getSelectorController().register(/*NIOChannelCleaner.DEFAULT*/ null, remoteChannel, SelectionKey.OP_READ, new ChannelRelayTunnel(SourceOrigin.REMOTE, getReadBufferSize(), remoteChannel, clientChannel, clientChannelSK, true, getSelectorController()), FACTORY.isBlocking());
-
-				}
-				else
-				{
-					if (debug)
-						log.info(new String(requestRawBuffer.toByteArray()));
-					
-					if (NetUtil.checkSecurityStatus(getInetFilterRulesManager(), remoteAddress.getInetAddress(), remoteChannel) !=  SecurityStatus.ALLOW)
-					{
-						HTTPMessageConfigInterface hccError = createErrorMSG(403, "Access Denied", requestMCCI.getURI());
-					
-						ByteBufferUtil.write(clientChannel, HTTPUtil.formatResponse(hccError, requestRawBuffer));
-						close();
-						return;	
-						// we must reply with an error
-					}
-					
-					if(!NetUtil.areInetSocketAddressDAOEquals(remoteAddress, lastRemoteAddress))
-					{
-						
-						//IOUtil.close(remoteChannel);
-						if (channelRelay != null)
-						{
-							channelRelay.processRead(remoteChannelSK);
-							channelRelay.waitThenStopReading();
-							if(debug)
-								log.info("THIS IS  supposed to happen RELAY STOP:" +lastRemoteAddress + "," + remoteAddress);
-						}
-						else if (remoteChannelSK != null)
-						{
-							if (debug)
-								log.info("THIS IS  supposed to happen CANCEL READ");
-							getSelectorController().cancelSelectionKey(remoteChannelSK);
-						}
-					}
-					
-					
-					
-					
-					if(remoteChannelSK == null || !remoteChannelSK.isValid())
-					{
-						//log.info("ChangeConnection:" + changeConnection);
-						try
-						{
-							remoteChannel = SocketChannel.open((new InetSocketAddress(remoteAddress.getInetAddress(), remoteAddress.getPort())));
-							//remoteChannelSK = getSelectorController().register(remoteSet, remoteChannel, SelectionKey.OP_READ, new ChannelRelay(remoteChannel, clientChannel), FACTORY.isBlocking());
-						}
-						catch(Exception e)
-						{
-							if (debug)
-							{
-								log.info(new String(requestRawBuffer.toByteArray()));
-								log.info("" + remoteAddress);
-								e.printStackTrace();
-							}
-							HTTPMessageConfigInterface hccError = createErrorMSG(404, "Host Not Found", remoteAddress.getInetAddress() + ":" + remoteAddress.getPort());
-							ByteBufferUtil.write(clientChannel, HTTPUtil.formatResponse(hccError, requestRawBuffer));
-							close();
-							return;	
-						}
-					}
-					
-					if (requestMCCI.isMultiPartEncoding())
-					{
-						log.info("We have multi Econding");
-					}
-					ByteBufferUtil.write(remoteChannel, HTTPUtil.formatRequest(requestMCCI, true, requestRawBuffer, HTTPHeaderName.PROXY_CONNECTION.getName()));
-				
-					if(remoteChannelSK == null || !remoteChannelSK.isValid())
-					{
-						channelRelay = new ChannelRelayTunnel(SourceOrigin.REMOTE, getReadBufferSize(), remoteChannel, clientChannel, clientChannelSK, true, getSelectorController());
-						remoteChannelSK = getSelectorController().register(NIOChannelCleaner.DEFAULT, remoteChannel, SelectionKey.OP_READ, channelRelay, FACTORY.isBlocking());
-					}
-					
-	    			
-	    			requestMCCI = null;
-	    			requestRawBuffer.reset();
-	    			lastRemoteAddress = remoteAddress;
-	    			
-				}
-
-				break;
-			case PARTIAL:
-				if(!HTTPUtil.isContentComplete(requestMCCI) && lastRead == -1)
-				{
-					if (debug)
-						log.info("WE HAVE AN INVALID REQUEST !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-					throw new IOException("Invalid request");
-				}
-				else
-				{
-					if (debug)
-						log.info("We have partial");
-				}
-				break;
-				
-			case INVALID:
-				log.info("INVALID:" +requestMCCI);
-			default:
-				break;
-			
-			}
-			
-		}
 		
-	}
 	
 	
-	
-	private void tryToConnectRemote2(UByteArrayOutputStream requestRawBuffer, int lastRead) throws IOException
+	private void tryToConnectRemote(UByteArrayOutputStream requestRawBuffer, int lastRead) throws IOException
 	{
 		
 	
@@ -564,8 +376,7 @@ extends ProtocolSessionProcessor
 			//InetSocketAddressDAO remoteAddress = HTTPUtil.parseHost(requestMCCI.getURI());
 			if (requestMCCI.getMethod() == HTTPMethod.CONNECT)
 			{
-//				System.out.println("" + requestRawBuffer);
-//				System.out.println("" + requestMCCI);
+
 				ssl = true;
 				if (NetUtil.checkSecurityStatus(getInetFilterRulesManager(), requestInfo.remoteAddress.getInetAddress(), remoteChannel) !=  SecurityStatus.ALLOW)
 				{
