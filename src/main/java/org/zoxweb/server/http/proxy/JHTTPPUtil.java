@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import org.zoxweb.server.io.IOUtil;
+import org.zoxweb.server.logging.LoggerUtil;
 import org.zoxweb.server.net.InetFilterRulesManager;
 import org.zoxweb.server.net.NIOSocket;
 import org.zoxweb.server.net.InetFilterRulesManager.InetFilterRule;
@@ -286,7 +287,7 @@ public class JHTTPPUtil
 		}
 			
 		NIOSocket nsio = new NIOSocket(NIOProxyProtocol.FACTORY, new InetSocketAddress(port), ifrm, null, TaskUtil.getDefaultTaskProcessor(),
-				IOUtil.loggerToFile(NIOProxyProtocol.class.getName()+".proxy", proxyLogFile));	
+				LoggerUtil.loggerToFile(NIOProxyProtocol.class.getName()+".proxy", proxyLogFile));	
 		
 		
 	

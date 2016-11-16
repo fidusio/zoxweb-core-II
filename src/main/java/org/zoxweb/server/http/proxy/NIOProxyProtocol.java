@@ -30,6 +30,7 @@ import org.zoxweb.server.http.HTTPUtil;
 import org.zoxweb.server.io.ByteBufferUtil;
 import org.zoxweb.server.io.IOUtil;
 import org.zoxweb.server.io.UByteArrayOutputStream;
+import org.zoxweb.server.logging.LoggerUtil;
 import org.zoxweb.server.io.ByteBufferUtil.BufferType;
 import org.zoxweb.server.net.ChannelRelayTunnel;
 import org.zoxweb.server.net.InetFilterRulesManager;
@@ -617,7 +618,7 @@ extends ProtocolSessionProcessor
 				}
 			}
 			log.info("filename:" + filename);
-			NIOSocket nsio = new NIOSocket(FACTORY, new InetSocketAddress(port), clientIFRM, null, TaskUtil.getDefaultTaskProcessor(), IOUtil.loggerToFile(NIOProxyProtocol.class.getName()+".proxy", filename));
+			NIOSocket nsio = new NIOSocket(FACTORY, new InetSocketAddress(port), clientIFRM, null, TaskUtil.getDefaultTaskProcessor(), LoggerUtil.loggerToFile(NIOProxyProtocol.class.getName()+".proxy", filename));
 			nsio.setStatLogCounter(0);
 			
 			//nios.addSeverSocket(2401, new NIOTunnelFactory(new InetSocketAddressDAO("10.0.0.1:2401")));

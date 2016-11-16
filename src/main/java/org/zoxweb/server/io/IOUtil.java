@@ -1,16 +1,16 @@
 package org.zoxweb.server.io;
 
-import java.io.BufferedWriter;
+
 import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.PrintWriter;
+
 import java.io.RandomAccessFile;
 
 import java.net.URL;
@@ -18,21 +18,17 @@ import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+
 import java.util.concurrent.TimeUnit;
 
-import java.util.logging.FileHandler;
 
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 
 import org.zoxweb.shared.util.SharedStringUtil;
 
 public class IOUtil 
 {
 	
-	public static final SimpleDateFormat SDF = new SimpleDateFormat("[yyyy-MM-dd HH:mm:ss.SSS] ");
+	//public static final SimpleDateFormat SDF = new SimpleDateFormat("[yyyy-MM-dd HH:mm:ss.SSS] ");
 	
 	/**
 	 * Close an AutoCloseable object if c is null the action is discarded, while closing catch any exception silently
@@ -61,13 +57,7 @@ public class IOUtil
 	}
 	
 	
-	public static void logToFile(PrintWriter pw, String msg)
-	{
-		if (pw != null)
-		{
-			pw.println(SDF.format(new Date()) + msg);
-		}
-	}
+	
 	
 	/**
 	 * 
@@ -189,46 +179,7 @@ public class IOUtil
 	
 	
 	
-	public static Logger loggerToFile(String loggerName, String filename) throws SecurityException, IOException
-	{
-		if (loggerName != null && filename != null)
-		{
-			return loggerToFile(Logger.getLogger(loggerName), filename);
-		}
-		return null;
-	}
 	
-	
-	public static Logger loggerToFile(Logger logger, String filename) throws SecurityException, IOException
-	{
-		if (logger != null && filename != null)
-		{
-			FileHandler  fh = new FileHandler(filename);
-			
-			//Logger rootLogger = Logger.getLogger("");
-	        //Handler[] handlers = rootLogger.getHandlers();
-	        //if (handlers[0] instanceof ConsoleHandler) {
-	        //       rootLogger.removeHandler(handlers[0]);
-	        //}
-	        logger.addHandler(fh);
-	        SimpleFormatter formatter = new SimpleFormatter();  
-	        fh.setFormatter(formatter);  
-	        logger.info("file logging started");
-		}
-        return logger;
-	}
-	
-	
-	public static PrintWriter createPrintWriter(String filename) throws IOException
-	{
-		return createPrintWriter(new File(filename));
-	}
-	
-	public static PrintWriter createPrintWriter(File f) throws IOException
-	{
-		FileWriter fw = new FileWriter(f, true);
-		return new PrintWriter(new BufferedWriter(fw), true);
-	}
 	
 	
 	
