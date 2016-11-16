@@ -21,9 +21,9 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.ConsoleHandler;
+
 import java.util.logging.FileHandler;
-import java.util.logging.Handler;
+
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
@@ -188,19 +188,33 @@ public class IOUtil
 	}
 	
 	
-	public static Logger  loggerToFile(Logger logger, String filename) throws SecurityException, IOException
+	
+	public static Logger loggerToFile(String loggerName, String filename) throws SecurityException, IOException
 	{
-		FileHandler  fh = new FileHandler(filename);
-		
-		Logger rootLogger = Logger.getLogger("");
-        Handler[] handlers = rootLogger.getHandlers();
-        if (handlers[0] instanceof ConsoleHandler) {
-                rootLogger.removeHandler(handlers[0]);
-        }
-        logger.addHandler(fh);
-        SimpleFormatter formatter = new SimpleFormatter();  
-        fh.setFormatter(formatter);  
-        logger.info("file logging started");
+		if (loggerName != null && filename != null)
+		{
+			return loggerToFile(Logger.getLogger(loggerName), filename);
+		}
+		return null;
+	}
+	
+	
+	public static Logger loggerToFile(Logger logger, String filename) throws SecurityException, IOException
+	{
+		if (logger != null && filename != null)
+		{
+			FileHandler  fh = new FileHandler(filename);
+			
+			//Logger rootLogger = Logger.getLogger("");
+	        //Handler[] handlers = rootLogger.getHandlers();
+	        //if (handlers[0] instanceof ConsoleHandler) {
+	        //       rootLogger.removeHandler(handlers[0]);
+	        //}
+	        logger.addHandler(fh);
+	        SimpleFormatter formatter = new SimpleFormatter();  
+	        fh.setFormatter(formatter);  
+	        logger.info("file logging started");
+		}
         return logger;
 	}
 	

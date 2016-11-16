@@ -617,7 +617,7 @@ extends ProtocolSessionProcessor
 				}
 			}
 			log.info("filename:" + filename);
-			NIOSocket nsio = new NIOSocket(FACTORY, new InetSocketAddress(port), clientIFRM, null, TaskUtil.getDefaultTaskProcessor(), filename);
+			NIOSocket nsio = new NIOSocket(FACTORY, new InetSocketAddress(port), clientIFRM, null, TaskUtil.getDefaultTaskProcessor(), IOUtil.loggerToFile(NIOProxyProtocol.class.getName()+".proxy", filename));
 			nsio.setStatLogCounter(0);
 			
 			//nios.addSeverSocket(2401, new NIOTunnelFactory(new InetSocketAddressDAO("10.0.0.1:2401")));

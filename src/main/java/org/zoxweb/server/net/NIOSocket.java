@@ -2,7 +2,6 @@ package org.zoxweb.server.net;
 
 import java.io.Closeable;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.nio.channels.DatagramChannel;
 import java.nio.channels.SelectionKey;
@@ -46,7 +45,8 @@ implements Runnable, DaemonController, Closeable
 	private long dispatchCounter = 0;
 	private long selectedCountTotal = 0;
 	private long statLogCounter = 0;
-	private PrintWriter pw = null;
+	//private PrintWriter pw = null;
+	private Logger fileLogger;
 	
 	
 	public NIOSocket(ProtocolSessionFactory<?> psf, InetSocketAddress sa, InetFilterRulesManager ifrm, InetFilterRulesManager outgoingIFRM, TaskProcessor tsp) throws IOException
@@ -54,7 +54,7 @@ implements Runnable, DaemonController, Closeable
 		this(psf, sa, ifrm, outgoingIFRM, tsp, null);
 	}
 	
-	public NIOSocket(ProtocolSessionFactory<?> psf, InetSocketAddress sa, InetFilterRulesManager ifrm, InetFilterRulesManager outgoingIFRM, TaskProcessor tsp, String logFileName) throws IOException
+	public NIOSocket(ProtocolSessionFactory<?> psf, InetSocketAddress sa, InetFilterRulesManager ifrm, InetFilterRulesManager outgoingIFRM, TaskProcessor tsp, Logger fileLogger) throws IOException
 	{
 		SharedUtil.checkIfNulls("Null value", psf, sa);
 		selectorController = new SelectorController(Selector.open());
@@ -67,17 +67,19 @@ implements Runnable, DaemonController, Closeable
 		if (sa != null)
 			addServerSocket(sa, psf);
 		
-		if (logFileName != null)
-		{
-			try
-			{
-				pw = IOUtil.createPrintWriter(logFileName);
-			}
-			catch(Exception e)
-			{
-				e.printStackTrace();
-			}
-		}
+//		if (logFileName != null)
+//		{
+//			try
+//			{
+//				pw = IOUtil.createPrintWriter(logFileName);
+//			}
+//			catch(Exception e)
+//			{
+//				e.printStackTrace();
+//			}
+//		}
+		
+		this.fileLogger = fileLogger;
 		log.info("outgoingIFRM  " + (outgoingIFRM != null ? outgoingIFRM.getAll() : null));
 		log.info("incomingIFRM  " + (ifrm != null ? ifrm.getAll() : null));
 		new Thread(this).start();
@@ -192,8 +194,13 @@ implements Runnable, DaemonController, Closeable
 							    	{
 							    		try
 							    		{
+							    			if (fileLogger!=null)
+							    			{
+							    				fileLogger.info("access denied:" + sc.getRemoteAddress());
+							    			}
 							    			log.info("access denied:" + sc.getRemoteAddress());
-							    			IOUtil.logToFile(pw, "access denied:" + sc.getRemoteAddress());
+							    			//IOUtil.logToFile(pw, "access denied:" + sc.getRemoteAddress());
+							    			
 							    		}
 							    		finally
 							    		{
@@ -203,6 +210,10 @@ implements Runnable, DaemonController, Closeable
 							    	}
 							    	else
 							    	{
+							    		
+							    		
+							    		
+							    		
 							    		ProtocolSessionFactory<?> psf = (ProtocolSessionFactory<?>) key.attachment();
 								    	ProtocolSessionProcessor psp = psf.newInstance();
 								    	psp.setSelectorController(selectorController);
@@ -210,7 +221,7 @@ implements Runnable, DaemonController, Closeable
 								    	selectorController.register(NIOChannelCleaner.DEFAULT, sc, SelectionKey.OP_READ, psp, psf.isBlocking());
 								    	
 								    	connectionCount.incrementAndGet();
-								    	
+								    	//log.info("Connected:" + sc.getRemoteAddress() + " " + connectionCount.get());
 								    
 							    	}
 	
@@ -315,7 +326,7 @@ implements Runnable, DaemonController, Closeable
 			}
 		}
 		
-		IOUtil.close(pw);
+		//IOUtil.close(pw);
 	
 	}
 	

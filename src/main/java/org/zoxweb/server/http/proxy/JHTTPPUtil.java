@@ -285,7 +285,8 @@ public class JHTTPPUtil
 			return null;
 		}
 			
-		NIOSocket nsio = new NIOSocket(NIOProxyProtocol.FACTORY, new InetSocketAddress(port), ifrm, null, TaskUtil.getDefaultTaskProcessor(), proxyLogFile);	
+		NIOSocket nsio = new NIOSocket(NIOProxyProtocol.FACTORY, new InetSocketAddress(port), ifrm, null, TaskUtil.getDefaultTaskProcessor(),
+				IOUtil.loggerToFile(NIOProxyProtocol.class.getName()+".proxy", proxyLogFile));	
 		
 		
 	
