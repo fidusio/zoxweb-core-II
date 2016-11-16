@@ -30,7 +30,7 @@ public class NIOSocket
 implements Runnable, DaemonController, Closeable
 {
 	
-	private static  final transient Logger log = Logger.getLogger(NIOSocket.class.getName());
+	private static  final transient Logger logger = Logger.getLogger(NIOSocket.class.getName());
 	
 	private boolean live = true;
 	
@@ -46,7 +46,7 @@ implements Runnable, DaemonController, Closeable
 	private long selectedCountTotal = 0;
 	private long statLogCounter = 0;
 	//private PrintWriter pw = null;
-	private Logger fileLogger;
+	private Logger log=logger;
 	
 	
 	public NIOSocket(ProtocolSessionFactory<?> psf, InetSocketAddress sa, InetFilterRulesManager ifrm, InetFilterRulesManager outgoingIFRM, TaskProcessor tsp) throws IOException
@@ -79,9 +79,13 @@ implements Runnable, DaemonController, Closeable
 //			}
 //		}
 		
-		this.fileLogger = fileLogger;
+		
 		log.info("outgoingIFRM  " + (outgoingIFRM != null ? outgoingIFRM.getAll() : null));
 		log.info("incomingIFRM  " + (ifrm != null ? ifrm.getAll() : null));
+		if (fileLogger != null)
+		{
+			log = fileLogger;
+		}
 		new Thread(this).start();
 	}
 	
@@ -193,11 +197,7 @@ implements Runnable, DaemonController, Closeable
 							    	if (NetUtil.checkSecurityStatus(getIncomingInetFilterRulesManager(), sc.getRemoteAddress(), null) !=  SecurityStatus.ALLOW)
 							    	{
 							    		try
-							    		{
-							    			if (fileLogger!=null)
-							    			{
-							    				fileLogger.info("access denied:" + sc.getRemoteAddress());
-							    			}
+							    		{ 			
 							    			log.info("access denied:" + sc.getRemoteAddress());
 							    			//IOUtil.logToFile(pw, "access denied:" + sc.getRemoteAddress());
 							    			
