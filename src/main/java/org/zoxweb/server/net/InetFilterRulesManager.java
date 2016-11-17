@@ -195,7 +195,13 @@ public class InetFilterRulesManager
 	}
 	
 	
-	
+	/**
+	 * Add a filter rule as a String format ip-netmask-[ALLOW|DENY] ex: 10.0.0.1-255.255.255.0-ALLOW, fidus-store.com-255.255.255.0-DENY 
+	 * @param rule
+	 * @throws IOException
+	 * @throws NullPointerException
+	 * @throws IllegalArgumentException
+	 */
 	public void addInetFilterProp(String rule) throws IOException, NullPointerException, IllegalArgumentException
 	{
 		
