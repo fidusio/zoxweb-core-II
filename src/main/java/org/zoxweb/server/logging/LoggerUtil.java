@@ -33,8 +33,7 @@ public final class LoggerUtil
 	{
 		if (logger != null && filename != null)
 		{
-			FileHandler  fh = new FileHandler(filename);
-			
+			FileHandler fh = new FileHandler(filename, true);
 			//Logger rootLogger = Logger.getLogger("");
 	        //Handler[] handlers = rootLogger.getHandlers();
 	        //if (handlers[0] instanceof ConsoleHandler) {

@@ -18,27 +18,25 @@ import org.zoxweb.server.io.IOUtil;
 import org.zoxweb.server.task.TaskEvent;
 import org.zoxweb.server.task.TaskProcessor;
 import org.zoxweb.server.task.TaskUtil;
-
 import org.zoxweb.shared.net.InetSocketAddressDAO;
 import org.zoxweb.shared.security.SecurityStatus;
 import org.zoxweb.shared.util.Const.TimeInMillis;
 import org.zoxweb.shared.util.DaemonController;
 import org.zoxweb.shared.util.SharedUtil;
 
-
+/**
+ * NIO Socket 
+ * @author mnael
+ *
+ */
 public class NIOSocket
 implements Runnable, DaemonController, Closeable
 {
-	
-	private static  final transient Logger logger = Logger.getLogger(NIOSocket.class.getName());
-	
+	private static final transient Logger logger = Logger.getLogger(NIOSocket.class.getName());
 	private boolean live = true;
-	
 	private final SelectorController selectorController;
-	
 	private final TaskProcessor tsp;
 	private AtomicLong connectionCount = new AtomicLong();
-	
 	private final InetFilterRulesManager ifrm;
 	private final InetFilterRulesManager outgoingIFRM;
 	private long totalDuration = 0;
@@ -84,6 +82,7 @@ implements Runnable, DaemonController, Closeable
 		log.info("incomingIFRM  " + (ifrm != null ? ifrm.getAll() : null));
 		if (fileLogger != null)
 		{
+			// Override the logger
 			log = fileLogger;
 		}
 		new Thread(this).start();
@@ -197,23 +196,24 @@ implements Runnable, DaemonController, Closeable
 							    	if (NetUtil.checkSecurityStatus(getIncomingInetFilterRulesManager(), sc.getRemoteAddress(), null) !=  SecurityStatus.ALLOW)
 							    	{
 							    		try
-							    		{ 			
+							    		{ 	
+							    			// in try block with catch exception since logger can point to file log
 							    			log.info("access denied:" + sc.getRemoteAddress());
-							    			//IOUtil.logToFile(pw, "access denied:" + sc.getRemoteAddress());
+							    		}
+							    		catch(Exception e)
+							    		{
 							    			
 							    		}
 							    		finally
 							    		{
+							    			// had to close after log otherwise we have an open socket
 							    			IOUtil.close(sc);
 							    		}
 							    		
 							    	}
 							    	else
 							    	{
-							    		
-							    		
-							    		
-							    		
+							    			    		
 							    		ProtocolSessionFactory<?> psf = (ProtocolSessionFactory<?>) key.attachment();
 								    	ProtocolSessionProcessor psp = psf.newInstance();
 								    	psp.setSelectorController(selectorController);
@@ -229,16 +229,12 @@ implements Runnable, DaemonController, Closeable
 							    else if (key.isValid() && key.channel().isOpen() && key.isConnectable())
 							    {
 							        // a connection was established with a remote server.
-							    	
-	
 							    } 
 							    else if (key.isValid() && key.channel().isOpen() && key.isWritable())
 							    {
 							        // a channel is ready for writing
-							    	
 							    }
 							   
-							    
 						    }
 						    catch(Exception e)
 						    {

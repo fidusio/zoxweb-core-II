@@ -56,52 +56,7 @@ extends ProtocolSessionProcessor
 		
 	}
 	
-//	
-//	class ClosePolicy
-//		implements AutoCloseable
-//	{
-//
-//		private SourceOrigin source = SourceOrigin.UNKNOWN;
-//		
-//		public synchronized void updateOrigin(SourceOrigin origin)
-//		{
-//			if (SourceOrigin.UNKNOWN == source)
-//			{
-//				source = origin;
-//			}
-//		}
-//		
-//		
-//		
-//		@Override
-//		public void close()
-//		{
-//			switch (source) 
-//			{
-//			case LOCAL:
-//				// original disconnection was local
-//				// we need to write data to remote 
-//				
-//				
-//				break;
-//			case REMOTE:
-//				// original disonnection remote
-//				break;
-//			case UNKNOWN:
-//				
-//				break;
-//			default:
-//				break;
-//			
-//			}
-//		}
-//		
-//	}
-	
-	
-	
-	
-	
+
 	private SocketChannel remoteChannel = null;
 	
 	private SocketChannel clientChannel = null;
@@ -138,7 +93,6 @@ extends ProtocolSessionProcessor
 		getSelectorController().cancelSelectionKey(clientChannelSK);
 		IOUtil.close(remoteChannel);
 		IOUtil.close(clientChannel);
-		
 		postOp();
 		log.info("close ended");
 	}
@@ -174,40 +128,19 @@ extends ProtocolSessionProcessor
     			}
     		}
     		while(read > 0);
-					
-				
-			
-
+    		
     		if (read == -1)
     		{
     			if(debug)
     				log.info("+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+Read:" + read);
     			
-   
-    			
     			getSelectorController().cancelSelectionKey(key);
-				if (relay != null)
-				{
-//					try
-//					{
-//						relay.processRead(null);
-//					}
-//					catch(Exception e)
-//					{
-//						e.printStackTrace();
-//					}
-					relay.close();
-
-				}
-    			
+    			IOUtil.close(relay);	
     			close();
     				
     			if (debug)
-    				log.info(key + ":" + key.isValid()+ " " + Thread.currentThread() + " " + TaskUtil.getDefaultTaskProcessor().availableExecutorThreads());
-    					
+    				log.info(key + ":" + key.isValid()+ " " + Thread.currentThread() + " " + TaskUtil.getDefaultTaskProcessor().availableExecutorThreads());		
     		}
-    		
-			
     	}
     	catch(Exception e)
     	{
@@ -218,7 +151,6 @@ extends ProtocolSessionProcessor
     			log.info(System.currentTimeMillis() + ":Connection end " + key + ":" + key.isValid()+ " " + Thread.currentThread() + " " + TaskUtil.getDefaultTaskProcessor().availableExecutorThreads());
     		
     	}
-    	
 		finally
 		{
 			//setSeletectable(true);
