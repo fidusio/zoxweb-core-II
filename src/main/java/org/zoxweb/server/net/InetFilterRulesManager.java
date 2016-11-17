@@ -227,7 +227,7 @@ public class InetFilterRulesManager
 				sbIP.append('-');
 		}
 		
-		System.out.println(sbIP.toString() + " " + netMask + " " + ss);
+	
 		
 		InetFilterDAO ifd = new InetFilterDAO(sbIP.toString(), netMask);
 		
