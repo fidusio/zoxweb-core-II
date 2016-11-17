@@ -204,13 +204,27 @@ public class InetFilterRulesManager
 		{
 			throw new IllegalArgumentException("Invalid rule " + rule + "\n format ip-netmask-[deny|allow]");
 		}
-		int index = 0;
-		InetFilterDAO ifd = new InetFilterDAO(rules[index++], rules[index++]);
-		SecurityStatus ss = (SecurityStatus) SharedUtil.lookupEnum(SecurityStatus.values(), rules[index]);
+		int index = rules.length;
+		SecurityStatus ss = (SecurityStatus) SharedUtil.lookupEnum(SecurityStatus.values(), rules[--index]);
 		if (ss == null)
 		{
 			throw new IllegalArgumentException("Invalid rule " + rule + "\n format ip-netmask-[deny|allow]");
 		}
+		String netMask = rules[--index];
+		StringBuilder sbIP  = new StringBuilder();
+		
+		
+		for(int i=0; i < index; i++)
+		{
+			sbIP.append(rules[i]);
+			if (i+1 != index)
+				sbIP.append('-');
+		}
+		
+		System.out.println(sbIP.toString() + " " + netMask + " " + ss);
+		
+		InetFilterDAO ifd = new InetFilterDAO(sbIP.toString(), netMask);
+		
 		addInetFilterProp(new InetFilterRule(ifd, ss));
 	}
 	
