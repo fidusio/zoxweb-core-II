@@ -26,7 +26,7 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
+import java.util.logging.Logger;
 
 import org.zoxweb.shared.data.SetNameDAO;
 import org.zoxweb.shared.net.InetFilterDAO;
@@ -44,8 +44,8 @@ import org.zoxweb.shared.util.SharedUtil;
 public class InetFilterRulesManager 
 {
 	
-	//private static final transient Logger log = Logger.getLogger("zoxweb.services");
-	//private static final transient Logger log = Logger.getLogger(InetFilterRulesManager.class.getName());
+	
+	private static final transient Logger log = Logger.getLogger(InetFilterRulesManager.class.getName());
 	//private SortedSet<InetFilterRule> set = new ConcurrentSkipListSet<InetFilterRule>();
 	private List<InetFilterRule> set = new ArrayList<InetFilterRule>();
 		
@@ -320,7 +320,7 @@ public class InetFilterRulesManager
 		
 		if (address instanceof Inet6Address)
 		{
-			//log.info("Inet4Address to check:" + address);
+			log.info("Inet6Address to check:" + address);
 			return checkIPSecurityStatus(address.getAddress());
 		}
 		
