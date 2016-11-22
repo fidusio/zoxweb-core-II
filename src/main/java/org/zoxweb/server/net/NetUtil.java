@@ -410,7 +410,7 @@ public class NetUtil
 		return InetAddress.getByAddress(maskAddress);
 	}
 	
-	public static InetAddress getNetwork( InterfaceAddress ia) throws IOException
+	public static InetAddress getNetwork(InterfaceAddress ia) throws IOException
 	{
 		InetAddress address = ia.getAddress();
 		byte addressBytes[] = address.getAddress();

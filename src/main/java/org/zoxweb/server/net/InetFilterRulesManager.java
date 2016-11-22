@@ -235,6 +235,10 @@ public class InetFilterRulesManager
 	}
 	
 	
+	
+	
+	
+	
 	public void addInetFilterProp(InetFilterDAO ifd, SecurityStatus ss) throws IOException
 	{
 		addInetFilterProp(new InetFilterRule(ifd, ss));
