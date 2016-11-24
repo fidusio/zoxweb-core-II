@@ -17,7 +17,7 @@ package org.zoxweb.server.shiro.authc;
 
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.zoxweb.shared.util.SharedStringUtil;
-;
+
 
 @SuppressWarnings("serial")
 public class DomainUsernamePasswordToken 

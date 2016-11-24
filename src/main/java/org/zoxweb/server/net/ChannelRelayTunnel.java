@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 
 import org.zoxweb.server.io.ByteBufferUtil;
 import org.zoxweb.server.io.IOUtil;
+import org.zoxweb.server.io.ByteBufferUtil.BufferType;
 import org.zoxweb.shared.util.Const.SourceOrigin;
 
 
@@ -46,7 +47,7 @@ public class  ChannelRelayTunnel
 							  SelectorController sc, Closeable closeInterface)
 	{
 		this.origin = origin;
-		bBuffer = ByteBufferUtil.allocateByteBuffer(bufferSize);
+		bBuffer = ByteBufferUtil.allocateByteBuffer(BufferType.HEAP, bufferSize);
 		this.readSource = readSource;
 		this.writeDestination = writeDestination;
 		this.writeChannelSK = writeChannelSK;
@@ -111,7 +112,8 @@ public class  ChannelRelayTunnel
 				read = ((SocketChannel)currentSK.channel()).read(bBuffer);
 				if (read > 0)
 				{
-					ByteBufferUtil.write(writeDestination, bBuffer);	
+					ByteBufferUtil.write(writeDestination, bBuffer);
+					//log.info(ByteBufferUtil.toString(bBuffer));
 				}
 			}while(read > 0);
 			

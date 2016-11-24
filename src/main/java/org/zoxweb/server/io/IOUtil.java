@@ -1,25 +1,34 @@
 package org.zoxweb.server.io;
 
+
 import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
+import java.io.RandomAccessFile;
+
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
+
 import java.util.concurrent.TimeUnit;
+
+
 
 import org.zoxweb.shared.util.SharedStringUtil;
 
 public class IOUtil 
 {
 	
+	//public static final SimpleDateFormat SDF = new SimpleDateFormat("[yyyy-MM-dd HH:mm:ss.SSS] ");
 	
 	/**
 	 * Close an AutoCloseable object if c is null the action is discarded, while closing catch any exception silently
@@ -39,6 +48,15 @@ public class IOUtil
 			}
 		}
 	}
+	
+	
+	public static RandomAccessFile endOfFile(RandomAccessFile br) throws IOException
+	{
+		br.seek(br.length());
+		return br;
+	}
+	
+	
 	
 	
 	/**
@@ -158,6 +176,9 @@ public class IOUtil
 		}
 				
 	}
+	
+	
+	
 	
 	
 	

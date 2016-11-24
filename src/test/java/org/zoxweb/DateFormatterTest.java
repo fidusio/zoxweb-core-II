@@ -34,8 +34,25 @@ public class DateFormatterTest
 	public static void main(String[] args) throws ParseException
 	{
 	
+		
+		try
+		{
+			SimpleDateFormat sdf = new SimpleDateFormat("[yyyy-MM-dd HH:mm:ss.SSS] ");
+			System.out.println("value  " + sdf.format(new Date()) + new Date());
+			
+		
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		
 		SimpleDateFormat DEFAULT_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
-	
+		System.out.println( new Date());
+		
+		
+		
 	
 		String[] dates = {"2014-05-28", "1960-5-20", "1900-8-4", "0000-01-01", "-2500-01-01"};
 	
@@ -63,6 +80,7 @@ public class DateFormatterTest
 				"yyyy-MM-dd 'Etc/'zz",
 				"yyyy-MM-dd 'Etc/'zzzz",
 				"yyyy-MM-dd",
+				
 			};
 		
 		
@@ -88,6 +106,9 @@ public class DateFormatterTest
 		DateTimeValueFilter dts = new DateTimeValueFilter("yyyy-MM-dd'T'HH:mm:ss'Z'", "UTC");
 		
 		System.out.println(new Date(dts.validate("2015-06-24T22:15:19Z")));
+		
+		
+		
 		
 		
 		

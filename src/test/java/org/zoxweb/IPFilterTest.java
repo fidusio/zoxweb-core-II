@@ -59,6 +59,8 @@ public class IPFilterTest
 			"192.168.1.1",
 			"55.55.55.55",
 			"localhost",
+			"204.110.9.200",
+			"m2m.rubuspi.com"
 		};
 		InetFilterRulesManager ipfm = new InetFilterRulesManager();
 		
@@ -120,6 +122,7 @@ public class IPFilterTest
 			ipfm.setAll(test);
 			checkTest( ipfm, ipArray);
 			System.out.println("Same test twice");
+			ipfm.addInetFilterProp("m2m.rubuspi.com-255.255.255.255-ALLOW");
 			checkTest( ipfm, ipArray);
 		}
 		catch(Exception e )

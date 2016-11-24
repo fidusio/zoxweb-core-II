@@ -8,6 +8,7 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
+
 import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
@@ -23,28 +24,35 @@ import org.zoxweb.shared.util.Const.TimeInMillis;
 import org.zoxweb.shared.util.DaemonController;
 import org.zoxweb.shared.util.SharedUtil;
 
-
+/**
+ * NIO Socket 
+ * @author mnael
+ *
+ */
 public class NIOSocket
 implements Runnable, DaemonController, Closeable
 {
-	
-	private static final transient Logger log = Logger.getLogger(NIOSocket.class.getName());
-	
+	private static final transient Logger logger = Logger.getLogger(NIOSocket.class.getName());
 	private boolean live = true;
-	
 	private final SelectorController selectorController;
-	
 	private final TaskProcessor tsp;
 	private AtomicLong connectionCount = new AtomicLong();
-	
 	private final InetFilterRulesManager ifrm;
 	private final InetFilterRulesManager outgoingIFRM;
 	private long totalDuration = 0;
 	private long dispatchCounter = 0;
 	private long selectedCountTotal = 0;
 	private long statLogCounter = 0;
+	//private PrintWriter pw = null;
+	private Logger log=logger;
+	
 	
 	public NIOSocket(ProtocolSessionFactory<?> psf, InetSocketAddress sa, InetFilterRulesManager ifrm, InetFilterRulesManager outgoingIFRM, TaskProcessor tsp) throws IOException
+	{
+		this(psf, sa, ifrm, outgoingIFRM, tsp, null);
+	}
+	
+	public NIOSocket(ProtocolSessionFactory<?> psf, InetSocketAddress sa, InetFilterRulesManager ifrm, InetFilterRulesManager outgoingIFRM, TaskProcessor tsp, Logger fileLogger) throws IOException
 	{
 		SharedUtil.checkIfNulls("Null value", psf, sa);
 		selectorController = new SelectorController(Selector.open());
@@ -57,8 +65,26 @@ implements Runnable, DaemonController, Closeable
 		if (sa != null)
 			addServerSocket(sa, psf);
 		
+//		if (logFileName != null)
+//		{
+//			try
+//			{
+//				pw = IOUtil.createPrintWriter(logFileName);
+//			}
+//			catch(Exception e)
+//			{
+//				e.printStackTrace();
+//			}
+//		}
+		
+		
 		log.info("outgoingIFRM  " + (outgoingIFRM != null ? outgoingIFRM.getAll() : null));
 		log.info("incomingIFRM  " + (ifrm != null ? ifrm.getAll() : null));
+		if (fileLogger != null)
+		{
+			// Override the logger
+			log = fileLogger;
+		}
 		new Thread(this).start();
 	}
 	
@@ -167,12 +193,27 @@ implements Runnable, DaemonController, Closeable
 							    	
 							    	SocketChannel sc = ((ServerSocketChannel)key.channel()).accept();
 							    	
-							    	if (NetUtil.validateRemoteAccess(getIncomingInetFilterRulesManager(), sc.getRemoteAddress(), sc) !=  SecurityStatus.ALLOW)
+							    	if (NetUtil.checkSecurityStatus(getIncomingInetFilterRulesManager(), sc.getRemoteAddress(), null) !=  SecurityStatus.ALLOW)
 							    	{
-							    		log.info("access denied:" + sc.getRemoteAddress());
+							    		try
+							    		{ 	
+							    			// in try block with catch exception since logger can point to file log
+							    			log.info("access denied:" + sc.getRemoteAddress());
+							    		}
+							    		catch(Exception e)
+							    		{
+							    			
+							    		}
+							    		finally
+							    		{
+							    			// had to close after log otherwise we have an open socket
+							    			IOUtil.close(sc);
+							    		}
+							    		
 							    	}
 							    	else
 							    	{
+							    			    		
 							    		ProtocolSessionFactory<?> psf = (ProtocolSessionFactory<?>) key.attachment();
 								    	ProtocolSessionProcessor psp = psf.newInstance();
 								    	psp.setSelectorController(selectorController);
@@ -180,6 +221,7 @@ implements Runnable, DaemonController, Closeable
 								    	selectorController.register(NIOChannelCleaner.DEFAULT, sc, SelectionKey.OP_READ, psp, psf.isBlocking());
 								    	
 								    	connectionCount.incrementAndGet();
+								    	//log.info("Connected:" + sc.getRemoteAddress() + " " + connectionCount.get());
 								    
 							    	}
 	
@@ -187,16 +229,12 @@ implements Runnable, DaemonController, Closeable
 							    else if (key.isValid() && key.channel().isOpen() && key.isConnectable())
 							    {
 							        // a connection was established with a remote server.
-							    	
-	
 							    } 
 							    else if (key.isValid() && key.channel().isOpen() && key.isWritable())
 							    {
 							        // a channel is ready for writing
-							    	
 							    }
 							   
-							    
 						    }
 						    catch(Exception e)
 						    {
@@ -283,8 +321,9 @@ implements Runnable, DaemonController, Closeable
 				
 			}
 		}
-		//IOUtil.close(ssc);
-		//sk.cancel();
+		
+		//IOUtil.close(pw);
+	
 	}
 	
 	

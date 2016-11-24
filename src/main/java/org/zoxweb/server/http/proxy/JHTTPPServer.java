@@ -266,7 +266,7 @@ implements Runnable,
 					if (ipfm != null)
 					{
 						clientHostAddress = client.getInetAddress();
-						SecurityStatus ft = ipfm.checkIPSecurityStatus(clientHostAddress);
+						SecurityStatus ft = ipfm.lookupSecurityStatus(clientHostAddress);
 						if ( ft == SecurityStatus.DENY)
 						{
 							IOUtil.close(client);

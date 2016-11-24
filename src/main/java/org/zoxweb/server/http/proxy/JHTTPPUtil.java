@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import org.zoxweb.server.io.IOUtil;
+import org.zoxweb.server.logging.LoggerUtil;
 import org.zoxweb.server.net.InetFilterRulesManager;
 import org.zoxweb.server.net.NIOSocket;
 import org.zoxweb.server.net.InetFilterRulesManager.InetFilterRule;
@@ -226,6 +227,7 @@ public class JHTTPPUtil
 //		ipf.setNetworkMask("255.255.255.255");
 		TaskUtil.setThreadMultiplier(4);
 		int port = 8080;
+		String proxyLogFile = null;
 		
 		// load the proxy rules
 		if (acd != null)
@@ -275,15 +277,17 @@ public class JHTTPPUtil
 				{
 					e.printStackTrace();
 				}
-				
 			}
+			
+			proxyLogFile = acd.lookupValue("proxy_log_file");
 		}
 		else
 		{
 			return null;
 		}
 			
-		NIOSocket nsio = new NIOSocket(NIOProxyProtocol.FACTORY, new InetSocketAddress(port), ifrm, null, TaskUtil.getDefaultTaskProcessor());	
+		NIOSocket nsio = new NIOSocket(NIOProxyProtocol.FACTORY, new InetSocketAddress(port), ifrm, null, TaskUtil.getDefaultTaskProcessor(),
+				LoggerUtil.loggerToFile(NIOProxyProtocol.class.getName()+".proxy", proxyLogFile));	
 		
 		
 	

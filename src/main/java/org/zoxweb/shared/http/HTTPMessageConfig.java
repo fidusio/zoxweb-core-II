@@ -18,6 +18,7 @@ package org.zoxweb.shared.http;
 
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -32,6 +33,7 @@ import org.zoxweb.shared.util.NVConfig;
 import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVConfigEntityLocal;
 import org.zoxweb.shared.util.NVConfigManager;
+import org.zoxweb.shared.util.NVGetNameValueList;
 import org.zoxweb.shared.util.NVGetNameValueMap;
 import org.zoxweb.shared.util.SetNameValue;
 import org.zoxweb.shared.util.SharedStringUtil;
@@ -142,7 +144,7 @@ implements HTTPMessageConfigInterface
 		setURLEncodingEnabled(true);
 		// updating PARAMETERS and HEADER_PARAMETERS to NVGetNameValueMap
 		// reason to support multi-parts parameters
-		attributes.put(Params.PARAMETERS.getNVConfig().getName(), new NVGetNameValueMap(Params.PARAMETERS.getNVConfig().getName(), new HashMap<GetName, GetNameValue<String>>()));
+		attributes.put(Params.PARAMETERS.getNVConfig().getName(), new NVGetNameValueList(Params.PARAMETERS.getNVConfig().getName(), new ArrayList<GetNameValue<String>>()));
 		attributes.put(Params.HEADER_PARAMETERS.getNVConfig().getName(), new NVGetNameValueMap(Params.HEADER_PARAMETERS.getNVConfig().getName(), new HashMap<GetName, GetNameValue<String>>()));
 	}
 	

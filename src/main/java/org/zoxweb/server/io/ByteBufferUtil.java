@@ -16,6 +16,12 @@ import org.zoxweb.shared.util.SimpleQueue;
 public class ByteBufferUtil 
 {
 	
+	public enum BufferType 
+	{
+		DIRECT, 
+		HEAP
+	}
+	
 	private static final ByteBufferUtil SINGLETON = new ByteBufferUtil();
 //	private static final String CLASS_NAME = "java.nio.CustomHeapByteBuffer";
 //	private static final transient Logger log = Logger.getLogger(ByteBufferUtil.class.getName());
@@ -28,7 +34,7 @@ public class ByteBufferUtil
 	
 	
 	public static final int DEFAULT_BUFFER_SIZE = 4096;
-	public static final int CACHE_LIMIT = 512;
+	public static final int CACHE_LIMIT = 256;
 	
 	private ByteBufferUtil()
 	{	
@@ -76,7 +82,7 @@ public class ByteBufferUtil
 	}
 	
 	
-	private  ByteBuffer toByteBuffer0(byte[] buffer, int offset, int length, boolean copy)
+	private  ByteBuffer toByteBuffer0(BufferType bType, byte[] buffer, int offset, int length, boolean copy)
 	{
 			
 		ByteBuffer bb = null;
@@ -126,7 +132,17 @@ public class ByteBufferUtil
 		{
 			if (bb == null)
 			{
-				bb = ByteBuffer.allocateDirect(length-offset);
+				switch(bType)
+				{
+				case DIRECT:
+					bb = ByteBuffer.allocateDirect(length-offset);
+					break;
+				case HEAP:
+					bb = ByteBuffer.allocate(length-offset);
+					break;
+				
+				}
+				bb = ByteBuffer.allocate(length-offset);
 				//log.info("["+ (counter++) + "]must create new buffer:" + bb.capacity() + " " + bb.getClass().getName());
 			}
 			if (copy)
@@ -211,7 +227,7 @@ public class ByteBufferUtil
 		{
 			throw new IllegalArgumentException("invalid offset " + off);
 		}
-		ByteBuffer bb = allocateByteBuffer(DEFAULT_BUFFER_SIZE);
+		ByteBuffer bb = allocateByteBuffer(BufferType.HEAP, DEFAULT_BUFFER_SIZE);
 		try
 		{
 			
@@ -239,17 +255,15 @@ public class ByteBufferUtil
 	}
 	
 	
-	public static ByteBuffer allocateByteBuffer(int capacity)
+	public static ByteBuffer allocateByteBuffer(BufferType bType, int capacity)
 	{
-		ByteBuffer ret =  SINGLETON.toByteBuffer0(null, 0, capacity, false);
-		//ret.clear();
-		return ret;
+		return SINGLETON.toByteBuffer0(bType, null, 0, capacity, false);
 	}
 	
 	
-	public static ByteBuffer allocateByteBuffer(byte buffer[], int offset, int length, boolean copy)
+	public static ByteBuffer allocateByteBuffer(BufferType bType, byte buffer[], int offset, int length, boolean copy)
 	{
-		return SINGLETON.toByteBuffer0(buffer, offset, length, copy);
+		return SINGLETON.toByteBuffer0(bType, buffer, offset, length, copy);
 	}
 	
 	
@@ -259,6 +273,20 @@ public class ByteBufferUtil
 		bb.flip();
 		while(bb.hasRemaining())
 			bc.write(bb);
+	}
+	
+	
+	
+	public static String toString(ByteBuffer bb) throws IOException
+	{
+		
+		
+		
+		UByteArrayOutputStream ubaos = new UByteArrayOutputStream();
+		write(ubaos, bb);
+		;
+
+		return ubaos.toString();
 	}
 	
 //	public static void fastWrite(UByteArrayOutputStream ubaos, ByteBuffer bb) throws IOException

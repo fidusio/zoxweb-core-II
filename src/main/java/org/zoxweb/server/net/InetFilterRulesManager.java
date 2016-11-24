@@ -26,7 +26,7 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
+import java.util.logging.Logger;
 
 import org.zoxweb.shared.data.SetNameDAO;
 import org.zoxweb.shared.net.InetFilterDAO;
@@ -44,8 +44,8 @@ import org.zoxweb.shared.util.SharedUtil;
 public class InetFilterRulesManager 
 {
 	
-	//private static final transient Logger log = Logger.getLogger("zoxweb.services");
-	//private static final transient Logger log = Logger.getLogger(InetFilterRulesManager.class.getName());
+	
+	private static final transient Logger log = Logger.getLogger(InetFilterRulesManager.class.getName());
 	//private SortedSet<InetFilterRule> set = new ConcurrentSkipListSet<InetFilterRule>();
 	private List<InetFilterRule> set = new ArrayList<InetFilterRule>();
 		
@@ -195,7 +195,13 @@ public class InetFilterRulesManager
 	}
 	
 	
-	
+	/**
+	 * Add a filter rule as a String format ip-netmask-[ALLOW|DENY] ex: 10.0.0.1-255.255.255.0-ALLOW, fidus-store.com-255.255.255.0-DENY 
+	 * @param rule
+	 * @throws IOException
+	 * @throws NullPointerException
+	 * @throws IllegalArgumentException
+	 */
 	public void addInetFilterProp(String rule) throws IOException, NullPointerException, IllegalArgumentException
 	{
 		
@@ -204,15 +210,33 @@ public class InetFilterRulesManager
 		{
 			throw new IllegalArgumentException("Invalid rule " + rule + "\n format ip-netmask-[deny|allow]");
 		}
-		int index = 0;
-		InetFilterDAO ifd = new InetFilterDAO(rules[index++], rules[index++]);
-		SecurityStatus ss = (SecurityStatus) SharedUtil.lookupEnum(SecurityStatus.values(), rules[index]);
+		int index = rules.length;
+		SecurityStatus ss = (SecurityStatus) SharedUtil.lookupEnum(SecurityStatus.values(), rules[--index]);
 		if (ss == null)
 		{
 			throw new IllegalArgumentException("Invalid rule " + rule + "\n format ip-netmask-[deny|allow]");
 		}
+		String netMask = rules[--index];
+		StringBuilder sbIP  = new StringBuilder();
+		
+		
+		for(int i=0; i < index; i++)
+		{
+			sbIP.append(rules[i]);
+			if (i+1 != index)
+				sbIP.append('-');
+		}
+		
+	
+		
+		InetFilterDAO ifd = new InetFilterDAO(sbIP.toString(), netMask);
+		
 		addInetFilterProp(new InetFilterRule(ifd, ss));
 	}
+	
+	
+	
+	
 	
 	
 	public void addInetFilterProp(InetFilterDAO ifd, SecurityStatus ss) throws IOException
@@ -279,7 +303,7 @@ public class InetFilterRulesManager
 	
 	
 	
-	public  SecurityStatus checkIPSecurityStatus(InetAddress address)
+	public  SecurityStatus lookupSecurityStatus(InetAddress address)
 	{
 		//log.info("address " + address);
 		if(address.isLoopbackAddress())
@@ -296,7 +320,7 @@ public class InetFilterRulesManager
 		
 		if (address instanceof Inet6Address)
 		{
-			//log.info("Inet4Address to check:" + address);
+			log.info("Inet6Address to check:" + address);
 			return checkIPSecurityStatus(address.getAddress());
 		}
 		
@@ -309,17 +333,12 @@ public class InetFilterRulesManager
 	
 	
 	
-	public  SecurityStatus checkIPSecurityStatus(SocketAddress address)
+	public  SecurityStatus lookupSecurityStatus(SocketAddress address)
 	{
-		//.info("" + address );
 		if (address instanceof InetSocketAddress)
 		{
-			return checkIPSecurityStatus(((InetSocketAddress)address).getAddress());
-		}
-		
-		
-
-		
+			return lookupSecurityStatus(((InetSocketAddress)address).getAddress());
+		}	
 		//log.info("we have ip v6 deny access:" + address);
 		// we ip v6
 		return SecurityStatus.DENY;
@@ -327,9 +346,9 @@ public class InetFilterRulesManager
 	}
 	
 	
-	public  SecurityStatus checkIPSecurityStatus(String ipAddress) throws IOException
+	public  SecurityStatus lookupSecurityStatus(String ipAddress) throws IOException
 	{
-		return checkIPSecurityStatus(InetAddress.getByName(ipAddress));
+		return lookupSecurityStatus(InetAddress.getByName(ipAddress));
 	}
 	
 	

@@ -34,7 +34,7 @@ public class FileInfoStreamSource
 	 * @param fid
 	 * @param is
 	 */
-	public FileInfoStreamSource( FileInfoDAO fid, InputStream is)
+	public FileInfoStreamSource(FileInfoDAO fid, InputStream is)
 	{
 		this.fid = fid;
 		srcInputStream = is;
