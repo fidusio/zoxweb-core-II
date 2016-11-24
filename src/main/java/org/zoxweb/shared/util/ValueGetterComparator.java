@@ -2,25 +2,25 @@ package org.zoxweb.shared.util;
 
 import java.util.Comparator;
 
-abstract public class ValueGetterComparator<T,O>
-implements Comparator<T>
+abstract public class ValueGetterComparator<I,O>
+implements Comparator<I>
 {
 	
-	public static class StringValueGetterComparator<T> 
-		extends ValueGetterComparator<T,String>
+	public static class StringValueGetterComparator<I>
+		extends ValueGetterComparator<I,String>
 	{
 
-		public StringValueGetterComparator(boolean accending, ValueGetter<T, String> vg) 
+		public StringValueGetterComparator(boolean accending, ValueGetter<I, String> vg)
 		{
 			super(accending, vg);
 			// TODO Auto-generated constructor stub
 		}
 
 		@Override
-		public int compare(T o1, T o2) 
+		public int compare(I o1, I o2)
 		{
-			String st1 = o1 !=null ?  vg.getValue(o1) : null;
-			String st2 = o2 !=null ?  vg.getValue(o2) : null;
+			String st1 = o1 != null ?  vg.getValue(o1) : null;
+			String st2 = o2 != null ?  vg.getValue(o2) : null;
 			int ret = NVConfigComparators.STRING.COMPARATOR.compare(st1, st2);
 			if (!accending)
 			{
@@ -39,9 +39,9 @@ implements Comparator<T>
 	
 	
 	
-	protected  final ValueGetter<T,O> vg;
+	protected  final ValueGetter<I,O> vg;
 	protected  final boolean accending;
-	public ValueGetterComparator(boolean accending, ValueGetter<T,O> vg)
+	public ValueGetterComparator(boolean accending, ValueGetter<I,O> vg)
 	{
 		this.vg = vg;
 		this.accending = accending;

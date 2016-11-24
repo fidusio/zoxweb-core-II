@@ -1,6 +1,11 @@
 package org.zoxweb.shared.util;
 
-public interface ValueGetter<T,O> 
+/**
+ * Define a value getter interface based on input and output type
+ * @param <I>
+ * @param <O>
+ */
+public interface ValueGetter<I,O>
 {
-	O getValue(T input);
+	O getValue(I input);
 }
