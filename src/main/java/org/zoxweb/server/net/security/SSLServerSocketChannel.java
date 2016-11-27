@@ -126,8 +126,8 @@ public class SSLServerSocketChannel extends ServerSocketChannel
       sslEngine.setUseClientMode(false);
       sslEngine.setWantClientAuth(wantClientAuthentication);
       sslEngine.setNeedClientAuth(needClientAuthentication);
-      sslEngine.setEnabledProtocols(filterArray(sslEngine.getEnabledProtocols(), includedProtocols, excludedProtocols));
-      sslEngine.setEnabledCipherSuites(filterArray(sslEngine.getEnabledCipherSuites(), includedCipherSuites, excludedCipherSuites));
+      //sslEngine.setEnabledProtocols(filterArray(sslEngine.getEnabledProtocols(), includedProtocols, excludedProtocols));
+      //sslEngine.setEnabledCipherSuites(filterArray(sslEngine.getEnabledCipherSuites(), includedCipherSuites, excludedCipherSuites));
 
       return new SSLSocketChannel(channel, sslEngine, threadPool, logger);
     }
