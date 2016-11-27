@@ -1,5 +1,6 @@
-package org.zoxweb.server.crypto;
+package org.zoxweb;
 
+import org.zoxweb.server.crypto.CryptoUtil;
 import org.zoxweb.server.io.UByteArrayOutputStream;
 import org.zoxweb.shared.crypto.EncryptedDAO;
 import org.zoxweb.shared.util.Const;
@@ -56,7 +57,7 @@ public class CryptoUtilTest
 				delta = System.nanoTime();
 				byte []data = CryptoUtil.decryptEncryptedDAO(ed, "password");
 				delta = System.nanoTime() - delta;
-				System.out.println( SharedUtil.slowEquals(original, data) + ": decrupting took " + Const.TimeInMillis.nanosToString(delta));
+				System.out.println(SharedUtil.slowEquals(original, data) + ": decrypting took " + Const.TimeInMillis.nanosToString(delta));
 			}
 		}
 		catch(Exception e)

@@ -54,7 +54,7 @@ implements Runnable, DaemonController, Closeable
 	
 	public NIOSocket(ProtocolSessionFactory<?> psf, InetSocketAddress sa, InetFilterRulesManager ifrm, InetFilterRulesManager outgoingIFRM, TaskProcessor tsp, Logger fileLogger) throws IOException
 	{
-		SharedUtil.checkIfNulls("Null value", psf, sa);
+		//SharedUtil.checkIfNulls("Null value", psf, sa);
 		selectorController = new SelectorController(Selector.open());
 		this.tsp = tsp;
 		
@@ -192,6 +192,7 @@ implements Runnable, DaemonController, Closeable
 							        // a connection was accepted by a ServerSocketChannel.
 							    	
 							    	SocketChannel sc = ((ServerSocketChannel)key.channel()).accept();
+							    	log.info("Accepted:" + sc);
 							    	
 							    	if (NetUtil.checkSecurityStatus(getIncomingInetFilterRulesManager(), sc.getRemoteAddress(), null) !=  SecurityStatus.ALLOW)
 							    	{

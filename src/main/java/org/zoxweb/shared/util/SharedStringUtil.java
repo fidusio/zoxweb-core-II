@@ -41,6 +41,15 @@ public final class SharedStringUtil
 	public static final String UTF_16 = "UTF_16";
 	
 	
+	public static boolean isIncrementOk(String args[], int index)
+	{
+		return isIncrementOk(args, index, 1);
+	}
+	
+	public static boolean isIncrementOk(String args[], int index, int increment)
+	{
+		return index + increment <= args.length;
+	}
 	
 	/**
 	 * Inner class is declared private which is accessible only within the class. This class

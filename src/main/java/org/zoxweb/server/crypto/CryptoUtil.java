@@ -17,10 +17,12 @@ package org.zoxweb.server.crypto;
 
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.security.GeneralSecurityException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.Key;
@@ -44,6 +46,9 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+import javax.net.ssl.KeyManagerFactory;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManagerFactory;
 
 import org.zoxweb.server.io.IOUtil;
 import org.zoxweb.server.io.UByteArrayOutputStream;
@@ -519,7 +524,42 @@ public class CryptoUtil
 	}
 
 	
+	public static SSLContext initSSLContext(final String keyStoreFilename, String keyStoreType, final char[] keyStorePassword, final char[] crtPassword) 
+			throws GeneralSecurityException, IOException
+	{
+		FileInputStream fis = null;
+		try 
+		{
+			fis = new FileInputStream(keyStoreFilename);
+			return initSSLContext(fis, keyStoreType, keyStorePassword, crtPassword);
+		}
+		finally
+		{
+			IOUtil.close(fis);
+		}
+		
+	}
 	
+	public static SSLContext initSSLContext(final InputStream keyStoreIS, String keyStoreType, final char[] keyStorePassword, final char[] crtPassword) 
+			throws GeneralSecurityException, IOException
+	{
+		KeyStore ks = CryptoUtil.loadKeyStore(keyStoreIS, keyStoreType, keyStorePassword);
+		KeyManagerFactory kmf =  KeyManagerFactory.getInstance("SunX509");
+		TrustManagerFactory tmf = TrustManagerFactory.getInstance("PKIX");
+		if (crtPassword != null)
+		{
+			kmf.init(ks, crtPassword);
+			tmf.init(ks);
+		}
+		else
+		{
+			kmf.init(ks, keyStorePassword);
+			tmf.init(ks);
+		}
+		SSLContext sc = SSLContext.getInstance("TLS");
+        sc.init(kmf.getKeyManagers(), null, null);
+        return sc;
+	}
 	
 	public static void  updateKeyPasswordInKeyStore(final InputStream keyStoreIS,
 												    String keyStoreType,
