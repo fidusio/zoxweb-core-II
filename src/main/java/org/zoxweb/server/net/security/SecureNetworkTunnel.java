@@ -2,10 +2,10 @@ package org.zoxweb.server.net.security;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.InetSocketAddress;
+
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.channels.ServerSocketChannel;
+
 import java.util.logging.Logger;
 
 import javax.net.ssl.SSLContext;
@@ -13,10 +13,9 @@ import javax.net.ssl.SSLServerSocketFactory;
 
 import org.zoxweb.server.crypto.CryptoUtil;
 import org.zoxweb.server.io.IOUtil;
-import org.zoxweb.server.net.NIOSocket;
+
 import org.zoxweb.server.net.NetworkTunnel;
-import org.zoxweb.server.net.NIOTunnel.NIOTunnelFactory;
-import org.zoxweb.server.task.TaskUtil;
+
 import org.zoxweb.server.util.GSONUtil;
 import org.zoxweb.shared.net.InetSocketAddressDAO;
 
@@ -86,34 +85,11 @@ implements Runnable
 			
 			//System.setProperty("javax.net.debug","all");
 			SSLContext sslc = CryptoUtil.initSSLContext(ksc.keystore_file, ksc.keystore_type, ksc.keystore_password.toCharArray(),  ksc.alias_password != null ?  ksc.alias_password.toCharArray() : null);
-			//SSLServerSocketFactory sslssf = sslc.getServerSocketFactory();
+			SSLServerSocketFactory sslssf = sslc.getServerSocketFactory();
 			
 			
-			@SuppressWarnings("resource")
-			NIOSocket nios = new NIOSocket(null, null, null, null, TaskUtil.getDefaultTaskProcessor());
-			for(; index < args.length; index++)
-			{
-				try
-				{
-					String parsed[] = args[index].split(",");
-					int port = Integer.parseInt(parsed[0]);
-					InetSocketAddressDAO remoteAddress = new InetSocketAddressDAO(parsed[1]);
-					ServerSocketChannel ssc = ServerSocketChannel.open();
-					SSLServerSocketChannel sslssc = new SSLServerSocketChannel(ssc, sslc, log);
-					sslssc.bind(new InetSocketAddress(port));
-					System.out.println("Adding:" + sslssc + " " + remoteAddress);
-					nios.addServerSocket(sslssc, new NIOTunnelFactory(remoteAddress));
-					//					
-				}
-				catch(Exception e)
-				{
-				
-					e.printStackTrace();
-				}
-			}
-			
-			
-//			
+//			@SuppressWarnings("resource")
+//			NIOSocket nios = new NIOSocket(null, null, null, null, TaskUtil.getDefaultTaskProcessor());
 //			for(; index < args.length; index++)
 //			{
 //				try
@@ -121,15 +97,38 @@ implements Runnable
 //					String parsed[] = args[index].split(",");
 //					int port = Integer.parseInt(parsed[0]);
 //					InetSocketAddressDAO remoteAddress = new InetSocketAddressDAO(parsed[1]);
-//					new SecureNetworkTunnel(sslssf, port, remoteAddress);
-//					
+//					ServerSocketChannel ssc = ServerSocketChannel.open();
+//					SSLServerSocketChannel sslssc = new SSLServerSocketChannel(ssc, sslc, log);
+//					sslssc.bind(new InetSocketAddress(port));
+//					System.out.println("Adding:" + sslssc + " " + remoteAddress);
+//					nios.addServerSocket(sslssc, new NIOTunnelFactory(remoteAddress));
+//					//					
 //				}
 //				catch(Exception e)
 //				{
-//					log.info("Failed to start " + args[index]);
+//				
 //					e.printStackTrace();
 //				}
 //			}
+			
+			
+			
+			for(; index < args.length; index++)
+			{
+				try
+				{
+					String parsed[] = args[index].split(",");
+					int port = Integer.parseInt(parsed[0]);
+					InetSocketAddressDAO remoteAddress = new InetSocketAddressDAO(parsed[1]);
+					new SecureNetworkTunnel(sslssf, port, remoteAddress);
+					
+				}
+				catch(Exception e)
+				{
+					log.info("Failed to start " + args[index]);
+					e.printStackTrace();
+				}
+			}
 				
 			
 
