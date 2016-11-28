@@ -15,6 +15,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Logger;
 
 import org.zoxweb.server.io.IOUtil;
+
 import org.zoxweb.server.task.TaskEvent;
 import org.zoxweb.server.task.TaskProcessor;
 import org.zoxweb.server.task.TaskUtil;
@@ -220,6 +221,9 @@ implements Runnable, DaemonController, Closeable
 								    	ProtocolSessionProcessor psp = psf.newInstance();
 								    	psp.setSelectorController(selectorController);
 								    	psp.setInetFilterRulesManager(getOutgoingInetFilterRulesManager());
+								    	
+								    	
+								    	
 								    	selectorController.register(NIOChannelCleaner.DEFAULT, sc, SelectionKey.OP_READ, psp, psf.isBlocking());
 								    	
 								    	connectionCount.incrementAndGet();
@@ -240,7 +244,7 @@ implements Runnable, DaemonController, Closeable
 						    }
 						    catch(Exception e)
 						    {
-						    	//e.printStackTrace();
+						    	e.printStackTrace();
 						    }
 						    
 						    keyIterator.remove();

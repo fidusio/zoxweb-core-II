@@ -6,6 +6,7 @@ import javax.net.ssl.SSLEngine;
 
 import org.zoxweb.shared.util.GetWrappedValue;
 
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.SocketAddress;
@@ -124,6 +125,13 @@ implements GetWrappedValue<ServerSocketChannel>
     }
     else
     {
+    	return init(channel);
+    }
+  }
+  
+  public SocketChannel init(SocketChannel channel) throws IOException
+  {
+	  logger.info("Accept with security");
       channel.configureBlocking(blockingMode);
 
       SSLEngine sslEngine = sslContext.createSSLEngine();
@@ -134,7 +142,6 @@ implements GetWrappedValue<ServerSocketChannel>
       //sslEngine.setEnabledCipherSuites(filterArray(sslEngine.getEnabledCipherSuites(), includedCipherSuites, excludedCipherSuites));
 
       return new SSLSocketChannel(channel, sslEngine, logger);
-    }
   }
 
   @Override

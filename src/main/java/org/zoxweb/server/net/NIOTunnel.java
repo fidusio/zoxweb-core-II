@@ -19,6 +19,7 @@ import org.zoxweb.server.net.NIOSocket;
 
 import org.zoxweb.server.net.ProtocolSessionFactory;
 import org.zoxweb.server.net.ProtocolSessionProcessor;
+
 import org.zoxweb.server.task.TaskUtil;
 import org.zoxweb.shared.net.InetSocketAddressDAO;
 import org.zoxweb.shared.util.Const.SourceOrigin;
@@ -36,9 +37,12 @@ extends ProtocolSessionProcessor
 	{
 		
 		final private InetSocketAddressDAO remoteAddress;
+		
+		
 		public NIOTunnelFactory(InetSocketAddressDAO remoteAddress)
 		{
 			this.remoteAddress = remoteAddress;
+			
 		}
 
 		@Override
@@ -53,6 +57,8 @@ extends ProtocolSessionProcessor
 			// TODO Auto-generated method stub
 			return false;
 		}
+
+	
 		
 	}
 	

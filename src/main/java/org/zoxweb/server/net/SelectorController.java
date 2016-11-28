@@ -94,7 +94,7 @@ public class SelectorController
 			selector.wakeup();
 			// invoke the main lock
 			selectLock.lock();
-			ch.configureBlocking(blocking);
+			SharedUtil.getWrappedValue(ch).configureBlocking(blocking);
 			ret = SharedUtil.getWrappedValue(ch).register(selector, ops, attachement);
 			if (niocc != null)
 			{
