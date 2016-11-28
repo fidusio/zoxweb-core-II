@@ -12,6 +12,7 @@ import org.zoxweb.server.task.TaskSchedulerProcessor.TaskSchedulerAppointment;
 import org.zoxweb.server.task.TaskUtil;
 import org.zoxweb.shared.util.AppointmentDefault;
 import org.zoxweb.shared.util.Const.TimeInMillis;
+import org.zoxweb.shared.util.SharedUtil;
 
 public class NIOChannelCleaner
 	extends RunnableTask
@@ -94,7 +95,7 @@ public class NIOChannelCleaner
 		int counter = 0;
 		for (SelectionKey sk : toCheck)
 		{
-			if (!sk.isValid() || !sk.channel().isOpen())
+			if (!sk.isValid() || !SharedUtil.getWrappedValue(sk.channel()).isOpen())
 			{
 				try
 				{

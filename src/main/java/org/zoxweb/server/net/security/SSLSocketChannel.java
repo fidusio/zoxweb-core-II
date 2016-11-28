@@ -3,6 +3,9 @@ package org.zoxweb.server.net.security;
 
 import javax.net.ssl.SSLEngine;
 import javax.net.ssl.SSLSession;
+
+import org.zoxweb.shared.util.GetWrappedValue;
+
 import java.io.IOException;
 import java.net.Socket;
 import java.net.SocketAddress;
@@ -10,13 +13,13 @@ import java.net.SocketOption;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 import java.util.Set;
-import java.util.concurrent.ExecutorService;
 import java.util.logging.Logger;
 
 /**
  * A wrapper around a real {@link SocketChannel} that adds SSL support.
  */
 public class SSLSocketChannel extends SocketChannel
+	implements GetWrappedValue<SocketChannel>
 {
   private final SocketChannel socketChannel;
 
@@ -34,7 +37,7 @@ public class SSLSocketChannel extends SocketChannel
    * @param log The logger for debug and error messages. A {@code null} logger will result in no log operations.
    * @throws IOException
    */
-  public SSLSocketChannel(SocketChannel socketChannel, final SSLEngine sslEngine, ExecutorService executorService, Logger log)
+  public SSLSocketChannel(SocketChannel socketChannel, final SSLEngine sslEngine,Logger log)
   {
     super(socketChannel.provider());
 
@@ -43,7 +46,7 @@ public class SSLSocketChannel extends SocketChannel
 
     logDebug = (log != null);
 
-    sslEngineBuffer = new SSLEngineBuffer(socketChannel, sslEngine, executorService, log);
+    sslEngineBuffer = new SSLEngineBuffer(socketChannel, sslEngine, log);
   }
 
   public SocketChannel getWrappedSocketChannel()
@@ -353,4 +356,10 @@ public class SSLSocketChannel extends SocketChannel
     socketChannel.close();
     sslEngineBuffer.close();
   }
+
+	@Override
+	public SocketChannel getWrappedValue() {
+		// TODO Auto-generated method stub
+		return socketChannel;
+	}
 }

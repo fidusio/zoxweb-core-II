@@ -100,6 +100,7 @@ implements Runnable, DaemonController, Closeable
 	public SelectionKey addServerSocket(ServerSocketChannel ssc,  ProtocolSessionFactory<?> psf) throws IOException
 	{
 		SharedUtil.checkIfNulls("Null values", ssc, psf);
+		
 		SelectionKey sk = selectorController.register(ssc, SelectionKey.OP_ACCEPT);
 		sk.attach(psf);
 		log.info(ssc + " added");
@@ -168,7 +169,7 @@ implements Runnable, DaemonController, Closeable
 						    SelectionKey key = keyIterator.next();			    
 						    try
 						    {	    	
-						    	if (key.isValid() && key.channel().isOpen() && key.isReadable())
+						    	if (key.isValid() && SharedUtil.getWrappedValue(key.channel()).isOpen() && key.isReadable())
 							    {
 							    	ProtocolSessionProcessor currentPSP = (ProtocolSessionProcessor)key.attachment();
 							    	if (currentPSP != null && currentPSP.isSeletectable())
@@ -187,7 +188,7 @@ implements Runnable, DaemonController, Closeable
 								    	}
 							    	}
 							    } 
-						    	else if(key.isValid() && key.channel().isOpen() && key.isAcceptable()) 
+						    	else if(key.isValid() && SharedUtil.getWrappedValue(key.channel()).isOpen() && key.isAcceptable()) 
 							    {
 							        // a connection was accepted by a ServerSocketChannel.
 							    	
@@ -227,11 +228,11 @@ implements Runnable, DaemonController, Closeable
 							    	}
 	
 							    } 
-							    else if (key.isValid() && key.channel().isOpen() && key.isConnectable())
+							    else if (key.isValid() && SharedUtil.getWrappedValue(key.channel()).isOpen() && key.isConnectable())
 							    {
 							        // a connection was established with a remote server.
 							    } 
-							    else if (key.isValid() && key.channel().isOpen() && key.isWritable())
+							    else if (key.isValid() && SharedUtil.getWrappedValue(key.channel()).isOpen() && key.isWritable())
 							    {
 							        // a channel is ready for writing
 							    }
@@ -245,7 +246,7 @@ implements Runnable, DaemonController, Closeable
 						    keyIterator.remove();
 						    try
 						    {
-						    	if (!key.isValid()|| !key.channel().isOpen())
+						    	if (!key.isValid()|| !SharedUtil.getWrappedValue(key.channel()).isOpen())
 						    	{
 						    		selectorController.cancelSelectionKey(key);
 						    	}

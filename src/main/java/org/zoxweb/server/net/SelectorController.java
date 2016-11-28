@@ -9,6 +9,8 @@ import java.nio.channels.spi.AbstractSelectableChannel;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import org.zoxweb.shared.util.SharedUtil;
+
 
 /**
  * This class is used to allow the Selector object to be used in multi-threaded environment.
@@ -93,7 +95,7 @@ public class SelectorController
 			// invoke the main lock
 			selectLock.lock();
 			ch.configureBlocking(blocking);
-			ret = ch.register(selector, ops, attachement);
+			ret = SharedUtil.getWrappedValue(ch).register(selector, ops, attachement);
 			if (niocc != null)
 			{
 				niocc.add(ret);

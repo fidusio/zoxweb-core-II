@@ -75,6 +75,18 @@ public class SharedUtil
 	}
 
 	
+	
+	@SuppressWarnings("unchecked")
+	public static <T> T getWrappedValue(T v)
+	{
+		if (v instanceof GetWrappedValue)
+		{
+			return (T) ((GetWrappedValue<?>)v).getWrappedValue();
+		}
+		
+		return v;
+	}
+	
 	/**
 	 * Creates a canonical string based on an array of objects which are separated by a character.
 	 * @param sep

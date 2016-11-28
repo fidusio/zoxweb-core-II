@@ -3,6 +3,9 @@ package org.zoxweb.server.net.security;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLEngine;
+
+import org.zoxweb.shared.util.GetWrappedValue;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.SocketAddress;
@@ -13,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.ExecutorService;
+
 import java.util.logging.Logger;
 
 /**
@@ -23,6 +26,7 @@ import java.util.logging.Logger;
  * @see SSLSocketChannel
  */
 public class SSLServerSocketChannel extends ServerSocketChannel
+implements GetWrappedValue<ServerSocketChannel>
 {
   /**
    * Should the SSLSocketChannels created from the accept method be put in blocking mode. Default is {@code false}.
@@ -63,7 +67,7 @@ public class SSLServerSocketChannel extends ServerSocketChannel
 
   private final SSLContext sslContext;
 
-  private final ExecutorService threadPool;
+
 
   private final Logger logger;
 
@@ -74,12 +78,12 @@ public class SSLServerSocketChannel extends ServerSocketChannel
    * @param threadPool The thread pool passed to SSLSocketChannel used to execute long running, blocking SSL operations such as certificate validation with a CA (<a href="http://docs.oracle.com/javase/7/docs/api/javax/net/ssl/SSLEngineResult.HandshakeStatus.html#NEED_TASK">NEED_TASK</a>)
    * @param logger The logger for debug and error messages. A null logger will result in no log operations.
    */
-  public SSLServerSocketChannel(ServerSocketChannel serverSocketChannel, SSLContext sslContext, ExecutorService threadPool, Logger logger)
+  public SSLServerSocketChannel(ServerSocketChannel serverSocketChannel, SSLContext sslContext, Logger logger)
   {
     super(serverSocketChannel.provider());
     this.serverSocketChannel = serverSocketChannel;
     this.sslContext = sslContext;
-    this.threadPool = threadPool;
+ 
     this.logger = logger;
   }
 
@@ -129,7 +133,7 @@ public class SSLServerSocketChannel extends ServerSocketChannel
       //sslEngine.setEnabledProtocols(filterArray(sslEngine.getEnabledProtocols(), includedProtocols, excludedProtocols));
       //sslEngine.setEnabledCipherSuites(filterArray(sslEngine.getEnabledCipherSuites(), includedCipherSuites, excludedCipherSuites));
 
-      return new SSLSocketChannel(channel, sslEngine, threadPool, logger);
+      return new SSLSocketChannel(channel, sslEngine, logger);
     }
   }
 
@@ -138,6 +142,8 @@ public class SSLServerSocketChannel extends ServerSocketChannel
   {
     return serverSocketChannel.bind(local, backlog);
   }
+  
+ 
 
   @Override
   public SocketAddress getLocalAddress() throws IOException
@@ -216,4 +222,10 @@ public class SSLServerSocketChannel extends ServerSocketChannel
 
     return filteredItems.toArray(new String[filteredItems.size()]);
   }
+
+	@Override
+	public ServerSocketChannel getWrappedValue() {
+		// TODO Auto-generated method stub
+		return serverSocketChannel;
+	}
 }

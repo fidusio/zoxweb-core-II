@@ -9,8 +9,6 @@ import javax.net.ssl.SSLSession;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.logging.Logger;
 
 class SSLEngineBuffer
@@ -19,7 +17,7 @@ class SSLEngineBuffer
 
   private final SSLEngine sslEngine;
 
-  private final ExecutorService executorService;
+ 
 
   private final ByteBuffer networkInboundBuffer;
 
@@ -35,16 +33,16 @@ class SSLEngineBuffer
 
   private final boolean logDebug;
   
-  private static final ExecutorService pool = Executors.newFixedThreadPool(10);
+ 
   
   
   
 
-  public SSLEngineBuffer(SocketChannel socketChannel, SSLEngine sslEngine, ExecutorService executorService, Logger log)
+  public SSLEngineBuffer(SocketChannel socketChannel, SSLEngine sslEngine, Logger log)
   {
     this.socketChannel = socketChannel;
     this.sslEngine = sslEngine;
-    this.executorService = executorService != null ? executorService : pool;
+   
     this.log = log;
 
     logDebug = log != null;
@@ -335,7 +333,7 @@ class SSLEngineBuffer
       }
       else
       {
-        executorService.execute(runnable);
+    	  new Thread(runnable).start();
       }
     }
   }
