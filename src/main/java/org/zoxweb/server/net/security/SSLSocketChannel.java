@@ -40,7 +40,7 @@ public class SSLSocketChannel extends SocketChannel
   public SSLSocketChannel(SocketChannel socketChannel, final SSLEngine sslEngine,Logger log)
   {
     super(socketChannel.provider());
-    System.out.println("SSLSocketChannel");
+ 
     this.socketChannel = socketChannel;
     this.log = log;
 

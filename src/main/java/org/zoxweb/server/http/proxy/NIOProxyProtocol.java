@@ -25,6 +25,7 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
 import java.util.logging.Logger;
 
+import javax.net.ssl.SSLContext;
 
 import org.zoxweb.server.http.HTTPUtil;
 import org.zoxweb.server.io.ByteBufferUtil;
@@ -150,6 +151,12 @@ extends ProtocolSessionProcessor
 		public boolean isBlocking()
 		{
 			return false;
+		}
+
+		@Override
+		public SSLContext getSSLContext() {
+			// TODO Auto-generated method stub
+			return null;
 		}
 
 		

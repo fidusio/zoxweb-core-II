@@ -33,7 +33,7 @@ public class ByteBufferUtil
 	private Map<Integer, SimpleQueue<ByteBuffer>> cachedBuffers = new HashMap<Integer, SimpleQueue<ByteBuffer>>();
 	
 	
-	public static final int DEFAULT_BUFFER_SIZE = 4096;
+	public static final int DEFAULT_BUFFER_SIZE = 16916;
 	public static final int CACHE_LIMIT = 256;
 	
 	private ByteBufferUtil()

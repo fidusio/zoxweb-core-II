@@ -7,6 +7,8 @@ import java.nio.channels.SelectionKey;
 
 import java.util.logging.Logger;
 
+import javax.net.ssl.SSLContext;
+
 import org.zoxweb.server.io.IOUtil;
 import org.zoxweb.server.task.TaskUtil;
 
@@ -34,6 +36,11 @@ extends ProtocolSessionProcessor
 				public boolean isBlocking()
 				{
 					return false;
+				}
+				@Override
+				public SSLContext getSSLContext() {
+					// TODO Auto-generated method stub
+					return null;
 				}
 				
 		

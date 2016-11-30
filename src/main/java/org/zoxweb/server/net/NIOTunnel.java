@@ -11,6 +11,8 @@ import java.nio.channels.SocketChannel;
 
 import java.util.logging.Logger;
 
+import javax.net.ssl.SSLContext;
+
 import org.zoxweb.server.io.ByteBufferUtil;
 import org.zoxweb.server.io.IOUtil;
 
@@ -19,7 +21,7 @@ import org.zoxweb.server.net.NIOSocket;
 
 import org.zoxweb.server.net.ProtocolSessionFactory;
 import org.zoxweb.server.net.ProtocolSessionProcessor;
-
+import org.zoxweb.server.net.security.SSLEngineBuffer;
 import org.zoxweb.server.task.TaskUtil;
 import org.zoxweb.shared.net.InetSocketAddressDAO;
 import org.zoxweb.shared.util.Const.SourceOrigin;
@@ -37,11 +39,13 @@ extends ProtocolSessionProcessor
 	{
 		
 		final private InetSocketAddressDAO remoteAddress;
+		final private SSLContext sslContext;
 		
 		
-		public NIOTunnelFactory(InetSocketAddressDAO remoteAddress)
+		public NIOTunnelFactory(InetSocketAddressDAO remoteAddress, SSLContext sslContext)
 		{
 			this.remoteAddress = remoteAddress;
+			this.sslContext = sslContext;
 			
 		}
 
@@ -56,6 +60,12 @@ extends ProtocolSessionProcessor
 		public boolean isBlocking() {
 			// TODO Auto-generated method stub
 			return false;
+		}
+
+		@Override
+		public SSLContext getSSLContext() {
+			// TODO Auto-generated method stub
+			return sslContext;
 		}
 
 	
@@ -108,8 +118,11 @@ extends ProtocolSessionProcessor
 	@Override
 	protected void processRead(SelectionKey key) 
 	{
+		
+		
 		try
     	{
+			SSLEngineBuffer sslEngineBuffer = ((ProtocolSessionProcessor)key.attachment()).getInputSSLEngineBuffer();
 			if(clientChannel == null)
 			{
 				clientChannel = (SocketChannel)key.channel();
@@ -117,7 +130,7 @@ extends ProtocolSessionProcessor
 				
 				remoteChannel = SocketChannel.open((new InetSocketAddress(remoteAddress.getInetAddress(), remoteAddress.getPort())));
 				relay = new ChannelRelayTunnel(SourceOrigin.REMOTE, getReadBufferSize(), remoteChannel, clientChannel, clientChannelSK,  true,  getSelectorController());
-				
+				relay.setOutputSSLEngineBuffer(sslEngineBuffer);
 				getSelectorController().register(NIOChannelCleaner.DEFAULT, remoteChannel, SelectionKey.OP_READ, relay, false);
 			}
 			
@@ -127,7 +140,15 @@ extends ProtocolSessionProcessor
     		{
     			bBuffer.clear();
     			
-    			read = ((SocketChannel)key.channel()).read(bBuffer);
+    			if (sslEngineBuffer != null)
+    			{
+    				// ssl mode
+    				read = sslEngineBuffer.read(bBuffer);
+    			}
+    			else
+    			{
+    				read = ((SocketChannel)key.channel()).read(bBuffer);
+    			}
     			if (read > 0)
     			{
     				ByteBufferUtil.write(remoteChannel, bBuffer);
@@ -150,7 +171,7 @@ extends ProtocolSessionProcessor
     	}
     	catch(Exception e)
     	{
-    		if(debug)
+    		//if(debug)
     			e.printStackTrace();
     		IOUtil.close(this);
     		if(debug)
@@ -208,7 +229,7 @@ extends ProtocolSessionProcessor
 			TaskUtil.setThreadMultiplier(4);
 			
 			
-			new NIOSocket(new NIOTunnelFactory(remoteAddress), new InetSocketAddress(port), null, null, TaskUtil.getDefaultTaskProcessor());
+			new NIOSocket(new NIOTunnelFactory(remoteAddress, null), new InetSocketAddress(port), null, null, TaskUtil.getDefaultTaskProcessor());
 		}
 		catch(Exception e)
 		{

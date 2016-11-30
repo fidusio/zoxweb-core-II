@@ -13,7 +13,7 @@ import org.zoxweb.server.crypto.CryptoUtil;
 import org.zoxweb.server.io.IOUtil;
 import org.zoxweb.server.net.NIOSocket;
 import org.zoxweb.server.net.NIOTunnel.NIOTunnelFactory;
-import org.zoxweb.server.net.security.SSLServerSocketChannel;
+
 
 import org.zoxweb.server.net.security.SecureNetworkTunnel.KeyStoreConfig;
 import org.zoxweb.server.task.TaskUtil;
@@ -48,10 +48,10 @@ public class SecureNIOTunnelTest {
 					int port = Integer.parseInt(parsed[0]);
 					InetSocketAddressDAO remoteAddress = new InetSocketAddressDAO(parsed[1]);
 					ServerSocketChannel ssc = ServerSocketChannel.open();
-					SSLServerSocketChannel sslssc = new SSLServerSocketChannel(ssc, sslc, log);
-					sslssc.bind(new InetSocketAddress(port));
-					System.out.println("Adding:" + sslssc + " " + remoteAddress);
-					nios.addServerSocket(sslssc, new NIOTunnelFactory(remoteAddress));
+				
+					ssc.bind(new InetSocketAddress(port));
+					System.out.println("Adding:" + ssc + " " + remoteAddress);
+					nios.addServerSocket(ssc, new NIOTunnelFactory(remoteAddress, sslc));
 					//					
 				}
 				catch(Exception e)

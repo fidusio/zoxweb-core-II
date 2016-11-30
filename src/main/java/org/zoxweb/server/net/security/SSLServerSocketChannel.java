@@ -125,13 +125,18 @@ implements GetWrappedValue<ServerSocketChannel>
     }
     else
     {
-    	return init(channel);
+    	return init(sslContext, channel, blockingMode, wantClientAuthentication,  needClientAuthentication, logger);
     }
   }
   
-  public SocketChannel init(SocketChannel channel) throws IOException
+  public static SocketChannel init(SSLContext sslContext, 
+		  						   SocketChannel channel, 
+		  						   boolean blockingMode,
+		  						   boolean wantClientAuthentication,
+		  						   boolean needClientAuthentication,
+		  						   Logger logger) throws IOException
   {
-	  logger.info("Accept with security");
+	 
       channel.configureBlocking(blockingMode);
 
       SSLEngine sslEngine = sslContext.createSSLEngine();

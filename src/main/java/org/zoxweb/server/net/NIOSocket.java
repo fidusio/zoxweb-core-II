@@ -14,8 +14,10 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Logger;
 
-import org.zoxweb.server.io.IOUtil;
+import javax.net.ssl.SSLContext;
 
+import org.zoxweb.server.io.IOUtil;
+import org.zoxweb.server.net.security.SSLEngineBuffer;
 import org.zoxweb.server.task.TaskEvent;
 import org.zoxweb.server.task.TaskProcessor;
 import org.zoxweb.server.task.TaskUtil;
@@ -218,10 +220,20 @@ implements Runnable, DaemonController, Closeable
 							    	{
 							    			    		
 							    		ProtocolSessionFactory<?> psf = (ProtocolSessionFactory<?>) key.attachment();
+							    		
+							    		
 								    	ProtocolSessionProcessor psp = psf.newInstance();
 								    	psp.setSelectorController(selectorController);
 								    	psp.setInetFilterRulesManager(getOutgoingInetFilterRulesManager());
 								    	
+								    	
+								    	// secure socket
+								    	SSLContext sslContext = psf.getSSLContext();
+								    	if (sslContext != null)
+								    	{
+								    		SSLEngineBuffer sslEngineBuffer = SSLEngineBuffer.init(sslContext, sc, false, false, false, log);
+								    		psp.setInputSSLEngineBuffer(sslEngineBuffer);
+								    	}
 								    	
 								    	
 								    	selectorController.register(NIOChannelCleaner.DEFAULT, sc, SelectionKey.OP_READ, psp, psf.isBlocking());
