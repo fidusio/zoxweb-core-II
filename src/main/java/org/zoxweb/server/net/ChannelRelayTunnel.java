@@ -112,7 +112,7 @@ public class  ChannelRelayTunnel
 				bBuffer.clear();
 				read = ((SocketChannel)currentSK.channel()).read(bBuffer);
 				
-				SSLEngineBuffer outputSSLEngineBuffer = getOutputSSLEngineBuffer();;
+				SSLEngineBuffer outputSSLEngineBuffer = getOutputSSLEngineBuffer();
 				if (read > 0)
 				{
 					if (outputSSLEngineBuffer != null)
