@@ -25,7 +25,7 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
 import java.util.logging.Logger;
 
-import javax.net.ssl.SSLContext;
+
 
 import org.zoxweb.server.http.HTTPUtil;
 import org.zoxweb.server.io.ByteBufferUtil;
@@ -40,7 +40,7 @@ import org.zoxweb.server.net.NIOSocket;
 import org.zoxweb.server.net.NetUtil;
 import org.zoxweb.server.net.ProtocolSessionFactory;
 import org.zoxweb.server.net.ProtocolSessionProcessor;
-
+import org.zoxweb.server.net.security.SSLUtil;
 import org.zoxweb.server.task.TaskUtil;
 import org.zoxweb.shared.http.HTTPMessageConfig;
 import org.zoxweb.shared.http.HTTPMessageConfigInterface;
@@ -154,7 +154,7 @@ extends ProtocolSessionProcessor
 		}
 
 		@Override
-		public SSLContext getSSLContext() {
+		public SSLUtil getSSLUtil() {
 			// TODO Auto-generated method stub
 			return null;
 		}

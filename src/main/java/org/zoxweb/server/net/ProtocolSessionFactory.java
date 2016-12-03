@@ -1,6 +1,8 @@
 package org.zoxweb.server.net;
 
-import javax.net.ssl.SSLContext;
+
+
+import org.zoxweb.server.net.security.SSLUtil;
 
 public interface ProtocolSessionFactory<P extends ProtocolSessionProcessor>
 {
@@ -10,7 +12,7 @@ public interface ProtocolSessionFactory<P extends ProtocolSessionProcessor>
 	
 	
 	
-	SSLContext getSSLContext();
+	SSLUtil getSSLUtil();
 	
 	
 }

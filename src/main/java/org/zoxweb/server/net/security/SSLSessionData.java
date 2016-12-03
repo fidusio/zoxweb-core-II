@@ -8,6 +8,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import javax.net.ssl.SSLEngine;
 import javax.net.ssl.SSLEngineResult;
+import javax.net.ssl.SSLEngineResult.HandshakeStatus;
 import javax.net.ssl.SSLSession;
 
 import org.zoxweb.server.io.ByteBufferUtil;
@@ -64,6 +65,7 @@ public class SSLSessionData
 					case CLOSED:
 						return -1;
 					case OK:
+						runDelegatedTasks(res.getHandshakeStatus(), sslEngine);
 						inSSLBuffer.compact();
 						read = appBuffer.position();
 						break;
@@ -82,6 +84,28 @@ public class SSLSessionData
 		return read;
 	}
 	
+	
+	/*
+     * If the result indicates that we have outstanding tasks to do,
+     * go ahead and run them in this thread.
+     */
+    private static void runDelegatedTasks(SSLEngineResult.HandshakeStatus hStatus,
+            SSLEngine engine) throws IOException {
+
+        if (hStatus == HandshakeStatus.NEED_TASK) {
+            Runnable runnable;
+            while ((runnable = engine.getDelegatedTask()) != null) {
+                
+                runnable.run();
+            }
+            HandshakeStatus hsStatus = engine.getHandshakeStatus();
+            if (hsStatus == HandshakeStatus.NEED_TASK) {
+                throw new IOException(
+                    "handshake shouldn't need additional tasks");
+            }
+          
+        }
+    }
 	
 	public void write(SocketChannel sc, ByteBuffer appBuffer, boolean sync) throws IOException
 	{
@@ -106,6 +130,7 @@ public class SSLSessionData
 				case CLOSED:
 					throw new IOException("Closed");
 				case OK:
+					runDelegatedTasks(res.getHandshakeStatus(), sslEngine);
 					ByteBufferUtil.write(sc, outSSLBuffer);
 					break;
 				}

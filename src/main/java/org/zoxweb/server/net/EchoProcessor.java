@@ -7,9 +7,9 @@ import java.nio.channels.SelectionKey;
 
 import java.util.logging.Logger;
 
-import javax.net.ssl.SSLContext;
 
 import org.zoxweb.server.io.IOUtil;
+import org.zoxweb.server.net.security.SSLUtil;
 import org.zoxweb.server.task.TaskUtil;
 
 import java.nio.channels.SocketChannel;
@@ -38,7 +38,7 @@ extends ProtocolSessionProcessor
 					return false;
 				}
 				@Override
-				public SSLContext getSSLContext() {
+				public SSLUtil getSSLUtil() {
 					// TODO Auto-generated method stub
 					return null;
 				}

@@ -14,10 +14,11 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Logger;
 
-import javax.net.ssl.SSLContext;
+
 
 import org.zoxweb.server.io.IOUtil;
-import org.zoxweb.server.net.security.SSLEngineBuffer;
+
+import org.zoxweb.server.net.security.SSLUtil;
 import org.zoxweb.server.task.TaskEvent;
 import org.zoxweb.server.task.TaskProcessor;
 import org.zoxweb.server.task.TaskUtil;
@@ -36,6 +37,7 @@ public class NIOSocket
 implements Runnable, DaemonController, Closeable
 {
 	private static final transient Logger logger = Logger.getLogger(NIOSocket.class.getName());
+	private static boolean debug = true;
 	private boolean live = true;
 	private final SelectorController selectorController;
 	private final TaskProcessor tsp;
@@ -106,7 +108,7 @@ implements Runnable, DaemonController, Closeable
 		
 		SelectionKey sk = selectorController.register(ssc, SelectionKey.OP_ACCEPT);
 		sk.attach(psf);
-		log.info(ssc + " added");
+		if (debug) log.info(ssc + " added");
 		
 		return sk;
 	}
@@ -125,7 +127,7 @@ implements Runnable, DaemonController, Closeable
 		SharedUtil.checkIfNulls("Null values", dc, psf);
 		SelectionKey sk = selectorController.register(dc, SelectionKey.OP_ACCEPT);
 		sk.attach(psf);
-		log.info(dc + " added");
+		if (debug) log.info(dc + " added");
 		
 		return sk;
 	}
@@ -228,11 +230,12 @@ implements Runnable, DaemonController, Closeable
 								    	
 								    	
 								    	// secure socket
-								    	SSLContext sslContext = psf.getSSLContext();
-								    	if (sslContext != null)
+								    	SSLUtil sslUtil = psf.getSSLUtil();
+								    	if (sslUtil != null)
 								    	{
-								    		SSLEngineBuffer sslEngineBuffer = SSLEngineBuffer.init(sslContext, sc, false, false, false, log);
-								    		psp.setInputSSLEngineBuffer(sslEngineBuffer);
+								    		if (debug) log.info("we ssl socket ");
+								    		psp.setInputSSLSessionData(sslUtil.create(false));
+								    		
 								    	}
 								    	
 								    	

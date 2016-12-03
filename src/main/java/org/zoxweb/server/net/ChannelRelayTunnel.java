@@ -10,7 +10,8 @@ import java.util.logging.Logger;
 
 import org.zoxweb.server.io.ByteBufferUtil;
 import org.zoxweb.server.io.IOUtil;
-import org.zoxweb.server.net.security.SSLEngineBuffer;
+
+import org.zoxweb.server.net.security.SSLSessionData;
 import org.zoxweb.server.io.ByteBufferUtil.BufferType;
 import org.zoxweb.shared.util.Const.SourceOrigin;
 
@@ -112,18 +113,20 @@ public class  ChannelRelayTunnel
 				bBuffer.clear();
 				read = ((SocketChannel)currentSK.channel()).read(bBuffer);
 				
-				SSLEngineBuffer outputSSLEngineBuffer = getOutputSSLEngineBuffer();
+				SSLSessionData outputSSLSessionData = getOutputSSLSessionData();
 				if (read > 0)
 				{
-					if (outputSSLEngineBuffer != null)
+					if (outputSSLSessionData != null)
 					{
-						outputSSLEngineBuffer.write(bBuffer);
-						log.info("Wrote Encrypted DATA !!!!!");
+						outputSSLSessionData.write(writeDestination, bBuffer, false);
+						if (debug) log.info("Wrote Encrypted DATA !!!!!");
 						
 					}
 					else
+					{
 						ByteBufferUtil.write(writeDestination, bBuffer);
-					//log.info(ByteBufferUtil.toString(bBuffer));
+						if (debug) log.info(ByteBufferUtil.toString(bBuffer));
+					}
 				}
 			}while(read > 0);
 			

@@ -5,7 +5,8 @@ import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 
 import org.zoxweb.server.io.ByteBufferUtil;
-import org.zoxweb.server.net.security.SSLEngineBuffer;
+
+import org.zoxweb.server.net.security.SSLSessionData;
 import org.zoxweb.server.task.RunnableTask;
 import org.zoxweb.server.task.TaskEvent;
 //import org.zoxweb.server.task.TaskEvent;
@@ -22,8 +23,8 @@ public abstract class ProtocolSessionProcessor
 	private volatile InetFilterRulesManager inetFilterRulesManager;
 	private volatile int defaultReadBufferSize = ByteBufferUtil.DEFAULT_BUFFER_SIZE;
 	protected volatile ByteBuffer bBuffer = null;
-	private volatile SSLEngineBuffer outputSSLEngineBuffer;
-	private volatile SSLEngineBuffer inputSSLEngineBuffer;
+	private volatile SSLSessionData outputSSLSessionData;
+	private volatile SSLSessionData inputSSLSessionData;
 	
 	protected ProtocolSessionProcessor()
 	{
@@ -112,26 +113,26 @@ public abstract class ProtocolSessionProcessor
 
 
 
-	public SSLEngineBuffer getOutputSSLEngineBuffer() {
-		return outputSSLEngineBuffer;
+	public SSLSessionData getOutputSSLSessionData() {
+		return outputSSLSessionData;
 	}
 
 
 
-	public void setOutputSSLEngineBuffer(SSLEngineBuffer outputSSLEngineBuffer) {
-		this.outputSSLEngineBuffer = outputSSLEngineBuffer;
+	public void setOutputSSLSessionData(SSLSessionData outputSSLSessionData) {
+		this.outputSSLSessionData = outputSSLSessionData;
 	}
 
 
 
-	public SSLEngineBuffer getInputSSLEngineBuffer() {
-		return inputSSLEngineBuffer;
+	public SSLSessionData getInputSSLSessionData() {
+		return inputSSLSessionData;
 	}
 
 
 
-	public void setInputSSLEngineBuffer(SSLEngineBuffer inputSSLEngineBuffer) {
-		this.inputSSLEngineBuffer = inputSSLEngineBuffer;
+	public void setInputSSLSessionData(SSLSessionData inputSSLSessionData) {
+		this.inputSSLSessionData = inputSSLSessionData;
 	}
 
 
