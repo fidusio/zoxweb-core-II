@@ -78,8 +78,8 @@ public class SSLSessionData
 					case NEED_UNWRAP:
 						break;
 					case NEED_WRAP:
-						inSSLBuffer.flip();
-						res = sslEngine.wrap(inSSLBuffer, appBuffer);
+						//inSSLBuffer.flip();
+						res = sslEngine.wrap(appBuffer, inSSLBuffer);
 						hStatus = res.getHandshakeStatus();
 						if(res.getStatus() == SSLEngineResult.Status.OK)
 						{
