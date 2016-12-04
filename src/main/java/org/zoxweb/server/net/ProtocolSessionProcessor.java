@@ -38,7 +38,7 @@ public abstract class ProtocolSessionProcessor
 		return defaultReadBufferSize;
 	}
 	
-	public void setReadBufferSize(int size)
+	public synchronized void setReadBufferSize(int size)
 	{
 		if (size < 512)
 			throw new IllegalArgumentException("Invalid size " + size + " min allowed size 512 bytes");
