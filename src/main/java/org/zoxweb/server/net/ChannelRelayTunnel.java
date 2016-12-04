@@ -118,7 +118,7 @@ public class  ChannelRelayTunnel
 				{
 					if (outputSSLSessionData != null)
 					{
-						outputSSLSessionData.write(writeDestination, bBuffer, false);
+						outputSSLSessionData.write(writeDestination, bBuffer, true);
 						if (debug) log.info("Wrote Encrypted DATA !!!!!");
 						
 					}

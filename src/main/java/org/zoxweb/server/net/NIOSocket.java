@@ -233,7 +233,7 @@ implements Runnable, DaemonController, Closeable
 								    	SSLUtil sslUtil = psf.getSSLUtil();
 								    	if (sslUtil != null)
 								    	{
-								    		if (debug) log.info("we ssl socket ");
+								    		if (debug) log.info("we have ssl socket");
 								    		psp.setInputSSLSessionData(sslUtil.create(false));
 								    		
 								    	}

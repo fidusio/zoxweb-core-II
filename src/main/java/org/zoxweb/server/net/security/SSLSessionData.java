@@ -1,10 +1,12 @@
 package org.zoxweb.server.net.security;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.logging.Logger;
 
 import javax.net.ssl.SSLEngine;
 import javax.net.ssl.SSLEngineResult;
@@ -13,8 +15,13 @@ import javax.net.ssl.SSLSession;
 
 import org.zoxweb.server.io.ByteBufferUtil;
 
-public class SSLSessionData 
+public class SSLSessionData
+	implements Closeable
 {
+	private static final boolean debug = true;
+	
+	private static final transient Logger log = Logger.getLogger(SSLSessionData.class.getName());
+	
 	private SSLSession sslSession;
 	private SSLEngine sslEngine;
 	private ByteBuffer outSSLBuffer;
@@ -42,17 +49,52 @@ public class SSLSessionData
 	public int read(SocketChannel sc, ByteBuffer appBuffer, boolean sync) throws IOException
 	{
 		int read;
-		
+		if(debug) log.info("read start");
 		try
 		{
 			if (sync)
 				ioLock.lock();
-			
+			inSSLBuffer.clear();
 			read = sc.read(inSSLBuffer);
 			if (read > 0)
 			{
 				inSSLBuffer.flip();
+				if(debug) log.info("before unwrap appBuffer " + appBuffer + " inSSLBuffer " + inSSLBuffer);
 				SSLEngineResult res = sslEngine.unwrap(inSSLBuffer, appBuffer);
+				
+				SSLEngineResult.HandshakeStatus hStatus =  res.getHandshakeStatus();
+				if(debug) log.info("after unwrap handshake:" + hStatus + " appBuffer " + appBuffer + " inSSLBuffer " + inSSLBuffer );
+				
+//				while(hStatus != null && 
+//					  hStatus != SSLEngineResult.HandshakeStatus.NOT_HANDSHAKING && 
+//					  hStatus != SSLEngineResult.HandshakeStatus.FINISHED)
+				{
+					switch(res.getHandshakeStatus())
+					{
+					case NEED_TASK:
+						hStatus = runDelegatedTasks(sslEngine);
+						if(debug) log.info("run delegate:" + hStatus);
+						break;
+					case NEED_UNWRAP:
+						break;
+					case NEED_WRAP:
+						inSSLBuffer.flip();
+						res = sslEngine.wrap(inSSLBuffer, appBuffer);
+						hStatus = res.getHandshakeStatus();
+						if(res.getStatus() == SSLEngineResult.Status.OK)
+						{
+							ByteBufferUtil.write(sc, appBuffer);
+						}
+						
+						
+						break;
+					default:
+						break;
+					
+					}
+				}
+				
+				
 				SSLEngineResult.Status status = res.getStatus();
 				if (status != null)
 				{
@@ -65,7 +107,7 @@ public class SSLSessionData
 					case CLOSED:
 						return -1;
 					case OK:
-						runDelegatedTasks(res.getHandshakeStatus(), sslEngine);
+						
 						inSSLBuffer.compact();
 						read = appBuffer.position();
 						break;
@@ -89,13 +131,16 @@ public class SSLSessionData
      * If the result indicates that we have outstanding tasks to do,
      * go ahead and run them in this thread.
      */
-    private static void runDelegatedTasks(SSLEngineResult.HandshakeStatus hStatus,
-            SSLEngine engine) throws IOException {
+    private static SSLEngineResult.HandshakeStatus runDelegatedTasks(SSLEngine engine)
+    		throws IOException 
+    {
 
-        if (hStatus == HandshakeStatus.NEED_TASK) {
+        //if (hStatus == HandshakeStatus.NEED_TASK) 
+        {
             Runnable runnable;
-            while ((runnable = engine.getDelegatedTask()) != null) {
-                
+            while ((runnable = engine.getDelegatedTask()) != null) 
+            {
+            	if(debug) log.info("Run delegate");
                 runnable.run();
             }
             HandshakeStatus hsStatus = engine.getHandshakeStatus();
@@ -103,6 +148,7 @@ public class SSLSessionData
                 throw new IOException(
                     "handshake shouldn't need additional tasks");
             }
+            return hsStatus;
           
         }
     }
@@ -130,7 +176,7 @@ public class SSLSessionData
 				case CLOSED:
 					throw new IOException("Closed");
 				case OK:
-					runDelegatedTasks(res.getHandshakeStatus(), sslEngine);
+					runDelegatedTasks(sslEngine);
 					ByteBufferUtil.write(sc, outSSLBuffer);
 					break;
 				}
@@ -143,6 +189,16 @@ public class SSLSessionData
 		}
 		
 	
+	}
+
+
+
+
+
+	@Override
+	public void close() throws IOException {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

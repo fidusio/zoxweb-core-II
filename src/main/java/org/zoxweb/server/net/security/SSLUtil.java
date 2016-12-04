@@ -34,6 +34,7 @@ public class SSLUtil
 	{
 		SSLEngine sslEngine = sslContext.createSSLEngine();
 		sslEngine.setUseClientMode(client);
+		sslEngine.setWantClientAuth(true);
 		SSLSessionData ret = new SSLSessionData(sslEngine);
 		
 		return ret;

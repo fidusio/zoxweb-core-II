@@ -151,7 +151,7 @@ extends ProtocolSessionProcessor
     			if (sslSessionData != null)
     			{
     				// ssl mode
-    				read = sslSessionData.read(((SocketChannel)key.channel()), bBuffer, false);
+    				read = sslSessionData.read(((SocketChannel)key.channel()), bBuffer, true);
     			}
     			else
     			{
