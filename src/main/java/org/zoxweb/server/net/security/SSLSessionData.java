@@ -16,7 +16,6 @@ import javax.net.ssl.SSLSession;
 
 import org.zoxweb.server.io.ByteBufferUtil;
 import org.zoxweb.server.io.ByteBufferUtil.BufferType;
-import org.zoxweb.shared.util.Const;
 
 public class SSLSessionData
 	implements Closeable
