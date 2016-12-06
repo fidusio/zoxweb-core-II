@@ -524,37 +524,48 @@ public class CryptoUtil
 	}
 
 	
-	public static SSLContext initSSLContext(final String keyStoreFilename, String keyStoreType, final char[] keyStorePassword, final char[] crtPassword) 
+	public static SSLContext initSSLContext(final String keyStoreFilename, String keyStoreType, final char[] keyStorePassword, 
+			final char[] crtPassword,
+			final String trustStoreFilename, final char[] trustStorePassword) 
 			throws GeneralSecurityException, IOException
 	{
-		FileInputStream fis = null;
+		FileInputStream ksfis = null;
+		FileInputStream tsfis = null;
 		try 
 		{
-			fis = new FileInputStream(keyStoreFilename);
-			return initSSLContext(fis, keyStoreType, keyStorePassword, crtPassword);
+			ksfis = new FileInputStream(keyStoreFilename);
+			tsfis = trustStoreFilename != null ? new FileInputStream(trustStoreFilename) : null;
+			return initSSLContext(ksfis, keyStoreType, keyStorePassword, crtPassword, tsfis, trustStorePassword);
 		}
 		finally
 		{
-			IOUtil.close(fis);
+			IOUtil.close(ksfis);
+			IOUtil.close(tsfis);
 		}
 		
 	}
 	
-	public static SSLContext initSSLContext(final InputStream keyStoreIS, String keyStoreType, final char[] keyStorePassword, final char[] crtPassword) 
+	public static SSLContext initSSLContext(final InputStream keyStoreIS, String keyStoreType, final char[] keyStorePassword, final char[] crtPassword,
+			final InputStream trustStoreIS, final char[] trustStorePassword) 
 			throws GeneralSecurityException, IOException
 	{
 		KeyStore ks = CryptoUtil.loadKeyStore(keyStoreIS, keyStoreType, keyStorePassword);
+		KeyStore ts = null;
 		KeyManagerFactory kmf =  KeyManagerFactory.getInstance("SunX509");
-		TrustManagerFactory tmf = TrustManagerFactory.getInstance("PKIX");
+		TrustManagerFactory tmf = TrustManagerFactory.getInstance("SunX509");
+		if (trustStoreIS != null)
+		{
+			ts = CryptoUtil.loadKeyStore(trustStoreIS, keyStoreType, trustStorePassword);
+		}
 		if (crtPassword != null)
 		{
 			kmf.init(ks, crtPassword);
-			tmf.init(ks);
+			tmf.init(ts != null ? ts : ks);
 		}
 		else
 		{
 			kmf.init(ks, keyStorePassword);
-			tmf.init(ks);
+			tmf.init(ts != null ? ts : ks);
 		}
 		SSLContext sc = SSLContext.getInstance("TLS");
         sc.init(kmf.getKeyManagers(), null, null);

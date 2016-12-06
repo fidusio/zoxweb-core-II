@@ -40,6 +40,8 @@ implements Runnable
 		public String keystore_file;
 		public String keystore_type;
 		public String keystore_password;
+		public String truststore_file;
+		public String truststore_password;
 		public String alias_password;
 	}
 	
@@ -92,7 +94,8 @@ implements Runnable
 			
 			
 			//System.setProperty("javax.net.debug","all");
-			SSLContext sslc = CryptoUtil.initSSLContext(ksc.keystore_file, ksc.keystore_type, ksc.keystore_password.toCharArray(),  ksc.alias_password != null ?  ksc.alias_password.toCharArray() : null);
+			SSLContext sslc = CryptoUtil.initSSLContext(ksc.keystore_file, ksc.keystore_type, ksc.keystore_password.toCharArray(),  
+					ksc.alias_password != null ?  ksc.alias_password.toCharArray() : null, null, null);
 			
 	
 			
