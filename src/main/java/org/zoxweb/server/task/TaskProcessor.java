@@ -17,6 +17,7 @@
 package org.zoxweb.server.task;
 
 
+import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
 
 
@@ -31,6 +32,7 @@ import org.zoxweb.shared.util.Const;
 import org.zoxweb.shared.util.DaemonController;
 import org.zoxweb.shared.util.SimpleQueueInterface;
 import org.zoxweb.shared.util.SimpleQueue;
+import org.zoxweb.server.task.RunnableTask.RunnableTaskContainer;
 
 
 
@@ -49,7 +51,8 @@ import org.zoxweb.shared.util.SimpleQueue;
 
 public class TaskProcessor
 implements Runnable,
-		   DaemonController
+		   DaemonController,
+		   Executor
 {
 	private static final transient Logger log = Logger.getLogger(Const.LOGGER_NAME);
 
@@ -423,6 +426,17 @@ implements Runnable,
 	public int getQueueMaxSize()
 	{
 		return tasksQueue.getHighMark();
+	}
+
+
+
+
+
+	@Override
+	public void execute(Runnable command) 
+	{
+		if (command != null)
+			queueTask(new TaskEvent(this, new RunnableTaskContainer(), command));		
 	}
 	
 	/**

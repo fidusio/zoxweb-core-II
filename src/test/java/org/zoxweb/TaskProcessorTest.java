@@ -5,15 +5,16 @@ package org.zoxweb;
 //import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.zoxweb.server.task.RunnableTask;
-import org.zoxweb.server.task.TaskEvent;
+
 import org.zoxweb.server.task.TaskProcessor;
 
 
 
 
 
-public class TaskProcessorTest extends RunnableTask {
+public class TaskProcessorTest 
+implements Runnable
+{
 
 	
 	AtomicInteger ai = new AtomicInteger();
@@ -43,7 +44,8 @@ public class TaskProcessorTest extends RunnableTask {
 		{
 			counter++;
 			//System.out.println("Adding event " + (counter));
-			tp.queueTask(new TaskEvent( tp, td,  (Object[])null));
+			//tp.queueTask(new TaskEvent( tp, td,  (Object[])null));
+			tp.execute(td);
 			
 		}
 		
