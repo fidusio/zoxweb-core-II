@@ -38,9 +38,10 @@ import org.zoxweb.server.net.InetFilterRulesManager;
 import org.zoxweb.server.net.NIOChannelCleaner;
 import org.zoxweb.server.net.NIOSocket;
 import org.zoxweb.server.net.NetUtil;
-import org.zoxweb.server.net.ProtocolSessionFactory;
+
+import org.zoxweb.server.net.ProtocolSessionFactoryBase;
 import org.zoxweb.server.net.ProtocolSessionProcessor;
-import org.zoxweb.server.net.security.SSLUtil;
+
 import org.zoxweb.server.task.TaskUtil;
 import org.zoxweb.shared.http.HTTPMessageConfig;
 import org.zoxweb.shared.http.HTTPMessageConfigInterface;
@@ -139,29 +140,24 @@ extends ProtocolSessionProcessor
 	}
 	
 	
-	public static final ProtocolSessionFactory<NIOProxyProtocol> FACTORY = new ProtocolSessionFactory<NIOProxyProtocol>()
+	public static final class NIOProxyProcotolFactory
+		extends ProtocolSessionFactoryBase<NIOProxyProtocol>
 	{
 
 		@Override
 		public NIOProxyProtocol newInstance() {
 			// TODO Auto-generated method stub
-			return new NIOProxyProtocol();
+			NIOProxyProtocol ret = new NIOProxyProtocol();
+			ret.setOutgoingInetFilterRulesManager(getOutgoingInetFilterRulesManager());
+			
+			return ret;
 		}
 		
-		public boolean isBlocking()
-		{
-			return false;
-		}
+	}
+	
+	
+	
 
-		@Override
-		public SSLUtil getSSLUtil() {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		
-
-	};
 	
 	
 	
@@ -388,7 +384,7 @@ extends ProtocolSessionProcessor
 			{
 
 				ssl = true;
-				if (NetUtil.checkSecurityStatus(getInetFilterRulesManager(), requestInfo.remoteAddress.getInetAddress(), remoteChannel) !=  SecurityStatus.ALLOW)
+				if (NetUtil.checkSecurityStatus(getOutgoingInetFilterRulesManager(), requestInfo.remoteAddress.getInetAddress(), remoteChannel) !=  SecurityStatus.ALLOW)
 				{
 					HTTPMessageConfigInterface hccError = createErrorMSG(403, "Access Denied", requestMCCI.getURI());
 					
@@ -448,7 +444,11 @@ extends ProtocolSessionProcessor
     				log.info(new String(requestRawBuffer.toByteArray()));
     			
     			
-    			remoteChannelSK = getSelectorController().register(NIOChannelCleaner.DEFAULT, remoteChannel, SelectionKey.OP_READ, new ChannelRelayTunnel(SourceOrigin.REMOTE, getReadBufferSize(), remoteChannel, clientChannel, clientChannelSK, true, getSelectorController()), FACTORY.isBlocking());
+    			remoteChannelSK = getSelectorController().register(NIOChannelCleaner.DEFAULT,
+    													  		   remoteChannel,
+    													  		   SelectionKey.OP_READ,
+    													  		   new ChannelRelayTunnel(SourceOrigin.REMOTE, getReadBufferSize(), remoteChannel, clientChannel, clientChannelSK, true, getSelectorController()),
+    													  		   false);
     			requestInfo = null;
     			
 			}
@@ -458,7 +458,7 @@ extends ProtocolSessionProcessor
 					log.info(new String(requestRawBuffer.toByteArray()));
 				
 				
-				if (NetUtil.checkSecurityStatus(getInetFilterRulesManager(), requestInfo.remoteAddress.getInetAddress(), remoteChannel) !=  SecurityStatus.ALLOW)
+				if (NetUtil.checkSecurityStatus(getOutgoingInetFilterRulesManager(), requestInfo.remoteAddress.getInetAddress(), remoteChannel) !=  SecurityStatus.ALLOW)
 				{
 					HTTPMessageConfigInterface hccError = createErrorMSG(403, "Access Denied", requestMCCI.getURI());
 				
@@ -545,7 +545,7 @@ extends ProtocolSessionProcessor
 				if(remoteChannelSK == null || !remoteChannelSK.isValid())
 				{
 					channelRelay = new ChannelRelayTunnel(SourceOrigin.REMOTE, getReadBufferSize(), remoteChannel, clientChannel, clientChannelSK, true, getSelectorController());
-					remoteChannelSK = getSelectorController().register(NIOChannelCleaner.DEFAULT, remoteChannel, SelectionKey.OP_READ, channelRelay, FACTORY.isBlocking());
+					remoteChannelSK = getSelectorController().register(NIOChannelCleaner.DEFAULT, remoteChannel, SelectionKey.OP_READ, channelRelay, false);
 				}
 				
 				
@@ -627,7 +627,12 @@ extends ProtocolSessionProcessor
 				}
 			}
 			log.info("filename:" + filename);
-			NIOSocket nsio = new NIOSocket(FACTORY, new InetSocketAddress(port), clientIFRM, null, TaskUtil.getDefaultTaskProcessor(), LoggerUtil.loggerToFile(NIOProxyProtocol.class.getName()+".proxy", filename));
+			
+			NIOProxyProcotolFactory factory = new NIOProxyProcotolFactory();
+			factory.setIncomingInetFilterRulesManager(clientIFRM);
+			
+			
+			NIOSocket nsio = new NIOSocket(factory, new InetSocketAddress(port), TaskUtil.getDefaultTaskProcessor(), LoggerUtil.loggerToFile(NIOProxyProtocol.class.getName()+".proxy", filename));
 			nsio.setStatLogCounter(0);
 			
 			//nios.addSeverSocket(2401, new NIOTunnelFactory(new InetSocketAddressDAO("10.0.0.1:2401")));

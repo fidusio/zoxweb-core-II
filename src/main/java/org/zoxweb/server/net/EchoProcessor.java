@@ -42,6 +42,26 @@ extends ProtocolSessionProcessor
 					// TODO Auto-generated method stub
 					return null;
 				}
+				@Override
+				public InetFilterRulesManager getIncomingInetFilterRulesManager() {
+					// TODO Auto-generated method stub
+					return null;
+				}
+				@Override
+				public void setIncomingInetFilterRulesManager(InetFilterRulesManager incomingIFRM) {
+					// TODO Auto-generated method stub
+					
+				}
+				@Override
+				public InetFilterRulesManager getOutgoingInetFilterRulesManager() {
+					// TODO Auto-generated method stub
+					return null;
+				}
+				@Override
+				public void setOutgoingInetFilterRulesManager(InetFilterRulesManager incomingIFRM) {
+					// TODO Auto-generated method stub
+					
+				}
 				
 		
 			};
@@ -122,7 +142,7 @@ extends ProtocolSessionProcessor
 	{
 		try
 		{
-			new NIOSocket(EchoProcessor.FACTORY, new InetSocketAddress(Integer.parseInt(args[0])), null, null, TaskUtil.getDefaultTaskProcessor());
+			new NIOSocket(EchoProcessor.FACTORY, new InetSocketAddress(Integer.parseInt(args[0])), TaskUtil.getDefaultTaskProcessor());
 		}
 		catch(Exception e)
 		{

@@ -20,7 +20,7 @@ public abstract class ProtocolSessionProcessor
 
 	protected volatile boolean selectable = true;
 	private volatile SelectorController selectorController;
-	private volatile InetFilterRulesManager inetFilterRulesManager;
+	private volatile InetFilterRulesManager outgoingInetFilterRulesManager;
 	private volatile int defaultReadBufferSize = ByteBufferUtil.DEFAULT_BUFFER_SIZE;
 	protected volatile ByteBuffer bBuffer = null;
 	private volatile SSLSessionData outputSSLSessionData;
@@ -99,15 +99,15 @@ public abstract class ProtocolSessionProcessor
 		}
 	}
 
-	public InetFilterRulesManager getInetFilterRulesManager() 
+	public InetFilterRulesManager getOutgoingInetFilterRulesManager() 
 	{
-		return inetFilterRulesManager;
+		return outgoingInetFilterRulesManager;
 	}
 
 
-	public void setInetFilterRulesManager(InetFilterRulesManager inetFilterRulesManager) 
+	public void setOutgoingInetFilterRulesManager(InetFilterRulesManager inetFilterRulesManager) 
 	{
-		this.inetFilterRulesManager = inetFilterRulesManager;
+		this.outgoingInetFilterRulesManager = inetFilterRulesManager;
 	}
 
 

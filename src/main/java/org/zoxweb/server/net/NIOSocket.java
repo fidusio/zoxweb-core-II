@@ -42,8 +42,8 @@ implements Runnable, DaemonController, Closeable
 	private final SelectorController selectorController;
 	private final TaskProcessor tsp;
 	private AtomicLong connectionCount = new AtomicLong();
-	private final InetFilterRulesManager ifrm;
-	private final InetFilterRulesManager outgoingIFRM;
+//	private final InetFilterRulesManager ifrm;
+//	private final InetFilterRulesManager outgoingIFRM;
 	private long totalDuration = 0;
 	private long dispatchCounter = 0;
 	private long selectedCountTotal = 0;
@@ -52,19 +52,19 @@ implements Runnable, DaemonController, Closeable
 	private Logger log=logger;
 	
 	
-	public NIOSocket(ProtocolSessionFactory<?> psf, InetSocketAddress sa, InetFilterRulesManager ifrm, InetFilterRulesManager outgoingIFRM, TaskProcessor tsp) throws IOException
+	public NIOSocket(ProtocolSessionFactory<?> psf, InetSocketAddress sa, TaskProcessor tsp) throws IOException
 	{
-		this(psf, sa, ifrm, outgoingIFRM, tsp, null);
+		this(psf, sa, tsp, null);
 	}
 	
-	public NIOSocket(ProtocolSessionFactory<?> psf, InetSocketAddress sa, InetFilterRulesManager ifrm, InetFilterRulesManager outgoingIFRM, TaskProcessor tsp, Logger fileLogger) throws IOException
+	public NIOSocket(ProtocolSessionFactory<?> psf, InetSocketAddress sa, TaskProcessor tsp, Logger fileLogger) throws IOException
 	{
 		//SharedUtil.checkIfNulls("Null value", psf, sa);
 		selectorController = new SelectorController(Selector.open());
 		this.tsp = tsp;
 		
-		this.ifrm = ifrm;
-		this.outgoingIFRM = outgoingIFRM;
+//		this.ifrm = ifrm;
+//		this.outgoingIFRM = outgoingIFRM;
 				
 
 		if (sa != null)
@@ -83,8 +83,8 @@ implements Runnable, DaemonController, Closeable
 //		}
 		
 		
-		log.info("outgoingIFRM  " + (outgoingIFRM != null ? outgoingIFRM.getAll() : null));
-		log.info("incomingIFRM  " + (ifrm != null ? ifrm.getAll() : null));
+//		log.info("outgoingIFRM  " + (outgoingIFRM != null ? outgoingIFRM.getAll() : null));
+//		log.info("incomingIFRM  " + (ifrm != null ? ifrm.getAll() : null));
 		if (fileLogger != null)
 		{
 			// Override the logger
@@ -199,8 +199,8 @@ implements Runnable, DaemonController, Closeable
 							    	
 							    	SocketChannel sc = ((ServerSocketChannel)key.channel()).accept();
 							    	log.info("Accepted:" + sc);
-							    	
-							    	if (NetUtil.checkSecurityStatus(getIncomingInetFilterRulesManager(), sc.getRemoteAddress(), null) !=  SecurityStatus.ALLOW)
+							    	ProtocolSessionFactory<?> psf = (ProtocolSessionFactory<?>) key.attachment();
+							    	if (NetUtil.checkSecurityStatus(psf.getIncomingInetFilterRulesManager(), sc.getRemoteAddress(), null) !=  SecurityStatus.ALLOW)
 							    	{
 							    		try
 							    		{ 	
@@ -221,12 +221,12 @@ implements Runnable, DaemonController, Closeable
 							    	else
 							    	{
 							    			    		
-							    		ProtocolSessionFactory<?> psf = (ProtocolSessionFactory<?>) key.attachment();
+							    		//ProtocolSessionFactory<?> psf = (ProtocolSessionFactory<?>) key.attachment();
 							    		
 							    		
 								    	ProtocolSessionProcessor psp = psf.newInstance();
 								    	psp.setSelectorController(selectorController);
-								    	psp.setInetFilterRulesManager(getOutgoingInetFilterRulesManager());
+								    	psp.setOutgoingInetFilterRulesManager(psf.getOutgoingInetFilterRulesManager());
 								    	
 								    	
 								    	// secure socket
@@ -363,15 +363,15 @@ implements Runnable, DaemonController, Closeable
 		this.statLogCounter = statLogCounter;
 	}
 
-	public InetFilterRulesManager getIncomingInetFilterRulesManager()
-	{
-		return ifrm;
-	}
-	
-	public InetFilterRulesManager getOutgoingInetFilterRulesManager()
-	{
-		return outgoingIFRM;
-	}
+//	public InetFilterRulesManager getIncomingInetFilterRulesManager()
+//	{
+//		return ifrm;
+//	}
+//	
+//	public InetFilterRulesManager getOutgoingInetFilterRulesManager()
+//	{
+//		return outgoingIFRM;
+//	}
 	
 	
 }

@@ -15,4 +15,11 @@ public interface ProtocolSessionFactory<P extends ProtocolSessionProcessor>
 	SSLUtil getSSLUtil();
 	
 	
+	public InetFilterRulesManager getIncomingInetFilterRulesManager();
+	public void setIncomingInetFilterRulesManager(InetFilterRulesManager incomingIFRM);
+	
+	public InetFilterRulesManager getOutgoingInetFilterRulesManager();
+	public void setOutgoingInetFilterRulesManager(InetFilterRulesManager incomingIFRM);
+	
+	
 }

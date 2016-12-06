@@ -22,6 +22,7 @@ import java.net.InetSocketAddress;
 import java.util.List;
 import java.util.logging.Logger;
 
+import org.zoxweb.server.http.proxy.NIOProxyProtocol.NIOProxyProcotolFactory;
 import org.zoxweb.server.io.IOUtil;
 import org.zoxweb.server.logging.LoggerUtil;
 import org.zoxweb.server.net.InetFilterRulesManager;
@@ -285,8 +286,11 @@ public class JHTTPPUtil
 		{
 			return null;
 		}
+		
+		NIOProxyProcotolFactory factory = new NIOProxyProcotolFactory();
+		factory.setIncomingInetFilterRulesManager(ifrm);
 			
-		NIOSocket nsio = new NIOSocket(NIOProxyProtocol.FACTORY, new InetSocketAddress(port), ifrm, null, TaskUtil.getDefaultTaskProcessor(),
+		NIOSocket nsio = new NIOSocket(factory, new InetSocketAddress(port), TaskUtil.getDefaultTaskProcessor(),
 				LoggerUtil.loggerToFile(NIOProxyProtocol.class.getName()+".proxy", proxyLogFile));	
 		
 		
