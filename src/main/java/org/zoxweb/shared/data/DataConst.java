@@ -31,6 +31,18 @@ import org.zoxweb.shared.util.NVPair;
 public class DataConst 
 {
 	
+	public enum PhoneType 
+	{
+		HOME,
+		WORK,
+		MOBILE,
+		FAX,
+		OTHER,
+		;
+		
+	}
+	
+	
 	public enum ContextAccess
 	{
 		// the context access is based on the account

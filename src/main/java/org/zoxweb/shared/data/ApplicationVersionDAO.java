@@ -29,7 +29,7 @@ import org.zoxweb.shared.util.SharedUtil;
  *
  */
 @SuppressWarnings("serial")
-public class ApplicationInfoDAO
+public class ApplicationVersionDAO
 	extends SetNameDescriptionDAO
 	implements CanonicalID
 {
@@ -57,15 +57,15 @@ public class ApplicationInfoDAO
 		}
 	}
 	
-	public static final NVConfigEntity NVC_APPLICATION_INFO_DAO = new NVConfigEntityLocal(
-																							"application_info_dao", 
+	public static final NVConfigEntity NVC_APPLICATION_VERSION_DAO = new NVConfigEntityLocal(
+																							"application_version_dao", 
 																							null, 
-																							"ApplicationInfoDAO", 
+																							"ApplicationVersionDAO", 
 																							true, 
 																							false, 
 																							false, 
 																							false, 
-																							ApplicationInfoDAO.class, 
+																							ApplicationVersionDAO.class, 
 																							SharedUtil.extractNVConfigs(Params.values()), 
 																							null, 
 																							false, 
@@ -76,9 +76,9 @@ public class ApplicationInfoDAO
 	/**
 	 * The default constructor.
 	 */
-	public ApplicationInfoDAO()
+	public ApplicationVersionDAO()
 	{
-		super(NVC_APPLICATION_INFO_DAO);
+		super(NVC_APPLICATION_VERSION_DAO);
 	}
 
 	/**

@@ -31,7 +31,7 @@ import org.zoxweb.shared.api.APICredentialsDAO;
 import org.zoxweb.shared.api.APIError;
 import org.zoxweb.shared.data.AddressDAO;
 import org.zoxweb.shared.data.AgreementDAO;
-import org.zoxweb.shared.data.ApplicationInfoDAO;
+import org.zoxweb.shared.data.ApplicationVersionDAO;
 import org.zoxweb.shared.data.AssociationDAO;
 import org.zoxweb.shared.data.CRUDNVEntityDAO;
 import org.zoxweb.shared.data.CreditCardDAO;
@@ -180,18 +180,18 @@ public class ZWDataFactory
 				return AgreementDAO.NVC_AGREEMENT_DAO;
 			};
 		},	
-		APPLICATION_INFO_DAO(ApplicationInfoDAO.class.getName())
+		APPLICATION_INFO_DAO(ApplicationVersionDAO.class.getName())
 		{
 			@SuppressWarnings("unchecked")
-			public ApplicationInfoDAO newInstance()
+			public ApplicationVersionDAO newInstance()
 			{
-				return new ApplicationInfoDAO();
+				return new ApplicationVersionDAO();
 			}
 
 			@Override
 			public NVConfigEntity getNVConfigEntity() 
 			{
-				return ApplicationInfoDAO.NVC_APPLICATION_INFO_DAO;
+				return ApplicationVersionDAO.NVC_APPLICATION_VERSION_DAO;
 			};
 		},	
 		ASSOCIATION_DAO(AssociationDAO.class.getName())

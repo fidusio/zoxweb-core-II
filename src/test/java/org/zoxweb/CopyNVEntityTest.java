@@ -1,10 +1,11 @@
 package org.zoxweb;
 
+import org.zoxweb.shared.data.DataConst.PhoneType;
 import org.zoxweb.shared.data.FileInfoDAO;
 import org.zoxweb.shared.data.FileInfoDAO.FileType;
 import org.zoxweb.shared.data.FolderInfoDAO;
 import org.zoxweb.shared.data.PhoneDAO;
-import org.zoxweb.shared.data.PhoneType;
+
 import org.zoxweb.shared.data.SharedDataUtil;
 import org.zoxweb.shared.data.ZWDataFactory;
 import org.zoxweb.shared.util.NVEntity;
