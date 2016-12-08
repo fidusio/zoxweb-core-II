@@ -13,6 +13,7 @@ package org.zoxweb.server.util;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
@@ -20,6 +21,7 @@ import java.util.Date;
 import org.zoxweb.server.io.IOUtil;
 import org.zoxweb.shared.data.RuntimeResultDAO;
 import org.zoxweb.shared.data.VMInfoDAO;
+import org.zoxweb.shared.util.Const.JavaClassVersion;
 import org.zoxweb.shared.data.RuntimeResultDAO.ResultAttribute;
 
 
@@ -163,34 +165,55 @@ public class RuntimeUtil
 	
 	
 	
-	public static String checkClassVersion(String filename)
+	public static JavaClassVersion checkClassVersion(String filename)
 		        throws IOException
     {
-		 
 		FileInputStream fis = null;
-		
-        DataInputStream in = null;
         try
         {
-	        fis = new FileInputStream(filename);
-	        
-	        in = new DataInputStream(fis);
-	
-	        int magic = in.readInt();
-	        if(magic != 0xcafebabe) 
-	        {
-	          throw new IOException(filename + " is not a valid class!");
-	        }
-	        int minor = in.readUnsignedShort();
-	        int major = in.readUnsignedShort();
-	        return (filename + ": " + major + " . " + minor);
+        	File file = new File(filename);
+        	if (!file.exists())
+        	{
+        		file = new File(filename + ".class");
+        	}
+        	if (!file.exists())
+        	{
+        		throw new FileNotFoundException("File:" + filename);
+        	}
+	        fis = new FileInputStream(file);       
+	        return checkClassVersion(fis);
         }
         finally
         {
         	IOUtil.close(fis);
-        	IOUtil.close(in);
+        	
         }
     }
+	
+	
+	
+	public static JavaClassVersion checkClassVersion(InputStream fis)
+	        throws IOException
+	{	
+	    DataInputStream in = null;
+	    try
+	    { 
+	        in = new DataInputStream(fis);
+	        int magic = in.readInt();
+	        if(magic != 0xcafebabe) 
+	        {
+	          throw new IOException("invalid class!");
+	        }
+	        int minor = in.readUnsignedShort();
+	        int major = in.readUnsignedShort();
+	        return JavaClassVersion.lookup(major, minor);
+	    }
+	    finally
+	    {
+	    	IOUtil.close(fis);
+	    	IOUtil.close(in);
+	    }
+	}
 	
 	
 	 public static void main(String[] args)
@@ -199,7 +222,7 @@ public class RuntimeUtil
 	        {
 	        	try
 	        	{
-	        		System.out.println(checkClassVersion(args[i]));
+	        		System.out.println(args[i] + ":" + checkClassVersion(args[i]));
 	        	}
 	        	catch(Exception e)
 	        	{

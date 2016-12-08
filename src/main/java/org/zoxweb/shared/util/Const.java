@@ -33,6 +33,69 @@ public class Const
 	
 	
 	
+	
+	public enum JavaClassVersion
+	{
+		//VER_1_0("1.0", 45, 3),
+		VER_1_1("1.1", 45, 3),
+		VER_1_2("1.2", 46, 0),
+		VER_1_3("1.3", 47, 0),
+		VER_1_4("1.4", 48, 0),
+		VER_1_5("1.5", 49, 0),
+		VER_1_6("1.6", 50, 0),
+		VER_1_7("1.7", 51, 0),
+		VER_1_8("1.8", 52, 0),
+		VER_UNKOWN("UNKOWN", 0, 0),
+		
+		;
+		private final String version;
+		private final int major;
+		private final int minor;
+		JavaClassVersion(String version, int major, int minor)
+		{
+			this.version = version;
+			this.major = major;
+			this.minor = minor;
+		}
+		
+
+		public String toString()
+		{
+			return version + "," + major + "." + minor;
+		}
+		
+		
+		public static JavaClassVersion lookup(int major, int minor)
+		{
+			
+			for (JavaClassVersion ver : values())
+			{
+				if(ver.major == major && ver.minor == minor)
+				{
+					return ver;
+				}
+			}
+			
+			return VER_UNKOWN;
+		}
+		
+		public static JavaClassVersion lookup(String version)
+		{
+			if(!SharedStringUtil.isEmpty(version))
+			{
+				for (JavaClassVersion ver : values())
+				{
+					if (ver.version.equalsIgnoreCase(version))
+						return ver;
+					
+				}
+			}
+			
+			return VER_UNKOWN;
+		}
+	}
+	
+	
 	public enum Bool
 		implements GetName, GetValue<Boolean>
 	{
