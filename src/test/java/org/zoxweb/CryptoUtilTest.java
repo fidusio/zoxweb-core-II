@@ -3,8 +3,10 @@ package org.zoxweb;
 import org.zoxweb.server.crypto.CryptoUtil;
 import org.zoxweb.server.io.UByteArrayOutputStream;
 import org.zoxweb.shared.crypto.EncryptedDAO;
+import org.zoxweb.shared.crypto.EncryptedKeyDAO;
 import org.zoxweb.shared.util.Const;
 import org.zoxweb.shared.util.Const.SizeInBytes;
+import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
 
 public class CryptoUtilTest 
@@ -59,6 +61,19 @@ public class CryptoUtilTest
 				delta = System.nanoTime() - delta;
 				System.out.println(SharedUtil.slowEquals(original, data) + ": decrypting took " + Const.TimeInMillis.nanosToString(delta));
 			}
+			
+			EncryptedKeyDAO ekd = CryptoUtil.createEncryptedKeyDAO("password");
+			byte key[] = CryptoUtil.decryptEncryptedDAO(ekd, "password");
+			System.out.println(SharedStringUtil.bytesToHex(key));
+			System.out.println(ekd.toCanonicalID());
+			
+			
+			EncryptedDAO ed = CryptoUtil.encryptDAO(new EncryptedKeyDAO(), SharedStringUtil.getBytes("password"), SharedStringUtil.getBytes("password"));
+			System.out.println(ed.toCanonicalID());
+			
+			key = CryptoUtil.decryptEncryptedDAO(ed, "password");
+			System.out.println(SharedStringUtil.bytesToHex(key));
+			
 		}
 		catch(Exception e)
 		{
