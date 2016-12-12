@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 
 
 import org.zoxweb.server.io.IOUtil;
-import org.zoxweb.server.net.security.SSLUtil;
+import org.zoxweb.server.net.security.SSLSessionDataFactory;
 import org.zoxweb.server.task.TaskUtil;
 
 import java.nio.channels.SocketChannel;
@@ -38,7 +38,7 @@ extends ProtocolSessionProcessor
 					return false;
 				}
 				@Override
-				public SSLUtil getSSLUtil() {
+				public SSLSessionDataFactory getIncomingSSLSessionDataFactory() {
 					// TODO Auto-generated method stub
 					return null;
 				}
@@ -59,6 +59,21 @@ extends ProtocolSessionProcessor
 				}
 				@Override
 				public void setOutgoingInetFilterRulesManager(InetFilterRulesManager incomingIFRM) {
+					// TODO Auto-generated method stub
+					
+				}
+				@Override
+				public void setIncomingSSLSessionDataFactory(SSLSessionDataFactory sslSessionDataFactory) {
+					// TODO Auto-generated method stub
+					
+				}
+				@Override
+				public Logger getLogger() {
+					// TODO Auto-generated method stub
+					return null;
+				}
+				@Override
+				public void setLogger(Logger logger) {
 					// TODO Auto-generated method stub
 					
 				}

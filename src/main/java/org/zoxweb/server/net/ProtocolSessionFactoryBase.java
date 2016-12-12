@@ -1,6 +1,8 @@
 package org.zoxweb.server.net;
 
-import org.zoxweb.server.net.security.SSLUtil;
+import java.util.logging.Logger;
+
+import org.zoxweb.server.net.security.SSLSessionDataFactory;
 
 public abstract class ProtocolSessionFactoryBase<P extends ProtocolSessionProcessor>
 	implements ProtocolSessionFactory<P>
@@ -8,7 +10,8 @@ public abstract class ProtocolSessionFactoryBase<P extends ProtocolSessionProces
 
 	private InetFilterRulesManager incomingInetFilterRulesManager;
 	private InetFilterRulesManager outgoingInetFilterRulesManager;
-	protected SSLUtil sslUtil;
+	protected SSLSessionDataFactory incomingSSLSessionFactory = null;
+	private Logger logger;
 
 	
 //	protected ProtocolSessionFactoryBase(InetFilterRulesManager incoming, InetFilterRulesManager outgoing, SSLUtil sslUtil)
@@ -19,6 +22,14 @@ public abstract class ProtocolSessionFactoryBase<P extends ProtocolSessionProces
 //	}
 	
 	
+	public Logger getLogger() {
+		return logger;
+	}
+
+	public void setLogger(Logger logger) {
+		this.logger = logger;
+	}
+
 	@Override
 	public boolean isBlocking() {
 		// TODO Auto-generated method stub
@@ -26,9 +37,15 @@ public abstract class ProtocolSessionFactoryBase<P extends ProtocolSessionProces
 	}
 
 	@Override
-	public SSLUtil getSSLUtil() {
+	public SSLSessionDataFactory getIncomingSSLSessionDataFactory() {
 		// TODO Auto-generated method stub
-		return sslUtil;
+		return incomingSSLSessionFactory;
+	}
+	
+	
+	public void setIncomingSSLSessionDataFactory(SSLSessionDataFactory sslsdf) {
+		// TODO Auto-generated method stub
+		incomingSSLSessionFactory = sslsdf;
 	}
 
 	@Override

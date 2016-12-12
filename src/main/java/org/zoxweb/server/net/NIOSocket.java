@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 
 import org.zoxweb.server.io.IOUtil;
 
-import org.zoxweb.server.net.security.SSLUtil;
+import org.zoxweb.server.net.security.SSLSessionDataFactory;
 import org.zoxweb.server.task.TaskEvent;
 import org.zoxweb.server.task.TaskProcessor;
 import org.zoxweb.server.task.TaskUtil;
@@ -49,47 +49,31 @@ implements Runnable, DaemonController, Closeable
 	private long selectedCountTotal = 0;
 	private long statLogCounter = 0;
 	//private PrintWriter pw = null;
-	private Logger log=logger;
+	//private Logger log=logger;
+	
+	
+	
+	public NIOSocket(TaskProcessor tsp) throws IOException
+	{
+		this(null, null, tsp);
+	}
+	
 	
 	
 	public NIOSocket(ProtocolSessionFactory<?> psf, InetSocketAddress sa, TaskProcessor tsp) throws IOException
-	{
-		this(psf, sa, tsp, null);
-	}
-	
-	public NIOSocket(ProtocolSessionFactory<?> psf, InetSocketAddress sa, TaskProcessor tsp, Logger fileLogger) throws IOException
 	{
 		//SharedUtil.checkIfNulls("Null value", psf, sa);
 		selectorController = new SelectorController(Selector.open());
 		this.tsp = tsp;
 		
-//		this.ifrm = ifrm;
-//		this.outgoingIFRM = outgoingIFRM;
+
 				
 
 		if (sa != null)
 			addServerSocket(sa, psf);
 		
-//		if (logFileName != null)
-//		{
-//			try
-//			{
-//				pw = IOUtil.createPrintWriter(logFileName);
-//			}
-//			catch(Exception e)
-//			{
-//				e.printStackTrace();
-//			}
-//		}
+
 		
-		
-//		log.info("outgoingIFRM  " + (outgoingIFRM != null ? outgoingIFRM.getAll() : null));
-//		log.info("incomingIFRM  " + (ifrm != null ? ifrm.getAll() : null));
-		if (fileLogger != null)
-		{
-			// Override the logger
-			log = fileLogger;
-		}
 		new Thread(this).start();
 	}
 	
@@ -108,7 +92,7 @@ implements Runnable, DaemonController, Closeable
 		
 		SelectionKey sk = selectorController.register(ssc, SelectionKey.OP_ACCEPT);
 		sk.attach(psf);
-		if (debug) log.info(ssc + " added");
+		if (debug) logger.info(ssc + " added");
 		
 		return sk;
 	}
@@ -127,7 +111,7 @@ implements Runnable, DaemonController, Closeable
 		SharedUtil.checkIfNulls("Null values", dc, psf);
 		SelectionKey sk = selectorController.register(dc, SelectionKey.OP_ACCEPT);
 		sk.attach(psf);
-		if (debug) log.info(dc + " added");
+		if (debug) logger.info(dc + " added");
 		
 		return sk;
 	}
@@ -198,14 +182,17 @@ implements Runnable, DaemonController, Closeable
 							        // a connection was accepted by a ServerSocketChannel.
 							    	
 							    	SocketChannel sc = ((ServerSocketChannel)key.channel()).accept();
-							    	log.info("Accepted:" + sc);
+							    	logger.info("Accepted:" + sc);
 							    	ProtocolSessionFactory<?> psf = (ProtocolSessionFactory<?>) key.attachment();
 							    	if (NetUtil.checkSecurityStatus(psf.getIncomingInetFilterRulesManager(), sc.getRemoteAddress(), null) !=  SecurityStatus.ALLOW)
 							    	{
 							    		try
 							    		{ 	
+							    			Logger log = psf.getLogger();
+							    			
 							    			// in try block with catch exception since logger can point to file log
-							    			log.info("access denied:" + sc.getRemoteAddress());
+							    			if (log != null)
+							    				log.info("access denied:" + sc.getRemoteAddress());
 							    		}
 							    		catch(Exception e)
 							    		{
@@ -230,10 +217,10 @@ implements Runnable, DaemonController, Closeable
 								    	
 								    	
 								    	// secure socket
-								    	SSLUtil sslUtil = psf.getSSLUtil();
+								    	SSLSessionDataFactory sslUtil = psf.getIncomingSSLSessionDataFactory();
 								    	if (sslUtil != null)
 								    	{
-								    		if (debug) log.info("we have ssl socket");
+								    		if (debug) logger.info("we have ssl socket");
 								    		psp.setInputSSLSessionData(sslUtil.create(false));
 								    		
 								    	}
@@ -288,7 +275,7 @@ implements Runnable, DaemonController, Closeable
 				if(getStatLogCounter() > 0 && (dispatchCounter%getStatLogCounter() == 0 || (System.currentTimeMillis() - snapTime) > getStatLogCounter()))
 				{
 					snapTime = System.currentTimeMillis();
-					log.info("Average dispatch processing " + TimeInMillis.nanosToString(averageProcessingTime()) + 
+					logger.info("Average dispatch processing " + TimeInMillis.nanosToString(averageProcessingTime()) + 
 							 " total time:" + TimeInMillis.nanosToString(totalDuration) +
 							 " total dispatches:" + dispatchCounter + " total selectors:" + selectedCountTotal + 
 							 " last select count:" + selectedCount + " total keys:" +selectorController.getSelector().keys().size() + 

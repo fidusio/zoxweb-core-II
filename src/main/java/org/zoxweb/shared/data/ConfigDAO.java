@@ -15,13 +15,17 @@
  */
 package org.zoxweb.shared.data;
 
+import org.zoxweb.shared.util.ArrayValues;
 import org.zoxweb.shared.util.GetNVConfig;
+import org.zoxweb.shared.util.GetNameValue;
 import org.zoxweb.shared.util.NVConfig;
 import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVConfigEntityLocal;
 import org.zoxweb.shared.util.NVConfigManager;
+import org.zoxweb.shared.util.NVEntity;
 import org.zoxweb.shared.util.SetCanonicalID;
 import org.zoxweb.shared.util.SharedUtil;
+import org.zoxweb.shared.util.NVConfigEntity.ArrayType;
 
 /**
  * This class is a generic class configurator 
@@ -39,13 +43,15 @@ public class ConfigDAO
 	 * @author mzebib
 	 *
 	 */
+	
+	private volatile  Object attachement;
 	public enum Param
 		implements GetNVConfig
 	{
-		CANONICAL_ID(NVConfigManager.createNVConfig("canonical_id", "Canonical ID", "CanonicalID", true, true, String.class)),
-		BEAN_TYPE(NVConfigManager.createNVConfig("bean_type", "Bean class name", "BeanType", false, true, String.class)),
-		
-		
+		CANONICAL_ID(NVConfigManager.createNVConfig("canonical_id", "Canonical ID", "CanonicalID", false, true, String.class)),
+		BEAN_CLASS_NAME(NVConfigManager.createNVConfig("bean_class_name", "Bean class name", "BeanClassName", false, true, String.class)),
+		PROPERTIES(NVConfigManager.createNVConfig("properties", "Configuration properties", "Properties", false, true, String[].class)),
+		CONTENT(NVConfigManager.createNVConfigEntity("content", "Sub configuration", "Content", false, true, NVEntity[].class, ArrayType.GET_NAME_MAP)),
 		;
 		
 		private final NVConfig cType;
@@ -86,6 +92,13 @@ public class ConfigDAO
 	{
 		super(NVC_CONFIG_DAO);
 	}
+	
+	
+	public ConfigDAO(String name)
+	{
+		this();
+		setName(name);
+	}
 
 	/**
 	 * Returns string representation of this class.
@@ -118,21 +131,41 @@ public class ConfigDAO
 	 * Returns content type.
 	 * @return
 	 */
-	public String getBeanType()
+	public String getBeanClassName()
 	{
-		return lookupValue(Param.BEAN_TYPE);
+		return lookupValue(Param.BEAN_CLASS_NAME);
 	}
 
 	/**
 	 * Sets content type.
 	 * @param type
 	 */
-	public void setBeanType(String type)
+	public void setBeanClassName(String type)
 	{
-		setValue(Param.BEAN_TYPE, type);
+		setValue(Param.BEAN_CLASS_NAME, type);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public ArrayValues<GetNameValue<String>> getProperties()
+	{
+		return (ArrayValues<GetNameValue<String>>) lookup(Param.PROPERTIES);
 	}
 	
 	
+	@SuppressWarnings("unchecked")
+	public ArrayValues<NVEntity> getContent()
+	{
+		return (ArrayValues<NVEntity>) lookup(Param.CONTENT);
+	}
 	
 	
+	public Object attachement()
+	{
+		return attachement;
+	}
+	
+	public void attach(Object attachement)
+	{
+		this.attachement = attachement;
+	}
 }

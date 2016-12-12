@@ -2,17 +2,20 @@ package org.zoxweb.server.net;
 
 
 
-import org.zoxweb.server.net.security.SSLUtil;
+import java.util.logging.Logger;
+
+import org.zoxweb.server.net.security.SSLSessionDataFactory;
 
 public interface ProtocolSessionFactory<P extends ProtocolSessionProcessor>
 {
-	P newInstance();
+	public P newInstance();
 	
-	boolean isBlocking();
+	public boolean isBlocking();
 	
 	
 	
-	SSLUtil getSSLUtil();
+	public SSLSessionDataFactory getIncomingSSLSessionDataFactory();
+	public void setIncomingSSLSessionDataFactory(SSLSessionDataFactory sslSessionDataFactory);
 	
 	
 	public InetFilterRulesManager getIncomingInetFilterRulesManager();
@@ -21,5 +24,7 @@ public interface ProtocolSessionFactory<P extends ProtocolSessionProcessor>
 	public InetFilterRulesManager getOutgoingInetFilterRulesManager();
 	public void setOutgoingInetFilterRulesManager(InetFilterRulesManager incomingIFRM);
 	
+	public Logger getLogger();
 	
+	public void setLogger(Logger logger);
 }

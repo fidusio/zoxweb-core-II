@@ -4,6 +4,7 @@ package org.zoxweb.server.io;
 import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
@@ -108,6 +109,14 @@ public class IOUtil
 	{
 		UByteArrayOutputStream baos = (UByteArrayOutputStream) inputStreamToByteArray(is, close);
 		return new String( baos.getInternalBuffer(), 0 , baos.size(),charsetEncoding );
+	}
+	
+	
+	
+	public static String inputStreamToString(String filename) 
+			throws IOException
+	{
+		return inputStreamToString(new FileInputStream(filename), true);
 	}
 	
 	public static String inputStreamToString(InputStream is, boolean close) 

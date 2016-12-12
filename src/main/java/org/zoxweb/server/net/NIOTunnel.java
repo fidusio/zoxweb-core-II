@@ -23,7 +23,7 @@ import org.zoxweb.server.net.NIOSocket;
 import org.zoxweb.server.net.ProtocolSessionProcessor;
 
 import org.zoxweb.server.net.security.SSLSessionData;
-import org.zoxweb.server.net.security.SSLUtil;
+import org.zoxweb.server.net.security.SSLSessionDataFactory;
 import org.zoxweb.server.task.TaskUtil;
 import org.zoxweb.shared.net.InetSocketAddressDAO;
 import org.zoxweb.shared.util.Const.SourceOrigin;
@@ -40,21 +40,28 @@ extends ProtocolSessionProcessor
 	extends  ProtocolSessionFactoryBase<NIOTunnel>
 	{
 		
-		final private InetSocketAddressDAO remoteAddress;
+		private InetSocketAddressDAO remoteAddress;
 		
-		
+		public NIOTunnelFactory()
+		{
+			
+		}
 		
 		public NIOTunnelFactory(InetSocketAddressDAO remoteAddress, SSLContext sslContext)
 		{
-			this(remoteAddress, new SSLUtil(sslContext));	
+			this(remoteAddress, new SSLSessionDataFactory(sslContext));	
 		}
 		
 		
-		public NIOTunnelFactory(InetSocketAddressDAO remoteAddress, SSLUtil sslUtil)
+		public NIOTunnelFactory(InetSocketAddressDAO remoteAddress, SSLSessionDataFactory sslUtil)
 		{
 			this.remoteAddress = remoteAddress;
-			this.sslUtil = sslUtil;
-			
+			this.incomingSSLSessionFactory = sslUtil;	
+		}
+		
+		public void setRemoteAddress(InetSocketAddressDAO rAddress)
+		{
+			remoteAddress = rAddress;
 		}
 
 		@Override
@@ -237,7 +244,7 @@ extends ProtocolSessionProcessor
 			TaskUtil.setThreadMultiplier(4);
 			
 			
-			new NIOSocket(new NIOTunnelFactory(remoteAddress, (SSLUtil)null), new InetSocketAddress(port), TaskUtil.getDefaultTaskProcessor());
+			new NIOSocket(new NIOTunnelFactory(remoteAddress, (SSLSessionDataFactory)null), new InetSocketAddress(port), TaskUtil.getDefaultTaskProcessor());
 		}
 		catch(Exception e)
 		{

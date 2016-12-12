@@ -7,23 +7,32 @@ import javax.net.ssl.SSLEngine;
 
 import org.zoxweb.shared.util.SharedUtil;
 
-public class SSLUtil 
+public class SSLSessionDataFactory 
 {
 	
 	
 	
 	
-	private final SSLContext sslContext;
+	private SSLContext sslContext;
 	
-	public SSLUtil(SSLContext sslContext)
+	
+	public SSLSessionDataFactory()
 	{
-		SharedUtil.checkIfNulls("Can't have a null sllContext", sslContext);
-		this.sslContext = sslContext;
+		
+	}
+	
+	public SSLSessionDataFactory(SSLContext sslContext)
+	{
+		setSSLContext(sslContext);
 	}
 	
 	
 	
-	
+	public void setSSLContext(SSLContext sslContext)
+	{
+		SharedUtil.checkIfNulls("Can't have a null sllContext", sslContext);
+		this.sslContext = sslContext;
+	}
 	public SSLContext getSSLContext()
 	{
 		return sslContext;

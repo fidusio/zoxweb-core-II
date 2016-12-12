@@ -140,7 +140,7 @@ extends ProtocolSessionProcessor
 	}
 	
 	
-	public static final class NIOProxyProcotolFactory
+	public static final class NIOProxyProtocolFactory
 		extends ProtocolSessionFactoryBase<NIOProxyProtocol>
 	{
 
@@ -628,11 +628,12 @@ extends ProtocolSessionProcessor
 			}
 			log.info("filename:" + filename);
 			
-			NIOProxyProcotolFactory factory = new NIOProxyProcotolFactory();
+			NIOProxyProtocolFactory factory = new NIOProxyProtocolFactory();
+			factory.setLogger(LoggerUtil.loggerToFile(NIOProxyProtocol.class.getName()+".proxy", filename));
 			factory.setIncomingInetFilterRulesManager(clientIFRM);
 			
 			
-			NIOSocket nsio = new NIOSocket(factory, new InetSocketAddress(port), TaskUtil.getDefaultTaskProcessor(), LoggerUtil.loggerToFile(NIOProxyProtocol.class.getName()+".proxy", filename));
+			NIOSocket nsio = new NIOSocket(factory, new InetSocketAddress(port), TaskUtil.getDefaultTaskProcessor());
 			nsio.setStatLogCounter(0);
 			
 			//nios.addSeverSocket(2401, new NIOTunnelFactory(new InetSocketAddressDAO("10.0.0.1:2401")));
