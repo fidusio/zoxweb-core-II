@@ -7,15 +7,12 @@ import java.nio.channels.SelectionKey;
 import org.zoxweb.server.io.ByteBufferUtil;
 
 import org.zoxweb.server.net.security.SSLSessionData;
-import org.zoxweb.server.task.RunnableTask;
-import org.zoxweb.server.task.TaskEvent;
-//import org.zoxweb.server.task.TaskEvent;
+
 import org.zoxweb.shared.util.GetDescription;
 import org.zoxweb.shared.util.GetName;
 
 public abstract class ProtocolSessionProcessor
-	extends RunnableTask
-	implements GetName, GetDescription, Closeable
+	implements GetName, GetDescription, Closeable, Runnable
 {
 
 	protected volatile boolean selectable = true;
@@ -25,6 +22,7 @@ public abstract class ProtocolSessionProcessor
 	protected volatile ByteBuffer bBuffer = null;
 	private volatile SSLSessionData outputSSLSessionData;
 	private volatile SSLSessionData inputSSLSessionData;
+	private volatile SelectionKey attachement;
 	
 	protected ProtocolSessionProcessor()
 	{
@@ -57,15 +55,32 @@ public abstract class ProtocolSessionProcessor
 	}
 	
 	
-	@Override
-	public void finishTask(TaskEvent event) 
+
+	
+	public synchronized void attach(SelectionKey sk)
 	{
-		selectable = true;
+		attachement = sk;
+	}
+	
+	protected synchronized SelectionKey detach()
+	{
+		SelectionKey ret = attachement;
+		attachement = null;
+		return ret;
 	}
 	
 	public void run()
 	{
-		processRead((SelectionKey) getTaskEvent().getTaskExecutorParameters()[0]);
+		try
+		{
+			processRead(detach());
+		}
+		catch(Exception e)
+		{
+			
+		}
+		// very crucial be set to true after the processRead call
+		selectable = true;
 	}
 	
 	
@@ -113,25 +128,29 @@ public abstract class ProtocolSessionProcessor
 
 
 
-	public SSLSessionData getOutputSSLSessionData() {
+	public SSLSessionData getOutputSSLSessionData()
+	{
 		return outputSSLSessionData;
 	}
 
 
 
-	public void setOutputSSLSessionData(SSLSessionData outputSSLSessionData) {
+	public void setOutputSSLSessionData(SSLSessionData outputSSLSessionData)
+	{
 		this.outputSSLSessionData = outputSSLSessionData;
 	}
 
 
 
-	public SSLSessionData getInputSSLSessionData() {
+	public SSLSessionData getInputSSLSessionData()
+	{
 		return inputSSLSessionData;
 	}
 
 
 
-	public void setInputSSLSessionData(SSLSessionData inputSSLSessionData) {
+	public void setInputSSLSessionData(SSLSessionData inputSSLSessionData)
+	{
 		this.inputSSLSessionData = inputSSLSessionData;
 	}
 

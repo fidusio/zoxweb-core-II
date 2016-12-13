@@ -29,7 +29,7 @@ implements TaskExecutor, Runnable
 		@Override
 		public void run() 
 		{
-			TaskEvent te = getTaskEvent();
+			TaskEvent te = attachedEvent();
 			((Runnable)te.getTaskExecutorParameters()[0]).run();
 		}
 
@@ -59,9 +59,11 @@ implements TaskExecutor, Runnable
 		
 	}
 	
-	protected TaskEvent getTaskEvent()
+	protected TaskEvent attachedEvent()
 	{
 		return te;
 	}
+	
+	
 
 }

@@ -98,7 +98,7 @@ extends APIServiceProviderBase<Void>
 		{
 			// TODO Auto-generated method stub
 			//sendAPIMessageInternal((APIMessage) event.getTaskExecutorParameters()[0]);
-			TaskEvent event = getTaskEvent();
+			TaskEvent event = attachedEvent();
 			int index = 0;
 			SMTPProvider smtpProvider =  (SMTPProvider) event.getTaskExecutorParameters()[index++];
 			APINotificationMessage notificationMessage = (APINotificationMessage) event.getTaskExecutorParameters()[index++];

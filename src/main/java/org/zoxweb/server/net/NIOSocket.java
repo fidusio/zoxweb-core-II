@@ -11,6 +11,7 @@ import java.nio.channels.SocketChannel;
 
 import java.util.Iterator;
 import java.util.Set;
+import java.util.concurrent.Executor;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Logger;
 
@@ -19,8 +20,8 @@ import java.util.logging.Logger;
 import org.zoxweb.server.io.IOUtil;
 
 import org.zoxweb.server.net.security.SSLSessionDataFactory;
-import org.zoxweb.server.task.TaskEvent;
-import org.zoxweb.server.task.TaskProcessor;
+
+
 import org.zoxweb.server.task.TaskUtil;
 import org.zoxweb.shared.net.InetSocketAddressDAO;
 import org.zoxweb.shared.security.SecurityStatus;
@@ -37,10 +38,10 @@ public class NIOSocket
 implements Runnable, DaemonController, Closeable
 {
 	private static final transient Logger logger = Logger.getLogger(NIOSocket.class.getName());
-	private static boolean debug = true;
+	private static boolean debug = false;
 	private boolean live = true;
 	private final SelectorController selectorController;
-	private final TaskProcessor tsp;
+	private final Executor tsp;
 	private AtomicLong connectionCount = new AtomicLong();
 //	private final InetFilterRulesManager ifrm;
 //	private final InetFilterRulesManager outgoingIFRM;
@@ -53,14 +54,14 @@ implements Runnable, DaemonController, Closeable
 	
 	
 	
-	public NIOSocket(TaskProcessor tsp) throws IOException
+	public NIOSocket(Executor tsp) throws IOException
 	{
 		this(null, null, tsp);
 	}
 	
 	
 	
-	public NIOSocket(ProtocolSessionFactory<?> psf, InetSocketAddress sa, TaskProcessor tsp) throws IOException
+	public NIOSocket(ProtocolSessionFactory<?> psf, InetSocketAddress sa, Executor tsp) throws IOException
 	{
 		//SharedUtil.checkIfNulls("Null value", psf, sa);
 		selectorController = new SelectorController(Selector.open());
@@ -165,11 +166,13 @@ implements Runnable, DaemonController, Closeable
 							    	{
 							    		// very very crucial setup prior to processing
 							    		currentPSP.setSeletectable(false);
+							    		currentPSP.attach(key);
 							    		// a channel is ready for reading
 								    	if (tsp != null)
 								    	{
 								    		
-								    		tsp.queueTask(new TaskEvent(this, currentPSP, key));
+								    		//tsp.queueTask(new TaskEvent(this, currentPSP, key));
+								    		tsp.execute(currentPSP);
 								    	}
 								    	else
 								    	{
@@ -182,7 +185,7 @@ implements Runnable, DaemonController, Closeable
 							        // a connection was accepted by a ServerSocketChannel.
 							    	
 							    	SocketChannel sc = ((ServerSocketChannel)key.channel()).accept();
-							    	logger.info("Accepted:" + sc);
+							    	if (debug) logger.info("Accepted:" + sc);
 							    	ProtocolSessionFactory<?> psf = (ProtocolSessionFactory<?>) key.attachment();
 							    	if (NetUtil.checkSecurityStatus(psf.getIncomingInetFilterRulesManager(), sc.getRemoteAddress(), null) !=  SecurityStatus.ALLOW)
 							    	{
