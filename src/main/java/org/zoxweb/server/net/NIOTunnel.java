@@ -173,24 +173,20 @@ extends ProtocolSessionProcessor
     		
     		if (read == -1)
     		{
-    			if(debug)
-    				log.info("+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+Read:" + read);
+    			if (debug) log.info("+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+Read:" + read);
     			
     			getSelectorController().cancelSelectionKey(key);
     			IOUtil.close(relay);	
     			close();
     				
-    			if (debug)
-    				log.info(key + ":" + key.isValid()+ " " + Thread.currentThread() + " " + TaskUtil.getDefaultTaskProcessor().availableExecutorThreads());		
+    			if (debug) log.info(key + ":" + key.isValid()+ " " + Thread.currentThread() + " " + TaskUtil.getDefaultTaskProcessor().availableExecutorThreads());		
     		}
     	}
     	catch(Exception e)
     	{
-    		//if(debug)
-    			e.printStackTrace();
+    		if (debug) e.printStackTrace();
     		IOUtil.close(this);
-    		if(debug)
-    			log.info(System.currentTimeMillis() + ":Connection end " + key + ":" + key.isValid()+ " " + Thread.currentThread() + " " + TaskUtil.getDefaultTaskProcessor().availableExecutorThreads());
+    		if (debug) log.info(System.currentTimeMillis() + ":Connection end " + key + ":" + key.isValid()+ " " + Thread.currentThread() + " " + TaskUtil.getDefaultTaskProcessor().availableExecutorThreads());
     		
     	}
 		finally

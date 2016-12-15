@@ -20,7 +20,7 @@ import org.zoxweb.server.io.ByteBufferUtil.BufferType;
 public class SSLSessionData
 	implements Closeable
 {
-	private static final boolean debug = true;
+	private static final boolean debug = false;
 	
 	private static final transient Logger log = Logger.getLogger(SSLSessionData.class.getName());
 	
