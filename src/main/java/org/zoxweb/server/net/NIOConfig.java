@@ -37,6 +37,12 @@ public class NIOConfig
 	private ConfigDAO configDAO;
 
 	
+	
+	public NIOConfig(String configDAOFile) throws InstantiationException, IllegalAccessException, ClassNotFoundException, IOException
+	{
+		this(GSONUtil.fromJSON(IOUtil.inputStreamToString(configDAOFile)));
+	}
+	
 	public NIOConfig(ConfigDAO configDAO)
 	{
 		this.configDAO = parse(configDAO);
@@ -205,7 +211,7 @@ public class NIOConfig
 		try
 		{
 			System.out.println("loading file " + args[0]);
-			ConfigDAO configDAO = GSONUtil.fromJSON(IOUtil.inputStreamToString(args[0]));
+			 ConfigDAO configDAO =GSONUtil.fromJSON(IOUtil.inputStreamToString(args[0]));
 			NIOConfig nioConfig = new NIOConfig(configDAO);
 			nioConfig.create();
 		}
