@@ -1,5 +1,6 @@
 package org.zoxweb.server.net.security;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -23,7 +24,7 @@ import org.zoxweb.shared.net.InetSocketAddressDAO;
 
 
 public class SecureNetworkTunnel
-implements Runnable
+implements Runnable, Closeable
 {
 	private static transient final Logger log = Logger.getLogger(SecureNetworkTunnel.class.getName());
 	/*
@@ -78,6 +79,13 @@ implements Runnable
 	}
 	
 	
+	@Override
+	public void close() throws IOException {
+		// TODO Auto-generated method stub
+		ss.close();
+	}
+	
+	@SuppressWarnings("resource")
 	public static void main(String ...args)
 	{
 		try
@@ -102,7 +110,7 @@ implements Runnable
 			if (nio)
 			{
 				log.info("Creating NIO Secure tunnel");
-				@SuppressWarnings("resource")
+				
 				NIOSocket nios = new NIOSocket(null, null, TaskUtil.getDefaultTaskProcessor());
 				for(; index < args.length; index++)
 				{
@@ -158,5 +166,8 @@ implements Runnable
 			System.exit(0);
 		}
 	}
+
+
+	
 	
 }

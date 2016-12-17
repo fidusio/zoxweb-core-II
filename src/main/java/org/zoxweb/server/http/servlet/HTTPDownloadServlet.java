@@ -116,7 +116,7 @@ public class HTTPDownloadServlet
 	
 	
 	
-	public void authenticate( HttpServletRequest request, HttpServletResponse response) throws AccessException
+	public void authenticate(HttpServletRequest request, HttpServletResponse response) throws AccessException
 	{
 		
 	}
@@ -131,12 +131,7 @@ public class HTTPDownloadServlet
 			// must allow secure communication only
 			resp.sendError( HTTPStatusCode.FORBIDDEN.CODE, "HTTPS request required.");
 			return;
-
 		}
-		
-		
-		
-	
 		
 		try
 		{

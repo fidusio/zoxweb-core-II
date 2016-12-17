@@ -29,6 +29,8 @@ import org.zoxweb.shared.net.InetSocketAddressDAO;
 import org.zoxweb.shared.util.Const.SourceOrigin;
 
 
+
+
 public class NIOTunnel 
 extends ProtocolSessionProcessor
 {
@@ -62,6 +64,11 @@ extends ProtocolSessionProcessor
 		public void setRemoteAddress(InetSocketAddressDAO rAddress)
 		{
 			remoteAddress = rAddress;
+		}
+		
+		public InetSocketAddressDAO getRemoteAddress()
+		{
+			return remoteAddress;
 		}
 
 		@Override
@@ -153,7 +160,7 @@ extends ProtocolSessionProcessor
 			int read = 0 ;
     		do
     		{
-    			bBuffer.clear();
+    		
     			
     			if (sslSessionData != null)
     			{
@@ -162,6 +169,7 @@ extends ProtocolSessionProcessor
     			}
     			else
     			{
+    				bBuffer.clear();
     				read = ((SocketChannel)key.channel()).read(bBuffer);
     			}
     			if (read > 0)

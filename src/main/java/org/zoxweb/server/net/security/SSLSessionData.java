@@ -29,6 +29,7 @@ public class SSLSessionData
 	private ByteBuffer outSSLBuffer;
 	private ByteBuffer inSSLBuffer;
 	private Lock ioLock = new ReentrantLock();
+	
 	boolean firstRead = true;
 	
 	
@@ -140,7 +141,7 @@ public class SSLSessionData
 					case BUFFER_OVERFLOW:
 						break;
 					case BUFFER_UNDERFLOW:
-						break;
+						return 0;
 					case CLOSED:
 						return -1;
 					case OK:

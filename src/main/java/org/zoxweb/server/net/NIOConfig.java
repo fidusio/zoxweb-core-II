@@ -3,7 +3,7 @@ package org.zoxweb.server.net;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.channels.ServerSocketChannel;
-
+import java.util.logging.Logger;
 
 import javax.net.ssl.SSLContext;
 
@@ -14,6 +14,7 @@ import org.zoxweb.server.io.IOUtil;
 import org.zoxweb.server.logging.LoggerUtil;
 import org.zoxweb.server.net.NIOTunnel.NIOTunnelFactory;
 import org.zoxweb.server.net.security.SSLSessionDataFactory;
+import org.zoxweb.server.net.security.SecureNetworkTunnel;
 import org.zoxweb.server.task.TaskUtil;
 import org.zoxweb.server.util.GSONUtil;
 import org.zoxweb.shared.data.ConfigDAO;
@@ -35,6 +36,7 @@ public class NIOConfig
 	
 	
 	private ConfigDAO configDAO;
+	private static final transient Logger log = Logger.getLogger(NIOConfig.class.getName());
 
 	
 	
@@ -64,11 +66,24 @@ public class NIOConfig
 				
 				if (config.attachement() instanceof ProtocolSessionFactory)
 				{
-					ServerSocketChannel ssc = ServerSocketChannel.open();
+					ProtocolSessionFactory<?> psf = (ProtocolSessionFactory<?>) config.attachement();
 					
-					ssc.bind(new InetSocketAddress(Integer.parseInt(SharedUtil.lookupValue(config.getProperties().get("port")))));
+					if (psf.getIncomingSSLSessionDataFactory() != null && psf instanceof NIOTunnelFactory)
+					{
+						log.info("Creating secure network tunnel:" + config.getProperties().get("port") + "," + ((NIOTunnelFactory)psf).getRemoteAddress() );
+						// secure temporary fix since the NIO Secure Socket still not fully operational
+						new SecureNetworkTunnel(psf.getIncomingSSLSessionDataFactory().getSSLContext().getServerSocketFactory(), 
+											    Integer.parseInt(SharedUtil.lookupValue(config.getProperties().get("port"))), 
+											    ((NIOTunnelFactory)psf).getRemoteAddress());
+					}
+					else
+					{
+						ServerSocketChannel ssc = ServerSocketChannel.open();
+					
+						ssc.bind(new InetSocketAddress(Integer.parseInt(SharedUtil.lookupValue(config.getProperties().get("port")))));
 	
-					ret.addServerSocket(ssc, (ProtocolSessionFactory<?>)config.attachement());
+						ret.addServerSocket(ssc, psf);
+					}
 				}
 			}
 		}

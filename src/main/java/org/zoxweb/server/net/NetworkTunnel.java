@@ -17,6 +17,7 @@ implements IsClosed
 	
 	
 	private static transient final Logger log = Logger.getLogger(NetworkTunnel.class.getName());
+	public static boolean debug = false;
 	
 	
 	static class StreamRelay
@@ -41,7 +42,7 @@ implements IsClosed
 		{
 			if (!closedStat)
 			{
-				log.info("closed");
+				if(debug)log.info("closed");
 				closedStat = true;
 				IOUtil.close(is);
 				IOUtil.close(os);
@@ -60,7 +61,7 @@ implements IsClosed
 		@Override
 		public void run() 
 		{
-			log.info("started");
+			if(debug) log.info("started");
 			byte buffer[] = new byte[4096];
 			// TODO Auto-generated method stub
 			int read = 0;
@@ -69,7 +70,7 @@ implements IsClosed
 				try
 				{
 					read = is.read(buffer);
-					log.info("Read:" + read);
+					if(debug) log.info("Read:" + read);
 					if (read > 0)
 					{
 						os.write(buffer, 0, read);
