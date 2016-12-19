@@ -122,6 +122,8 @@ public class NIOConfig
 																		SharedUtil.getValue(config.getProperties().get("trustore_file")), 
 																		SharedUtil.getValue(config.getProperties().get("trustore_password")) != null ?  SharedUtil.getValue(config.getProperties().get("trustore_password")).toCharArray() : null);
 							((SSLSessionDataFactory)toAttach).setSSLContext(sslc);
+							
+							((SSLSessionDataFactory)toAttach).setExecutor(TaskUtil.getDefaultTaskProcessor());
 						}
 							
 							

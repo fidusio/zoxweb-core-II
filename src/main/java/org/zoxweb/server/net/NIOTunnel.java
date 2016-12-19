@@ -51,7 +51,7 @@ extends ProtocolSessionProcessor
 		
 		public NIOTunnelFactory(InetSocketAddressDAO remoteAddress, SSLContext sslContext)
 		{
-			this(remoteAddress, new SSLSessionDataFactory(sslContext));	
+			this(remoteAddress, new SSLSessionDataFactory(sslContext, null));	
 		}
 		
 		

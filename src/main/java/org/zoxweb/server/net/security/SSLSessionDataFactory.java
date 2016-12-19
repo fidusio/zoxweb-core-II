@@ -2,6 +2,8 @@ package org.zoxweb.server.net.security;
 
 
 
+import java.util.concurrent.Executor;
+
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLEngine;
 
@@ -14,16 +16,20 @@ public class SSLSessionDataFactory
 	
 	
 	private SSLContext sslContext;
+	private volatile Executor executor;
 	
 	
+	
+
 	public SSLSessionDataFactory()
 	{
 		
 	}
 	
-	public SSLSessionDataFactory(SSLContext sslContext)
+	public SSLSessionDataFactory(SSLContext sslContext, Executor executor)
 	{
 		setSSLContext(sslContext);
+		setExecutor(executor);
 	}
 	
 	
@@ -38,13 +44,22 @@ public class SSLSessionDataFactory
 		return sslContext;
 	}
 	
+	public Executor getExecutor() 
+	{
+		return executor;
+	}
+
+	public void setExecutor(Executor executor)
+	{
+		this.executor = executor;
+	}
 	
 	public SSLSessionData create(boolean client)
 	{
 		SSLEngine sslEngine = sslContext.createSSLEngine();
 		sslEngine.setUseClientMode(client);
 		sslEngine.setWantClientAuth(true);
-		SSLSessionData ret = new SSLSessionData(sslEngine);
+		SSLSessionData ret = new SSLSessionData(sslEngine, executor);
 		
 		return ret;
 	}

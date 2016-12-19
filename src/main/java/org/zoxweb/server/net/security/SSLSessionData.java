@@ -4,6 +4,7 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
+import java.util.concurrent.Executor;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Logger;
@@ -30,12 +31,15 @@ public class SSLSessionData
 	private ByteBuffer inSSLBuffer;
 	private Lock ioLock = new ReentrantLock();
 	
-	boolean firstRead = true;
+	private boolean firstRead = true;
+	
+	private volatile Executor executor = null;
 	
 	
-	SSLSessionData(SSLEngine sslEngine)
+	SSLSessionData(SSLEngine sslEngine, Executor executor)
 	{
 		this.sslEngine = sslEngine;
+		this.executor = executor;
 		sslSession = sslEngine.getSession();
 		outSSLBuffer = ByteBuffer.allocate(sslSession.getPacketBufferSize());
 		inSSLBuffer  = ByteBuffer.allocate(sslSession.getPacketBufferSize());
@@ -377,7 +381,14 @@ public class SSLSessionData
             case NEED_TASK:
                 Runnable task;
                 while ((task = engine.getDelegatedTask()) != null) {
-                    task.run();
+                	if (executor != null)
+                	{
+                		executor.execute(task);
+                	}
+                	else
+                	{	
+                		task.run();
+                	}
                 }
                 handshakeStatus = engine.getHandshakeStatus();
                 break;
