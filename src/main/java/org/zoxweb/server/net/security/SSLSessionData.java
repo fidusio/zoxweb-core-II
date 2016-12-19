@@ -261,7 +261,30 @@ public class SSLSessionData
 	
 	}
 
+	protected boolean checkForHandShake(SocketChannel socketChannel)
+	{
+		boolean ret = false;
+        HandshakeStatus handshakeStatus = sslEngine.getHandshakeStatus();
+        while (handshakeStatus != SSLEngineResult.HandshakeStatus.FINISHED && handshakeStatus != SSLEngineResult.HandshakeStatus.NOT_HANDSHAKING)
+        {
+            switch(handshakeStatus)
+            {
+                case NEED_TASK:
+                    Runnable task;
+                    while ((task = sslEngine.getDelegatedTask()) != null) {
+                        task.run();
+                    }
+                    handshakeStatus = sslEngine.getHandshakeStatus();
+                    break;
+                case NEED_WRAP:
+                    break;
+                case NEED_UNWRAP:
+                    break;
+            }
+        }
 
+		return ret;
+	}
 	
 	
     protected boolean doHandshake(SocketChannel socketChannel, SSLEngine engine) throws IOException {
