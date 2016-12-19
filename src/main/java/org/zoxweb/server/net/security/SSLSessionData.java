@@ -280,6 +280,8 @@ public class SSLSessionData
                     break;
                 case NEED_UNWRAP:
                     break;
+                default:
+                    	
             }
         }
 
