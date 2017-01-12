@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -26,13 +25,15 @@ public class RabbitMQReceive {
 
         volatile Channel channel;
         long id;
+        String message;
+        String uuid;
 
 
         public void run()
         {
             try
             {
-                System.out.println( "START " + Thread.currentThread().getName() + ":" + id);
+                System.out.println( "START " + Thread.currentThread().getName() + ":" + id + ":" + message);
                 long timeToSleep = SecureRandom.getInstance("SHA1PRNG").nextInt(100) +1 ;
 		          try {
 
@@ -52,7 +53,7 @@ public class RabbitMQReceive {
         }
     }
 
-	private static long counter = 0;
+	//private static long counter = 0;
     private static Executor executor = Executors.newCachedThreadPool();
 
 	private  static String EXCHANGE = "";
@@ -112,6 +113,8 @@ public class RabbitMQReceive {
 		          ConsumerTask ct = new ConsumerTask();
 		          ct.channel = getChannel();
 		          ct.id = envelope.getDeliveryTag();
+		          ct.message = message;
+		          ct.uuid = uuid;
 
 		          executor.execute(ct);
 		          getChannel().basicAck(envelope.getDeliveryTag(), true);
