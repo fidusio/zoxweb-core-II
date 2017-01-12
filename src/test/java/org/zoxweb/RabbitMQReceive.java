@@ -7,16 +7,53 @@ import com.rabbitmq.client.DefaultConsumer;
 import com.rabbitmq.client.Envelope;
 
 import java.io.IOException;
+import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
 
 public class RabbitMQReceive {
 
+    public static class ConsumerTask
+        implements Runnable
+    {
+
+        volatile Channel channel;
+        long id;
+
+
+        public void run()
+        {
+            try
+            {
+                System.out.println( "START " + Thread.currentThread().getName() + ":" + id);
+                long timeToSleep = SecureRandom.getInstance("SHA1PRNG").nextInt(100) +1 ;
+		          try {
+
+					Thread.sleep(timeToSleep);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+                System.out.println( "END afer sleeping " + timeToSleep + ":"+ Thread.currentThread().getName() + ":" + id);
+
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
+
 	private static long counter = 0;
+    private static Executor executor = Executors.newCachedThreadPool();
 
 	private  static String EXCHANGE = "";
 	public static void main(String[] args) 
@@ -65,15 +102,20 @@ public class RabbitMQReceive {
 		            throws IOException {
 		          String message = new String(body, "UTF-8");
 		          //if (counter++ % 10000 == 0)
-		        	  System.out.println( Thread.currentThread().getName() + ":" + uuid + " [" +(++counter) +"] Received '" + message + "'" + properties.getPriority() + "," + properties.getMessageId());
+		        	 // System.out.println( Thread.currentThread().getName() + ":" + uuid + " [" +(++counter) +"] Received '" + message + "'" + properties.getPriority() + "," + properties.getMessageId());
 //		          try {
 //					Thread.sleep(50);
 //				} catch (InterruptedException e) {
 //					// TODO Auto-generated catch block
 //					e.printStackTrace();
 //				}
-		          
+		          ConsumerTask ct = new ConsumerTask();
+		          ct.channel = getChannel();
+		          ct.id = envelope.getDeliveryTag();
+
+		          executor.execute(ct);
 		          getChannel().basicAck(envelope.getDeliveryTag(), true);
+
 		        }
 		        
 		      };
