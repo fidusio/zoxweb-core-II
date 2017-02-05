@@ -26,46 +26,45 @@ import org.zoxweb.shared.util.NVConfigEntityLocal;
 import org.zoxweb.shared.util.SetName;
 import org.zoxweb.shared.util.SharedUtil;
 
+import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
+
 /**
  * This class defines set name data access object.
  * @author mzebib
  *
  */
+@MappedSuperclass
 @SuppressWarnings("serial")
-abstract public class SetNameDAO 
+public abstract class SetNameDAO
 	extends ReferenceIDDAO
 	implements SetName
 {
+	public static final String COLUMN_NAME = "name";
+
 	//public static final NVConfig NVC_NAME = NVConfigManager.createNVConfig("name", null,"Name", false, true, String.class);
 
-	
 	public static final NVConfigEntity NVC_NAME_DAO = new NVConfigEntityLocal(null, null , null, true, false, false, false, SetNameDAO.class, SharedUtil.toNVConfigList(DataParam.NAME.getNVConfig()), null, false, ReferenceIDDAO.NVC_REFERENCE_ID_DAO);
-	/**
-	 * This constructor instantiates SetNameDAO based on list of NVConfigEntity type.
-	 * @param list
-	 */	
-	protected SetNameDAO(NVConfigEntity nvce) 
-	{
+
+	protected SetNameDAO(NVConfigEntity nvce) {
 		super(nvce);
 	}
 	
-	
 	/**
-	 * This method returns the name value.
+	 * Returns the name value.
 	 * @return
 	 */
-	public String getName() 
-	{
+	@Column(name = COLUMN_NAME)
+	public String getName() {
 		return lookupValue(DataParam.NAME);
 	}
 
 	/**
-	 * This method sets the name value.
+	 * Sets the name value.
 	 * @param name
 	 */
 	public void setName(String name) 
-			throws NullPointerException, IllegalArgumentException
-	{
+			throws NullPointerException, IllegalArgumentException {
 		setValue(DataParam.NAME, name);
 	}
 	

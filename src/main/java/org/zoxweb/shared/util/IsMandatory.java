@@ -20,11 +20,12 @@ package org.zoxweb.shared.util;
  * @author mzebib
  *
  */
-public interface IsMandatory 
-{
+public interface IsMandatory {
+
 	/**
 	 * Checks if property is mandatory.
 	 * @return
 	 */
 	public boolean isMandatory();
+
 }

@@ -15,66 +15,60 @@
  */
 package org.zoxweb.shared.data;
 
-import org.zoxweb.shared.util.NVConfig;
-import org.zoxweb.shared.util.NVConfigEntity;
-import org.zoxweb.shared.util.NVConfigEntityLocal;
-import org.zoxweb.shared.util.NVConfigManager;
-import org.zoxweb.shared.util.NVEntity;
-import org.zoxweb.shared.util.SharedUtil;
+import org.zoxweb.shared.util.*;
+
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 
 /**
  * 
  * @author mzebib
  *
  */
+@MappedSuperclass
 @SuppressWarnings("serial")
 public abstract class ReferenceIDDAO 
-	extends NVEntity
-{
-	
+	extends NVEntity {
+
+	public static final String COLUMN_REF_ID = "reference_id";
+
 	public static final NVConfig NVC_REFERENCE_ID = NVConfigManager.createNVConfig("reference_id", "The reference id of the Object","ReferenceID", true, false, true, true, true, String.class, null);
 	public static final NVConfig NVC_ACCOUNT_ID = NVConfigManager.createNVConfig("account_id", "The account id","AccountID", true, false, false, true, true, String.class, null);
 	public static final NVConfig NVC_USER_ID = NVConfigManager.createNVConfig("user_id", "The user id","UserID", true, false, false, true, true, String.class, null);
 	public static final NVConfigEntity NVC_REFERENCE_ID_DAO = new NVConfigEntityLocal(null, null , null, true, false, false, false,ReferenceIDDAO.class, SharedUtil.toNVConfigList(NVC_REFERENCE_ID, NVC_ACCOUNT_ID, NVC_USER_ID), null, false, null);
 	
-//	protected ReferenceIDDAO(List<NVConfigEntity> list)
-//	{
+//	protected ReferenceIDDAO(List<NVConfigEntity> list){
 //		super(SharedUtil.merge(list, NVC_REFERENCE_ID_DAO));
 //	}
-	
-	/**
-	 * This constructor instantiates ReferenceIDDAO based on given NVConfigEntity parameter.
-	 * @param nvce
-	 */
-	protected ReferenceIDDAO(NVConfigEntity nvce)
-	{
+
+	protected ReferenceIDDAO(NVConfigEntity nvce) {
 		super(nvce);
 	}
 	
 	/**
-	 * Gets the reference ID.
+	 * Returns the reference ID.
 	 * @return 
 	 */
-	public String getReferenceID() 
-	{
+	@Id
+	@Column(name = COLUMN_REF_ID)
+	public String getReferenceID() {
 		return lookupValue(NVC_REFERENCE_ID);
 	}
 
 	/**
 	 * Sets the reference ID.
-	 * @param id
+	 * @param referenceID
 	 */
-	public void setReferenceID(String id) 
-	{
-		setValue(NVC_REFERENCE_ID, id);
+	public void setReferenceID(String referenceID) {
+		setValue(NVC_REFERENCE_ID, referenceID);
 	}
 	
 	/**
-	 * Gets the account ID.
+	 * Returns the account ID.
 	 * @return 
 	 */
-	public String getAccountID() 
-	{
+	public String getAccountID() {
 		return lookupValue(NVC_ACCOUNT_ID);
 	}
 
@@ -82,17 +76,15 @@ public abstract class ReferenceIDDAO
 	 * Sets the account ID.
 	 * @param id
 	 */
-	public void setAccountID(String id) 
-	{
+	public void setAccountID(String id) {
 		setValue(NVC_ACCOUNT_ID, id);
 	}
 	
 	/**
-	 * Gets the user ID.
+	 * Returns the user ID.
 	 * @return 
 	 */
-	public String getUserID() 
-	{
+	public String getUserID() {
 		return lookupValue(NVC_USER_ID);
 	}
 
@@ -100,9 +92,8 @@ public abstract class ReferenceIDDAO
 	 * Sets the user ID.
 	 * @param id
 	 */
-	public void setUserID(String id) 
-	{
+	public void setUserID(String id) {
 		setValue(NVC_USER_ID, id);
 	}
-		
+
 }

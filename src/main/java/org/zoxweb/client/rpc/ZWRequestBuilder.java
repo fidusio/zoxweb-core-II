@@ -24,26 +24,22 @@ import com.google.gwt.http.client.RequestBuilder;
  * 
  */
 public class ZWRequestBuilder
-	extends RequestBuilder
-{
+		extends RequestBuilder {
+
 	/**
-	 * @param httpMethod
+	 * @param method
 	 * @param url
 	 */
-	public ZWRequestBuilder(HTTPMethod method, String url)
-	{
+	public ZWRequestBuilder(HTTPMethod method, String url) {
 		this(method.getName(), url);
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
 	 * @param httpMethod
 	 * @param url
 	 */
-	public ZWRequestBuilder(String httpMethod, String url)
-	{
+	public ZWRequestBuilder(String httpMethod, String url) {
 		super(httpMethod, url);
-		// TODO Auto-generated constructor stub
 	}
 
 }

@@ -15,15 +15,12 @@
  */
 package org.zoxweb.shared.util;
 
-
 import java.util.Arrays;
 import java.util.HashMap;
-//import java.util.List;
 
 import java.util.List;
 
 import org.zoxweb.shared.filters.ValueFilter;
-import org.zoxweb.shared.util.ReferenceID;
 
 /**
  * This is a meta defined object which can be represented as a bean object. 
@@ -32,21 +29,18 @@ import org.zoxweb.shared.util.ReferenceID;
  *
  */
 @SuppressWarnings("serial")
-abstract public class NVEntity
+public abstract class NVEntity
 	implements ReferenceID<String>,
 			   AccountID<String>,
 			   UserID<String>,
 			   GetNVConfig,
-			   GetName
-{
+			   GetName {
 	
-	static class NVCB<V>
-	{
+	static class NVCB<V> {
 		final NVConfig nvc;
 		final NVBase<V> nvb;
 		
-		NVCB(NVConfig nvc, NVBase<V> nvb)
-		{
+		NVCB(NVConfig nvc, NVBase<V> nvb) {
 			this.nvc = nvc;
 			this.nvb = nvb;
 		}
@@ -55,70 +49,61 @@ abstract public class NVEntity
 	protected transient NVConfigEntity config;
 
 	protected HashMap<String, NVBase<?>> attributes;
-	
-	protected NVEntity(NVConfigEntity nvce)
-	{
+
+	protected NVEntity(NVConfigEntity nvce) {
 //		config = nvce;
 //		attributes = SharedUtil.toData( config.getAttributes());
 		this(nvce, SharedUtil.toData(nvce.getAttributes()));
 	}
-	
 	
 	/**
 	 * 
 	 * @param c
 	 * @param a
 	 */
-	protected NVEntity(NVConfigEntity c, HashMap<String, NVBase<?>>  a)
-	{
+	protected NVEntity(NVConfigEntity c, HashMap<String, NVBase<?>>  a) {
 		config = c;
 		attributes = a;
 	}
 	
 	
 	/**
-	 * This method returns NVConfig.
+	 * Returns the NVConfig.
 	 */
-	public NVConfig getNVConfig()
-	{
+	public NVConfig getNVConfig() {
 		return config;
 	}
 
 	/**
-	 * This method returns the attributes.
+	 * Returns the attributes.
 	 * @return
 	 */
-	public HashMap<String, NVBase<?>> getAttributes()
-	{
+	public HashMap<String, NVBase<?>> getAttributes() {
 		return attributes;
 	}
 	
 	/**
-	 * This method sets the attributes.
+	 * Sets the attributes.
 	 * @param attr
 	 */
-	public void setAttributes(HashMap<String, NVBase<?>> attr)
-	{
+	public void setAttributes(HashMap<String, NVBase<?>> attr) {
 		attributes = attr;
 	}
 	
 	/**
-	 * This method looks up the NVBase object by name.
+	 * Looks up NVBase object by name.
 	 * @param name
 	 * @return
 	 */
-	public NVBase<?> lookup(String name)
-	{
+	public NVBase<?> lookup(String name) {
 		return attributes.get(name);
 	}
 
-	public NVBase<?> lookup(GetNVConfig gnvc)
-	{
+	public NVBase<?> lookup(GetNVConfig gnvc) {
 		return attributes.get(gnvc.getNVConfig().getName());
 	}
 	
-	public NVBase<?> lookup(GetName gName)
-	{
+	public NVBase<?> lookup(GetName gName) {
 		return attributes.get(gName.getName());
 	}
 	
@@ -129,13 +114,13 @@ abstract public class NVEntity
 	 * @param nvc
 	 * @return
 	 */
-	public <V> V lookupValue(NVConfig nvc)
-	{	
-		
+	public <V> V lookupValue(NVConfig nvc) {
 		@SuppressWarnings("unchecked")
 		NVBase<V> ret = (NVBase<V>) attributes.get(nvc.getName());
-		if ( ret != null)
+		if (ret != null) {
 			return ret.getValue();
+		}
+
 		return null;
 	}
 	
@@ -146,18 +131,16 @@ abstract public class NVEntity
 	 * @param gName
 	 * @return
 	 */
-	public <V> V lookupValue(GetName gName)
-	{	
-		
+	public <V> V lookupValue(GetName gName) {
 		@SuppressWarnings("unchecked")
 		NVBase<V> ret = (NVBase<V>) attributes.get(gName.getName());
-		if ( ret != null)
+		if (ret != null) {
 			return ret.getValue();
+		}
+
 		return null;
 	}
-	
-	
-	
+
 	/**
 	 * This method looks up the NVBase object of generic 
 	 * type object by name. 
@@ -165,13 +148,13 @@ abstract public class NVEntity
 	 * @param name
 	 * @return
 	 */
-	public <V> V lookupValue(String name)
-	{	
+	public <V> V lookupValue(String name) {
 		@SuppressWarnings("unchecked")
 		NVBase<V> ret = (NVBase<V>) attributes.get(name);
 		
-		if ( ret != null)
+		if (ret != null) {
 			return ret.getValue();
+		}
 		
 		return null;
 	}
@@ -250,82 +233,64 @@ abstract public class NVEntity
 				nvcb.nvb.setValue(v);
 			}
 		}
-		
 	}
 	
 	/**
-	 * This method will set the value for the NVBase
-	 * object.
+	 * Sets the value to the given NVBase object.
 	 * @param gnvc
 	 * @param v
 	 */
-	public <V> void setValue(GetNVConfig gnvc, V v)
-	{	
+	public <V> void setValue(GetNVConfig gnvc, V v) {
 		setValue(gnvc.getNVConfig(), v);
 	}
 	
 	/**
-	 * This method will set the value for the NVBase
-	 * object.
+	 * Sets the value to the given NVBase object.
 	 * @param nvc
 	 * @param v
 	 */
-	public <V> void setValue(NVConfig nvc, V v)
-	{	
+	public <V> void setValue(NVConfig nvc, V v) {
 		setValue( nvc.getName(), v);
 	}
 	
 	
 	/**
-	 * This method returns the string representation of the object.
+	 * Returns the string representation of the object.
 	 */
 	@SuppressWarnings("rawtypes")
-	public String toString()
-	{
-		if (attributes != null)
-		{
+	public String toString() {
+		if (attributes != null) {
 			StringBuilder sb = new StringBuilder();
 			
-			if (config.getDisplayAttributes() == null)
-			{
-				for (int i = 0; i < config.getAttributes().size(); i++)
-				{
+			if (config.getDisplayAttributes() == null) {
+				for (int i = 0; i < config.getAttributes().size(); i++) {
 					NVBase<?> nvb = attributes.get( config.getAttributes().get(i).getName());
 					
-					if (nvb != null && nvb.getValue() != null)
-					{
-						if ( i > 0)
+					if (nvb != null && nvb.getValue() != null) {
+						if ( i > 0) {
 							sb.append(",");
-						
-						if (nvb instanceof ArrayValues)
-						{	
-							sb.append( nvb.getName() + ":" + Arrays.toString(((ArrayValues)nvb).values()));
 						}
-						else
-						{
+						
+						if (nvb instanceof ArrayValues) {
+							sb.append( nvb.getName() + ":" + Arrays.toString(((ArrayValues)nvb).values()));
+						} else {
 							sb.append( nvb.getName() + ":" + nvb.getValue());
 						}
 					}
 				}
-			}
-			else 
-			{
-				for (int i = 0; i < config.getDisplayAttributes().size(); i++)
-				{
+			} else {
+				for (int i = 0; i < config.getDisplayAttributes().size(); i++) {
 					NVConfig confAttr = config.getDisplayAttributes().get(i);
 					NVBase<?> nvb = lookup( confAttr.getName());
 					
-					if (nvb != null && nvb.getValue() != null)
-					{
-						if (i > 0)
+					if (nvb != null && nvb.getValue() != null) {
+						if (i > 0) {
 							sb.append(",");
-						
-						if (nvb instanceof ArrayValues)
-						{
-							sb.append( nvb.getName() + ":" + Arrays.toString(((ArrayValues)nvb).values()));
 						}
-						else
-						{
+						
+						if (nvb instanceof ArrayValues) {
+							sb.append( nvb.getName() + ":" + Arrays.toString(((ArrayValues)nvb).values()));
+						} else {
 							sb.append( nvb.getName() + ":" + nvb.getValue());
 						}
 					}
@@ -339,53 +304,39 @@ abstract public class NVEntity
 	}
 	
 	@SuppressWarnings("unchecked")
-	private <V> NVCB<V> lookupNVCB(String name)
-	{
+	private <V> NVCB<V> lookupNVCB(String name) {
 		NVBase<?> retNVB = (NVBase<?>) attributes.get(name);
 		NVConfig  retNVC = config.lookup(name);
-		
-		
-		if (retNVB == null && name.indexOf('.') != -1)
-		{
-			
+
+		if (retNVB == null && name.indexOf('.') != -1) {
 			String subNames [] = name.split("\\.");
 			NVEntity nve = this;
-			for (int i = 0; i < subNames.length; i++)
-			{
-				
-				if (nve != null)
-				{
+
+			for (int i = 0; i < subNames.length; i++) {
+				if (nve != null) {
 					retNVB = nve.lookup(subNames[i]);
-					if (retNVB != null && retNVB instanceof NVEntityReference)
-					{
+
+					if (retNVB != null && retNVB instanceof NVEntityReference) {
 						nve = (NVEntity) retNVB.getValue();
-					}
-					else if (i+1 < subNames.length)
-					{
+					} else if (i+1 < subNames.length) {
 						return null;
-					}
-					else
-					{
-						// we have a match	
+					} else {
+						// we have a match
 						retNVC = ((NVConfigEntity)nve.getNVConfig()).lookup(subNames[i]);
 					}
-				}
-				else
-				{
+				} else {
 					return null;
 				}
-				
-
 			}
 			
 		}
 		
 		
-		if (retNVB != null)
-		{
+		if (retNVB != null) {
 			return new NVCB<V>(retNVC, (NVBase<V>)retNVB); 
 		}
 		
 		return null;
 	}
+
 }

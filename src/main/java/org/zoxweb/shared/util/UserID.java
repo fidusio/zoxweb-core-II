@@ -19,17 +19,17 @@ package org.zoxweb.shared.util;
  * The user ID interface.
  * 
  */
-public interface UserID<T> 
-{
+public interface UserID<T> {
 	/**
-	 * Get the user ID.
+	 * Returns the user ID.
 	 * @return
 	 */
 	public T getUserID();
 	
 	/**
-	 * Set the user ID.
+	 * Sets the user ID.
 	 * @param id
 	 */
 	public void setUserID(T id);
+
 }

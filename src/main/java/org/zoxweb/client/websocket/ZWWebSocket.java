@@ -31,8 +31,7 @@ import com.google.gwt.core.client.GWT;
  * @author mzebib
  *
  */
-public class ZWWebSocket 
-{
+public class ZWWebSocket {
 
     private static long counter = 1;
 
@@ -50,20 +49,15 @@ public class ZWWebSocket
     private final String varName;
     private final String url;
 
-    
-    public ZWWebSocket(HTTPMessageConfigInterface hcc)
-    {
+    public ZWWebSocket(HTTPMessageConfigInterface hcc) {
     	this(formatFullURL(hcc));
     }
-    
-    
+
     private static String formatFullURL(HTTPMessageConfigInterface hcc)
     {
-    	if (SharedStringUtil.isEmpty(hcc.getURL()))
-    	{
+    	if (SharedStringUtil.isEmpty(hcc.getURL())) {
     		String url = GWT.getModuleBaseURL().toLowerCase();
-    		if (url.startsWith("http"))
-    		{
+    		if (url.startsWith("http")) {
     			// replace http or https with ws or ws
     			url = "ws" + GWT.getModuleBaseURL().substring("http".length());
     			hcc.setURL(url);
@@ -73,8 +67,7 @@ public class ZWWebSocket
     	
     }
     
-    public ZWWebSocket(String url) 
-    {
+    public ZWWebSocket(String url) {
         this.url = url;
         this.varName = "gwtws-" + counter++;
     }
@@ -103,93 +96,73 @@ public class ZWWebSocket
          return $wnd[s].readyState;
 	}-*/;
 
-    public void addListener(ZWWebSocketListener listener) 
-    {
+    public void addListener(ZWWebSocketListener listener) {
         listeners.add(listener);
     }
 
-    public void close() 
-    {
+    public void close() {
         _close(varName);
     }
 
-    public int getState() 
-    {
+    public int getState() {
         return _state(varName);
     }
 
-    protected void onClose() 
-    {
-        for (ZWWebSocketListener listener : listeners)
+    protected void onClose() {
+        for (ZWWebSocketListener listener : listeners) {
             listener.onClose();
+        }
     }
 
     protected void onError() {
-        for (ZWWebSocketListener listener : listeners) 
-        {
-        	if (listener instanceof ZWWebSocketListenerExt) 
-        	{
+        for (ZWWebSocketListener listener : listeners) {
+        	if (listener instanceof ZWWebSocketListenerExt) {
         		((ZWWebSocketListenerExt)listener).onError();
         	}
         }
     }
 
-    protected void onMessage(String msg) 
-    {
-        for (ZWWebSocketListener listener : listeners) 
-        {
-            if (listener instanceof ZWBinaryWebSocketListener) 
-            {
+    protected void onMessage(String msg) {
+        for (ZWWebSocketListener listener : listeners) {
+            if (listener instanceof ZWBinaryWebSocketListener) {
                 byte[] bytes =  SharedBase64.decode( msg!= null ? msg.getBytes() : null);//Base64Utils.fromBase64(msg);
                 ((ZWBinaryWebSocketListener) listener).onMessage(bytes);
-            }
-            else
-            {
+            } else {
             	listener.onMessage(msg);
             }
         }
     }
 
-    protected void onOpen() 
-    {
-        for (ZWWebSocketListener listener : listeners)
+    protected void onOpen() {
+        for (ZWWebSocketListener listener : listeners) {
             listener.onOpen();
+        }
     }
 
-    public void open() 
-    {
+    public void open() {
         _open(this, varName, url);
     }
 
-    public void send(String msg) 
-    {
+    public void send(String msg) {
         _send(varName, msg);
     }
 
-    public void send(byte[] bytes) 
-    {
+    public void send(byte[] bytes) {
     	send(bytes, 0, bytes.length);
     }
-    
-    
-    public void send(byte[] bytes, int index, int length) 
-    {
+
+    public void send(byte[] bytes, int index, int length) {
         send(SharedStringUtil.toString(SharedBase64.encode(bytes, index, length)));
     }
     
-    
-    public static void close (ZWWebSocket socket)
-    {
-    	if (socket != null)
-    	{
-    		try
-    		{
+    public static void close (ZWWebSocket socket) {
+    	if (socket != null) {
+    		try {
     			socket.close();
-    		}
-    		catch (Exception e )
-    		{
+    		} catch (Exception e ) {
     			e.printStackTrace();
     		}
     	}
     }
+
 }

@@ -23,7 +23,6 @@ package org.zoxweb.shared.util;
  */
 public interface GetNameValue<V>
 	extends GetName,
-			GetValue<V>
-{
+			GetValue<V> {
 
 }

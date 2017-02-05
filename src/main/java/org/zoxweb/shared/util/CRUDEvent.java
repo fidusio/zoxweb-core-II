@@ -26,7 +26,7 @@ public interface CRUDEvent
 	extends  Serializable
 {
 	/**
-	 * Returns CRUD.
+	 * Returns the CRUD.
 	 * @return
 	 */
 	public CRUD getCRUD();

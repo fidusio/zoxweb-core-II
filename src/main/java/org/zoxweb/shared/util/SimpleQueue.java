@@ -8,13 +8,10 @@ package org.zoxweb.shared.util;
  * remove an object from the queue Object obj = q.dequeue() </xmp>
  * 
  */
-
 public class SimpleQueue<O>
-implements SimpleQueueInterface<O>
-{
+		implements SimpleQueueInterface<O> {
 	
 	private int size;
-
 	private QueueNode<O> head;
 	private long totalQueued = 0;
 	private boolean equalityEnabled = true;
@@ -22,26 +19,25 @@ implements SimpleQueueInterface<O>
 	/**
 	 * Create a empty queue.
 	 */
-	public SimpleQueue() 
-	{
+	public SimpleQueue() {
 		head = new QueueNode<O>(null, null, null);
 		// make the last node point to the head node
 		size = 0;
 	}
-	public SimpleQueue(boolean equalityEnabled) 
-	{
+
+	public SimpleQueue(boolean equalityEnabled) {
 		this();
 		this.equalityEnabled = equalityEnabled;
 	}
 		
 
 	/**
-	 * Method to clear the queue. It removes all the elements from it.
+	 * Clears the queue. It removes all the elements from it.
 	 */
-	public synchronized void clear()
-	{
-		while (!(isEmpty()))
+	public synchronized void clear() {
+		while (!(isEmpty())) {
 			dequeue();
+		}
 	}
 
 	/**
@@ -63,6 +59,7 @@ implements SimpleQueueInterface<O>
 	}
 
 	/**
+	 * Returns the size of the queue.
 	 * @return the size of the queue.
 	 */
 	public int size() {
@@ -72,35 +69,30 @@ implements SimpleQueueInterface<O>
 	/**
 	 * This will queue an object, the object can be null.
 	 * 
-	 * @param toQueue
-	 *            is the object to add in the queue
+	 * @param toQueue the object to add in the queue
 	 * 
 	 */
-	public synchronized void queue(O toQueue) 
-	{
+	public synchronized void queue(O toQueue) {
+
 		/**
 		 * The implementation of this queue is based on the algorithm of a
 		 * circular double link list.
 		 * 
 		 */
-		if (toQueue == null) 
-		{
+		if (toQueue == null) {
 			throw new IllegalArgumentException("Can't queue a null object");
 		}
 
 		QueueNode<O> newNode = new QueueNode<O>(toQueue, null, null);
 
 		// empty queue
-		if (head.next == null && head.previous == null) 
-		{
+		if (head.next == null && head.previous == null) {
 			// we have
 			head.next = newNode;
 			head.previous = newNode;
 			newNode.next = head;
 			newNode.previous = head;
-		} 
-		else 
-		{
+		} else {
 
 			newNode.next = head.next;
 			newNode.previous = head;
@@ -115,28 +107,22 @@ implements SimpleQueueInterface<O>
 	} // end queue()
 
 	/**
-	 * This method will dequeue and Object, if the queue is empty it will return
-	 * null.
-	 * 
+	 * Dequeue an object, if the queue is empty it will return null.
+	 * @return
 	 */
-	public synchronized O dequeue() 
-	{
+	public synchronized O dequeue() {
 		O retval = null;
 
 		// if the queue is not empty
-		if (head.next != null && head.previous != null)
-		{
+		if (head.next != null && head.previous != null) {
 			QueueNode<O> toRemove = head.previous;
 			retval = toRemove.obj;
 
-			if (toRemove.previous == head) 
-			{
+			if (toRemove.previous == head) {
 				// this the last element in the queue
 				head.next = null;
 				head.previous = null;
-			} 
-			else 
-			{
+			} else {
 				// remove the node from the
 				head.previous = toRemove.previous;
 				head.previous.next = head;
@@ -149,28 +135,29 @@ implements SimpleQueueInterface<O>
 			toRemove.obj = null;
 			size--;
 		}
+
 		return retval;
 
 	} // end dequeue()
-	
-	
-	
-	public synchronized boolean contains(O o)
-	{
+
+	/**
+	 * Checks if queue contains the given object.
+	 * @param o the object to check
+	 * @return true if found, false if not
+	 */
+	public synchronized boolean contains(O o) {
 		QueueNode<O> temp = head;
-		while(temp.next != null)
-		{
-			if (temp.obj == o)
-			{
+
+		while(temp.next != null) {
+			if (temp.obj == o) {
+				return true;
+			} else if (equalityEnabled && temp.obj != null && temp.obj.equals(o)) {
 				return true;
 			}
-			else if (equalityEnabled && temp.obj != null && temp.obj.equals(o))
-			{
-				return true;
-			}
+
 			temp = temp.next;
-			if (temp == head)
-			{
+
+			if (temp == head) {
 				break;
 			}
 		}
@@ -180,29 +167,26 @@ implements SimpleQueueInterface<O>
 
 	/**
 	 * Check if the queue is empty.
-	 * 
 	 * @return true if empty. false otherwise.
 	 */
-	public synchronized boolean isEmpty() 
-	{ 
+	public synchronized boolean isEmpty() {
 		return (size == 0);
 	}
 	
 	/**
+	 * Returns the total number of objects queued.
 	 * @return the total number of object queued
 	 */
-	public long totalQueued()
-	{
+	public long totalQueued() {
 		return totalQueued;
 	}
 	
 	/**
+	 * Returns the total number of objects dequeued.
 	 * @return the total number of object dequeued
 	 */
-	public long totalDequeued()
-	{
+	public long totalDequeued() {
 		return totalQueued - size;
 	}
 
-} 
-
+}

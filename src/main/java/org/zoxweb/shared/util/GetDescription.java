@@ -20,10 +20,10 @@ package org.zoxweb.shared.util;
  * @author mnael
  *
  */
-public interface GetDescription 
-{
+public interface GetDescription {
+
 	/**
-	 * Gets the property description.
+	 * Returns the property description.
 	 * @return
 	 */
 	public String getDescription();

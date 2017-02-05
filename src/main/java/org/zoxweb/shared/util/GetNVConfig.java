@@ -22,12 +22,13 @@ import java.io.Serializable;
  * @author mzebib
  *
  */
-public interface GetNVConfig 
-	extends Serializable
-{
+public interface GetNVConfig
+		extends Serializable {
+
 	/**
-	 * Gets the NVConfig.
+	 * Returns the NVConfig.
 	 * @return
 	 */
 	public NVConfig getNVConfig();
+
 }

@@ -19,36 +19,32 @@ import org.zoxweb.shared.data.events.CallbackListener;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-public class CallBackHandler<T> 
-	implements AsyncCallback<T>, CallbackListener<Throwable, T> 
-{
+public class CallBackHandler<T>
+		implements AsyncCallback<T>, CallbackListener<Throwable, T> {
+
 	protected AsyncCallback<T> callback;
 	protected CallBackHandlerListener listener;
-	
-	
-	public CallBackHandler(AsyncCallback<T> callback)
-	{
+
+	public CallBackHandler(AsyncCallback<T> callback) {
 		this.callback = callback;
 	}
 	
-	public CallBackHandler(CallBackHandlerListener listener, AsyncCallback<T> callback)
-	{
+	public CallBackHandler(CallBackHandlerListener listener, AsyncCallback<T> callback) {
 		this.callback = callback;
 		this.listener = listener;
 		
-		if (listener != null)
+		if (listener != null) {
 			listener.callBackInitiated();
+		}
 		
 	}
 	
 	@Override
-	public void onFailure(Throwable caught)
-	{
+	public void onFailure(Throwable caught) {
 		boolean notify = true;
 		
 		// this hook is available to process exceptions in stan
-		if (listener != null)
-		{
+		if (listener != null) {
 			notify = listener.callBackEndedWithException( caught);
 		}
 		
@@ -67,15 +63,16 @@ public class CallBackHandler<T>
 //			}
 //		}
 		
-		if (notify)
+		if (notify) {
 			callback.onFailure(caught);
+		}
 	}
 
 	@Override
-	public void onSuccess(T result)
-	{
-		if (listener != null)
+	public void onSuccess(T result) {
+		if (listener != null) {
 			listener.callBackEnded();
+		}
 		
 		callback.onSuccess(result);
 	}

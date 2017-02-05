@@ -21,8 +21,8 @@ package org.zoxweb.shared.util;
  * @author mzebib
  * 
  */
-public interface IsUnique 
-{
+public interface IsUnique {
+
 	/**
 	 * Check if value is unique within its set.
 	 * @return

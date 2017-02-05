@@ -22,7 +22,8 @@ package org.zoxweb.client.websocket;
  *
  */
 public interface ZWWebSocketListenerExt
-	extends ZWWebSocketListener 
-{
+        extends ZWWebSocketListener {
+
     void onError();
+
 }

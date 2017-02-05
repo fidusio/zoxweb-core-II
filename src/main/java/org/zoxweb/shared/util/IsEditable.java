@@ -20,8 +20,8 @@ package org.zoxweb.shared.util;
  * @author mzebib
  *
  */
-public interface IsEditable 
-{
+public interface IsEditable {
+
 	/**
 	 * Checks if property is editable.
 	 * @return

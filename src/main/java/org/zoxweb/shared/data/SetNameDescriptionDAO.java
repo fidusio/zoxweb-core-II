@@ -18,9 +18,11 @@ package org.zoxweb.shared.data;
 import org.zoxweb.shared.data.DataConst.DataParam;
 import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVConfigEntityLocal;
-
 import org.zoxweb.shared.util.SetDescription;
 import org.zoxweb.shared.util.SharedUtil;
+
+import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
 
 /**
  * This class defines set name description data access object
@@ -30,30 +32,27 @@ import org.zoxweb.shared.util.SharedUtil;
  * @lastModifiedBy $Author: mnael $
  * @lastModifiedAt $Date: 2015/11/30 06:38:57 $
  */
+@MappedSuperclass
 @SuppressWarnings("serial")
 public abstract class SetNameDescriptionDAO
 	extends SetNameDAO
-	implements SetDescription
-{
-	
+	implements SetDescription {
+
+	public static final String COLUMN_DESCRIPTION = "description";
+
 	//public static final NVConfig NVC_DESCRIPTION =  NVConfigManager.createNVConfig("description", null, "Description", false, true, String.class);
 	public static final NVConfigEntity NVC_NAME_DESCRIPTION_DAO = new NVConfigEntityLocal(null, null , null, true, false, false, false, SetNameDescriptionDAO.class, SharedUtil.toNVConfigList(DataParam.DESCRIPTION.getNVConfig()), null, false, SetNameDAO.NVC_NAME_DAO);
-	
-	/**
-	 * This constructor instantiates SimpleDocumentDAO based on given NVConfigEntity parameter.
-	 * @param nvce
-	 */
-	protected SetNameDescriptionDAO(NVConfigEntity nvce) 
-	{
+
+	protected SetNameDescriptionDAO(NVConfigEntity nvce) {
 		super(nvce);
 	}
-	
+
 	/**
-	 * Gets the description.
+	 * Returns the description.
 	 * @return
 	 */
-	public String getDescription() 
-	{
+	@Column(name = COLUMN_DESCRIPTION)
+	public String getDescription() {
 		return lookupValue(DataParam.DESCRIPTION);
 	}
 
@@ -62,8 +61,7 @@ public abstract class SetNameDescriptionDAO
 	 * @param description
 	 */
 	public void setDescription(String description) 
-			throws NullPointerException, IllegalArgumentException
-	{
+			throws NullPointerException, IllegalArgumentException {
 		setValue(DataParam.DESCRIPTION, description);
 	}
 

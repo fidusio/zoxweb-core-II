@@ -24,7 +24,7 @@ public interface SetNVConfig
 	extends GetNVConfig 
 {
 	/**
-	 * Set NVConfig.
+	 * Set the NVConfig.
 	 * @param nvc
 	 */
 	public void setNVConfig(NVConfig nvc);

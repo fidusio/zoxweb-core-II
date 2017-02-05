@@ -75,15 +75,12 @@ public enum MetaToken
 	
 	private String name;
 	
-	MetaToken(String name)
-	{
+	MetaToken(String name) {
 		this.name = name;
 	}
 
 	@Override
-	public String getName() 
-	{
-
+	public String getName() {
 		return name;
 	}
 

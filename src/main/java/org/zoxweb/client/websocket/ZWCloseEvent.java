@@ -21,8 +21,7 @@ public class ZWCloseEvent {
     private final String reason;
     private final boolean wasClean;
 
-    public ZWCloseEvent(short code, String reason, boolean wasClean)
-    {
+    public ZWCloseEvent(short code, String reason, boolean wasClean) {
         this.code = code;
         this.reason = reason;
         this.wasClean = wasClean;

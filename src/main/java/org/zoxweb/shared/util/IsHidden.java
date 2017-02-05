@@ -20,11 +20,12 @@ package org.zoxweb.shared.util;
  * @author mzebib
  *
  */
-public interface IsHidden 
-{
+public interface IsHidden {
+
 	/**
 	 * Checks if property is hidden.
 	 * @return
 	 */
 	boolean isHidden();
+
 }

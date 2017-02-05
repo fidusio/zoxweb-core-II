@@ -22,16 +22,27 @@ import org.zoxweb.shared.util.NVConfigEntityLocal;
 import org.zoxweb.shared.util.NVConfigManager;
 import org.zoxweb.shared.util.SharedUtil;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 /**
  * The AddressDAO class defines the address data access object used to create an address object.
  * @author mzebib
  *
  */
+@Entity
+@Table(name = "address")
 @SuppressWarnings("serial")
 public class AddressDAO 
-	extends SetNameDescriptionDAO
-{
-	
+	extends SetNameDescriptionDAO {
+
+	public static final String COLUMN_STREET = "street";
+	public static final String COLUMN_CITY = "city";
+	public static final String COLUMN_STATE = "state_province";
+	public static final String COLUMN_COUNTRY = "country";
+	public static final String COLUMN_ZIP_CODE = "zip_postal_code";
+
 	public enum Params
 		implements GetNVConfig
 	{
@@ -72,19 +83,18 @@ public class AddressDAO
 																				);
 	
 	/**
-	 * The default constructor.
+	 * The default constructor creates an AddressDAO instance.
 	 */
-	public AddressDAO()
-	{
+	public AddressDAO() {
 		super(NVC_ADDRESS_DAO);
 	}
 	
 	/**
-	 * Gets the street.
+	 * Returns the street.
 	 * @return
 	 */
-	public String getStreet() 
-	{
+	@Column (name = COLUMN_STREET)
+	public String getStreet() {
 		return lookupValue(Params.STREET);
 	}
 	
@@ -92,17 +102,16 @@ public class AddressDAO
 	 * Sets the street.
 	 * @param street
 	 */
-	public void setStreet(String street) 
-	{
+	public void setStreet(String street) {
 		setValue(Params.STREET, street);
 	}
 	
 	/**
-	 * Gets the city.
+	 * Returns the city.
 	 * @return
 	 */
-	public String getCity() 
-	{
+	@Column (name = COLUMN_CITY)
+	public String getCity() {
 		return lookupValue(Params.CITY);
 	}
 	
@@ -110,17 +119,16 @@ public class AddressDAO
 	 * Sets the city.
 	 * @param city
 	 */
-	public void setCity(String city) 
-	{
+	public void setCity(String city) {
 		setValue(Params.CITY, city);
 	}
 	
 	/**
-	 * Gets the state or province.
+	 * Returns the state or province.
 	 * @return
 	 */
-	public String getStateOrProvince() 
-	{
+	@Column (name = COLUMN_STATE)
+	public String getStateOrProvince() {
 		return lookupValue(Params.STATE_PROVINCE);
 	}
 	
@@ -128,17 +136,16 @@ public class AddressDAO
 	 * Sets the state or province.
 	 * @param state
 	 */
-	public void setStateOrProvince(String state) 
-	{
+	public void setStateOrProvince(String state) {
 		setValue(Params.STATE_PROVINCE, state);
 	}
 	
 	/**
-	 * Gets the country.
+	 * Returns the country.
 	 * @return
 	 */
-	public String getCountry() 
-	{
+	@Column (name = COLUMN_COUNTRY)
+	public String getCountry() {
 		return lookupValue(Params.COUNTRY);
 	}
 	
@@ -146,17 +153,16 @@ public class AddressDAO
 	 * Sets the country.
 	 * @param country
 	 */
-	public void setCountry(String country) 
-	{
+	public void setCountry(String country) {
 		setValue(Params.COUNTRY, country);
 	}
 	
 	/**
-	 * Gets the ZIP or postal code.
+	 * Returns the ZIP or postal code.
 	 * @return
 	 */
-	public String getZIPOrPostalCode() 
-	{
+	@Column (name = COLUMN_ZIP_CODE)
+	public String getZIPOrPostalCode() {
 		return lookupValue(Params.ZIP_POSTAL_CODE);
 	}
 	
@@ -164,8 +170,7 @@ public class AddressDAO
 	 * Sets the ZIP or postal code.
 	 * @param code
 	 */
-	public void setZIPOrPostalCode(String code) 
-	{
+	public void setZIPOrPostalCode(String code) {
 		setValue(Params.ZIP_POSTAL_CODE, code);
 	}
 	

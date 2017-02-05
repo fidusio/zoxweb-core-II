@@ -21,11 +21,10 @@ import org.zoxweb.shared.util.Const.RelationalOperator;
 
 
 /**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
+ * The appointment interface.
+ *
  */
-public interface Appointment
-{
+public interface Appointment {
 	
 	public static final Comparator<Appointment> EQUAL_COMPARATOR = new AppointmentComparator();
 	public static final Comparator<Appointment> EQUAL_LESS_COMPARATOR = new AppointmentComparator(RelationalOperator.LT);
@@ -33,11 +32,12 @@ public interface Appointment
 	
 	/**
 	 * 
-	 * Get the delay time in millis
+	 * Returns the delay time in millis
 	 * 
 	 * @return
 	 */
 	public long getDelayInMillis();
+
 	/**
 	 * Set the delay time in millis
 	 * @param delayInMillis
@@ -45,12 +45,15 @@ public interface Appointment
 	public void setDelayInMillis( long delayInMillis);
 	
 	/**
-	 * Get the expiration in real time
+	 * Returns the expiration in real time.
 	 * @return
 	 */
 	public long getExpirationInMillis();
-	
-	
+
+	/**
+	 * Cancel operation.
+	 * @return
+	 */
 	public boolean cancel();
 	
 }

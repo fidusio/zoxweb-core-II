@@ -20,16 +20,16 @@ package org.zoxweb.shared.util;
  * @author mzebib
  *
  */
-public interface SystemID<T>
-{
+public interface SystemID<T> {
+
 	/**
-	 * Get system ID.
+	 * Returns the system ID.
 	 * @return
 	 */
 	public T getSystemID();
 	
 	/**
-	 * Set system ID.	
+	 * Sets the system ID.
 	 * @param systemID
 	 */
 	public void setSystemID(T systemID);

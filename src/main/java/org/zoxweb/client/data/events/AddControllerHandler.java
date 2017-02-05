@@ -19,12 +19,9 @@ import org.zoxweb.shared.data.events.ActionBaseListener;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-/**
- * @author mzebib
- *
- */
 public interface AddControllerHandler<V, T>
-	extends ActionBaseListener<V>
-{
+	extends ActionBaseListener<V> {
+
 	public void actionAdd(V v, AsyncCallback<T> callback);
+
 }

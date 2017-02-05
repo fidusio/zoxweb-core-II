@@ -20,10 +20,10 @@ package org.zoxweb.shared.util;
  * @author mzebib
  *
  */
-public interface GetName 
-{
+public interface GetName {
+
 	/**
-	 * Gets the name of the property in question.
+	 * Returns the name.
 	 * @return
 	 */
 	public String getName();

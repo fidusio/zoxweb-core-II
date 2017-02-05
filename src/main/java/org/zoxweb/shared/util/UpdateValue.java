@@ -20,11 +20,12 @@ package org.zoxweb.shared.util;
  * @author mzebib
  *
  */
-public interface UpdateValue<V>
-{
+public interface UpdateValue<V> {
+
 	/**
-	 * Update value.
+	 * Updates the value.
 	 * @param value
 	 */
 	public void updateValue(V value);
+
 }

@@ -25,7 +25,7 @@ public interface CRUDNVBase
 	extends CRUDEvent
 {
 	/**
-	 * Returns NVBase.
+	 * Returns the NVBase.
 	 * @return
 	 */
 	public NVBase<?> getNVBase();

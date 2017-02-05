@@ -24,14 +24,13 @@ import java.util.List;
  *
  */
 @SuppressWarnings("serial")
-public class NVBigDecimalList 
-	extends NVBase<List<BigDecimal>> 
-{
+public class NVBigDecimalList
+		extends NVBase<List<BigDecimal>> {
+
 	/**
-	 * This is the default constructor.
+	 * The default constructor.
 	 */
-	public NVBigDecimalList()
-	{
+	public NVBigDecimalList() {
 		super();
 	}
 	
@@ -40,8 +39,8 @@ public class NVBigDecimalList
 	 * @param name
 	 * @param value
 	 */
-	public NVBigDecimalList(String name, List<BigDecimal> value)
-	{
+	public NVBigDecimalList(String name, List<BigDecimal> value) {
 		super(name, value);
 	}
+
 }

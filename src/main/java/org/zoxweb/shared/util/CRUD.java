@@ -21,8 +21,7 @@ package org.zoxweb.shared.util;
  * @author mzebib
  *
  */
-public enum CRUD 
-{
+public enum CRUD {
 	CREATE,
 	READ,
 	UPDATE,

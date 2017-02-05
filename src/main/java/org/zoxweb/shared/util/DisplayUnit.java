@@ -3,8 +3,8 @@ package org.zoxweb.shared.util;
 import org.zoxweb.shared.util.GetName;
 
 public enum DisplayUnit
-	implements GetName
-{
+	implements GetName {
+
 	EM("EM"),
 	PERCENT("%"),
 	PIXEL("px")
@@ -13,14 +13,13 @@ public enum DisplayUnit
 
 	String name;
 	
-	DisplayUnit(String name)
-	{
+	DisplayUnit(String name) {
 		this.name = name;
 	}
 	
 	@Override
-	public String getName()
-	{
+	public String getName() {
 		return name;
 	}
+
 }

@@ -21,10 +21,9 @@ package org.zoxweb.shared.util;
  *
  * @param <T>
  */
-public interface AccountID<T> 
-{
+public interface AccountID<T> {
 	/**
-	 * Gets the account ID.
+	 * Returns the account ID.
 	 * @return
 	 */
 	public T getAccountID();

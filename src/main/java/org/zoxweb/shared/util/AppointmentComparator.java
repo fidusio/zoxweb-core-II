@@ -24,10 +24,8 @@ import org.zoxweb.shared.util.Const.RelationalOperator;
  * 
  */
 public class AppointmentComparator
-implements Comparator<Appointment>
-{
+		implements Comparator<Appointment> {
 
-	
 	private RelationalOperator equality;
 	
 	public AppointmentComparator()
@@ -45,15 +43,12 @@ implements Comparator<Appointment>
 	 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
 	 */
 	@Override
-	public int compare(Appointment o1, Appointment o2) 
-	{
+	public int compare(Appointment o1, Appointment o2) {
 		int result = 0;
-		// TODO Auto-generated method stub
-		if (o1 != null && o2 != null)
-		{
+
+		if (o1 != null && o2 != null) {
 			result = (int)(o1.getExpirationInMillis() - o2.getExpirationInMillis());
-			if ( result == 0)
-			{
+			if (result == 0) {
 				switch(equality)
 				{
 				case EQUAL:
@@ -68,8 +63,6 @@ implements Comparator<Appointment>
 					break;
 				default:
 					throw new IllegalArgumentException("Operator not supported:" + equality);
-					
-				
 				}
 			}
 		}

@@ -17,8 +17,6 @@ package org.zoxweb.shared.util;
 
 import org.zoxweb.shared.db.QueryMarker;
 
-
-
 /**
  * This class contains various lists of constants declared as enums or as arrays.
  * @author mzebib
@@ -31,9 +29,7 @@ public class Const
 	 */
 	public static final String LOGGER_NAME = "zoxweb-core";
 	
-	
-	
-	
+
 	public enum JavaClassVersion
 	{
 		//VER_1_0("1.0", 45, 3),
@@ -51,27 +47,22 @@ public class Const
 		private final String version;
 		private final int major;
 		private final int minor;
-		JavaClassVersion(String version, int major, int minor)
-		{
+
+		JavaClassVersion(String version, int major, int minor) {
 			this.version = version;
 			this.major = major;
 			this.minor = minor;
 		}
 		
 
-		public String toString()
-		{
+		public String toString() {
 			return version + "," + major + "." + minor;
 		}
 		
 		
-		public static JavaClassVersion lookup(int major, int minor)
-		{
-			
-			for (JavaClassVersion ver : values())
-			{
-				if(ver.major == major && ver.minor == minor)
-				{
+		public static JavaClassVersion lookup(int major, int minor) {
+			for (JavaClassVersion ver : values()) {
+				if (ver.major == major && ver.minor == minor) {
 					return ver;
 				}
 			}
@@ -81,13 +72,11 @@ public class Const
 		
 		public static JavaClassVersion lookup(String version)
 		{
-			if(!SharedStringUtil.isEmpty(version))
-			{
-				for (JavaClassVersion ver : values())
-				{
-					if (ver.version.equalsIgnoreCase(version))
+			if(!SharedStringUtil.isEmpty(version)) {
+				for (JavaClassVersion ver : values()) {
+					if (ver.version.equalsIgnoreCase(version)) {
 						return ver;
-					
+					}
 				}
 			}
 			
@@ -99,7 +88,6 @@ public class Const
 	public enum Bool
 		implements GetName, GetValue<Boolean>
 	{
-		
 		TRUE("true", true),
 		FALSE("false", false),
 		ON("on", true),
@@ -113,76 +101,61 @@ public class Const
 		private final boolean value;
 		private final String name;
 		
-		Bool(String name, boolean value)
-		{
+		Bool(String name, boolean value) {
 			this.name = name;
 			this.value = value;
 		}
+
 		@Override
-		public Boolean getValue() 
-		{
-			// TODO Auto-generated method stub
+		public Boolean getValue() {
 			return value;
 		}
 
 		@Override
-		public String getName()
-		{
-			// TODO Auto-generated method stub
+		public String getName() {
 			return name;
 		}
 		
-		public static Bool parse(String str)
-		{
+		public static Bool parse(String str) {
 			return (Bool) SharedUtil.lookupEnum(Bool.values(), str);
 		}
 		
 		
-		public static boolean lookupValue(String str)
-		{
+		public static boolean lookupValue(String str) {
 			Bool ret = parse(str);
-			if (ret == null)
-			{
+
+			if (ret == null) {
 				throw new IllegalArgumentException("Invalid Bool token " + str);
 			}
 			
 			return ret.value;
 		}
-		
-		
 	}
 	
-	public enum SourceOrigin
-	{
+	public enum SourceOrigin {
 		LOCAL,
 		REMOTE,
 		UNKNOWN,
 	}
-	
-	
-	
-	public enum Status
-	{
+
+	public enum Status {
 		ACTIVE,
 		EXPIRED,
 		INACTIVE,
 		INVALID,
 		PENDING,
 		SUSPENDED,
-		
 	}
 	
 	
-	public enum ResourceType
-	{
+	public enum ResourceType {
 		FILE,
 		FOLDER,
 		FORM,
 		TEMP_FILE,
 		NVENTITY
 	}
-	
-	
+
 	public enum Unit
 		implements GetName
 	{
@@ -194,29 +167,21 @@ public class Const
 
 		private String name;
 		
-		Unit(String name)
-		{
+		Unit(String name) {
 			this.name = name;
 		}
 		
 		@Override
-		public String getName()
-		{
-
+		public String getName() {
 			return name;
 		}
-	
-		
-		public static Unit parseUnit(String str)
-		{
-			if (!SharedStringUtil.isEmpty(str))
-			{
+
+		public static Unit parseUnit(String str) {
+			if (!SharedStringUtil.isEmpty(str)) {
 				str = str.toLowerCase();
 				
-				for (Unit unit : Unit.values())
-				{
-					if (str.endsWith(unit.getName()))
-					{
+				for (Unit unit : Unit.values()) {
+					if (str.endsWith(unit.getName())) {
 						return unit;
 					}
 				}
@@ -225,8 +190,6 @@ public class Const
 			return null;
 		}
 	}
-	
-	
 	
 	public enum DeviceType
 		implements GetName
@@ -239,35 +202,29 @@ public class Const
 		
 		private final String name;
 		
-		DeviceType(String name)
-		{
+		DeviceType(String name) {
 			this.name = name;
 		}
 	
 		@Override
 		public String getName() {
-			// TODO Auto-generated method stub
 			return name;
 		}
 		
-		
-		public static DeviceType lookup(String toMatch)
-		{
-			for (DeviceType md : DeviceType.values())
-			{
-				if (SharedStringUtil.contains(toMatch, md.getName(), true))
+		public static DeviceType lookup(String toMatch) {
+			for (DeviceType md : DeviceType.values()) {
+				if (SharedStringUtil.contains(toMatch, md.getName(), true)) {
 					return md;
+				}
 			}
 			
 			return null;
 		}
-		public static boolean isMobileDevice(String toMatch)
-		{
+
+		public static boolean isMobileDevice(String toMatch) {
 			return (lookup(toMatch) != null);
 		}
-		
 	}
-	
 	
 	/**
 	 * Number of bits inside a byte
@@ -302,15 +259,14 @@ public class Const
 		;
 		
 		/**
-		 * This returns the size of bytes.
+		 * Returns the size of bytes.
 		 */
 		public final long LENGTH;
 		
 		
 		private String name;
 		
-		SizeInBytes(String name, long value)
-		{
+		SizeInBytes(String name, long value) {
 			this.name = name;
 			LENGTH = value;
 		}
@@ -320,23 +276,18 @@ public class Const
 		 * @param str
 		 * @return
 		 */
-		public static long parse(String str)
-		{
+		public static long parse(String str) {
 			str = str.toUpperCase();
 			long multiplier = 1;
 			SizeInBytes values[] = SizeInBytes.values();
 			
-			for(int i = values.length - 1 ; i >= 0; i--)
-			{
+			for (int i = values.length - 1 ; i >= 0; i--) {
 				SizeInBytes bs = values[i];
-				if (str.endsWith(bs.getName()))
-				{
+				if (str.endsWith(bs.getName())) {
 					multiplier = bs.LENGTH;
 					str = str.substring(0, str.length() - bs.getName().length());
 					break;
-				}
-				else if (str.endsWith(bs.name()))
-				{
+				} else if (str.endsWith(bs.name())) {
 					multiplier = bs.LENGTH;
 					str = str.substring(0, str.length() - bs.name().length());
 					break;
@@ -346,20 +297,17 @@ public class Const
 			return Long.parseLong(str)* multiplier;
 		}
 
-		public long sizeInBits(int size)
-		{
+		public long sizeInBits(int size) {
 			return LENGTH*size*Byte.SIZE;
 		}
 		
 		
-		public long sizeInBytes(long size)
-		{
+		public long sizeInBytes(long size) {
 			return LENGTH*size;
 		}
 
 		@Override
-		public String getName() 
-		{
+		public String getName() {
 			return name;
 		}
 	}
@@ -369,14 +317,12 @@ public class Const
 	 * @author mzebib
 	 *
 	 */
-	public enum TimeUnitType
-	{
+	public enum TimeUnitType {
 		NANOS,
 		MILLIS,
 	}
 	
-	public enum FilenameSep
-	{
+	public enum FilenameSep {
 		SLASH('/'),
 		BACKSLASH('\\'),
 		COLON(':'),
@@ -386,17 +332,14 @@ public class Const
 		
 		public final char sep;
 		
-		FilenameSep( char s)
-		{
+		FilenameSep( char s) {
 			this.sep=s;
 		}
 		
-		public String toString()
-		{
+		public String toString() {
 			return "" + sep;
 		}
 	}
-	
 
 	/**
 	 * This enum represents units of time in milliseconds.
@@ -428,51 +371,44 @@ public class Const
 		public final long MILLIS;
 		private final String tokens[];
 		
-		TimeInMillis(long duration, String ...tokens)
-		{
+		TimeInMillis(long duration, String ...tokens) {
 			this.MILLIS = duration;
 			this.tokens = tokens;
 		}
 		
 		/**
-		 * This method converts string to time in milliseconds.
+		 * Converts string to time in milliseconds.
 		 * @param time
 		 * @return
 		 */
 		public static long toMillis(String time) 
-			throws NullPointerException, IllegalArgumentException
-		{
+			throws NullPointerException, IllegalArgumentException {
+
 			time  = SharedStringUtil.toLowerCase(time).trim();
 			TimeInMillis timeMatch = null;
 			String tokenMatch = null;
 			
-			for (TimeInMillis tim : TimeInMillis.values())
-			{
-				for (String tok : tim.tokens)
-				{
-					if (time.endsWith(tok))
-					{
+			for (TimeInMillis tim : TimeInMillis.values()) {
+				for (String tok : tim.tokens) {
+					if (time.endsWith(tok)) {
 						tokenMatch = tok;
 						timeMatch = tim;
 						break;
 					}
 					
-					if (timeMatch != null)
-					{
+					if (timeMatch != null) {
 						break;
 					}
 				}
 			}
 			
-			if (timeMatch == null)
-			{
+			if (timeMatch == null) {
 				throw new IllegalArgumentException("Invalid time token " + time);
 			}
 			
 			String valueMatch[] = time.split(tokenMatch);
 			
-			if (valueMatch.length != 1)
-			{
+			if (valueMatch.length != 1) {
 				throw new IllegalArgumentException("Invalid time token " + time);
 			}
 			
@@ -483,41 +419,36 @@ public class Const
 		
 		/**
 		 * 
-		 * This method converts the time to nano second value (10 power -9 second)
+		 * Converts the time to nano second value (10 power -9 second)
 		 * @param time
 		 * @return
 		 */
 		public static long toNanos(String time)
-				throws NullPointerException, IllegalArgumentException
-		{
+				throws NullPointerException, IllegalArgumentException {
 			return toMillis(time) * 1000000;
 		}
 		
-		public static String nanosToString(long nanos)
-		{
+		public static String nanosToString(long nanos) {
 			long rest = nanos/1000000;
-			if (rest > 0)
-			{
+
+			if (rest > 0) {
 				return rest + " millis";
 			}
+
 			return nanos + " nanos";
 		}
 		
 		/**
 		 * 
-		 * This method converts the time to micro second value (10 power -6 second)
+		 * Converts the time to micro second value (10 power -6 second)
 		 * @param time
 		 * @return
 		 */
 		public static long toMicros(String time)
-				throws NullPointerException, IllegalArgumentException
-		{
+				throws NullPointerException, IllegalArgumentException {
 			return toMillis(time) * 1000;
 		}
-		
-		
 	}
-	
 	
 	public enum TimeZoneOffset
 		implements GetName
@@ -537,7 +468,7 @@ public class Const
 		UTC_LESS_0300("UTC-3:00", '-', 3, 0),
 		UTC_LESS_0200("UTC-2:00", '-', 2, 0),
 		UTC_LESS_0100("UTC-1:00", '-', 1, 0),
-		UTC("UTC±00:00", '+', 0, 0),
+		UTC("UTCï¿½00:00", '+', 0, 0),
 		UTC_PLUS_0100("UTC+1:00", '+', 1, 0),
 		UTC_PLUS_0200("UTC+2:00", '+', 2, 0),
 		UTC_PLUS_0300("UTC+3:00", '+', 3, 0),
@@ -570,8 +501,7 @@ public class Const
 		private int hours;
 		private int minutes;
 		
-		TimeZoneOffset(String name, char sign, int hours, int minutes)
-		{
+		TimeZoneOffset(String name, char sign, int hours, int minutes) {
 			this.name = name;
 			this.sign = sign;
 			this.hours = hours;
@@ -579,41 +509,33 @@ public class Const
 		}
 	
 		@Override
-		public String getName() 
-		{
+		public String getName() {
 			return name;
 		}
 		
-		public char getSign()
-		{
+		public char getSign() {
 			return sign;
 		}
 		
-		public int getHours()
-		{
+		public int getHours() {
 			return hours;
 		}
 		
-		public int getMinutes()
-		{
+		public int getMinutes() {
 			return minutes;
 		}
 		
-		public int getOffsetInMinutes(TimeZoneOffset timeZone)
-		{
+		public int getOffsetInMinutes(TimeZoneOffset timeZone) {
 			return timeZone.getHours()*60 + timeZone.getMinutes();
 		}
 		
-		public int getOffsetInMillis(TimeZoneOffset timeZone)
-		{
+		public int getOffsetInMillis(TimeZoneOffset timeZone) {
 			return getOffsetInMinutes(timeZone)*1000;
 		}
-	
 	}
-	
-	
+
 	/**
-	 * This enum represents data type in bytes.
+	 * Represents data type in bytes.
 	 * @author mzebib
 	 *
 	 */
@@ -631,15 +553,11 @@ public class Const
 		 */
 		public final int size;
 		
-		TypeInBytes(int s)
-		{
+		TypeInBytes(int s) {
 			size = s;
 		}
+
 	}
-	
-	
-	
-	
 	
 	/**
 	 * This enum declares the file type.
@@ -647,8 +565,7 @@ public class Const
 	 *
 	 */
 	public enum DocumentType
-		implements GetName
-	{
+		implements GetName {
 		FILE("File"),
 		FOLDER("Folder"),
 		FORM("Form")
@@ -658,19 +575,17 @@ public class Const
 		
 		private String name;
 		
-		DocumentType(String name)
-		{
+		DocumentType(String name) {
 			this.name = name;
 		}
 		
 		@Override
-		public String getName() 
-		{
+		public String getName() {
 			return name;
 		}
+
 	}
-	
-	
+
 	public enum DayOfWeek
 		implements GetNameValue<Integer>
 	{
@@ -687,23 +602,21 @@ public class Const
 		private Integer value;
 		private String name;
 		
-		DayOfWeek(String name, Integer value)
-		{
+		DayOfWeek(String name, Integer value) {
 			this.name = name;
 			this.value = value;
 		}
 		
 		@Override
-		public String getName() 
-		{
+		public String getName() {
 			return name;
 		}		
 		
 		@Override
-		public Integer getValue() 
-		{
+		public Integer getValue() {
 			return value;
 		}
+
 	}
 	
 	
@@ -732,20 +645,15 @@ public class Const
 
 		private String name;
 		
-		Month(String name)
-		{
+		Month(String name) {
 			this.name = name;
 		}
 		
 		
 		@Override
-		public String getName()
-		{
+		public String getName() {
 			return name;
 		}
-		
-		
-		
 	}
 	
 	/**
@@ -793,21 +701,17 @@ public class Const
 		
 		private Integer value;
 		
-		DaysInMonth(Integer value)
-		{
+		DaysInMonth(Integer value) {
 			this.value = value;
 		}
 		
 		@Override
-		public Integer getValue() 
-		{
-
+		public Integer getValue() {
 			return value;
 		}
+
 	}
-	
-	
-	
+
 	public enum DayPeriod
 		implements GetName
 	{
@@ -818,14 +722,12 @@ public class Const
 
 		private String name;
 		
-		DayPeriod(String name)
-		{
+		DayPeriod(String name) {
 			this.name = name;
 		}
 		
 		@Override
-		public String getName() 
-		{
+		public String getName() {
 			return name;
 		}
 	
@@ -836,7 +738,7 @@ public class Const
 	{
 		LTR,
 		RTL
-		
+
 		;
 	}
 		
@@ -855,24 +757,20 @@ public class Const
 
 		private String value;
 		
-		LogicalOperator(String value)
-		{
+		LogicalOperator(String value) {
 			this.value = value;
 		}
 		
 		@Override
-		public String getValue() 
-		{
+		public String getValue() {
 			return value;
 		}
 		
-		public String toString()
-		{
+		public String toString() {
 			return getValue();
 		}
 	}
-	
-	
+
 	/**
 	 * This enum contains relational operators.
 	 * @author mzebib
@@ -892,19 +790,15 @@ public class Const
 
 		String value;
 		
-		RelationalOperator(String value)
-		{
+		RelationalOperator(String value) {
 			this.value = value;
 		}
 		
 		@Override
-		public String getValue() 
-		{
+		public String getValue() {
 			return value;
 		}
 	}
-	
-	
 	
 	/**
 	 * Utility Date pattern that can be used on the client and server side.
@@ -923,17 +817,14 @@ public class Const
 
 		private String value;
 		
-		DateTimePattern(String value)
-		{
+		DateTimePattern(String value) {
 			this.value = value;
 		}
 		
 		@Override
-		public String getValue() 
-		{
+		public String getValue() {
 			return value;
 		}
-		
 	}
 
 	/**
@@ -972,7 +863,6 @@ public class Const
 		DYNAMIC_ENUM_MAP_LIST
 		
 	}
-	
 	
 	/**
 	 * Mapping types
@@ -1027,30 +917,21 @@ public class Const
 		};
 	
 	/**
-	 * This method is used to wrap primitive types declared
-	 * as the data type itself or as a class of the data type.
+	 * Used to wrap primitive types declared as the data type itself or as a class of the data type.
 	 * @param c
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T> Class<T> wrap(Class<T> c) 
-	{
-		if (c.isPrimitive())
-		{
-			for (Class<?>[] temp : PRIMITIVES_TO_WRAPPERS)
-			{
-				if (temp[0] == c)
-				{
+	public static <T> Class<T> wrap(Class<T> c) {
+		if (c.isPrimitive()) {
+			for (Class<?>[] temp : PRIMITIVES_TO_WRAPPERS) {
+				if (temp[0] == c) {
 					return (Class<T>) temp[1];
 				}
 			}
-		}
-		else if (c.isArray())
-		{
-			for (Class<?>[] temp : PRIMITIVES_ARRAY_TO_WRAPPERS)
-			{
-				if (temp[0] == c)
-				{
+		} else if (c.isArray()) {
+			for (Class<?>[] temp : PRIMITIVES_ARRAY_TO_WRAPPERS) {
+				if (temp[0] == c) {
 					return (Class<T>) temp[1];
 				}
 			}
@@ -1086,5 +967,4 @@ public class Const
 			{long[].class, Long[].class},
 		};
 
-	
 }

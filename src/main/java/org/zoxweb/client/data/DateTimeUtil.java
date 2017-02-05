@@ -21,13 +21,12 @@ import com.google.gwt.i18n.client.TimeZone;
  * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
  * 
  */
-public class DateTimeUtil 
-{
-	private DateTimeUtil()
-	{
+public class DateTimeUtil {
+
+	private DateTimeUtil() {
 		
 	}
 	
-	
 	public final static TimeZone GMT_TZ= TimeZone.createTimeZone(0);
+
 }

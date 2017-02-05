@@ -25,8 +25,8 @@ package org.zoxweb.shared.util;
  */
 public interface DomainID<T>
 	extends SetName, 
-			SetDescription
-{
+			SetDescription {
+
 	/**
 	 * Gets the domain ID.
 	 * @return

@@ -21,14 +21,13 @@ package org.zoxweb.shared.util;
  *
  */
 @SuppressWarnings("serial")
-public class NVBoolean 
-	extends NVBase<Boolean> 
-{
+public class NVBoolean
+		extends NVBase<Boolean> {
+
 	/**
-	 * Default constructor used for Java Bean Compiler.
+	 * The default constructor.
 	 */
-	public NVBoolean()
-	{
+	public NVBoolean() {
 		super();
 	}
 	
@@ -37,8 +36,8 @@ public class NVBoolean
 	 * @param name
 	 * @param value
 	 */
-	public NVBoolean(String name, boolean value)
-	{
+	public NVBoolean(String name, boolean value) {
 		super(name, value);
 	}
+
 }

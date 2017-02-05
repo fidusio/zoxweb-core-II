@@ -21,8 +21,8 @@ package org.zoxweb.shared.util;
  * @author mzebib
  *
  */
-public class StringToken 
-{
+public class StringToken {
+
 	private String token;
 	private int sourcePostIndex;
 	private int sourcePreIndex;
@@ -30,8 +30,7 @@ public class StringToken
 	/**
 	 * This constructor can be accessed outside the class.
 	 */
-	public StringToken()
-	{
+	public StringToken() {
 		
 	}
 	
@@ -42,64 +41,58 @@ public class StringToken
 	 * @param sourcePreIndex
 	 * @param sourcePostIndex
 	 */
-	public StringToken(String token, int sourcePreIndex, int sourcePostIndex)
-	{
+	public StringToken(String token, int sourcePreIndex, int sourcePostIndex) {
 		setToken( token);
 		setSourcePreIndex( sourcePreIndex);
 		setSourcePostIndex( sourcePostIndex);
 	}
 	
 	/**
-	 * This method returns token.
+	 * Returns token.
 	 * @return
 	 */
-	public String getToken() 
-	{
+	public String getToken() {
 		return token;
 	}
 	
 	/**
-	 *This method sets token. 
+	 * Sets token.
 	 * @param token
 	 */
-	public void setToken(String token) 
-	{
+	public void setToken(String token) {
 		this.token = token;
 	}
 	
 	/**
-	 * This method returns sourcePostIndex.
+	 * Returns sourcePostIndex.
 	 * @return
 	 */
-	public int getSourcePostIndex() 
-	{
+	public int getSourcePostIndex() {
 		return sourcePostIndex;
 	}
 	
 	/**
-	 * This method sets sourcePostIndex.
+	 * Sets sourcePostIndex.
 	 * @param sourcePostIndex
 	 */
-	public void setSourcePostIndex(int sourcePostIndex) 
-	{
+	public void setSourcePostIndex(int sourcePostIndex) {
 		this.sourcePostIndex = sourcePostIndex;
 	}
 	
 	/**
-	 * This method returns sourcePreIndex.
+	 * Returns the sourcePreIndex.
 	 * @return
 	 */
-	public int getSourcePreIndex() 
-	{
+	public int getSourcePreIndex() {
 		return sourcePreIndex;
 	}
 	
 	/**
-	 * This method sets sourcePreIndex.
+	 * Sets the sourcePreIndex.
 	 * @param sourcePreIndex
 	 */
-	public void setSourcePreIndex(int sourcePreIndex) 
-	{
+	public void setSourcePreIndex(int sourcePreIndex) {
 		this.sourcePreIndex = sourcePreIndex;
 	}
+
 }

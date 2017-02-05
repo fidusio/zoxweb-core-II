@@ -26,36 +26,30 @@ import org.zoxweb.shared.util.SharedUtil;
  * 
  */
 public class CryptoClient
-implements CryptoInterface
-{
+		implements CryptoInterface {
+
 	final public static CryptoInterface SINGLETON = new CryptoClient();
 	
-	protected CryptoClient()
-	{
+	protected CryptoClient() {
 		
 	}
 
-	/**
-	 *
-	 */
 	@Override
 	public byte[] hash(String mdAlgo, byte[]... tokens)
-			throws NullPointerException, AccessSecurityException
-	{
+			throws NullPointerException, AccessSecurityException {
+
 		CryptoConst.MDType mdType = CryptoConst.MDType.lookup(mdAlgo);
 		SharedUtil.checkIfNulls("MD type not found", mdType);
 		StringBuilder sb = new StringBuilder();
 		switch(mdType)
 		{
 		case MD5:
-			for (byte[] array : tokens)
-			{
+			for (byte[] array : tokens) {
 				sb.append(SharedStringUtil.toString(array));
 			}
 			return SharedStringUtil.hexToBytes(hashMD5(sb.toString()));
 		case SHA_256:
-			for (byte[] array : tokens)
-			{
+			for (byte[] array : tokens) {
 				sb.append(SharedStringUtil.toString(array));
 			}
 			return SharedStringUtil.hexToBytes(hashSHA256(sb.toString()));
@@ -81,14 +75,12 @@ implements CryptoInterface
 		switch(mdType)
 		{
 		case MD5:
-			for (String str : tokens)
-			{
+			for (String str : tokens) {
 				sb.append(str);
 			}
 			return SharedStringUtil.hexToBytes(hashMD5(sb.toString()));
 		case SHA_256:
-			for (String str : tokens)
-			{
+			for (String str : tokens) {
 				sb.append(str);
 			}
 			return SharedStringUtil.hexToBytes(hashSHA256(sb.toString()));

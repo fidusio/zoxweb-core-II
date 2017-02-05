@@ -24,7 +24,8 @@ package org.zoxweb.client.websocket;
  *
  */
 public interface ZWBinaryWebSocketListener 
-	extends ZWWebSocketListener 
-{
+	extends ZWWebSocketListener {
+
     void onMessage(byte[] bytes);
+
 }

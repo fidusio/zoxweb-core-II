@@ -13,37 +13,30 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-
 package org.zoxweb.client.data.events;
 
 import com.google.gwt.event.shared.GwtEvent;
 import org.zoxweb.shared.util.CRUDNVBase;
 
-public class CRUDNVBaseEvent extends GwtEvent<CRUDNVBaseHandler>
-{
+public class CRUDNVBaseEvent
+		extends GwtEvent<CRUDNVBaseHandler> {
+
 	public final static Type<CRUDNVBaseHandler> TYPE = new Type<CRUDNVBaseHandler>();
 
 	private final CRUDNVBase crudNVBase;
 	
-	public CRUDNVBaseEvent( CRUDNVBase crudNVBase)
-	{
+	public CRUDNVBaseEvent( CRUDNVBase crudNVBase) {
 		this.crudNVBase = crudNVBase;
 	}
 	
-	
 	@Override
-	public Type<CRUDNVBaseHandler> getAssociatedType() 
-	{
-		// TODO Auto-generated method stub
+	public Type<CRUDNVBaseHandler> getAssociatedType() {
 		return TYPE;
 	}
 
 	@Override
-	protected void dispatch(CRUDNVBaseHandler handler) 
-	{
-		// TODO Auto-generated method stub
+	protected void dispatch(CRUDNVBaseHandler handler) {
 		handler.applyCRUD(crudNVBase.getCRUD(), crudNVBase.getNVBase());
-		
 	}
 	
 }

@@ -20,12 +20,13 @@ package org.zoxweb.shared.util;
  * @author mzebib
  *
  */
-public interface SetUnique 
-	extends IsUnique 
-{
+public interface SetUnique
+		extends IsUnique {
+
 	/**
-	 * Set unique property.
+	 * Sets unique property.
 	 * @param unique
 	 */
 	public void setUnique(boolean unique);
+
 }

@@ -17,49 +17,47 @@ package org.zoxweb.shared.util;
 
 import java.io.Serializable;
 
-
 /**
  * TimeStampInterface
  * 
  */
 public interface TimeStampInterface
-extends Serializable
-{
+		extends Serializable {
+
 	/**
-	 * Get the time is millis when the file was created or uploaded into a system or domain.
+	 * Returns the time is millis when the file was created or uploaded into a system or domain.
 	 * @return
 	 */
 	public long getCreationTime();
 	
 	/**
-	 * Set the time is millis when the file was created or uploaded into a system or domain.
+	 * Sets the time is millis when the file was created or uploaded into a system or domain.
 	 * @param ts
 	 */
 	public void setCreationTime(long ts);
 	
 	/**
-	 * Get the last time the file was updated.
+	 * Returns the last time the file was updated.
 	 * @return
 	 */
 	public long getLastTimeUpdated();
 	
 	/**
-	 * Set the last time the file was updated.
+	 * Sets the last time the file was updated.
 	 * @param ts
 	 */
 	public void setLastTimeUpdated(long ts);
 	
 	/**
-	 * Get the last time the file was read.
+	 * Returns the last time the file was read.
 	 * @return
 	 */
 	public long getLastTimeRead();
 	
 	/**
-	 * Set the last time the file was read.
+	 * Sets the last time the file was read.
 	 * @param ts
 	 */
 	public void setLastTimeRead(long ts);
-	
 
 }

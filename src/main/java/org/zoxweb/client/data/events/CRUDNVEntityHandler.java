@@ -21,7 +21,6 @@ import org.zoxweb.shared.util.NVEntity;
 import com.google.gwt.event.shared.EventHandler;
 
 public interface CRUDNVEntityHandler
-	extends EventHandler, CRUDOperation<NVEntity>
-{
-	
+		extends EventHandler, CRUDOperation<NVEntity> {
+
 }

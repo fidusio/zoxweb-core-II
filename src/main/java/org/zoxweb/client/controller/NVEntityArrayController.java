@@ -28,20 +28,14 @@ import org.zoxweb.shared.util.Const.ReturnType;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
-/**
- * @author mzebib
- *
- */
 public class NVEntityArrayController 
 	implements AddControllerHandler<String, NVEntity>
 {
-
 	private String uri = null;
 	// uri = FSConst.URIs.API_DATA_MANAGER.getValue();
 	
 	@Override
-	public void actionAdd(String v, AsyncCallback<NVEntity> callback) 
-	{
+	public void actionAdd(String v, AsyncCallback<NVEntity> callback) {
 		
 		HTTPMessageConfigInterface hcc = HTTPMessageConfig.createAndInit(null, uri, HTTPMethod.POST);
 		hcc.setContentType(HTTPMimeType.APPLICATION_JSON);

@@ -20,6 +20,7 @@ import com.google.gwt.event.shared.EventHandler;
 import org.zoxweb.shared.util.CRUDOperation;
 import org.zoxweb.shared.util.NVBase;
 
-public interface CRUDNVBaseHandler extends EventHandler, CRUDOperation<NVBase<?>>
-{
+public interface CRUDNVBaseHandler
+        extends EventHandler, CRUDOperation<NVBase<?>> {
+
 }

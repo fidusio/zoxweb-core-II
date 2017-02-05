@@ -1,4 +1,3 @@
-
 /*
  * Copyright 2012 ZoxWeb.com LLC.
  * 
@@ -30,27 +29,21 @@ import java.util.Set;
 import org.zoxweb.shared.data.ReferenceIDDAO;
 import org.zoxweb.shared.filters.GetValueFilter;
 import org.zoxweb.shared.filters.ValueFilter;
-import org.zoxweb.shared.util.GetName;
-import org.zoxweb.shared.util.GetNameValue;
-import org.zoxweb.shared.util.GetValue;
 
 /**
- * This class is used for utility methods shared between the client and the server.
+ * Contains utility methods shared between the client and the server.
  * @author mzebib
  *
  */
-public class SharedUtil 
-{
+public class SharedUtil {
 	
 	/**
-	 * This creates a constructor which cannot be used outside the class.
+	 * The constructor is declared private to prevent instantiation.
 	 */
-	private SharedUtil()
-	{
-		
+	private SharedUtil() {
+
 	}
-	
-	
+
 	/**
 	 * Checks all the objs if any of them is null it will throws a NullPointerException.
 	 * @param msg to be added to the NullPointerException
@@ -60,27 +53,21 @@ public class SharedUtil
 	public static void checkIfNulls(String msg, Object ... objs)
 		throws NullPointerException
 	{
-		if (objs == null)
-		{
+		if (objs == null) {
 			// error in invoking the check
 			throw new NullPointerException("Null Array Object");
 		}
-		
-		
-		for(Object o : objs)
-		{
-			if (o == null)
-				throw new NullPointerException(msg);
-		}
+
+		for (Object o : objs) {
+            if (o == null) {
+                throw new NullPointerException(msg);
+            }
+        }
 	}
 
-	
-	
 	@SuppressWarnings("unchecked")
-	public static <T> T getWrappedValue(T v)
-	{
-		if (v instanceof GetWrappedValue)
-		{
+	public static <T> T getWrappedValue(T v) {
+		if (v instanceof GetWrappedValue) {
 			return (T) ((GetWrappedValue<?>)v).getWrappedValue();
 		}
 		
@@ -93,29 +80,22 @@ public class SharedUtil
 	 * @param objArray
 	 * @return
 	 */
-	public static String toCanonicalID(char sep, Object...objArray)
-	{	
+	public static String toCanonicalID(char sep, Object...objArray) {
 		return toCanonicalID(false, sep, objArray);
 	}
 	
-	public static String toCanonicalID(boolean ignoreNulls, char sep, Object...objArray)
-	{
+	public static String toCanonicalID(boolean ignoreNulls, char sep, Object...objArray) {
 		StringBuilder sb = new StringBuilder();
 		
-		if (objArray != null)
-		{
-			for (int i = 0; i < objArray.length; i++)
-			{				
+		if (objArray != null) {
+			for (int i = 0; i < objArray.length; i++) {
 				_toCanonicalID(i, sb, ignoreNulls, sep, objArray[i] );
-
 			}
 		}
 		
 		return sb.toString();
 	}
-	
-	
-	
+
 	/**
 	 * Creates a canonical string based on a enum list of a certain data type and 
 	 * the elements in list are read separately and are specified by a character.
@@ -123,15 +103,12 @@ public class SharedUtil
 	 * @param enumer
 	 * @return
 	 */
-	public static String toCanonicalID(boolean ignoreNulls, char sep, Enumeration<?> enumer)
-	{
+	public static String toCanonicalID(boolean ignoreNulls, char sep, Enumeration<?> enumer) {
 		StringBuilder sb = new StringBuilder();
 		
-		if (enumer != null)
-		{
+		if (enumer != null) {
 			int pos = 0;
-			while(enumer.hasMoreElements())
-			{
+			while(enumer.hasMoreElements()) {
 				_toCanonicalID(pos++, sb, ignoreNulls, sep, enumer.nextElement());
 			}
 		}
@@ -139,48 +116,37 @@ public class SharedUtil
 		return sb.toString();
 	}
 	
-	private static StringBuilder _toCanonicalID(int pos, StringBuilder sb, boolean ignoreNull, char sep, Object val)
-	{
-		if ( val == null && ignoreNull)
-		{
+	private static StringBuilder _toCanonicalID(int pos, StringBuilder sb, boolean ignoreNull, char sep, Object val) {
+		if ( val == null && ignoreNull) {
 			return sb;
 		}
 		
-		if (ignoreNull && sb.length() != 0)
-		{
+		if (ignoreNull && sb.length() != 0) {
 			sb.append(sep);
-		}
-		else if (pos != 0)
-		{
+		} else if (pos != 0) {
 			sb.append(sep);
 		}
 		
-		if (val != null)
-			sb.append(val);
+		if (val != null) {
+            sb.append(val);
+        }
+
 		return sb;
 	}
-	
-	
-	public static boolean equals(ValueFilter<?, ?> vf1, ValueFilter<?, ?> vf2)
-	{
-		if (vf1 != null && vf2 != null)
-		{
-			if (vf1 == vf2)
-			{
+
+	public static boolean equals(ValueFilter<?, ?> vf1, ValueFilter<?, ?> vf2) {
+		if (vf1 != null && vf2 != null) {
+			if (vf1 == vf2) {
 				return true;
 			}
-			if (vf1.toCanonicalID() != null && vf2.toCanonicalID() != null)
-			{
+
+			if (vf1.toCanonicalID() != null && vf2.toCanonicalID() != null) {
 				return vf1.toCanonicalID().equals(vf2.toCanonicalID());
 			}
 		}
-		
-		
+
 		return false;
 	}
-	
-	
-
 
 	/**
 	 * This utility method look for the matching enum in case insensitive fashion.
@@ -196,94 +162,70 @@ public class SharedUtil
 	 * @param str
 	 * @return
 	 */
-	public static Enum<?> lookupEnum(Enum<?>[] list, String str)
-	{
-		if (str != null)
-		{
-			for (Enum<?> e: list)
-			{
-				if (str.equalsIgnoreCase(e.name()))
-				{
+	public static Enum<?> lookupEnum(Enum<?>[] list, String str) {
+		if (str != null) {
+			for (Enum<?> e: list) {
+				if (str.equalsIgnoreCase(e.name())) {
 					return e;
 				}
 				
-				if (str.equalsIgnoreCase(e.toString()))
-				{
+				if (str.equalsIgnoreCase(e.toString())) {
 					return e;
 				}
 				
-				if (e instanceof GetName && str.equalsIgnoreCase( ((GetName)e).getName()))
-				{
+				if (e instanceof GetName && str.equalsIgnoreCase( ((GetName)e).getName())) {
 					return e;
 				}
 				
-				if (e instanceof GetValue && str.equalsIgnoreCase( "" + ((GetValue<?>)e).getValue()))
-				{
+				if (e instanceof GetValue && str.equalsIgnoreCase( "" + ((GetValue<?>)e).getValue())) {
 					return e;
 				}
-				
 			}
 		}
 		
 		return null;
 	}
 	
-	
-	public static<T extends Enum<?>> T lookupTypedEnum(T[] list, String str)
-	{
-		if (str != null)
-		{
-			for (T e: list)
-			{
-				if (str.equalsIgnoreCase(e.name()))
-				{
+	public static<T extends Enum<?>> T lookupTypedEnum(T[] list, String str) {
+		if (str != null) {
+			for (T e: list) {
+				if (str.equalsIgnoreCase(e.name())) {
 					return e;
 				}
 				
-				if (str.equalsIgnoreCase(e.toString()))
-				{
+				if (str.equalsIgnoreCase(e.toString())) {
 					return e;
 				}
 				
-				if (e instanceof GetName && str.equalsIgnoreCase( ((GetName)e).getName()))
-				{
+				if (e instanceof GetName && str.equalsIgnoreCase( ((GetName)e).getName())) {
 					return e;
 				}
 				
-				if (e instanceof GetValue && str.equalsIgnoreCase( "" + ((GetValue<?>)e).getValue()))
-				{
+				if (e instanceof GetValue && str.equalsIgnoreCase( "" + ((GetValue<?>)e).getValue())) {
 					return e;
 				}
-				
 			}
 		}
 		
 		return null;
 	}
-	
-	
-	public static Enum<?> matchingEnumContent(Enum<?>[] list, String str)
-	{
-		if (str != null)
-		{
-			for (Enum<?> e: list)
-			{
-				if (SharedStringUtil.contains(str, e.name(), true))
-				{
+
+	public static Enum<?> matchingEnumContent(Enum<?>[] list, String str) {
+		if (str != null) {
+			for (Enum<?> e: list) {
+				if (SharedStringUtil.contains(str, e.name(), true)) {
 					return e;
 				}
-				if (SharedStringUtil.contains(str, e.toString(), true))
-				{
+
+				if (SharedStringUtil.contains(str, e.toString(), true)) {
 					return e;
 				}
 				
-				if (e instanceof GetName && SharedStringUtil.contains(str, ((GetName)e).getName(), true))
-				{
+				if (e instanceof GetName && SharedStringUtil.contains(str, ((GetName)e).getName(), true)) {
 					return e;
 				}
 				
-				if (e instanceof GetValue && SharedStringUtil.contains(str, "" + ((GetValue<?>)e).getValue(),true))
-				{
+				if (e instanceof GetValue && SharedStringUtil.contains(str, "" + ((GetValue<?>)e).getValue(),true)) {
 					return e;
 				}	
 			}
@@ -291,39 +233,30 @@ public class SharedUtil
 		
 		return null;
 	}
-	
-	
-	public static Enum<?> matchingEnumContent(String str, Enum<?>[] list)
-	{
-		if (str != null)
-		{
-			for (Enum<?> e: list)
-			{
-				if (SharedStringUtil.contains(e.name(), str, true))
-				{
+
+	public static Enum<?> matchingEnumContent(String str, Enum<?>[] list) {
+		if (str != null) {
+			for (Enum<?> e: list) {
+				if (SharedStringUtil.contains(e.name(), str, true)) {
 					return e;
 				}
-				if (SharedStringUtil.contains(e.toString(), str,true))
-				{
+				if (SharedStringUtil.contains(e.toString(), str,true)) {
 					return e;
 				}
 				
-				if (e instanceof GetName && SharedStringUtil.contains(((GetName)e).getName(), str, true))
-				{
+				if (e instanceof GetName && SharedStringUtil.contains(((GetName)e).getName(), str, true)) {
 					return e;
 				}
 				
-				if (e instanceof GetValue && SharedStringUtil.contains("" + ((GetValue<?>)e).getValue(), str,true))
-				{
+				if (e instanceof GetValue && SharedStringUtil.contains("" + ((GetValue<?>)e).getValue(), str,true)) {
 					return e;
-				}	
+				}
 			}
 		}
 		
 		return null;
 	}
-	
-	
+
 	/**
 	 * Converts the enum name() to the actual enum value based enum class  
 	 * 
@@ -332,48 +265,35 @@ public class SharedUtil
 	 * @param value
 	 * @return
 	 */
-	public static Enum<?> enumValue(Class<?> enumClass, String value)
-	{
-		if (value != null)
-		{
-			if (enumClass.isArray())
-			{
+	public static Enum<?> enumValue(Class<?> enumClass, String value) {
+		if (value != null) {
+			if (enumClass.isArray()) {
 				enumClass = enumClass.getComponentType();
 			}
 			
-			if (enumClass.isEnum())
-			{
+			if (enumClass.isEnum()) {
 				Enum<?>[] all = (Enum<?>[]) enumClass.getEnumConstants();
 				
-				for (int i=0; i < all.length; i++)
-				{
+				for (int i=0; i < all.length; i++) {
 					//Enum<?> e = (Enum<?>) all[i];
-					if (all[i].name().equals(value))
-					{
+					if (all[i].name().equals(value)) {
 						return all[i];
-						
 					}
 				}
-			}
-			else
-			{
+			} else {
 				throw new IllegalArgumentException(enumClass + " is an enum class"); 
 			}
 		}
 		
 		return null;
 	}
-	
-	
-	
-	
+
 	/**
 	 * Parses a name = value String and return an NVPair object.
 	 * @param str
 	 * @return
 	 */
-	public static NVPair toNVPair(String str)
-	{
+	public static NVPair toNVPair(String str) {
 		return toNVPair(str, "=", false);
 	}
 	
@@ -383,8 +303,7 @@ public class SharedUtil
 	 * @param sep
 	 * @return
 	 */
-	public static NVPair toNVPair(String str, String sep)
-	{
+	public static NVPair toNVPair(String str, String sep) {
 //		NVPair ret = null;
 //		str = SharedStringUtil.trimOrNull(str);
 //		
@@ -408,33 +327,27 @@ public class SharedUtil
 		
 		return toNVPair(str, sep, false);
 	}
-	
-	
-	
-	public static NVPair toNVPair(String str, String sep, boolean trim)
-	{
+
+	public static NVPair toNVPair(String str, String sep, boolean trim) {
 		NVPair ret = null;
 		str = SharedStringUtil.trimOrNull(str);
 		
-		if (str != null )
-		{
+		if (str != null) {
 			int index = str.indexOf(sep);
 			
-			if (index != -1)
-			{
+			if (index != -1) {
 				String name = SharedStringUtil.trimOrNull(str.substring(0, index));
 				String value = str.substring(index+1, str.length());
-				if (value.length() == 0)
-				{
+
+				if (value.length() == 0) {
 					value = null;
 				}
-				if (value != null && trim)
-				{
+
+				if (value != null && trim) {
 					value = value.trim();
 				}
 				
-				if (name != null)
-				{
+				if (name != null) {
 					ret = new NVPair(name, value);
 				}
 			}
@@ -449,14 +362,10 @@ public class SharedUtil
 	 * @param name
 	 * @return
 	 */
-	public static NVBase<?> lookupNVPB(List<NVBase<?>> list, String name)
-	{
-		if (name != null)
-		{
-			for (NVBase<?> nvpb: list)
-			{
-				if (name.equalsIgnoreCase(nvpb.getName()))
-				{
+	public static NVBase<?> lookupNVPB(List<NVBase<?>> list, String name) {
+		if (name != null) {
+			for (NVBase<?> nvpb: list) {
+				if (name.equalsIgnoreCase(nvpb.getName())) {
 					return nvpb;
 				}
 			}
@@ -464,7 +373,6 @@ public class SharedUtil
 		
 		return null;
 	}
-	
 	
 	/**
 	 * Looks up the NVBase based on enum.
@@ -474,34 +382,24 @@ public class SharedUtil
 	 */
 	public static NVBase<?> lookupNVPB(List<NVBase<?>> list, Enum<?> e)
 	{
-		if (e != null)
-		{
-			for (NVBase<?> nvpb: list)
-			{
-				if (e.name().equalsIgnoreCase( nvpb.getName()))
-				{
+		if (e != null) {
+			for (NVBase<?> nvpb: list) {
+				if (e.name().equalsIgnoreCase( nvpb.getName())) {
 					return nvpb;
-				}
-				else if (e instanceof GetName)
-				{
+				} else if (e instanceof GetName) {
 					String n = ((GetName) e).getName();
-					if (n.equalsIgnoreCase(nvpb.getName()))
-					{
+
+					if (n.equalsIgnoreCase(nvpb.getName())) {
 						return nvpb;
 					}
-				}
-				else if (e instanceof GetNVConfig)
-				{
+				} else if (e instanceof GetNVConfig) {
 					String n = ((GetNVConfig) e).getNVConfig().getName();
-					if (n.equalsIgnoreCase(nvpb.getName()))
-					{
+					if (n.equalsIgnoreCase(nvpb.getName())) {
 						return nvpb;
-					}
-					else
-					{
+					} else {
 						n = ((GetNVConfig) e).getNVConfig().getDisplayName();
-						if (n.equalsIgnoreCase(nvpb.getName()))
-						{
+
+						if (n.equalsIgnoreCase(nvpb.getName())) {
 							return nvpb;
 						}
 					}
@@ -511,28 +409,16 @@ public class SharedUtil
 		
 		return null;
 	}
-	
-	
+
 	/**
 	 * Looks NV list based on name.
 	 * @param list
 	 * @param name
 	 * @return
 	 */
-	public static <V> GetNameValue<V> lookupNV(List<? extends GetNameValue<V>> list, String name)
-	{
+	public static <V> GetNameValue<V> lookupNV(List<? extends GetNameValue<V>> list, String name) {
 		return lookupNV(list, name, null);
 	}
-	
-
-	
-//	public static NVPair lookupNVP(List<NVPair> list, String name)
-//	{
-//		
-//		
-//		return lookupNV(list, name, null);
-//		
-//	}
 	
 	/**
 	 * Looks up NV based on name and canonical separator.
@@ -541,19 +427,14 @@ public class SharedUtil
 	 * @param canonicalSep
 	 * @return
 	 */
-	public static <V> GetNameValue<V> lookupNV(List<? extends GetNameValue<V>> list, String name, String canonicalSep)
-	{
-		if (name != null)
-		{
-			if (canonicalSep !=null)
-			{
+	public static <V> GetNameValue<V> lookupNV(List<? extends GetNameValue<V>> list, String name, String canonicalSep) {
+		if (name != null) {
+			if (canonicalSep !=null) {
 				name = SharedStringUtil.parseNameValue(name, canonicalSep)[0];
 			}
 			
-			for (GetNameValue<V> nvp: list)
-			{
-				if (name.equalsIgnoreCase( nvp.getName()))
-				{
+			for (GetNameValue<V> nvp: list) {
+				if (name.equalsIgnoreCase( nvp.getName())) {
 					return nvp;
 				}
 			}
@@ -568,16 +449,12 @@ public class SharedUtil
 	 * @param name
 	 * @return
 	 */
-	public static <V> V lookupValue(List<? extends GetNameValue<V>> list, String name)
-	{
+	public static <V> V lookupValue(List<? extends GetNameValue<V>> list, String name) {
 		V ret = null;
 		
-		if (name != null)
-		{
-			for (GetNameValue<V> nvp: list)
-			{
-				if (name.equalsIgnoreCase(nvp.getName()))
-				{
+		if (name != null) {
+			for (GetNameValue<V> nvp: list) {
+				if (name.equalsIgnoreCase(nvp.getName())) {
 					ret = nvp.getValue();
 					break;
 				}
@@ -586,18 +463,13 @@ public class SharedUtil
 		
 		return ret;
 	}
-	
-	
-	public static <V> V lookupValue(ArrayValues<GetNameValue<V>> list, String name)
-	{
+
+	public static <V> V lookupValue(ArrayValues<GetNameValue<V>> list, String name) {
 		V ret = null;
 		
-		if (name != null)
-		{
-			for (GetNameValue<V> nvp: list.values())
-			{
-				if (name.equalsIgnoreCase(nvp.getName()))
-				{
+		if (name != null) {
+			for (GetNameValue<V> nvp: list.values()) {
+				if (name.equalsIgnoreCase(nvp.getName())) {
 					ret = nvp.getValue();
 					break;
 				}
@@ -613,22 +485,15 @@ public class SharedUtil
 	 * @param e
 	 * @return
 	 */
-	public static <V> V lookupValue(List<? extends GetNameValue<V>> list, Enum<?> e)
-	{
+	public static <V> V lookupValue(List<? extends GetNameValue<V>> list, Enum<?> e) {
 		V ret = null;
 		
-		if (e != null)
-		{
-			for (GetNameValue<V> nvp: list)
-			{
-				if (e.name().equalsIgnoreCase( nvp.getName()))
-				{
+		if (e != null) {
+			for (GetNameValue<V> nvp: list) {
+				if (e.name().equalsIgnoreCase( nvp.getName())) {
 					ret = nvp.getValue();
 					break;
-				}
-				
-				else if (e instanceof GetName && ((GetName) e).getName().equalsIgnoreCase( nvp.getName()))
-				{
+				} else if (e instanceof GetName && ((GetName) e).getName().equalsIgnoreCase( nvp.getName())) {
 					ret = (V) nvp.getValue();
 					break;
 				}
@@ -639,10 +504,8 @@ public class SharedUtil
 	}
 	
 	
-	public static <V> V lookupValue(GetNameValue<V> v)
-	{
-		if (v != null)
-		{
+	public static <V> V lookupValue(GetNameValue<V> v) {
+		if (v != null) {
 			return v.getValue();
 		}
 		
@@ -656,16 +519,12 @@ public class SharedUtil
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public static  <V> V lookup(List<? extends GetName> list, String name)
-	{
+	public static  <V> V lookup(List<? extends GetName> list, String name) {
 		V ret = null;
 		
-		if (name != null)
-		{
-			for (GetName nvp: list)
-			{
-				if (name.equalsIgnoreCase(nvp.getName()))
-				{
+		if (name != null) {
+			for (GetName nvp: list) {
+				if (name.equalsIgnoreCase(nvp.getName())) {
 					ret = (V)nvp;
 					break;
 				}
@@ -674,69 +533,47 @@ public class SharedUtil
 		
 		return ret;
 	}
-	
-	
-	
-	public static <V> V lookupMap(Map<String, V> map, String key, boolean ignoreCase)
-	{
-		
-		if (key != null)
-		{
-			if (ignoreCase)
-			{
+
+	public static <V> V lookupMap(Map<String, V> map, String key, boolean ignoreCase) {
+		if (key != null) {
+			if (ignoreCase) {
 				Set<Map.Entry<String, V>> set = map.entrySet();
 				Iterator<Map.Entry<String, V>> it = set.iterator();
-				while(it.hasNext())
-				{
+				while(it.hasNext()) {
 					Map.Entry<String, V> entry = it.next();
-					if (key.equalsIgnoreCase(entry.getKey()))
-					{
+					if (key.equalsIgnoreCase(entry.getKey())) {
 						return entry.getValue();
 					}
 				}
 			}
-			
 		}
 		
 		return map.get(key);
 	}
-	
-	
+
 	@SuppressWarnings("unchecked")
-	public static  <V> List<V> search(GetName[] list, String... name)
-	{
+	public static  <V> List<V> search(GetName[] list, String... name) {
 		List<V> ret = new ArrayList<V>();
 		
-		if (name != null && name.length > 0 && name[0] != null)
-		{
-			for (GetName nvp: list)
-			{
-				if (name[0].equalsIgnoreCase(nvp.getName()))
-				{
+		if (name != null && name.length > 0 && name[0] != null) {
+			for (GetName nvp: list) {
+				if (name[0].equalsIgnoreCase(nvp.getName())) {
 					ret.add( (V) nvp);
-				
 				}
 			}
 		}
 		
 		return ret;
 	}
-	
-	
-	
+
 	@SuppressWarnings("unchecked")
-	public static  <V> List<V> search(List<? extends GetName> list, String... name)
-	{
+	public static  <V> List<V> search(List<? extends GetName> list, String... name) {
 		List<V> ret = new ArrayList<V>();
 		
-		if (name != null && name.length > 0 && name[0] != null)
-		{
-			for (GetName nvp: list)
-			{
-				if (name[0].equalsIgnoreCase(nvp.getName()))
-				{
+		if (name != null && name.length > 0 && name[0] != null) {
+			for (GetName nvp: list) {
+				if (name[0].equalsIgnoreCase(nvp.getName())) {
 					ret.add( (V) nvp);
-				
 				}
 			}
 		}
@@ -751,22 +588,15 @@ public class SharedUtil
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public static  <V> V lookup(List<? extends GetName> list, Enum<?> e)
-	{
+	public static  <V> V lookup(List<? extends GetName> list, Enum<?> e) {
 		V ret = null;
 		
-		if (e != null)
-		{
-			for (GetName nvp: list)
-			{
-				if (e.name().equalsIgnoreCase( nvp.getName()))
-				{
+		if (e != null) {
+			for (GetName nvp: list) {
+				if (e.name().equalsIgnoreCase( nvp.getName())) {
 					ret = (V) nvp;
 					break;
-				}
-				
-				else if (e instanceof GetName && ((GetName) e).getName().equalsIgnoreCase(nvp.getName()))
-				{
+				} else if (e instanceof GetName && ((GetName) e).getName().equalsIgnoreCase(nvp.getName())) {
 					ret = (V) nvp;
 					break;
 				}
@@ -776,7 +606,6 @@ public class SharedUtil
 		return ret;
 	}
 
-
 	/**
 	 * This method removes the prefix in a string and returns a substring of the original string
 	 * less the prefix	
@@ -784,37 +613,27 @@ public class SharedUtil
 	 * @param str
 	 * @return
 	 */
-	public static String removePrefix(String prefix, String str)
-	{
-		
-		if (prefix != null && str.startsWith(prefix))
-		{
+	public static String removePrefix(String prefix, String str) {
+		if (prefix != null && str.startsWith(prefix)) {
 			// tele-sign do not like the + 
 			str = str.substring(prefix.length());
 		}
 		
 		return str;
 	}
-	
-	
+
 	/**
 	 * Looks up NV list that extends GetNameValue based on enum.
 	 * @param arrayList
 	 * @param e
 	 * @return
 	 */
-	public static <V> GetNameValue<V> lookupNV(List<? extends GetNameValue<V>> arrayList, Enum<?> e)
-	{
-		if (e != null)
-		{
-			for (GetNameValue<V> nvp: arrayList)
-			{
-				if (e.name().equalsIgnoreCase(nvp.getName()))
-				{
+	public static <V> GetNameValue<V> lookupNV(List<? extends GetNameValue<V>> arrayList, Enum<?> e) {
+		if (e != null) {
+			for (GetNameValue<V> nvp: arrayList) {
+				if (e.name().equalsIgnoreCase(nvp.getName())) {
 					return nvp;
-				}
-				else if (e instanceof GetName && ((GetName)e).getName().equalsIgnoreCase(nvp.getName()))
-				{
+				} else if (e instanceof GetName && ((GetName)e).getName().equalsIgnoreCase(nvp.getName())) {
 					return nvp;
 				}
 			}
@@ -831,8 +650,7 @@ public class SharedUtil
 	 * @param array
 	 * @return
 	 */
-	public static String toString(Object[] array)
-	{
+	public static String toString(Object[] array) {
 		return toString(array, "\n");
 	}
 	
@@ -846,8 +664,7 @@ public class SharedUtil
 	 * @param sep
 	 * @return
 	 */
-	public static String toString(Object[] array, String sep)
-	{
+	public static String toString(Object[] array, String sep) {
 		return toString(array, sep, true);
 	}
 	
@@ -864,16 +681,12 @@ public class SharedUtil
 	 * @param index
 	 * @return
 	 */
-	public static String toString(Object[] array, String sep, boolean index)
-	{
+	public static String toString(Object[] array, String sep, boolean index) {
 		StringBuilder sb = new StringBuilder();
 		
-		if (array != null)
-		{
-			for (int i = 0; i < array.length; i++)
-			{
-				if (index)
-				{
+		if (array != null) {
+			for (int i = 0; i < array.length; i++) {
+				if (index) {
 					sb.append("[");
 					sb.append(i);
 					sb.append("]:");
@@ -881,54 +694,44 @@ public class SharedUtil
 				
 				sb.append(array[i]);
 				
-				if (i + 1 !=  array.length)
-					sb.append(sep);
+				if (i + 1 !=  array.length) {
+                    sb.append(sep);
+                }
 			}
 		}
 		
 		return sb.toString();
 	}
-	
-	
+
 	/**
 	 * Converts NVEntity to debug string.
 	 * @param nve
 	 * @return
 	 */
-	public static String toDebugString(NVEntity nve)
-	{
+	public static String toDebugString(NVEntity nve) {
 		StringBuilder sb = new StringBuilder();
 		
-		if (nve != null)
-		{
+		if (nve != null) {
 			sb.append("[" + nve.getClass().getName() + "]\n");
 			
-			for (NVBase<?> nvb : nve.getAttributes().values())
-			{
+			for (NVBase<?> nvb : nve.getAttributes().values()) {
 				sb.append("\t" + nvb.getClass().getName() + ",");
 				
-				if (nvb instanceof NVEntityReference)
-				{
+				if (nvb instanceof NVEntityReference) {
 					sb.append(nvb.getName() + ":" + toDebugString((NVEntity)nvb.getValue()) + "\n");
 				}
 				
-				if (nvb instanceof NVEntityReferenceList)
-				{
+				if (nvb instanceof NVEntityReferenceList) {
 					NVEntityReferenceList tempList = (NVEntityReferenceList) nvb;
 					
-					for (NVEntity nveTemp : tempList.getValue())
-					{
+					for (NVEntity nveTemp : tempList.getValue()) {
 						sb.append(nvb.getName() + ":" + toDebugString(nveTemp) + "\n");
 					}
-				}
-				else
-				{
+				} else {
 					sb.append(nvb.getName() + ":" + nvb.getValue() + "\n") ;
 				}
 			}
-		}
-		else
-		{
+		} else {
 			sb.append("null");
 		}
 		
@@ -938,20 +741,16 @@ public class SharedUtil
 	
 	/**
 	 * Looks up array values based on given String.
-	 * @param arrayList
+	 * @param arrayValues
 	 * @param name
 	 * @return
 	 */
-	public static <V> List<? extends GetNameValue<V>> lookupArrayValues(ArrayValues<? extends GetNameValue<V>> arrayValues, String name)
-	{
+	public static <V> List<? extends GetNameValue<V>> lookupArrayValues(ArrayValues<? extends GetNameValue<V>> arrayValues, String name) {
 		ArrayList<GetNameValue<V>> ret = new ArrayList<GetNameValue<V>>(); 
 		
-		if (name != null)
-		{
-			for (GetNameValue<V> nvp : arrayValues.values())
-			{
-				if (name.equalsIgnoreCase(nvp.getName()))
-				{
+		if (name != null) {
+			for (GetNameValue<V> nvp : arrayValues.values()) {
+				if (name.equalsIgnoreCase(nvp.getName())) {
 					ret.add( nvp);
 				}
 			}
@@ -962,24 +761,18 @@ public class SharedUtil
 	
 	/**
 	 * Looks up array values based on given enum.
-	 * @param arrayList
+	 * @param arrayValues
 	 * @param e
 	 * @return
 	 */
-	public static <V> List<? extends GetNameValue<V>> lookupArrayValues(ArrayValues<? extends GetNameValue<V>> arrayValues, Enum<?> e)
-	{
+	public static <V> List<? extends GetNameValue<V>> lookupArrayValues(ArrayValues<? extends GetNameValue<V>> arrayValues, Enum<?> e) {
 		ArrayList<GetNameValue<V>> ret = new ArrayList<GetNameValue<V>>(); 
 		
-		if (e != null)
-		{
-			for (GetNameValue<V> nvp : arrayValues.values())
-			{
-				if (e.name().equalsIgnoreCase(nvp.getName()))
-				{
+		if (e != null) {
+			for (GetNameValue<V> nvp : arrayValues.values()) {
+				if (e.name().equalsIgnoreCase(nvp.getName())) {
 					ret.add( nvp);
-				}
-				else if (e instanceof GetName && ((GetName)e).getName().equalsIgnoreCase(nvp.getName()))
-				{
+				} else if (e instanceof GetName && ((GetName)e).getName().equalsIgnoreCase(nvp.getName())) {
 					ret.add(nvp);
 				}
 			}
@@ -994,20 +787,14 @@ public class SharedUtil
 	 * @param e
 	 * @return
 	 */
-	public static <V> List<? extends GetNameValue<V>> lookupAllNV(List<GetNameValue<V>> arrayList, Enum<?> e)
-	{
+	public static <V> List<? extends GetNameValue<V>> lookupAllNV(List<GetNameValue<V>> arrayList, Enum<?> e) {
 		ArrayList<GetNameValue<V>> ret = new ArrayList<GetNameValue<V>>(); 
 		
-		if (e != null)
-		{
-			for (GetNameValue<V> nvp : arrayList)
-			{
-				if (e.name().equalsIgnoreCase(nvp.getName()))
-				{
+		if (e != null) {
+			for (GetNameValue<V> nvp : arrayList) {
+				if (e.name().equalsIgnoreCase(nvp.getName())) {
 					ret.add( nvp);
-				}
-				else if (e instanceof GetName && ((GetName)e).getName().equalsIgnoreCase(nvp.getName()))
-				{
+				} else if (e instanceof GetName && ((GetName)e).getName().equalsIgnoreCase(nvp.getName())) {
 					ret.add(nvp);
 				}
 			}
@@ -1023,9 +810,7 @@ public class SharedUtil
 	 * @param name
 	 * @return
 	 */
-	public static <V>List< ? extends GetNameValue<V>> lookupAllNV(List<? extends GetNameValue<V>> arrayList, String name)
-	{
-		
+	public static <V>List< ? extends GetNameValue<V>> lookupAllNV(List<? extends GetNameValue<V>> arrayList, String name) {
 		return lookupAllNV(arrayList, name, null);
 	}
 	
@@ -1036,21 +821,16 @@ public class SharedUtil
 	 * @param canonicalSep
 	 * @return
 	 */
-	public static <V>List< ? extends GetNameValue<V>> lookupAllNV(List<? extends GetNameValue<V>> arrayList, String name, String canonicalSep)
-	{
-		
+	public static <V>List< ? extends GetNameValue<V>> lookupAllNV(List<? extends GetNameValue<V>> arrayList, String name, String canonicalSep) {
 		ArrayList<GetNameValue<V>> ret = new ArrayList<GetNameValue<V>>(); 
 		
-		if (name != null)
-		{
-			if (canonicalSep != null)
-			{
+		if (name != null) {
+			if (canonicalSep != null) {
 				name = SharedStringUtil.parseNameValue(name, canonicalSep)[0];
 			}
-			for (GetNameValue<V> nvp: arrayList)
-			{
-				if (name.equalsIgnoreCase(nvp.getName()))
-				{
+
+			for (GetNameValue<V> nvp: arrayList) {
+				if (name.equalsIgnoreCase(nvp.getName())) {
 					ret.add(nvp);
 				}
 			}
@@ -1093,8 +873,7 @@ public class SharedUtil
 	 * @param nvMap
 	 * @return
 	 */
-	public static <V>List<? extends GetNameValue<String>> toNVPairs(Map<String, String[]> nvMap)
-	{
+	public static <V>List<? extends GetNameValue<String>> toNVPairs(Map<String, String[]> nvMap) {
 		return toNVPairs(nvMap, false);
 	}
 	
@@ -1104,26 +883,22 @@ public class SharedUtil
 	 * @param nullAllowed
 	 * @return
 	 */
-	public static <V>List<? extends GetNameValue<String>> toNVPairs(Map<String, String[]> nvMap, boolean nullAllowed)
-	{
+	public static <V>List<? extends GetNameValue<String>> toNVPairs(Map<String, String[]> nvMap, boolean nullAllowed) {
 		List< GetNameValue<String>> ret = new ArrayList<GetNameValue<String>>();
 		
-		for (Map.Entry<String, String[]> nvp : nvMap.entrySet())
-		{
-			if (nvp != null)
-			{
+		for (Map.Entry<String, String[]> nvp : nvMap.entrySet()) {
+			if (nvp != null) {
 				String values[] = nvp.getValue();
 				
-				if (values != null)
-				{
-				
-					for (String value : values)
-					{
-						if (!nullAllowed)
-							value = SharedStringUtil.trimOrNull(value);
+				if (values != null) {
+					for (String value : values) {
+						if (!nullAllowed) {
+                            value = SharedStringUtil.trimOrNull(value);
+                        }
 						
-						if ((nullAllowed || value != null) && nvp.getKey() != null)
-							ret.add(new NVPair(nvp.getKey(), value));
+						if ((nullAllowed || value != null) && nvp.getKey() != null) {
+                            ret.add(new NVPair(nvp.getKey(), value));
+                        }
 					}
 				}
 			}
@@ -1138,37 +913,28 @@ public class SharedUtil
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public static <V>List< ? extends GetNameValue<String>> toNVPairs(Enum<?>... enums)
-	{
+	public static <V>List< ? extends GetNameValue<String>> toNVPairs(Enum<?>... enums) {
 		List<GetNameValue<String>> ret = new ArrayList<GetNameValue<String>>();
 		
-		for (Enum<?> e : enums)
-		{
+		for (Enum<?> e : enums) {
 			NVPair nvp = new NVPair();
 			
-			if (e instanceof GetName)
-			{
+			if (e instanceof GetName) {
 				nvp.setName(((GetName)e).getName());
-			}
-			else
-			{
+			} else {
 				nvp.setName(e.name());
 			}
 			
-			if (e instanceof GetValue)
-			{
+			if (e instanceof GetValue) {
 				nvp.setValue(((GetValue<String>)e).getValue());
 			}
 			
-			if (e instanceof GetValueFilter)
-			{
-				ValueFilter<String, String> vf = ((GetValueFilter<String, String>)e).getValueFilter();
+			if (e instanceof GetValueFilter) {
+			    ValueFilter<String, String> vf = ((GetValueFilter<String, String>)e).getValueFilter();
 				
 				//nvp.setValueFilter(((GetValueFilter<String, String>)e).getValueFilter());
-				if (vf instanceof DynamicEnumMap)
-				{
+				if (vf instanceof DynamicEnumMap) {
 					vf = DynamicEnumMapManager.SINGLETON.lookup(((DynamicEnumMap) vf).getName());
-					
 				}
 				
 				nvp.setValueFilter(vf);
@@ -1185,22 +951,18 @@ public class SharedUtil
 	 * @param nvMap
 	 * @return
 	 */
-	public static ArrayList<? extends GetNameValue<String>> listToNVPairs(Map<String, List<String>> nvMap)
-	{
+	public static ArrayList<? extends GetNameValue<String>> listToNVPairs(Map<String, List<String>> nvMap) {
 		ArrayList< GetNameValue<String>> ret = new ArrayList<GetNameValue<String>>();
 		
-		for (Map.Entry<String, List<String>> nvp : nvMap.entrySet())
-		{
-			if (nvp != null)
-			{
-				List<String> values = nvp.getValue();
-				
-				if (values != null)
-				
-				for (String value : values)
-				{
-					ret.add( new NVPair( nvp.getKey(), value));
-				}
+		for (Map.Entry<String, List<String>> nvp : nvMap.entrySet()) {
+			if (nvp != null) {
+                List<String> values = nvp.getValue();
+
+                if (values != null) {
+                    for (String value : values) {
+                        ret.add(new NVPair(nvp.getKey(), value));
+                    }
+                }
 			}
 		}
 		
@@ -1213,8 +975,7 @@ public class SharedUtil
 	 * @param configList
 	 * @return
 	 */
-	public static boolean areAllMandtorySet(List<NVPair> paramList, GetNVConfig configList[])
-	{
+	public static boolean areAllMandtorySet(List<NVPair> paramList, GetNVConfig configList[]) {
 		return (firstMissingMandtory(paramList, configList) == null);
 	}
 	
@@ -1224,23 +985,17 @@ public class SharedUtil
 	 * @param configList
 	 * @return
 	 */
-	public static NVConfig firstMissingMandtory(List<NVPair> paramList, GetNVConfig configList[])
-	{
-		for (GetNVConfig con : configList)
-		{
+	public static NVConfig firstMissingMandtory(List<NVPair> paramList, GetNVConfig configList[]) {
+		for (GetNVConfig con : configList) {
 			NVConfig config = con.getNVConfig();
 			
-			if (config.isMandatory())
-			{
-				
-				if (lookupNV( paramList, config.getName()) == null)
-				{
-					
-					if (lookupNV( paramList, (Enum<?>)con) != null)
-					{
+			if (config.isMandatory()) {
+				if (lookupNV( paramList, config.getName()) == null) {
+					if (lookupNV( paramList, (Enum<?>)con) != null) {
 						continue;
 					}
-						return config;
+
+					return config;
 				}		
 			}
 		}
@@ -1248,18 +1003,15 @@ public class SharedUtil
 		return null;
 	}
 	
-	
 	/**
 	 * 
 	 * @param params
 	 * @return
 	 */
-	public static HashMap<String, NVBase<?>> toData(List<NVConfig> params)
-	{
+	public static HashMap<String, NVBase<?>> toData(List<NVConfig> params) {
 		HashMap<String, NVBase<?>> ret = new HashMap<String, NVBase<?>>();
 		
-		for (NVConfig config : params)
-		{
+		for (NVConfig config : params) {
 			ret.put(config.getName(), metaConfigToNVBase(config));
 		}
 		
@@ -1271,12 +1023,10 @@ public class SharedUtil
 	 * @param params
 	 * @return
 	 */
-	public static ArrayList<NVBase<?>> toData(NVConfig[] params)
-	{
+	public static ArrayList<NVBase<?>> toData(NVConfig[] params) {
 		ArrayList<NVBase<?>> ret = new ArrayList<NVBase<?>>();
 		
-		for (NVConfig config : params)
-		{
+		for (NVConfig config : params) {
 			ret.add(metaConfigToNVBase(config));
 		}
 		
@@ -1288,12 +1038,10 @@ public class SharedUtil
 	 * @param params
 	 * @return
 	 */
-	public static ArrayList<NVBase<?>> toData(GetNVConfig[] params)
-	{
+	public static ArrayList<NVBase<?>> toData(GetNVConfig[] params) {
 		ArrayList<NVBase<?>> ret = new ArrayList<NVBase<?>>();
 		
-		for (GetNVConfig config : params)
-		{
+		for (GetNVConfig config : params) {
 			ret.add(metaConfigToNVBase(config.getNVConfig()));
 		}
 		
@@ -1306,13 +1054,12 @@ public class SharedUtil
 	 * @param values
 	 * @return
 	 */
-	public static ArrayList<NVBase<?>> toData(NVConfigEntity nvce, ArrayList<NVBase<?>> values)
-	{
-		if (values == null)
-			values = new ArrayList<NVBase<?>>();
+	public static ArrayList<NVBase<?>> toData(NVConfigEntity nvce, ArrayList<NVBase<?>> values) {
+		if (values == null) {
+            values = new ArrayList<NVBase<?>>();
+        }
 		
-		for (NVConfig config : nvce.getAttributes())
-		{
+		for (NVConfig config : nvce.getAttributes()) {
 			values.add(metaConfigToNVBase(config));
 		}
 		
@@ -1321,7 +1068,7 @@ public class SharedUtil
  	
 
 	/**
-	 * This method converts NVConfig to NVBase based on
+	 * Converts NVConfig to NVBase based on
 	 * the variable name shared between both objects.
 	 * <br>Primitive object conversion list:</br>
 	 * <ul>
@@ -1346,18 +1093,12 @@ public class SharedUtil
 	 * @param config
 	 * @return
 	 */
-	
 	@SuppressWarnings("unchecked")
-	public static NVBase<?> metaConfigToNVBase(NVConfig config)
-	{
-		
+	public static NVBase<?> metaConfigToNVBase(NVConfig config) {
 		Class<?> c = config.getMetaType();
 		
-		if (config.isArray())
-		{
-			
-			if (config instanceof NVConfigEntity)
-			{
+		if (config.isArray()) {
+			if (config instanceof NVConfigEntity) {
 				NVConfigEntity nvce = (NVConfigEntity) config;
 				//System.out.println(""+config);
 				
@@ -1380,57 +1121,36 @@ public class SharedUtil
 			}
 			
 			// enum must be checked first
-			if (config.isEnum())
-			{
+			if (config.isEnum()) {
 				return (new NVEnumList(config.getName(), new ArrayList<Enum<?>>()));
-			}
-			else if (String[].class.equals(c))
-			{
-				if (config.isUnique())
-				{
+			} else if (String[].class.equals(c)) {
+				if (config.isUnique()) {
 					return (new NVPairGetNameMap (config.getName(), new HashMap<GetName, NVPair>()));
 				}
 				
 				return (new NVPairList (config.getName(), new ArrayList<NVPair>()));
-			}
-			else if (Long[].class.equals(c))
-			{
+			} else if (Long[].class.equals(c)) {
 				return (new NVLongList(config.getName(), new ArrayList<Long>()));
-			}
-			else if (byte[].class.equals(c))
-			{
+			} else if (byte[].class.equals(c)) {
 				return (new NVBlob(config.getName(), null));
-			}
-			else if (Integer[].class.equals(c))
-			{
+			} else if (Integer[].class.equals(c)) {
 				return (new NVIntList(config.getName(), new ArrayList<Integer>()));
-			}
-			else if (Float[].class.equals(c))
-			{
+			} else if (Float[].class.equals(c)) {
 				return (new NVFloatList( config.getName(), new ArrayList<Float>()));
-			}
-			else if (Double[].class.equals( c))
-			{
+			} else if (Double[].class.equals( c)) {
 				return (new NVDoubleList(config.getName(), new ArrayList<Double>()));
-			}
-			else if (Date[].class.equals(c))
-			{
+			} else if (Date[].class.equals(c)) {
 				return (new NVLongList( config.getName(), new ArrayList<Long>()));
-			}
-			else if (BigDecimal[].class.equals(c))
-			{
+			} else if (BigDecimal[].class.equals(c)) {
 				return (new NVBigDecimalList( config.getName(), new ArrayList<BigDecimal>()));
 			}
-		}
-		else // not array 
-		{
-			if (config instanceof NVConfigEntity)
-			{
+		} else {
+		    // Not array
+			if (config instanceof NVConfigEntity) {
 				return new NVEntityReference(config);
 			}
 			
-			if (config.isEnum())
-			{
+			if (config.isEnum()) {
 				
 //				if ( DynamicEnumMap.class.equals( config.getMetaType()))
 //				{
@@ -1438,39 +1158,23 @@ public class SharedUtil
 //				}
 				
 				return (new NVEnum(config.getName(), null));
-			}
-			else if (String.class.equals(c))
-			{
+			} else if (String.class.equals(c)) {
 				NVPair nvp = new NVPair(config.getName(), (String)null);
 				nvp.setValueFilter(config.getValueFilter());
 				return nvp;
-			}
-			else if (Long.class.equals(c))
-			{
+			} else if (Long.class.equals(c)) {
 				return new NVLong(config.getName(), 0);
-			}
-			else if (Integer.class.equals(c))
-			{
+			} else if (Integer.class.equals(c)) {
 				return new NVInt(config.getName(), 0);
-			}
-			else if (Boolean.class.equals(c))
-			{
+			} else if (Boolean.class.equals(c)) {
 				return (new NVBoolean(config.getName(), false));
-			}
-			else if (Float.class.equals(c))
-			{
+			} else if (Float.class.equals(c)) {
 				return new NVFloat(config.getName(), 0);
-			}
-			else if (Double.class.equals(c))
-			{
+			} else if (Double.class.equals(c)) {
 				return new NVDouble(config.getName(), 0);
-			}
-			else if (Date.class.equals(c)) 
-			{
+			} else if (Date.class.equals(c)) {
 				return new NVLong(config.getName(), 0);
-			}
-			else if (BigDecimal.class.equals(c))
-			{
+			} else if (BigDecimal.class.equals(c)) {
 				return new NVBigDecimal(config.getName(), new BigDecimal(0));
 			}
 			
@@ -1485,13 +1189,11 @@ public class SharedUtil
 	 * @param value
 	 * @return
 	 */
-	public static Object stringToValue(NVConfig config, String value)
-	{
-		
+	public static Object stringToValue(NVConfig config, String value) {
+
 		Class<?> c = config.getMetaType();
 		
-		if (c.isArray())
-		{
+		if (c.isArray()) {
 			throw new IllegalArgumentException(config + " Cannot be converted, is of type array.");
 //			if ( config instanceof NVConfigEntity)
 //			{
@@ -1528,74 +1230,44 @@ public class SharedUtil
 //			{
 //				return ( new NVDoubleList( config.getName(), new ArrayList<Double>()));
 //			}
-		}
-		else // not array 
-		{
-			
-
-			if (c.isEnum())
-			{
+		} else {
+		    // Not array
+			if (c.isEnum()) {
 				return lookupEnum((Enum<?>[]) c.getEnumConstants(), value);
-			}
-			else if (String.class.equals(c))
-			{
+			} else if (String.class.equals(c)) {
 				return value;
-			}
-			else if (Long.class.equals(c))
-			{
-				if (!SharedStringUtil.isEmpty(value))
-				{
+			} else if (Long.class.equals(c)) {
+				if (!SharedStringUtil.isEmpty(value)) {
 					return Long.valueOf(value);
-				}
-				else  if (!config.isMandatory())
-				{
+				} else  if (!config.isMandatory()) {
 					return Long.valueOf(0);
 				}
-			}
-			else if (Integer.class.equals(c))
-			{
-				if (!SharedStringUtil.isEmpty(value))
-				{
+			} else if (Integer.class.equals(c)) {
+				if (!SharedStringUtil.isEmpty(value)) {
 					return Integer.valueOf(value);
-				}
-				else  if (!config.isMandatory())
-				{
+				} else  if (!config.isMandatory()) {
 					return Integer.valueOf(0);
 				}
-			}
-			else if (Boolean.class.equals(c))
-			{
+			} else if (Boolean.class.equals(c)) {
 				return Boolean.valueOf(value);
-			}
-			else if (Float.class.equals(c))
-			{
-				if (!SharedStringUtil.isEmpty(value))
-				{
+			} else if (Float.class.equals(c)) {
+				if (!SharedStringUtil.isEmpty(value)) {
 					return Float.valueOf(value);
-				}
-				else if (!config.isMandatory())
-				{
-					return Float.valueOf((float) 0.0);
+				} else if (!config.isMandatory()) {
+				    return Float.valueOf((float) 0.0);
 				}	
-			}
-			else if (Double.class.equals(c))
-			{
-				if (!SharedStringUtil.isEmpty(value))
-				{
+			} else if (Double.class.equals(c)) {
+				if (!SharedStringUtil.isEmpty(value)) {
 					return Double.valueOf(value);
-				}
-				else if ( !config.isMandatory())
-				{
+				} else if ( !config.isMandatory()) {
 					return Double.valueOf( 0.0);
 				}
 			}
 			
 		}
-		
-		
+
 		throw new IllegalArgumentException("Unsuppored type " + config);
 	}
-	
 
 	/**
 	 * First checks whether the class is of array type. Then checks the primitive data type of 
@@ -1603,12 +1275,10 @@ public class SharedUtil
 	 * @param c
 	 * @return
 	 */
-	public static boolean isPrimitive(Class<?> c)
-	{
+	public static boolean isPrimitive(Class<?> c) {
 		checkIfNulls("Class can't be null", c);
 		
-		if (c.isArray())
-		{
+		if (c.isArray()) {
 			c = c.getComponentType();
 		}
 		
@@ -1631,16 +1301,13 @@ public class SharedUtil
 	 * @param array
 	 * @return
 	 */
-	public static ArrayList<NVConfig> extractNVConfigs(GetNVConfig[] array)
-	{
+	public static ArrayList<NVConfig> extractNVConfigs(GetNVConfig[] array) {
 		ArrayList<NVConfig> ret = null;
 		
-		if (array != null)
-		{
+		if (array != null) {
 			ret = new ArrayList<NVConfig>();
 			
-			for (int i = 0 ; i < array.length; i++)
-			{
+			for (int i = 0 ; i < array.length; i++) {
 				ret.add(array[i].getNVConfig());
 			}
 			
@@ -1654,16 +1321,13 @@ public class SharedUtil
 	 * @param array
 	 * @return
 	 */
-	public static ArrayList<NVConfig> toNVConfigList(NVConfig... array)
-	{
+	public static ArrayList<NVConfig> toNVConfigList(NVConfig... array) {
 		ArrayList<NVConfig> ret = null;
 		
-		if(array != null)
-		{
+		if(array != null) {
 			ret = new ArrayList<NVConfig>();
 			
-			for (int i = 0; i < array.length; i++)
-			{
+			for (int i = 0; i < array.length; i++) {
 				ret.add(array[i]);
 			}
 		}
@@ -1677,20 +1341,16 @@ public class SharedUtil
 	 * @param toAdd
 	 * @return
 	 */
-	public static List<NVConfigEntity> merge(List<NVConfigEntity> list, NVConfigEntity... toAdd)
-	{
-		if (list == null)
-		{
+	public static List<NVConfigEntity> merge(List<NVConfigEntity> list, NVConfigEntity... toAdd) {
+		if (list == null) {
 			list = new ArrayList<NVConfigEntity>();
 		}
 		
-		for (NVConfigEntity nvce : toAdd)
-		{
+		for (NVConfigEntity nvce : toAdd) {
 			list.add(nvce);
 		}
 		
 		return list;
-		
 	}
 	
 //	public static NVConfigEntity mergeMeta(NVConfigEntity ... cList)
@@ -1725,8 +1385,7 @@ public class SharedUtil
 	
 	
 	@SafeVarargs
-	public static List<NVConfig> mergeMeta(List<NVConfig>... cList)
-	{
+	public static List<NVConfig> mergeMeta(List<NVConfig>... cList) {
 //		ArrayList<NVConfig> first = null;
 //		
 //		for (int i = 0; i < cList.length; i++)//NVConfigEntity c : cList)
@@ -1748,16 +1407,13 @@ public class SharedUtil
 	}
 	
 	@SafeVarargs
-	public static List<NVConfig> mergeMeta(boolean deepCopy, List<NVConfig>... cList)
-	{
+	public static List<NVConfig> mergeMeta(boolean deepCopy, List<NVConfig>... cList) {
 		List<NVConfig> first = null;
 		
-		for (int i = 0; i < cList.length; i++)//NVConfigEntity c : cList)
-		{
+		for (int i = 0; i < cList.length; i++) {
 			List<NVConfig> c = cList[i];
 			
-			if (first == null)
-			{
+			if (first == null) {
 				first = c;
 				continue;
 			}
@@ -1805,23 +1461,19 @@ public class SharedUtil
 	 * @param list
 	 * @return
 	 */
-	public static List<GetNameValue<String>> toNVList(List<NVPair> list)
-	{
+	public static List<GetNameValue<String>> toNVList(List<NVPair> list) {
 		List<GetNameValue<String>> ret = null;
 		
-		if (list != null)
-		{
+		if (list != null) {
 			ret = new ArrayList<GetNameValue<String>>();
 			
-			for (NVPair nvp : list)
-			{
+			for (NVPair nvp : list) {
 				ret.add( nvp);
 			}
 		}	
 		
 		return ret;
 	}
-	
 
 	/**
 	 * 
@@ -1832,23 +1484,19 @@ public class SharedUtil
 	 * @param regExp the separator nvp1 rexExp nvp2
 	 * @return
 	 */
-	public static List<NVPair> toNVPairs(String str, String nvpSep, String regExp)
-	{
+	public static List<NVPair> toNVPairs(String str, String nvpSep, String regExp) {
 		String pairs[] = SharedStringUtil.parseString(str,regExp, (CharSequence[] )null );
 		ArrayList<NVPair> ret = new ArrayList<NVPair>();
 		
-		for (String p : pairs)
-		{
+		for (String p : pairs) {
 			NVPair nv = toNVPair(p, nvpSep, false);
 			
-			if (nv != null)
-			{
+			if (nv != null) {
 				ret.add(nv);
 			}
 		}
 		
 		return ret;
-		
 	}
 	
 	/**
@@ -1857,19 +1505,13 @@ public class SharedUtil
 	 * @param nameOfNVToBeFiltered
 	 * @return
 	 */
-	public static List<GetNameValue<String>> filterNV(List<GetNameValue<String>> list,String nameOfNVToBeFiltered)
-	{
-		
+	public static List<GetNameValue<String>> filterNV(List<GetNameValue<String>> list,String nameOfNVToBeFiltered) {
 		List<GetNameValue<String>> ret = null;
 		
-		if (nameOfNVToBeFiltered != null)
-		{
-			for (GetNameValue<String> nvp: list)
-			{
-				if (!nameOfNVToBeFiltered.equalsIgnoreCase(nvp.getName()))
-				{
-					if (ret == null)
-					{
+		if (nameOfNVToBeFiltered != null) {
+			for (GetNameValue<String> nvp: list) {
+				if (!nameOfNVToBeFiltered.equalsIgnoreCase(nvp.getName())) {
+					if (ret == null) {
 						ret = new ArrayList<GetNameValue<String>>();
 					}
 					
@@ -1878,22 +1520,20 @@ public class SharedUtil
 			}
 		}
 		
-		if (ret == null)
-		{
+		if (ret == null) {
 			ret = list;
 		}
 		
 		return ret;
 	}
-	
-	
+
 	/**
 	 * Return the index of the first occurrence of match[] in buffer[]
 	 * @param buffer
 	 * @param match
 	 * @return index of the match, -1 if no match found
 	 */
-	public static int indexOf(byte buffer[], byte match[])
+	public static int indexOf(byte[] buffer, byte match[])
 	{
 		return indexOf(buffer, 0, buffer.length, match, 0, match.length);
 	}
@@ -1908,28 +1548,21 @@ public class SharedUtil
 	 * @param matchLen
 	 * @return
 	 */
-	public static int indexOf(byte buffer[], int bufferStartIndex, int bufferEndIndex, byte match[], int matchOffset, int matchLen)
-	{
-		
-		if (matchOffset < 0 || matchLen < 1 || (matchOffset+matchLen) > match.length || bufferEndIndex > buffer.length)
-		{
+	public static int indexOf(byte[] buffer, int bufferStartIndex, int bufferEndIndex, byte match[], int matchOffset, int matchLen) {
+		if (matchOffset < 0 || matchLen < 1 || (matchOffset+matchLen) > match.length || bufferEndIndex > buffer.length) {
 			throw new IndexOutOfBoundsException();
 		}
 		
-		for (int i = bufferStartIndex; i < bufferEndIndex; i++)
-		{
+		for (int i = bufferStartIndex; i < bufferEndIndex; i++) {
 			int j = 0;
 			
-			for ( ; j < matchLen && j+i < bufferEndIndex; j++)
-			{
-				if (buffer[i + j] != match[matchOffset + j])
-				{
+			for ( ; j < matchLen && j+i < bufferEndIndex; j++) {
+				if (buffer[i + j] != match[matchOffset + j]) {
 					break;
 				}
 			}
 			
-			if (j == matchLen)
-			{
+			if (j == matchLen) {
 				return i;
 			}
 		}
@@ -1942,10 +1575,8 @@ public class SharedUtil
 	 * @param gnv
 	 * @return
 	 */
-	public static <V> V getValue(GetNameValue<V> gnv)
-	{
-		if (gnv != null)
-		{
+	public static <V> V getValue(GetNameValue<V> gnv) {
+		if (gnv != null) {
 			return gnv.getValue();
 		}
 		
@@ -1954,22 +1585,21 @@ public class SharedUtil
 	
 	/**
 	 * 
-	 * @param buf
+	 * @param buffer
 	 * @param str
 	 * @return
 	 */
-	public static int indexOf(byte buffer[], String str)
-	{
+	public static int indexOf(byte[] buffer, String str) {
 		return indexOf(buffer, 0, buffer.length, str, 0, str.length(), false);
 	}
 	
 	/**
 	 * 
-	 * @param buf
+	 * @param buffer
 	 * @param str
 	 * @return
 	 */
-	public static int indexOfIgnoreCase(byte buffer[], String str)
+	public static int indexOfIgnoreCase(byte[] buffer, String str)
 	{
 		return indexOf(buffer, 0, buffer.length, str, 0, str.length(), true);
 	}
@@ -1985,45 +1615,33 @@ public class SharedUtil
 	 * @param ignoreCase
 	 * @return
 	 */
-	public static int indexOf(byte buffer[], int bufferStartIndex, int bufferEndIndex, CharSequence cs, int csOffset, int csLen, boolean ignoreCase)
-	{
+	public static int indexOf(byte[] buffer, int bufferStartIndex, int bufferEndIndex, CharSequence cs, int csOffset, int csLen, boolean ignoreCase) {
 		
-		if (csOffset < 0 || csLen < 1 || (csOffset+csLen) > cs.length()  || bufferEndIndex > buffer.length)
-		{
+		if (csOffset < 0 || csLen < 1 || (csOffset+csLen) > cs.length()  || bufferEndIndex > buffer.length) {
 			throw new IndexOutOfBoundsException();
 		}
 		
-		for (int i = bufferStartIndex; i < bufferEndIndex; i++)
-		{
+		for (int i = bufferStartIndex; i < bufferEndIndex; i++) {
 			int j = 0;
 			
-			for ( ; j < csLen && j+i < bufferEndIndex; j++)
-			{
-				if (ignoreCase)
-				{
-					if ((buffer[i + j] != Character.toUpperCase(cs.charAt(csOffset + j)) && buffer[i + j] != Character.toLowerCase(cs.charAt(csOffset + j))))
-					{
+			for ( ; j < csLen && j+i < bufferEndIndex; j++) {
+				if (ignoreCase) {
+					if ((buffer[i + j] != Character.toUpperCase(cs.charAt(csOffset + j)) && buffer[i + j] != Character.toLowerCase(cs.charAt(csOffset + j)))) {
 						break;
 					}
-				}
-				else if (buffer[i + j] != cs.charAt(csOffset + j))
-				{
+				} else if (buffer[i + j] != cs.charAt(csOffset + j)) {
 					break;
 				}
 			}
-			if (j == csLen)
-			{
+
+			if (j == csLen) {
 				return i;
 			}
 		}
 		
 		return -1;
 	}
-	
-	
-	
-	
-	
+
 	/**
 	 * Compares two byte arrays in length-constant time. This comparison method
      * is used so that password hashes cannot be extracted from an on-line 
@@ -2032,10 +1650,9 @@ public class SharedUtil
      * @param   a       the first byte array
      * @param   b       the second byte array 
      * @return          true if both byte arrays are the same, false if not
-     * @see https://crackstation.net/hashing-security.htm
+     * @see // https://crackstation.net/hashing-security.htm
 	 */
-	public static boolean slowEquals(byte[] a, byte[] b)
-	{
+	public static boolean slowEquals(byte[] a, byte[] b) {
 		checkIfNulls("one of the byte array is null", a, b);
 		int diff = a.length ^ b.length;
 		
@@ -2043,9 +1660,7 @@ public class SharedUtil
 			diff |= a[i] ^ b[i];
 		return diff == 0;
 	}
-	
-	
-	
+
 //	/**
 //	 * Format a list of NPairs
 //	 * @param list
@@ -2143,8 +1758,7 @@ public class SharedUtil
 //	{
 //		return format(name, value, "=", false);
 //	}
-	
-	
+
 	/**
 	 * 
 	 * @param name
@@ -2153,35 +1767,29 @@ public class SharedUtil
 	 * @param quotedValue
 	 * @return
 	 */
-	public static <V> String format(String name, V value, String nameValueSep, boolean quotedValue)
-	{
+	public static <V> String format(String name, V value, String nameValueSep, boolean quotedValue) {
 		StringBuilder sb = new StringBuilder();
 		
-		if (name != null)
-		{
+		if (name != null) {
 			sb.append(name);
 			sb.append(nameValueSep);
 		}
 		
-		if(value != null)
-		{
-			if (quotedValue)
-				sb.append('\"');
+		if (value != null) {
+			if (quotedValue) {
+                sb.append('\"');
+            }
 			
 			sb.append(value);
 			
-			if (quotedValue)
-				sb.append('\"');
-			
+			if (quotedValue) {
+                sb.append('\"');
+            }
 		}
 		
 		return sb.toString();
 	}
-	
 
-	
-	
-	
 	/**
 	 * This method will check value == null then return defaultValue otherwise it will return value.
 	 * The value and defaultValue can not be null simultaneously.  
@@ -2191,26 +1799,21 @@ public class SharedUtil
 	 * @throws NullPointerException if defaultValue == null && value == null
 	 */
 	public static <V extends Object> V nullToDefault(V value, V defaultValue)
-		throws NullPointerException
-	{
-		if (value == null && defaultValue == null)
-		{
+		throws NullPointerException {
+
+		if (value == null && defaultValue == null) {
 			throw new NullPointerException("value and defaultValue can not be set to null simultaneously");
 		}
 		
-		if (value == null)
-		{
+		if (value == null) {
 			return defaultValue;
 		}
 		
 		return value;
 	}
-	
-	
-	public static long referenceIDToLong(ReferenceID<?> refID)
-	{
-		if (refID != null && refID.getReferenceID()!= null)
-		{
+
+	public static long referenceIDToLong(ReferenceID<?> refID) {
+		if (refID != null && refID.getReferenceID()!= null) {
 			return Long.parseLong(""+ refID.getReferenceID());
 		}
 		
@@ -2218,105 +1821,85 @@ public class SharedUtil
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static <V> void validate(NVConfig nvc, NVBase<V> nvb, boolean setValue)
-	{
-		if (nvb != null)
-		{
-			if (nvb.getValue() == null && nvc.isMandatory())
-			{
+	public static <V> void validate(NVConfig nvc, NVBase<V> nvb, boolean setValue) {
+
+		if (nvb != null) {
+			if (nvb.getValue() == null && nvc.isMandatory()) {
 				throw new NullPointerException("attibute " + nvc + " is a required value can't be null");
 			}
 			
 			ValueFilter<Object, Object> vf = (ValueFilter<Object, Object>) nvc.getValueFilter();
 			
-			if (vf != null)
-			{
-				if (setValue)
-				{
+			if (vf != null) {
+				if (setValue) {
 					V v = nvb.getValue();
 					
-					if (nvc.isArray() && v instanceof List)
-					{
+					if (nvc.isArray() && v instanceof List) {
 						List<Object> list = (List<Object>) v; 
-						for (int i = 0; i < list.size(); i++)
-						{
+
+						for (int i = 0; i < list.size(); i++) {
 							Object value = list.get(i);
-							if (value instanceof NVPair)
-							{
+
+							if (value instanceof NVPair) {
 								((NVPair) value).setValue((String) vf.validate(((NVPair) value).getValue())); 
-							}
-							else
-							{
+							} else {
 								value = vf.validate(value);
 							}
 							
 							list.set(i, value);
-							 
 						}
-					}
-					else
-					{
+					} else {
 						nvb.setValue((V) vf.validate(nvb.getValue()));
 					}
-					
-					
-				}
-				else if (!nvc.isArray())
-				{
+				} else if (!nvc.isArray()) {
 					vf.validate(nvb.getValue());
 				}
 			}
-			
 		}
-		
-		
 	}
 	
-	public static void validate(NVEntity nve, boolean setValue, boolean validateRecursive)
-	{
+	public static void validate(NVEntity nve, boolean setValue, boolean validateRecursive) {
 		NVConfigEntity nvce = (NVConfigEntity) nve.getNVConfig();
 		
-		for (NVConfig nvc : nvce.getAttributes())
-		{
-			//Logic needs to be changed, NVEntiy must have reference ID implementation.
-			if (nvc != ReferenceIDDAO.NVC_REFERENCE_ID && nvc != ReferenceIDDAO.NVC_USER_ID && nvc != ReferenceIDDAO.NVC_ACCOUNT_ID)
-				
-				if (validateRecursive && nvc instanceof NVConfigEntity)
-				{
-					NVConfigEntity nvcetemp = (NVConfigEntity) nvc;
-					
-					if (!nvcetemp.isArray())
-					{
-						NVEntityReference nver = (NVEntityReference) nve.lookup(nvc.getName());
-						validate(nver.getValue(), setValue, validateRecursive);
-					}
-				}
-				
-				else
-				{
-					validate(nvc, nve.lookup(nvc.getName()), setValue);
-				}
+		for (NVConfig nvc : nvce.getAttributes()) {
+            //Logic needs to be changed, NVEntiy must have reference ID implementation.
+            if (nvc != ReferenceIDDAO.NVC_REFERENCE_ID && nvc != ReferenceIDDAO.NVC_USER_ID && nvc != ReferenceIDDAO.NVC_ACCOUNT_ID) {
+
+                if (validateRecursive && nvc instanceof NVConfigEntity) {
+                    NVConfigEntity nvcetemp = (NVConfigEntity) nvc;
+
+                    if (!nvcetemp.isArray()) {
+                        NVEntityReference nver = (NVEntityReference) nve.lookup(nvc.getName());
+                        validate(nver.getValue(), setValue, validateRecursive);
+                    }
+                } else {
+                    validate(nvc, nve.lookup(nvc.getName()), setValue);
+                }
+            }
 		}
-		
-		
 	}
-	
-	
-	public static List<NVPair> copy(List<NVPair> list)
-	{
+
+    /**
+     * Returns a copy of the given NVPair list.
+     * @param list NVPair list to copy
+     * @return copied NVPair list
+     */
+	public static List<NVPair> copy(List<NVPair> list) {
 		List<NVPair> ret = new ArrayList<NVPair>();
 		
-		for (NVPair nvp : list)
-		{
+		for (NVPair nvp : list) {
 			ret.add(copy(nvp));
 		}
 		
 		return ret;
 	}
-	
-	
-	public static NVPair copy(NVPair nvp)
-	{
+
+    /**
+     * Returns a copy of the given NVPair.
+     * @param nvp NVPair to copy
+     * @return copied NVPair
+     */
+	public static NVPair copy(NVPair nvp) {
 		NVPair ret = new NVPair();
 		
 		ret.setName(nvp.getName());
@@ -2337,27 +1920,21 @@ public class SharedUtil
 		SharedUtil.checkIfNulls("Document info is null.", ts);
 		
 		
-		if (ts.getCreationTime() == 0)
-		{
+		if (ts.getCreationTime() == 0) {
 			ts.setCreationTime(System.currentTimeMillis());
 		}
 		
-		if (ops == null || ops.length ==0)
-		{
+		if (ops == null || ops.length ==0) {
 			ts.setLastTimeUpdated(System.currentTimeMillis());
 			ts.setLastTimeRead(System.currentTimeMillis());
 		}
-		else
-		{
-			for (CRUD op : ops)
-			{
-				if (op != null)
-				{
+		else {
+			for (CRUD op : ops) {
+				if (op != null) {
 					switch(op)
 					{
 					case CREATE:
-						if (ts.getCreationTime() == 0)
-						{
+						if (ts.getCreationTime() == 0) {
 							ts.setCreationTime(System.currentTimeMillis());
 						}
 						break;
@@ -2371,7 +1948,6 @@ public class SharedUtil
 						break;
 					default:
 						break;
-					
 					}
 				}
 			}
@@ -2380,14 +1956,11 @@ public class SharedUtil
 		return ts;
 	}
 	
-	public static boolean doesNVEntityExist(List<? extends NVEntity> list, String refID)
-	{
-		if (list != null && refID != null)
-		{
-			for (NVEntity nve : list)
-			{
-				if (nve.getReferenceID() != null && nve.getReferenceID().equals(refID))
-				{
+	public static boolean doesNVEntityExist(List<? extends NVEntity> list, String referenceID) {
+
+		if (list != null && referenceID != null) {
+			for (NVEntity nve : list) {
+				if (nve.getReferenceID() != null && nve.getReferenceID().equals(referenceID)) {
 					return true;
 				}
 			}
@@ -2396,23 +1969,19 @@ public class SharedUtil
 		return false;
 	}
 
-	public static void close(AutoCloseable autoCloseable)
-	{
-		if (autoCloseable != null)
-		{
-			try 
-			{
+	public static void close(AutoCloseable autoCloseable) {
+		if (autoCloseable != null) {
+			try {
 				autoCloseable.close();
 			}
-			catch (Exception e)
-			{
+			catch (Exception e) {
 				
 			}
 		}
 	}
 	
-	public static boolean equals(NVEntity nve1, NVEntity nve2)
-	{
+	public static boolean equals(NVEntity nve1, NVEntity nve2) {
+
 		if (nve1 != null && nve2 != null 
 				&& nve1.getNVConfig().getMetaType() != null 
 				&& nve2.getNVConfig().getMetaType() != null
@@ -2434,10 +2003,10 @@ public class SharedUtil
 	 * Example: 2015 (non-leap year) returns false and 2008 (leap year) returns true.
 	 * 
 	 * @param year
-	 * @return
+	 * @return true if leap year, false if not
 	 */
-	public static boolean isLeapYear(int year)
-	{
+	public static boolean isLeapYear(int year) {
 		return (year % 400 == 0) || ((year % 100) != 0 && (year % 4 == 0));
 	}
+
 }

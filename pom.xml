@@ -23,6 +23,9 @@
         <rabbitmq-client.version>4.0.0</rabbitmq-client.version>
 		<ehcache.version>2.10.3</ehcache.version>
 		<maven-plugin.version>3.6.0</maven-plugin.version>
+        <javaee-api.version>7.0</javaee-api.version>
+        <hibernate.version>5.2.6.Final</hibernate.version>
+        <apache.derby.version>10.4.2.0</apache.derby.version>
     </properties>
 
     <!-- default-->
@@ -135,7 +138,25 @@
             <artifactId>amqp-client</artifactId>
             <version>${rabbitmq-client.version}</version>
         </dependency>
-        
+        <!-- https://mvnrepository.com/artifact/javax/javaee-api -->
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>${javaee-api.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.derby</groupId>
+            <artifactId>derbyclient</artifactId>
+            <version>${apache.derby.version}</version>
+        </dependency>
+
+
     </dependencies>
 
 </project>

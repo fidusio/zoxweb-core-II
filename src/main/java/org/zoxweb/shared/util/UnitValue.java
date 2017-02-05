@@ -22,11 +22,18 @@ import org.zoxweb.shared.util.Const.Unit;
  *
  */
 public interface UnitValue<V>
-	extends SetValue<V>
-{
+	extends SetValue<V> {
 
+	/**
+	 * Returns the unit.
+	 * @return
+	 */
 	public Unit getUnit();
-	
+
+	/**
+	 * Sets the unit.
+	 * @param unit
+	 */
 	public void setUnit(Unit unit);
 
 }

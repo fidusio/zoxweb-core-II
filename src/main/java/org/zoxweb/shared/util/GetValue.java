@@ -21,10 +21,10 @@ package org.zoxweb.shared.util;
  *
  * @param <V>
  */
-public interface GetValue<V> 
-{
+public interface GetValue<V> {
+
 	/**
-	 * Gets value of the property.
+	 * Returns the value.
 	 * @return
 	 */
 	public V getValue();

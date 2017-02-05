@@ -24,11 +24,12 @@ import java.io.Serializable;
  *
  */
 public interface CanonicalID  
-	extends Serializable
-{
+	extends Serializable {
+
 	/**
-	 * Convert the implementing object in its canonical form.
+	 * Converts the implementing object in its canonical form.
 	 * @return text identification of the object
 	 */
 	public String toCanonicalID();
+
 }

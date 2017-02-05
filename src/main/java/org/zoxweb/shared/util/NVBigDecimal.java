@@ -23,14 +23,13 @@ import java.math.BigDecimal;
  *
  */
 @SuppressWarnings("serial")
-public class NVBigDecimal 
-	extends NVBase<BigDecimal> 
-{
+public class NVBigDecimal
+		extends NVBase<BigDecimal> {
+
 	/**
-	 * This is the default constructor.
+	 * The default constructor.
 	 */
-	public NVBigDecimal()
-	{
+	public NVBigDecimal() {
 		super();
 	}
 	
@@ -39,8 +38,8 @@ public class NVBigDecimal
 	 * @param name
 	 * @param value
 	 */
-	public NVBigDecimal(String name, BigDecimal value)
-	{
+	public NVBigDecimal(String name, BigDecimal value) {
 		super(name, value);
 	}
+
 }

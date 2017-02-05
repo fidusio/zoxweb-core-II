@@ -24,7 +24,7 @@ package org.zoxweb.shared.util;
 public interface ApplicationID<T>
 {
 	/**
-	 * Gets the application ID.
+	 * Returns the application ID.
 	 * @return
 	 */
 	public T getApplicationID();

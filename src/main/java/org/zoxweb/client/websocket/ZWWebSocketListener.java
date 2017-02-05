@@ -22,11 +22,12 @@ package org.zoxweb.client.websocket;
  * @author mzebib
  *
  */
-public interface ZWWebSocketListener 
-{
+public interface ZWWebSocketListener {
+
     void onClose();
 
     void onMessage(String msg);
 
     void onOpen();
+
 }

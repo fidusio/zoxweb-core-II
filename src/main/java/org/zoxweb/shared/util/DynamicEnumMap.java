@@ -45,8 +45,7 @@ public class DynamicEnumMap
 	/**
 	 * The default constructor.
 	 */
-	public DynamicEnumMap()
-	{
+	public DynamicEnumMap() {
 		//Call super constructor empty. Do not call super(name, value), 
 		//Constructor must be called like this, otherwise an exception
 		//will be thrown.
@@ -58,8 +57,7 @@ public class DynamicEnumMap
 	 * This constructor instantiates DynamicEnumMap based on given name.
 	 * @param name
 	 */
-	public DynamicEnumMap(String name)
-	{
+	public DynamicEnumMap(String name) {
 		super(name, new ArrayList<NVPair>());
 	}
 	
@@ -67,8 +65,7 @@ public class DynamicEnumMap
 	 * This constructor instantiates DynamicEnumMap based on given enum class.
 	 * @param enumClass
 	 */
-	public DynamicEnumMap(Class<?extends Enum<?>> enumClass)
-	{
+	public DynamicEnumMap(Class<?extends Enum<?>> enumClass) {
 		this(enumClass.getName(), enumClass.getEnumConstants());
 	}
 	
@@ -78,8 +75,7 @@ public class DynamicEnumMap
 	 * @param n
 	 * @param v
 	 */
-	public DynamicEnumMap(String n, List<NVPair> v)
-	{
+	public DynamicEnumMap(String n, List<NVPair> v) {
 		super(n, (ArrayList<NVPair>) v);
 	}
 	
@@ -88,14 +84,11 @@ public class DynamicEnumMap
 	 * @param name
 	 * @param enums
 	 */
-	public DynamicEnumMap(String name, Enum<?>... enums)
-	{
+	public DynamicEnumMap(String name, Enum<?>... enums) {
 		super(name, new ArrayList<NVPair>());
 	
-		if (enums != null)
-		{
-			for (Enum<?> e: enums)
-			{
+		if (enums != null) {
+			for (Enum<?> e: enums) {
 				addEnumValue(e);
 			}
 		}
@@ -106,43 +99,32 @@ public class DynamicEnumMap
 	 * @param name
 	 * @param enums
 	 */
-	public DynamicEnumMap(String name, NVPair... enums)
-	{
+	public DynamicEnumMap(String name, NVPair... enums) {
 		super(name, new ArrayList<NVPair>());
 	
-		if (enums != null)
-		{
-			for (NVPair nvp : enums)
-			{
+		if (enums != null) {
+			for (NVPair nvp : enums) {
 				addEnumValue(nvp);
 			}
 		}
 	}
 	
 	/**
-	 * This method is used to validate the given string.
+	 * Validates the given string.
 	 * @param v
 	 * @return
 	 */
 	public final String validate(String v) 
-			throws NullPointerException, IllegalArgumentException 
-	{
-		if (v != null)
-		{
-			for (NVPair nvp : value)
-			{
-				if ((ignoreCase ? v.equalsIgnoreCase(nvp.getName()) : v.equals(nvp.getName())))
-				{
+			throws NullPointerException, IllegalArgumentException {
+		if (v != null) {
+			for (NVPair nvp : value) {
+				if ((ignoreCase ? v.equalsIgnoreCase(nvp.getName()) : v.equals(nvp.getName()))) {
 					return nvp.getName();
-				}
-				else if ((ignoreCase ? v.equalsIgnoreCase(nvp.getValue()) : v.equals(nvp.getValue())))
-				{
+				} else if ((ignoreCase ? v.equalsIgnoreCase(nvp.getValue()) : v.equals(nvp.getValue()))) {
 					return nvp.getName();
 				}
 			}
-		}
-		else
-		{
+		} else {
 			return null;
 		}
 		
@@ -150,28 +132,21 @@ public class DynamicEnumMap
 	}
 	
 	/**
-	 * This method checks whether the given string is valid.
+	 * Checks whether the given string is valid.
 	 * @param v
 	 * @return
 	 */
-	public boolean isValid(String v) 
-	{
-		if (v != null)
-		{
-			for (NVPair nvp : value)
-			{
-				if ((ignoreCase ? v.equalsIgnoreCase(nvp.getName()) : v.equals(nvp.getName())))
-				{
+	public boolean isValid(String v) {
+		if (v != null) {
+			for (NVPair nvp : value) {
+				if ((ignoreCase ? v.equalsIgnoreCase(nvp.getName()) : v.equals(nvp.getName()))) {
 					return true;
 				}
-				else if ((ignoreCase ? v.equalsIgnoreCase(nvp.getValue()) : v.equals(nvp.getValue())))
-				{
+				else if ((ignoreCase ? v.equalsIgnoreCase(nvp.getValue()) : v.equals(nvp.getValue()))) {
 					return true;
 				}
 			}
-		}
-		else
-		{
+		} else {
 			return true;
 		}
 		
@@ -179,26 +154,19 @@ public class DynamicEnumMap
 	}
 	
 	/**
-	 * This method adds an enum type value.
+	 * Adds an enum type value.
 	 * @param e
 	 */
-	public void addEnumValue(Enum<?> e)
-	{
+	public void addEnumValue(Enum<?> e) {
 		SharedUtil.checkIfNulls("Null enum.", e);
 		
-		if (e instanceof GetName)
-		{
+		if (e instanceof GetName) {
 			addEnumValue(new NVPair(e.name(), ((GetName) e).getName()));
-		}
-		else if (e instanceof GetValue) 
-		{
+		} else if (e instanceof GetValue) {
 			addEnumValue(new NVPair(e.name(), "" + ((GetValue<?>) e).getValue()));
-		}
-		else
-		{
+		} else {
 			addEnumValue(new NVPair(e.name(), (String)null));
 		}
-		
 	}
 	
 	/**
@@ -206,31 +174,23 @@ public class DynamicEnumMap
 	 * is used add NVPair type enum value. 
 	 * @param nvp
 	 */
-	public synchronized void addEnumValue(NVPair nvp)
-	{
-		if (!isValid( nvp.getName()))
-		{
+	public synchronized void addEnumValue(NVPair nvp) {
+		if (!isValid( nvp.getName())) {
 			value.add(nvp);
 		}
 	}
 	
 	/**
-	 * This method is used to lookup and return NVPair based on enum name or value.
+	 * Looks up and returns NVPair based on enum name or value.
 	 * @param enumNameOrValue
 	 * @return
 	 */
-	public final NVPair lookup(String enumNameOrValue)
-	{
-		if (enumNameOrValue != null)
-		{
-			for (NVPair nvp : value)
-			{
-				if ((ignoreCase ? enumNameOrValue.equalsIgnoreCase(nvp.getName()) : enumNameOrValue.equals(nvp.getName())))
-				{
+	public final NVPair lookup(String enumNameOrValue) {
+		if (enumNameOrValue != null) {
+			for (NVPair nvp : value) {
+				if ((ignoreCase ? enumNameOrValue.equalsIgnoreCase(nvp.getName()) : enumNameOrValue.equals(nvp.getName()))) {
 					return nvp;
-				}
-				else if ((ignoreCase ? enumNameOrValue.equalsIgnoreCase(nvp.getValue()) : enumNameOrValue.equals(nvp.getValue())))
-				{
+				} else if ((ignoreCase ? enumNameOrValue.equalsIgnoreCase(nvp.getValue()) : enumNameOrValue.equals(nvp.getValue()))) {
 					return nvp;
 				}
 			}
@@ -240,57 +200,51 @@ public class DynamicEnumMap
 	}
 	
 	/**
-	 * This method returns the name.
+	 * Returns the name.
 	 * @return
 	 */
-	public String toString()
-	{
+	public String toString() {
 		return name +':'+ SharedUtil.toCanonicalID(',', value.toArray());
 	}
 
 	/**
-	 * This method returns the ignore case value.
+	 * Checks if ignore case.
 	 * @return
 	 */
-	public boolean isIgnoreCase()
-	{
+	public boolean isIgnoreCase() {
 		return ignoreCase;
 	}
 
 	/**
-	 * This method sets the ignore case value.
+	 * Sets the ignore case value.
 	 * @param ignoreCase
 	 */
-	public void setIgnoreCase(boolean ignoreCase)
-	{
+	public void setIgnoreCase(boolean ignoreCase) {
 		this.ignoreCase = ignoreCase;
 	}
 
 	/**
-	 * This method returns the string representation of the class.
+	 * Returns the string representation of the class.
 	 * @return
 	 */
 	@Override
-	public String toCanonicalID()
-	{
+	public String toCanonicalID() {
 		return getName();
 	}
 
 	/**
-	 * This method returns the static enum value.
+	 * Checks if static enum.
 	 * @return
 	 */
-	public boolean isStatic()
-	{
+	public boolean isStatic() {
 		return staticEnum;
 	}
 
 	/**
-	 * This method sets the enum static value.
+	 * Sets the static enum value.
 	 * @param staticEnum
 	 */
-	public void setStatic(boolean staticEnum)
-	{
+	public void setStatic(boolean staticEnum) {
 		this.staticEnum = staticEnum;
 	}
 	
@@ -299,8 +253,7 @@ public class DynamicEnumMap
 	 * is used to set the name.
 	 * @param name
 	 */
-	public synchronized void setName(String name)
-	{
+	public synchronized void setName(String name) {
 		String oldName = this.name;
 		
 		SharedUtil.checkIfNulls("Null value", name);
@@ -309,15 +262,13 @@ public class DynamicEnumMap
 		
 		name = SharedStringUtil.trimOrNull(name);
 		
-		if (name == null)
-		{
+		if (name == null) {
 			throw new IllegalArgumentException("Invalid name");
 		}
 		
 		this.name = SharedUtil.toCanonicalID(':', NAME_PREFIX, name);
 		
-		if (oldName != null)
-		{
+		if (oldName != null) {
 			DynamicEnumMapManager.SINGLETON.deleteDynamicEnumMap(oldName);
 		}
 		
@@ -325,65 +276,63 @@ public class DynamicEnumMap
 	}
 
 	/**
-	 * This method returns the user ID.
+	 * Returns the user ID.
 	 * @return
 	 */
 	@Override
-	public String getUserID() 
-	{
+	public String getUserID() {
 		return userID;
 	}
 
 	/**
-	 * This method sets the user ID.
+	 * Sets the user ID.
 	 * @param userID
 	 */
 	@Override
-	public void setUserID(String userID)
-	{
+	public void setUserID(String userID) {
 		this.userID = userID;	
 	}
 
 	/**
-	 * This method returns the account ID.
+	 * Returns the account ID.
 	 * @return
 	 */
 	@Override
-	public String getAccountID()
-	{
+	public String getAccountID() {
 		return accountID;
 	}
 
 	/**
-	 * This method sets the account ID.
+	 * Sets the account ID.
 	 * @param accountID
 	 */
 	@Override
-	public void setAccountID(String accountID) 
-	{
+	public void setAccountID(String accountID) {
 		this.accountID = accountID;
 	}
 
 	/**
-	 * This method returns the description.
+	 * Returns the description.
 	 * @return
 	 */
-	public String getDescription() 
-	{
+	public String getDescription() {
 		return description;
 	}
 
 	/**
-	 * This method sets the description.
+	 * Sets the description.
 	 * @param description
 	 */
-	public void setDescription(String description)
-	{
+	public void setDescription(String description) {
 		this.description = description;
 	}
-	
-	public String getDisplayName()
-	{
+
+	/**
+	 * Returns the display name.
+	 * @return
+	 */
+	public String getDisplayName() {
 		return SharedStringUtil.filterString(getName(), NAME_PREFIX + ":", NAME_PREFIX);
 	}
+
 }

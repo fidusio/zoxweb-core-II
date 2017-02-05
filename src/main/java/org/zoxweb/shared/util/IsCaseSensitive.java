@@ -19,7 +19,11 @@ package org.zoxweb.shared.util;
  * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
  * 
  */
-public interface IsCaseSensitive 
-{
+public interface IsCaseSensitive {
+
+	/**
+	 * Checks if case insensitive.
+	 * @return
+	 */
 	public boolean isCaseInsensitive();
 }

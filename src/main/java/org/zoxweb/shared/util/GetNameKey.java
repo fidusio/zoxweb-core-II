@@ -23,108 +23,78 @@ import java.io.Serializable;
  */
 @SuppressWarnings("serial")
 public class GetNameKey
-implements Serializable, GetName, SetCaseSensitive
-{
+		implements Serializable, GetName, SetCaseSensitive {
 
-	
-	
-	
-	
 	private GetName getName;
 	private boolean caseInsensitive;
 
-	public GetNameKey()
-	{
+	public GetNameKey() {
+
 	}
 	
-	public GetNameKey(GetName gn, boolean caseInsensitive)
-	{
+	public GetNameKey(GetName gn, boolean caseInsensitive) {
 		setGetName(gn);
 		setCaseInsensitive(caseInsensitive);
 	}
-	
-	
-	public GetNameKey(String name, boolean caseInsensitive)
-	{
+
+	public GetNameKey(String name, boolean caseInsensitive) {
 		setGetName(new SetNamePortable(name));
 		setCaseInsensitive(caseInsensitive);
 	}
-	
-	
-	public boolean equals(Object o)
-	{
-		if (o != null && getName() != null)
-		{
-			if (o == this || o.equals(getName))
-			{
-				
+
+	public boolean equals(Object o) {
+		if (o != null && getName() != null) {
+			if (o == this || o.equals(getName)) {
 				return true;
 			}
-			if (o instanceof String)
-			{
-				if (caseInsensitive)
-				{
-					
+
+			if (o instanceof String) {
+				if (caseInsensitive) {
 					return getName().equalsIgnoreCase((String)o);
-				}
-				else
-				{
-					
+				} else {
 					return getName().equals((String)o);
 				}
 			}
 			
-			if (o instanceof GetName)
-			{
-				if(caseInsensitive)
-				{
-					
+			if (o instanceof GetName) {
+				if (caseInsensitive) {
 					return getName().equalsIgnoreCase(((GetName)o).getName());
-				}
-				else
-				{
+				} else {
 					return getName().equals(((GetName)o).getName());
 				}
-					
 			}
-			
-			
+
 			return o.equals(getName());
 		}
+
 		return false;
 	}
-	
-	
-	public int hashCode()
-	{
-		if (caseInsensitive)
-		{
+
+	public int hashCode() {
+		if (caseInsensitive) {
 			return getName().toLowerCase().hashCode();
 		}
+
 		return getName().hashCode();
 	}
 	
-	public GetName getGetName()
-	{
+	public GetName getGetName() {
 		return getName;
 	}
 
-	public void setGetName(GetName getName)
-	{
-		if ( getName == null || getName.getName() == null)
-		{
+	public void setGetName(GetName getName) {
+		if ( getName == null || getName.getName() == null) {
 			throw new NullPointerException("name value nul");
 		}
+
 		this.getName = getName;
 	}
 	
-	public boolean isCaseInsensitive()
-	{
+	public boolean isCaseInsensitive() {
 		return caseInsensitive;
 	}
 
-	public void setCaseInsensitive(boolean caseInsensitive)
-	{
+	public void setCaseInsensitive(boolean caseInsensitive) {
 		this.caseInsensitive = caseInsensitive;
 	}
 
@@ -132,15 +102,12 @@ implements Serializable, GetName, SetCaseSensitive
 	 * @see org.zoxweb.shared.util.GetName#getName()
 	 */
 	@Override
-	public String getName()
-	{
-		// TODO Auto-generated method stub
+	public String getName() {
 		return getName != null ? getName.getName() : null;
 	}
-	
-	
-	public String toString()
-	{
+
+	public String toString() {
 		return getName();
 	}
+
 }

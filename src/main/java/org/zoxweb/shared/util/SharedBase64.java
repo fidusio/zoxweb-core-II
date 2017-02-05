@@ -16,16 +16,11 @@
 package org.zoxweb.shared.util;
 
 /**
- * This class contains methods which converts to and/or from base64 byte array.
+ * Contains utility methods to converts to/from base64 byte array.
  * @author mnael
- *
  */
-public class SharedBase64 
-{
-	
+public class SharedBase64 {
 
-	
-	
 	/**
 	 * This byte array contains the base64 values. This array is used to
 	 * convert to base64.
@@ -63,26 +58,33 @@ public class SharedBase64
 	
 	
 	/**
-	 * The default constructor is declared private so it cannot be accessed outside the class.
+	 * The constructor is declared private to prevent instantiation.
 	 */
-	private SharedBase64()
-	{	
+	private SharedBase64() {
+
 	}
 
 	/**
-	 * This method decodes a base64 array to a byte array.
+	 * Decodes a base64 array to a byte array.
 	 * @param data
 	 * @return
 	 */
-	public static byte[] decode(byte[] data) 
-	{
+	public static byte[] decode(byte[] data) {
 		return decode( data, 0, data.length);
 	}
-    
-	public static byte[] decode(byte[] data, int index, int len) 
-	{
-    	if (data == null || data.length == 0) 
+
+	/**
+	 * Decodes a base64 array to a byte array.
+	 * @param data
+	 * @param index
+	 * @param len
+	 * @return
+	 */
+	public static byte[] decode(byte[] data, int index, int len) {
+
+    	if (data == null || data.length == 0) {
     		return new byte[0];
+		}
 	    
 	    //int len = data.length;
 	    assert (len % 4) == 0;
@@ -91,13 +93,12 @@ public class SharedBase64
 	    //data.getChars(0, len, chars, 0);
 
 	    int olen = 3 * (len / 4);
-	    if (data[len - 2] == '=') 
-	    {
-	      --olen;
+	    if (data[len - 2] == '=') {
+	    	--olen;
 	    }
-	    if (data[len - 1] == '=') 
-	    {
-	      --olen;
+
+	    if (data[len - 1] == '=') {
+	    	--olen;
 	    }
 
 	    byte[] bytes = new byte[olen];
@@ -105,58 +106,57 @@ public class SharedBase64
 	    int iidx = 0;
 	    int oidx = 0;
 	    
-	    while (iidx < len) 
-	    {
-	      int c0 = REVERSE_BASE_64[data[index + iidx++] & 0xff];
-	      int c1 = REVERSE_BASE_64[data[index + iidx++] & 0xff];
-	      int c2 = REVERSE_BASE_64[data[index + iidx++] & 0xff];
-	      int c3 = REVERSE_BASE_64[data[index + iidx++] & 0xff];
-	      int c24 = (c0 << 18) | (c1 << 12) | (c2 << 6) | c3;
+	    while (iidx < len) {
+	    	int c0 = REVERSE_BASE_64[data[index + iidx++] & 0xff];
+	    	int c1 = REVERSE_BASE_64[data[index + iidx++] & 0xff];
+	    	int c2 = REVERSE_BASE_64[data[index + iidx++] & 0xff];
+	    	int c3 = REVERSE_BASE_64[data[index + iidx++] & 0xff];
+	    	int c24 = (c0 << 18) | (c1 << 12) | (c2 << 6) | c3;
 
-	      bytes[oidx++] = (byte) (c24 >> 16);
-	      if (oidx == olen)
-	      {
-	        break;
-	      }
-	      bytes[oidx++] = (byte) (c24 >> 8);
-	      if (oidx == olen)
-	      {
-	        break;
-	      }
-	      bytes[oidx++] = (byte) c24;
+	    	bytes[oidx++] = (byte) (c24 >> 16);
+
+	    	if (oidx == olen) {
+	    		break;
+	    	}
+
+	    	bytes[oidx++] = (byte) (c24 >> 8);
+
+	    	if (oidx == olen) {
+	    		break;
+	    	}
+
+	    	bytes[oidx++] = (byte) c24;
 	    }
 
 	    return bytes;
 	}
-	
-	
-    
+
     /**
-     * This method encodes a byte array to base64 array.
+     * Encodes a byte array to base64 array.
      * @param data
      * @return
      */
-    public static byte[] encode(byte[] data) 
-    {
+    public static byte[] encode(byte[] data) {
     	return encode(data, 0, data.length);
     }
-    
-    
-    /**
-     * This method encodes a byte array to base64 array.
-     * @param data
-     * @return
-     */
-    public static byte[] encode(byte[] data, int index, int len) 
-    {
-    	if ( data == null || data.length == 0) 
-    		return new byte[0];
-    	if (index < 0 || len > data.length - index )
-    		throw new IllegalArgumentException("Invalid parameter " + index + "," + len);
-    		
+
+	/**
+	 * Encodes a byte array to base64 array.
+	 * @param data
+	 * @param index
+	 * @param len
+	 * @return
+	 */
+	public static byte[] encode(byte[] data, int index, int len) {
+    	if (data == null || data.length == 0) {
+			return new byte[0];
+		}
+
+    	if (index < 0 || len > data.length - index ) {
+			throw new IllegalArgumentException("Invalid parameter " + index + "," + len);
+		}
 
 	    //int len = data.length;
-	    
 
 	    int olen = 4 * ((len + 2) / 3);
 	    byte[] bytes = new byte[olen];
@@ -165,24 +165,23 @@ public class SharedBase64
 	    int oidx = 0;
 	    int charsLeft = len;
 	    
-	    while (charsLeft > 0) 
-	    {
-	      int b0 = data[iidx++] & 0xff;
-	      int b1 = (charsLeft > 1) ? data[iidx++] & 0xff : 0;
-	      int b2 = (charsLeft > 2) ? data[iidx++] & 0xff : 0;
-	      int b24 = (b0 << 16) | (b1 << 8) | b2;
+	    while (charsLeft > 0) {
+	    	int b0 = data[iidx++] & 0xff;
+	    	int b1 = (charsLeft > 1) ? data[iidx++] & 0xff : 0;
+	    	int b2 = (charsLeft > 2) ? data[iidx++] & 0xff : 0;
+	    	int b24 = (b0 << 16) | (b1 << 8) | b2;
 
-	      int c0 = (b24 >> 18) & 0x3f;
-	      int c1 = (b24 >> 12) & 0x3f;
-	      int c2 = (b24 >> 6) & 0x3f;
-	      int c3 = b24 & 0x3f;
+	    	int c0 = (b24 >> 18) & 0x3f;
+	    	int c1 = (b24 >> 12) & 0x3f;
+	    	int c2 = (b24 >> 6) & 0x3f;
+	    	int c3 = b24 & 0x3f;
 
-	      bytes[oidx++] = BASE_64[c0];
-	      bytes[oidx++] = BASE_64[c1];
-	      bytes[oidx++] = (byte)((charsLeft > 1) ? BASE_64[c2] : '=');
-	      bytes[oidx++] = (byte)((charsLeft > 2) ? BASE_64[c3] : '=');
+	    	bytes[oidx++] = BASE_64[c0];
+	    	bytes[oidx++] = BASE_64[c1];
+	    	bytes[oidx++] = (byte)((charsLeft > 1) ? BASE_64[c2] : '=');
+	    	bytes[oidx++] = (byte)((charsLeft > 2) ? BASE_64[c3] : '=');
 
-	      charsLeft -= 3;
+	    	charsLeft -= 3;
 	    }
 
 	    return bytes;

@@ -16,8 +16,8 @@
 
 package org.zoxweb.client.rpc;
 
-public interface CallBackHandlerListener 
-{
+public interface CallBackHandlerListener {
+
 	public void callBackInitiated();
 	public void callBackEnded();
 	
