@@ -25,7 +25,7 @@
 		<maven-plugin.version>3.6.0</maven-plugin.version>
         <javaee-api.version>7.0</javaee-api.version>
         <hibernate.version>5.2.6.Final</hibernate.version>
-        <apache.derby.version>10.4.2.0</apache.derby.version>
+        <apache.derby.version>10.13.1.1</apache.derby.version>
     </properties>
 
     <!-- default-->
