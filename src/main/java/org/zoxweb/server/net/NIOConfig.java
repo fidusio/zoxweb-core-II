@@ -42,7 +42,7 @@ public class NIOConfig
 	
 	public NIOConfig(String configDAOFile) throws InstantiationException, IllegalAccessException, ClassNotFoundException, IOException
 	{
-		this(GSONUtil.fromJSON(IOUtil.inputStreamToString(configDAOFile)));
+		this((ConfigDAO)GSONUtil.fromJSON(IOUtil.inputStreamToString(configDAOFile)));
 	}
 	
 	public NIOConfig(ConfigDAO configDAO)

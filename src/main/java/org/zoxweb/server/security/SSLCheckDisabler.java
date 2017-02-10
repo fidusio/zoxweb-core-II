@@ -27,10 +27,11 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
-import org.zoxweb.server.crypto.CryptoUtil;
+
 
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
 
 /**
@@ -144,7 +145,7 @@ implements SSLSocketProp
 
 		// Install the all-trusting trust manager
 		SSLContext sc = SSLContext.getInstance("SSL");
-		sc.init(null, trustAllCerts, CryptoUtil.defaultSecureRandom());
+		sc.init(null, trustAllCerts,  new SecureRandom());
 		disabledSSLFactory = sc.getSocketFactory();
 		// Create all-trusting host name verifier
 		allHostsValid = new HostnameVerifier()
