@@ -1,7 +1,11 @@
 package org.zoxweb.server.io;
 
 
+import java.io.Closeable;
+import java.io.DataInput;
+import java.io.DataInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 import java.io.IOException;
@@ -24,23 +28,34 @@ implements DaemonController
 	
 	
 	private File file;
-	private RandomAccessFile bufferedReader;
+	private DataInput bufferedReader;
+	
 	private long creationTime;
 	private boolean autoRun;
+	private boolean device;
 	private EventListenerManager<?, StringTokenEvent> elm;
 	
+	
+	
 	public FileMonitor(String logToMonitor, EventListenerManager<?, StringTokenEvent> elm, boolean autoRun)
+			throws NullPointerException, IllegalArgumentException, IOException
+	{
+		this(logToMonitor, elm, autoRun, false);
+	}
+	
+	public FileMonitor(String logToMonitor, EventListenerManager<?, StringTokenEvent> elm, boolean autoRun, boolean device)
 		throws NullPointerException, IllegalArgumentException, IOException
 	{
 		SharedUtil.checkIfNulls("Null variable", logToMonitor);
 		// open file and got to the end
 		file = new File(logToMonitor);
+		this.device = device;
 		if (!file.exists())
 		{
 			throw new FileNotFoundException(file.getName());			
 		}
 		
-		if (!file.isFile())
+		if (!file.isFile() && !device)
 		{
 			throw new IllegalArgumentException(file.getName() + " is not a file");
 		}
@@ -58,12 +73,21 @@ implements DaemonController
 	}
 	
 	
-	private RandomAccessFile openFile(File file) throws IOException
+	private DataInput openFile(File file) throws IOException
 	{
-		IOUtil.close(bufferedReader);
-		creationTime = IOUtil.fileCreationTime(file);
-		RandomAccessFile fileReader = new RandomAccessFile(file, "r");
-		return fileReader;
+		if (bufferedReader instanceof Closeable)
+			IOUtil.close((Closeable)bufferedReader);
+		if (device)
+		{
+			creationTime = System.currentTimeMillis();
+		}
+		else
+			creationTime = IOUtil.fileCreationTime(file);
+		if (device)
+			return new DataInputStream( new FileInputStream(file));
+		else 
+			return  new RandomAccessFile(file, "r");
+
 			
 	}
 	
@@ -78,7 +102,8 @@ implements DaemonController
 		
 		try
 		{
-			bufferedReader = IOUtil.endOfFile(bufferedReader);
+			if (!device)
+				bufferedReader = IOUtil.endOfFile((RandomAccessFile)bufferedReader);
 			do
 			{
 				try
@@ -94,9 +119,9 @@ implements DaemonController
 						{
 							elm.dispatch(new StringTokenEvent(this, line));
 						}
-						else
+						else if(!line.trim().isEmpty())
 						{
-							log.info("line:" + line);
+							log.info(line);
 						}
 					}
 					else 
@@ -104,10 +129,11 @@ implements DaemonController
 						
 						try
 						{
-							if (creationTime != IOUtil.fileCreationTime(file))
+							
+							if (!device && creationTime != IOUtil.fileCreationTime(file))
 							{
 								bufferedReader = openFile(file);
-								 IOUtil.endOfFile(bufferedReader);
+								IOUtil.endOfFile((RandomAccessFile)bufferedReader);
 							}
 						}
 						catch(Exception e)
@@ -148,8 +174,13 @@ implements DaemonController
 		{
 			int index = 0;
 			String file = args[index++];
+			boolean device = false;
+			if (index < args.length)
+			{
+				device = "dev".equalsIgnoreCase(args[index++]);
+			}
 
-			new FileMonitor(file, null, true);
+			new FileMonitor(file, null, true, device);
 		}
 		catch(Exception e)
 		{
