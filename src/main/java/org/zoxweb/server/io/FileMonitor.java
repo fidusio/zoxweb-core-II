@@ -121,7 +121,7 @@ implements DaemonController
 						}
 						else if(!line.trim().isEmpty())
 						{
-							log.info(line);
+							System.out.println(line);
 						}
 					}
 					else 
