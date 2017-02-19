@@ -26,7 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.zoxweb.server.crypto;
+package org.zoxweb.server.security;
 import java.security.MessageDigest;
 import java.security.SecureRandom;
 
@@ -80,7 +80,7 @@ public class HashUtil
         throws NoSuchAlgorithmException, InvalidKeySpecException
     {
         // Generate a random salt
-        SecureRandom random = CryptoUtil.defaultSecureRandom();
+        SecureRandom random = new SecureRandom();
         byte[] salt = new byte[SALT_BYTE_SIZE];
         random.nextBytes(salt);
 

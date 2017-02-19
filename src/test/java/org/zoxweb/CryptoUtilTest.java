@@ -1,7 +1,7 @@
 package org.zoxweb;
 
-import org.zoxweb.server.crypto.CryptoUtil;
 import org.zoxweb.server.io.UByteArrayOutputStream;
+import org.zoxweb.server.security.CryptoUtil;
 import org.zoxweb.shared.crypto.EncryptedDAO;
 import org.zoxweb.shared.crypto.EncryptedKeyDAO;
 import org.zoxweb.shared.util.Const;

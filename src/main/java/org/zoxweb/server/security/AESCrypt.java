@@ -1,4 +1,4 @@
-package org.zoxweb.server.crypto;
+package org.zoxweb.server.security;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;

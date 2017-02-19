@@ -16,7 +16,7 @@
 package org.zoxweb;
 
 
-import org.zoxweb.server.crypto.HashUtil;
+import org.zoxweb.server.security.HashUtil;
 import org.zoxweb.shared.util.SharedStringUtil;
 
 /**

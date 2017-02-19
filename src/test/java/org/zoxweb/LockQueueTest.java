@@ -19,7 +19,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.concurrent.locks.Lock;
 
-import org.zoxweb.server.crypto.CryptoUtil;
+import org.zoxweb.server.security.CryptoUtil;
 import org.zoxweb.server.util.LockQueue;
 import org.zoxweb.shared.util.SimpleQueue;
 

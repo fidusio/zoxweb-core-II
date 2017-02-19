@@ -17,7 +17,7 @@ package org.zoxweb;
 
 import java.security.SecureRandom;
 
-import org.zoxweb.server.crypto.CryptoUtil;
+import org.zoxweb.server.security.CryptoUtil;
 import org.zoxweb.shared.crypto.CryptoConst.SecureRandomType;
 import org.zoxweb.shared.util.SharedUtil;
 

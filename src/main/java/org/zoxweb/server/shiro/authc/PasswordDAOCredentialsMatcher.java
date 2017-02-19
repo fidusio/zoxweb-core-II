@@ -18,7 +18,7 @@ package org.zoxweb.server.shiro.authc;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.credential.CredentialsMatcher;
-import org.zoxweb.server.crypto.CryptoUtil;
+import org.zoxweb.server.security.CryptoUtil;
 import org.zoxweb.shared.crypto.PasswordDAO;
 
 /**

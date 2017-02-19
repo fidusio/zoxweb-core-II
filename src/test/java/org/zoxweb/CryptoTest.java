@@ -18,7 +18,7 @@ package org.zoxweb;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
-import org.zoxweb.server.crypto.CryptoUtil;
+import org.zoxweb.server.security.CryptoUtil;
 import org.zoxweb.shared.util.SharedBase64;
 import org.zoxweb.shared.util.SharedStringUtil;
 
