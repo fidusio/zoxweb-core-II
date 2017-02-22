@@ -155,6 +155,11 @@
             <artifactId>derbyclient</artifactId>
             <version>${apache.derby.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.derby</groupId>
+            <artifactId>derby</artifactId>
+            <version>${apache.derby.version}</version>
+        </dependency>
 
 
     </dependencies>

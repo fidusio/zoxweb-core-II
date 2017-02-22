@@ -5,8 +5,12 @@
 <hibernate-configuration>
     <session-factory>
         <!-- Connection settings -->
+        <!--   
         <property name="hibernate.connection.driver_class">org.apache.derby.jdbc.ClientDriver</property>
         <property name="hibernate.connection.url">jdbc:derby://localhost:1527/test;create=true</property>
+        -->
+        <property name="hibernate.connection.driver_class">org.apache.derby.jdbc.EmbeddedDriver</property>
+        <property name="hibernate.connection.url">jdbc:derby:memory:test;create=true</property>
         <!--<property name="hibernate.connection.username">admin</property>-->
         <!--<property name="hibernate.connection.password">admin</property>-->
         <property name="hibernate.connection.pool_size">10</property>
