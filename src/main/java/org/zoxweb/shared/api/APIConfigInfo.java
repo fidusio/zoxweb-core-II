@@ -56,8 +56,7 @@ public interface APIConfigInfo
 	 * @return
 	 */
 	public String getAPITypeName();
-	
-	public String getName();
+
 	
 	/**
 	 * This method sets the API type name.
@@ -99,7 +98,7 @@ public interface APIConfigInfo
 	 * This method sets the configuration parameters.
 	 * @param configParams
 	 */
-	public void setConfigParameters(List< NVPair> configParams);
+	public void setConfigParameters(List<NVPair> configParams);
 	
 	/**
 	 * This method sets the configuration parameters.
@@ -138,7 +137,5 @@ public interface APIConfigInfo
 	
 	public void setOAuthVersion(OAuthVersion version);
 	
-//	public String getAPIKeyRefID();
-//	
-//	public void setAPIKeyRefID(String apiKeyRefID);
+
 }

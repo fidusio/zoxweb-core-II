@@ -19,6 +19,8 @@ public class HibernateDataStore
 
     private APIConfigInfo configInfo;
     private SessionFactory sessionFactory;
+    private String name =  "HibernateDataStore";
+    private String description = "Hibernate based data store";
 
     public static final String RESOURCE = "resource";
 
@@ -33,22 +35,23 @@ public class HibernateDataStore
 
     @Override
     public String getName() {
-        return null;
+        return name;
     }
 
     @Override
     public String getDescription() {
-        return null;
+        return description;
     }
 
     @Override
-    public void setName(String name) {
-
+    public void setName(String name)
+    {
+        this.name = name;
     }
 
     @Override
     public void setDescription(String str) {
-
+        this.description = str;
     }
 
     @Override
