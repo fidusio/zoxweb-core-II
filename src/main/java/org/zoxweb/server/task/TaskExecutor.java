@@ -36,10 +36,6 @@ extends EventListener
 	 */
 	public void executeTask(TaskEvent event);
 	
-	
-	//public TaskEvent getTaskEvent();
-	
-	
 	/**
 	 * Called after returning from TaskExecutor.executeTask();
 	 * @param event

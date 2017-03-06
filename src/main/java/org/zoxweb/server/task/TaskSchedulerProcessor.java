@@ -91,6 +91,7 @@ implements Runnable, DaemonController
 		}
 		
 	}
+	
 	private TaskProcessor taskProcessor = null;
 	private boolean live = true;
 	private static final long DEFAULT_TIMEOUT = Const.TimeInMillis.MILLI.MILLIS*500;
@@ -106,11 +107,11 @@ implements Runnable, DaemonController
 	
 	public TaskSchedulerProcessor(TaskProcessor tp)
 	{
-		this( Appointment.EQUAL_COMPARATOR, tp);
+		this(Appointment.EQUAL_COMPARATOR, tp);
 	}
 	
 	
-	private TaskSchedulerProcessor( Comparator<Appointment> tsc, TaskProcessor tp)
+	private TaskSchedulerProcessor(Comparator<Appointment> tsc, TaskProcessor tp)
 	{
 		SharedUtil.checkIfNulls("TaskSchedulerComparator can't be null", tsc);
 		queue =  new ConcurrentSkipListSet<TaskSchedulerAppointment>( tsc);
@@ -173,7 +174,7 @@ implements Runnable, DaemonController
 		{
 			ts = new AppointmentDefault();
 		}
-		return queue( new TaskSchedulerAppointment( ts, te));
+		return queue(new TaskSchedulerAppointment( ts, te));
 	}
 	
 	
