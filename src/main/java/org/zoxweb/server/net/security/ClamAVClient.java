@@ -8,6 +8,7 @@ import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.URL;
 import java.nio.ByteBuffer;
@@ -32,14 +33,7 @@ public class ClamAVClient
 		extends FilterInputStream
 		implements StreamStats
 	{
-//		long size = 0;
-//		String response;
 		IOStreamInfo ci;
-//		long duration = 0;
-//		boolean isClean;
-//		String scanName;
-		
-		
 		ScanResultDAO result = new ScanResultDAO();
 		ClamAVScanResult(IOStreamInfo ci, InputStream is, String scanName)
 		{
@@ -58,10 +52,7 @@ public class ClamAVClient
 		}
 		
 		
-//		public String getScanResponse()
-//		{
-//			return response;
-//		}
+
 		
 		
 		public IOStreamInfo getConnectionInfo()
@@ -69,20 +60,7 @@ public class ClamAVClient
 			return ci;
 		}
 		
-//		public long getDuration()
-//		{
-//			return duration;
-//		}
-//		
-//		public String getFilename()
-//		{
-//			return scanName;
-//		}
-//		
-//		public boolean isClean()
-//		{
-//			return isClean;
-//		}
+
 		
 		
 		
@@ -183,8 +161,11 @@ public class ClamAVClient
   	throws IOException
   {
 	  long delta = System.currentTimeMillis();
-	  Socket s =  new Socket(hostName,port);
-	  s.setSoTimeout(timeout);
+	  Socket s =  new Socket();
+	  //s.setSoTimeout(timeout);
+	  
+	  
+	  s.connect( new InetSocketAddress(hostName, port), timeout);
 	  IOStreamInfo ci = new IOStreamInfo(s);
 	  ci.os.write(asBytes("zINSTREAM\0"));
 	  ci.os.flush();
@@ -264,10 +245,10 @@ public class ClamAVClient
 	      s.setSoTimeout(timeout); 
 	      long delta = System.currentTimeMillis();
 	      // handshake
-	      System.out.println("before start");
+	    
 	      outs.write(asBytes("zINSTREAM\0"));
 	      outs.flush();
-	      System.out.println("after start");
+	     
 	      byte[] chunk = new byte[CHUNK_SIZE];
 	
 	      // send data
@@ -295,9 +276,9 @@ public class ClamAVClient
 	      // read reply
 	      try (InputStream clamIs = s.getInputStream()) 
 	      {
-	    	  System.out.println("before read all");
+	    	
 	    	byte result[] = readAll(clamIs);
-	    	System.out.println("after  read all");
+	    
 	      
 	        ret.getScanResult().setResult(new String(result));
 	        delta = System.currentTimeMillis() - delta;

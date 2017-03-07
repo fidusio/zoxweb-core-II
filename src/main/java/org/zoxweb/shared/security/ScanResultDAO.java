@@ -9,7 +9,11 @@ import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVConfigEntityLocal;
 import org.zoxweb.shared.util.NVConfigManager;
 import org.zoxweb.shared.util.SharedUtil;
-
+/**
+ * The ScanResultDAO object contains the scan result session of a file or stream
+ * @author mnael
+ *
+ */
 @SuppressWarnings("serial")
 public class ScanResultDAO
 	extends CanonicalIDDAO
@@ -58,6 +62,10 @@ public class ScanResultDAO
 		super(NVC_SCAN_RESULT_DAO);
 	}
 	
+	/**
+	 * Length in bytes of the scan
+	 * @return
+	 */
 	public long getLength()
 	{
 		return lookupValue(Params.LENGTH);
@@ -68,6 +76,9 @@ public class ScanResultDAO
 		setValue(Params.LENGTH, length);
 	}
 	
+	/**
+	 * @return true id the scan result is clean
+	 */
 	public boolean isClean()
 	{
 		return lookupValue(Params.IS_CLEAN);
@@ -78,6 +89,9 @@ public class ScanResultDAO
 		setValue(Params.IS_CLEAN, clean);
 	}
 	
+	/**
+	 * @return the scan duration in millis
+	 */
 	public long getScanDuration()
 	{
 		return lookupValue(Params.SCAN_DURATION);
@@ -88,7 +102,9 @@ public class ScanResultDAO
 		setValue(Params.SCAN_DURATION, scanDuration);
 	}
 	
-	
+	/**
+	 * @return the scan native result
+	 */
 	public String getResult()
 	{
 		return lookupValue(Params.RESULT);
