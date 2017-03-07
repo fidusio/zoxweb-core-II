@@ -52,7 +52,7 @@ implements SetCanonicalID
 		CASE_SENSITIVE(NVConfigManager.createNVConfig("case_sensitive", "True the access code is a exact match", "CaseSensitive", false, false, Boolean.class)),
 		CANONICAL_ID(DataParam.CANONICAL_ID.getNVConfig()),
 		DESCRIPTION(NVConfigManager.createNVConfig("description", null, "Description", false, true, false, true, false, String.class, null)),
-		SESSION_DURATION(NVConfigManager.createNVConfig("session_duration", "The session duration is millis", "SessionDuration", false, true, Long.class)),
+		SESSION_DURATION(NVConfigManager.createNVConfig("session_duration", "The session duration in millis", "SessionDuration", false, true, Long.class)),
 		
 		
 		;
