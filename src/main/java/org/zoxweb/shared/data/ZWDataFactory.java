@@ -64,6 +64,7 @@ import org.zoxweb.shared.net.InetSocketAddressDAO;
 import org.zoxweb.shared.net.NetworkInterfaceDAO;
 import org.zoxweb.shared.security.AccessCodeDAO;
 import org.zoxweb.shared.security.LoginTokenDAO;
+import org.zoxweb.shared.security.ScanResultDAO;
 import org.zoxweb.shared.util.GetName;
 import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVEntity;
@@ -674,6 +675,22 @@ public class ZWDataFactory
 			{
 				return BillingAccountDAO.NVC_BILLING_ACCOUNT_DAO;
 			};
+		},
+		SCAN_RESULT_DAO(ScanResultDAO.class.getName())
+		{
+			@SuppressWarnings("unchecked")
+			@Override
+			public ScanResultDAO newInstance()
+			{
+				return new ScanResultDAO();
+			}
+
+			@Override
+			public NVConfigEntity getNVConfigEntity()
+			{
+				return ScanResultDAO.NVC_SCAN_RESULT_DAO;
+			}
+			
 		},
 
 		//	org.zoxweb.shared.data.shiro
