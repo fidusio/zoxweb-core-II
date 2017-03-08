@@ -27,6 +27,7 @@ public class  ChannelRelayTunnel
 	private SocketChannel readSource;
 	private SocketChannel writeDestination;
 	private SelectionKey currentSK = null;
+	@SuppressWarnings("unused")
 	private SelectionKey writeChannelSK;
 	private final boolean autoCloseDesticantion;
 	//private ByteBuffer bBuffer = null;
@@ -130,21 +131,15 @@ public class  ChannelRelayTunnel
 				}
 			}while(read > 0);
 			
-	    	if(read < 0)
-	    	{
-	    		// we have to close 
-	    		close();
-	    		
-	    	}
+	    	if(read < 0) //end of stream we have to close 
+	    		IOUtil.close(this);
+	    	
 		}
 		catch(Exception e)
 		{
-			
-			//if (debug)
-			{
-				log.info("error:" + key + ":" + writeChannelSK + ":" +System.currentTimeMillis());
+			log.info("error:" +e);
+			if (!(e instanceof IOException))
 				e.printStackTrace();
-			}
 			IOUtil.close(this);
 		}
 		

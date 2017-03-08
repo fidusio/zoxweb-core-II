@@ -117,7 +117,7 @@ public class ClamAVClient
 
   private String hostName;
   private int port;
-  private int timeout;
+  //private int timeout;
 
   // "do not exceed StreamMaxLength as defined in clamd.conf, otherwise clamd will reply with INSTREAM size limit exceeded and close the connection."
   public static final int CHUNK_SIZE = 2048;
@@ -134,7 +134,7 @@ public class ClamAVClient
     }
     this.hostName = hostName;
     this.port = port;
-    this.timeout = timeout;
+    //this.timeout = timeout;
   }
 
   public ClamAVClient(String hostName, int port) {
@@ -148,7 +148,7 @@ public class ClamAVClient
    */
   public boolean ping() throws IOException {
     try (Socket s = new Socket(hostName,port); OutputStream outs = s.getOutputStream()) {
-      s.setSoTimeout(timeout);
+      //s.setSoTimeout(timeout);
       outs.write(asBytes("zPING\0"));
       outs.flush();
       byte[] b = new byte[4];
@@ -161,11 +161,11 @@ public class ClamAVClient
   	throws IOException
   {
 	  long delta = System.currentTimeMillis();
-	  Socket s =  new Socket();
+	  Socket s = new Socket();
 	  //s.setSoTimeout(timeout);
 	  
 	  
-	  s.connect( new InetSocketAddress(hostName, port), timeout);
+	  s.connect(new InetSocketAddress(hostName, port));
 	  IOStreamInfo ci = new IOStreamInfo(s);
 	  ci.os.write(asBytes("zINSTREAM\0"));
 	  ci.os.flush();
@@ -242,7 +242,7 @@ public class ClamAVClient
 	  ClamAVScanResult  ret = new   ClamAVScanResult(null, is, null);
 	  try (Socket s = new Socket(hostName,port); OutputStream outs = new BufferedOutputStream(s.getOutputStream()))
 	  {
-	      s.setSoTimeout(timeout); 
+	      //s.setSoTimeout(timeout); 
 	      long delta = System.currentTimeMillis();
 	      // handshake
 	    
@@ -440,7 +440,7 @@ public class ClamAVClient
 					  System.out.println(cavsr);
 				  }
 				  catch(Exception e)
-				  {
+				  {					  
 					  e.printStackTrace();
 					  System.out.println("Processing error:" + e);
 				  }
