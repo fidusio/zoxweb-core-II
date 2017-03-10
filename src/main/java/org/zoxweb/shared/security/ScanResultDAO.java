@@ -9,6 +9,7 @@ import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVConfigEntityLocal;
 import org.zoxweb.shared.util.NVConfigManager;
 import org.zoxweb.shared.util.SharedUtil;
+import org.zoxweb.shared.util.Const.ScanStatus;
 /**
  * The ScanResultDAO object contains the scan result session of a file or stream
  * @author mnael
@@ -24,7 +25,7 @@ public class ScanResultDAO
 		
 		
 		LENGTH(NVConfigManager.createNVConfig("length", "The length of the data", "Length", false, true, Long.class)),
-		IS_CLEAN(NVConfigManager.createNVConfig("is_clean", "True if the scan result is OK.", "IsClean", false, true, Boolean.class)),
+		STATUS(NVConfigManager.createNVConfig("status", "OK result no infection.", "status", false, true, ScanStatus.class)),
 		SCAN_DURATION(NVConfigManager.createNVConfig("scan_duration", "The scan duration in millis", "ScanDuration", false, true, Long.class)),
 		RESULT(NVConfigManager.createNVConfig("result", "The result of the scan", "Result", false, true, String.class)),
 		;
@@ -79,14 +80,14 @@ public class ScanResultDAO
 	/**
 	 * @return true id the scan result is clean
 	 */
-	public boolean isClean()
+	public ScanStatus getStatus()
 	{
-		return lookupValue(Params.IS_CLEAN);
+		return lookupValue(Params.STATUS);
 	}
 	
-	public void setClean(boolean clean)
+	public void setStatus(ScanStatus stat)
 	{
-		setValue(Params.IS_CLEAN, clean);
+		setValue(Params.STATUS, stat);
 	}
 	
 	/**

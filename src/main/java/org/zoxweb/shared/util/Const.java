@@ -840,6 +840,15 @@ public class Const
 		NAME_VALUE,
 		VALUE
 	}
+
+
+	public enum ScanStatus
+	{
+		OK, // ok no infection
+		INFECTED, // infected
+		FAILED, // failed not known
+
+	}
 	
 	
 	/**

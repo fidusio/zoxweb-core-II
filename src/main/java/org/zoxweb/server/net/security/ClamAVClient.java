@@ -21,6 +21,7 @@ import org.zoxweb.server.io.IOUtil;
 import org.zoxweb.server.io.StreamStats;
 import org.zoxweb.shared.net.InetSocketAddressDAO;
 import org.zoxweb.shared.security.ScanResultDAO;
+import org.zoxweb.shared.util.Const;
 
 /**
  * Simple client for ClamAV's clamd scanner. Provides straightforward instream scanning.
@@ -102,7 +103,7 @@ public class ClamAVClient
 		}
 		public String toString()
 		{
-			return (result.getName() != null ? result.getName() +"," : "") + "Data length:" + result.getLength() + ",Scan duration:" + result.getScanDuration() + " millis" +",Is Clean:" + result.isClean() + ".\n"
+			return (result.getName() != null ? result.getName() +"," : "") + "Data length:" + result.getLength() + ",Scan duration:" + result.getScanDuration() + " millis" +",Is Clean:" + result.getStatus() + ".\n"
 					+ result.getResult();
 		}
 
@@ -221,7 +222,7 @@ public class ClamAVClient
 	  delta = System.currentTimeMillis() - delta;
 	  
 	  cavsr.getScanResult().setScanDuration(cavsr.getScanResult().getScanDuration() + delta);
-	  cavsr.getScanResult().setClean(isCleanReply(result));
+	  cavsr.getScanResult().setStatus(isCleanReply(result) ? Const.ScanStatus.OK : Const.ScanStatus.INFECTED);
 	  return cavsr;
   }
 
@@ -284,7 +285,7 @@ public class ClamAVClient
 	        delta = System.currentTimeMillis() - delta;
 	      
 	        ret.getScanResult().setScanDuration( + delta);
-	        ret.getScanResult().setClean(isCleanReply(result));
+	        ret.getScanResult().setStatus(isCleanReply(result) ? Const.ScanStatus.OK : Const.ScanStatus.INFECTED);
 	        return ret;
 	      }
 	  } 
