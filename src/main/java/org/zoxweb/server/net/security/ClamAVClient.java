@@ -42,8 +42,6 @@ public class ClamAVClient
 			result.setName(scanName);
 			//this.scanName = scanName;
 			this.ci = ci;
-			
-			
 		}
 		
 		
