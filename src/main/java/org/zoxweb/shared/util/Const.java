@@ -556,6 +556,52 @@ public class Const
 		TypeInBytes(int s) {
 			size = s;
 		}
+		
+		
+		
+		public static byte[] bytesToBytes(byte b)
+		{
+			byte ret[] = new byte[1];
+			ret[0] = b;
+			return ret;
+ 		}
+
+		public static byte[] shortToBytes(short val)
+		{
+			byte ret[] = new byte[SHORT.size];
+			
+			for(int i = 0; i < ret.length; i++)
+			{
+				ret[i] = (byte) (val >> (8*(ret.length-1-i)));
+			}
+			
+			return ret;
+		}
+		
+		
+		public static byte[] intToBytes(int val)
+		{
+			byte ret[] = new byte[INT.size];
+			
+			for(int i = 0; i < ret.length; i++)
+			{
+				ret[i] = (byte) (val >> (8*(ret.length-1-i)));
+			}
+			
+			return ret;
+		}
+		
+		public static byte[] longToBytes(long val)
+		{
+			byte ret[] = new byte[LONG.size];
+			
+			for(int i = 0; i < ret.length; i++)
+			{
+				ret[i] = (byte) (val >> (8*(ret.length-1-i)));
+			}
+			
+			return ret;
+		}
 
 	}
 	

@@ -773,7 +773,8 @@ public final class SharedStringUtil {
 	 * @throws IllegalArgumentException if c is different than 0,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f
 	 */
 	public static int hexToInt(char c)
-			throws IllegalArgumentException {
+			throws IllegalArgumentException 
+	{
 
 		c = Character.toUpperCase(c);
 		

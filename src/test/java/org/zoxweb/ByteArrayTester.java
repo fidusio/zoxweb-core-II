@@ -4,8 +4,11 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.nio.ByteBuffer;
+import java.util.Arrays;
 
 import org.zoxweb.server.io.UByteArrayOutputStream;
+import org.zoxweb.shared.util.Const.TypeInBytes;
 import org.zoxweb.shared.util.SharedUtil;
 
 public class ByteArrayTester {
@@ -148,6 +151,29 @@ public class ByteArrayTester {
 			UByteArrayOutputStream.printInfo(ubaosShift);
 			ubaosShift.shiftLeft(1, 0);
 			UByteArrayOutputStream.printInfo(ubaosShift);
+			
+			
+			
+			
+			int intArray[] = {0, 1, 2, 3, 100000, 100000001, 1304434343};
+			ByteBuffer.allocate(4).putInt(0).array();
+			TypeInBytes.intToBytes(0);
+			//long delta, delta1 = System.nanoTime();
+			for (int val : intArray)
+			{
+				long delta = System.nanoTime();
+				byte[] buffer = ByteBuffer.allocate(4).putInt(val).array();
+				delta = System.nanoTime() - delta;
+				
+				long delta1 = System.nanoTime();
+				byte[] buffer1 = TypeInBytes.intToBytes(val);
+				delta1 = System.nanoTime() - delta1;
+				
+				System.out.println(val + " delta " + delta + " delta1 " + delta1 + " equals " + Arrays.equals(buffer, buffer1));
+			}
+			
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 

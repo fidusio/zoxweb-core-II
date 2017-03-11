@@ -11,7 +11,7 @@ import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.URL;
-import java.nio.ByteBuffer;
+
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
@@ -22,6 +22,7 @@ import org.zoxweb.server.io.StreamStats;
 import org.zoxweb.shared.net.InetSocketAddressDAO;
 import org.zoxweb.shared.security.ScanResultDAO;
 import org.zoxweb.shared.util.Const;
+import org.zoxweb.shared.util.Const.TypeInBytes;
 
 /**
  * Simple client for ClamAV's clamd scanner. Provides straightforward instream scanning.
@@ -187,7 +188,7 @@ public class ClamAVClient
 		  }
 		  
 		  
-		  byte[] chunkSizeBuffer = ByteBuffer.allocate(4).putInt(chunkSize).array();
+		  byte[] chunkSizeBuffer = TypeInBytes.intToBytes(chunkSize);//ByteBuffer.allocate(4).putInt(chunkSize).array();
 		  cavsr.ci.os.write(chunkSizeBuffer);
 		  cavsr.ci.os.write(buffer, offset+i, chunkSize);
 		  cavsr.ci.os.flush();
@@ -258,7 +259,7 @@ public class ClamAVClient
 	    	ret.getScanResult().setLength(ret.getScanResult().getLength() + read);
 	        // The format of the chunk is: '<length><data>' where <length> is the size of the following data in bytes expressed as a 4 byte unsigned
 	        // integer in network byte order and <data> is the actual chunk. Streaming is terminated by sending a zero-length chunk.
-	        byte[] chunkSize = ByteBuffer.allocate(4).putInt(read).array();
+	        byte[] chunkSize = TypeInBytes.intToBytes(read); //ByteBuffer.allocate(4).putInt(read).array();
 	        outs.write(chunkSize);
 	        outs.write(chunk, 0, read);
 	        outs.flush();
