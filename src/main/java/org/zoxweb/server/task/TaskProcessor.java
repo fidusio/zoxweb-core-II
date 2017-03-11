@@ -219,7 +219,7 @@ implements Runnable,
 	
 	
 	/**
-	 * Create a task processor with default count of worker thread if the core count > 1 core count*1.5 if core == 1 then it is 2
+	 * Create a task processor with default count of worker thread if the <code>core count > 1 core count*1.5 if core == 1 then it is 2</code>
 	 * @param taskQueueMaxSize
 	 */
 	public TaskProcessor(int taskQueueMaxSize)
@@ -240,7 +240,7 @@ implements Runnable,
 	 * @param executorThreadCount number of worker threads
 	 * @param threadPriority the thread priority
 	 * @param executorNotify notify the task executor
-	 * @throws IllegalArgumentException if taskQueueMaxSize < 2 or executorThreadCount < 2, or executorThreadCount > taskQueueMaxSize
+	 * @throws IllegalArgumentException <code>if taskQueueMaxSize < 2 or executorThreadCount < 2, or executorThreadCount > taskQueueMaxSize</code>
 	 */
 	public TaskProcessor(int taskQueueMaxSize, 
 						 int executorThreadCount,

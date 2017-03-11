@@ -25,8 +25,8 @@ public interface CRUDOperation<V>
 {
 	/**
 	 * Applies CRUD to given variable.
-	 * @param crud
-	 * @param v
+	 * @param crud operation 
+	 * @param v value to be applied to
 	 */
 	public void applyCRUD(CRUD crud, V v);	
 }

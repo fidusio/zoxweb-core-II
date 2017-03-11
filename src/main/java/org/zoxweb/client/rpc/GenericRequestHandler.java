@@ -39,7 +39,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 
 /**
  * @author mnael
- * @param <T>
+ * @param <T> The type of request
  *
  */
 public class GenericRequestHandler<T>

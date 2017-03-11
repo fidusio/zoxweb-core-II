@@ -67,8 +67,6 @@ public class UByteArrayOutputStream
 	/**
 	 * 
 	 * @param buffer
-	 * @param offset
-	 * @param len
 	 */
 	public UByteArrayOutputStream(byte buffer[])
 	{
@@ -76,10 +74,7 @@ public class UByteArrayOutputStream
 	}
 	
 	
-//	public NVGetNameValueGenericMap getProperties()
-//	{
-//		return props;
-//	}
+
 	
 	/**
 	 * 
@@ -162,7 +157,7 @@ public class UByteArrayOutputStream
 	 * @param startAt
 	 * @param match
 	 * @param offset
-	 * @param len
+	 * @param length
 	 * @return
 	 */
 	public int indexOf(int startAt, byte match[], int offset, int length)
@@ -170,21 +165,11 @@ public class UByteArrayOutputStream
 		return SharedUtil.indexOf(getInternalBuffer(), startAt, size(), match, offset, length);
 	}
 	
-	/**
-	 * 
-	 * @param str
-	 * @return
-	 */
 	public int indexOf(String str)
 	{
 		return SharedUtil.indexOf(getInternalBuffer(), 0, size(), str, 0, str.length(), false);
 	}
 	
-	/**
-	 * 
-	 * @param str
-	 * @return
-	 */
 	public int indexOfIgnoreCase(String str)
 	{
 		return SharedUtil.indexOf(getInternalBuffer(), 0, size(), str, 0, str.length(), true);
@@ -275,23 +260,7 @@ public class UByteArrayOutputStream
 	{
 		write(buf, 0, buf.length);
 	}
-	
-//	public synchronized void write(ByteBuffer bb)
-//	{
-//		bb.flip();
-//		for (int i = 0; i < bb.limit(); i++)
-//		{
-//			write(bb.get());
-//		}
-//	}
-	
-	
-//	public synchronized ByteBuffer toByteBuffer()
-//	{
-//		ByteBuffer bb = ByteBuffer.allocate(size());
-//		bb.put(getInternalBuffer(), 0, size());
-//		return bb;
-//	}
+
 
 	/**
 	 * Insert a string at the specified location
@@ -306,10 +275,10 @@ public class UByteArrayOutputStream
 	}
 
 	/**
-	 * Insert a byte at the specified location
+	 * Insert a byte at the specified index location
 	 * 
-	 * @param index
-	 * @param str
+	 * @param index location
+	 * @param b byte value
 	 */
 	public synchronized void writeAt(int index, byte b)
 			throws IndexOutOfBoundsException 
@@ -450,7 +419,7 @@ public class UByteArrayOutputStream
 	}
 	
 	/**
-	 * Shit the data left from->to
+	 * Shift the data left from to
 	 * @param from index
 	 * @param to index
 	 */

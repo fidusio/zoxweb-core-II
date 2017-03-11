@@ -38,13 +38,13 @@ import java.security.cert.X509Certificate;
  * This class is a singleton object used to create a fake validation for SSL check.
  * It is mainly used to connect to expired certificates or self signed certificates.
  * How to use it:
- * <pre>
+ * <code>
  *  // create the secure connection
  * 	HttpsURLConnection httpsCon = ...;
  *  // update the connection SSLFactory and HostVerifier
  * 	SSLCheckDisabler.updateURLConnection( httpsCon);
  *  // make the connection as usual
- * <pre>
+ * </code>
  * Note: using this class in production is no recommended since it will not validate the end point of the connection
  */
 public class SSLCheckDisabler

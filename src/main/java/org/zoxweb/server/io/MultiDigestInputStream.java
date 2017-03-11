@@ -64,7 +64,6 @@ implements MultiDigestInterface
      * Returns the message digests associated with this stream.
      *
      * @return the message digests associated with this stream.
-     * @see #setMessageDigests(java.security.MessageDigest[])
      */
     public MessageDigest[] getMessageDigests()
     {
@@ -74,8 +73,7 @@ implements MultiDigestInterface
     /**
      * Associates the specified message digests with this stream.
      *
-     * @param digest the message digest to be associated with this stream.
-     * @see #getMessageDigests()
+     * @param digests the message digest to be associated with this stream.
      */
     public void setMessageDigests(MessageDigest[] digests)
     {
@@ -94,7 +92,6 @@ implements MultiDigestInterface
      *
      * @exception IOException if an I/O error occurs.
      *
-     * @see MessageDigest#update(byte)
      */
     public int read() throws IOException 
     {
@@ -133,7 +130,6 @@ implements MultiDigestInterface
      *
      * @exception IOException if an I/O error occurs.
      *
-     * @see MessageDigest#update(byte[], int, int)
      */
     public int read(byte[] b, int off, int len) 
     		throws IOException
@@ -166,8 +162,7 @@ implements MultiDigestInterface
     }
 
     /**
-     * Prints a string representation of this digest input stream and
-     * its associated message digest object.
+     * return Prints a string representation of this digest input stream and its associated message digest object.
      */
      public String toString()
      {

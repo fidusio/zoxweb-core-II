@@ -40,8 +40,8 @@ public class GWTHTMLFilter {
 
     /**
      * Checks if given input String is HTML.
-     * @param str
-     * @return
+     * @param str of type html to be checked
+     * @return true is html
      */
     public static boolean isHTML(String str) {
         boolean ret = false;

@@ -636,9 +636,8 @@ implements Runnable,
 	
 
 	/**
-	 * @see org.zoxweb.shared.util.DaemonController#terminate()
+	 * Shutdown the proxy object
 	 */
-	@Override
 	public synchronized void close() 
 	{
 		// TODO Auto-generated method stub

@@ -42,9 +42,7 @@ implements ReferenceID<String>
 	 * Create a task event
 	 * @param source generating the event
 	 * @param te the implementation that will execute the event
-	 * @param tel the implementation that will be notified after executing the task 
 	 * @param taskExecutorparams the task executor parameters
-	 * @param id is a reference identifier
 	 */
 	public TaskEvent(Object source, TaskExecutor te, Object... taskExecutorparams)
 	{

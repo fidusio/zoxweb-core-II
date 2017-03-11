@@ -35,15 +35,16 @@ public interface HTTPDownloadHandler
 extends AuthenticationHandler<HttpServletRequest, HttpServletResponse>
 {
 	
+
+	
+	
 	/**
-	 * 
-	 * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
-	 * 
-	 * @param request
-	 * @param attributes
-	 * @return
-	 * @throws AccessException
-	 * @throws IOException
+	 * Locate the file info source
+	 * @param request http request
+	 * @param attributes the request attributes
+	 * @return the stream source
+	 * @throws AccessException if the current subject has no permission
+	 * @throws IOException IO error
 	 */
 	FileInfoStreamSource lookupFileInfoSource(HttpServletRequest request, HTTPRequestAttributes attributes)
 					  throws AccessException, IOException;
@@ -51,12 +52,15 @@ extends AuthenticationHandler<HttpServletRequest, HttpServletResponse>
 	
 	
 	
+	
+	
 	/**
-	 * 
-	 * @param session
-	 * @param fid
+	 * Update the file info dao
+	 * @param fileInfo to be updated
+	 * @throws AccessException if the subject user has no permission
+	 * @throws IOException IO error
 	 */
-	 void updatedFileInfoDAO( FileInfoDAO fileInfo) 
+	 void updatedFileInfoDAO(FileInfoDAO fileInfo) 
 			 throws AccessException, IOException;
 	
 }

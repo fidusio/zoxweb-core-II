@@ -97,7 +97,7 @@ public abstract class ProtocolSessionProcessor
 
 
 	/**
-	 * @param selector the selector to set
+	 * @param selectorController the selector to set
 	 */
 	public void setSelectorController(SelectorController selectorController) 
 	{

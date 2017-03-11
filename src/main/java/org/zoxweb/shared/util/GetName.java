@@ -23,8 +23,7 @@ package org.zoxweb.shared.util;
 public interface GetName {
 
 	/**
-	 * Returns the name.
-	 * @return
+	 * @return the name of the object 
 	 */
 	public String getName();
 }

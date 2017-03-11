@@ -40,8 +40,7 @@ implements MultiDigestInterface
 	/**
      * Associates the specified message digest with this stream.
      *
-     * @param digest the message digest to be associated with this stream.
-     * @see #getMessageDigests()
+     * @param digests the message digest to be associated with this stream.
      */
     public void setMessageDigests(MessageDigest[] digests)
     {
@@ -52,7 +51,6 @@ implements MultiDigestInterface
      * Returns the message digest associated with this stream.
      *
      * @return the message digest associated with this stream.
-     * @see #setMessageDigests(java.security.MessageDigest)
      */
     public MessageDigest[] getMessageDigests() {
         return digests;
@@ -64,8 +62,7 @@ implements MultiDigestInterface
      * update on the message digest.  But when it is off, the message
      * digest is not updated.
      *
-     * @param on true to turn the digest function on, false to turn it
-     * off.
+     * @param on true to turn the digest function on, false to turn it off.
      */
     public void on(boolean on) 
     {
@@ -80,8 +77,7 @@ implements MultiDigestInterface
     
     
     /**
-     * Prints a string representation of this digest output stream and
-     * its associated message digest object.
+     * @return Prints a string representation of this digest output stream and its associated message digest object.
      */
      public String toString()
      {

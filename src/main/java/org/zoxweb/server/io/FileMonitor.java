@@ -24,6 +24,7 @@ import org.zoxweb.shared.util.Const.TimeInMillis;
 public class FileMonitor extends RunnableTask
 implements DaemonController
 {
+	@SuppressWarnings("unused")
 	private static final transient Logger log = Logger.getLogger(FileMonitor.class.getName());
 	
 	

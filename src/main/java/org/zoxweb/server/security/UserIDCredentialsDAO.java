@@ -136,34 +136,7 @@ public class UserIDCredentialsDAO
 	}
 
 
-//	protected UserIDCredentialsDAO(List<NVConfigEntity> list)
-//	{
-//		super(SharedUtil.merge(list, NVC_USER_ID_CREDENTIALS_DAO));
-//	}
-	
 
-	/**
-	 * This method returns the user ID.
-	 * @return
-	 */
-//	public UserIDDAO getUserIDDAO() 
-//	{
-//		return lookupValue(UserCredentials.USER_ID_DAO);
-//	}
-	
-	/**
-	 * This method sets the user ID.
-	 * @param userID
-	 */
-//	public void setUserIDDAO(UserIDDAO userID)
-//	{
-//		setValue(UserCredentials.USER_ID_DAO, userID);
-//		if (userID!=null)
-//		{
-//			setUserID(userID.getReferenceID());
-//		}
-//	}	
-	
 	
 	/**
 	 * This method returns the user status.
@@ -176,7 +149,7 @@ public class UserIDCredentialsDAO
 	
 	/**
 	 * This method sets the user status.
-	 * @param userStatus
+	 * @param status
 	 */
 	public void setUserStatus(UserStatus status)
 	{

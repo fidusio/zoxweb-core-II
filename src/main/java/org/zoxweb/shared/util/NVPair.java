@@ -66,7 +66,7 @@ public class NVPair
 	
 	/**
 	 * This constructor instantiates NVPair based on GetName type and value parameters.
-	 * @param gn
+	 * @param name
 	 * @param v
 	 */
 	public NVPair(String name, GetValue<String> v)

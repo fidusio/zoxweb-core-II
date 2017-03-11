@@ -450,12 +450,12 @@ public class SSLSessionData
     }
 
     /**
-     * Compares <code>sessionProposedCapacity<code> with buffer's capacity. If buffer's capacity is smaller,
+     * Compares <code>sessionProposedCapacity</code> with buffer's capacity. If buffer's capacity is smaller,
      * returns a buffer with the proposed capacity. If it's equal or larger, returns a buffer
      * with capacity twice the size of the initial one.
      *
      * @param buffer - the buffer to be enlarged.
-     * @param sessionProposedCapacity - the minimum size of the new buffer, proposed by {@link SSLSession}.
+     * @param sessionProposedCapacity - the minimum size of the new buffer.
      * @return A new buffer with a larger capacity.
      */
     protected static ByteBuffer enlargeBuffer(ByteBuffer buffer, int sessionProposedCapacity) {

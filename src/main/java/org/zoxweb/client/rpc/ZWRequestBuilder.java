@@ -27,16 +27,16 @@ public class ZWRequestBuilder
 		extends RequestBuilder {
 
 	/**
-	 * @param method
-	 * @param url
+	 * @param method to applied
+	 * @param url parameter
 	 */
 	public ZWRequestBuilder(HTTPMethod method, String url) {
 		this(method.getName(), url);
 	}
 
 	/**
-	 * @param httpMethod
-	 * @param url
+	 * @param httpMethod as string
+	 * @param url parameter
 	 */
 	public ZWRequestBuilder(String httpMethod, String url) {
 		super(httpMethod, url);

@@ -52,7 +52,7 @@ public class SelectorController
 	 * <li> unlock the select lock
 	 * <li> return the selection key
 	 * </ol>
-	 * @param ssc
+	 * @param ch
 	 * @param ops
 	 * @return
 	 * @throws IOException

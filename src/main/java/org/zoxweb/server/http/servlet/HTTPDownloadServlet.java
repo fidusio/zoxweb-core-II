@@ -45,9 +45,7 @@ import org.zoxweb.shared.util.SharedUtil;
 /**
  * 
  * @author mnael
- * @version $Revision: 1.21 $
- * @lastModifiedBy $Author: mnael $
- * @lastModifiedAt $Date: 2015/08/11 16:55:05 $
+ *
  */
 
 @SuppressWarnings("serial")
