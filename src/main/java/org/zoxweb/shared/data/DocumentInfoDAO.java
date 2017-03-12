@@ -107,7 +107,7 @@ abstract public class DocumentInfoDAO
 	
 	/**
 	 * Gets the document status.
-	 * @return
+	 * @return status
 	 */
 	public DocumentStatus getStatus()
 	{
@@ -125,16 +125,16 @@ abstract public class DocumentInfoDAO
 	
 	/**
 	 * Get the URL location where the document is stored.
-	 * @return
+	 * @return the api config reference id
 	 */
 	public String getAPIConfigInfoReferenceID() 
 	{
-		return lookupValue( Params.API_CONFIG_INFO_REF_ID);
+		return lookupValue(Params.API_CONFIG_INFO_REF_ID);
 	}
 	
 	/**
 	 * Set the URL location where the document is stored.
-	 * @param location
+	 * @param aci
 	 */
 	public void setAPIConfigInfoReferenceID(String aci) 
 	{
@@ -143,7 +143,7 @@ abstract public class DocumentInfoDAO
 	
 	/**
 	 * Get the document properties.
-	 * @return
+	 * @return config properties
 	 */
 	@SuppressWarnings("unchecked")
 	public ArrayValues<NVPair> getProperties()
@@ -177,7 +177,7 @@ abstract public class DocumentInfoDAO
 	
 	/**
 	 * Check if link.
-	 * @return
+	 * @return true if a link
 	 */
 	public boolean isLink()
 	{
@@ -195,7 +195,7 @@ abstract public class DocumentInfoDAO
 	
 	/**
 	 * Gets the HashSHA256.
-	 * @return
+	 * @return sha256
 	 */
 	public String getHashSHA256()
 	{

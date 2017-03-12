@@ -61,9 +61,6 @@ public class AssociationDAO
 
 
 	/**
-	 * [Optional - Please state the purpose of this constructor; especially if multiple constructors exist.].
-	 * 
-	 * @param nvce
 	 */
 	public AssociationDAO()
 	{

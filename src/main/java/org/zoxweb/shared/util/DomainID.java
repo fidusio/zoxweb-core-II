@@ -29,7 +29,7 @@ public interface DomainID<T>
 
 	/**
 	 * Gets the domain ID.
-	 * @return
+	 * @return typed domain id
 	 */
 	public T getDomainID();
 	

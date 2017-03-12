@@ -84,7 +84,7 @@ public class TermsAndAgreementWidget
 	
 	/**
 	 * This method returns the agreement title.
-	 * @return
+	 * @return the agreement title.
 	 */
 	public String getAgreementTitle()
 	{
@@ -105,7 +105,7 @@ public class TermsAndAgreementWidget
 	
 	/**
 	 * This method returns the agreement content.
-	 * @return
+	 * @return the agreement content.
 	 */
 	public String getAgreementContent()
 	{
@@ -126,7 +126,7 @@ public class TermsAndAgreementWidget
 	
 	/**
 	 * This method returns the check box title.
-	 * @return
+	 * @return the check box title.
 	 */
 	public String getCheckBoxTitle()
 	{
@@ -223,7 +223,7 @@ public class TermsAndAgreementWidget
 	
 	/**
 	 * This method returns the agreement check box value.
-	 * @return
+	 * @return true if checked
 	 */
 	public boolean isChecked()
 	{
@@ -232,7 +232,7 @@ public class TermsAndAgreementWidget
 	
 	/**
 	 * This method returns the agreement check box.
-	 * @return
+	 * @return the agreement check box.
 	 */
 	public CheckBox getAgreementCheckBox()
 	{
@@ -241,7 +241,7 @@ public class TermsAndAgreementWidget
 	
 	/**
 	 * This method returns the agreement hyperlink.
-	 * @return
+	 * @return the agreement hyperlink.
 	 */
 	public Hyperlink getHrefName()
 	{

@@ -95,19 +95,12 @@ public class CreditCardDAO
 		super( NVC_CREDIT_CARD_DAO);
 	}
 		
-//	/**
-//	 * This constructor instantiates CreditCardDAO based on list of NVConfigEntity type.
-//	 * @param list
-//	 */
-//	protected CreditCardDAO(List<NVConfigEntity> list)
-//	{
-//		super(SharedUtil.merge(list, NVC_CREDIT_CARD_DAO));
-//	}
+
 		
 	
 	/**
 	 * Gets the credit card type.
-	 * @return
+	 * @return the credit card type
 	 */
 	public CreditCardType getCardType() 
 	{
@@ -125,7 +118,7 @@ public class CreditCardDAO
 	
 	/**
 	 * Gets the card holder name.
-	 * @return
+	 * @return name of card holder
 	 */
 	public String getCardHolderName() 
 	{
@@ -143,7 +136,7 @@ public class CreditCardDAO
 	
 	/**
 	 * Gets the card number.
-	 * @return
+	 * @return the card number
 	 */
 	public String getCardNumber()
 	{	
@@ -162,7 +155,7 @@ public class CreditCardDAO
 		
 	/**
 	 * Gets the expiration date.
-	 * @return
+	 * @return the expiration date in millis since 1970-01-01
 	 */
 	public long getExpirationDate()
 	{
@@ -180,7 +173,7 @@ public class CreditCardDAO
 	
 	/**
 	 * Gets the security code.
-	 * @return
+	 * @return the security code
 	 */
 	public String getSecurityCode()
 	{

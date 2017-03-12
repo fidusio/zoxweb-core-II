@@ -29,7 +29,7 @@ public interface APINotification<V>
 	 * This method sends a message and returns transaction information.
 	 * @param message
 	 * @param apind NOW the message will be send at the message return, QUEUED the message will be queued and sent later
-	 * @return
+	 * @return APITransactionInfo
 	 * @throws NullPointerException
 	 * @throws IllegalArgumentException
 	 * @throws APIException
@@ -39,8 +39,8 @@ public interface APINotification<V>
 	
 	/**
 	 * This method updates transaction information.
-	 * @param tansaction
-	 * @return
+	 * @param transaction
+	 * @return APITransactionInfo
 	 * @throws NullPointerException
 	 * @throws IllegalArgumentException
 	 * @throws APIException

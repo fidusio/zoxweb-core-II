@@ -58,7 +58,7 @@ extends SimplePrincipalCollection
 	/**
 	 * This is a second unique identifier 
 	 * 
-	 * @return
+	 * @return user id
 	 */
 	public String getUserID()
 	{

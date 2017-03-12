@@ -25,7 +25,7 @@ public interface APIFileInfoMap
 	
 	/**
 	 * This method returns the original file information.
-	 * @return
+	 * @return FileInfoDAO
 	 */
 	public FileInfoDAO getOriginalFileInfo();
 
@@ -39,7 +39,7 @@ public interface APIFileInfoMap
 
 	/**
 	 * This method returns the remote file information.
-	 * @return
+	 * @return FileInfoDAO
 	 */
 	public FileInfoDAO getRemoteFileInfo();
 	

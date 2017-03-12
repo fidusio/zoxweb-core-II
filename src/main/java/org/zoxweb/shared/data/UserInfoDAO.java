@@ -84,7 +84,7 @@ public class UserInfoDAO
 	
 	/**
 	 * Gets the list of aliases.
-	 * @return
+	 * @return list of aliases
 	 */
 	public List<NVPair> getListOfAliases() 
 	{
@@ -102,7 +102,7 @@ public class UserInfoDAO
 	
 	/**
 	 * Gets the list of credit cards.
-	 * @return
+	 * @return list of credit cards
 	 */
 	public List<CreditCardDAO> getListOfCreditCards() 
 	{

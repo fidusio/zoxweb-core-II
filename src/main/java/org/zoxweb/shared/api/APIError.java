@@ -203,7 +203,7 @@ public class APIError
 	}
 	/**
 	 * Get the url redirect
-	 * @return
+	 * @return the redirect url
 	 */
 	public String getURLRedirect()
 	{
@@ -213,7 +213,7 @@ public class APIError
 	
 	/**
 	 * Set the redirect url optional
-	 * @param url
+	 * @param urlRedirect
 	 */
 	public void setURLRedirect(String urlRedirect)
 	{

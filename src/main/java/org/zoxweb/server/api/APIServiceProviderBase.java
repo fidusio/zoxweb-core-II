@@ -49,7 +49,7 @@ implements APIServiceProvider<V>
 	
 	/**
 	 * This method will return last time it was used or accessed
-	 * @return
+	 * @return the last it was accessed in millis
 	 */
 	public long lastTimeAccessed()
 	{
@@ -58,7 +58,7 @@ implements APIServiceProvider<V>
 	
 	/**
 	 * This method will return the delta between NOW and last time the object was used
-	 * @return
+	 * @return the inactivity duration in millis
 	 */
 	public long inactivityDuration()
 	{	

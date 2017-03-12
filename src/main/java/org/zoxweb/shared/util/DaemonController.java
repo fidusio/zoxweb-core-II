@@ -29,7 +29,7 @@ extends Closeable
 	
 	/**
 	 * This method checks if the controller is terminated.
-	 * @return
+	 * @return true if closed
 	 */
 	public boolean isClosed();
 	

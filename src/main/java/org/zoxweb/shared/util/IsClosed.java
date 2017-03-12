@@ -5,7 +5,7 @@ public interface IsClosed
 
 	/**
 	 * Checks if closed.
-	 * @return
+	 * @return true if closed
 	 */
 	public boolean isClosed();
 }

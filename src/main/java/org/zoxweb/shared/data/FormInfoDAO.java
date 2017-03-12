@@ -87,8 +87,7 @@ public class FormInfoDAO
 	}
 	
 	/**
-	 * Gets the form reference.
-	 * @return
+	 * @return the form reference.
 	 */
 	public NVEntity getFormReference()
 	{

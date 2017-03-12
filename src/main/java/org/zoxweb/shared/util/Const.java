@@ -274,7 +274,7 @@ public class Const
 		/**
 		 * This method returns a long value of the parsed string.
 		 * @param str
-		 * @return
+		 * @return the converted string value to long 
 		 */
 		public static long parse(String str) {
 			str = str.toUpperCase();
@@ -379,7 +379,7 @@ public class Const
 		/**
 		 * Converts string to time in milliseconds.
 		 * @param time
-		 * @return
+		 * @return the time string value in millis 
 		 */
 		public static long toMillis(String time) 
 			throws NullPointerException, IllegalArgumentException {
@@ -421,7 +421,7 @@ public class Const
 		 * 
 		 * Converts the time to nano second value (10 power -9 second)
 		 * @param time
-		 * @return
+		 * @return the time string value in nanos 
 		 */
 		public static long toNanos(String time)
 				throws NullPointerException, IllegalArgumentException {
@@ -442,7 +442,7 @@ public class Const
 		 * 
 		 * Converts the time to micro second value (10 power -6 second)
 		 * @param time
-		 * @return
+		 * @return the time string value in micros 
 		 */
 		public static long toMicros(String time)
 				throws NullPointerException, IllegalArgumentException {
@@ -974,7 +974,7 @@ public class Const
 	/**
 	 * Used to wrap primitive types declared as the data type itself or as a class of the data type.
 	 * @param c
-	 * @return
+	 * @return wrapped class type
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> Class<T> wrap(Class<T> c) {

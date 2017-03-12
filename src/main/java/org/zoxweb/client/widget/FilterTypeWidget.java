@@ -63,7 +63,7 @@ public class FilterTypeWidget
 	
 	/**
 	 * This method returns the selected value filter.
-	 * @return
+	 * @return ValueFilter
 	 */
 	@SuppressWarnings("unchecked")
 	public ValueFilter<String, String> getSelectedFilter()

@@ -3,8 +3,7 @@ package org.zoxweb;
 
 import java.nio.ByteBuffer;
 
-import java.util.ArrayList;
-
+import java.util.List;
 
 import org.zoxweb.server.io.ByteBufferParser;
 import org.zoxweb.server.io.ByteBufferUtil;
@@ -48,7 +47,7 @@ public class BufferTest {
 					
 			}
 		
-		ArrayList<byte[]> matchedTokens = ByteBufferParser.parse(bufferOutput, delims);
+		List<byte[]> matchedTokens = ByteBufferParser.parse(bufferOutput, delims);
 		//ArrayList<byte[]> matchedTokens = byteParser.parse();
 		
 			if(matchedTokens.size() > 0) {

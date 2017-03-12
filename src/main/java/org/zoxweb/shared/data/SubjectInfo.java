@@ -24,7 +24,7 @@ public interface SubjectInfo
 {
 	/**
 	 * Gets the first name.
-	 * @return
+	 * @return fist name 
 	 */
 	public String getFirstName();
 	
@@ -36,7 +36,7 @@ public interface SubjectInfo
 
 	/**
 	 * Gets the middle name.
-	 * @return
+	 * @return middle name
 	 */
 	public String getMiddleName();
 	
@@ -48,7 +48,7 @@ public interface SubjectInfo
 	
 	/**
 	 * Gets the last name.
-	 * @return
+	 * @return last name
 	 */
 	public String getLastName();
 	
@@ -60,7 +60,7 @@ public interface SubjectInfo
 	
 	/**
 	 * Gets the primary email.
-	 * @return
+	 * @return primary email
 	 */
 	public String getPrimaryEmail();
 	
@@ -72,7 +72,7 @@ public interface SubjectInfo
 	
 	/**
 	 * Gets the title.
-	 * @return
+	 * @return title 
 	 */
 	public String getTitle();
 	

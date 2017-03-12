@@ -10,7 +10,7 @@ public interface EmailID
 	
 	/**
 	 * Returns the email ID
-	 * @return
+	 * @return email id
 	 */
 	String getEmailID();
 	

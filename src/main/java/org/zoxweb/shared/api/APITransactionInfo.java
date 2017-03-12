@@ -25,7 +25,7 @@ public interface APITransactionInfo
 {
 	/**
 	 * This method returns the message.
-	 * @return
+	 * @return APINotificationMessage
 	 */
 	public APINotificationMessage getMessage();
 	
@@ -38,7 +38,7 @@ public interface APITransactionInfo
 	
 	/**
 	 * This method returns the delivery status.
-	 * @return
+	 * @return APINotificationStatus
 	 */
 	public APINotificationStatus getDeliverStatus();
 	
@@ -51,7 +51,7 @@ public interface APITransactionInfo
 	
 	/**
 	 * This method returns the updated time stamp.
-	 * @return
+	 * @return the last itme updated in miilis
 	 */
 	public long getUpdateTimeStamp();
 	
@@ -66,7 +66,7 @@ public interface APITransactionInfo
 	
 	/**
 	 * This method returns the created time stamp.
-	 * @return
+	 * @return creation time stamp in millis.
 	 */
 	public long getCreateTimeStamp();
 	

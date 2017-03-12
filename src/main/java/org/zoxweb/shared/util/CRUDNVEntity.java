@@ -25,9 +25,13 @@ public interface CRUDNVEntity
 {
 	/**
 	 * Returns NVEntity.
-	 * @return
+	 * @return the nventity 
 	 */
 	public NVEntity getNVEntity();
 	
+	
+	/**
+	 * @return true if revision tracking is enabled 
+	 */
 	public boolean isRevisionTrackingEnabled();
 }

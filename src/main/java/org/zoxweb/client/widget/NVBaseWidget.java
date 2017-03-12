@@ -82,7 +82,7 @@ public abstract class NVBaseWidget<V>
 	
 	/**
 	 * 
-	 * @return
+	 * @return nv config
 	 */
 	@Override
 	public NVConfig getNVConfig() 
@@ -102,7 +102,7 @@ public abstract class NVBaseWidget<V>
 	
 	/**
 	 * 
-	 * @return
+	 * @return typed value 
 	 */
 	public V getValue()
 		throws NullPointerException, IllegalArgumentException, ExceptionCollection
@@ -125,7 +125,7 @@ public abstract class NVBaseWidget<V>
 	
 	/**
 	 * 
-	 * @return
+	 * @return typed value
 	 */
 	public abstract V getWidgetValue();
 	
@@ -148,7 +148,7 @@ public abstract class NVBaseWidget<V>
 	
 	/**
 	 * 
-	 * @return
+	 * @return NVConfigNameMap
 	 */
 	public NVConfigNameMap getNVConfigNameMap()
 	{
@@ -166,7 +166,7 @@ public abstract class NVBaseWidget<V>
 	
 	/**
 	 * 
-	 * @return
+	 * @return NVTextWidgetController
 	 */
 	@SuppressWarnings("rawtypes")
 	public NVTextWidgetController getTextWidgetController()

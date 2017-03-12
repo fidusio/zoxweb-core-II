@@ -23,7 +23,7 @@ public interface IsCaseSensitive {
 
 	/**
 	 * Checks if case insensitive.
-	 * @return
+	 * @return true if case sensitive
 	 */
 	public boolean isCaseInsensitive();
 }

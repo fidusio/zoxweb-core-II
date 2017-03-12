@@ -27,7 +27,7 @@ public interface CRUDEvent
 {
 	/**
 	 * Returns the CRUD.
-	 * @return
+	 * @return crud value
 	 */
 	public CRUD getCRUD();
 }

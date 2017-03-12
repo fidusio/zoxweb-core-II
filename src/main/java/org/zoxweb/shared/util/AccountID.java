@@ -24,7 +24,7 @@ package org.zoxweb.shared.util;
 public interface AccountID<T> {
 	/**
 	 * Returns the account ID.
-	 * @return
+	 * @return the typed account id
 	 */
 	public T getAccountID();
 	

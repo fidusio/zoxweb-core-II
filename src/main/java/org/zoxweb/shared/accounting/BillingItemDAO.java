@@ -94,7 +94,7 @@ public class BillingItemDAO
 	
 	/**
 	 * Gets referenced NVEntity.
-	 * @return
+	 * @return the referenced NVEntity
 	 */
 	public NVEntity getNVEntityReference()
 	{
@@ -112,7 +112,7 @@ public class BillingItemDAO
 	
 	/**
 	 * Gets the unit cost.
-	 * @return
+	 * @return the cost of on unit
 	 */
 	public BigDecimal getUnitCost()
 	{
@@ -130,7 +130,7 @@ public class BillingItemDAO
 	
 	/**
 	 * Gets the quantity.
-	 * @return
+	 * @return the quantity
 	 */
 	public BigDecimal getQuantity()
 	{
@@ -139,7 +139,7 @@ public class BillingItemDAO
 	
 	/**
 	 * Sets the quantity.
-	 * @param value
+	 * @param quantity
 	 */
 	public void setQuantity(BigDecimal quantity)
 	{		
@@ -148,7 +148,7 @@ public class BillingItemDAO
 	
 	/**
 	 * Checks if billing is waived.
-	 * @return
+	 * @return true if waived
 	 */
 	public boolean isWaived()
 	{

@@ -84,7 +84,7 @@ public enum CreditCardType
 	/**
 	 * Looks up the credit card type given the credit card number.
 	 * @param ccNumber
-	 * @return
+	 * @return the credit card type
 	 */
 	public static CreditCardType lookup(String ccNumber)
 	{

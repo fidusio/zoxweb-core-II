@@ -54,7 +54,7 @@ extends RuntimeException
 	
 	/**
 	 * Get the url redirect
-	 * @return
+	 * @return the url redirect
 	 */
 	public String getURLRedirect()
 	{
@@ -64,7 +64,7 @@ extends RuntimeException
 	
 	/**
 	 * Set the redirect url optional
-	 * @param url
+	 * @param urlRedirect
 	 */
 	public void setURLRedirect(String urlRedirect)
 	{

@@ -31,10 +31,7 @@ public interface Appointment {
 	public static final Comparator<Appointment> EQUAL_MORE_COMPARATOR = new AppointmentComparator(RelationalOperator.GT);
 	
 	/**
-	 * 
-	 * Returns the delay time in millis
-	 * 
-	 * @return
+	 * @return the delay time in millis
 	 */
 	public long getDelayInMillis();
 
@@ -46,13 +43,13 @@ public interface Appointment {
 	
 	/**
 	 * Returns the expiration in real time.
-	 * @return
-	 */
+	 * @return the expiration in real time.
+	 */ 
 	public long getExpirationInMillis();
 
 	/**
 	 * Cancel operation.
-	 * @return
+	 * @return true if canceled
 	 */
 	public boolean cancel();
 	

@@ -96,7 +96,7 @@ public class LoginTokenDAO
 	/**
 	 * Gets the login ID.
 	 * 
-	 * @return
+	 * @return login id
 	 */
 	public String getLoginID() 
 	{
@@ -117,7 +117,7 @@ public class LoginTokenDAO
 	/**
 	 * Gets the current session ID optional.
 	 * 
-	 * @return
+	 * @return session id
 	 */
 	public String getSessionID() 
 	{

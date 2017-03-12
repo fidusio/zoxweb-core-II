@@ -86,7 +86,7 @@ public class VMInfoDAO
 	
 	/**
 	 * Gets core count.
-	 * @return
+	 * @return core counts 
 	 */
 	public int getCoreCount()
 	{
@@ -104,7 +104,7 @@ public class VMInfoDAO
 	
 	/**
 	 * Gets free memory.
-	 * @return
+	 * @return free memory
 	 */
 	public long getFreeMemory()
 	{
@@ -122,7 +122,7 @@ public class VMInfoDAO
 	
 	/**
 	 * Gets max memory.
-	 * @return
+	 * @return max memory
 	 */
 	public long getMaxMemory()
 	{
@@ -140,7 +140,7 @@ public class VMInfoDAO
 	
 	/**
 	 * Gets used memory.
-	 * @return
+	 * @return used memory
 	 */
 	public long getUsedMemory()
 	{
@@ -158,7 +158,7 @@ public class VMInfoDAO
 	
 	/**
 	 * Gets time stamp.
-	 * @return
+	 * @return time stamp
 	 */
 	public Date getTimeStamp()
 	{
@@ -176,7 +176,7 @@ public class VMInfoDAO
 	
 	/**
 	 * Gets total memory.
-	 * @return
+	 * @return total memory
 	 */
 	public long getTotalMemory()
 	{

@@ -91,7 +91,7 @@ public class RuntimeResultDAO
 
 	/**
 	 * Gets the exit code.
-	 * @return
+	 * @return exit code
 	 */
 	public int getExitCode()
 	{
@@ -109,7 +109,7 @@ public class RuntimeResultDAO
 
 	/**
 	 * Gets the output data.
-	 * @return
+	 * @return output data
 	 */
 	public String getOutputData()
 	{
@@ -127,7 +127,7 @@ public class RuntimeResultDAO
 	
 	/**
 	 * Gets the error data.
-	 * @return
+	 * @return error data
 	 */
 	public String getErrorData()
 	{

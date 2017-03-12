@@ -92,7 +92,7 @@ public abstract class UserInfoBaseDAO
 	
 	/**
 	 * Gets the personal title.
-	 * @return
+	 * @return title 
 	 */
 	public String getTitle() 
 	{
@@ -110,7 +110,7 @@ public abstract class UserInfoBaseDAO
 	
 	/**
 	 * Gets the first name.
-	 * @return
+	 * @return first name
 	 */
 	public String getFirstName() 
 	{
@@ -128,7 +128,7 @@ public abstract class UserInfoBaseDAO
 	
 	/**
 	 * Gets the middle name.
-	 * @return
+	 * @return middle name
 	 */
 	public String getMiddleName() 
 	{
@@ -146,7 +146,7 @@ public abstract class UserInfoBaseDAO
 	
 	/**
 	 * Gets the last name.
-	 * @return
+	 * @return last name
 	 */
 	public String getLastName() 
 	{
@@ -164,7 +164,7 @@ public abstract class UserInfoBaseDAO
 	
 	/**
 	 * Gets the date of birth.
-	 * @return
+	 * @return date of birth
 	 */
 	public long getDOB() 
 	{
@@ -182,7 +182,7 @@ public abstract class UserInfoBaseDAO
 	
 	/**
 	 * Gets the list of addresses.
-	 * @return
+	 * @return list of addresses
 	 */
 	public List<AddressDAO> getListOfAddresses() 
 	{
@@ -200,7 +200,7 @@ public abstract class UserInfoBaseDAO
 	
 	/**
 	 * Gets the list of phones.
-	 * @return
+	 * @return list of phones
 	 */
 	public List<PhoneDAO> getListOfPhones() 
 	{
@@ -227,7 +227,7 @@ public abstract class UserInfoBaseDAO
 	
 	/**
 	 * Gets the list of emails.
-	 * @return
+	 * @return list of emails
 	 */
 	public List<NVPair> getListOfEmails() 
 	{
@@ -245,7 +245,7 @@ public abstract class UserInfoBaseDAO
 	
 	/**
 	 * Gets additional information.
-	 * @return
+	 * @return additional infos
 	 */
 	public List<NVPair> getAdditonalInfo() 
 	{

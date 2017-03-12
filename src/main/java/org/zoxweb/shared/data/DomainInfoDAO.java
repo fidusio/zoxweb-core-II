@@ -56,7 +56,7 @@ public class DomainInfoDAO
 
 	/**
 	 * Gets the domain ID;
-	 * @return
+	 * @return the domain id
 	 */
 	@Override
 	public String getDomainID()

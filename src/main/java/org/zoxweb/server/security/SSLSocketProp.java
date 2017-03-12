@@ -27,7 +27,7 @@ public interface SSLSocketProp
 	/**
 	 * Return the SSLFactory
 	 * 
-	 * @return
+	 * @return SSLSocketFactory
 	 */
 	public SSLSocketFactory getSSLFactory();
 	
@@ -35,7 +35,7 @@ public interface SSLSocketProp
 	/**
 	 * Return the HostnameVerifier
 	 * 
-	 * @return
+	 * @return HostnameVerifier
 	 */
 	public HostnameVerifier getHostnameVerifier();
 	

@@ -35,7 +35,7 @@ public class CRUDManagerDefault
 	 * Checks if given resource ID has permission for CRUD operation.
 	 * @param resourceID
 	 * @param crud
-	 * @return
+	 * @return true if permission granted
 	 */
 	@Override
 	public boolean hasPermission(String resourceID, CRUD crud) 

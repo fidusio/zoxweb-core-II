@@ -92,7 +92,7 @@ public class SimpleDocumentDAO
 	
 	/**
 	 * Gets content.
-	 * @return
+	 * @return content
 	 */
 	public String getContent()
 	{

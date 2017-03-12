@@ -94,7 +94,7 @@ public class BillingAccountDAO
 		
 	/**
 	 * Gets the current balance.
-	 * @return
+	 * @return MoneyValueDAO
 	 */
 	public MoneyValueDAO getCurrentBalance() 
 	{
@@ -112,7 +112,7 @@ public class BillingAccountDAO
 	
 	/**
 	 * Gets the payment information.
-	 * @return
+	 * @return PaymentInfoDAO
 	 */
 	public PaymentInfoDAO getPaymentInfo()
 	{
@@ -131,7 +131,7 @@ public class BillingAccountDAO
 	/**
 	 * Applies the given transaction and updates the current balance.
 	 * @param transaction
-	 * @return
+	 * @return the updated value after applying the transaction
 	 */
 	public synchronized BigDecimal applyTransaction(FinancialTransactionDAO transaction)
 	{

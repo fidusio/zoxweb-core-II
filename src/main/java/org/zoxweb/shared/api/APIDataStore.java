@@ -35,14 +35,13 @@ public interface APIDataStore<ST>
 {
 	
 	/**
-	 * This method returns the storage name.
-	 * @return
+	 * @return the data stpre name
 	 */
 	public String getStoreName();
 	
 	/**
 	 * This method retrieves the storage tables.
-	 * @return
+	 * @return the set of tables
 	 */
 	public Set<String> getStoreTables();
 	
@@ -51,7 +50,7 @@ public interface APIDataStore<ST>
 	 * @param nvce
 	 * @param fieldNames
 	 * @param queryCriteria
-	 * @return
+	 * @return the matching entities
 	 * @throws NullPointerException
 	 * @throws IllegalArgumentException
 	 * @throws APIException
@@ -65,7 +64,7 @@ public interface APIDataStore<ST>
 	 * @param className
 	 * @param fieldNames
 	 * @param queryCriteria
-	 * @return
+	 * @return the matching entities
 	 * @throws NullPointerException
 	 * @throws IllegalArgumentException
 	 * @throws AccessException
@@ -79,7 +78,7 @@ public interface APIDataStore<ST>
 	 * 
 	 * @param nvce
 	 * @param queryCriteria
-	 * @return
+	 * @return the matching entities
 	 * @throws NullPointerException
 	 * @throws IllegalArgumentException
 	 * @throws AccessException
@@ -92,7 +91,7 @@ public interface APIDataStore<ST>
 	 * 
 	 * @param className
 	 * @param queryCriteria
-	 * @return
+	 * @return the matching entities
 	 * @throws NullPointerException
 	 * @throws IllegalArgumentException
 	 * @throws AccessException
@@ -107,7 +106,7 @@ public interface APIDataStore<ST>
 	 * @param results
 	 * @param startIndex
 	 * @param batchSize
-	 * @return
+	 * @return the matching entities
 	 * @throws NullPointerException
 	 * @throws IllegalArgumentException
 	 * @throws AccessException
@@ -122,7 +121,7 @@ public interface APIDataStore<ST>
 	 * @param nvce
 	 * @param fieldNames
 	 * @param queryCriteria
-	 * @return
+	 * @return the matching entities
 	 * @throws NullPointerException
 	 * @throws IllegalArgumentException
 	 * @throws AccessException
@@ -139,7 +138,7 @@ public interface APIDataStore<ST>
 	 * @param className
 	 * @param fieldNames
 	 * @param queryCriteria
-	 * @return
+	 * @return the matching entities
 	 * @throws NullPointerException
 	 * @throws IllegalArgumentException
 	 * @throws AccessException
@@ -152,7 +151,7 @@ public interface APIDataStore<ST>
 	 * This method searches for documents based on id.
 	 * @param nvce
 	 * @param ids
-	 * @return
+	 * @return the matching entities
 	 * @throws NullPointerException
 	 * @throws IllegalArgumentException
 	 * @throws APIException
@@ -163,9 +162,9 @@ public interface APIDataStore<ST>
 	
 	/**
 	 * This method searches for documents based on id.
-	 * @param className, the class must extend NVEntity otherwise it will APIException
+	 * @param className the class must extend NVEntity otherwise it will APIException
 	 * @param ids
-	 * @return
+	 * @return the matching entities
 	 * @throws NullPointerException
 	 * @throws IllegalArgumentException
 	 * @throws APIException
@@ -178,7 +177,7 @@ public interface APIDataStore<ST>
 	 * This method searches for documents based on id.
 	 * @param nvce
 	 * @param ids
-	 * @return
+	 * @return the matching entities
 	 * @throws NullPointerException
 	 * @throws IllegalArgumentException
 	 * @throws APIException
@@ -188,7 +187,7 @@ public interface APIDataStore<ST>
 	/**
 	 * This method inserts a document.
 	 * @param nve
-	 * @return
+	 * @return the matching entities
 	 * @throws NullPointerException
 	 * @throws IllegalArgumentException
 	 * @throws APIException
@@ -200,7 +199,7 @@ public interface APIDataStore<ST>
 	 * This method deletes a document.
 	 * @param nve
 	 * @param withReference
-	 * @return
+	 * @return the matching entities
 	 * @throws NullPointerException
 	 * @throws IllegalArgumentException
 	 * @throws APIException
@@ -214,7 +213,7 @@ public interface APIDataStore<ST>
 	 * 
 	 * @param nvce
 	 * @param queryCriteria
-	 * @return
+	 * @return the matching entities
 	 * @throws NullPointerException
 	 * @throws IllegalArgumentException
 	 * @throws AccessException
@@ -226,7 +225,7 @@ public interface APIDataStore<ST>
 	/**
 	 * This method updates a document.
 	 * @param nve
-	 * @return
+	 * @return the matching entities
 	 * @throws NullPointerException
 	 * @throws IllegalArgumentException
 	 * @throws APIException
@@ -239,11 +238,11 @@ public interface APIDataStore<ST>
 	 * This method patch a document.
 	 * 
 	 * @param nve to be updated
-	 * @param sync if true the datastore update become synchrnonized
+	 * @param sync if true the datastore update become synchronized
 	 * @param updateRefOnly will update the reference only
 	 * @param includeParam if true the nvConfigNames list will be updated, if false the nvConfigNames will be excluded
 	 * @param nvConfigNames to be updated if null or empty the whole object will be updated
-	 * @return
+	 * @return the matching entities
 	 * @throws NullPointerException
 	 * @throws IllegalArgumentException
 	 * @throws APIException
@@ -255,7 +254,7 @@ public interface APIDataStore<ST>
 	 * This method counts the number of matched documents found.
 	 * @param nvce
 	 * @param queryCriteria
-	 * @return
+	 * @return the matching cpunt
 	 * @throws NullPointerException
 	 * @throws IllegalArgumentException
 	 * @throws APIException
@@ -267,7 +266,7 @@ public interface APIDataStore<ST>
 	/**
 	 * This method inserts the dynamic enum into the database.
 	 * @param dynamicEnumMap
-	 * @return
+	 * @return the enum map
 	 * @throws NullPointerException
 	 * @throws IllegalArgumentException
 	 * @throws APIException
@@ -278,7 +277,7 @@ public interface APIDataStore<ST>
 	/**
 	 * This method updates the dynamic enum already in the database.
 	 * @param dynamicEnumMap
-	 * @return
+	 * @return the updated enum map 
 	 * @throws NullPointerException
 	 * @throws IllegalArgumentException
 	 * @throws APIException
@@ -289,7 +288,7 @@ public interface APIDataStore<ST>
 	/**
 	 * This method searches for the dynamic enum by name.
 	 * @param name
-	 * @return
+	 * @return the matching enum map
 	 */
 	public DynamicEnumMap searchDynamicEnumMapByName(String name)
 			throws NullPointerException, IllegalArgumentException, APIException;
@@ -306,7 +305,7 @@ public interface APIDataStore<ST>
 	 * This method returns a list of dynamic enum map in the dynamic enum map collection.
 	 * @param domainID
 	 * @param userID
-	 * @return
+	 * @return all the enum maps
 	 */
 	public List<DynamicEnumMap> getAllDynamicEnumMap(String domainID, String userID)
 		throws NullPointerException, IllegalArgumentException, AccessException, APIException;

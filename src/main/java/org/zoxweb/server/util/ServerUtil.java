@@ -56,10 +56,6 @@ import org.zoxweb.shared.util.SharedUtil;
 /**
  * 
  * @author mnael
- * @version $Revision: 1.35 $
- * @lastModifiedBy $Author: mnael $
- * @lastModifiedAt $Date: 2015/12/24 03:58:18 $
- 
  */
 public final class ServerUtil 
 {
@@ -81,7 +77,7 @@ public final class ServerUtil
 	 * This methods will concatenate two arrays as one
 	 * @param first
 	 * @param second
-	 * @return
+	 * @return concatenated type array
 	 */
 	public static <T> T[] concat(T[] first, T[] second) 
 	{
@@ -118,7 +114,7 @@ public final class ServerUtil
 	 * on the computer and stores the data in an array list of 
 	 * strings.
 	 * @param fileName
-	 * @return
+	 * @return string list 
 	 * @throws IOException
 	 */
 	public static List<String> toStringList(String fileName) throws IOException
@@ -147,7 +143,7 @@ public final class ServerUtil
 	 * This method is used to convert input streams to an
 	 * array list of strings.
 	 * @param inputStream
-	 * @return
+	 * @return string list
 	 * @throws IOException
 	 */
 	public static List<String> toStringList(InputStream inputStream) throws IOException
@@ -353,7 +349,7 @@ public final class ServerUtil
 	 * enters a while loop for the delay. Otherwise, the program calls 
 	 * the sleep function based on the time length.
 	 * @param timeToSleepNanos
-	 * @return
+	 * @return delay
 	 */
 	public static long delay(long timeToSleepNanos)
 	{		

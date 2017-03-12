@@ -52,8 +52,7 @@ public interface APIConfigInfo
 	
 	
 	/**
-	 * This method returns the API type name.
-	 * @return
+	 * @return returns the API type name.
 	 */
 	public String getAPITypeName();
 
@@ -65,8 +64,7 @@ public interface APIConfigInfo
 	public void setAPITypeName(String name);
 	
 	/**
-	 * This method returns service types.
-	 * @return
+	 * @return service types.
 	 */
 	public APIServiceType[] getServiceTypes();
 	
@@ -77,8 +75,7 @@ public interface APIConfigInfo
 	public void setServiceTypes(APIServiceType[] serviceType);
 
 	/**
-	 * This method returns the version.
-	 * @return
+	 * @return the version.
 	 */
 	public String getVersion();
 	
@@ -89,8 +86,7 @@ public interface APIConfigInfo
 	public void setVersion(String version);
 	
 	/**
-	 * This method returns the configuration parameters.
-	 * @return
+	 * @return the configuration parameters.
 	 */
 	public ArrayValues<NVPair> getConfigParameters();
 	
@@ -122,19 +118,30 @@ public interface APIConfigInfo
 	/**
 	 * This method checks if the specified service type is supported.
 	 * @param type
-	 * @return
+	 * @return true is the type is supported.
 	 */
 	public boolean isServiceTypeSupported(APIServiceType type);
 	
-	
+	/**
+	 * @return status
+	 */
 	public APIConfigStatus getStatus();
 	
-	
+	/**
+	 * Set the current status.
+	 * @param status
+	 */
 	public void setStatus(APIConfigStatus status);
 	
-	
+	/**
+	 * @return the oauth version
+	 */
 	public OAuthVersion getOAuthVersion();
 	
+	/**
+	 * Set the oauth version
+	 * @param version
+	 */
 	public void setOAuthVersion(OAuthVersion version);
 	
 

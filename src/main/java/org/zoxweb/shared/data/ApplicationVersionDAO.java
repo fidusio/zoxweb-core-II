@@ -92,7 +92,7 @@ public class ApplicationVersionDAO
 	
 	/**
 	 * Gets the major number of the version.
-	 * @return
+	 * @return the major value
 	 */
 	public int getMajor()
 	{
@@ -110,7 +110,7 @@ public class ApplicationVersionDAO
 	
 	/**
 	 * Gets the minor number of the version.
-	 * @return
+	 * @return the minor value
 	 */
 	public int getMinor()
 	{
@@ -133,7 +133,7 @@ public class ApplicationVersionDAO
 	
 	/**
 	 * Gets the nano number of the version.
-	 * @return
+	 * @return the nano value
 	 */
 	public int getNano()
 	{

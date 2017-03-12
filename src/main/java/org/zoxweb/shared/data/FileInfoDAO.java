@@ -134,7 +134,7 @@ public class FileInfoDAO
 	
 	/**
 	 * Gets the file content type.
-	 * @return
+	 * @return content type
 	 */
 	public String getContentType()
 	{
@@ -188,7 +188,7 @@ public class FileInfoDAO
 //	
 	/**
 	 * Gets the file type.
-	 * @return
+	 * @return file type
 	 */
 	public FileType getFileType()
 	{
@@ -206,7 +206,7 @@ public class FileInfoDAO
 	
 	/**
 	 * Gets the URL location where the file is stored.
-	 * @return
+	 * @return resource location
 	 */
 	public String getResourceLocation() 
 	{
@@ -224,7 +224,7 @@ public class FileInfoDAO
 	
 	/**
 	 * Gets the URL location where the file is stored.
-	 * @return
+	 * @return full path name
 	 */
 	public String getFullPathName() 
 	{
@@ -233,7 +233,7 @@ public class FileInfoDAO
 
 	/**
 	 * Sets the URL location where the file is stored.
-	 * @param location
+	 * @param fullPathName
 	 */
 	public void setFullPathName(String fullPathName) 
 	{
@@ -243,7 +243,7 @@ public class FileInfoDAO
 	
 	/**
 	 * Gets the URL location where the file is stored.
-	 * @return
+	 * @return resource id
 	 */
 	public String getResourceID() 
 	{

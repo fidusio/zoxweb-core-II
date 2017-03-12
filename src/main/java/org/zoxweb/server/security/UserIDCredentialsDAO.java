@@ -140,7 +140,7 @@ public class UserIDCredentialsDAO
 	
 	/**
 	 * This method returns the user status.
-	 * @return
+	 * @return UserStatus
 	 */
 	public UserStatus getUserStatus() 
 	{
@@ -159,7 +159,7 @@ public class UserIDCredentialsDAO
 	
 	/**
 	 * This method returns the time stamp of the last status update.
-	 * @return
+	 * @return in millis last status update
 	 */
 	public long getLastStatusUpdateTimestamp() 
 	{
@@ -178,7 +178,7 @@ public class UserIDCredentialsDAO
 	
 	/**
 	 * This method returns the pending token.
-	 * @return
+	 * @return the pending token
 	 */
 	public String getPendingToken() 
 	{
@@ -197,7 +197,7 @@ public class UserIDCredentialsDAO
 	
 	/**
 	 * This method returns the pending pin.
-	 * @return
+	 * @return pending pin
 	 */
 	public String getPendingPin() 
 	{
@@ -216,7 +216,7 @@ public class UserIDCredentialsDAO
 	
 	/**
 	 * This method returns the password.
-	 * @return
+	 * @return password dao
 	 */
 	public PasswordDAO getPassword() 
 	{

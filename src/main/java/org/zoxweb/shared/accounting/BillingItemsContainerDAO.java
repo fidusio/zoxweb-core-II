@@ -76,7 +76,7 @@ public class BillingItemsContainerDAO
 	
 	/**
 	 * Gets billing status.
-	 * @return
+	 * @return status
 	 */
 	public String getBillingStatus()
 	{
@@ -94,7 +94,7 @@ public class BillingItemsContainerDAO
 	
 	/**
 	 * Gets billing items as an array values of BillingItemDAO.
-	 * @return
+	 * @return list of items
 	 */
 	@SuppressWarnings("unchecked")
 	public ArrayValues<NVEntity> getBillingItems()
@@ -122,7 +122,7 @@ public class BillingItemsContainerDAO
 	
 	/**
 	 * Gets the total.
-	 * @return
+	 * @return total as BigDecimal
 	 */
 	public BigDecimal getTotal()
 	{
@@ -131,7 +131,7 @@ public class BillingItemsContainerDAO
 	
 	/**
 	 * Calculates the total.
-	 * @return
+	 * @return compute the total
 	 */
 	public synchronized BigDecimal calculateTotal()
 	{
@@ -158,7 +158,7 @@ public class BillingItemsContainerDAO
 	/**
 	 * Adds BillingItemDAO.
 	 * @param billingItem
-	 * @return
+	 * @return the added item
 	 */
 	public synchronized BillingItemDAO addBillingItem(BillingItemDAO billingItem)
 	{
@@ -177,7 +177,7 @@ public class BillingItemsContainerDAO
 	/**
 	 * Removes BillingItemDAO.
 	 * @param billingItem
-	 * @return
+	 * @return the removed item
 	 */
 	public BillingItemDAO removeBillingItem(BillingItemDAO billingItem)
 	{

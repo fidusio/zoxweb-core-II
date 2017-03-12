@@ -112,7 +112,7 @@ public class DynamicEnumMap
 	/**
 	 * Validates the given string.
 	 * @param v
-	 * @return
+	 * @return validated string
 	 */
 	public final String validate(String v) 
 			throws NullPointerException, IllegalArgumentException {
@@ -134,7 +134,7 @@ public class DynamicEnumMap
 	/**
 	 * Checks whether the given string is valid.
 	 * @param v
-	 * @return
+	 * @return true if valid
 	 */
 	public boolean isValid(String v) {
 		if (v != null) {
@@ -183,7 +183,7 @@ public class DynamicEnumMap
 	/**
 	 * Looks up and returns NVPair based on enum name or value.
 	 * @param enumNameOrValue
-	 * @return
+	 * @return mapped nvpair
 	 */
 	public final NVPair lookup(String enumNameOrValue) {
 		if (enumNameOrValue != null) {
@@ -201,7 +201,7 @@ public class DynamicEnumMap
 	
 	/**
 	 * Returns the name.
-	 * @return
+	 * @return to string conversion
 	 */
 	public String toString() {
 		return name +':'+ SharedUtil.toCanonicalID(',', value.toArray());
@@ -209,7 +209,7 @@ public class DynamicEnumMap
 
 	/**
 	 * Checks if ignore case.
-	 * @return
+	 * @return true if case insensitive
 	 */
 	public boolean isIgnoreCase() {
 		return ignoreCase;
@@ -225,7 +225,7 @@ public class DynamicEnumMap
 
 	/**
 	 * Returns the string representation of the class.
-	 * @return
+	 * @return the canonical id 
 	 */
 	@Override
 	public String toCanonicalID() {
@@ -234,7 +234,7 @@ public class DynamicEnumMap
 
 	/**
 	 * Checks if static enum.
-	 * @return
+	 * @return true if static
 	 */
 	public boolean isStatic() {
 		return staticEnum;
@@ -277,7 +277,7 @@ public class DynamicEnumMap
 
 	/**
 	 * Returns the user ID.
-	 * @return
+	 * @return user id
 	 */
 	@Override
 	public String getUserID() {
@@ -295,7 +295,7 @@ public class DynamicEnumMap
 
 	/**
 	 * Returns the account ID.
-	 * @return
+	 * @return account id
 	 */
 	@Override
 	public String getAccountID() {
@@ -313,7 +313,7 @@ public class DynamicEnumMap
 
 	/**
 	 * Returns the description.
-	 * @return
+	 * @return description
 	 */
 	public String getDescription() {
 		return description;
@@ -329,7 +329,7 @@ public class DynamicEnumMap
 
 	/**
 	 * Returns the display name.
-	 * @return
+	 * @return display name
 	 */
 	public String getDisplayName() {
 		return SharedStringUtil.filterString(getName(), NAME_PREFIX + ":", NAME_PREFIX);

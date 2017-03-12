@@ -24,7 +24,7 @@ public interface IsHidden {
 
 	/**
 	 * Checks if property is hidden.
-	 * @return
+	 * @return true if hidden
 	 */
 	boolean isHidden();
 

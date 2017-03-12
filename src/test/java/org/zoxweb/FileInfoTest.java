@@ -62,7 +62,7 @@ public class FileInfoTest
 		
 		/**
 		 * Get the the filename
-		 * @return
+		 * @return child name 
 		 */
 		public String getChildName() 
 		{

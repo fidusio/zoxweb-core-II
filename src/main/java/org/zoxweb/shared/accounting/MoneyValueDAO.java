@@ -132,7 +132,7 @@ public class MoneyValueDAO
 	
 	/**
 	 * This constructor instantiates MoneyValueDAO based on given currency (Currency).
-	 * @param amount
+	 * @param currency
 	 */
 	public MoneyValueDAO(Currency currency)
 	{
@@ -168,7 +168,7 @@ public class MoneyValueDAO
 	
 	/**
 	 * Gets the currency.
-	 * @return
+	 * @return currency
 	 */
 	public Currency getCurrency() 
 	{
@@ -186,7 +186,7 @@ public class MoneyValueDAO
 	
 	/**
 	 * Gets the value.
-	 * @return
+	 * @return value
 	 */
 	public BigDecimal getValue()
 	{

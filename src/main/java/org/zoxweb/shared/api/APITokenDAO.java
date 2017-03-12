@@ -113,7 +113,7 @@ public class APITokenDAO extends APIAccessTokenDAO
 	 * 
 	 * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
 	 * 
-	 * @return
+	 * @return the api token
 	 * @deprecated
 	 */
 	public String getAPIToken()
@@ -123,7 +123,7 @@ public class APITokenDAO extends APIAccessTokenDAO
 
 	/**
 	 * This method sets the API type name.
-	 * @param name
+	 * @param apiToken
 	 * @deprecated
 	 */
 	public void setAPIToken(String apiToken) 
@@ -133,30 +133,10 @@ public class APITokenDAO extends APIAccessTokenDAO
 	
 	
 	
-//	public long getAPITokenExpiration()
-//	{
-//		return lookupValue(Params.API_TOKEN_EXPIRATION);
-//	}
 
 	/**
-	 * This method sets the API type name.
-	 * @param name
+	 * @return configuration parameters
 	 */
-	
-//	public void setAPITokenExpiration(long expiration) 
-//	{
-//		setValue(Params.API_TOKEN_EXPIRATION, expiration);
-//	}
-	
-//	public boolean isTokenExpired()
-//	{
-//		long expiration = getAPITokenExpiration();
-//		// zero or negative value token does not expire
-//		if (expiration <=0)
-//			return true;
-//		return (getLastTimeUpdated() + expiration - System.currentTimeMillis() > 0);
-//	}
-	
 	@SuppressWarnings("unchecked")
 	public ArrayValues<NVPair> getExtraParameters()
 	{

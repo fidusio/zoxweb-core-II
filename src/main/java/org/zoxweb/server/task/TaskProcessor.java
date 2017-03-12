@@ -380,7 +380,7 @@ implements Runnable,
 	
 	/**
 	 * Return the current number of tasks pending to be executed
-	 * @return
+	 * @return count of pending tasks
 	 */
 	public int pendingTasks()
 	{
@@ -396,7 +396,7 @@ implements Runnable,
 	}
 	/**
 	 * Return the current number of available threads to do the work
-	 * @return
+	 * @return available threads
 	 */
 	public int availableExecutorThreads()
 	{

@@ -43,7 +43,7 @@ public interface APIDocumentStore<V>
 	 * @param folderID
 	 * @param file
 	 * @param is
-	 * @return
+	 * @return APIFileInfoMap
 	 * @throws IllegalArgumentException
 	 * @throws IOException
 	 * @throws NullPointerException
@@ -57,7 +57,7 @@ public interface APIDocumentStore<V>
 	 * 
 	 * Create a folder  
 	 * @param folderFullPath
-	 * @return
+	 * @return APIFileInfoMap
 	 * @throws NullPointerException
 	 * @throws IllegalArgumentException
 	 * @throws IOException
@@ -70,7 +70,7 @@ public interface APIDocumentStore<V>
 	 * This method reads a file.
 	 * @param map
 	 * @param os
-	 * @return
+	 * @return APIFileInfoMap
 	 * @throws IllegalArgumentException
 	 * @throws IOException
 	 * @throws NullPointerException
@@ -82,7 +82,7 @@ public interface APIDocumentStore<V>
 	 * This method updates a file.
 	 * @param map
 	 * @param is
-	 * @return
+	 * @return APIFileInfoMap
 	 * @throws IllegalArgumentException
 	 * @throws IOException
 	 * @throws NullPointerException
@@ -102,7 +102,7 @@ public interface APIDocumentStore<V>
 	
 	/**
 	 * This method returns a list of files.
-	 * @return
+	 * @return the map
 	 */
 	public Map<String, APIFileInfoMap> discover()
 		throws IOException, AccessException, APIException;

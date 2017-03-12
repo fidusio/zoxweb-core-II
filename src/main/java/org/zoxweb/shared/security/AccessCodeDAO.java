@@ -207,7 +207,7 @@ implements SetCanonicalID
 	
 	/**
 	 * Get the session duration in milli second -1 for ever, 0 it the caller default session duration
-	 * @return
+	 * @return the session duration in millis
 	 */
 	public long getSessionDuration()
 	{
@@ -217,7 +217,7 @@ implements SetCanonicalID
 
 	/**
 	 * 
-	 * @param systemID
+	 * @param duration
 	 */
 	public void setSessionDuration(long duration)
 	{

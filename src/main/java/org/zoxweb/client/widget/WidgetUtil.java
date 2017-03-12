@@ -97,7 +97,7 @@ public class WidgetUtil
 	 * 
 	 * @param color
 	 * @param text
-	 * @return
+	 * @return SafeHtml
 	 */
     public static SafeHtml renderText(String color, String text)
     {
@@ -110,7 +110,7 @@ public class WidgetUtil
     /**
      * 
      * @param type
-     * @return
+     * @return color 
      */
     public static String getNotificationColor(NotificationType type)
     {
@@ -148,7 +148,7 @@ public class WidgetUtil
      * Returns list item index based on list name.
      * @param lb
      * @param itemName
-     * @return
+     * @return index
      */
 	public static int indexOfListItemByName(ListBox lb, String itemName)
 	{
@@ -170,7 +170,7 @@ public class WidgetUtil
 	 * Returns list item index based on item value.
 	 * @param lb
 	 * @param itemValue
-	 * @return
+	 * @return index
 	 */
 	public static int indexOfListItemByValue(ListBox lb, String itemValue)
 	{

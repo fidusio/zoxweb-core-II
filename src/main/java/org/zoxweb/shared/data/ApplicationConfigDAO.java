@@ -103,7 +103,7 @@ public class ApplicationConfigDAO
 	/**
 	 * Looks up value based on application parameter.
 	 * @param p
-	 * @return
+	 * @return the value in string 
 	 */
 	public String lookupValue(Enum<?> p)
 	{
@@ -123,7 +123,7 @@ public class ApplicationConfigDAO
 	/**
 	 * Looks up value by name.
 	 * @param name
-	 * @return
+	 * @return the value 
 	 */
 	public String lookupValue(String name)
 	{
@@ -165,7 +165,7 @@ public class ApplicationConfigDAO
 	
 	/**
 	 * Gets properties.
-	 * @return
+	 * @return the properties map
 	 */
 	public Map<String, String> getProperties()
 	{

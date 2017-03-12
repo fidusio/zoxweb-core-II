@@ -548,7 +548,7 @@ public class NetUtil
 	/**
 	 * Return the protocol type of network connection static or dhcp
 	 * @param niName
-	 * @return
+	 * @return Inet protocol
 	 * @throws IOException if protocol is different than static or dhcp
 	 */
 	public static InetProto getProtoType( String niName) throws IOException
@@ -580,7 +580,7 @@ public class NetUtil
 	
 	/**
 	 * Convert the property to a network interface
-	 * @return
+	 * @return network interface
 	 * @throws IOException if the network interface do not exist
 	 */
 	public static NetworkInterface toNI(String niName) throws IOException
@@ -590,7 +590,7 @@ public class NetUtil
 	
 	/**
 	 * This method invoke the isUp for currently associated NetworkInterface
-	 * @return
+	 * @return true if active
 	 * @throws IOException
 	 */
 	public static boolean isActive(String niName) throws IOException
@@ -627,7 +627,7 @@ public class NetUtil
 	
 	/**
 	 * Convert the property to a network interface
-	 * @return
+	 * @return network interface 
 	 * @throws IOException if the network interface do not exist
 	 */
 	public static NetworkInterface toNI(NetworkInterface ni) throws IOException
@@ -637,7 +637,7 @@ public class NetUtil
 	
 	/**
 	 * This method invoke the isUp for currently associated NetworkInterface
-	 * @return
+	 * @return true if active
 	 * @throws IOException
 	 */
 	public static boolean isActive(NetworkInterface ni) throws IOException

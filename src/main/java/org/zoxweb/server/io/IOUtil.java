@@ -63,7 +63,7 @@ public class IOUtil
 	/**
 	 * 
 	 * @param c
-	 * @return
+	 * @return IOException or null if none generated
 	 */
 	public static IOException close(Closeable c)
 	{
@@ -195,7 +195,7 @@ public class IOUtil
 	/**
 	 * Return the file creation in millis
 	 * @param file
-	 * @return
+	 * @return file creation time in millis
 	 * @throws IOException
 	 */
 	public static long fileCreationTime(File file) throws IOException
@@ -210,7 +210,7 @@ public class IOUtil
 	/**
 	 * Return the file creation in millis
 	 * @param path
-	 * @return
+	 * @return file creation time in millis
 	 * @throws IOException
 	 */
 	public static long fileCreationTime(Path path) throws IOException

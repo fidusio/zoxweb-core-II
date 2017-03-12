@@ -49,7 +49,7 @@ public abstract class SetNameDescriptionDAO
 
 	/**
 	 * Returns the description.
-	 * @return
+	 * @return description
 	 */
 	@Column(name = COLUMN_DESCRIPTION)
 	public String getDescription() {

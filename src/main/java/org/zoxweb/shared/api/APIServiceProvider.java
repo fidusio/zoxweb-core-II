@@ -32,7 +32,7 @@ public interface APIServiceProvider<SP>
 {
 	/**
 	 * This method gets the store configuration parameters
-	 * @return
+	 * @return APIConfigInfo
 	 */
 	public APIConfigInfo getAPIConfigInfo();
 	
@@ -76,7 +76,7 @@ public interface APIServiceProvider<SP>
 	
 	/**
 	 * This method returns the exception handler.
-	 * @return
+	 * @returnAPIExceptionHandler
 	 */
 	public APIExceptionHandler getAPIExceptionHandler();
 	

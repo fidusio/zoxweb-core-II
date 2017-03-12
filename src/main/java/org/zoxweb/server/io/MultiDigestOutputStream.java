@@ -47,7 +47,7 @@ implements MultiDigestInterface
      *
      * @param stream the output stream.
      *
-     * @param digest the message digest to associate with this stream.
+     * @param digests the message digest to associate with this stream.
      */
     public MultiDigestOutputStream(OutputStream stream, MessageDigest ...digests)
     {
@@ -60,7 +60,7 @@ implements MultiDigestInterface
      * Returns the message digest associated with this stream.
      *
      * @return the message digest associated with this stream.
-     * @see #setMessageDigests(java.security.MessageDigest)
+     
      */
     public MessageDigest[] getMessageDigests()
     {
@@ -70,8 +70,8 @@ implements MultiDigestInterface
     /**
      * Associates the specified message digest with this stream.
      *
-     * @param digest the message digest to be associated with this stream.
-     * @see #getMessageDigests()
+     * @param digests the message digest to be associated with this stream.
+
      */
     public void setMessageDigests(MessageDigest[] digests)
     {

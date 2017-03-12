@@ -83,8 +83,7 @@ public class APIBatchResult<V extends NVEntity>
 	}
 	
 	/**
-	 * Returns the report ID.
-	 * @return
+	 * @return the report ID.
 	 */
 	public String getReportID()
 	{
@@ -101,8 +100,7 @@ public class APIBatchResult<V extends NVEntity>
 	}
 	
 	/**
-	 * Returns the total number of matches in APIReportResults.
-	 * @return
+	 * @return the total number of matches in APIReportResults.
 	 */
 	public int getTotalMatches()
 	{
@@ -119,8 +117,7 @@ public class APIBatchResult<V extends NVEntity>
 	}
 
 	/**
-	 * Returns the start range.
-	 * @return
+	 * @return the start range.
 	 */
 	public int getStartRange()
 	{
@@ -128,8 +125,7 @@ public class APIBatchResult<V extends NVEntity>
 	}
 	
 	/**
-	 * Returns the end range.
-	 * @return
+	 * @return the end range.
 	 */
 	public int getEndRange()
 	{
@@ -148,8 +144,7 @@ public class APIBatchResult<V extends NVEntity>
 	}
 	
 	/**
-	 * Returns the batch.
-	 * @return
+	 * @return the batch list.
 	 */
 	public List<NVEntity> getBatch()
 	{
@@ -166,8 +161,8 @@ public class APIBatchResult<V extends NVEntity>
 	}
 	
 	/**
-	 * Checks if last batch.
-	 * @return
+
+	 * @return true if last batch.
 	 */
 	public boolean isLastBatch()
 	{

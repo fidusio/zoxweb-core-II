@@ -87,7 +87,7 @@ public class MessageTemplateDAO
 	
 	/**
 	 * Gets the message body content.
-	 * @return
+	 * @return body content
 	 */
 	public String getBodyContent() 
 	{
@@ -109,7 +109,7 @@ public class MessageTemplateDAO
 	
 	/**
 	 * Gets the message body tags.
-	 * @return
+	 * @return tags
 	 */
 	@SuppressWarnings("unchecked")
 	public ArrayValues<NVPair> getBodyTags()
@@ -141,7 +141,7 @@ public class MessageTemplateDAO
 	
 	/**
 	 * Gets the message title.
-	 * @return
+	 * @return title
 	 */
 	public String getTitle()
 	{
@@ -159,7 +159,7 @@ public class MessageTemplateDAO
 	
 	/**
 	 * Gets the pre-token tag.
-	 * @return
+	 * @return pretag
 	 */
 	public String getPreTag() 
 	{
@@ -177,7 +177,7 @@ public class MessageTemplateDAO
 	
 	/**
 	 * Gets the post-token tag.
-	 * @return
+	 * @return post tag
 	 */
 	public String getPostTag() 
 	{

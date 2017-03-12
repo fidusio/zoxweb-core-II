@@ -102,18 +102,11 @@ public class APINotificationMessageDAO
 		super(NVC_API_NOTIFICATION_MESSAGE_DAO);
 	}
 	
-	/**
-	 * This constructor instantiates APINotificationMessageDAO based on list of NVConfigEntity type.
-	 * @param list
-	 */
-//	protected APINotificationMessageDAO(List<NVConfigEntity> list)
-//	{
-//		super(SharedUtil.merge(list, NVC_API_NOTIFICATION_MESSAGE_DAO));
-//	}
+
 	
 	/**
 	 * This method returns the sender ID.
-	 * @return
+	 * @return the sender ID.
 	 */
 	@Override
 	public String getSenderID()
@@ -138,8 +131,7 @@ public class APINotificationMessageDAO
 	}
 
 	/**
-	 * This method returns the recipient IDs.
-	 * @return
+	 * @return the recipient IDs.
 	 */
 	@Override
 	public String[] getRecipientIDs() 
@@ -178,8 +170,7 @@ public class APINotificationMessageDAO
 	}
 	
 	/**
-	 * This method returns the subject of the message.
-	 * @return
+	 * @return the subject of the message.
 	 */
 	@Override
 	public String getTitle() 
@@ -311,8 +302,7 @@ public class APINotificationMessageDAO
 	}
 
 	/**
-	 * This method returns the pre-token tag.
-	 * @return
+	 * @return the pre-token tag.
 	 */
 	public String getPreTag() 
 	{
@@ -329,8 +319,7 @@ public class APINotificationMessageDAO
 	}
 	
 	/**
-	 * This method returns the post-token tag.
-	 * @return
+	 * @return the post-token tag.
 	 */
 	public String getPostTag() 
 	{

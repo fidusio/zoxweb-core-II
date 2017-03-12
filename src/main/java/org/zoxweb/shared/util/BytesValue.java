@@ -74,10 +74,13 @@ public interface BytesValue<V>
 			
 		}
 	
+		
+		
 		/**
-		 * Convert a JAVA long into a byte array, java is ok not sure how it will work with javascript
-		 * @param val
-		 * @return
+		 * @param bytes array
+		 * @param offset
+		 * @param length
+		 * @return Long converted value
 		 */
 		public Long toValue(byte[] bytes, int offset, int length)
 		{
@@ -112,10 +115,13 @@ public interface BytesValue<V>
 			return buffer;	
 		}
 	
+		
+		
 		/**
-		 * Convert a JAVA long into a byte array, java is ok not sure how it will work with javascript
-		 * @param val
-		 * @return
+		 * @param bytes
+		 * @param offset
+		 * @param length
+		 * @return float value
 		 */
 		public Float toValue(byte bytes[], int offset, int length)
 		{
@@ -149,11 +155,7 @@ public interface BytesValue<V>
 			return buffer;
 		}
 	
-		/**
-		 * Convert a JAVA double into a byte array
-		 * @param val
-		 * @return
-		 */
+	
 		public Double toValue(byte bytes[], int offset, int length)
 		{
 			long value = 0;

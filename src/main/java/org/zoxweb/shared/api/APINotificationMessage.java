@@ -30,8 +30,7 @@ public interface APINotificationMessage
 	extends APIMessage
 {
 	/**
-	 * This method returns the sender ID.
-	 * @return
+	 * @return the sender ID.
 	 */
 	public String getSenderID();
 	
@@ -46,8 +45,7 @@ public interface APINotificationMessage
 	
 	
 	/**
-	 * This method returns the recipient IDs.
-	 * @return
+	 * @return  the recipient IDs.
 	 */
 	public String[] getRecipientIDs();
 	
@@ -62,8 +60,7 @@ public interface APINotificationMessage
 	
 	
 	/**
-	 * This method returns the subject of the message.
-	 * @return
+	 * @return the title/subject of the message.
 	 */
 	public String getTitle();
 
@@ -78,8 +75,7 @@ public interface APINotificationMessage
 	
 	
 	/**
-	 * This method returns the message body.
-	 * @return
+	 * @return the message body.
 	 */
 	public String getBodyTemplate();
 	
@@ -94,8 +90,7 @@ public interface APINotificationMessage
 	
 	
 	/**
-	 * This method returns the message body tags.
-	 * @return
+	 * @return the message body tags.
 	 */
 	public ArrayValues<NVPair> getBodyTags();
 	
@@ -113,8 +108,7 @@ public interface APINotificationMessage
 	
 	
 	/**
-	 * This method returns extra attributes.
-	 * @return
+	 * @return the extra attributes.
 	 */
 	public ArrayValues<NVPair> getExtraAttribues();
 
@@ -132,8 +126,7 @@ public interface APINotificationMessage
 	
 	
 	/**
-	 * This method returns the pre-token tag.
-	 * @return
+	 * @return the pre-token tag.
 	 */
 	public String getPreTag();
 
@@ -145,8 +138,7 @@ public interface APINotificationMessage
 	
 	
 	/**
-	 * This method returns the post-token tag.
-	 * @return
+	 * @return the post-token tag.
 	 */
 	public String getPostTag();
 

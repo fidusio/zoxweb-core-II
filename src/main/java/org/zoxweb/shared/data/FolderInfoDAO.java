@@ -84,7 +84,7 @@ public class FolderInfoDAO
 	
 	/**
 	 * Gets the folder content.
-	 * @return
+	 * @return folder contenet
 	 */
 	@SuppressWarnings("unchecked")
 	public ArrayValues<NVEntity> getFolderContent()
@@ -118,7 +118,7 @@ public class FolderInfoDAO
 	 * Checks if folder contains NVEntity given reference ID of the object.
 	 * Returns object if found.
 	 * @param refID
-	 * @return
+	 * @return the contained nventity or null if not found
 	 */
 	@Override
 	public NVEntity contains(String refID) 
@@ -129,7 +129,7 @@ public class FolderInfoDAO
 	/**
 	 * Checks if folder contains given NVEntity. Returns object if found.
 	 * @param nve
-	 * @return
+	 * @return return the contained nventity or null
 	 */
 	@Override
 	public NVEntity contains(NVEntity nve) 

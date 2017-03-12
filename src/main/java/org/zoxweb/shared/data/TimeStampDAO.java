@@ -84,7 +84,7 @@ abstract public class TimeStampDAO
 	
 	/**
 	 * Gets the time (in milliseconds) when the file was created or uploaded into a system or domain.
-	 * @return
+	 * @return creation time
 	 */
 	public long getCreationTime() 
 	{
@@ -102,7 +102,7 @@ abstract public class TimeStampDAO
 	
 	/**
 	 * Gets the last time (in milliseconds) the file was updated.
-	 * @return
+	 * @return last time updated 
 	 */
 	public long getLastTimeUpdated() 
 	{
@@ -120,7 +120,7 @@ abstract public class TimeStampDAO
 	
 	/**
 	 * Gets the last time (in milliseconds) the file was read.
-	 * @return
+	 * @return last time read 
 	 */
 	public long getLastTimeRead() 
 	{

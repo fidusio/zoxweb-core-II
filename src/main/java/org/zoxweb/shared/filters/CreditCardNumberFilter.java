@@ -98,7 +98,7 @@ public class CreditCardNumberFilter
 	 * the credit card type.
 	 * @param ccNumber
 	 * @param code
-	 * @return
+	 * @return validated CVV code
 	 */
 	public static String validateCVV(String ccNumber, String code)
 	{
@@ -153,9 +153,11 @@ public class CreditCardNumberFilter
 	 * the credit card type.
 	 * @param type
 	 * @param code
-	 * @return
+	 * @return validated CVV
+	 * @throws IllegalArgumentException
 	 */
 	public static String validateCVVByType(CreditCardType type, String code)
+		throws IllegalArgumentException
 	{
 		code = SharedStringUtil.trimOrNull(code);
 		

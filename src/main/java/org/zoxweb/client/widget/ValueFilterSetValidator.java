@@ -50,7 +50,7 @@ public class ValueFilterSetValidator<V>
 	/**
 	 * 
 	 * @param checkAll
-	 * @return
+	 * @return true if all valid 
 	 */
 	public boolean areAllValid(boolean checkAll)
 	{

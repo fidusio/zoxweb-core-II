@@ -118,7 +118,7 @@ public class DataContentDAO
 	
 	/**
 	 * Returns content type.
-	 * @return
+	 * @return content type
 	 */
 	public String getContentType()
 	{
@@ -137,7 +137,7 @@ public class DataContentDAO
 	
 	/**
 	 * Returns language.
-	 * @return
+	 * @return language
 	 */
 	public String getLanguage()
 	{

@@ -85,7 +85,7 @@ public class PaymentInfoDAO
 	
 	/**
 	 * Gets the credit card information.
-	 * @return
+	 * @return Credit card
 	 */
 	public CreditCardDAO getCreditCard() 
 	{
@@ -103,7 +103,7 @@ public class PaymentInfoDAO
 
 	/**
 	 * Gets the billing address.
-	 * @return
+	 * @return billing address
 	 */
 	public AddressDAO getBillingAddress() 
 	{

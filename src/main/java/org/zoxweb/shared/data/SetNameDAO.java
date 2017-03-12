@@ -52,7 +52,7 @@ public abstract class SetNameDAO
 	
 	/**
 	 * Returns the name value.
-	 * @return
+	 * @return name
 	 */
 	@Column(name = COLUMN_NAME)
 	public String getName() {

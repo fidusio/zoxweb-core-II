@@ -32,7 +32,7 @@ public interface APISearch<I, O>
 	/**
 	 * This method is used to search and return list of outputs based on input arguments.
 	 * @param args
-	 * @return
+	 * @return list of matching the search criteria
 	 * @throws IllegalArgumentException
 	 * @throws IOException
 	 * @throws NullPointerException

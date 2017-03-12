@@ -70,10 +70,9 @@ public class AuthenticationResponse
 																						   );
 	
 	
-	
 
 	/**
-	 * @param nvce
+	 * Default constructor
 	 */
 	public AuthenticationResponse()
 	{
@@ -93,7 +92,7 @@ public class AuthenticationResponse
 
 	/**
 	 * Get the session duration in milli second -1 for ever, 0 it the caller default session duration
-	 * @return
+	 * @return the session inactivity duration
 	 */
 	public long getSessionDuration()
 	{
@@ -103,7 +102,7 @@ public class AuthenticationResponse
 
 	/**
 	 * 
-	 * @param systemID
+	 * @param duration
 	 */
 	public void setSessionDuration(long duration)
 	{

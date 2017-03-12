@@ -50,7 +50,7 @@ public class ExceptionCollection
 	
 	/**
 	 * Returns the exception list.
-	 * @return
+	 * @return list of exceptions
 	 */
 	public List<Exception> getExceptionList() {
 		return list;
@@ -66,7 +66,7 @@ public class ExceptionCollection
 	
 	/**
 	 * Returns the message;
-	 * @return
+	 * @return the message
 	 */
 	public String getMessage() {
 		return message;

@@ -127,7 +127,7 @@ public class FinancialTransactionDAO
 	
 	/**
 	 * Gets the external reference.
-	 * @return
+	 * @return external reference
 	 */
 	public String getExternalReference() 
 	{
@@ -145,7 +145,7 @@ public class FinancialTransactionDAO
 	
 	/**
 	 * Gets the referenced NVEntity.
-	 * @return
+	 * @return nventity
 	 */
 	public NVEntity getReferencedNVE() 
 	{
@@ -163,7 +163,7 @@ public class FinancialTransactionDAO
 	
 	/**
 	 * Gets the transaction amount.
-	 * @return
+	 * @return money value 
 	 */
 	public MoneyValueDAO getAmount() 
 	{
@@ -181,7 +181,7 @@ public class FinancialTransactionDAO
 	
 	/**
 	 * Gets the transaction type.
-	 * @return
+	 * @return transaction type
 	 */
 	public TransactionType getType() 
 	{
@@ -199,7 +199,7 @@ public class FinancialTransactionDAO
 	
 	/**
 	 * Gets the transaction descriptor.
-	 * @return
+	 * @return transaction descriptor
 	 */
 	public String getDescriptor() 
 	{

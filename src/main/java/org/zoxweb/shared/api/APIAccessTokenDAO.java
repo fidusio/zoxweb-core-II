@@ -99,8 +99,7 @@ public class APIAccessTokenDAO
 	
 	
 	/**
-	 * This method returns the access token.
-	 * @return
+	 * @return the access token.
 	 */
 	public String getAccessToken() 
 	{
@@ -117,8 +116,7 @@ public class APIAccessTokenDAO
 	}
 	
 	/**
-	 * This method returns the expiration value.
-	 * @return
+	 * @return the expiration value.
 	 */
 	public int getTokenExpiration() 
 	{
@@ -138,8 +136,7 @@ public class APIAccessTokenDAO
 	
 	
 	/**
-	 * This method returns the refresh token.
-	 * @return
+	 * @return the refresh token.
 	 */
 	public String getRefreshToken() 
 	{
@@ -156,8 +153,7 @@ public class APIAccessTokenDAO
 	}
 	
 	/**
-	 * This method returns the token type.
-	 * @return
+	 * @return  the token type.
 	 */
 	public String getTokenType() 
 	{
@@ -184,8 +180,7 @@ public class APIAccessTokenDAO
 	}
 
 	/**
-	 * This method checks if the token has expired.
-	 * @return
+	 * @return checks if the token has expired.
 	 */
 	public boolean isTokenExpired()
 	{

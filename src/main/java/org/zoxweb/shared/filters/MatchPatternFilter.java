@@ -85,7 +85,7 @@ public class MatchPatternFilter
 	
 	/**
 	 * Checks whether pattern is recursive.
-	 * @return
+	 * @return true if recursive
 	 */
 	public boolean isRecursive()
 	{
@@ -94,7 +94,7 @@ public class MatchPatternFilter
 	
 	/**
 	 * Checks whether pattern is case sensitive.
-	 * @return
+	 * @return true if case sensitive
 	 */
 	public boolean isCaseSensitive()
 	{
@@ -104,7 +104,7 @@ public class MatchPatternFilter
 	/**
 	 * Matches the given string value to all match patterns.
 	 * @param value
-	 * @return
+	 * @return true if match found
 	 */
 	public boolean match(String value)
 	{
@@ -126,7 +126,7 @@ public class MatchPatternFilter
 	
 	/**
 	 * Returns the list of match patterns.
-	 * @return
+	 * @return match pattern
 	 */
 	public String[] getMatchPatterns()
 	{
@@ -193,8 +193,8 @@ public class MatchPatternFilter
 	
 	/**
 	 * Creates a MatchPatternFilter object based on the given match criteria.
-	 * @param matchCriterias
-	 * @return
+	 * @param matchCriteria
+	 * @return pattern filter
 	 */
 	public static MatchPatternFilter createMatchFilter(String... matchCriteria)
 	{

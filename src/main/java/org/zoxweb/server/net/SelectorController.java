@@ -54,7 +54,7 @@ public class SelectorController
 	 * </ol>
 	 * @param ch
 	 * @param ops
-	 * @return
+	 * @return SelectionKey
 	 * @throws IOException
 	 */
 	public SelectionKey register(AbstractSelectableChannel ch, int ops) throws IOException
@@ -80,7 +80,7 @@ public class SelectorController
 	 * @param ops
 	 * @param attachement
 	 * @param blocking
-	 * @return
+	 * @return SelectionKey
 	 * @throws IOException
 	 */
 	public SelectionKey register(NIOChannelCleaner niocc, AbstractSelectableChannel ch, int ops, Object attachement, boolean blocking) throws IOException
@@ -125,7 +125,7 @@ public class SelectorController
 	/**
 	 * 
 	 * @param timeout
-	 * @return
+	 * @return number of selected keys
 	 * @throws IOException
 	 */
 	public int select(long timeout) throws IOException

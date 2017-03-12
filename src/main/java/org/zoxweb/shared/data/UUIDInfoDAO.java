@@ -98,7 +98,7 @@ public class UUIDInfoDAO
 	
 	/**
 	 * Gets expiration time (in milliseconds, -1 for never expires).
-	 * @return
+	 * @return expiratrion time
 	 */
 	public long getExpirationTime() 
 	{
@@ -116,7 +116,7 @@ public class UUIDInfoDAO
 	
 	/**
 	 * Gets the access count (in milliseconds, -1 for never expires).
-	 * @return
+	 * @return access count
 	 */
 	public long getAccessCount()
 	{
@@ -125,7 +125,7 @@ public class UUIDInfoDAO
 	
 	/**
 	 * Sets the access count (in milliseconds, -1 for never expires).
-	 * @param ts
+	 * @param ac
 	 */
 	public synchronized void setAccessCount(long ac) 
 	{
@@ -134,7 +134,7 @@ public class UUIDInfoDAO
 	
 	/**
 	 * Gets UUID.
-	 * @return
+	 * @return uuid
 	 */
 	public String getUUID() 
 	{
@@ -152,7 +152,7 @@ public class UUIDInfoDAO
 	
 	/**
 	 * Gets resource ID.
-	 * @return
+	 * @return resource id
 	 */
 	public String getResourceID()
 	{
@@ -171,7 +171,7 @@ public class UUIDInfoDAO
 	
 	/**
 	 * Gets resource canonical ID.
-	 * @return
+	 * @return resource canonical id
 	 */
 	public String getResourceCanonicalID()
 	{
@@ -191,7 +191,7 @@ public class UUIDInfoDAO
 	
 	/**
 	 * Get content.
-	 * @return
+	 * @return content 
 	 */
 	public NVEntity getContent()
 	{
@@ -200,7 +200,7 @@ public class UUIDInfoDAO
 	
 	/**
 	 * Set content.
-	 * @param resourceID
+	 * @param content
 	 */
 	public void setContent(NVEntity content) 
 	{
@@ -209,7 +209,7 @@ public class UUIDInfoDAO
 	
 	/**
 	 * Gets resource type.
-	 * @return
+	 * @return resource type 
 	 */
 	public ResourceType getResourceType()
 	{
@@ -227,7 +227,7 @@ public class UUIDInfoDAO
 	
 	/**
 	 * Gets resource CRUD.
-	 * @return
+	 * @return crud
 	 */
 	public CRUD getResourceCRUD()
 	{
@@ -245,7 +245,7 @@ public class UUIDInfoDAO
 	
 	/**
 	 * Gets session ID.
-	 * @return
+	 * @return session id
 	 */
 	public String getSessionID()
 	{

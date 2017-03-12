@@ -48,7 +48,7 @@ public class EnumList
 	
 	/**
 	 * Returns the enum class name.
-	 * @return
+	 * @return enaum class name
 	 */
 	public final String getEnumClassName() {
 		return enumClassName;
@@ -64,7 +64,7 @@ public class EnumList
 	
 	/**
 	 * Returns an enum list.
-	 * @return
+	 * @return all enums
 	 */
 	public final Enum<?>[] getEnumList() {
 		return enumList;

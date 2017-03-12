@@ -86,7 +86,7 @@ public class MessageDAO
 	
 	/**
 	 * Gets the content.
-	 * @return
+	 * @return content
 	 */
 	public NVEntity getContent()
 	{

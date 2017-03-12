@@ -27,7 +27,7 @@ public interface NVEntityFactory
 	/**
 	 * Creates NVEntity based on given class name.
 	 * @param className
-	 * @return
+	 * @return typed nventity
 	 */
 	<V extends NVEntity> V createNVEntity(String className);
 }

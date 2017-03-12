@@ -94,7 +94,7 @@ public class NVEntityContainerDAO
 	
 	/**
 	 * Returns content as an array values of NVEntity.
-	 * @return
+	 * @return content
 	 */
 	@SuppressWarnings("unchecked")
 	public ArrayValues<NVEntity> getContent()
@@ -122,7 +122,7 @@ public class NVEntityContainerDAO
 	
 	/**
 	 * Returns content as a list of NVEntity.
-	 * @return
+	 * @return content as list
 	 */
 	public List<NVEntity> getContentAsList()
 	{
@@ -133,7 +133,7 @@ public class NVEntityContainerDAO
 	 * Checks if content contains NVEntity given the reference ID of the object.
 	 * Returns object if found.
 	 * @param refID
-	 * @return
+	 * @return contained nventity
 	 */
 	@Override
 	public NVEntity contains(String refID)
@@ -155,7 +155,7 @@ public class NVEntityContainerDAO
 	/**
 	 * Checks if content contains given NVEntity. Returns object if found.
 	 * @param nve
-	 * @return
+	 * @return contained nventity
 	 */
 	@Override
 	public NVEntity contains(NVEntity nve) 

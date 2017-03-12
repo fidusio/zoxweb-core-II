@@ -65,7 +65,7 @@ implements ReferenceID<String>
 	
 	/**
 	 * This method return the parameters that will used inside the TaskExecutor.executeTask() method
-	 * @return
+	 * @return parameters
 	 */
 	public Object[] getTaskExecutorParameters()
 	{
@@ -74,7 +74,7 @@ implements ReferenceID<String>
 	
 	/**
 	 * This method will return the result of the execution.
-	 * @return
+	 * @return result
 	 */
 	public Object getExecutionResult() 
 	{

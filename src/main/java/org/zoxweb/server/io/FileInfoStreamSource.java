@@ -42,7 +42,7 @@ public class FileInfoStreamSource
 	
 	/**
 	 * 
-	 * @return
+	 * @return input stream
 	 */
 	public InputStream getSourceInputStream()
 	{
@@ -51,7 +51,7 @@ public class FileInfoStreamSource
 	
 	/**
 	 * 
-	 * @return
+	 * @return file info dao
 	 */
 	public FileInfoDAO getFileInfoDAO()
 	{

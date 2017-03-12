@@ -48,7 +48,7 @@ public class HTTPMultiPartUtil
 	
 	/**
 	 * Generate a boundary string in hex format based on the java time in nano seconds 
-	 * @return
+	 * @return boundary
 	 */
 	public static String generateBoundary(TimeUnitType tut)
 	{
@@ -70,7 +70,7 @@ public class HTTPMultiPartUtil
 	/**
 	 * Format: BOUNDARY_EDGE + boundary
 	 * @param boundary
-	 * @return
+	 * @return formated boundary
 	 */
 	public static String formatBoundary(String boundary)
 	{
@@ -80,7 +80,7 @@ public class HTTPMultiPartUtil
 	/**
 	 * Format : BOUNDARY_EDGE + boundary+ \r\n
 	 * @param boundary
-	 * @return
+	 * @return start 
 	 */
 	public static String formatStartBoundary(String boundary)
 	{
@@ -91,7 +91,7 @@ public class HTTPMultiPartUtil
 	/**
 	 * Format : BOUNDARY_EDGE + boundary + BOUNDARY_EDGE \r\n
 	 * @param boundary
-	 * @return
+	 * @return end
 	 */
 	public static String formatEndBoundary(String boundary)
 	{
@@ -239,7 +239,7 @@ public class HTTPMultiPartUtil
 	 * 
 	 * @param boundary
 	 * @param params
-	 * @return
+	 * @return all content formatted
 	 */
 	public static String formatMultiPartContent(String boundary, List<GetNameValue<String>> params)
 	{

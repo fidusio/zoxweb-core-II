@@ -69,7 +69,7 @@ public class HTTPRequestAttributes
 	/**
 	 * Get the incoming request headers
 	 * 
-	 * @return
+	 * @return the headers
 	 */
 	public final List<GetNameValue<String>> getHeaders()
 	{
@@ -79,7 +79,7 @@ public class HTTPRequestAttributes
 	/**
 	 * Get the incoming request parameters
 	 * 
-	 * @return
+	 * @return parameters
 	 */
 	public final List<GetNameValue<String>> getParameters()
 	{
@@ -107,7 +107,7 @@ public class HTTPRequestAttributes
 	/**
 	 * Return the list of file information and stream information if the request has embedded multipart files
 	 * 
-	 * @return
+	 * @return stream list
 	 */
 	public final List<FileInfoStreamSource> getFileInfoStreamSources()
 	{
@@ -132,7 +132,7 @@ public class HTTPRequestAttributes
 	 * Returns any extra path information associated with the URL the client sent when it made this request. The extra path information follows the servlet path but precedes the query string and will start with a "/" character.
 	 * This method returns null if there was no extra path information. 
 	 * (Optional)
-	 * @return
+	 * @return path info 
 	 */
 	public String getPathInfo()
 	{

@@ -98,7 +98,7 @@ public class MerchantDAO
 	
 	/**
 	 * Gets the domain ID.
-	 * @return
+	 * @return list of domain ids
 	 */
 	public List<DomainID<String>> getDomainIDs() 
 	{
@@ -107,7 +107,7 @@ public class MerchantDAO
 	
 	/**
 	 * Sets the domain ID.
-	 * @param domainID
+	 * @param domainIDs
 	 */
 	public void setDomainID(List<DomainID<String>> domainIDs)
 	{
@@ -116,7 +116,7 @@ public class MerchantDAO
 	
 	/**
 	 * Gets the company type.
-	 * @return
+	 * @return company type
 	 */
 	public String getCompanyType() 
 	{
@@ -134,7 +134,7 @@ public class MerchantDAO
 	
 	/**
 	 * Gets list of addresses.
-	 * @return
+	 * @return list of addresses
 	 */
 	public ArrayList<AddressDAO> getListOfAddresses() 
 	{
@@ -152,7 +152,7 @@ public class MerchantDAO
 	
 	/**
 	 * Gets list of phones.
-	 * @return
+	 * @return list of phones
 	 */
 	public ArrayList<PhoneDAO> getListOfPhones() 
 	{
@@ -170,7 +170,7 @@ public class MerchantDAO
 	
 	/**
 	 * Gets list of domain emails.
-	 * @return
+	 * @return list of emails 
 	 */
 	public ArrayList<NVPair> getListOfDomainEmails() 
 	{
@@ -188,7 +188,7 @@ public class MerchantDAO
 	
 	/**
 	 * Gets list of payment information.
-	 * @return
+	 * @return list of payment infos
 	 */
 	public ArrayList<PaymentInfoDAO> getListOfPaymentInfos() 
 	{
@@ -206,7 +206,7 @@ public class MerchantDAO
 	
 	/**
 	 * Gets additional information.
-	 * @return
+	 * @return list of additional info
 	 */
 	public ArrayList<NVPair> getAdditonalInfos() 
 	{

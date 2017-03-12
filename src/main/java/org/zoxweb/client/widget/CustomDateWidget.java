@@ -79,7 +79,7 @@ public class CustomDateWidget
 	 * whether to set UTC as the default time zone.
 	 * @param startYear
 	 * @param endYear
-	 * @param useUTCTimeZone
+	 * @param isGMT
 	 */
 	public CustomDateWidget(int startYear, int endYear, boolean isGMT) 
 	{	
@@ -208,7 +208,7 @@ public class CustomDateWidget
 	
 	/**
 	 * Gets the number of days available.
-	 * @return
+	 * @return days
 	 */
 	public int getDays()
 	{
@@ -273,7 +273,7 @@ public class CustomDateWidget
 
 	/**
 	 * Gets the selected date as a long value.
-	 * @return
+	 * @return long value
 	 */
 	@Override
 	public Long getValue() 
@@ -387,8 +387,8 @@ public class CustomDateWidget
 	
 	/**
 	 * Checks whether widget is visible or not.
-	 * @param field
-	 * @return
+	 * @param widget
+	 * @return true if visible
 	 */
 	public boolean isVisible(Widget widget)
 	{
@@ -454,7 +454,7 @@ public class CustomDateWidget
 	
 	/**
 	 * Gets the year ListBox widget.
-	 * @return
+	 * @return year list box
 	 */
 	public ListBox getYearListBox()
 	{
@@ -463,7 +463,7 @@ public class CustomDateWidget
 	
 	/**
 	 * Gets the month ListBox widget.
-	 * @return
+	 * @return month list box
 	 */
 	public ListBox getMonthListBox()
 	{
@@ -472,7 +472,7 @@ public class CustomDateWidget
 	
 	/**
 	 * Gets the day ListBox widget.
-	 * @return
+	 * @return day list box
 	 */
 	public ListBox getDayListBox()
 	{
@@ -481,7 +481,7 @@ public class CustomDateWidget
 	
 	/**
 	 * Checks if date is selected.
-	 * @return
+	 * @return true if date is selected
 	 */
 	public boolean isDateSelected()
 	{

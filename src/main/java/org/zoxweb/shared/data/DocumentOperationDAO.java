@@ -92,7 +92,7 @@ public class DocumentOperationDAO
 	
 	/**
 	 * Gets the x-coordinate value.
-	 * @return
+	 * @return x coordinate
 	 */
 	public String getXCoordinate() 
 	{
@@ -110,7 +110,7 @@ public class DocumentOperationDAO
 	
 	/**
 	 * Gets the y-coordinate value.
-	 * @return
+	 * @return y coordinate
 	 */
 	public String getYCoordinate() 
 	{
@@ -128,7 +128,7 @@ public class DocumentOperationDAO
 	
 	/**
 	 * Gets the FolderInfoDAO object reference ID.
-	 * @return
+	 * @return folder reference id
 	 */
 	public String getFolderInfoReferenceID() 
 	{
@@ -146,7 +146,7 @@ public class DocumentOperationDAO
 	
 	/**
 	 * Gets the APIConfigInfo object reference ID.
-	 * @return
+	 * @return api config reference id
 	 */
 	public String getAPIConfigInfoReferenceID() 
 	{
@@ -164,7 +164,7 @@ public class DocumentOperationDAO
 	
 	/**
 	 * Gets the display unit.
-	 * @return
+	 * @return displau unit
 	 */
 	public DisplayUnit getUnit()
 	{
@@ -182,7 +182,7 @@ public class DocumentOperationDAO
 	
 	/**
 	 * Gets the requested operation on the document (if null the interpretation is service specific).
-	 * @return
+	 * @return crud operation
 	 */
 	public CRUD getOperation()
 	{
@@ -200,7 +200,7 @@ public class DocumentOperationDAO
 	
 	/**
 	 * Gets the document reference ID.
-	 * @return
+	 * @return document reference id
 	 */
 	public String getDocumentInfoReferenceID()
 	{

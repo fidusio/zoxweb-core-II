@@ -130,7 +130,7 @@ public class HTTPCall
 	 * 
 	 * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
 	 * 
-	 * @return
+	 * @return HTTPResponseData
 	 * @throws IOException
 	 */
 	public HTTPResponseData sendRequest() throws IOException

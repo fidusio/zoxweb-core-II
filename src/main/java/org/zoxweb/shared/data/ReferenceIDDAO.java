@@ -48,7 +48,7 @@ public abstract class ReferenceIDDAO
 	
 	/**
 	 * Returns the reference ID.
-	 * @return 
+	 * @return  reference id
 	 */
 	@Id
 	@Column(name = COLUMN_REF_ID)
@@ -66,7 +66,7 @@ public abstract class ReferenceIDDAO
 	
 	/**
 	 * Returns the account ID.
-	 * @return 
+	 * @return account id
 	 */
 	public String getAccountID() {
 		return lookupValue(NVC_ACCOUNT_ID);
@@ -82,7 +82,7 @@ public abstract class ReferenceIDDAO
 	
 	/**
 	 * Returns the user ID.
-	 * @return 
+	 * @return user id
 	 */
 	public String getUserID() {
 		return lookupValue(NVC_USER_ID);

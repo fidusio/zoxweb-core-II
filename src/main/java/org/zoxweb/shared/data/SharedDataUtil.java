@@ -397,7 +397,7 @@ public class SharedDataUtil
 	 * Returns the the short hand display of the given NVEntity.
 	 * 
 	 * @param nve
-	 * @return
+	 * @return short description of nve
 	 */
 	public static String getNVEntityShortHand(NVEntity nve)
 	{
@@ -524,7 +524,7 @@ public class SharedDataUtil
 	 * Example: cardNumber = "4400 0000 0000 1234" returns "1234"
 	 * 
 	 * @param cardNumber
-	 * @return
+	 * @return last 4 digit of CC 
 	 */
 	public static String getCreditCardLastFourDigits(String cardNumber)
 	{
@@ -547,8 +547,8 @@ public class SharedDataUtil
 	
 	/**
 	 * Return the reference id of all the contained refids
-	 * @param entry
-	 * @return
+	 * @param entry 
+	 * @return set of all the contained ref ids in an nventity
 	 */
 	public static Set<String> getAllContainedRefIDs(NVEntity entry)
 	{
@@ -607,7 +607,7 @@ public class SharedDataUtil
 	 * Example: Given card number = "4444000000001234", returns "XXXXXXXXXXXX1234".
 	 * 
 	 * @param cardNumber
-	 * @return
+	 * @return masked credit card number
 	 */
 	public static String maskCreditCardNumber(String cardNumber)
 	{	
@@ -644,7 +644,7 @@ public class SharedDataUtil
 	 * @param deep - recursive call to check for inner array of NVEntity or NVEntity objects
 	 * @param omitRefID - omit the reference ID (if true, sets reference ID of NVE object to null)
 	 * @param omitUserID - omit the user ID (if true, sets user ID of NVE object to null)
-	 * @return
+	 * @return copied NVEntity
 	 */
 	@SuppressWarnings("unchecked")
 	public static NVEntity copyNVEntity(NVEntityFactory factory, NVEntity nveToCopy, boolean deep, boolean omitRefID, boolean omitUserID) {

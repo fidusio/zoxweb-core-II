@@ -61,7 +61,7 @@ public class SystemInfoDAO
 	
 	/**
 	 * Gets the system properties.
-	 * @return
+	 * @return system properties
 	 */
 	@SuppressWarnings("unchecked")
 	public ArrayValues<NVPair> getSystemProperties() 
@@ -80,7 +80,7 @@ public class SystemInfoDAO
 	
 	/**
 	 * Gets the ApplicationDAO objects.
-	 * @return
+	 * @return application daos
 	 */
 	public ArrayValues<NVEntity> getApplicationDAOs() 
 	{
@@ -98,10 +98,10 @@ public class SystemInfoDAO
 
 	/**
 	 * Gets the network interfaces.
-	 * @return
+	 * @return network interfaces array
 	 */
 	@SuppressWarnings("unchecked")
-	public  ArrayValues<NVEntity> getNetworkInterfaces()
+	public ArrayValues<NVEntity> getNetworkInterfaces()
 	{
 		return  (ArrayValues<NVEntity>) lookup(NETWORK_INTERFACES.getName());
 	}
@@ -117,7 +117,7 @@ public class SystemInfoDAO
 
 	/**
 	 * Gets the system assigned ID (the ID is a globally assigned identifier).
-	 * @return
+	 * @return system id
 	 */
 	public String getSystemID() 
 	{
@@ -135,7 +135,7 @@ public class SystemInfoDAO
 
 	/**
 	 * Gets canonical ID.
-	 * @return
+	 * @return canonical id
 	 */
 	@Override
 	public String toCanonicalID() 
@@ -145,7 +145,7 @@ public class SystemInfoDAO
 
 	/**
 	 * Gets the application properties.
-	 * @return
+	 * @return properties
 	 */
 	@SuppressWarnings("unchecked")
 	public ArrayValues<NVPair> getApplicationProperties() 

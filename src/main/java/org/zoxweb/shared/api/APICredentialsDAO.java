@@ -78,9 +78,8 @@ public class APICredentialsDAO
 																	);
 	
 	/**
-	 * [Optional - Please state the purpose of this constructor; especially if multiple constructors exist.].
+	 * default constructor
 	 * 
-	 * @param nvce
 	 */
 	public APICredentialsDAO() 
 	{

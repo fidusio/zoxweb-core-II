@@ -108,7 +108,7 @@ public class PhoneDAO
 	
 	/**
 	 * Gets the phone type.
-	 * @return
+	 * @return phone type
 	 */
 	public String getPhoneType() 
 	{
@@ -126,7 +126,7 @@ public class PhoneDAO
 	
 	/**
 	 * Gets the country code.
-	 * @return
+	 * @return country code
 	 */
 	public String getCountryCode() 
 	{
@@ -144,7 +144,7 @@ public class PhoneDAO
 	
 	/**
 	 * Gets the area code.
-	 * @return
+	 * @return area code
 	 */
 	public String getAreaCode() 
 	{
@@ -162,7 +162,7 @@ public class PhoneDAO
 	
 	/**
 	 * Gets the number.
-	 * @return
+	 * @return phone number
 	 */
 	public String getNumber() 
 	{
@@ -180,7 +180,7 @@ public class PhoneDAO
 	
 	/**
 	 * Gets the extension.
-	 * @return
+	 * @return extension
 	 */
 	public String getExtension() 
 	{

@@ -31,7 +31,7 @@ public interface APIMessage
 {
 	/**
 	 * This method returns the message type.
-	 * @return
+	 * @return APIServiceType
 	 */
 	public APIServiceType getMessageType();
 	

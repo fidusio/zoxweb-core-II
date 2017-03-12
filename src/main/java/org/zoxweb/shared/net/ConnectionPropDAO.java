@@ -119,7 +119,7 @@ public class ConnectionPropDAO {
 	
 	/**
 	 * Get the current assigned status
-	 * @return
+	 * @return the network interface status
 	 */
 	public NIStatus currentStatus()
 	{
@@ -136,7 +136,7 @@ public class ConnectionPropDAO {
 
 	/**
 	 * Set the network interface name
-	 * @param name
+	 * @param niName
 	 */
 	public void setNIName(String niName) 
 	{

@@ -399,7 +399,7 @@ public class ShiroUtil
 	/**
 	 * Create subject based on parametrazied security manager
 	 * @param sm
-	 * @return
+	 * @return subject
 	 */
 	public static Subject getSubject(SecurityManager sm) 
 	 {

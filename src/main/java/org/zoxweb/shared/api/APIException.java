@@ -93,7 +93,7 @@ public class APIException
 	
 	/**
 	 * This method returns the error category.
-	 * @return
+	 * @return the category
 	 */
 	public Category getCategory()
 	{
@@ -102,7 +102,7 @@ public class APIException
 	
 	/**
 	 * This method returns the error code.
-	 * @return
+	 * @return the Code
 	 */
 	public Code getCode()
 	{

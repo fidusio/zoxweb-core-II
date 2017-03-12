@@ -26,7 +26,7 @@ public interface CRUDNVBase
 {
 	/**
 	 * Returns the NVBase.
-	 * @return
+	 * @return the nv base value
 	 */
 	public NVBase<?> getNVBase();
 }

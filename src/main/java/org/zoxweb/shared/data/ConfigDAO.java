@@ -129,7 +129,7 @@ public class ConfigDAO
 	
 	/**
 	 * Returns content type.
-	 * @return
+	 * @return the bean class name
 	 */
 	public String getBeanClassName()
 	{

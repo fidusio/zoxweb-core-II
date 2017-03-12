@@ -39,7 +39,7 @@ public class SearchCriteriaImpl
 	
 	/**
 	 * Gets text.
-	 * @return
+	 * @return text
 	 */
 	@Override
 	public String getText() 
@@ -59,7 +59,7 @@ public class SearchCriteriaImpl
 
 	/**
 	 * Checks if recursive.
-	 * @return 
+	 * @return true if recursive
 	 */
 	@Override
 	public boolean isRecursive() 
@@ -79,7 +79,7 @@ public class SearchCriteriaImpl
 
 	/**
 	 * Checks if case sensitive.
-	 * @return
+	 * @return true if case sensitive
 	 */
 	@Override
 	public boolean isCaseSensitive() 
@@ -99,7 +99,7 @@ public class SearchCriteriaImpl
 
 	/**
 	 * Checks if exact match.
-	 * @return
+	 * @return true if exact match
 	 */
 	@Override
 	public boolean isExactMatch() 

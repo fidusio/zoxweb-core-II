@@ -69,7 +69,7 @@ import com.google.gson.stream.JsonWriter;
 
 /**
  * This utility class convert NVEnity Object to json and a json object to an NVEntity.
- * It uses Gson from google {@link https://code.google.com/p/google-gson/}
+ * It uses Gson from google 
  * @author mnael
  */
 final public class GSONUtil 

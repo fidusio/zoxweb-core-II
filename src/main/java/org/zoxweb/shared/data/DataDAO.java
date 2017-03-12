@@ -75,7 +75,7 @@ implements SetCanonicalID
 	
 	/**
 	 * This method returns the system ID.
-	 * @return
+	 * @return the system id
 	 */
 	public String getSystemID() 
 	{
@@ -105,7 +105,7 @@ implements SetCanonicalID
 	
 	/**
 	 * This method sets the data.
-	 * @param dataArray
+	 * @param data
 	 */
 	public void setData(byte[] data)
 	{
@@ -114,7 +114,7 @@ implements SetCanonicalID
 	
 	/**
 	 * This method returns the data.
-	 * @return
+	 * @return the data as byte array
 	 */
 	public byte[] getData()
 	{
@@ -123,7 +123,7 @@ implements SetCanonicalID
 	
 	/**
 	 * This method sets the source ID.
-	 * @param id
+	 * @param sourceID
 	 */
 	public void setSourceID(String sourceID)
 	{
@@ -140,7 +140,7 @@ implements SetCanonicalID
 	 * <li> Gyroscope sensor.
 	 * <li> or any device that can be integrated or supported by rubus pi project.
 	 * </ul>
-	 * @return
+	 * @return the source id 
 	 */
 	public String getSourceID()
 	{
@@ -150,7 +150,7 @@ implements SetCanonicalID
 	@Override
 	public String toCanonicalID() {
 		// TODO Auto-generated method stub
-		return null;
+		return getCanonicalID();
 	}
 
 	@Override

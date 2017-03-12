@@ -45,7 +45,7 @@ public class APISearchResult<T>
 	
 	/**
 	 * Returns the NVConfigEntity.
-	 * @return
+	 * @return NVConfigEntity
 	 */
 	public NVConfigEntity getNVConfigEntity()
 	{
@@ -62,8 +62,7 @@ public class APISearchResult<T>
 	}
 	
 	/**
-	 * Returns the report ID.
-	 * @return
+	 * @return the report ID.
 	 */
 	public String getReportID()
 	{
@@ -72,7 +71,7 @@ public class APISearchResult<T>
 	
 	/**
 	 * Sets the report ID.
-	 * @param id
+	 * @param reportID
 	 */
 	public void setReportID(String reportID)
 	{
@@ -81,7 +80,7 @@ public class APISearchResult<T>
 	
 	/**
 	 * Returns list of match ID's.
-	 * @return
+	 * @return the matching ids.
 	 */
 	public List<T> getMatchIDs()
 	{
@@ -99,7 +98,7 @@ public class APISearchResult<T>
 	
 	/**
 	 * Returns the size of the match ID's list.
-	 * @return
+	 * @return size
 	 */
 	public int size()
 	{

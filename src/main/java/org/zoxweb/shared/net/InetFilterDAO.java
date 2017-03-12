@@ -123,7 +123,7 @@ extends SetNameDescriptionDAO
 	/**
 	 * Get the ip, null if no set
 	 * 
-	 * @return
+	 * @return the ip 
 	 */
 	public String getIP() 
 	{
@@ -144,7 +144,7 @@ extends SetNameDescriptionDAO
 	/**
 	 * Get the network mask, null if not set
 	 * 
-	 * @return
+	 * @return network mask
 	 */
 	public String getNetworkMask()
 	{

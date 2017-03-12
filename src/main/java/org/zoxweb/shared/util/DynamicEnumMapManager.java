@@ -46,7 +46,7 @@ public class DynamicEnumMapManager {
 
 	/**
 	 * This method returns all dynamic enum maps.
-	 * @return
+	 * @return the map
 	 */
 	public HashMap<String, DynamicEnumMap> getAllEnumMaps() {
 		return allEnumMaps;
@@ -98,7 +98,7 @@ public class DynamicEnumMapManager {
 	/**
 	 * Looks up the dynamic enum map based on the given enum map name.
 	 * @param enumMapName
-	 * @return
+	 * @return tehe map
 	 */
 	public DynamicEnumMap lookup(String enumMapName) {
 		DynamicEnumMap ret = allEnumMaps.get(enumMapName);
@@ -112,7 +112,7 @@ public class DynamicEnumMapManager {
 	
 	/**
 	 * Returns the number of entries.
-	 * @return
+	 * @return size
 	 */
 	public int size() {
 		return allEnumMaps.size();
@@ -145,7 +145,7 @@ public class DynamicEnumMapManager {
 	 * Adds dynamic enum map based on given enum name and names of the parameters.
 	 * @param enumName
 	 * @param names
-	 * @return
+	 * @return DynamicEnumMap
 	 */
 	public synchronized DynamicEnumMap addDynamicEnumMap(String enumName, String... names) {
 		DynamicEnumMap ret = lookup(enumName);
@@ -168,7 +168,7 @@ public class DynamicEnumMapManager {
 	 * Adds dynamic enum map based on the given name and value.
 	 * @param name
 	 * @param values
-	 * @return
+	 * @return DynamicEnumMap
 	 */
 	public synchronized DynamicEnumMap addDynamicEnumMap(String name, Enum<?>... values) {
 		DynamicEnumMap ret = lookup(name);
@@ -189,7 +189,7 @@ public class DynamicEnumMapManager {
 	
 	/**
 	 * Returns an array of all dynamic enum maps.
-	 * @return
+	 * @return all DynamicEnumMap
 	 */
 	public DynamicEnumMap[] getAll() {
 		return allEnumMaps.values().toArray(new DynamicEnumMap[0]);

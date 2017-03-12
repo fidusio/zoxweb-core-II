@@ -113,7 +113,7 @@ public class UByteArrayOutputStream
 	
 	/**
 	 * This method will transfer the data to ByteArrayInputStream and reset the UByteArrayOutputStream
-	 * @return
+	 * @return ByteArrayInputStream
 	 */
 	public synchronized ByteArrayInputStream toByteArrayInputStream()
 	{
@@ -158,7 +158,7 @@ public class UByteArrayOutputStream
 	 * @param match
 	 * @param offset
 	 * @param length
-	 * @return
+	 * @return index
 	 */
 	public int indexOf(int startAt, byte match[], int offset, int length)
 	{
@@ -212,7 +212,7 @@ public class UByteArrayOutputStream
 	 * 
 	 * @param baos1
 	 * @param baos2
-	 * @return
+	 * @return true if equals
 	 */
 	public static boolean areEqual(UByteArrayOutputStream baos1, UByteArrayOutputStream baos2)
 	{
@@ -450,8 +450,7 @@ public class UByteArrayOutputStream
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * @return internal buffer 
 	 */
 	public byte[] getInternalBuffer()
 	{

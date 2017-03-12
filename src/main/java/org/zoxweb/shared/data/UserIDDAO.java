@@ -82,7 +82,7 @@ public class UserIDDAO
 	
 	/**
 	 * Gets the primary email.
-	 * @return
+	 * @return primary email
 	 */
 	public String getPrimaryEmail() 
 	{
@@ -100,7 +100,7 @@ public class UserIDDAO
 	
 	/**
 	 * Gets the user information.
-	 * @return
+	 * @return user info dao
 	 */
 	public UserInfoDAO getUserInfo() 
 	{
@@ -118,7 +118,7 @@ public class UserIDDAO
 	
 	/**
 	 * Gets the user ID.
-	 * @return
+	 * @return user id
 	 */
 	public String getUserID()
 	{

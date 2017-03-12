@@ -91,7 +91,7 @@ public class AddressDAO
 	
 	/**
 	 * Returns the street.
-	 * @return
+	 * @return the street
 	 */
 	@Column (name = COLUMN_STREET)
 	public String getStreet() {
@@ -108,7 +108,7 @@ public class AddressDAO
 	
 	/**
 	 * Returns the city.
-	 * @return
+	 * @return the city
 	 */
 	@Column (name = COLUMN_CITY)
 	public String getCity() {
@@ -125,7 +125,7 @@ public class AddressDAO
 	
 	/**
 	 * Returns the state or province.
-	 * @return
+	 * @return the province
 	 */
 	@Column (name = COLUMN_STATE)
 	public String getStateOrProvince() {
@@ -142,7 +142,7 @@ public class AddressDAO
 	
 	/**
 	 * Returns the country.
-	 * @return
+	 * @return the country
 	 */
 	@Column (name = COLUMN_COUNTRY)
 	public String getCountry() {
@@ -159,7 +159,7 @@ public class AddressDAO
 	
 	/**
 	 * Returns the ZIP or postal code.
-	 * @return
+	 * @return the zip or postal code depending on the country
 	 */
 	@Column (name = COLUMN_ZIP_CODE)
 	public String getZIPOrPostalCode() {

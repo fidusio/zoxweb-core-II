@@ -132,7 +132,7 @@ public class RuntimeUtil
 	 * and then execute it and command line.
 	 * @param command
 	 * @param f
-	 * @return
+	 * @return RuntimeResultDAO
 	 * @throws InterruptedException
 	 * @throws IOException
 	 */

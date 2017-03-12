@@ -17,6 +17,7 @@ package org.zoxweb.server.io;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * This class is used to parse a message in a buffer with or without initiating 
@@ -55,7 +56,7 @@ public class ByteBufferParser
 
 	/**
 	 * This method returns the output byte array stream.
-	 * @return
+	 * @return the byte array out stream
 	 */
 	public final UByteArrayOutputStream getOutputByteArrayStream() 
 	{
@@ -64,9 +65,9 @@ public class ByteBufferParser
 
 	/**
 	 * This method returns the delimiter value. 
-	 * @return
+	 * @return the delimiter 
 	 */
-	public final byte[] getDelimeter() 
+	public final byte[] getDelimiter() 
 	{
 		return delimiter;
 	}
@@ -74,9 +75,9 @@ public class ByteBufferParser
 	/**
 	 * This method parses the data based on the delimiter
 	 * value of the ByteBufferParser object.
-	 * @return
+	 * @return the parsed byte arrays
 	 */
-	public ArrayList<byte[]> parse()
+	public List<byte[]> parse()
 	{
 		
 		return parse(delimiter);
@@ -87,9 +88,9 @@ public class ByteBufferParser
 	 * value as parameter. The delimiter value can be changed
 	 * from outside the class.
 	 * @param delim
-	 * @return
+	 * @return the parsed byte arrays
 	 */
-	public ArrayList<byte[]> parse(byte[] delim)
+	public List<byte[]> parse(byte[] delim)
 	{
 		
 		return parse(uboas, delim);
@@ -105,9 +106,9 @@ public class ByteBufferParser
 	 * exits the loop when no match is found.
 	 * @param uboas
 	 * @param delim
-	 * @return
+	 * @return the parsed byte arrays
 	 */
-	public static ArrayList<byte[]> parse(UByteArrayOutputStream uboas, byte[] delim)
+	public static List<byte[]> parse(UByteArrayOutputStream uboas, byte[] delim)
 	{
 		
 		if(uboas == null || delim == null)

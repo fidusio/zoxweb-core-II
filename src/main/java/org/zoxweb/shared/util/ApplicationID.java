@@ -25,7 +25,7 @@ public interface ApplicationID<T>
 {
 	/**
 	 * Returns the application ID.
-	 * @return
+	 * @return the typed application ID
 	 */
 	public T getApplicationID();
 	

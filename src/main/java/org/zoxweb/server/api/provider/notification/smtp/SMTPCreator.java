@@ -82,10 +82,10 @@ public class SMTPCreator
 	
 	/**
 	 * This method creates an empty configuration information parameters.
-	 * @return
+	 * @return APIConfigInfo
 	 */
 	@SuppressWarnings("unchecked")
-	@Override
+	@Override 
 	public APIConfigInfo createEmptyConfigInfo()
 	{
 		APIConfigInfoDAO configInfo = new APIConfigInfoDAO();
@@ -107,7 +107,7 @@ public class SMTPCreator
 
 	/**
 	 * This method returns the exception handler.
-	 * @return
+	 * @return APIExceptionHandler
 	 */
 	@Override
 	public APIExceptionHandler getExeptionHandler() 
@@ -118,7 +118,7 @@ public class SMTPCreator
 	/**
 	 * This method creates API based on configuration information parameters.
 	 * @param apiConfig
-	 * @return
+	 * @return APIServiceProvider
 	 */
 	@Override
 	public APIServiceProvider<Void> createAPI(APIDataStore<?> dataStore, APIConfigInfo apiConfig)

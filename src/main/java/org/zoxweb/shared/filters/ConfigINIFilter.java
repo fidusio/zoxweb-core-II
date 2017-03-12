@@ -111,7 +111,7 @@ public class ConfigINIFilter implements ValueFilter<String, List<String>> {
 
 	/**
 	 * 
-	 * @return
+	 * @return true if line trimming enabled
 	 */
 	public boolean isLineTrimmingEnabled() 
 	{

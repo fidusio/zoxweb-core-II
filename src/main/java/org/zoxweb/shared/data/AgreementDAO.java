@@ -96,17 +96,17 @@ public class AgreementDAO
 	public AgreementDAO(String language, String checkTitle, String agreementTitle, String content)
 	{
 		this();
-		setLanguage( language);
+		setLanguage(language);
 		setAgreementCheckTitle(checkTitle);
-		setAgreementContent( content);
-		setAgreementTitle( agreementTitle);
+		setAgreementContent(content);
+		setAgreementTitle(agreementTitle);
 	}
 
 	/**
 	 * Gets the language of the agreement.
-	 * @return
+	 * @return language
 	 */
-	public String getLanaguage() 
+	public String getLanguage() 
 	{
 		return getName();
 	}
@@ -122,7 +122,7 @@ public class AgreementDAO
 	
 	/**
 	 * Gets the title of the agreement.
-	 * @return
+	 * @return the agreement title
 	 */
 	public String getAgreementTitle() 
 	{
@@ -140,7 +140,7 @@ public class AgreementDAO
 	
 	/**
 	 * Gets the content of the agreement.
-	 * @return
+	 * @return the agreement content
 	 */
 	public String getAgreementContent() 
 	{
@@ -158,7 +158,7 @@ public class AgreementDAO
 	
 	/**
 	 * Gets the check box title of the agreement.
-	 * @return
+	 * @return the agreement check title
 	 */
 	public String getAgreementCheckTitle() 
 	{

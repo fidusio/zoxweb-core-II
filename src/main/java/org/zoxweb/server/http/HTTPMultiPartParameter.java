@@ -122,7 +122,7 @@ implements SetNameValue<String>
 	
 	/**
 	 * If content is byte array that means we have a binary data
-	 * @return
+	 * @return content value as byte array
 	 */
 	public byte[] getContentValue() 
 	{
@@ -137,7 +137,7 @@ implements SetNameValue<String>
 	
 	/**
 	 * If the file name is set that mean this is a file upload
-	 * @return
+	 * @return the file name
 	 */
 	public String getFileName()
 	{

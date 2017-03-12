@@ -27,13 +27,13 @@ public interface APIServiceProviderCreator
 {
 	/**
 	 * This method creates empty configuration information parameters.
-	 * @return
+	 * @return APIConfigInfo
 	 */
 	public APIConfigInfo createEmptyConfigInfo();
 	
 	/**
 	 * This method returns the exception handler.
-	 * @return
+	 * @return APIExceptionHandler
 	 */
 	public APIExceptionHandler getExeptionHandler();
 	
@@ -41,13 +41,15 @@ public interface APIServiceProviderCreator
 	 * This method creates the API based on the configuration information
 	 * parameters.
 	 * @param apiConfig
-	 * @return
+	 * @return APIServiceProvider
 	 * @throws APIException
 	 */
 	public APIServiceProvider<?> createAPI(APIDataStore<?> dataStore, APIConfigInfo apiConfig ) 
 			throws APIException;
 	
-	
+	/**
+	 * @return the api token manager
+	 */
 	public APITokenManager getAPITokenManager();
 	
 	

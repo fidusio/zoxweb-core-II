@@ -24,7 +24,7 @@ public interface IsMandatory {
 
 	/**
 	 * Checks if property is mandatory.
-	 * @return
+	 * @return true if mandatory
 	 */
 	public boolean isMandatory();
 

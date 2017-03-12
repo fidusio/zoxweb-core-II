@@ -93,7 +93,7 @@ public class NVEntityAccessInfo
 	
 	/**
 	 * Gets associated NVEntity.
-	 * @return
+	 * @return ref id of the associated nventity
 	 */
 	public String getAssociatedNVEntityRefID() 
 	{
@@ -111,7 +111,7 @@ public class NVEntityAccessInfo
 	
 	/**
 	 * Gets permissions.
-	 * @return
+	 * @return list of cruds
 	 */
 	public List<CRUD> getCRUDs() 
 	{
@@ -129,7 +129,7 @@ public class NVEntityAccessInfo
 	
 	/**
 	 * Gets expiration date.
-	 * @return
+	 * @return expiration date in millis
 	 */
 	public long getExpirationDate()
 	{
@@ -139,7 +139,7 @@ public class NVEntityAccessInfo
 	/**
 	 * Checks if given CRUD is permitted.
 	 * @param crud
-	 * @return
+	 * @return true if permitted
 	 */
 	public boolean isPermitted(CRUD crud)
 	{

@@ -627,7 +627,7 @@ public enum FilterType
 	/**
 	 * This method maps the given class to the applicable primitive type. Otherwise, returns null.
 	 * @param clazz
-	 * @return
+	 * @return filter type
 	 */
 	public static FilterType mapPrimitiveFilterType(Class<?> clazz)
 	{
@@ -673,7 +673,7 @@ public enum FilterType
 	/**
 	 * This method maps the given NVConfig to the applicable primitive type. Otherwise, returns null. 
 	 * @param nvc
-	 * @return
+	 * @return filter type
 	 */
 	public static FilterType mapPrimitiveFilterType(NVConfig nvc)
 	{
@@ -684,7 +684,7 @@ public enum FilterType
 	 * This method converts the string value to given NVConfig type.
 	 * @param nvc
 	 * @param value
-	 * @return
+	 * @return object value 
 	 */
 	public static Object stringToValue(NVConfig nvc, String value)
 	{
@@ -695,7 +695,7 @@ public enum FilterType
 	 * This method converts the string value to given class type.
 	 * @param clazz
 	 * @param value
-	 * @return
+	 * @return object value
 	 */
 	public static Object stringToValue(Class<?> clazz, String value)
 	{

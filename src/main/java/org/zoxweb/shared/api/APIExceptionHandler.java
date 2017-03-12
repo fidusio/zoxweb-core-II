@@ -33,7 +33,7 @@ public interface APIExceptionHandler
 	/**
 	 * This method maps the exception to an API exception.
 	 * @param e
-	 * @return
+	 * @return the mapped exception of type APIException
 	 */
 	public APIException mapException(Exception e);
 	

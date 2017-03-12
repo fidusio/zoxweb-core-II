@@ -116,8 +116,7 @@ public class APIConfigInfoDAO
 //	}
 	
 	/**
-	 * This method returns the API type name.
-	 * @return
+	 * @return the API type name.
 	 */
 	@Override
 	public String getAPITypeName()
@@ -136,8 +135,7 @@ public class APIConfigInfoDAO
 	}
 	
 	/**
-	 * This method returns the service type.
-	 * @return
+	 * @return the supported service types.
 	 */
 	@Override
 	public APIServiceType[] getServiceTypes() 
@@ -168,8 +166,7 @@ public class APIConfigInfoDAO
 	}
 
 	/**
-	 * This method returns the service configuration parameters.
-	 * @return
+	 * @return The configuration parameters
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -199,8 +196,7 @@ public class APIConfigInfoDAO
 	}
 
 	/**
-	 * This method returns the version.
-	 * @return
+	 * @return The version
 	 */
 	@Override
 	public String getVersion()
@@ -221,7 +217,7 @@ public class APIConfigInfoDAO
 	/**
 	 * This method returns a string representation of the class.
 	 * (return domain ID/account ID/user ID or profile).
-	 * @return
+	 * @return the canonical identifier
 	 */
 	@Override
 	public String toCanonicalID()
@@ -232,7 +228,7 @@ public class APIConfigInfoDAO
 	/**
 	 * This method checks if the service type is supported.
 	 * @param type
-	 * @return
+	 * @return true if type is supported
 	 */
 	@Override
 	public boolean isServiceTypeSupported(APIServiceType type) 
