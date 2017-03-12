@@ -48,6 +48,7 @@ test-classes/
 *.idea/
 *.iml
 *.log
+*.logs
 *.swp
 
 /src/main/java/META-INF/
