@@ -256,7 +256,7 @@ public final class SharedStringUtil {
 	/**
 	 * Returns null if str is null or str is empty, if not it will trim str from starting and ending whitespaces.
 	 * @param str
-	 * @return
+	 * @return null if str is null or str is empty, if not it will trim str from starting and ending whitespaces.
 	 */
 	public static String trimOrNull(String str)
 	{	
@@ -274,7 +274,7 @@ public final class SharedStringUtil {
 	/**
 	 * Returns empty string if str is null, if not it will trim str from starting and ending whitespaces.
 	 * @param str
-	 * @return
+	 * @return empty string if str is null, if not it will trim str from starting and ending whitespaces.
 	 */
 	public static String trimOrEmpty(String str) {
 		if (str != null) {
@@ -292,7 +292,7 @@ public final class SharedStringUtil {
 	 * otherwise will return empty string.
 	 * @param val
 	 * @param token
-	 * @return
+	 * @return a substring to the right of the specified index if both val and token are not null, 
 	 */
 	public static String valueAfterRightToken(String val, String token) {
 		if (val != null && token != null) {
@@ -311,7 +311,7 @@ public final class SharedStringUtil {
 	 * if both val and token are not null, otherwise will return empty string.
 	 * @param val
 	 * @param token
-	 * @return
+	 * @return a substring starting at the beginning of the string and ending to the left of the specified index
 	 */
 	public static String valueBeforeRightToken(String val, String token) {
 		if (val != null && token != null) {
@@ -331,7 +331,7 @@ public final class SharedStringUtil {
 	 * @param prefix
 	 * @param postfix
 	 * @param ignoreCase
-	 * @return
+	 * @return the value between the prefix and postfix string.
 	 */
 	public static StringToken valueBetween(String str, String prefix, String postfix, boolean ignoreCase) {
 		if (str != null) {
@@ -367,7 +367,7 @@ public final class SharedStringUtil {
 	 * otherwise will return empty string.
 	 * @param val
 	 * @param token
-	 * @return
+	 * @return a substring to the right of the specified index if both val and token are not null,
 	 */
 	public static String valueAfterLeftToken(String val, String token)
 	{
@@ -387,7 +387,7 @@ public final class SharedStringUtil {
 	 * if both val and token are not null, otherwise will return empty string.
 	 * @param val
 	 * @param token
-	 * @return
+	 * @return  a substring starting at the beginning of the string and ending to the left of the specified index
 	 */
 	public static String valueBeforeLeftToken(String val, String token) {
 		if (val != null && token != null) {
@@ -404,7 +404,7 @@ public final class SharedStringUtil {
 	/**
 	 * Checks if str is not null then return uppercase version, otherwise return null.
 	 * @param str
-	 * @return
+	 * @return if str is not null then return uppercase version, otherwise return null.
 	 */
 	public static String toUpperCase(String str) {
 		if (str != null) {
@@ -417,7 +417,7 @@ public final class SharedStringUtil {
 	/**
 	 * Return the byte array by converting the string to byte using UTF-8.
 	 * @param str
-	 * @return
+	 * @return  the byte array by converting the string to byte using UTF-8.
 	 * @throws NullPointerException
 	 * @throws IllegalArgumentException
 	 */
@@ -437,7 +437,7 @@ public final class SharedStringUtil {
 	/**
 	 * Returns the bytes array by converting the strings to bytes using UTF-8.
 	 * @param strs
-	 * @return
+	 * @return the bytes array by converting the strings to bytes using UTF-8.
 	 * @throws NullPointerException
 	 * @throws IllegalArgumentException
 	 */
@@ -458,7 +458,7 @@ public final class SharedStringUtil {
 	/**
 	 * Return the String based on the byte array  using encoding UTF-8.
 	 * @param array
-	 * @return
+	 * @return the String based on the byte array  using encoding UTF-8.
 	 * @throws NullPointerException
 	 * @throws IllegalArgumentException
 	 */
@@ -478,7 +478,7 @@ public final class SharedStringUtil {
 	/**
 	 * Checks if str is not null then return lowercase version, otherwise return null.
 	 * @param str
-	 * @return
+	 * @return if str is not null then return lowercase version, otherwise return null.
 	 */
 	public static String toLowerCase(String str) {
 		if (str != null) {
@@ -513,7 +513,7 @@ public final class SharedStringUtil {
 	 * Filters the given string based on given filters and returns the filtered string.
 	 * @param str
 	 * @param filter
-	 * @return
+	 * @return the given string based on given filters and returns the filtered string.
 	 */
 	public static String filterString(String str, CharSequence... filter) {
 		if (str != null) {
@@ -526,11 +526,11 @@ public final class SharedStringUtil {
 	}
 
 	/**
-	 * Parses specifed string based on regex and filter.
+	 * Parses specified string based on regex and filter.
 	 * @param str
 	 * @param regex
 	 * @param filter
-	 * @return
+	 * @return parsed strings
 	 */
 	public static String[] parseString(String str, String regex, CharSequence... filter) {
 		if (filter != null) {
@@ -544,9 +544,9 @@ public final class SharedStringUtil {
 	 * Returns a string array based on the strings str and sep.
 	 * @param str
 	 * @param sep
-	 * @return
+	 * @return {name, value}
 	 */
-	public static String[] parseNameValue( String str, String sep) {
+	public static String[] parseNameValue(String str, String sep) {
 		int index = str.indexOf( sep);
 		
 		if (index != -1) {
@@ -574,7 +574,7 @@ public final class SharedStringUtil {
 	 * @param s1
 	 * @param s2
 	 * @param sep
-	 * @return
+	 * @return s1 + sep + s2                
 	 */
 	public static String concat(String s1, String s2, String sep) {
 		s1 = trimOrEmpty( s1);
@@ -597,7 +597,7 @@ public final class SharedStringUtil {
 	/**
 	 * Format a list of NPairs
 	 * @param list
-	 * @return
+	 * @return n1=v1&n2=v2...
 	 */
 	public static <V> String format(ArrayValues<GetNameValue<V>> list) {
 		return format(list,"=", false, "&"); 
@@ -633,7 +633,7 @@ public final class SharedStringUtil {
 	 * @param pair
 	 * @param nameValueSep
 	 * @param quotedValue
-	 * @return
+	 * @return formatted string 
 	 */
 	public static <V> String format(GetNameValue<V> pair, String nameValueSep, boolean quotedValue) {
 		return format(pair.getName(), pair.getValue(), nameValueSep,  quotedValue);
@@ -645,7 +645,7 @@ public final class SharedStringUtil {
 	 * @param value
 	 * @param nameValueSep
 	 * @param quotedValue
-	 * @return
+	 * @return formatted string 
 	 */
 	public static <V> String format(String name, V value, String nameValueSep, boolean quotedValue) {
 		StringBuilder sb = new StringBuilder();
@@ -735,7 +735,7 @@ public final class SharedStringUtil {
 	/**
 	 * Converts a hex string into a byte array
 	 * @param str
-	 * @return
+	 * @return  a hex string into a byte array
 	 * @throws IllegalArgumentException
 	 * @throws NullPointerException
 	 */
@@ -793,7 +793,7 @@ public final class SharedStringUtil {
 	 * @param text
 	 * @param textMarker
 	 * @param value
-	 * @return
+	 * @return text embedded with value 
 	 */
 	public static String embedText(String text, String textMarker, String value) {
 
@@ -819,7 +819,7 @@ public final class SharedStringUtil {
 	 * @param text
 	 * @param textMarker
 	 * @param value
-	 * @return
+	 * @return text embedded with value 
 	 */
 	@SuppressWarnings("unchecked")
 	public static String embedText(String text, Enum<?> textMarker, String value) {
@@ -857,7 +857,7 @@ public final class SharedStringUtil {
 	 * Returns the string after the last occurrence of delimiter if no match is found return token as is.
 	 * @param token
 	 * @param delimiter
-	 * @return
+	 * @return the string after the last occurrence of delimiter if no match is found return token as is.
 	 */
 	public static String getTokenAfterDelimiter(String token, char delimiter) {
 		int index = token.lastIndexOf(delimiter);
@@ -873,7 +873,7 @@ public final class SharedStringUtil {
 	 * Checks if token occurs at least once in text.
 	 * @param text
 	 * @param token
-	 * @return
+	 * @return true if token occurs at least once in text.
 	 */
 	public static boolean hasToken(String text, String token) {
 		return !(text.indexOf(token) == -1);
@@ -886,7 +886,7 @@ public final class SharedStringUtil {
 	 * @param offset
 	 * @param len
 	 * @param postToken
-	 * @return
+	 * @return string of hex that represent the buffer content
 	 */
 	public static String bytesToHex(String preToken, byte buffer[], int offset, int len, String postToken)
 	{
@@ -909,7 +909,7 @@ public final class SharedStringUtil {
 	 * Converts a byte buffer into a hexadecimal string representation.
 	 * @param buffer
 	 * @param postToken
-	 * @return
+	 * @return string of hex that represent the buffer content
 	 */
 	public static String bytesToHex(byte buffer[], String postToken) {
 		return bytesToHex(null, buffer, 0, buffer.length, postToken);
@@ -920,7 +920,7 @@ public final class SharedStringUtil {
 	 * @param preToken
 	 * @param buffer
 	 * @param postToken
-	 * @return
+	 * @return string of hex that represent the buffer content
 	 */
 	public static String bytesToHex(String preToken, byte buffer[], String postToken) {
 		return bytesToHex(preToken, buffer, 0, buffer.length, postToken);
@@ -930,7 +930,7 @@ public final class SharedStringUtil {
 	 * Converts a byte buffer into a hexadecimal string representation
 	 * @param preToken
 	 * @param buffer
-	 * @return
+	 * @return string of hex that represent the buffer content
 	 */
 	public static String bytesToHex(String preToken, byte buffer[]) {
 		return bytesToHex(preToken, buffer, 0, buffer.length, null);
@@ -941,7 +941,7 @@ public final class SharedStringUtil {
 	 * @param buffer
 	 * @param offset
 	 * @param len
-	 * @return
+	 * @return string of hex that represent the buffer content
 	 */
 	public static String bytesToHex(byte buffer[], int offset, int len) {
 		return bytesToHex(null, buffer, offset, len, null);
@@ -952,7 +952,7 @@ public final class SharedStringUtil {
 	 * @param sb if null this method will create a new string builder , if not null will use the one being passed
 	 * @param preToken to be added before the converted byte if null it will be skipped
 	 * @param b byte to convert
-	 * @return
+	 * @return stringbuilder of hex that represent the buffer content
 	 */
 	public static StringBuilder byteToHex(StringBuilder sb, String preToken, byte b) {
 		if  (sb == null) {
@@ -972,7 +972,7 @@ public final class SharedStringUtil {
 	/**
 	 * Converts a byte buffer into a hexadecimal string representation.
 	 * @param buffer
-	 * @return
+	 * @return string of hex that represent the buffer content
 	 */
 	public static String bytesToHex(byte buffer[]) {
 		return bytesToHex(null, buffer, 0, buffer.length, null);
@@ -982,7 +982,7 @@ public final class SharedStringUtil {
 	 * Converts a string into a hexadecimal string representation.
 	 * @param preToken
 	 * @param str
-	 * @return
+	 * @return string of hex that represent the buffer content
 	 */
 	public static String stringToHex(String preToken, String str) {
 		return bytesToHex(preToken, getBytes(str));
@@ -992,7 +992,7 @@ public final class SharedStringUtil {
 	 * Truncates a string based on the specified length.
 	 * @param str
 	 * @param length
-	 * @return
+	 * @return Truncates a string based on the specified length.
 	 */
 	public static String truncate(String str, int length) {
 		if (str == null) {
@@ -1012,7 +1012,7 @@ public final class SharedStringUtil {
 	 * @param str
 	 * @param maxLength
 	 * @param sepLength
-	 * @return
+	 * @return compresses the given string given the maximum length, separator, and separator length.
 	 */
 	public static String toShortHand(char sep, String str, int maxLength, int sepLength) {
 		if (str != null) {

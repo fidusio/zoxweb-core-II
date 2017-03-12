@@ -116,7 +116,7 @@ public class NVCEMap
 	
 	/**
 	 * Gets the associated NVConfigEntity.
-	 * @return
+	 * @return the associated NVConfigEntity.
 	 */
 	public NVConfigEntity getAssociatedNVCE() 
 	{
@@ -134,7 +134,7 @@ public class NVCEMap
 	
 	/**
 	 * Gets the NVConfigEntity map list.
-	 * @return
+	 * @return the NVConfigEntity map list.
 	 */
 	@SuppressWarnings("unchecked")
 	public ArrayValues<NVEntity> getNVCMapList() 
@@ -167,7 +167,7 @@ public class NVCEMap
 	
 	/**
 	 * Gets the language.
-	 * @return
+	 * @return the language.
 	 */
 	public String getLanguage() 
 	{
@@ -185,7 +185,7 @@ public class NVCEMap
 	
 	/**
 	 * Gets the language direction.
-	 * @return
+	 * @return the language direction.
 	 */
 	public Bidi getLanguageDirection() 
 	{

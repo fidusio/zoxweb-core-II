@@ -25,7 +25,7 @@ public interface GetDisplayName {
 	/**
 	 * Returns the display name of an object which is usually
 	 * used in the context of name override or for context change.
-	 * @return
+	 * @return display name 
 	 */
 	public String getDisplayName();
 	

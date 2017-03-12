@@ -27,8 +27,8 @@ public interface NVConfigAttributesMap
 			ReferenceID<String>
 {
 	/**
-	 * This method returns teh attributes map.
-	 * @return
+	 * This method returns the attributes map.
+	 * @return  the attributes map.
 	 */
 	public List<NVConfigNameMap> getAttribuesMap();
 	
@@ -41,7 +41,7 @@ public interface NVConfigAttributesMap
 	/**
 	 * This method looks up the attributes map based on given string input.
 	 * @param attributeNameOrAttributeMappedName
-	 * @return
+	 * @return matching  attributes map
 	 */
 	public NVConfigNameMap lookup(String attributeNameOrAttributeMappedName);
 	

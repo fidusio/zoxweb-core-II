@@ -78,7 +78,7 @@ public class SharedUtil {
 	 * Creates a canonical string based on an array of objects which are separated by a character.
 	 * @param sep
 	 * @param objArray
-	 * @return
+	 * @return obj0.toString() + sep + obj1.toString() + sep + obj2.toString() ...
 	 */
 	public static String toCanonicalID(char sep, Object...objArray) {
 		return toCanonicalID(false, sep, objArray);
@@ -101,7 +101,7 @@ public class SharedUtil {
 	 * the elements in list are read separately and are specified by a character.
 	 * @param sep
 	 * @param enumer
-	 * @return
+	 * @return obj0.toString() + sep + obj1.toString() + sep + obj2.toString() ...
 	 */
 	public static String toCanonicalID(boolean ignoreNulls, char sep, Enumeration<?> enumer) {
 		StringBuilder sb = new StringBuilder();
@@ -160,7 +160,7 @@ public class SharedUtil {
 	 * </ol> 
 	 * @param list
 	 * @param str
-	 * @return
+	 * @return matching enum
 	 */
 	public static Enum<?> lookupEnum(Enum<?>[] list, String str) {
 		if (str != null) {
@@ -263,7 +263,7 @@ public class SharedUtil {
 	 * 
 	 * @param enumClass
 	 * @param value
-	 * @return
+	 * @return matchinf enum
 	 */
 	public static Enum<?> enumValue(Class<?> enumClass, String value) {
 		if (value != null) {
@@ -291,7 +291,7 @@ public class SharedUtil {
 	/**
 	 * Parses a name = value String and return an NVPair object.
 	 * @param str
-	 * @return
+	 * @return parse name=value into nvpair
 	 */
 	public static NVPair toNVPair(String str) {
 		return toNVPair(str, "=", false);
@@ -301,29 +301,10 @@ public class SharedUtil {
 	 * Converts a string to a NVPair based on the first occurrence of the sep in str.
 	 * @param str
 	 * @param sep
-	 * @return
+	 * @return parse name sep value into nvpair
 	 */
 	public static NVPair toNVPair(String str, String sep) {
-//		NVPair ret = null;
-//		str = SharedStringUtil.trimOrNull(str);
-//		
-//		if (str != null )
-//		{
-//			int index = str.indexOf(sep);
-//			
-//			if (index != -1)
-//			{
-//				String name = SharedStringUtil.trimOrNull(SharedStringUtil.valueBeforeLeftToken(str, sep));
-//				String value = SharedStringUtil.valueAfterLeftToken(str, sep);
-//				
-//				if (name != null)
-//				{
-//					ret = new NVPair(name, value);
-//				}
-//			}
-//		}
-//		
-//		return ret;
+
 		
 		return toNVPair(str, sep, false);
 	}
@@ -360,7 +341,7 @@ public class SharedUtil {
 	 * Looks up the NVBase on name.
 	 * @param list
 	 * @param name
-	 * @return
+	 * @return nvbase that matches getName()
 	 */
 	public static NVBase<?> lookupNVPB(List<NVBase<?>> list, String name) {
 		if (name != null) {
@@ -378,7 +359,7 @@ public class SharedUtil {
 	 * Looks up the NVBase based on enum.
 	 * @param list
 	 * @param e
-	 * @return
+	 * @return nvbase that matches getName()
 	 */
 	public static NVBase<?> lookupNVPB(List<NVBase<?>> list, Enum<?> e)
 	{
@@ -414,7 +395,7 @@ public class SharedUtil {
 	 * Looks NV list based on name.
 	 * @param list
 	 * @param name
-	 * @return
+	 * @return GateNameValue<?> matches name
 	 */
 	public static <V> GetNameValue<V> lookupNV(List<? extends GetNameValue<V>> list, String name) {
 		return lookupNV(list, name, null);
@@ -425,7 +406,7 @@ public class SharedUtil {
 	 * @param list
 	 * @param name
 	 * @param canonicalSep
-	 * @return
+	 * @return GateNameValue<?> matches name
 	 */
 	public static <V> GetNameValue<V> lookupNV(List<? extends GetNameValue<V>> list, String name, String canonicalSep) {
 		if (name != null) {
@@ -447,7 +428,7 @@ public class SharedUtil {
 	 * Looks up value based on name.
 	 * @param list
 	 * @param name
-	 * @return
+	 * @return return the value that matches name
 	 */
 	public static <V> V lookupValue(List<? extends GetNameValue<V>> list, String name) {
 		V ret = null;
@@ -483,7 +464,7 @@ public class SharedUtil {
 	 * Looks up value based on enum.
 	 * @param list
 	 * @param e
-	 * @return
+	 * @return lookup value that matched e name 
 	 */
 	public static <V> V lookupValue(List<? extends GetNameValue<V>> list, Enum<?> e) {
 		V ret = null;
@@ -516,7 +497,7 @@ public class SharedUtil {
 	 * Looks up list which GetName based on name.
 	 * @param list
 	 * @param name
-	 * @return
+	 * @return return the matching GetName that matches name
 	 */
 	@SuppressWarnings("unchecked")
 	public static  <V> V lookup(List<? extends GetName> list, String name) {
@@ -585,7 +566,7 @@ public class SharedUtil {
 	 * Looks up list which extends GetName based on enum.
 	 * @param list
 	 * @param e
-	 * @return
+	 * @return return the matching GetName that matches e
 	 */
 	@SuppressWarnings("unchecked")
 	public static  <V> V lookup(List<? extends GetName> list, Enum<?> e) {
@@ -611,7 +592,7 @@ public class SharedUtil {
 	 * less the prefix	
 	 * @param prefix
 	 * @param str
-	 * @return
+	 * @return str stripped of prefix
 	 */
 	public static String removePrefix(String prefix, String str) {
 		if (prefix != null && str.startsWith(prefix)) {
@@ -626,7 +607,7 @@ public class SharedUtil {
 	 * Looks up NV list that extends GetNameValue based on enum.
 	 * @param arrayList
 	 * @param e
-	 * @return
+	 * @return matching GetNameValue<V>
 	 */
 	public static <V> GetNameValue<V> lookupNV(List<? extends GetNameValue<V>> arrayList, Enum<?> e) {
 		if (e != null) {
@@ -648,7 +629,7 @@ public class SharedUtil {
 	 * str[0] = "Zox"; str[1] = "Web"; str[2] = "Core";
 	 * toString(str) returns [0]:Zox [1]:Web [2]:Core
 	 * @param array
-	 * @return
+	 * @return obj[0] + \n + ob[1] +\n + ...
 	 */
 	public static String toString(Object[] array) {
 		return toString(array, "\n");
@@ -662,7 +643,7 @@ public class SharedUtil {
 	 * toString(str, "-") returns [0]:Zox-[1]:Web-[2]:Core
 	 * @param array
 	 * @param sep
-	 * @return
+	 * @return  obj[0] + sep + ob[1] +sep  + ...
 	 */
 	public static String toString(Object[] array, String sep) {
 		return toString(array, sep, true);
@@ -679,7 +660,7 @@ public class SharedUtil {
 	 * @param array
 	 * @param sep
 	 * @param index
-	 * @return
+	 * @return formatted string
 	 */
 	public static String toString(Object[] array, String sep, boolean index) {
 		StringBuilder sb = new StringBuilder();
@@ -706,7 +687,7 @@ public class SharedUtil {
 	/**
 	 * Converts NVEntity to debug string.
 	 * @param nve
-	 * @return
+	 * @return debug string
 	 */
 	public static String toDebugString(NVEntity nve) {
 		StringBuilder sb = new StringBuilder();
@@ -743,7 +724,7 @@ public class SharedUtil {
 	 * Looks up array values based on given String.
 	 * @param arrayValues
 	 * @param name
-	 * @return
+	 * @return list that matches name
 	 */
 	public static <V> List<? extends GetNameValue<V>> lookupArrayValues(ArrayValues<? extends GetNameValue<V>> arrayValues, String name) {
 		ArrayList<GetNameValue<V>> ret = new ArrayList<GetNameValue<V>>(); 
@@ -763,7 +744,7 @@ public class SharedUtil {
 	 * Looks up array values based on given enum.
 	 * @param arrayValues
 	 * @param e
-	 * @return
+	 * @return list that matches e
 	 */
 	public static <V> List<? extends GetNameValue<V>> lookupArrayValues(ArrayValues<? extends GetNameValue<V>> arrayValues, Enum<?> e) {
 		ArrayList<GetNameValue<V>> ret = new ArrayList<GetNameValue<V>>(); 
@@ -785,7 +766,7 @@ public class SharedUtil {
 	 * Looks up all NV list that extends GetNameValue based on enum.
 	 * @param arrayList
 	 * @param e
-	 * @return
+	 * @return  list that matches e
 	 */
 	public static <V> List<? extends GetNameValue<V>> lookupAllNV(List<GetNameValue<V>> arrayList, Enum<?> e) {
 		ArrayList<GetNameValue<V>> ret = new ArrayList<GetNameValue<V>>(); 
@@ -808,7 +789,7 @@ public class SharedUtil {
 	 * 
 	 * @param arrayList
 	 * @param name
-	 * @return
+	 * @return  list that matches name
 	 */
 	public static <V>List< ? extends GetNameValue<V>> lookupAllNV(List<? extends GetNameValue<V>> arrayList, String name) {
 		return lookupAllNV(arrayList, name, null);
@@ -819,7 +800,7 @@ public class SharedUtil {
 	 * @param arrayList
 	 * @param name
 	 * @param canonicalSep
-	 * @return
+	 * @return  list that matches name
 	 */
 	public static <V>List< ? extends GetNameValue<V>> lookupAllNV(List<? extends GetNameValue<V>> arrayList, String name, String canonicalSep) {
 		ArrayList<GetNameValue<V>> ret = new ArrayList<GetNameValue<V>>(); 
@@ -871,7 +852,7 @@ public class SharedUtil {
 	/**
 	 * 
 	 * @param nvMap
-	 * @return
+	 * @return convert map to list nvpairs
 	 */
 	public static <V>List<? extends GetNameValue<String>> toNVPairs(Map<String, String[]> nvMap) {
 		return toNVPairs(nvMap, false);
@@ -881,7 +862,7 @@ public class SharedUtil {
 	 * 
 	 * @param nvMap
 	 * @param nullAllowed
-	 * @return
+	 * @return convert map to list nvpairs
 	 */
 	public static <V>List<? extends GetNameValue<String>> toNVPairs(Map<String, String[]> nvMap, boolean nullAllowed) {
 		List< GetNameValue<String>> ret = new ArrayList<GetNameValue<String>>();
@@ -910,7 +891,7 @@ public class SharedUtil {
 	/**
 	 * 
 	 * @param enums
-	 * @return
+	 * @return convert enum to list nvpairs
 	 */
 	@SuppressWarnings("unchecked")
 	public static <V>List< ? extends GetNameValue<String>> toNVPairs(Enum<?>... enums) {
@@ -949,7 +930,7 @@ public class SharedUtil {
 	/**
 	 * 
 	 * @param nvMap
-	 * @return
+	 * @return convert map to list nvpairs
 	 */
 	public static ArrayList<? extends GetNameValue<String>> listToNVPairs(Map<String, List<String>> nvMap) {
 		ArrayList< GetNameValue<String>> ret = new ArrayList<GetNameValue<String>>();
@@ -973,8 +954,8 @@ public class SharedUtil {
 	 * 
 	 * @param paramList
 	 * @param configList
-	 * @return
-	 */
+	 * @return true if all mandatory parameters are set
+	 */ 
 	public static boolean areAllMandtorySet(List<NVPair> paramList, GetNVConfig configList[]) {
 		return (firstMissingMandtory(paramList, configList) == null);
 	}
@@ -983,7 +964,7 @@ public class SharedUtil {
 	 * 
 	 * @param paramList
 	 * @param configList
-	 * @return
+	 * @return the first not set mandatory nvconfig
 	 */
 	public static NVConfig firstMissingMandtory(List<NVPair> paramList, GetNVConfig configList[]) {
 		for (GetNVConfig con : configList) {
@@ -1006,7 +987,7 @@ public class SharedUtil {
 	/**
 	 * 
 	 * @param params
-	 * @return
+	 * @return create map nvbase based on the meta params
 	 */
 	public static HashMap<String, NVBase<?>> toData(List<NVConfig> params) {
 		HashMap<String, NVBase<?>> ret = new HashMap<String, NVBase<?>>();
@@ -1021,7 +1002,7 @@ public class SharedUtil {
 	/**
 	 * 
 	 * @param params
-	 * @return
+	 * @return create list nvbased on nvconfig array
 	 */
 	public static ArrayList<NVBase<?>> toData(NVConfig[] params) {
 		ArrayList<NVBase<?>> ret = new ArrayList<NVBase<?>>();
@@ -1036,7 +1017,7 @@ public class SharedUtil {
 	/**
 	 * 
 	 * @param params
-	 * @return
+	 * @return create list nvbased on nvconfig array
 	 */
 	public static ArrayList<NVBase<?>> toData(GetNVConfig[] params) {
 		ArrayList<NVBase<?>> ret = new ArrayList<NVBase<?>>();
@@ -1052,7 +1033,7 @@ public class SharedUtil {
 	 * 
 	 * @param nvce
 	 * @param values
-	 * @return
+	 * @return create list nvbased on nvce 
 	 */
 	public static ArrayList<NVBase<?>> toData(NVConfigEntity nvce, ArrayList<NVBase<?>> values) {
 		if (values == null) {
@@ -1091,7 +1072,7 @@ public class SharedUtil {
 	 * <li>Double array type class to NVDoubleList
 	 * </ul>
 	 * @param config
-	 * @return
+	 * @return nvbase based on nvconfig
 	 */
 	@SuppressWarnings("unchecked")
 	public static NVBase<?> metaConfigToNVBase(NVConfig config) {
@@ -1187,7 +1168,7 @@ public class SharedUtil {
 	 * 
 	 * @param config
 	 * @param value
-	 * @return
+	 * @return convert string to value dictated by nvconfig
 	 */
 	public static Object stringToValue(NVConfig config, String value) {
 
@@ -1273,7 +1254,7 @@ public class SharedUtil {
 	 * First checks whether the class is of array type. Then checks the primitive data type of 
 	 * class c and returns true if class type is primitive, otherwise returns false.
 	 * @param c
-	 * @return
+	 * @return true if primitive note string is considered primitive
 	 */
 	public static boolean isPrimitive(Class<?> c) {
 		checkIfNulls("Class can't be null", c);
@@ -1299,7 +1280,7 @@ public class SharedUtil {
 	/**
 	 * 
 	 * @param array
-	 * @return
+	 * @return extract the nvconfig from the GetNVConfig array 
 	 */
 	public static ArrayList<NVConfig> extractNVConfigs(GetNVConfig[] array) {
 		ArrayList<NVConfig> ret = null;
@@ -1319,7 +1300,7 @@ public class SharedUtil {
 	/**
 	 * 
 	 * @param array
-	 * @return
+	 * @return convert NVConfig array to List
 	 */
 	public static ArrayList<NVConfig> toNVConfigList(NVConfig... array) {
 		ArrayList<NVConfig> ret = null;
@@ -1339,9 +1320,10 @@ public class SharedUtil {
 	 * 
 	 * @param list
 	 * @param toAdd
-	 * @return
+	 * @return merged list + toAdd
 	 */
-	public static List<NVConfigEntity> merge(List<NVConfigEntity> list, NVConfigEntity... toAdd) {
+	public static List<NVConfigEntity> merge(List<NVConfigEntity> list, NVConfigEntity... toAdd) 
+	{
 		if (list == null) {
 			list = new ArrayList<NVConfigEntity>();
 		}
@@ -1459,7 +1441,7 @@ public class SharedUtil {
 	/**
 	 * 
 	 * @param list
-	 * @return
+	 * @return convert nvpair list to GetNameValue<String> list
 	 */
 	public static List<GetNameValue<String>> toNVList(List<NVPair> list) {
 		List<GetNameValue<String>> ret = null;
@@ -1482,7 +1464,7 @@ public class SharedUtil {
 	 * @param str
 	 * @param nvpSep the name nvpSep value
 	 * @param regExp the separator nvp1 rexExp nvp2
-	 * @return
+	 * @return list nvpair (name sep value regExp)+
 	 */
 	public static List<NVPair> toNVPairs(String str, String nvpSep, String regExp) {
 		String pairs[] = SharedStringUtil.parseString(str,regExp, (CharSequence[] )null );
@@ -1503,9 +1485,9 @@ public class SharedUtil {
 	 * 
 	 * @param list
 	 * @param nameOfNVToBeFiltered
-	 * @return
+	 * @return something
 	 */
-	public static List<GetNameValue<String>> filterNV(List<GetNameValue<String>> list,String nameOfNVToBeFiltered) {
+	public static List<GetNameValue<String>> filterNV(List<GetNameValue<String>> list, String nameOfNVToBeFiltered) {
 		List<GetNameValue<String>> ret = null;
 		
 		if (nameOfNVToBeFiltered != null) {
@@ -1546,7 +1528,7 @@ public class SharedUtil {
 	 * @param match
 	 * @param matchOffset
 	 * @param matchLen
-	 * @return
+	 * @return matching index
 	 */
 	public static int indexOf(byte[] buffer, int bufferStartIndex, int bufferEndIndex, byte match[], int matchOffset, int matchLen) {
 		if (matchOffset < 0 || matchLen < 1 || (matchOffset+matchLen) > match.length || bufferEndIndex > buffer.length) {
@@ -1573,7 +1555,7 @@ public class SharedUtil {
 	/**
 	 * 
 	 * @param gnv
-	 * @return
+	 * @return value 
 	 */
 	public static <V> V getValue(GetNameValue<V> gnv) {
 		if (gnv != null) {
@@ -1587,7 +1569,7 @@ public class SharedUtil {
 	 * 
 	 * @param buffer
 	 * @param str
-	 * @return
+	 * @return matching index
 	 */
 	public static int indexOf(byte[] buffer, String str) {
 		return indexOf(buffer, 0, buffer.length, str, 0, str.length(), false);
@@ -1597,7 +1579,7 @@ public class SharedUtil {
 	 * 
 	 * @param buffer
 	 * @param str
-	 * @return
+	 * @return matching index
 	 */
 	public static int indexOfIgnoreCase(byte[] buffer, String str)
 	{
@@ -1613,7 +1595,7 @@ public class SharedUtil {
 	 * @param csOffset
 	 * @param csLen
 	 * @param ignoreCase
-	 * @return
+	 * @return matching index
 	 */
 	public static int indexOf(byte[] buffer, int bufferStartIndex, int bufferEndIndex, CharSequence cs, int csOffset, int csLen, boolean ignoreCase) {
 		
@@ -1650,7 +1632,6 @@ public class SharedUtil {
      * @param   a       the first byte array
      * @param   b       the second byte array 
      * @return          true if both byte arrays are the same, false if not
-     * @see // https://crackstation.net/hashing-security.htm
 	 */
 	public static boolean slowEquals(byte[] a, byte[] b) {
 		checkIfNulls("one of the byte array is null", a, b);
@@ -1765,7 +1746,7 @@ public class SharedUtil {
 	 * @param value
 	 * @param nameValueSep
 	 * @param quotedValue
-	 * @return
+	 * @return formatted string name sep quote value quote
 	 */
 	public static <V> String format(String name, V value, String nameValueSep, boolean quotedValue) {
 		StringBuilder sb = new StringBuilder();
@@ -1795,7 +1776,7 @@ public class SharedUtil {
 	 * The value and defaultValue can not be null simultaneously.  
 	 * @param value
 	 * @param defaultValue
-	 * @return
+	 * @return override null with default value
 	 * @throws NullPointerException if defaultValue == null && value == null
 	 */
 	public static <V extends Object> V nullToDefault(V value, V defaultValue)

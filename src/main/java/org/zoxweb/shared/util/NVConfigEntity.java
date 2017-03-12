@@ -42,7 +42,7 @@ public interface NVConfigEntity
 	
 	/**
 	 * This method returns the list of attributes of NVConfig type.
-	 * @return 
+	 * @return list of meta attribute
 	 */
 	public List<NVConfig> getAttributes();
 	
@@ -55,7 +55,7 @@ public interface NVConfigEntity
 	/**
 	 * This method returns the list of the specified attributes of 
 	 * NVConfig type to be displayed.
-	 * @return
+	 * @return display attributes
 	 */
 	public List<NVConfig> getDisplayAttributes();
 	
@@ -68,14 +68,14 @@ public interface NVConfigEntity
 	/**
 	 * This method looks up the matching NVConfig by name.
 	 * @param name is an array list of NVConfig type
-	 * @return
+	 * @return nvconfig matching name
 	 */
 	public NVConfig lookup(String name);
 	
 	/**
 	 * This method looks up the matching NVConfig by enum value.
 	 * @param e is of generic enum type
-	 * @return
+	 * @return  nvconfig matching e
 	 */
 	public NVConfig lookup(Enum<?> e);
 	
@@ -99,7 +99,7 @@ public interface NVConfigEntity
 	
 	/**
 	 * This method returns the referenced NVConfigEntity.
-	 * @return
+	 * @return the referenced NVConfigEntity.
 	 */
 	NVConfigEntity getReferencedNVConfigEntity();
 	
@@ -107,7 +107,7 @@ public interface NVConfigEntity
 	
 	/**
 	 * This method checks whether attribute validation is required.
-	 * @return
+	 * @return true if attribute validation is required.
 	 */
 	public boolean isAttributesValidationRequired();
 

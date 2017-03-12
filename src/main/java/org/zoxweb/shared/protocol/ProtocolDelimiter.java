@@ -79,7 +79,7 @@ public enum ProtocolDelimiter
 	
 	/**
 	 * This method returns byte array.
-	 * @return
+	 * @return bytes array
 	 */
 	public final byte[] getBytes()
 	{

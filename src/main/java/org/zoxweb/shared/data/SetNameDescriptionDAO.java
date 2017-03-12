@@ -28,9 +28,6 @@ import javax.persistence.MappedSuperclass;
  * This class defines set name description data access object
  * which extends SetNameDAO.
  * @author mnael
- * @version $Revision: 1.17 $
- * @lastModifiedBy $Author: mnael $
- * @lastModifiedAt $Date: 2015/11/30 06:38:57 $
  */
 @MappedSuperclass
 @SuppressWarnings("serial")

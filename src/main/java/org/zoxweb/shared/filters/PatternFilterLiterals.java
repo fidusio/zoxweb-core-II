@@ -95,7 +95,7 @@ public class PatternFilterLiterals implements ValueFilter<String, String>
 	 * excluded from the literal pattern.
 	 * @param in
 	 * @param exclusionList
-	 * @return
+	 * @return validated string
 	 */
 	public String validateWithExclusion(String in, String ... exclusionList)
 	{

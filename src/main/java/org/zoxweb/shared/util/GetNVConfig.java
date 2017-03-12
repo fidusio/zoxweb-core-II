@@ -27,7 +27,7 @@ public interface GetNVConfig
 
 	/**
 	 * Returns the NVConfig.
-	 * @return
+	 * @return nvconfig
 	 */
 	public NVConfig getNVConfig();
 

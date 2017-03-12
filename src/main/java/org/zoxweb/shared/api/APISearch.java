@@ -36,6 +36,8 @@ public interface APISearch<I, O>
 	 * @throws IllegalArgumentException
 	 * @throws IOException
 	 * @throws NullPointerException
+	 * @throws AccessException 
+	 * @throws APIException 
 	 */
 	@SuppressWarnings("unchecked")
 	List<O> search(I... args) 

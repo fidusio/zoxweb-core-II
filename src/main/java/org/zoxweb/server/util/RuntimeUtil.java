@@ -47,8 +47,11 @@ public class RuntimeUtil
 	/**
 	 * Get the output of the command as string. IT will block until the
 	 * executing process closes the stream.
+	 * @param p 
+	 * @param ra 
 	 * 
 	 * @return the output of the command. If there is no output, "" is returned.
+	 * @throws IOException 
 	 * @throws InterruptedException 
 	 */
 	public static String getRuntimeResponse(Process p, ResultAttribute ra ) 
@@ -85,6 +88,8 @@ public class RuntimeUtil
 	 * @param command
 	 *            to be executed.
 	 * @return The execution result the process exit code and the output stream
+	 * @throws InterruptedException 
+	 * @throws IOException 
 	 */
 	public static RuntimeResultDAO runAndFinish(String command)
 			throws InterruptedException, IOException 
@@ -98,7 +103,10 @@ public class RuntimeUtil
 	 * 
 	 * @param command
 	 *            to be executed.
+	 * @param ra 
 	 * @return The execution result the process exit code and the output stream
+	 * @throws InterruptedException 
+	 * @throws IOException 
 	 */
 	public static RuntimeResultDAO runAndFinish(String command, ResultAttribute ra)
 			throws InterruptedException, IOException 

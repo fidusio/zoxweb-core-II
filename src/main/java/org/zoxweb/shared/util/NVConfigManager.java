@@ -42,10 +42,10 @@ public class NVConfigManager
 	 * @param name
 	 * @param description
 	 * @param displayName
-	 * @param manantory
+	 * @param mandatory
 	 * @param editable
 	 * @param type
-	 * @return
+	 * @return NVConfig
 	 */
 	public static NVConfig createNVConfig(String name, String description, String displayName, boolean mandatory, boolean editable, Class<?> type)
 	{
@@ -57,11 +57,11 @@ public class NVConfigManager
 	 * @param name
 	 * @param description
 	 * @param displayName
-	 * @param manantory
+	 * @param mandatory
 	 * @param editable
 	 * @param type
 	 * @param vf
-	 * @return
+	 * @return NVConfig
 	 */
 	public static NVConfig createNVConfig(String name, String  description, String displayName, boolean mandatory, boolean editable, boolean isUnique, Class<?> type, ValueFilter<?, ?> vf)
 	{
@@ -73,13 +73,13 @@ public class NVConfigManager
 	 * @param name
 	 * @param description
 	 * @param displayName
-	 * @param manantory
+	 * @param mandatory
 	 * @param editable
 	 * @param isUnique
 	 * @param isHidden
 	 * @param type
 	 * @param vf
-	 * @return
+	 * @return NVConfig
 	 */
 	public static NVConfig createNVConfig(String name,
 										  String  description,
@@ -115,12 +115,11 @@ public class NVConfigManager
 	 * @param name
 	 * @param description
 	 * @param displayName
-	 * @param man
+	 * @param mandatory
 	 * @param edit
 	 * @param type
-	 * @param attrList
-	 * @param displayList
-	 * @return
+	 * @param at
+	 * @return NVConfig
 	 */
 	public static NVConfig createNVConfigEntity(String name, 
 											    String description,
@@ -138,10 +137,10 @@ public class NVConfigManager
 	 * @param name
 	 * @param description
 	 * @param displayName
-	 * @param man
+	 * @param mandatory
 	 * @param edit
 	 * @param nvce
-	 * @return
+	 * @return NVConfig
 	 */
 	public static NVConfig createNVConfigEntity(String name, String  description, String displayName, boolean mandatory, boolean edit, NVConfigEntity nvce)
 	{
@@ -153,10 +152,10 @@ public class NVConfigManager
 	 * @param name
 	 * @param description
 	 * @param displayName
-	 * @param man
+	 * @param mandatory
 	 * @param edit
 	 * @param nvce
-	 * @return
+	 * @return NVConfig
 	 */
 	public static NVConfig createNVConfigEntity(String name, 
 												String  description, 

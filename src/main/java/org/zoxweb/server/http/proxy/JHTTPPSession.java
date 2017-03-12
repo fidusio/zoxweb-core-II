@@ -176,7 +176,12 @@ implements Runnable
 		if (server.isDebugEnabled())
 			log.info("end http session");
 	}
-	/** sends a message to the user */
+	/** 
+	 * sends a message to the user 
+	 * @param a 
+	 * @param info 
+	 * @throws IOException 
+	 */
 	public void sendErrorMSG(int a,String info)throws IOException {
 		String statuscode = sendHeader(a);
 		String localhost = "localhost";
@@ -235,7 +240,11 @@ implements Runnable
 		return stat;
 	}
 
-  /** the main routine, where it all happens */
+  /**
+   *  the main routine, where it all happens 
+   * 
+   * @throws Exception 
+   */
 	public void handleRequest() throws Exception {
 		InetAddress remote_host;
 		JHTTPPRead remote_read=null;
@@ -364,7 +373,10 @@ implements Runnable
 			remote_read.close(); // close Jhttpp2Read thread
 		return;
 	}
-  /** connects to the given host and port */
+  /** connects to the given host and port 
+ * @param host 
+ * @param port 
+ * @throws IOException */
   public void connect(InetAddress host,int port)
   	throws IOException 
   {
@@ -373,7 +385,10 @@ implements Runnable
       remote_in = new BufferedInputStream(getRemoteSocket().getInputStream());
       remote_out = new BufferedOutputStream(getRemoteSocket().getOutputStream());
   }
-  /** converts an String into a Byte-Array to write it with the OutputStream */
+  /** converts an String into a Byte-Array to write it with the OutputStream 
+ * @param o 
+ * @param p 
+ * @throws IOException */
   public void write(BufferedOutputStream o,String p)
   	throws IOException 
   {
@@ -382,6 +397,7 @@ implements Runnable
 
   /**
    * Small webserver for local files in {app}/htdocs
+ * @throws IOException 
    * @since 0.4.04
    */
   public void file_handler() throws IOException 
@@ -432,14 +448,17 @@ implements Runnable
     file_in.close(); // finished!
   }
   /**
-   * @since 0.4.10b
+   * @return  status
+ * @since 0.4.10b
    */
   public int getStatus()
   {
     return client_in.getStatusCode();
   }
   /**
-     * @since 0.4.20a
+     * @param b 
+ * @throws IOException 
+ * @since 0.4.20a
      * admin webpage
    */
   public void admin_handler(byte[] b) throws IOException

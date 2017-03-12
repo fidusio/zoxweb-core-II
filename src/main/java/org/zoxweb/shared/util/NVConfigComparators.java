@@ -324,7 +324,7 @@ public enum NVConfigComparators
 	 * This method returns the appropriate comparator type
 	 * of an object of NVConfig type.
 	 * @param nvc
-	 * @return
+	 * @return matching comparator
 	 */
 	public static Comparator<Object> lookupComparator(NVConfig nvc)
 	{

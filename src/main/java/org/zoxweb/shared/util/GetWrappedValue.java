@@ -4,7 +4,7 @@ public interface GetWrappedValue<V> {
 
 	/**
 	 * Returns the wrapped value.
-	 * @return
+	 * @return wrapped typed value
 	 */
 	V getWrappedValue();
 }

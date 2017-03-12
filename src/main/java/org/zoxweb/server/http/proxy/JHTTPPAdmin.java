@@ -42,7 +42,9 @@ public class JHTTPPAdmin {
 
 	static public String error_msg = "";
 
-	/** perform admin functions */
+	/** perform admin functions 
+	 * @param infilename 
+	 * @param inserver */
 	public JHTTPPAdmin(String infilename, JHTTPPServer inserver) {
 		server = inserver;
 		myfilename = infilename;
@@ -256,7 +258,9 @@ public class JHTTPPAdmin {
 		return result;
 	}
 
-	/** html form */
+	/** html form 
+	 * @return  string
+	 * */
 	public String HTMLAdmin() {
 		String msg = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\"><html>\r"
 				+ "<!-- jHTTPp2 admin page --><HEAD>\r"
@@ -402,7 +406,9 @@ public class JHTTPPAdmin {
 				+ "\" size=\"20\" value=\"" + w + "\"></td>\r" + "</tr>\r";
 	}
 
-	/** list of actions as html popup */
+	/** list of actions as html popup 
+	 * @return String 
+	 * */
 	public static String HTMLActionPopup() {
 		StringBuffer out = new StringBuffer();
 

@@ -17,6 +17,7 @@ package org.zoxweb.shared.util;
 
 /**
  * The SimpleQueueInterface is a FIFO queue interface. It is used to store non null Objects only.
+ * @param <O> 
  */
 
 public interface SimpleQueueInterface<O>
@@ -35,6 +36,7 @@ public interface SimpleQueueInterface<O>
 	 * Contract to queue an object, the object can be null.
 	 * 
 	 * @param toQueue the object
+	 * @throws NullPointerException 
 	 * 
 	 */
 	public void queue(O toQueue) throws NullPointerException;
@@ -42,6 +44,7 @@ public interface SimpleQueueInterface<O>
 
 	/**
 	 * Contract to dequeue the first object in the queue, null if queue is empty.
+	 * @return dequeued object
 	 */
 	public O dequeue();
 
@@ -67,7 +70,7 @@ public interface SimpleQueueInterface<O>
 	/**
 	 * Return true if the queue contains o.
 	 * @param o
-	 * @return
+	 * @return true if contained
 	 */
 	public boolean contains(O o);
 } 

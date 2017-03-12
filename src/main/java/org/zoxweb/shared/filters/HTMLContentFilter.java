@@ -23,7 +23,7 @@ public class HTMLContentFilter
 	/**
 	 * Validates given HTML.
 	 * @param html
-	 * @return
+	 * @return validated html
 	 */
 	public static String validateHTML(String html)
 	{

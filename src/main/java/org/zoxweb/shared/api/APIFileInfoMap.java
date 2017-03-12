@@ -33,6 +33,8 @@ public interface APIFileInfoMap
 	/**
 	 * This method sets the original file information.
 	 * @param info
+	 * @throws NullPointerException 
+	 * @throws IllegalArgumentException 
 	 */
 	public void setOriginalFileInfo(FileInfoDAO info) throws NullPointerException, IllegalArgumentException;
 	
@@ -47,6 +49,8 @@ public interface APIFileInfoMap
 	/**
 	 * This method sets the remote file information.
 	 * @param info
+	 * @throws NullPointerException 
+	 * @throws IllegalArgumentException 
 	 */
 	public void setRemoteFileInfo(FileInfoDAO info) throws NullPointerException, IllegalArgumentException;
 	

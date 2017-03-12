@@ -91,9 +91,7 @@ public class JTestPaymentInfo
 		
 	}
 
-	/**
-	 * Test method for {@link org.zoxweb.shared.accounting.PaymentInfoDAO#getAddress()}.
-	 */
+	
 	@Test
 	public void testGetAddress() 
 	{
@@ -111,9 +109,7 @@ public class JTestPaymentInfo
 		
 	}
 
-	/**
-	 * Test method for {@link org.zoxweb.shared.accounting.PaymentInfoDAO#setAddress(org.zoxweb.shared.data.AddressDAO)}.
-	 */
+	
 	@Test
 	public void testSetAddress() 
 	{

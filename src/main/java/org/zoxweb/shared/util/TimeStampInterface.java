@@ -26,7 +26,7 @@ public interface TimeStampInterface
 
 	/**
 	 * Returns the time is millis when the file was created or uploaded into a system or domain.
-	 * @return
+	 * @return creation time in millis 
 	 */
 	public long getCreationTime();
 	
@@ -38,7 +38,7 @@ public interface TimeStampInterface
 	
 	/**
 	 * Returns the last time the file was updated.
-	 * @return
+	 * @return last time updated in millis 
 	 */
 	public long getLastTimeUpdated();
 	
@@ -50,7 +50,7 @@ public interface TimeStampInterface
 	
 	/**
 	 * Returns the last time the file was read.
-	 * @return
+	 * @return last time read in millis 
 	 */
 	public long getLastTimeRead();
 	

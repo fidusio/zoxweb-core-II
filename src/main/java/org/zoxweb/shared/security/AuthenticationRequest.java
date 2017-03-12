@@ -80,9 +80,7 @@ public class AuthenticationRequest
 	
 	
 
-	/**
-	 * @param nvce
-	 */
+	
 	public AuthenticationRequest()
 	{
 		super(NVC_AUTHENTICATON_REQUEST);

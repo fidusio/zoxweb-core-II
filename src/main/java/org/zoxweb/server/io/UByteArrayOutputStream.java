@@ -127,6 +127,7 @@ public class UByteArrayOutputStream
 	}
 
 	/**
+	 * @param index 
 	 * @return the char at index.
 	 */
 	public char charAt(int index) 
@@ -135,6 +136,7 @@ public class UByteArrayOutputStream
 	}
 
 	/**
+	 * @param index 
 	 * @return the byte at index.
 	 */
 	public byte byteAt(int index) 
@@ -176,6 +178,7 @@ public class UByteArrayOutputStream
 	}
 	
 	/**
+	 * @param index 
 	 * @return the integer at index.
 	 */
 	public int intAt(int index)
@@ -267,6 +270,7 @@ public class UByteArrayOutputStream
 	 * 
 	 * @param index
 	 * @param str
+	 * @throws IndexOutOfBoundsException 
 	 */
 	public synchronized void insertAt(int index, String str)
 			throws IndexOutOfBoundsException 
@@ -279,6 +283,7 @@ public class UByteArrayOutputStream
 	 * 
 	 * @param index location
 	 * @param b byte value
+	 * @throws IndexOutOfBoundsException 
 	 */
 	public synchronized void writeAt(int index, byte b)
 			throws IndexOutOfBoundsException 
@@ -313,6 +318,7 @@ public class UByteArrayOutputStream
 	 * 
 	 * @param index
 	 * @param array
+	 * @throws IndexOutOfBoundsException 
 	 */
 	public synchronized void insertAt(int index, byte array[])
 			throws IndexOutOfBoundsException 

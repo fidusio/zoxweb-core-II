@@ -580,6 +580,7 @@ public class NetUtil
 	
 	/**
 	 * Convert the property to a network interface
+	 * @param niName 
 	 * @return network interface
 	 * @throws IOException if the network interface do not exist
 	 */
@@ -590,6 +591,7 @@ public class NetUtil
 	
 	/**
 	 * This method invoke the isUp for currently associated NetworkInterface
+	 * @param niName 
 	 * @return true if active
 	 * @throws IOException
 	 */
@@ -627,6 +629,7 @@ public class NetUtil
 	
 	/**
 	 * Convert the property to a network interface
+	 * @param ni 
 	 * @return network interface 
 	 * @throws IOException if the network interface do not exist
 	 */
@@ -637,6 +640,7 @@ public class NetUtil
 	
 	/**
 	 * This method invoke the isUp for currently associated NetworkInterface
+	 * @param ni 
 	 * @return true if active
 	 * @throws IOException
 	 */

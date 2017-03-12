@@ -99,7 +99,7 @@ public class NVCMap
 	
 	/**
 	 * Gets the associated NVConfig.
-	 * @return
+	 * @return  the associated NVConfig.
 	 */
 	public NVConfig getAssociatedNVConfig() 
 	{
@@ -117,7 +117,7 @@ public class NVCMap
 	
 	/**
 	 * Gets the display name.
-	 * @return
+	 * @return the display name.
 	 */
 	public String getDisplayName() 
 	{
@@ -134,7 +134,7 @@ public class NVCMap
 	}
 	/**
 	 * Returns the NVC display list.
-	 * @return
+	 * @return  the NVC display list.
 	 */
 	@SuppressWarnings("unchecked")
 	public ArrayValues<NVPair> getNVCDisplayList() 
@@ -166,7 +166,7 @@ public class NVCMap
 	
 	/**
 	 * Gets the separator used to separate values.
-	 * @return
+	 * @return the separator used to separate values.
 	 */
 	public String getSeparator() 
 	{
@@ -184,7 +184,7 @@ public class NVCMap
 	
 	/**
 	 * Checks if read only.
-	 * @return
+	 * @return true if read only
 	 */
 	public boolean isReadOnly() 
 	{
@@ -203,7 +203,7 @@ public class NVCMap
 	/**
 	 * Returns the values associated with the given NVEntity.
 	 * @param nve
-	 * @return
+	 * @return the values associated with the given NVEntity.
 	 */
 	public String valueToString(NVEntity nve)
 	{
@@ -216,7 +216,7 @@ public class NVCMap
 	 * Set max length to -1 to return all values.
 	 * @param nve
 	 * @param maxLength
-	 * @return
+	 * @return string 
 	 */
 	@SuppressWarnings("rawtypes")
 	public String valueToString(NVEntity nve, int maxLength)

@@ -24,7 +24,7 @@ public interface SystemID<T> {
 
 	/**
 	 * Returns the system ID.
-	 * @return
+	 * @return typed system id
 	 */
 	public T getSystemID();
 	

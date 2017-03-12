@@ -45,7 +45,7 @@ public class MessageContentFilter
 	/**
 	 * Validates the notification message.
 	 * @param in
-	 * @return
+	 * @return validated 
 	 */
 	@Override
 	public String validate(APINotificationMessage in)
@@ -71,7 +71,7 @@ public class MessageContentFilter
 	/**
 	 * Checks if the notification message is valid.
 	 * @param in
-	 * @return
+	 * @return true if valid
 	 */
 	@Override
 	public boolean isValid(APINotificationMessage in)

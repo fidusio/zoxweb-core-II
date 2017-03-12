@@ -161,8 +161,6 @@ implements HTTPMessageConfigInterface
 			}
 		}
 		
-		
-		
 		return lookupValue(Params.MULTI_PART_ENCODING);
 	}
 
@@ -176,7 +174,7 @@ implements HTTPMessageConfigInterface
 	/**
 	 * Get the action parameters as an array list of NVPairs.
 	 * The parameters sequence should be preserved during invocation 
-	 * @return
+	 * @return parameters 
 	 */
 	@SuppressWarnings("unchecked")
 	public synchronized ArrayValues<GetNameValue<String>> getParameters() 
@@ -206,7 +204,7 @@ implements HTTPMessageConfigInterface
 	
 	/**
 	 * Set the HTTP request parameters
-	 * @return
+	 * @return headers
 	 */
 	@SuppressWarnings("unchecked")
 	public synchronized ArrayValues<GetNameValue<String>> getHeaderParameters() 
@@ -235,7 +233,7 @@ implements HTTPMessageConfigInterface
 
 	/**
 	 * Get the action type
-	 * @return
+	 * @return http method
 	 */
 	public HTTPMethod getMethod() 
 	{
@@ -244,7 +242,7 @@ implements HTTPMessageConfigInterface
 	
 	/**
 	 * Set the action type
-	 * @param httpAction
+	 * @param httpMethod
 	 */
 	public void setMethod(HTTPMethod httpMethod) 
 	{
@@ -268,7 +266,7 @@ implements HTTPMessageConfigInterface
 	
 	/**
 	 * Get the URI extension
-	 * @return
+	 * @return URI
 	 */
 	public String getURI() 
 	{
@@ -286,7 +284,7 @@ implements HTTPMessageConfigInterface
 	
 	/**
 	 * Get the URL
-	 * @return
+	 * @return URL
 	 */
 	public String getURL() 
 	{
@@ -305,26 +303,26 @@ implements HTTPMessageConfigInterface
 
 	
 	/**
-	 * Set the request payload or content
-	 * @param payload
+	 * Set the request content
+	 * @param content
 	 */
-	public void setContent(byte[] payload)
+	public void setContent(byte[] content)
 	{
-		setValue(Params.CONTENT, payload);
+		setValue(Params.CONTENT, content);
 	}
 	
 	/**
-	 * Set the request payload or content
-	 * @param payload
+	 * Set the request content
+	 * @param content
 	 */
-	public void setContent(String payload)
+	public void setContent(String content)
 	{
-		setContent(SharedStringUtil.getBytes(payload));
+		setContent(SharedStringUtil.getBytes(content));
 	}
 	
 	/**
 	 * Get the request payload or content
-	 * @return
+	 * @return content 
 	 */
 	public byte[] getContent()
 	{
@@ -416,7 +414,7 @@ implements HTTPMessageConfigInterface
 	/**
 	 * The connect timeout in millis seconds before throwing an exception, 0 to disable
 	 * 
-	 * @return
+	 * @return connection timeout
 	 */
 	public int getConnectTimeout() 
 	{
@@ -437,7 +435,7 @@ implements HTTPMessageConfigInterface
 	/**
 	 * The read timeout in millis seconds before throwing an exception, 0 to disable
 	 * 
-	 * @return
+	 * @return read timeout
 	 */
 	public int getReadTimeout() 
 	{
@@ -458,7 +456,7 @@ implements HTTPMessageConfigInterface
 
 	/**
 	 * Get the encoding to be used for the parameter, if null default will be used
-	 * @return
+	 * @return charset
 	 */
 	public String getCharset() 
 	{
@@ -498,7 +496,6 @@ implements HTTPMessageConfigInterface
 
 
 	/**
-	 * @see org.zoxweb.shared.http.HTTPMessageConfigInterface#getUser()
 	 */
 	@Override
 	public String getUser() {
@@ -509,7 +506,6 @@ implements HTTPMessageConfigInterface
 
 
 	/**
-	 * @see org.zoxweb.shared.http.HTTPMessageConfigInterface#setUser()
 	 */
 	@Override
 	public void setUser(String user) 
@@ -555,7 +551,6 @@ implements HTTPMessageConfigInterface
 
 
 	/**
-	 * @see org.zoxweb.shared.http.HTTPMessageConfigInterface#setAuthentication(org.zoxweb.shared.http.HTTPAuthenticationType)
 	 */
 	@Override
 	public void setAuthentication(HTTPAuthentication httpAuthentication) {

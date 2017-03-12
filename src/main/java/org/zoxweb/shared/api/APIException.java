@@ -130,6 +130,8 @@ public class APIException
 	 * This constructor instantiates APIStoreException based on given reason,
 	 * set category and set code.
 	 * @param reason
+	 * @param category 
+	 * @param code 
 	 */
 	public APIException(String reason, Category category, Code code)
 	{

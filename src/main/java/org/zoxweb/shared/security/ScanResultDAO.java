@@ -65,7 +65,7 @@ public class ScanResultDAO
 	
 	/**
 	 * Length in bytes of the scan
-	 * @return
+	 * @return scan length
 	 */
 	public long getLength()
 	{

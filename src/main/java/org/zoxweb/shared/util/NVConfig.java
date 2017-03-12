@@ -46,10 +46,13 @@ public interface NVConfig
 {
 	/**
 	 * This method returns the class type of NVConfig.
-	 * @return
+	 * @return class meta type
 	 */
 	public Class<?> getMetaType();
 	
+	/**
+	 * @return base meta type if the meta type is array
+	 */
 	public Class<?> getMetaTypeBase();
 	
 	

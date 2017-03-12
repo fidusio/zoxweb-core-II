@@ -58,7 +58,7 @@ public class NVConfigPortable
 	
 	/**
 	 * This method checks if the property is unique.
-	 * @return
+	 * @return true if unique
 	 */
 	public boolean isUnique() 
 	{
@@ -122,7 +122,7 @@ public class NVConfigPortable
 	
 	/**
 	 * This method returns the name.
-	 * @return
+	 * @return name
 	 */
 	public String getName() 
 	{
@@ -140,7 +140,7 @@ public class NVConfigPortable
 
 	/**
 	 * This method returns the description.
-	 * @return
+	 * @return description
 	 */
 	public String getDescription()
 	{
@@ -158,7 +158,7 @@ public class NVConfigPortable
 	
 	/**
 	 * This method checks if attribute is mandatory.
-	 * @return
+	 * @return true if mandatory
 	 */
 	public boolean isMandatory()
 	{
@@ -176,7 +176,7 @@ public class NVConfigPortable
 	
 	/**
 	 * This method checks if attribute is editable.
-	 * @return
+	 * @return true if user editable
 	 */
 	public boolean isEditable()
 	{
@@ -194,7 +194,7 @@ public class NVConfigPortable
 	
 	/**
 	 * This method returns the meta type.
-	 * @return
+	 * @return class type 
 	 */
 	public Class<?> getMetaType() 
 	{
@@ -212,7 +212,7 @@ public class NVConfigPortable
 	
 	/**
 	 * This method returns the display name.
-	 * @return
+	 * @return display name
 	 */
 	public String getDisplayName() 
 	{
@@ -233,7 +233,7 @@ public class NVConfigPortable
 
 	/**
 	 * This method returns the value filter.
-	 * @return
+	 * @return value filter
 	 */
 	public synchronized  ValueFilter<?, ?> getValueFilter() 
 	{
@@ -259,7 +259,7 @@ public class NVConfigPortable
 
 	/**
 	 * This method checks if property is an array.
-	 * @return
+	 * @return true if array
 	 */
 	@Override
 	public boolean isArray() 
@@ -279,7 +279,7 @@ public class NVConfigPortable
 
 	/**
 	 * This method returns the base meta type.
-	 * @return
+	 * @return the base class if type is array
 	 */
 	@Override
 	public Class<?> getMetaTypeBase() 
@@ -289,7 +289,7 @@ public class NVConfigPortable
 
 	/**
 	 * This method checks if property is an enum.
-	 * @return
+	 * @return true if enum 
 	 */
 	@Override
 	public boolean isEnum() 
@@ -314,7 +314,7 @@ public class NVConfigPortable
 
 	/**
 	 * This method checks if the property is hidden.
-	 * @return
+	 * @return true if hidden
 	 */
 	@Override
 	public boolean isHidden() 

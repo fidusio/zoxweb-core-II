@@ -325,10 +325,11 @@ public class AESCrypt {
 	
 	/**
 	 * Builds an object to encrypt or decrypt files with the given password.
+	 * @param password 
 	 * @throws GeneralSecurityException if the platform does not support the required cryptographic methods.
 	 * @throws UnsupportedEncodingException if UTF-16 encoding is not supported.
 	 */
-	public AESCrypt( byte password[]) throws GeneralSecurityException, UnsupportedEncodingException 
+	public AESCrypt(byte password[]) throws GeneralSecurityException, UnsupportedEncodingException 
 	{
 		try 
 		{
@@ -345,10 +346,11 @@ public class AESCrypt {
 	
 	/**
 	 * Builds an object to encrypt or decrypt files with the given password.
+	 * @param password 
 	 * @throws GeneralSecurityException if the platform does not support the required cryptographic methods.
 	 * @throws UnsupportedEncodingException if UTF-16 encoding is not supported.
 	 */
-	public AESCrypt( String password) throws GeneralSecurityException, UnsupportedEncodingException 
+	public AESCrypt(String password) throws GeneralSecurityException, UnsupportedEncodingException 
 	{
 		this( password.getBytes("UTF-16LE"));
 	}
@@ -356,6 +358,7 @@ public class AESCrypt {
 	
 	/**
 	 * Changes the password this object uses to encrypt and decrypt.
+	 * @param password 
 	 * @throws UnsupportedEncodingException if UTF-16 encoding is not supported.
 	 */
 	public void setPassword(String password) throws UnsupportedEncodingException 
@@ -365,6 +368,7 @@ public class AESCrypt {
 	
 	/**
 	 * Changes the password this object uses to encrypt and decrypt.
+	 * @param pass 
 	 * @throws UnsupportedEncodingException if UTF-16 encoding is not supported.
 	 */
 	public void setPassword(byte pass[]) throws UnsupportedEncodingException 
@@ -379,6 +383,9 @@ public class AESCrypt {
 	 * The file at <tt>fromPath</tt> is encrypted and saved at <tt>toPath</tt> location.
 	 * <p>
 	 * <tt>version</tt> can be either 1 or 2.
+	 * @param version 
+	 * @param fromPath 
+	 * @param toPath 
 	 * @throws IOException when there are I/O errors.
 	 * @throws GeneralSecurityException if the platform does not support the required cryptographic methods.
 	 */
@@ -393,6 +400,9 @@ public class AESCrypt {
 	 * The file at <tt>fromPath</tt> is encrypted and saved at <tt>toPath</tt> location.
 	 * <p>
 	 * <tt>version</tt> can be either 1 or 2.
+	 * @param version 
+	 * @param fromPath 
+	 * @param toPath 
 	 * @throws IOException when there are I/O errors.
 	 * @throws GeneralSecurityException if the platform does not support the required cryptographic methods.
 	 */
@@ -422,6 +432,8 @@ public class AESCrypt {
 	 * The file at <tt>fromPath</tt> is decrypted and saved at <tt>toPath</tt> location.
 	 * <p>
 	 * Source file can be encrypted using version 1 or 2 of aescrypt.
+	 * @param fromPath 
+	 * @param toPath 
 	 * @throws IOException when there are I/O errors.
 	 * @throws GeneralSecurityException if the platform does not support the required cryptographic methods.
 	 */
@@ -438,6 +450,8 @@ public class AESCrypt {
 	 * The file at <tt>fromPath</tt> is decrypted and saved at <tt>toPath</tt> location.
 	 * <p>
 	 * Source file can be encrypted using version 1 or 2 of aescrypt.
+	 * @param fromPath 
+	 * @param toPath 
 	 * @throws IOException when there are I/O errors.
 	 * @throws GeneralSecurityException if the platform does not support the required cryptographic methods.
 	 */
@@ -473,6 +487,11 @@ public class AESCrypt {
 	 * The file at <tt>fromPath</tt> is encrypted and saved at <tt>toPath</tt> location.
 	 * <p>
 	 * <tt>version</tt> can be either 1 or 2.
+	 * @param version 
+	 * @param in 
+	 * @param out 
+	 * @param closeIn 
+	 * @param closeOut 
 	 * @throws IOException when there are I/O errors.
 	 * @throws GeneralSecurityException if the platform does not support the required cryptographic methods.
 	 */
@@ -573,6 +592,11 @@ public class AESCrypt {
 	 * The file at <tt>fromPath</tt> is decrypted and saved at <tt>toPath</tt> location.
 	 * <p>
 	 * Source file can be encrypted using version 1 or 2 of aescrypt.
+	 * @param inLength 
+	 * @param in 
+	 * @param out 
+	 * @param closeIn 
+	 * @param closeOut 
 	 * @throws IOException when there are I/O errors.
 	 * @throws GeneralSecurityException if the platform does not support the required cryptographic methods.
 	 */

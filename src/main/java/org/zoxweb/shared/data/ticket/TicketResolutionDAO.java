@@ -92,7 +92,7 @@ public class TicketResolutionDAO
 	
 	/**
 	 * Gets ticket resolution status.
-	 * @return
+	 * @return status
 	 */
 	public String getStatus()
 	{
@@ -110,7 +110,7 @@ public class TicketResolutionDAO
 	
 	/**
 	 * Gets time spent on ticket resolution.
-	 * @return
+	 * @return time spent
 	 */
 	public BigDecimal getTimeSpent()
 	{

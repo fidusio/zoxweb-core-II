@@ -118,7 +118,7 @@ public class QueryMatch<V>
 	
 	/**
 	 * This method returns the name.
-	 * @return
+	 * @return name
 	 */
 	@Override
 	public String getName()
@@ -143,7 +143,7 @@ public class QueryMatch<V>
 		
 	/**
 	 * This method returns the relational operator.
-	 * @return
+	 * @return the relational operator.
 	 */
 	public RelationalOperator getOperator() 
 	{
@@ -161,7 +161,7 @@ public class QueryMatch<V>
 
 	/**
 	 * This method returns the value.
-	 * @return
+	 * @return value
 	 */
 	@Override
 	public V getValue() 

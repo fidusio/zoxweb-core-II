@@ -155,8 +155,7 @@ public class NVConfigEntityLocal
 	 * @param man
 	 * @param edit
 	 * @param type
-	 * @param attrList
-	 * @param displayList
+	 * @param at
 	 */
 	public NVConfigEntityLocal(String name,
 							   String  description,

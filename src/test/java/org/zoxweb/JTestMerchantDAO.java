@@ -85,7 +85,7 @@ public class JTestMerchantDAO {
 	}
 	
 	/**
-	 * Test method for {@link org.zoxweb.shared.data.MerchantDAO#getDomainID()}.
+	 * Test method for
 	 */
 	@Test
 	public void testGetDomainID() 
@@ -94,9 +94,7 @@ public class JTestMerchantDAO {
 		assertEquals("Domain ID: ", "www.google.com", merchant.getAccountID());
 	}
 
-	/**
-	 * Test method for {@link org.zoxweb.shared.data.MerchantDAO#setDomainID(java.lang.String)}.
-	 */
+	
 	@Test
 	public void testSetDomainID() 
 	{
@@ -215,7 +213,7 @@ public class JTestMerchantDAO {
 	}
 
 	/**
-	 * Test method for {@link org.zoxweb.shared.data.MerchantDAO#getListOfPaymentInfo()}.
+	 * Test method for
 	 */
 	@Test(expected = Error.class)
 	public void testGetListOfPaymentInfos() 
@@ -224,7 +222,7 @@ public class JTestMerchantDAO {
 	}
 
 	/**
-	 * Test method for {@link org.zoxweb.shared.data.MerchantDAO#setListOfPaymentInfo(java.util.ArrayList)}.
+	 * Test method for
 	 */
 	@Test
 	public void testSetListOfPaymentInfos() 
@@ -232,18 +230,14 @@ public class JTestMerchantDAO {
 		merchant.setListOfPaymentInfos(null);
 	}
 
-	/**
-	 * Test method for {@link org.zoxweb.shared.data.MerchantDAO#getAdditonalInfo()}.
-	 */
+	
 	@Test(expected = Error.class)
 	public void testGetAdditonalInfo() 
 	{
 		assertEquals("Additional Info Check: ", null, merchant.getAdditonalInfos());
 	}
 
-	/**
-	 * Test method for {@link org.zoxweb.shared.data.MerchantDAO#setAdditionalInfo(java.util.ArrayList)}.
-	 */
+	
 	@Test
 	public void testSetAdditionalInfo() 
 	{

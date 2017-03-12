@@ -49,7 +49,7 @@ public class StringToken {
 	
 	/**
 	 * Returns token.
-	 * @return
+	 * @return token
 	 */
 	public String getToken() {
 		return token;
@@ -65,8 +65,8 @@ public class StringToken {
 	
 	/**
 	 * Returns sourcePostIndex.
-	 * @return
-	 */
+	 * @return index
+	 */ 
 	public int getSourcePostIndex() {
 		return sourcePostIndex;
 	}
@@ -81,7 +81,7 @@ public class StringToken {
 	
 	/**
 	 * Returns the sourcePreIndex.
-	 * @return
+	 * @return index
 	 */
 	public int getSourcePreIndex() {
 		return sourcePreIndex;

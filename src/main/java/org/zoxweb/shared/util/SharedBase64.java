@@ -67,7 +67,7 @@ public class SharedBase64 {
 	/**
 	 * Decodes a base64 array to a byte array.
 	 * @param data
-	 * @return
+	 * @return decoded byte array
 	 */
 	public static byte[] decode(byte[] data) {
 		return decode( data, 0, data.length);
@@ -78,7 +78,7 @@ public class SharedBase64 {
 	 * @param data
 	 * @param index
 	 * @param len
-	 * @return
+	 * @return decoded byte array
 	 */
 	public static byte[] decode(byte[] data, int index, int len) {
 
@@ -134,7 +134,7 @@ public class SharedBase64 {
     /**
      * Encodes a byte array to base64 array.
      * @param data
-     * @return
+     * @return base64 encoded array
      */
     public static byte[] encode(byte[] data) {
     	return encode(data, 0, data.length);
@@ -145,7 +145,7 @@ public class SharedBase64 {
 	 * @param data
 	 * @param index
 	 * @param len
-	 * @return
+	 * @return base64 encoded array
 	 */
 	public static byte[] encode(byte[] data, int index, int len) {
     	if (data == null || data.length == 0) {

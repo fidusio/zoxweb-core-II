@@ -22,7 +22,7 @@ package org.zoxweb.shared.util;
 public interface UserID<T> {
 	/**
 	 * Returns the user ID.
-	 * @return
+	 * @return typed user id 
 	 */
 	public T getUserID();
 	

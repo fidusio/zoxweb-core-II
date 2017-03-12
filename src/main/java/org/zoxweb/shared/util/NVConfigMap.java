@@ -26,7 +26,7 @@ public interface NVConfigMap
 {
 	/**
 	 * This method returns the mapped NVConfig.
-	 * @return
+	 * @return the mapped NVConfig.
 	 */
 	public NVConfig getMappedNVConfig();
 	

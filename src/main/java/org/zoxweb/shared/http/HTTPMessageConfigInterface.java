@@ -33,18 +33,23 @@ import org.zoxweb.shared.util.SetName;
 public interface HTTPMessageConfigInterface
 extends ReferenceID<String>, SetName, SetDescription
 {
+	/**
+	 * @return true if mutli part encoding
+	 */
 	public boolean isMultiPartEncoding();
 
-
+	/**
+	 * @param multiPartEncoding true to enable multi part encoding
+	 */
 	public void setMultiPartEncoding(boolean multiPartEncoding);
 	
 	
 	/**
 	 * Get the action parameters as an array list of NVPairs.
 	 * The parameters sequence should be preserved during invocation 
-	 * @return
+	 * @return http parameters
 	 */
-	public ArrayValues<GetNameValue<String>>getParameters();
+	public ArrayValues<GetNameValue<String>> getParameters();
 
 	/**
 	 * Set the action parameters list
@@ -54,25 +59,25 @@ extends ReferenceID<String>, SetName, SetDescription
 
 	/**
 	 * Get the action type
-	 * @return
+	 * @return the method
 	 */
 	public HTTPMethod getMethod();
 	
 	/**
 	 * Set the action type
-	 * @param httpAction
+	 * @param httpMethod
 	 */
 	public void setMethod(HTTPMethod httpMethod);
 	
 	/**
 	 * Set the action type
-	 * @param httpAction
+	 * @param httpMethod
 	 */
 	public void setMethod(String httpMethod);
 	
 	/**
 	 * Get the URI extension
-	 * @return
+	 * @return the uri part
 	 */
 	public String getURI();
 	
@@ -84,7 +89,7 @@ extends ReferenceID<String>, SetName, SetDescription
 	
 	/**
 	 * Get the URL
-	 * @return
+	 * @return url part 
 	 */
 	public String getURL();
 	
@@ -97,7 +102,7 @@ extends ReferenceID<String>, SetName, SetDescription
 
 	/**
 	 * Set the HTTP request parameters
-	 * @return
+	 * @return headers
 	 */
 	public ArrayValues<GetNameValue<String>> getHeaderParameters();
 
@@ -107,8 +112,15 @@ extends ReferenceID<String>, SetName, SetDescription
 	 */
 	public void setHeaderParameters(List<GetNameValue<String>> headerParams);
 	
+	/**
+	 * @return true if url encoding is enabled
+	 */
 	public boolean isURLEncodingEnabled();
 	
+	/**
+	 * enable url encoding
+	 * @param value
+	 */
 	public void setURLEncodingEnabled(boolean value);
 	/**
 	 * Set the request payload or content
@@ -125,11 +137,18 @@ extends ReferenceID<String>, SetName, SetDescription
 	
 	/**
 	 * Get the request payload or content
-	 * @return
+	 * @return content
 	 */
 	public byte[] getContent();
 	
+	/**
+	 * @return content length
+	 */
 	public int getContentLength();
+	/**
+	 * Set the content length
+	 * @param length
+	 */
 	public void setContentLength(int length);
 
 	/**
@@ -144,7 +163,9 @@ extends ReferenceID<String>, SetName, SetDescription
 	 */
 	public void setBoundary(String boundary);
 	
-	
+	/**
+	 * @return true if redirect is enabled
+	 */
 	public boolean isRedirectEnabled();
 
 	public void setRedirectEnabled(boolean redirectEnabled);
@@ -152,24 +173,32 @@ extends ReferenceID<String>, SetName, SetDescription
 	/**
 	 * The connect timeout in millis seconds before throwing an exception, 0 to disable
 	 * 
-	 * @return
+	 * @return connection timeout in millis
 	 */
 	public int getConnectTimeout();
 	
+	/**
+	 * Set the connection timeout is millis 
+	 * @param connectTimeout
+	 */
 	public void setConnectTimeout(int connectTimeout);
 	
 	/**
 	 * The read timeout in millis seconds before throwing an exception, 0 to disable
 	 * 
-	 * @return
+	 * @return the read timeout in millis
 	 */
 	public int getReadTimeout();
 	
+	/**
+	 * Set the read timeout is millis
+	 * @param readTimeout
+	 */
 	public void setReadTimeout(int readTimeout);
 
 	/**
 	 * Get the encoding to be used for the parameter, if null default will be used
-	 * @return
+	 * @return charset
 	 */
 	public String getCharset();
 
@@ -181,24 +210,51 @@ extends ReferenceID<String>, SetName, SetDescription
 	 */
 	public void setCharset(String charset);
 	
+	/**
+	 * 
+	 * @return the user
+	 */
 	public String getUser();
 	
+	/**
+	 * Set the user
+	 * @param user
+	 */
 	public void setUser(String user);
 	
+	/**
+	 * @return user password
+	 */
 	public String getPassword();
 	
+	/**
+	 * Set user password
+	 * @param password
+	 */
 	public void setPassword(String password);
 	
-	
+	/**
+	 * 
+	 * @return HTTPAuthentication
+	 */
 	public HTTPAuthentication getAuthentitcation();
 	
 	public void setAuthentication(HTTPAuthentication httpAuthentication);
 	
-	
+	/**
+	 * @return the proxy address null if not set
+	 */
 	public InetSocketAddressDAO getProxyAddress();
 	
+	/**
+	 * Set the proxy address
+	 * @param proxyAddress
+	 */
 	public void setProxyAddress(InetSocketAddressDAO proxyAddress);
 	
+	/**
+	 * @return reason
+	 */
 	public String getReason();
 	
 	public void setReason(String reason);
@@ -207,7 +263,7 @@ extends ReferenceID<String>, SetName, SetDescription
 	 * 
 	 * Get the header content type
 	 * 
-	 * @return
+	 * @return content type
 	 */
 	public String getContentType();
 	
@@ -228,16 +284,25 @@ extends ReferenceID<String>, SetName, SetDescription
 	
 	/**
 	 * Return the Cookie header value
-	 * @return
+	 * @return cookie
 	 */
 	public String getCookie();
 	
-	
+	/**
+	 * Set cookie
+	 * @param cookieValue
+	 */
 	public void setCookie(String cookieValue);
 	
+	/**
+	 * Set cookie
+	 * @param cookieValue
+	 */
 	public void setCookie(GetValue<String> cookieValue);
 	
-	
+	/**
+	 * @return HTTPVersion
+	 */
 	public HTTPVersion getHTTPVersion();
 	
 	public void setHTTPVersion(String version);
@@ -248,9 +313,6 @@ extends ReferenceID<String>, SetName, SetDescription
 	public void setHTTPStatusCode(HTTPStatusCode status);
 	
 	public HTTPStatusCode getHTTPStatusCode();
-	
-	
-	
 	
 	
 }

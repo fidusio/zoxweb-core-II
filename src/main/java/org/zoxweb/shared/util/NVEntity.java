@@ -76,7 +76,7 @@ public abstract class NVEntity
 
 	/**
 	 * Returns the attributes.
-	 * @return
+	 * @return attributes map 
 	 */
 	public HashMap<String, NVBase<?>> getAttributes() {
 		return attributes;
@@ -93,7 +93,7 @@ public abstract class NVEntity
 	/**
 	 * Looks up NVBase object by name.
 	 * @param name
-	 * @return
+	 * @return lookup matching name nvbase
 	 */
 	public NVBase<?> lookup(String name) {
 		return attributes.get(name);
@@ -112,7 +112,7 @@ public abstract class NVEntity
 	 * This method looks up the NVBase object of generic type
 	 * by given parameter of NVConfig type.
 	 * @param nvc
-	 * @return
+	 * @return value
 	 */
 	public <V> V lookupValue(NVConfig nvc) {
 		@SuppressWarnings("unchecked")
@@ -129,7 +129,7 @@ public abstract class NVEntity
 	 * This method looks up the NVBase object of generic type
 	 * by given parameter of GetName type.
 	 * @param gName
-	 * @return
+	 * @return value
 	 */
 	public <V> V lookupValue(GetName gName) {
 		@SuppressWarnings("unchecked")
@@ -146,7 +146,7 @@ public abstract class NVEntity
 	 * type object by name. 
 	 * the name and return its value.
 	 * @param name
-	 * @return
+	 * @return value
 	 */
 	public <V> V lookupValue(String name) {
 		@SuppressWarnings("unchecked")
@@ -164,7 +164,7 @@ public abstract class NVEntity
 	 * by given parameter of GetNVConfig type.
 	 * return its value.
 	 * @param gnvc
-	 * @return
+	 * @return value
 	 */
 	public <V> V lookupValue(GetNVConfig gnvc)
 	{	

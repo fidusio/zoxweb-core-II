@@ -47,7 +47,7 @@ public class PhoneNumberFilterOLD
 	/**
 	 * This method validates the given phone number.
 	 * @param num
-	 * @return
+	 * @return phone dao
 	 * @throws NullPointerException
 	 * @throws IllegalArgumentException
 	 */
@@ -114,7 +114,7 @@ public class PhoneNumberFilterOLD
 	/**
 	 * This method checks if the phone number is valid.
 	 * @param num
-	 * @return
+	 * @return true if valid
 	 */
 	public boolean isValid(String num)
 	{

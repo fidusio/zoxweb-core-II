@@ -302,6 +302,7 @@ implements Runnable,
 
 	/**
 	 * Tests what method is used with the reqest
+	 * @param d 
 	 * 
 	 * @return -1 if the server doesn't support the method
 	 */
@@ -345,6 +346,7 @@ implements Runnable,
 
 	/**
 	 * saves all settings with a ObjectOutputStream into a file
+	 * @throws IOException 
 	 * 
 	 * @since 0.2.10
 	 */
@@ -493,11 +495,7 @@ implements Runnable,
 //		writeLog(s, true);
 //	}
 
-	/**
-	 * writes to the server log file
-	 * 
-	 * @since 0.2.21
-	 */
+	
 //	public void writeLog(String s, boolean b) 
 //	{
 //		if ( b && logfile != null)
@@ -531,6 +529,12 @@ implements Runnable,
 //		}
 //	}
 
+	/**
+	 * writes to the server log file
+	 * @param read 
+	 * 
+	 * @since 0.2.21
+	 */
 	public void addBytesRead(long read) {
 		bytesread += read;
 	}
@@ -538,6 +542,7 @@ implements Runnable,
 	/**
 	 * Functions for the jHTTPp2 statistics: How many connections Bytes
 	 * read/written
+	 * @param written 
 	 * 
 	 * @since 0.3.0
 	 */
@@ -602,6 +607,7 @@ implements Runnable,
 	}
 
 	/**
+	 * @return Properties
 	 * @since 0.4.10a
 	 */
 	public Properties getServerProperties() {

@@ -55,7 +55,7 @@ public class NVPairList
 	 * <li> The FilterValue of every contained NVPair cannot be modified
 	 * <li> Only the value of the NVPair object can be updated
 	 * </ol>
-	 * @return
+	 * @return true if fixed
 	 */
 	public boolean isFixed() 
 	{

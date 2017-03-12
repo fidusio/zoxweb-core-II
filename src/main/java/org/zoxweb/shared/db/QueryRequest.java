@@ -58,7 +58,7 @@ implements Serializable,SetCanonicalID
 	/**
 	 * If the batch size is > 0 than we have batched query
 	 * 
-	 * @return
+	 * @return batch size
 	 */
 	public int getBatchSize()
 	{
@@ -73,7 +73,7 @@ implements Serializable,SetCanonicalID
 	/**
 	 * List if field names than the caller is interested in if null all the fields a required
 	 * 
-	 * @return
+	 * @return field names
 	 */
 	public List<String> getFieldNames() 
 	{

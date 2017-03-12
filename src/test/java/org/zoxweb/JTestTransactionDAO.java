@@ -56,72 +56,54 @@ public class JTestTransactionDAO
 		transaction = null;
 	}
 
-	/**
-	 * Test method for {@link org.zoxweb.shared.accounting.FinancialTransactionDAO#getCurrency()}.
-	 */
+	
 	@Test
 	public void testGetCurrency() 
 	{
 		assertTrue("Currency verification: ", Currency.USD.equals(transaction.getAmount().getCurrency()));  
 	}
 
-	/**
-	 * Test method for {@link org.zoxweb.shared.accounting.FinancialTransactionDAO#setCurrency(org.zoxweb.shared.accounting.Currency)}.
-	 */
+
 	@Test(expected = NullPointerException.class)
 	public void testSetCurrency() 
 	{
 		transaction.getAmount().setCurrency(null);
 	}
 
-	/**
-	 * Test method for {@link org.zoxweb.shared.accounting.FinancialTransactionDAO#getTransactionAmount()}.
-	 */
+	
 	@Test
 	public void testGetTransactionAmount() 
 	{
 		assertEquals("Amount verification: ", new BigDecimal("100.00"), transaction.getAmount());
 	}
 
-	/**
-	 * Test method for {@link org.zoxweb.shared.accounting.FinancialTransactionDAO#setTransactionAmount(java.math.BigDecimal)}.
-	 */
+	
 	@Test(expected = NullPointerException.class)
 	public void testSetTransactionAmount() 
 	{
 		transaction.setAmount(null);
 	}
 
-	/**
-	 * Test method for {@link org.zoxweb.shared.accounting.FinancialTransactionDAO#getTransactionType()}.
-	 */
 	@Test
 	public void testGetTransactionType() 
 	{
 		assertTrue("Transaction type verification: ", TransactionType.CREDIT.equals(transaction.getType()));
 	}
 
-	/**
-	 * Test method for {@link org.zoxweb.shared.accounting.FinancialTransactionDAO#setTransactionType(org.zoxweb.shared.accounting.TransactionType)}.
-	 */
 	@Test
 	public void testSetTransactionType() 
 	{
 		transaction.setType(TransactionType.CREDIT);
 	}
 
-	/**
-	 * Test method for {@link org.zoxweb.shared.accounting.FinancialTransactionDAO#getTransactionDescriptor()}.
-	 */
+	
 	@Test
 	public void testGetTransactionDescriptor() 
 	{
 		assertFalse("Transaction descriptor verification: ", TransactionDescriptor.MONTHLY_PAYMENT.equals(transaction.getDescriptor()));
 	}
 
-	/**
-	 * Test method for {@link org.zoxweb.shared.accounting.FinancialTransactionDAO#setTransactionDescriptor(org.zoxweb.shared.accounting.TransactionDescriptor)}.
-	 */
+	
 	@Test
 	public void testSetTransactionDescriptor() 
 	{

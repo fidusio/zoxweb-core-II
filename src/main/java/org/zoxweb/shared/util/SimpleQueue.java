@@ -108,7 +108,7 @@ public class SimpleQueue<O>
 
 	/**
 	 * Dequeue an object, if the queue is empty it will return null.
-	 * @return
+	 * @return first object or null 
 	 */
 	public synchronized O dequeue() {
 		O retval = null;

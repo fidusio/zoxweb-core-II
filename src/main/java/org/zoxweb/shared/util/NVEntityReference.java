@@ -47,7 +47,7 @@ public class NVEntityReference
 
 	/**
 	 * This method returns the NVConfig.
-	 * @return
+	 * @return ncvonfig
 	 */
 	@Override
 	public NVConfig getNVConfig()

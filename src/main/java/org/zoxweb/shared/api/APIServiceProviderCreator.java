@@ -40,6 +40,7 @@ public interface APIServiceProviderCreator
 	/**
 	 * This method creates the API based on the configuration information
 	 * parameters.
+	 * @param dataStore 
 	 * @param apiConfig
 	 * @return APIServiceProvider
 	 * @throws APIException

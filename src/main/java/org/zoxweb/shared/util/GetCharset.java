@@ -4,7 +4,7 @@ public interface GetCharset {
 
 	/**
 	 * Returns the charset.
-	 * @return
+	 * @return char set 
 	 */
 	String getCharset();
 

@@ -41,7 +41,7 @@ public class NVEntityReferenceList
 	
 	/**
 	 * This constructor instantiates NVEntityReferenceList based on value of NVConfig type.
-	 * @param config
+	 * @param name
 	 */
 	public NVEntityReferenceList(String name)
 	{
@@ -62,7 +62,7 @@ public class NVEntityReferenceList
 	
 	/**
 	 * This method returns the NVConfig.
-	 * @return
+	 * @return matching nvconfig
 	 */
 	@Override	
 	public NVEntity get(String str)

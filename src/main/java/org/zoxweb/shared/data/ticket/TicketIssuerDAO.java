@@ -111,7 +111,7 @@ public class TicketIssuerDAO
 
 	/**
 	 * Gets first name.
-	 * @return
+	 * @return first name 
 	 */
 	public String getFirstName() 
 	{
@@ -129,7 +129,7 @@ public class TicketIssuerDAO
 	
 	/**
 	 * Gets last name.
-	 * @return
+	 * @return last name
 	 */
 	public String getLastName() 
 	{
@@ -147,7 +147,7 @@ public class TicketIssuerDAO
 	
 	/**
 	 * Gets email address.
-	 * @return
+	 * @return email id
 	 */
 	public String getEmailID() 
 	{
@@ -165,7 +165,7 @@ public class TicketIssuerDAO
 	
 	/**
 	 * Gets phone number.
-	 * @return
+	 * @return phone number
 	 */
 	public PhoneDAO getPhoneNumber() 
 	{
@@ -183,7 +183,7 @@ public class TicketIssuerDAO
 	
 	/**
 	 * Gets issuer's position at associated company.
-	 * @return
+	 * @return position
 	 */
 	public String getPosition() 
 	{
@@ -201,7 +201,7 @@ public class TicketIssuerDAO
 	
 	/**
 	 * Gets company.
-	 * @return
+	 * @return company
 	 */
 	public String getCompany() 
 	{
@@ -219,8 +219,8 @@ public class TicketIssuerDAO
 	
 	/**
 	 * Gets incident location.
-	 * @return
-	 */
+	 * @return incident location.
+	 */ 
 	public String getIncidentLocation() 
 	{
 		return lookupValue(Params.INCIDENT_LOCATION);
@@ -237,7 +237,7 @@ public class TicketIssuerDAO
 	
 	/**
 	 * Gets incident address.
-	 * @return
+	 * @return  incident address.
 	 */
 	public AddressDAO getIncidentAddress() 
 	{
@@ -255,7 +255,7 @@ public class TicketIssuerDAO
 	
 	/**
 	 * Gets due date.
-	 * @return
+	 * @return due date.
 	 */
 	public long getDueDate() 
 	{
@@ -273,7 +273,7 @@ public class TicketIssuerDAO
 	
 	/**
 	 * Gets assignee.
-	 * @return
+	 * @return assignee.
 	 */
 	public String getAssignee() 
 	{

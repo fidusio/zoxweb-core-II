@@ -35,7 +35,7 @@ public class NVConfigMapUtil
 	 * This method returns the display based on NVConfig and NVConfigNameMap inputs.
 	 * @param nvc
 	 * @param nvcnm
-	 * @return
+	 * @return display string
 	 */
 	public static String toDisplayName(NVConfig nvc, NVConfigNameMap nvcnm)
 	{
@@ -63,7 +63,7 @@ public class NVConfigMapUtil
 	 * This method returns the display name based on NVConfig and NVConfigAttributesMap inputs.
 	 * @param nvc
 	 * @param map
-	 * @return
+	 * @return display name
 	 */
 	public static String toDisplayName(NVConfig nvc, NVConfigAttributesMap map)
 	{
@@ -86,7 +86,7 @@ public class NVConfigMapUtil
 	 * This method returns the display name based on NVEntity and NVConfigAttributesMap inputs.
 	 * @param nve
 	 * @param map
-	 * @return
+	 * @return toString
 	 */
 	public static String toString(NVEntity nve, NVConfigAttributesMap map)
 	{		
@@ -99,7 +99,7 @@ public class NVConfigMapUtil
 	 * @param nve
 	 * @param map
 	 * @param addDisplayName
-	 * @return
+	 * @return toString
 	 */
 	@SuppressWarnings("rawtypes")
 	public static String toString(NVEntity nve, NVConfigAttributesMap map, boolean addDisplayName)

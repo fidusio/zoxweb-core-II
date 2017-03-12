@@ -380,6 +380,8 @@ public class Const
 		 * Converts string to time in milliseconds.
 		 * @param time
 		 * @return the time string value in millis 
+		 * @throws NullPointerException 
+		 * @throws IllegalArgumentException 
 		 */
 		public static long toMillis(String time) 
 			throws NullPointerException, IllegalArgumentException {
@@ -422,6 +424,8 @@ public class Const
 		 * Converts the time to nano second value (10 power -9 second)
 		 * @param time
 		 * @return the time string value in nanos 
+		 * @throws NullPointerException 
+		 * @throws IllegalArgumentException 
 		 */
 		public static long toNanos(String time)
 				throws NullPointerException, IllegalArgumentException {
@@ -443,6 +447,8 @@ public class Const
 		 * Converts the time to micro second value (10 power -6 second)
 		 * @param time
 		 * @return the time string value in micros 
+		 * @throws NullPointerException 
+		 * @throws IllegalArgumentException 
 		 */
 		public static long toMicros(String time)
 				throws NullPointerException, IllegalArgumentException {

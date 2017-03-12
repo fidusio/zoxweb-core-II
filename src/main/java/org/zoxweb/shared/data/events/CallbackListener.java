@@ -17,6 +17,8 @@ package org.zoxweb.shared.data.events;
 
 /**
  * @author mzebib
+ * @param <F> 
+ * @param <T> 
  *
  */
 public interface CallbackListener<F, T>

@@ -24,7 +24,7 @@ public interface GetDescription {
 
 	/**
 	 * Returns the property description.
-	 * @return
+	 * @return description
 	 */
 	public String getDescription();
 	

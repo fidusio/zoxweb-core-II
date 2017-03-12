@@ -28,6 +28,7 @@ import org.zoxweb.shared.db.QueryMarker;
 /**
  * The API data storage interface.
  * @author mzebib
+ * @param <ST> 
  *
  */
 public interface APIDataStore<ST>
@@ -53,6 +54,7 @@ public interface APIDataStore<ST>
 	 * @return the matching entities
 	 * @throws NullPointerException
 	 * @throws IllegalArgumentException
+	 * @throws AccessException 
 	 * @throws APIException
 	 */
 	public <V extends NVEntity> List<V> search(NVConfigEntity nvce, List<String> fieldNames, QueryMarker ... queryCriteria) 
@@ -154,6 +156,7 @@ public interface APIDataStore<ST>
 	 * @return the matching entities
 	 * @throws NullPointerException
 	 * @throws IllegalArgumentException
+	 * @throws AccessException 
 	 * @throws APIException
 	 */
 	public <V extends NVEntity> List<V> searchByID(NVConfigEntity nvce, String... ids) 
@@ -167,6 +170,7 @@ public interface APIDataStore<ST>
 	 * @return the matching entities
 	 * @throws NullPointerException
 	 * @throws IllegalArgumentException
+	 * @throws AccessException 
 	 * @throws APIException
 	 */
 	public <V extends NVEntity> List<V> searchByID(String className, String... ids) 
@@ -175,11 +179,13 @@ public interface APIDataStore<ST>
 	
 	/**
 	 * This method searches for documents based on id.
+	 * @param userID 
 	 * @param nvce
 	 * @param ids
 	 * @return the matching entities
 	 * @throws NullPointerException
 	 * @throws IllegalArgumentException
+	 * @throws AccessException 
 	 * @throws APIException
 	 */
 	public <V extends NVEntity> List<V> userSearchByID(String userID, NVConfigEntity nvce, String... ids) 
@@ -190,6 +196,7 @@ public interface APIDataStore<ST>
 	 * @return the matching entities
 	 * @throws NullPointerException
 	 * @throws IllegalArgumentException
+	 * @throws AccessException 
 	 * @throws APIException
 	 */
 	public <V extends NVEntity> V insert(V nve)
@@ -202,6 +209,7 @@ public interface APIDataStore<ST>
 	 * @return the matching entities
 	 * @throws NullPointerException
 	 * @throws IllegalArgumentException
+	 * @throws AccessException 
 	 * @throws APIException
 	 */
 	public <V extends NVEntity> boolean delete(V nve, boolean withReference)
@@ -238,6 +246,7 @@ public interface APIDataStore<ST>
 	 * This method patch a document.
 	 * 
 	 * @param nve to be updated
+	 * @param updateTS 
 	 * @param sync if true the datastore update become synchronized
 	 * @param updateRefOnly will update the reference only
 	 * @param includeParam if true the nvConfigNames list will be updated, if false the nvConfigNames will be excluded
@@ -289,6 +298,9 @@ public interface APIDataStore<ST>
 	 * This method searches for the dynamic enum by name.
 	 * @param name
 	 * @return the matching enum map
+	 * @throws NullPointerException 
+	 * @throws IllegalArgumentException 
+	 * @throws APIException 
 	 */
 	public DynamicEnumMap searchDynamicEnumMapByName(String name)
 			throws NullPointerException, IllegalArgumentException, APIException;
@@ -296,6 +308,9 @@ public interface APIDataStore<ST>
 	/**
 	 * This method deletes a dynamic enum based on name.
 	 * @param name
+	 * @throws NullPointerException 
+	 * @throws IllegalArgumentException 
+	 * @throws APIException 
 	 */
 	public void deleteDynamicEnumMap(String name)
 		throws NullPointerException, IllegalArgumentException, APIException;
@@ -306,6 +321,10 @@ public interface APIDataStore<ST>
 	 * @param domainID
 	 * @param userID
 	 * @return all the enum maps
+	 * @throws NullPointerException 
+	 * @throws IllegalArgumentException 
+	 * @throws AccessException 
+	 * @throws APIException 
 	 */
 	public List<DynamicEnumMap> getAllDynamicEnumMap(String domainID, String userID)
 		throws NullPointerException, IllegalArgumentException, AccessException, APIException;

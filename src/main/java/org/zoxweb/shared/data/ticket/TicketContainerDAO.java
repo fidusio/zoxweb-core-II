@@ -146,7 +146,7 @@ public class TicketContainerDAO
 	 * Adds TicketResolutionDAO to container.
 	 * A TicketContainerDAO object can contain multiple TicketResolution objects.
 	 * @param ticketResolutionToAdd
-	 * @return
+	 * @return TicketResolutionDAO
 	 */
 	public synchronized TicketResolutionDAO addTicketResolutionDAO(TicketResolutionDAO ticketResolutionToAdd)
 	{
@@ -164,7 +164,7 @@ public class TicketContainerDAO
 	 * Removes TicketResolutionDAO from container.
 	 * 
 	 * @param ticketResolutionToRemove
-	 * @return
+	 * @return TicketResolutionDAO
 	 */
 	public synchronized TicketResolutionDAO removeTicketResolutionDAO(TicketResolutionDAO ticketResolutionToRemove)
 	{

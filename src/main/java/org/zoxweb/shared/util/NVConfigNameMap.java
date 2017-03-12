@@ -29,7 +29,7 @@ public interface NVConfigNameMap
 	/**
 	 * This method returns the name of the NVConfig.
 	 * This parameter is mandatory.
-	 * @return
+	 * @return name 
 	 */
 	public String getName();
 	
@@ -43,7 +43,7 @@ public interface NVConfigNameMap
 	/**
 	 * This method returns the name of the mapped NVConfig.
 	 * This parameter is optional. 
-	 * @return
+	 * @return mapped name 
 	 */
 	public String getMappedName();
 	
@@ -56,7 +56,7 @@ public interface NVConfigNameMap
 	
 	/**
 	 * This method returns the display name of the NVConfig.
-	 * @return
+	 * @return display name
 	 */
 	public String getDisplayName();
 	

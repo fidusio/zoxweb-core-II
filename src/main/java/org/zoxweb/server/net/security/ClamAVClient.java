@@ -145,6 +145,7 @@ public class ClamAVClient
    * Run PING command to clamd to test it is responding.
    * 
    * @return true if the server responded with proper ping reply.
+ * @throws IOException 
    */
   public boolean ping() throws IOException {
     try (Socket s = new Socket(hostName,port); OutputStream outs = s.getOutputStream()) {
@@ -235,6 +236,7 @@ public class ClamAVClient
    * 
    * @param is data to scan. Not closed by this method!
    * @return server reply
+ * @throws IOException 
    */
   public ClamAVScanResult scan(InputStream is)
 		  throws IOException
@@ -365,6 +367,7 @@ public class ClamAVClient
    * 
    * @param in data to scan
    * @return server reply
+ * @throws IOException 
    **/
   public ClamAVScanResult scan(byte[] in) throws IOException {
     ByteArrayInputStream bis = new ByteArrayInputStream(in);

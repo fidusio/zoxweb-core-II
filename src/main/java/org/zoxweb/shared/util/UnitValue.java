@@ -26,7 +26,7 @@ public interface UnitValue<V>
 
 	/**
 	 * Returns the unit.
-	 * @return
+	 * @return unit
 	 */
 	public Unit getUnit();
 

@@ -43,10 +43,13 @@ public interface APIDocumentStore<V>
 	 * @param folderID
 	 * @param file
 	 * @param is
+	 * @param closeStream 
 	 * @return APIFileInfoMap
 	 * @throws IllegalArgumentException
 	 * @throws IOException
 	 * @throws NullPointerException
+	 * @throws AccessException 
+	 * @throws APIException 
 	 */
 	public APIFileInfoMap createFile(String folderID, APIFileInfoMap file, InputStream is, boolean closeStream)  
 			throws NullPointerException, IllegalArgumentException, IOException, AccessException, APIException;
@@ -62,6 +65,7 @@ public interface APIDocumentStore<V>
 	 * @throws IllegalArgumentException
 	 * @throws IOException
 	 * @throws AccessException
+	 * @throws APIException 
 	 */
 	public APIFileInfoMap createFolder(String folderFullPath)  
 			throws NullPointerException, IllegalArgumentException, IOException, AccessException , APIException;
@@ -70,10 +74,13 @@ public interface APIDocumentStore<V>
 	 * This method reads a file.
 	 * @param map
 	 * @param os
+	 * @param closeStream 
 	 * @return APIFileInfoMap
 	 * @throws IllegalArgumentException
 	 * @throws IOException
 	 * @throws NullPointerException
+	 * @throws AccessException 
+	 * @throws APIException 
 	 */
 	public APIFileInfoMap readFile(APIFileInfoMap map, OutputStream os, boolean closeStream) 
 			throws NullPointerException, IllegalArgumentException, IOException, AccessException, APIException;
@@ -82,10 +89,13 @@ public interface APIDocumentStore<V>
 	 * This method updates a file.
 	 * @param map
 	 * @param is
+	 * @param closeStream 
 	 * @return APIFileInfoMap
 	 * @throws IllegalArgumentException
 	 * @throws IOException
 	 * @throws NullPointerException
+	 * @throws AccessException 
+	 * @throws APIException 
 	 */
 	public APIFileInfoMap updateFile(APIFileInfoMap map, InputStream is, boolean closeStream) 
 			throws NullPointerException, IllegalArgumentException, IOException, AccessException, APIException;
@@ -96,6 +106,8 @@ public interface APIDocumentStore<V>
 	 * @throws IllegalArgumentException
 	 * @throws IOException
 	 * @throws NullPointerException
+	 * @throws AccessException 
+	 * @throws APIException 
 	 */
 	public void deleteFile(APIFileInfoMap map) 
 			throws NullPointerException, IllegalArgumentException, IOException, AccessException, APIException;
@@ -103,6 +115,9 @@ public interface APIDocumentStore<V>
 	/**
 	 * This method returns a list of files.
 	 * @return the map
+	 * @throws IOException 
+	 * @throws AccessException 
+	 * @throws APIException 
 	 */
 	public Map<String, APIFileInfoMap> discover()
 		throws IOException, AccessException, APIException;
@@ -111,6 +126,12 @@ public interface APIDocumentStore<V>
 	/**
 	 * This method is used to search for list of files given arguments.
 	 * @param args
+	 * @return  List<APIFileInfoMap>
+	 * @throws NullPointerException 
+	 * @throws IllegalArgumentException 
+	 * @throws IOException 
+	 * @throws AccessException 
+	 * @throws APIException 
 	 */
 	public List<APIFileInfoMap> search(String... args) 
 			throws NullPointerException, IllegalArgumentException, IOException, AccessException, APIException;

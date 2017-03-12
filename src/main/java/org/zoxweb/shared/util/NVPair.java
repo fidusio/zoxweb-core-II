@@ -107,7 +107,7 @@ public class NVPair
 	
 	/**
 	 * This method returns the filter type.
-	 * @return
+	 * @return value filter
 	 */
 	public synchronized ValueFilter<String, String> getValueFilter() 
 	{
@@ -124,7 +124,7 @@ public class NVPair
 
 	/**
 	 * This method sets the filter type.
-	 * @param filterType
+	 * @param valueFilter
 	 */
 	public synchronized void setValueFilter(ValueFilter<String, String> valueFilter) 
 	{

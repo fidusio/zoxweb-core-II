@@ -146,7 +146,7 @@ public class PhoneNumberFilter
 	/**
 	 * This method checks if the number is valid.
 	 * @param in
-	 * @return
+	 * @return true if valid
 	 */
 	@Override
 	public boolean isValid(String in) 
