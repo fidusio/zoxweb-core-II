@@ -20,8 +20,9 @@
     </licenses>
     
     <scm>
-    	<url>https://github.com/fidusio/zoxweb-core</url>
+    	<url>https://github.com/fidusio/zoxweb-core.git</url>
     	<connection>scm:git:git://github.com/fidusio/zoxweb-core.git</connection>
+    	<developerConnection>scm:git:git://github.com/fidusio/zoxweb-core.git</developerConnection>
     </scm>
     
     
