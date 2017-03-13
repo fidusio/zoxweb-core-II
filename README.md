@@ -7,12 +7,8 @@
 
 Project website: http://www.zoxweb.com/ <br />
 <br />
-Release builds are available from 
-   *  [Maven Central] http://search.maven.org/#artifactdetails%7Corg.zoxweb%7Czoxweb-core%7C2.0%7Cjar
-
-   
  
-Copyright (C) 2012-2017 ZoxWeb.com
+Copyright (C) 2008-2017 http://www.zoxweb.com
 
 ## LICENSE
  
@@ -28,13 +24,13 @@ Copyright (C) 2012-2017 ZoxWeb.com
  See the License for the specific language governing permissions and
  limitations under the License.
 
+## RELEASES
+2.0 2017-03-12
 
 ## KNOWN ISSUES
 
 
 ## IN DEVELOPMENT
 
-
-## RELEASES
 
 
