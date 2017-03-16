@@ -21,6 +21,7 @@ public class ExecutorHolder<E extends Executor>
 	private final String name;
 	private final String description;
 	protected final LifeCycleMonitor<ExecutorHolder<?>> lcm;
+	private boolean closed = false;
 	
 	
 	
@@ -39,7 +40,7 @@ public class ExecutorHolder<E extends Executor>
 	@SuppressWarnings("unchecked")
 	public ExecutorHolder(Executor es, LifeCycleMonitor<ExecutorHolder<?>> lcm, String name, String description)
 	{
-		SharedUtil.checkIfNulls("ExecutorService null", es, lcm);
+		SharedUtil.checkIfNulls("Executor or LifeCycleMonitor null", es, lcm);
 		this.es = (E) es;
 		this.name = name != null ? name : UUID.randomUUID().toString();
 		this.description = description;
@@ -73,7 +74,27 @@ public class ExecutorHolder<E extends Executor>
 	@Override
 	public void close() {
 		// TODO Auto-generated method stub
-		lcm.terminated(this);
+		if (!closed)
+		{
+			synchronized(this)
+			{
+				if (!closed)
+				{
+					if(es instanceof AutoCloseable)
+					{
+						try 
+						{
+							((AutoCloseable)es).close();
+						} catch (Exception e) {
+							// TODO: handle exception
+						}
+					}
+					lcm.terminated(this);
+				}
+				
+				closed = true;
+			}
+		}
 	}
 
 }

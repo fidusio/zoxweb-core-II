@@ -2,6 +2,7 @@ package org.zoxweb.server.task;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -45,10 +46,27 @@ public class ExecutorHolderManager
 		
 	}
 	
+	public Executor register(Executor exec, String name)
+	{
+		ExecutorHolder<Executor> ret = null;
+		try
+		{
+			ret = new ExecutorHolder<Executor>(exec, this, name, null);
+		}
+		catch(IllegalArgumentException e)
+		{
+			e.printStackTrace();
+			throw e;
+		}
+		
+		
+		return ret;
+	}
+	
 	public ExecutorService createFixedThreadPool(String name, int nThreads)
 	{
 		
-		ExecutorService ret = null;
+		ExecutorServiceHolder ret = null;
 		try
 		{
 			ret = new ExecutorServiceHolder(Executors.newFixedThreadPool(nThreads), this, name, null);
@@ -67,7 +85,7 @@ public class ExecutorHolderManager
 	public ScheduledExecutorService createScheduledThreadPool(String name, int nThreads)
 	{
 		
-		ScheduledExecutorService ret = null;
+		ScheduledExecutorServiceHolder ret = null;
 		try
 		{
 			ret = new ScheduledExecutorServiceHolder(Executors.newScheduledThreadPool(nThreads), this, name, null);
