@@ -23,8 +23,8 @@ public class ExecutorHolderManager
 {
 	public static final ExecutorHolderManager SINGLETON = new ExecutorHolderManager();
 
-	private Map<String, ExecutorHolder<?>> map = new HashMap<String, ExecutorHolder<?>>();
-	private Lock lock = new ReentrantLock();
+	volatile private Map<String, ExecutorHolder<?>> map = new HashMap<String, ExecutorHolder<?>>();
+	volatile private Lock lock = new ReentrantLock();
 	
 	private ExecutorHolderManager()
 	{

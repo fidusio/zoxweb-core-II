@@ -27,7 +27,7 @@ public class ExecutorHolder<E extends Executor>
 	private final String name;
 	private final String description;
 	protected final LifeCycleMonitor<ExecutorHolder<?>> lcm;
-	private boolean closed = false;
+	volatile private boolean closed = false;
 	
 	
 	
