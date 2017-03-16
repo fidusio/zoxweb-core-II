@@ -25,10 +25,13 @@ Copyright (C) 2008-2017 http://www.zoxweb.com
  limitations under the License.
 
 ## RELEASES
+
 <ul>
 <li>2.0.1 	2017-03-16
 <li>2.0	2017-03-12
-/<ul>
+</ul>
+
+
 ## KNOWN ISSUES
 
 
