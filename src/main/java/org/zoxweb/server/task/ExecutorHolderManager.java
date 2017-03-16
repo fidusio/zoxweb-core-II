@@ -51,7 +51,8 @@ public class ExecutorHolderManager
 		
 	}
 	
-	public Executor register(Executor exec, String name)
+	@SuppressWarnings("unchecked")
+	public <T extends Executor> T register(Executor exec, String name)
 	{
 		
 		SharedUtil.checkIfNulls("Executor cannot be null", exec);
@@ -59,17 +60,17 @@ public class ExecutorHolderManager
 		{
 			throw new IllegalArgumentException("Cannot resigter an ExecutorHolder: " + exec);
 		}
-		ExecutorHolder<?> ret = null;
+		T ret = null;
 		try
 		{
 			
 			// dot change sequence because of inheritance
 			if (exec instanceof ScheduledExecutorService)
-				ret = new ScheduledExecutorServiceHolder((ScheduledExecutorService)exec, this, name, null);
+				ret = (T) new ScheduledExecutorServiceHolder((ScheduledExecutorService)exec, this, name, null);
 			else if (exec instanceof ExecutorService)
-				ret = new ExecutorServiceHolder((ExecutorService)exec, this, name, null);
+				ret = (T) new ExecutorServiceHolder((ExecutorService)exec, this, name, null);
 			else	
-				ret = new ExecutorHolder<Executor>(exec, this, name, null);
+				ret = (T) new ExecutorHolder<Executor>(exec, this, name, null);
 		}
 		catch(IllegalArgumentException e)
 		{
@@ -83,40 +84,12 @@ public class ExecutorHolderManager
 	
 	public ExecutorService createFixedThreadPool(String name, int nThreads)
 	{
-		
-		ExecutorServiceHolder ret = null;
-		try
-		{
-			ret = new ExecutorServiceHolder(Executors.newFixedThreadPool(nThreads), this, name, null);
-		}
-		catch(IllegalArgumentException e)
-		{
-			e.printStackTrace();
-			throw e;
-		}
-		
-		
-		return ret;
-		
+		return register(Executors.newFixedThreadPool(nThreads), name);
 	}
 	
 	public ScheduledExecutorService createScheduledThreadPool(String name, int nThreads)
 	{
-		
-		ScheduledExecutorServiceHolder ret = null;
-		try
-		{
-			ret = new ScheduledExecutorServiceHolder(Executors.newScheduledThreadPool(nThreads), this, name, null);
-		}
-		catch(IllegalArgumentException e)
-		{
-			e.printStackTrace();
-			throw e;
-		}
-		
-		
-		return ret;
-		
+		return register(Executors.newScheduledThreadPool(nThreads), name);
 	}
 	
 	

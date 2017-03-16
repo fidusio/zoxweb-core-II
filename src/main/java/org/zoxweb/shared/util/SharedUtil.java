@@ -865,7 +865,7 @@ public class SharedUtil {
 	 * @return convert map to list nvpairs
 	 */
 	public static <V>List<? extends GetNameValue<String>> toNVPairs(Map<String, String[]> nvMap, boolean nullAllowed) {
-		List< GetNameValue<String>> ret = new ArrayList<GetNameValue<String>>();
+		List<GetNameValue<String>> ret = new ArrayList<GetNameValue<String>>();
 		
 		for (Map.Entry<String, String[]> nvp : nvMap.entrySet()) {
 			if (nvp != null) {
