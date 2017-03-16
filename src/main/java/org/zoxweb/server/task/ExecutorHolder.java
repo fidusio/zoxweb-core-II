@@ -10,6 +10,12 @@ import org.zoxweb.shared.util.GetName;
 import org.zoxweb.shared.util.LifeCycleMonitor;
 import org.zoxweb.shared.util.SharedUtil;
 
+/**
+ * 
+ * @author mnael
+ *
+ * @param <E> Executor
+ */
 public class ExecutorHolder<E extends Executor>
 	implements Executor,
 			   GetName,
@@ -47,7 +53,7 @@ public class ExecutorHolder<E extends Executor>
 		this.lcm = lcm;
 		if (!lcm.created(this))
 		{
-			throw new IllegalArgumentException("Creation failed for " + name);
+			throw new IllegalArgumentException("Registration failed for " + name);
 		}
 		
 	}
@@ -97,4 +103,9 @@ public class ExecutorHolder<E extends Executor>
 		}
 	}
 
+	
+	public String toString()
+	{
+		return getName() + ", " + es;
+	}
 }

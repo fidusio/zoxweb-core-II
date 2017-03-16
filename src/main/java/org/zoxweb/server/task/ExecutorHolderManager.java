@@ -10,8 +10,13 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import org.zoxweb.shared.util.LifeCycleMonitor;
+import org.zoxweb.shared.util.SharedUtil;
 
-
+/**
+ * 
+ * @author mnael
+ *
+ */
 public class ExecutorHolderManager
 	implements LifeCycleMonitor<ExecutorHolder<?>>,
 			   AutoCloseable
@@ -48,10 +53,23 @@ public class ExecutorHolderManager
 	
 	public Executor register(Executor exec, String name)
 	{
-		ExecutorHolder<Executor> ret = null;
+		
+		SharedUtil.checkIfNulls("Executor cannot be null", exec);
+		if (exec instanceof ExecutorHolder)
+		{
+			throw new IllegalArgumentException("Cannot resigter an ExecutorHolder: " + exec);
+		}
+		ExecutorHolder<?> ret = null;
 		try
 		{
-			ret = new ExecutorHolder<Executor>(exec, this, name, null);
+			
+			// dot change sequence because of inheritance
+			if (exec instanceof ScheduledExecutorService)
+				ret = new ScheduledExecutorServiceHolder((ScheduledExecutorService)exec, this, name, null);
+			else if (exec instanceof ExecutorService)
+				ret = new ExecutorServiceHolder((ExecutorService)exec, this, name, null);
+			else	
+				ret = new ExecutorHolder<Executor>(exec, this, name, null);
 		}
 		catch(IllegalArgumentException e)
 		{
@@ -109,7 +127,7 @@ public class ExecutorHolderManager
 	}
 
 	@Override
-	public boolean created(ExecutorHolder<?> t) 
+	public boolean created(ExecutorHolder<?> t)
 	{
 		try
 		{

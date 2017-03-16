@@ -14,7 +14,11 @@ import java.util.concurrent.TimeoutException;
 
 import org.zoxweb.shared.util.LifeCycleMonitor;
 
-
+/**
+ * 
+ * @author mnael
+ *
+ */
 public class ExecutorServiceHolder
 extends ExecutorHolder<ExecutorService>
 implements ExecutorService

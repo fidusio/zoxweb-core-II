@@ -6,7 +6,11 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 import org.zoxweb.shared.util.LifeCycleMonitor;
-
+/**
+ * 
+ * @author mnael
+ *
+ */
 public class ScheduledExecutorServiceHolder extends ExecutorServiceHolder
 implements ScheduledExecutorService 
 {

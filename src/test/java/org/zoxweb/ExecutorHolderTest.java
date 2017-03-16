@@ -1,5 +1,7 @@
 package org.zoxweb;
 
+import java.util.concurrent.Executor;
+
 import org.zoxweb.server.task.ExecutorHolderManager;
 import org.zoxweb.server.task.TaskProcessor;
 
@@ -18,9 +20,12 @@ public class ExecutorHolderTest
 			ExecutorHolderManager.SINGLETON.createScheduledThreadPool("imad", 5);
 			System.out.println(ExecutorHolderManager.SINGLETON.size());
 			
-			ExecutorHolderManager.SINGLETON.register(new TaskProcessor(1000), "eerabi");
+			Executor ret = ExecutorHolderManager.SINGLETON.register(new TaskProcessor(1000), "eerabi");
 			
 			System.out.println(ExecutorHolderManager.SINGLETON.size());
+			
+			
+			ExecutorHolderManager.SINGLETON.register(ret, "batata");
 			
 			ExecutorHolderManager.SINGLETON.close();
 			
