@@ -32,19 +32,30 @@ public class ExecutorHolder<E extends Executor>
 	
 	
 	public ExecutorHolder(Executor es, LifeCycleMonitor<ExecutorHolder<?>> lcm)
+			throws NullPointerException, IllegalArgumentException
 	{
 		this(es, lcm, null, null);
 	}
 	
 	
 	public ExecutorHolder(Executor es, LifeCycleMonitor<ExecutorHolder<?>> lcm, String name)
+			throws NullPointerException, IllegalArgumentException
 	{
 		this(es, lcm, name, null);
 		
 	}
-	
+	/**
+	 * 
+	 * @param es Executor to be registered, mandatory
+	 * @param lcm LifeCycleMonitor that will monitor creation and termination, mandatory
+	 * @param name of the Executor if null an automatic UUID name will be generated
+	 * @param description optional
+	 * @throws NullPointerException if es or lcm null
+	 * @throws IllegalArgumentException if name of executor already exist, Executor instance of ExecutorHolder
+	 */
 	@SuppressWarnings("unchecked")
 	public ExecutorHolder(Executor es, LifeCycleMonitor<ExecutorHolder<?>> lcm, String name, String description)
+		throws NullPointerException, IllegalArgumentException
 	{
 		SharedUtil.checkIfNulls("Executor or LifeCycleMonitor null", es, lcm);
 		this.es = (E) es;
@@ -53,7 +64,7 @@ public class ExecutorHolder<E extends Executor>
 		this.lcm = lcm;
 		if (!lcm.created(this))
 		{
-			throw new IllegalArgumentException("Registration failed for " + name);
+			throw new IllegalArgumentException(name + " already registered.");
 		}
 		
 	}

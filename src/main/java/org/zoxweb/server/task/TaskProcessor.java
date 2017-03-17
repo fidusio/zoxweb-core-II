@@ -28,7 +28,6 @@ import java.util.logging.Logger;
 
 import org.zoxweb.server.util.BoundedSimpleQueue;
 import org.zoxweb.server.util.RuntimeUtil;
-import org.zoxweb.shared.util.Const;
 import org.zoxweb.shared.util.DaemonController;
 import org.zoxweb.shared.util.SimpleQueueInterface;
 import org.zoxweb.shared.util.SimpleQueue;
@@ -54,7 +53,7 @@ implements Runnable,
 		   DaemonController,
 		   Executor
 {
-	private static final transient Logger log = Logger.getLogger(Const.LOGGER_NAME);
+	private static final transient Logger log = Logger.getLogger(TaskProcessor.class.getName());
 
 	public static final long WAIT_TIME = TimeUnit.MILLISECONDS.toMillis(500); 
 	private Thread thread;

@@ -51,8 +51,17 @@ public class ExecutorHolderManager
 		
 	}
 	
+	/**
+	 * Register an Executor by creating an ExecutorHolder
+	 * @param exec java executor to be register mandatory
+	 * @param name of the executor if null an automatic UUID name will be generated
+	 * @return ExecutorHolder base class
+	 * @throws NullPointerException if es or lcm null
+	 * @throws IllegalArgumentException if name of executor already exist or  Executor instance of ExecutorHolder
+	 */
 	@SuppressWarnings("unchecked")
 	public <T extends Executor> T register(Executor exec, String name)
+		throws NullPointerException, IllegalArgumentException
 	{
 		
 		SharedUtil.checkIfNulls("Executor cannot be null", exec);
@@ -64,7 +73,7 @@ public class ExecutorHolderManager
 		try
 		{
 			
-			// dot change sequence because of inheritance
+			// do not change sequence because of inheritance
 			if (exec instanceof ScheduledExecutorService)
 				ret = (T) new ScheduledExecutorServiceHolder((ScheduledExecutorService)exec, this, name, null);
 			else if (exec instanceof ExecutorService)
@@ -82,12 +91,41 @@ public class ExecutorHolderManager
 		return ret;
 	}
 	
+	
+	
+	public void terminate(String name)
+	{
+		try
+		{
+			lock.lock();
+			ExecutorHolder<?> eh = map.get(name);
+			if(eh != null)
+			{
+				try
+				{
+					eh.close();
+				}
+				catch(Exception e)
+				{
+					
+				}
+			}
+			
+		}
+		finally
+		{
+			lock.unlock();
+		}
+	}
+	
 	public ExecutorService createFixedThreadPool(String name, int nThreads)
+			throws NullPointerException, IllegalArgumentException
 	{
 		return register(Executors.newFixedThreadPool(nThreads), name);
 	}
 	
 	public ScheduledExecutorService createScheduledThreadPool(String name, int nThreads)
+			throws NullPointerException, IllegalArgumentException
 	{
 		return register(Executors.newScheduledThreadPool(nThreads), name);
 	}
@@ -151,6 +189,7 @@ public class ExecutorHolderManager
 			{
 				ev.close();
 			}
+			map.clear();
 		}
 		
 		finally
