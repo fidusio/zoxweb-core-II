@@ -67,39 +67,90 @@ public final class ServerUtil
 	}
 	
 	
+	
+
+	/**
+	 * Secure random
+	 */
 	public final static SecureRandom RNG = new SecureRandom();
 	
-	
+	/**
+	 * Utility global lock
+	 */
 	public final static Lock LOCK = new ReentrantLock();
 		
+
+	
+	/**
+	 * Utility method to wait on a object
+	 * @param obj to be synchronized and wait on
+	 * @param millis to wait
+	 * @param nanos to wait
+	 */
+	public static void waitNano(Object obj, long millis, int nanos)
+	{
+		synchronized(obj)
+		{
+			try 
+			{
+				obj.wait(millis, nanos);
+				
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	
+	/**
+	 * Utility method to wait on a object
+	 * @param obj to be synchronized and wait on
+	 * @param millis to wait
+	 */
+	public static void waitNano(Object obj, long millis)
+	{
+		synchronized(obj)
+		{
+			try 
+			{
+				obj.wait(millis);
+				
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	
 	/**
 	 * This methods will concatenate two arrays as one
-	 * @param first
-	 * @param second
+	 * @param array1
+	 * @param array2
 	 * @return concatenated type array
 	 */
-	public static <T> T[] concat(T[] first, T[] second) 
+	public static <T> T[] concat(T[] array1, T[] array2) 
 	{
 		
 		
 		
-		  if ( first != null && second != null)
+		  if ( array1 != null && array2 != null)
 		  {
-			  T[] result = Arrays.copyOf(first, first.length + second.length);
-			  System.arraycopy(second, 0, result, first.length, second.length);
+			  T[] result = Arrays.copyOf(array1, array1.length + array2.length);
+			  System.arraycopy(array2, 0, result, array1.length, array2.length);
 			  return result;
 		  }
 		
 		
-		  if ( first == null && second != null)
+		  if ( array1 == null && array2 != null)
 		  {
-			  return second;
+			  return array2;
 		  }
 		  
-		  if ( first != null && second == null)
+		  if ( array1 != null && array2 == null)
 		  {
-			  return first;
+			  return array1;
 		  }
 		  
 		
@@ -113,9 +164,9 @@ public final class ServerUtil
 	 * This method reads files based on the file name/location
 	 * on the computer and stores the data in an array list of 
 	 * strings.
-	 * @param fileName
-	 * @return string list 
-	 * @throws IOException
+	 * @param fileName to be read
+	 * @return string list
+	 * @throws IOException in case of IO error
 	 */
 	public static List<String> toStringList(String fileName) throws IOException
 	{
@@ -243,7 +294,11 @@ public final class ServerUtil
 	
 	
 	
-	
+	/**
+	 * Load the systeminfo 
+	 * @param includeNetworkDetails true add networking info
+	 * @return SystemInfoDAO
+	 */
 	public static SystemInfoDAO loadSystemInfoDAO(boolean includeNetworkDetails) 
 	{
 		SystemInfoDAO ret = new SystemInfoDAO();
@@ -319,7 +374,11 @@ public final class ServerUtil
 //	}
 	
 	
-	
+	/**
+	 * Create delay in nanos
+	 * @param nanos to delay
+	 * @return the difference
+	 */
 	private static long delayInNanos(long nanos)
 	{
 		
@@ -332,15 +391,6 @@ public final class ServerUtil
 		}while(System.nanoTime() < stopAt);
 		
 		return System.nanoTime() - stopAt;
-		
-		
-//		long ts =  System.nanoTime();
-//		do
-//		{
-//			
-//		}while(System.nanoTime() - ts < nanos);
-//		
-//		return System.nanoTime() - ts - nanos;
 	}
 	
 	/**
@@ -353,9 +403,7 @@ public final class ServerUtil
 	 */
 	public static long delay(long timeToSleepNanos)
 	{		
-		//long lastTs = 0;
 		
-		//long start = System.nanoTime();
 		
 		if(timeToSleepNanos <= 1000000) 
 		{
@@ -389,9 +437,14 @@ public final class ServerUtil
 		
 			}
 
-		//return System.nanoTime() - start;
 	}
 	
+	/**
+	 * Check if the list of all object are derived from Clazz
+	 * @param list of objects 
+	 * @param clazz to be matched with
+	 * @return true if all the list object are matching
+	 */
 	public static boolean areAllInstancesMatchingType(List<?> list, Class<?> clazz)
 	{		
 		SharedUtil.checkIfNulls("Null list or class.", list, clazz);

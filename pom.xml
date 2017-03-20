@@ -53,7 +53,7 @@
         <javax-mail.version>1.5.6</javax-mail.version>
         <junit.version>4.8.2</junit.version>
         <common-codec.version>1.9</common-codec.version>
-        <rabbitmq-client.version>4.0.0</rabbitmq-client.version>
+        <rabbitmq-client.version>4.1.0</rabbitmq-client.version>
 		<ehcache.version>2.10.3</ehcache.version>
 		<maven-plugin.version>3.6.1</maven-plugin.version>
         <javaee-api.version>7.0</javaee-api.version>

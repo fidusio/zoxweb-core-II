@@ -25,6 +25,7 @@ public class RabbitMQSend {
 		 ConnectionFactory factory = new ConnectionFactory();
 		 	
 		 	factory.setHost(args[index++]);
+		 	//factory.setPort(port);
 		 	factory.setVirtualHost(args[index++]);
 		 	EXCHANGE = args[index++];
 		    factory.setUsername(args[index++]);
