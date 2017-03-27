@@ -128,11 +128,9 @@ public class ApplicationConfigDAO
 	public String lookupValue(String name)
 	{
 		name = SharedStringUtil.toLowerCase(name);
-		if (name != null)
-		{
+		if (!SharedStringUtil.isEmpty(name))
 			return properties.get(name);
-		}
-		
+
 		return null;
 	}
 	
@@ -143,8 +141,9 @@ public class ApplicationConfigDAO
 	 */
 	public synchronized void set(String name, String value)
 	{
-		name = SharedStringUtil.toLowerCase( name);
-		properties.put( name, value);
+		name = SharedStringUtil.toLowerCase(name);
+		if (!SharedStringUtil.isEmpty(name))
+			properties.put( name, value);
 	}
 	
 	/**

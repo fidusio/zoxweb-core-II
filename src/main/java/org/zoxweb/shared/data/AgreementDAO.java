@@ -54,7 +54,8 @@ public class AgreementDAO
 		{
 			cType = c;
 		}
-		
+
+		@Override
 		public NVConfig getNVConfig() 
 		{
 			return cType;

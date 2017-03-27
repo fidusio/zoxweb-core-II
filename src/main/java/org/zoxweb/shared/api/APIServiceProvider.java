@@ -25,7 +25,7 @@ import org.zoxweb.shared.util.SetName;
  * @author mzebib
  *
  */
-public interface APIServiceProvider<SP>
+public interface APIServiceProvider<S>
 	extends SetDescription, 
 			SetName, 
 			CanonicalID
@@ -49,7 +49,7 @@ public interface APIServiceProvider<SP>
 	 * @return native connection 
 	 * @throws APIException in case of connection issues
 	 */
-	public SP connect() 
+	public S connect()
 			throws APIException;
 	
 	/**
@@ -57,7 +57,7 @@ public interface APIServiceProvider<SP>
 	 * @return native connection 
 	 * @throws APIException in case of connection issues
 	 */
-	public SP newConnection()
+	public S newConnection()
 			throws APIException;
 	
 	/**

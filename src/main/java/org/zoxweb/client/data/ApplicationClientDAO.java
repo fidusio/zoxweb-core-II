@@ -44,7 +44,8 @@ public class ApplicationClientDAO
 			this.handlerManager = new HandlerManager(this);
 		}
 	}
-	
+
+	@Override
 	public String getName() {
 		return name;
 	}
@@ -60,7 +61,7 @@ public class ApplicationClientDAO
 
 	@Override
 	public void callBackInitiated() {
-		
+		// to be compliant
 	}
 
 	@Override
