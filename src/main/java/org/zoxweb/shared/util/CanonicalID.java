@@ -30,6 +30,6 @@ public interface CanonicalID
 	 * Converts the implementing object in its canonical form.
 	 * @return text identification of the object
 	 */
-	public String toCanonicalID();
+	String toCanonicalID();
 
 }

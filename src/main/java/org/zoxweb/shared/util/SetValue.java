@@ -29,6 +29,6 @@ public interface SetValue<V>
 	 * Sets the value.
 	 * @param value
 	 */
-	public void setValue(V value);
+	void setValue(V value);
 
 }

@@ -27,5 +27,5 @@ public interface GetValue<V> {
 	 * Returns the value.
 	 * @return typed value
 	 */
-	public V getValue();
+	 V getValue();
 }

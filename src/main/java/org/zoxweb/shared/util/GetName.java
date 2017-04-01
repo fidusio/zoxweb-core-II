@@ -25,5 +25,5 @@ public interface GetName {
 	/**
 	 * @return the name of the object 
 	 */
-	public String getName();
+	 String getName();
 }

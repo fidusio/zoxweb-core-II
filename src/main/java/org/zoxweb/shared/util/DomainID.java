@@ -31,12 +31,12 @@ public interface DomainID<T>
 	 * Gets the domain ID.
 	 * @return typed domain id
 	 */
-	public T getDomainID();
+	T getDomainID();
 	
 	/**
 	 * Sets the domain ID.
 	 * @param domainID
 	 */
-	public void setDomainID(T domainID);
+	void setDomainID(T domainID);
 	
 }

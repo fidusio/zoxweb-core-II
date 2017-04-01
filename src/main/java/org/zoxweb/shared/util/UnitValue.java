@@ -28,12 +28,12 @@ public interface UnitValue<V>
 	 * Returns the unit.
 	 * @return unit
 	 */
-	public Unit getUnit();
+	 Unit getUnit();
 
 	/**
 	 * Sets the unit.
 	 * @param unit
 	 */
-	public void setUnit(Unit unit);
+	 void setUnit(Unit unit);
 
 }

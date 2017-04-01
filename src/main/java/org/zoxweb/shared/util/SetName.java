@@ -27,5 +27,5 @@ public interface SetName
 	 * Set name property.
 	 * @param name
 	 */
-	public void setName(String name);
+	 void setName(String name);
 }

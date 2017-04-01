@@ -6,8 +6,8 @@ import org.zoxweb.shared.util.NVConfigEntityLocal;
 import org.zoxweb.shared.util.SharedUtil;
 
 /**
- * This class was reintroduced for backward compatibility reason.
- * IT SHOULD NEVER BE USED and might delete in future releases.
+ * This class was reintroduced for backward compatibility reasons.
+ * IT SHOULD NEVER BE USED and might be deleted in future releases.
 
  * @author mnael
  *

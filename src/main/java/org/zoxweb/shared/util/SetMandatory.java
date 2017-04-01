@@ -27,5 +27,5 @@ public interface SetMandatory
 	 * Set mandatory property.
 	 * @param mandatory
 	 */
-	public void setMandatory(boolean mandatory);
+	 void setMandatory(boolean mandatory);
 }

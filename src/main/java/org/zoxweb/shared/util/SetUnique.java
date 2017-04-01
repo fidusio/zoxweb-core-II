@@ -27,6 +27,6 @@ public interface SetUnique
 	 * Sets unique property.
 	 * @param unique
 	 */
-	public void setUnique(boolean unique);
+	 void setUnique(boolean unique);
 
 }

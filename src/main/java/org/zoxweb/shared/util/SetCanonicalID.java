@@ -23,8 +23,8 @@ public interface SetCanonicalID
 	extends CanonicalID
 {
 	
-	public String getCanonicalID();
+	String getCanonicalID();
 	
-	public void setCanonicalID(String id);
+	void setCanonicalID(String id);
 	
 }

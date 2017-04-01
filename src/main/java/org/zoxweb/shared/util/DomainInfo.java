@@ -27,11 +27,11 @@ public interface DomainInfo
 			DomainID<String>, 
 			CanonicalID
 {
-	public boolean addNVConfigEntity(NVConfigEntity nvce);
+	boolean addNVConfigEntity(NVConfigEntity nvce);
 	
-	public boolean deleteNVConfigEntity(NVConfigEntity nvce);
+	boolean deleteNVConfigEntity(NVConfigEntity nvce);
 	
-	public NVConfigEntity lookup(String byName);
+	NVConfigEntity lookup(String byName);
 	
-	public NVConfigEntity[] getAllNVConfigEntity();
+	NVConfigEntity[] getAllNVConfigEntity();
 }

@@ -26,11 +26,11 @@ public interface SystemID<T> {
 	 * Returns the system ID.
 	 * @return typed system id
 	 */
-	public T getSystemID();
+	T getSystemID();
 	
 	/**
 	 * Sets the system ID.
 	 * @param systemID
 	 */
-	public void setSystemID(T systemID);
+	void setSystemID(T systemID);
 }
