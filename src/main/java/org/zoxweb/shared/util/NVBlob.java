@@ -27,7 +27,8 @@ public class NVBlob
 	/**
 	 * The default constructor.
 	 */
-	public NVBlob() {
+	public NVBlob() 
+	{
 
 	}
 	
