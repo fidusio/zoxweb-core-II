@@ -26,4 +26,9 @@ public interface GlobalID<T>
      * @return the global identifier of the object
      */
     T getGlobalID();
+
+    /**
+     * @param gid the global identifier of the object.
+     */
+    void setGlobalID(T gid);
 }
