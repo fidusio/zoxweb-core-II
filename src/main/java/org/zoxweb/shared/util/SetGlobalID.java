@@ -6,5 +6,8 @@ package org.zoxweb.shared.util;
 public interface SetGlobalID <T>
     extends GlobalID<T>
 {
-    void setUUID(T uuid);
+    /**
+     * @param gid the global identifier of the object.
+     */
+    void setGlobalID(T gid);
 }
