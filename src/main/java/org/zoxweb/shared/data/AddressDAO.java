@@ -34,7 +34,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "address")
 @SuppressWarnings("serial")
-public class AddressDAO 
+public class  AddressDAO
 	extends SetNameDescriptionDAO {
 
 	public static final String COLUMN_STREET = "street";

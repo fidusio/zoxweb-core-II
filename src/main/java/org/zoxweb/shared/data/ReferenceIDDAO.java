@@ -36,7 +36,8 @@ public abstract class ReferenceIDDAO
 	public static final NVConfig NVC_REFERENCE_ID = NVConfigManager.createNVConfig("reference_id", "The reference id of the Object","ReferenceID", true, false, true, true, true, String.class, null);
 	public static final NVConfig NVC_ACCOUNT_ID = NVConfigManager.createNVConfig("account_id", "The account id","AccountID", true, false, false, true, true, String.class, null);
 	public static final NVConfig NVC_USER_ID = NVConfigManager.createNVConfig("user_id", "The user id","UserID", true, false, false, true, true, String.class, null);
-	public static final NVConfigEntity NVC_REFERENCE_ID_DAO = new NVConfigEntityLocal(null, null , null, true, false, false, false,ReferenceIDDAO.class, SharedUtil.toNVConfigList(NVC_REFERENCE_ID, NVC_ACCOUNT_ID, NVC_USER_ID), null, false, null);
+	public static final NVConfig NVC_GLOBAL_ID = NVConfigManager.createNVConfig("global_id", "The global id of the Object","GlobalID", true, false, true, true, false, String.class, null);
+	public static final NVConfigEntity NVC_REFERENCE_ID_DAO = new NVConfigEntityLocal(null, null , null, true, false, false, false,ReferenceIDDAO.class, SharedUtil.toNVConfigList(NVC_REFERENCE_ID, NVC_ACCOUNT_ID, NVC_USER_ID, NVC_GLOBAL_ID), null, false, null);
 	
 //	protected ReferenceIDDAO(List<NVConfigEntity> list){
 //		super(SharedUtil.merge(list, NVC_REFERENCE_ID_DAO));
@@ -94,6 +95,22 @@ public abstract class ReferenceIDDAO
 	 */
 	public void setUserID(String id) {
 		setValue(NVC_USER_ID, id);
+	}
+
+	/**
+	 * Returns the global ID.
+	 * @return global id
+	 */
+	public String getGlobalID() {
+		return lookupValue(NVC_GLOBAL_ID);
+	}
+
+	/**
+	 * Sets the global ID.
+	 * @param gid global uuid
+	 */
+	public void setGlobalID(String gid) {
+		setValue(NVC_GLOBAL_ID, gid);
 	}
 
 }

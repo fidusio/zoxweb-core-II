@@ -31,6 +31,8 @@ public enum MetaToken
 	VALUE("value"),
 	// 	Reference ID of the attribute.
 	REFERENCE_ID("reference_id"),
+	// Global ID of the attributes
+	GLOBAL_ID("global_id"),
 	// 	Value filter of the attribute.
 	VALUE_FILTER("value_filter"),
 	// 	Attributes list or collection.

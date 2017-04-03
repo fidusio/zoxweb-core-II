@@ -33,7 +33,7 @@ public abstract class NVEntity
 	implements ReferenceID<String>,
 			   AccountID<String>,
 			   UserID<String>,
-
+               GlobalID<String>,
 			   GetNVConfig,
 			   GetName {
 	
