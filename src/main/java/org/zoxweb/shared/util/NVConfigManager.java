@@ -158,7 +158,7 @@ public class NVConfigManager
 	 * @return NVConfig
 	 */
 	public static NVConfig createNVConfigEntity(String name, 
-												String  description, 
+												String description,
 												String displayName, 
 												boolean mandatory, 
 												boolean edit, 
@@ -171,7 +171,7 @@ public class NVConfigManager
 	
 	
 	public static NVConfig createNVConfigEntity(String name,
-												String  description, 
+												String description,
 												String displayName, 
 												boolean mandatory, 
 												boolean edit, 

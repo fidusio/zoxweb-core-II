@@ -4,6 +4,7 @@ package org.zoxweb;
 
 
 import java.util.List;
+import java.util.UUID;
 import java.util.logging.Logger;
 
 import org.zoxweb.server.util.GSONUtil;
@@ -25,6 +26,7 @@ public class JSONTest
 		try 
 		{
 			SystemInfoDAO sysDAO = ServerUtil.loadSystemInfoDAO();
+			sysDAO.setGlobalID(UUID.randomUUID().toString());
 			
 			for (NVEntity nve : sysDAO.getNetworkInterfaces().values())
 			{
