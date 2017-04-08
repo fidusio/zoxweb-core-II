@@ -15,6 +15,7 @@
  */
 package org.zoxweb.shared.data;
 
+import org.hibernate.mapping.MappedSuperclass;
 import org.zoxweb.shared.data.DataConst.DataParam;
 import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVConfigEntityLocal;
