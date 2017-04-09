@@ -15,11 +15,17 @@
  */
 package org.zoxweb.shared.data;
 
-import org.zoxweb.shared.util.*;
-
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+
+import org.zoxweb.shared.util.MetaToken;
+import org.zoxweb.shared.util.NVConfig;
+import org.zoxweb.shared.util.NVConfigEntity;
+import org.zoxweb.shared.util.NVConfigEntityLocal;
+import org.zoxweb.shared.util.NVConfigManager;
+import org.zoxweb.shared.util.NVEntity;
+import org.zoxweb.shared.util.SharedUtil;
 
 /**
  * 
@@ -29,9 +35,10 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 @SuppressWarnings("serial")
 public abstract class ReferenceIDDAO 
-	extends NVEntity {
+	extends NVEntity 
+{
 
-	public static final String COLUMN_REF_ID = "reference_id";
+
 
 	public static final NVConfig NVC_REFERENCE_ID = NVConfigManager.createNVConfig(MetaToken.REFERENCE_ID.getName(), "The reference id of the Object","ReferenceID", true, false, true, true, true, String.class, null);
 	public static final NVConfig NVC_ACCOUNT_ID = NVConfigManager.createNVConfig(MetaToken.ACCOUNT_ID.getName(), "The account id","AccountID", true, false, false, true, true, String.class, null);
@@ -39,11 +46,10 @@ public abstract class ReferenceIDDAO
 	public static final NVConfig NVC_GLOBAL_ID = NVConfigManager.createNVConfig(MetaToken.GLOBAL_ID.getName(), "The global id of the Object","GlobalID", false, false, false, true, false, String.class, null);
 	public static final NVConfigEntity NVC_REFERENCE_ID_DAO = new NVConfigEntityLocal(null, null , null, true, false, false, false,ReferenceIDDAO.class, SharedUtil.toNVConfigList(NVC_REFERENCE_ID, NVC_ACCOUNT_ID, NVC_USER_ID, NVC_GLOBAL_ID), null, false, null);
 	
-//	protected ReferenceIDDAO(List<NVConfigEntity> list){
-//		super(SharedUtil.merge(list, NVC_REFERENCE_ID_DAO));
-//	}
 
-	protected ReferenceIDDAO(NVConfigEntity nvce) {
+
+	protected ReferenceIDDAO(NVConfigEntity nvce)
+	{
 		super(nvce);
 	}
 	
@@ -52,7 +58,8 @@ public abstract class ReferenceIDDAO
 	 * @return  reference id
 	 */
 	@Id
-	@Column(name = COLUMN_REF_ID)
+	@Column(name = "reference_id")
+	@Override
 	public String getReferenceID() {
 		return lookupValue(NVC_REFERENCE_ID);
 	}
@@ -61,7 +68,9 @@ public abstract class ReferenceIDDAO
 	 * Sets the reference ID.
 	 * @param referenceID
 	 */
-	public void setReferenceID(String referenceID) {
+	@Override
+	public void setReferenceID(String referenceID)
+	{
 		setValue(NVC_REFERENCE_ID, referenceID);
 	}
 	
@@ -69,7 +78,10 @@ public abstract class ReferenceIDDAO
 	 * Returns the account ID.
 	 * @return account id
 	 */
-	public String getAccountID() {
+	@Column(name = "account_id")
+	@Override
+	public String getAccountID()
+	{
 		return lookupValue(NVC_ACCOUNT_ID);
 	}
 
@@ -77,7 +89,9 @@ public abstract class ReferenceIDDAO
 	 * Sets the account ID.
 	 * @param id
 	 */
-	public void setAccountID(String id) {
+	@Override
+	public void setAccountID(String id)
+	{
 		setValue(NVC_ACCOUNT_ID, id);
 	}
 	
@@ -85,7 +99,10 @@ public abstract class ReferenceIDDAO
 	 * Returns the user ID.
 	 * @return user id
 	 */
-	public String getUserID() {
+	@Column(name = "user_id")
+	@Override
+	public String getUserID()
+	{
 		return lookupValue(NVC_USER_ID);
 	}
 
@@ -93,7 +110,9 @@ public abstract class ReferenceIDDAO
 	 * Sets the user ID.
 	 * @param id
 	 */
-	public void setUserID(String id) {
+	@Override
+	public void setUserID(String id)
+	{
 		setValue(NVC_USER_ID, id);
 	}
 
@@ -101,6 +120,8 @@ public abstract class ReferenceIDDAO
 	 * Returns the global ID.
 	 * @return global id
 	 */
+	@Column(name = "global_id")
+	@Override
 	public String getGlobalID() {
 		return lookupValue(NVC_GLOBAL_ID);
 	}
@@ -109,7 +130,9 @@ public abstract class ReferenceIDDAO
 	 * Sets the global ID.
 	 * @param gid global uuid
 	 */
-	public void setGlobalID(String gid) {
+	@Override
+	public void setGlobalID(String gid)
+	{
 		setValue(NVC_GLOBAL_ID, gid);
 	}
 

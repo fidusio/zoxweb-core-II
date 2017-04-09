@@ -5,10 +5,20 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-import org.zoxweb.shared.api.*;
+import org.zoxweb.server.io.IOUtil;
+import org.zoxweb.shared.api.APIBatchResult;
+import org.zoxweb.shared.api.APIConfigInfo;
+import org.zoxweb.shared.api.APIDataStore;
+import org.zoxweb.shared.api.APIException;
+import org.zoxweb.shared.api.APIExceptionHandler;
+import org.zoxweb.shared.api.APISearchResult;
 import org.zoxweb.shared.db.QueryMarker;
 import org.zoxweb.shared.security.AccessException;
-import org.zoxweb.shared.util.*;
+import org.zoxweb.shared.util.DynamicEnumMap;
+import org.zoxweb.shared.util.GetName;
+import org.zoxweb.shared.util.NVConfigEntity;
+import org.zoxweb.shared.util.NVEntity;
+import org.zoxweb.shared.util.SharedUtil;
 
 import java.util.List;
 import java.util.Set;
@@ -214,24 +224,38 @@ public class HibernateDataStore
     public NVEntity insert(NVEntity nve) throws NullPointerException, IllegalArgumentException, AccessException, APIException {
         SharedUtil.checkIfNulls("NVEntity is null.", nve);
 
-        Session session = connect().openSession();
+        Session session = null;
         Transaction transaction = null;
 
-        if (nve.getReferenceID() == null) {
+        if (nve.getReferenceID() == null) 
+        {
             nve.setReferenceID(UUID.randomUUID().toString());
         }
+        
+        if(nve.getGlobalID() == null)
+        {
+        	 nve.setGlobalID(UUID.randomUUID().toString());
+        }
 
-        try {
+        try 
+        {
+        	
+        	session = connect().openSession();
             transaction = session.beginTransaction();
             session.save(nve);
             transaction.commit();
-        } catch (HibernateException e) {
-            if (transaction != null) {
+        } 
+        catch (HibernateException e) 
+        {
+            if (transaction != null)
+            {
                 transaction.rollback();
             }
             throw new APIException("Insert failed: " + e.getMessage());
-        } finally {
-            session.close();
+        } 
+        finally 
+        {
+        	IOUtil.close(session);
         }
 
         return nve;
@@ -241,20 +265,27 @@ public class HibernateDataStore
     public boolean delete(NVEntity nve, boolean withReference) throws NullPointerException, IllegalArgumentException, AccessException, APIException {
         SharedUtil.checkIfNulls("NVEntity is null.", nve);
 
-        Session session = connect().openSession();
+        Session session = null; 
         Transaction transaction = null;
 
-        try {
+        try 
+        {
+        	session = connect().openSession();
             transaction = session.beginTransaction();
             session.delete(nve);
             transaction.commit();
-        } catch (HibernateException e) {
-            if (transaction != null) {
+        }
+        catch (HibernateException e) 
+        {
+            if (transaction != null)
+            {
                 transaction.rollback();
             }
             throw new APIException("Delete failed: " + e.getMessage());
-        } finally {
-            session.close();
+        } 
+        finally 
+        {
+        	IOUtil.close(session);
         }
 
         return true;
@@ -269,20 +300,25 @@ public class HibernateDataStore
     public NVEntity update(NVEntity nve) throws NullPointerException, IllegalArgumentException, APIException {
         SharedUtil.checkIfNulls("NVEntity is null.", nve);
 
-        Session session = connect().openSession();
+        Session session = null;
         Transaction transaction = null;
 
-        try {
+        try 
+        {
+        	session = connect().openSession();
             transaction = session.beginTransaction();
             session.update(nve);
             transaction.commit();
-        } catch (HibernateException e) {
+        } 
+        catch (HibernateException e) 
+        {
             if (transaction != null) {
                 transaction.rollback();
             }
             throw new APIException("Updated failed: " + e.getMessage());
-        } finally {
-            session.close();
+        } finally 
+        {
+        	IOUtil.close(session);
         }
 
         return nve;
@@ -309,24 +345,28 @@ public class HibernateDataStore
 
         String referenceID = (String) objectId;
 
-        Session session = connect().openSession();
-        session.setDefaultReadOnly(true);
+        Session session = null;
 
         Transaction transaction = null;
         NVEntity nve;
 
         try {
+        	session = connect().openSession();
+            session.setDefaultReadOnly(true);
             transaction = session.beginTransaction();
             nve = (NVEntity) session.get(metaTypeName, referenceID);
             transaction.commit();
-        } catch (HibernateException e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
+        } catch (HibernateException e)
+        {
+//            if (transaction != null) {
+//                transaction.rollback();
+//            }
+//            e.printStackTrace();
             throw new APIException("Lookup failed: " + e.getMessage());
-        } finally {
-            session.close();
+        } 
+        finally 
+        {
+        	IOUtil.close(session);
         }
 
         return nve;

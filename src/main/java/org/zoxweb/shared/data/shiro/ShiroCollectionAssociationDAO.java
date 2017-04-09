@@ -49,8 +49,8 @@ public class ShiroCollectionAssociationDAO
 			this.nvc = nvc;
 		}
 		@Override
-		public NVConfig getNVConfig() {
-			// TODO Auto-generated method stub
+		public NVConfig getNVConfig() 
+		{
 			return nvc;
 		}
 		

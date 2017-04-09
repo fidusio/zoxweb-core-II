@@ -17,12 +17,10 @@ package org.zoxweb.shared.data;
 
 import org.zoxweb.shared.data.DataConst.DataParam;
 
-//import java.util.List;
 
-//import org.zoxweb.shared.util.NVConfig;
 import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVConfigEntityLocal;
-//import org.zoxweb.shared.util.NVConfigManager;
+
 import org.zoxweb.shared.util.SetName;
 import org.zoxweb.shared.util.SharedUtil;
 
@@ -40,9 +38,7 @@ public abstract class SetNameDAO
 	extends ReferenceIDDAO
 	implements SetName
 {
-	public static final String COLUMN_NAME = "name";
-
-	//public static final NVConfig NVC_NAME = NVConfigManager.createNVConfig("name", null,"Name", false, true, String.class);
+	
 
 	public static final NVConfigEntity NVC_NAME_DAO = new NVConfigEntityLocal(null, null , null, true, false, false, false, SetNameDAO.class, SharedUtil.toNVConfigList(DataParam.NAME.getNVConfig()), null, false, ReferenceIDDAO.NVC_REFERENCE_ID_DAO);
 
@@ -54,7 +50,8 @@ public abstract class SetNameDAO
 	 * Returns the name value.
 	 * @return name
 	 */
-	@Column(name = COLUMN_NAME)
+	@Column(name = "name")
+	@Override
 	public String getName() {
 		return lookupValue(DataParam.NAME);
 	}
@@ -63,6 +60,7 @@ public abstract class SetNameDAO
 	 * Sets the name value.
 	 * @param name
 	 */
+	@Override
 	public void setName(String name) 
 			throws NullPointerException, IllegalArgumentException {
 		setValue(DataParam.NAME, name);
