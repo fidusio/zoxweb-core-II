@@ -136,7 +136,7 @@ public class HibernateDataStore
     }
 
     @Override
-    public List search(NVConfigEntity nvce, List fieldNames, QueryMarker... queryCriteria) throws NullPointerException, IllegalArgumentException, AccessException, APIException {
+    public  <V extends NVEntity> List<V> search(NVConfigEntity nvce, List<String> fieldNames, QueryMarker... queryCriteria) throws NullPointerException, IllegalArgumentException, AccessException, APIException {
         return null;
     }
 
@@ -156,12 +156,12 @@ public class HibernateDataStore
     }
 
     @Override
-    public List search(String className, List fieldNames, QueryMarker... queryCriteria) throws NullPointerException, IllegalArgumentException, AccessException, APIException {
+    public  <V extends NVEntity> List<V> search(String className, List<String> fieldNames, QueryMarker... queryCriteria) throws NullPointerException, IllegalArgumentException, AccessException, APIException {
         return null;
     }
 
     @Override
-    public Object lookupProperty(GetName propertyName) {
+    public <T> T lookupProperty(GetName propertyName) {
         return null;
     }
 
@@ -176,7 +176,7 @@ public class HibernateDataStore
     }
 
     @Override
-    public APISearchResult batchSearch(NVConfigEntity nvce, QueryMarker... queryCriteria) throws NullPointerException, IllegalArgumentException, AccessException, APIException {
+    public <T> APISearchResult<T> batchSearch(NVConfigEntity nvce, QueryMarker... queryCriteria) throws NullPointerException, IllegalArgumentException, AccessException, APIException {
         return null;
     }
 
@@ -186,42 +186,42 @@ public class HibernateDataStore
     }
 
     @Override
-    public APISearchResult batchSearch(String className, QueryMarker... queryCriteria) throws NullPointerException, IllegalArgumentException, AccessException, APIException {
+    public <T> APISearchResult<T> batchSearch(String className, QueryMarker... queryCriteria) throws NullPointerException, IllegalArgumentException, AccessException, APIException {
         return null;
     }
 
     @Override
-    public APIBatchResult nextBatch(APISearchResult results, int startIndex, int batchSize) throws NullPointerException, IllegalArgumentException, AccessException, APIException {
+    public <T, V extends NVEntity> APIBatchResult<V> nextBatch(APISearchResult<T> results, int startIndex, int batchSize) throws NullPointerException, IllegalArgumentException, AccessException, APIException {
         return null;
     }
 
     @Override
-    public List userSearch(String userID, NVConfigEntity nvce, List fieldNames, QueryMarker... queryCriteria) throws NullPointerException, IllegalArgumentException, AccessException, APIException {
+    public <V extends NVEntity> List<V> userSearch(String userID, NVConfigEntity nvce, List<String> fieldNames, QueryMarker... queryCriteria) throws NullPointerException, IllegalArgumentException, AccessException, APIException {
         return null;
     }
 
     @Override
-    public List userSearch(String userID, String className, List fieldNames, QueryMarker... queryCriteria) throws NullPointerException, IllegalArgumentException, AccessException, APIException {
+    public <V extends NVEntity> List<V> userSearch(String userID, String className, List<String> fieldNames, QueryMarker... queryCriteria) throws NullPointerException, IllegalArgumentException, AccessException, APIException {
         return null;
     }
 
     @Override
-    public List searchByID(NVConfigEntity nvce, String... ids) throws NullPointerException, IllegalArgumentException, AccessException, APIException {
+    public <V extends NVEntity> List<V> searchByID(NVConfigEntity nvce, String... ids) throws NullPointerException, IllegalArgumentException, AccessException, APIException {
         return null;
     }
 
     @Override
-    public List searchByID(String className, String... ids) throws NullPointerException, IllegalArgumentException, AccessException, APIException {
+    public <V extends NVEntity> List<V> searchByID(String className, String... ids) throws NullPointerException, IllegalArgumentException, AccessException, APIException {
         return null;
     }
 
     @Override
-    public List userSearchByID(String userID, NVConfigEntity nvce, String... ids) throws NullPointerException, IllegalArgumentException, AccessException, APIException {
+    public <V extends NVEntity> List<V> userSearchByID(String userID, NVConfigEntity nvce, String... ids) throws NullPointerException, IllegalArgumentException, AccessException, APIException {
         return null;
     }
 
     @Override
-    public NVEntity insert(NVEntity nve) throws NullPointerException, IllegalArgumentException, AccessException, APIException {
+    public <V extends NVEntity> V insert(V nve) throws NullPointerException, IllegalArgumentException, AccessException, APIException {
         SharedUtil.checkIfNulls("NVEntity is null.", nve);
 
         Session session = null;
@@ -297,7 +297,7 @@ public class HibernateDataStore
     }
 
     @Override
-    public NVEntity update(NVEntity nve) throws NullPointerException, IllegalArgumentException, APIException {
+    public <V extends NVEntity> V update(V nve) throws NullPointerException, IllegalArgumentException, APIException {
         SharedUtil.checkIfNulls("NVEntity is null.", nve);
 
         Session session = null;
@@ -325,7 +325,7 @@ public class HibernateDataStore
     }
 
     @Override
-    public NVEntity patch(NVEntity nve, boolean updateTS, boolean sync, boolean updateRefOnly, boolean includeParam, String... nvConfigNames) throws NullPointerException, IllegalArgumentException, APIException {
+    public  <V extends NVEntity> V patch(V nve, boolean updateTS, boolean sync, boolean updateRefOnly, boolean includeParam, String... nvConfigNames) throws NullPointerException, IllegalArgumentException, APIException {
         return null;
     }
 
@@ -334,8 +334,9 @@ public class HibernateDataStore
         return 0;
     }
 
-    @Override
-    public Object lookupByReferenceID(String metaTypeName, Object objectId) {
+    @SuppressWarnings("unchecked")
+	@Override
+    public <NT, RT> NT lookupByReferenceID(String metaTypeName, RT objectId) {
         SharedUtil.checkIfNulls("Meta type name is null.", metaTypeName);
         SharedUtil.checkIfNulls("Reference ID is null.", objectId);
 
@@ -369,11 +370,11 @@ public class HibernateDataStore
         	IOUtil.close(session);
         }
 
-        return nve;
+        return (NT) nve;
     }
 
     @Override
-    public Object lookupByReferenceID(String metaTypeName, Object objectId, Object projection) {
+    public <NT, RT, NIT> NT lookupByReferenceID(String metaTypeName, RT objectId, NIT projection) {
         return null;
     }
 
