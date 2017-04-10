@@ -34,13 +34,11 @@ public interface ReferenceID<T>
 	 * Get reference unique ID.
 	 * @return the object reference unique identifier
 	 */
-	public T getReferenceID();
+	 T getReferenceID();
 	
 	/**
 	 * Set reference unique ID.
 	 * @param id
 	 */
-	public void setReferenceID(T id);
-	
-	
+	 void setReferenceID(T id);
 }

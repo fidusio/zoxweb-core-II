@@ -24,12 +24,12 @@ public interface UserID<T> {
 	 * Returns the user ID.
 	 * @return typed user id 
 	 */
-	public T getUserID();
+	T getUserID();
 	
 	/**
 	 * Sets the user ID.
 	 * @param id
 	 */
-	public void setUserID(T id);
+	void setUserID(T id);
 
 }

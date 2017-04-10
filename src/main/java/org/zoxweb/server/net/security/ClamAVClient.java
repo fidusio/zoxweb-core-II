@@ -29,7 +29,7 @@ import org.zoxweb.shared.util.Const.TypeInBytes;
  */
 public class ClamAVClient
 {
-	//private static final transient Logger log = Logger.getLogger(ClamAVClient.class.getName());
+
 	
 	public static class ClamAVScanResult
 		extends FilterInputStream
@@ -41,7 +41,6 @@ public class ClamAVClient
 		{
 			super(is);
 			result.setName(scanName);
-			//this.scanName = scanName;
 			this.ci = ci;
 		}
 		
@@ -51,10 +50,7 @@ public class ClamAVClient
 			return result;
 		}
 		
-		
-
-		
-		
+				
 		public IOStreamInfo getConnectionInfo()
 		{
 			return ci;
@@ -109,7 +105,6 @@ public class ClamAVClient
 		@Override
 		public long totalBytes() 
 		{
-			// TODO Auto-generated method stub
 			return result.getLength();
 		}
 	}
@@ -189,7 +184,7 @@ public class ClamAVClient
 		  }
 		  
 		  
-		  byte[] chunkSizeBuffer = TypeInBytes.intToBytes(chunkSize);//ByteBuffer.allocate(4).putInt(chunkSize).array();
+		  byte[] chunkSizeBuffer = TypeInBytes.intToBytes(chunkSize);
 		  cavsr.ci.os.write(chunkSizeBuffer);
 		  cavsr.ci.os.write(buffer, offset+i, chunkSize);
 		  cavsr.ci.os.flush();
@@ -261,7 +256,8 @@ public class ClamAVClient
 	    	ret.getScanResult().setLength(ret.getScanResult().getLength() + read);
 	        // The format of the chunk is: '<length><data>' where <length> is the size of the following data in bytes expressed as a 4 byte unsigned
 	        // integer in network byte order and <data> is the actual chunk. Streaming is terminated by sending a zero-length chunk.
-	        byte[] chunkSize = TypeInBytes.intToBytes(read); //ByteBuffer.allocate(4).putInt(read).array();
+	    	//ByteBuffer.allocate(4).putInt(read).array();
+	        byte[] chunkSize = TypeInBytes.intToBytes(read); 
 	        outs.write(chunkSize);
 	        outs.write(chunk, 0, read);
 	        outs.flush();
@@ -314,52 +310,7 @@ public class ClamAVClient
 	  
 	  return ret;
 	  
-//	  ClamAVScanResult  ret = new   ClamAVScanResult(null, is, null);
-//	  try (Socket s = new Socket(hostName,port); OutputStream outs = new BufferedOutputStream(s.getOutputStream()))
-//	  {
-//	      s.setSoTimeout(timeout); 
-//	      long delta = System.currentTimeMillis();
-//	      // handshake
-//	      System.out.println("before start");
-//	      outs.write(asBytes("zINSTREAM\0"));
-//	      outs.flush();
-//	      System.out.println("after start");
-//	      byte[] chunk = new byte[CHUNK_SIZE];
-//	
-//	      // send data
-//	      int read = ret.read(chunk);
-//	      while (read >= 0) 
-//	      {
-//	    	ret.size += read;
-//	        // The format of the chunk is: '<length><data>' where <length> is the size of the following data in bytes expressed as a 4 byte unsigned
-//	        // integer in network byte order and <data> is the actual chunk. Streaming is terminated by sending a zero-length chunk.
-//	        byte[] chunkSize = ByteBuffer.allocate(4).putInt(read).array();
-//	        outs.write(chunkSize);
-//	        outs.write(chunk, 0, read);
-//	        outs.flush();
-//	      
-//	        read = is.read(chunk);
-//	        
-//	        
-//	      }
-//	
-//	      // terminate scan
-//	      outs.write(new byte[]{0,0,0,0});
-//	      outs.flush();
-//	
-//	      // read reply
-//	      try (InputStream clamIs = s.getInputStream()) 
-//	      {
-//	    	  System.out.println("before read all");
-//	    	byte result[] = readAll(clamIs);
-//	    	System.out.println("after  read all");
-//	        ret.response = new String(result);
-//	        delta = System.currentTimeMillis() - delta;
-//	        ret.duration = delta;
-//	        ret.isClean = isCleanReply(result);
-//	        return ret;
-//	      }
-//	  } 
+
   }
 
   /**

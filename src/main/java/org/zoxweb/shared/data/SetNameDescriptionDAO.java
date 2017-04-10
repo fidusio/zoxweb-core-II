@@ -15,6 +15,7 @@
  */
 package org.zoxweb.shared.data;
 
+
 import org.zoxweb.shared.data.DataConst.DataParam;
 import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVConfigEntityLocal;
@@ -33,11 +34,8 @@ import javax.persistence.MappedSuperclass;
 @SuppressWarnings("serial")
 public abstract class SetNameDescriptionDAO
 	extends SetNameDAO
-	implements SetDescription {
-
-	public static final String COLUMN_DESCRIPTION = "description";
-
-	//public static final NVConfig NVC_DESCRIPTION =  NVConfigManager.createNVConfig("description", null, "Description", false, true, String.class);
+	implements SetDescription
+{
 	public static final NVConfigEntity NVC_NAME_DESCRIPTION_DAO = new NVConfigEntityLocal(null, null , null, true, false, false, false, SetNameDescriptionDAO.class, SharedUtil.toNVConfigList(DataParam.DESCRIPTION.getNVConfig()), null, false, SetNameDAO.NVC_NAME_DAO);
 
 	protected SetNameDescriptionDAO(NVConfigEntity nvce) {
@@ -48,7 +46,8 @@ public abstract class SetNameDescriptionDAO
 	 * Returns the description.
 	 * @return description
 	 */
-	@Column(name = COLUMN_DESCRIPTION)
+	@Column(name = "description")
+	@Override
 	public String getDescription() {
 		return lookupValue(DataParam.DESCRIPTION);
 	}
@@ -57,6 +56,7 @@ public abstract class SetNameDescriptionDAO
 	 * Sets the description.
 	 * @param description
 	 */
+	@Override
 	public void setDescription(String description) 
 			throws NullPointerException, IllegalArgumentException {
 		setValue(DataParam.DESCRIPTION, description);

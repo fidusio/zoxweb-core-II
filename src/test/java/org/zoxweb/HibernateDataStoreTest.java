@@ -19,11 +19,20 @@ public class HibernateDataStoreTest {
 
     @BeforeClass
     public static void setUp() {
-        APIConfigInfo configInfo = new APIConfigInfoDAO();
-        configInfo.getConfigParameters().add(new NVPair("resource", RESOURCE_FILE));
+//    	try
+    	{
+    		APIConfigInfo configInfo = new APIConfigInfoDAO();
+    		configInfo.getConfigParameters().add(new NVPair("resource", RESOURCE_FILE));
 
-        dataStore = new HibernateDataStore(configInfo);
-        dataStore.connect();
+    		dataStore = new HibernateDataStore(configInfo);
+    		dataStore.connect();
+    	}
+//    	catch(Throwable e)
+//    	{
+//    		e.printStackTrace();
+//    		
+//    	}
+    	System.out.println("Setup done");
     }
 
     @AfterClass

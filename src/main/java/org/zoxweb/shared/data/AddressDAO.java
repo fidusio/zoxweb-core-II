@@ -37,12 +37,6 @@ import javax.persistence.Table;
 public class  AddressDAO
 	extends SetNameDescriptionDAO {
 
-	public static final String COLUMN_STREET = "street";
-	public static final String COLUMN_CITY = "city";
-	public static final String COLUMN_STATE = "state_province";
-	public static final String COLUMN_COUNTRY = "country";
-	public static final String COLUMN_ZIP_CODE = "zip_postal_code";
-
 	public enum Params
 		implements GetNVConfig
 	{
@@ -93,7 +87,7 @@ public class  AddressDAO
 	 * Returns the street.
 	 * @return the street
 	 */
-	@Column (name = COLUMN_STREET)
+	@Column (name = "street")
 	public String getStreet() {
 		return lookupValue(Params.STREET);
 	}
@@ -110,7 +104,7 @@ public class  AddressDAO
 	 * Returns the city.
 	 * @return the city
 	 */
-	@Column (name = COLUMN_CITY)
+	@Column (name = "city")
 	public String getCity() {
 		return lookupValue(Params.CITY);
 	}
@@ -127,7 +121,7 @@ public class  AddressDAO
 	 * Returns the state or province.
 	 * @return the province
 	 */
-	@Column (name = COLUMN_STATE)
+	@Column (name = "state_province")
 	public String getStateOrProvince() {
 		return lookupValue(Params.STATE_PROVINCE);
 	}
@@ -144,7 +138,7 @@ public class  AddressDAO
 	 * Returns the country.
 	 * @return the country
 	 */
-	@Column (name = COLUMN_COUNTRY)
+	@Column (name = "country")
 	public String getCountry() {
 		return lookupValue(Params.COUNTRY);
 	}
@@ -161,7 +155,7 @@ public class  AddressDAO
 	 * Returns the ZIP or postal code.
 	 * @return the zip or postal code depending on the country
 	 */
-	@Column (name = COLUMN_ZIP_CODE)
+	@Column (name = "zip_postal_code")
 	public String getZIPOrPostalCode() {
 		return lookupValue(Params.ZIP_POSTAL_CODE);
 	}

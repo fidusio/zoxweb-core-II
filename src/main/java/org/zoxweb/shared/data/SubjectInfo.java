@@ -15,12 +15,15 @@
  */
 package org.zoxweb.shared.data;
 
+import org.zoxweb.shared.util.SubjectID;
+
 /**
  * The SubjectInfo interface.
  * @author mzebib
  *
  */
 public interface SubjectInfo
+	extends SubjectID<String>
 {
 	/**
 	 * Gets the first name.
