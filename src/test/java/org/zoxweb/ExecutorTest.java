@@ -9,8 +9,7 @@ public class ExecutorTest
 	implements Runnable {
 
 	private static volatile int counter = 0;
-	
-	
+
 	public void run() {
 		int index = counter++;
 		System.out.println("Started " + index);

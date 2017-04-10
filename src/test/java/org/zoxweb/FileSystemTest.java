@@ -32,7 +32,6 @@ import java.util.Iterator;
 import org.zoxweb.shared.util.SharedBase64;
 import org.zoxweb.shared.util.SharedUtil;
 
-
 public class FileSystemTest {
 
 	@SuppressWarnings("resource")
@@ -47,8 +46,6 @@ public class FileSystemTest {
             while (fsi.hasNext()) {
                 FileStore fStore = fsi.next();
                 System.out.println(SharedUtil.toCanonicalID(',', fStore.name(), fStore.type(), fStore.getTotalSpace(), fStore.getUnallocatedSpace(), fStore.getUsableSpace()));
-
-
             }
 
             File file = new File("/temp/dummy.lnk");

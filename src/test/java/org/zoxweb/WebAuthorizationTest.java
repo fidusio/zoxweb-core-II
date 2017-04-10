@@ -25,10 +25,6 @@ import org.zoxweb.shared.http.HTTPMessageConfig;
 import org.zoxweb.shared.http.HTTPMethod;
 import org.zoxweb.shared.util.GetNameValue;
 
-/**
- * @author mnael
- *
- */
 public class WebAuthorizationTest {
 
 	public static void main(String[] args) {

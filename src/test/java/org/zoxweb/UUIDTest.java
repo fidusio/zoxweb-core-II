@@ -4,7 +4,7 @@ import java.util.UUID;
 
 public class UUIDTest {
 
-	public static void main(String ...args) {
+	public static void main(String[] args) {
 		long most  = System.nanoTime();
 		long least = System.nanoTime();
 		int size = 10;
@@ -23,7 +23,7 @@ public class UUIDTest {
 		long last = 0L;
 
 		for (long n : listNanos) {
-			System.out.println( n + " last equals " + ( last == n) + " " + UUID.randomUUID() + " " + Long.toHexString(n)) ;
+			System.out.println( n + " last equals " + ( last == n) + " " + UUID.randomUUID() + " " + Long.toHexString(n));
 			last = n;
 		}
 

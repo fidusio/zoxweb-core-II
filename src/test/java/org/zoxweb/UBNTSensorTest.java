@@ -30,7 +30,7 @@ import org.zoxweb.shared.util.SetNameValue;
 
 public class UBNTSensorTest {
 
-	public static void main(String ...args) {
+	public static void main(String[] args) {
 		try {
 		    int i = 0;
 			String url = args[i++];

@@ -5,7 +5,7 @@ import org.zoxweb.shared.util.Const;
 
 public class TimeTest {
 
-	public static void main( String ...args) {
+	public static void main(String[] args) {
 		for (String time: args) {
 			try
 			{
