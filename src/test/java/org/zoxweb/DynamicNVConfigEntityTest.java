@@ -27,15 +27,10 @@ import org.zoxweb.shared.util.NVConfigPortable;
 import org.zoxweb.shared.util.NVConfigManager;
 import org.zoxweb.shared.util.NVConfigEntity.ArrayType;
 
-/**
- * @author mzebib
- *
- */
-public class DynamicNVConfigEntityTest
-{
+public class DynamicNVConfigEntityTest {
 
-	public static String metaWalker(NVConfig nvc)
-	{
+	public static String metaWalker(NVConfig nvc) {
+
 		StringBuilder sb = new StringBuilder();
 		
 		sb.append("name: ");
@@ -67,26 +62,18 @@ public class DynamicNVConfigEntityTest
 		sb.append("\n");
 		
 		
-		if(nvc instanceof NVConfigEntity)
-		{ 
+		if (nvc instanceof NVConfigEntity) {
+            List<NVConfig> list = ((NVConfigEntity) nvc).getAttributes();
 			
-			List<NVConfig> list = ((NVConfigEntity) nvc).getAttributes();
-			
-			for(NVConfig nv : list)
-			{
+			for(NVConfig nv : list) {
 				sb.append(metaWalker(nv));
 			}
-			
-			
 		}
 		
 		return sb.toString();
 	}
-	
-	
-	public static void main(String[] args)
-	{
-		
+
+	public static void main(String[] args) {
 		ArrayList<NVConfig> attr = new ArrayList<NVConfig>();
 		NVConfigEntity nvConfigEntity = new NVConfigEntityLocal();
 		
@@ -211,13 +198,6 @@ public class DynamicNVConfigEntityTest
 //		System.out.println(nvConfigEntity.lookup("integer"));
 //		System.out.println(nvConfigEntity.lookup("byte_array"));
 //		System.out.println(nvConfigEntity.lookup("test"));
-		
-		
-		
-		
-		
 	}
 
-	
-	
 }

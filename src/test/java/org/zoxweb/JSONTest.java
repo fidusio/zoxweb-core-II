@@ -1,8 +1,5 @@
 package org.zoxweb;
 
-
-
-
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
@@ -18,28 +15,25 @@ import org.zoxweb.shared.util.NVEntity;
 
 import com.google.gson.Gson;
 
-public class JSONTest 
-{
+public class JSONTest {
+
 	private static Logger log = Logger.getLogger(Const.LOGGER_NAME);
-	public static void main ( String ...args)
-	{
-		try 
-		{
+
+	public static void main (String[] args) {
+
+	    try {
 			SystemInfoDAO sysDAO = ServerUtil.loadSystemInfoDAO();
 			sysDAO.setGlobalID(UUID.randomUUID().toString());
 			
-			for (NVEntity nve : sysDAO.getNetworkInterfaces().values())
-			{
+			for (NVEntity nve : sysDAO.getNetworkInterfaces().values()) {
 				NetworkInterfaceDAO niDAO = (NetworkInterfaceDAO) nve;
-				for ( InetAddressDAO iaDAO : niDAO.getInetAddresses())
-				{
+
+				for (InetAddressDAO iaDAO : niDAO.getInetAddresses()) {
 					String json = GSONUtil.toJSON( iaDAO, false);
-					System.out.println( json);
-					System.out.println( ""+GSONUtil.fromJSON(json, InetAddressDAO.class));
+					System.out.println(json);
+					System.out.println("" + GSONUtil.fromJSON(json, InetAddressDAO.class));
 				}
-				
-				
-				
+
 				long ts1 = System.nanoTime();
 				String json1 = new Gson().toJson(niDAO);
 				ts1 = System.nanoTime() - ts1;
@@ -48,19 +42,15 @@ public class JSONTest
 				long ts = System.nanoTime();
 				json = GSONUtil.toJSON( niDAO, false);
 				ts = System.nanoTime() -ts;
-				
-				
+
 				System.out.println( json1);
 				System.out.println( json);
 				System.out.println( "******* json conversion Gson:" + ts1 + " it took zoxweb json:" + ts + " delta " +((ts1-ts)) + " zoxweb is "  + ((float)ts1/(float)ts) + " faster");
 				
-				
-				
 				ts1 = System.nanoTime();
 				NetworkInterfaceDAO niTemp = new Gson().fromJson(json1, NetworkInterfaceDAO.class);
 				ts1 = System.nanoTime() - ts1;
-				
-				
+
 				ts = System.nanoTime();
 				NetworkInterfaceDAO zbNI = GSONUtil.fromJSON(json, NetworkInterfaceDAO.class);
 				ts = System.nanoTime() -ts;
@@ -69,9 +59,7 @@ public class JSONTest
 				System.out.println( "NI   DAO:"+niDAO);
 				System.out.println( "******* Object conversion Gson:" + ts1 + " it took zoxweb json:" + ts + " delta " +((ts1-ts)) + " zoxweb is "  + ((float)ts1/(float)ts) + " faster");
 			}
-			
-			
-			
+
 			String temp =  GSONUtil.toJSON(sysDAO, true);
 			System.out.println(temp);
 			SystemInfoDAO newSysDAO =  GSONUtil.fromJSON(temp, SystemInfoDAO.class);
@@ -93,14 +81,9 @@ public class JSONTest
 			System.out.println(jsonValues);
 			List<NVEntity> values = GSONUtil.fromJSONValues(jsonValues);
 			System.out.println(values);
-			
-			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		
 	}
+
 }

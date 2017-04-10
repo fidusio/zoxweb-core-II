@@ -25,31 +25,26 @@ import org.zoxweb.shared.data.CreditCardDAO;
 import org.zoxweb.shared.data.CreditCardType;
 import org.zoxweb.shared.data.SharedDataUtil;
 
-/**
- * @author mzebib
- *
- */
 public class CreditCardTest
 {
 	public static final SimpleDateFormat DEFAULT_DATE_FORMAT = new SimpleDateFormat("MM-yyyy");
 	
 	public static void main(String[] args)
-			throws IOException, ParseException
-	{
+			throws IOException, ParseException {
+
 		//Search for credit card type by card number.
-		try
-		{
+		try {
+
 			String[] cards= {"5412 3456 7891 1234", "4412 3456 7891 1234", "34 1234 5678 9112 3"};
 			
-			for (int i = 0; i < cards.length; i++)
-			{
+			for (int i = 0; i < cards.length; i++) {
 				System.out.println(CreditCardType.lookup(cards[i]));
 			}
 			
 			//MasterCard
 			CreditCardDAO card1 = new CreditCardDAO();
 			card1.setCardType(CreditCardType.MASTER);
-			card1.setCardHolderName("Mustapha Zebib");
+			card1.setCardHolderName("John Smith");
 			card1.setCardNumber("5-1-1234-56789-11234");
 			card1.setSecurityCode("999");
 			card1.setExpirationDate(DEFAULT_DATE_FORMAT.parse("06-2015").getTime());
@@ -66,7 +61,7 @@ public class CreditCardTest
 			//VISA
 			CreditCardDAO card2 = new CreditCardDAO();
 			card2.setCardType(CreditCardType.VISA);
-			card2.setCardHolderName("Mustapha Zebib");
+			card2.setCardHolderName("John Smith");
 			card2.setCardNumber("4400-0000-1111-2222");
 			card2.setSecurityCode("000");
 			card2.setExpirationDate(DEFAULT_DATE_FORMAT.parse("06-2015").getTime());
@@ -83,7 +78,7 @@ public class CreditCardTest
 			//AMEX
 			CreditCardDAO card3 = new CreditCardDAO();
 			card3.setCardType(CreditCardType.AMEX);
-			card3.setCardHolderName("Mustapha Zebib");
+			card3.setCardHolderName("John Smith");
 			card3.setCardNumber("3-4-99999-99999-000");
 			card3.setSecurityCode("2222");
 			card3.setExpirationDate(DEFAULT_DATE_FORMAT.parse("06-2015").getTime());
@@ -97,22 +92,17 @@ public class CreditCardTest
 			System.out.println(new Date(card3.getExpirationDate()));
 			System.out.println(GSONUtil.toJSON(card3, true));
 		
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
-			
 		}
 		
 		maskCreditCardNumber();
 	}
 
-	public static void maskCreditCardNumber()
-	{
+	public static void maskCreditCardNumber() {
 		String[] numbers = {"51-1234-56789-11234", "4400-0000 1111 2222", "3499 9999 9999 000"};
 		
-		for (String num : numbers)
-		{
+		for (String num : numbers) {
 			System.out.println("Card Type: " + CreditCardType.lookup(num));
 			System.out.println("Masked CC Number: " +  SharedDataUtil.maskCreditCardNumber(num));
 		}

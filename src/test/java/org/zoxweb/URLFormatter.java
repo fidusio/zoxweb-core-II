@@ -23,15 +23,13 @@ import org.zoxweb.server.http.HTTPUtil;
  * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
  * 
  */
-public class URLFormatter 
-{	
-	public static void main ( String ...args)
-	{
-		for (String arg : args)
-		{
-			try
-			{
-				System.out.println("trying to parse " + arg);
+public class URLFormatter {
+
+	public static void main ( String[] args) {
+
+	    for (String arg : args) {
+			try {
+				System.out.println("Trying to parse: " + arg);
 				URL url = new URL(arg);
 				System.out.println( HTTPUtil.parseHostURL(url));
 				System.out.println( HTTPUtil.parseURI(url, false));
@@ -39,9 +37,7 @@ public class URLFormatter
 				System.out.println(HTTPUtil.parseURL(url));
 				System.out.println(url.getQuery());
 				
-			}
-			catch ( Exception e)
-			{
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}

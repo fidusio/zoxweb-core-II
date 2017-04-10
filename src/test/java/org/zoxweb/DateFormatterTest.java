@@ -22,48 +22,27 @@ import java.util.TimeZone;
 
 import org.zoxweb.server.filters.DateTimeValueFilter;
 
-
-
-/**
- * @author mzebib
- *
- */
-public class DateFormatterTest 
-{
+public class DateFormatterTest {
 	
-	public static void main(String[] args) throws ParseException
-	{
-	
-		
+	public static void main(String[] args) throws ParseException {
 		try
 		{
 			SimpleDateFormat sdf = new SimpleDateFormat("[yyyy-MM-dd HH:mm:ss.SSS] ");
 			System.out.println("value  " + sdf.format(new Date()) + new Date());
-			
-		
-		}
-		catch(Exception e)
-		{
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
-		
-		
+
 		SimpleDateFormat DEFAULT_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 		System.out.println( new Date());
-		
-		
-		
-	
+
 		String[] dates = {"2014-05-28", "1960-5-20", "1900-8-4", "0000-01-01", "-2500-01-01"};
 	
-		for(int i = 0; i < dates.length; i++)
-		{
+		for(int i = 0; i < dates.length; i++) {
 			Date date = DEFAULT_DATE_FORMAT.parse(dates[i]);
 			System.out.println(date.getTime() + " " + date);
 		}
-		
-		
-		
+
 		@SuppressWarnings("deprecation")
 		Date date = new Date(114, 4, 29, 11, 14);
 		System.out.println(date);
@@ -86,8 +65,7 @@ public class DateFormatterTest
 		
 		String toParse ="2015-7-17 Etc/GMT+7";
 		
-		for(String pattern : patterns)
-		{
+		for (String pattern : patterns) {
 			try
 			{
 				SimpleDateFormat sdf = new SimpleDateFormat(pattern);
@@ -95,26 +73,15 @@ public class DateFormatterTest
 				sdf.setTimeZone(TimeZone.getTimeZone("Etc/GMT+7"));
 				System.out.println("pattern:" + pattern);
 				System.out.println( sdf.parse(toParse));
-			}
-			catch(Exception e)
-			{
+			} catch(Exception e) {
 				e.printStackTrace();
 			}
 		}
-		
-		
+
 		DateTimeValueFilter dts = new DateTimeValueFilter("yyyy-MM-dd'T'HH:mm:ss'Z'", "UTC");
 		
 		System.out.println(new Date(dts.validate("2015-06-24T22:15:19Z")));
-		
-		
-		
-		
-		
-		
-		
-		
+
 		System.out.println(TimeZone.getDefault().getID());
-	
 	}
 }

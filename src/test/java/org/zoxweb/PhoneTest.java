@@ -21,23 +21,16 @@ import org.zoxweb.server.util.GSONUtil;
 import org.zoxweb.shared.data.PhoneDAO;
 import org.zoxweb.shared.filters.PhoneNumberFilterOLD;
 
+public class PhoneTest {
 
-/**
- * @author mzebib
- *
- */
-public class PhoneTest 
-{
-
-	public static void main(String[] args) throws IOException
-	{
+	public static void main(String[] args) throws IOException {
 		PhoneDAO phone = new PhoneDAO();
 		
 		phone.setPhoneType("Mobile");
 		phone.setCountryCode("+1");
 		
-		phone.setAreaCode("310");
-		phone.setNumber("3027883");
+		phone.setAreaCode("212");
+		phone.setNumber("5551234");
 		
 		System.out.println(GSONUtil.toJSON(phone, true));
 		
@@ -54,31 +47,21 @@ public class PhoneTest
 //		System.out.println(n[1]);
 		
 		
-		String[] numbers = {"+1-310-3027883ext55", "+650-429-8422", "1-310-3027883x44", null, "", "+1-302988", ""};
+		String[] numbers = {"+1-212-5551234xt55", "+650-444-1234", "1-444-4441234x22", null, "", "+1-44489", ""};
 		PhoneNumberFilterOLD filter = new PhoneNumberFilterOLD();
 		PhoneDAO phone2 = new PhoneDAO();
 				
-		for(int i = 0; i < numbers.length; i++ )
-		{
-			try
-			{
+		for (int i = 0; i < numbers.length; i++ ) {
+			try {
 				phone2 = filter.validate(numbers[i]);
 				System.out.println(filter.isValid(numbers[i]));
 				System.out.println(GSONUtil.toJSON(phone2, true));
 				System.out.println(phone2.toCanonicalID());
-			}
-			
-			catch(Exception e)
-			{
+			} catch(Exception e) {
 				System.err.println(numbers[i]);
 				e.printStackTrace();
 			}
-
 		}
-		
-		
-		
-		
 	}
-	
+
 }

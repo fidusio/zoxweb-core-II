@@ -17,75 +17,44 @@ package org.zoxweb;
 
 import org.zoxweb.shared.filters.ValueFilter;
 
-/**
- * @author mzebib
- *
- */
 @SuppressWarnings("serial")
-public class FloatFilter implements ValueFilter<String, Float>
-{
+public class FloatFilter
+		implements ValueFilter<String, Float> {
 
 	
-	private FloatFilter()
-	{
+	private FloatFilter() {
 		
 	}
-	
-	//public static final FloatFilter SINGLETON = new FloatFilter();
-	
+
 	private static FloatFilter ref;
 	
-	public static synchronized FloatFilter getFloatFilter()
-	{
-		if(ref == null)
-		{
+	public static synchronized FloatFilter getFloatFilter() {
+		if(ref == null) {
 			ref = new FloatFilter();
 		}
 		
 		return ref;
 	}
-
 	
 	@Override
-	public String toCanonicalID() 
-	{
-		// TODO Auto-generated method stub
+	public String toCanonicalID() {
 		return "FLOAT";
 	}
 
-
 	@Override
-	public Float validate(String in) throws NullPointerException, IllegalArgumentException 
-	{
-		// TODO Auto-generated method stub
+	public Float validate(String in) throws NullPointerException, IllegalArgumentException {
 		return Float.valueOf(in);
-
-		
 	}
 
-
-
 	@Override
-	public boolean isValid(String in) 
-	{
-		try
-		{
+	public boolean isValid(String in) {
+		try {
 			Float.valueOf(in);
-		}
-		catch( Exception e )
-		{
+		} catch(Exception e) {
 			return false;
 		}
 		
 		return true;
-		
 	}
-
-
-	
-	
-	
-	
-	
 	
 }

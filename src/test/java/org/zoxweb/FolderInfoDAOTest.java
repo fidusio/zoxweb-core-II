@@ -23,12 +23,10 @@ import org.zoxweb.shared.data.SetNameDescriptionDAO;
  * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
  * 
  */
-public class FolderInfoDAOTest 
-{
-	public static void main(String ...args)
-	{
-		try
-		{
+public class FolderInfoDAOTest {
+
+	public static void main(String[] args) {
+		try {
 			FolderInfoDAO fid = new FolderInfoDAO();
 			SetNameDescriptionDAO nve = new FolderInfoDAO();
 			nve.setName("Folder");
@@ -40,12 +38,7 @@ public class FolderInfoDAOTest
 			
 			System.out.println( "" + fid);
 			System.out.println( "" + fid.getFolderContent());
-			
-			
-			
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

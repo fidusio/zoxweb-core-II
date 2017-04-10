@@ -28,14 +28,11 @@ import org.zoxweb.shared.net.InetSocketAddressDAO;
 import org.zoxweb.shared.util.NVPair;
 import org.zoxweb.shared.util.SetNameValue;
 
-public class UBNTSensorTest 
-{
+public class UBNTSensorTest {
 
-	public static void main(String ...args)
-	{
-		try
-		{
-			int i = 0;
+	public static void main(String ...args) {
+		try {
+		    int i = 0;
 			String url = args[i++];
 			String uri = args[i++];
 			String user = args[i++];
@@ -80,14 +77,7 @@ public class UBNTSensorTest
 			hc = new HTTPCall(setSensor, SSLCheckDisabler.SINGLETON);
 			
 			System.out.println( hc.sendRequest().getStatus());
-			
-			
-			
-			
-			
-		}
-		catch( Exception e)
-		{
+		} catch( Exception e) {
 			e.printStackTrace();
 		}
 	}

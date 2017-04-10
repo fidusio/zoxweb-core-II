@@ -9,47 +9,35 @@ import org.zoxweb.shared.util.Const.SizeInBytes;
 import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
 
-public class CryptoUtilTest 
-{
-	public static void main(String ...args)
-	{
-		try 
-		{
-			
+public class CryptoUtilTest {
+
+	public static void main(String[] args) {
+
+		try {
 			int len = 4096;
 			int repeat = 5;
-			
-			
+
 			int index = 0;
-			if (args.length > index)
-			{
+			if (args.length > index) {
 				len = (int) SizeInBytes.parse(args[index++]);
 			}
 			
-			if (args.length > index)
-			{
-				
-				
+			if (args.length > index) {
 				repeat = Integer.parseInt(args[index++]);
 			}
-			
-			
-			
+
 			//EncryptedKeyDAO ekd = CryptoUtil.createEncryptedKeyDAO("password");
 			
 			UByteArrayOutputStream ubaos = new UByteArrayOutputStream();
-			for (int i = 0; i < len; i++)
-			{
+
+			for (int i = 0; i < len; i++) {
 				ubaos.write(i);
 			}
+
 			ubaos.close();
 			byte original [] = ubaos.toByteArray();
-			
-			
-			
-			
-			for (int i = 0; i < repeat; i++)
-			{
+
+			for (int i = 0; i < repeat; i++) {
 				EncryptedDAO ed = new EncryptedDAO();
 				long delta = System.nanoTime();
 				ed = CryptoUtil.encryptDAO(ed, "password".getBytes(), original);
@@ -74,11 +62,9 @@ public class CryptoUtilTest
 			key = CryptoUtil.decryptEncryptedDAO(ed, "password");
 			System.out.println(SharedStringUtil.bytesToHex(key));
 			
-		}
-		catch(Exception e)
-		{
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 }

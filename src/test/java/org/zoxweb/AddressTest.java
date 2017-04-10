@@ -26,26 +26,22 @@ import org.zoxweb.shared.util.SharedUtil;
  * @author mzebib
  *
  */
-public class AddressTest 
-{
+public class AddressTest {
 
-	public static void main(String[] args) throws IOException
-	{
-		try
-		{
+	public static void main(String[] args) throws IOException {
+		try {
 			AddressDAO address = new AddressDAO();
 			
-			address.setStreet("1802 Purdue Ave. Suite A");
+			address.setStreet("123 Main Street");
 			address.setCity("Los Angeles");
 			address.setStateOrProvince("CA");
 			address.setCountry("USA");
-			
-			address.setZIPOrPostalCode("90025");
-			
-			
+			address.setZIPOrPostalCode("90000");
+
 			System.out.println(address);
 			String json = GSONUtil.toJSON(address, true);
 			System.out.println( json);
+
 			try {
 				AddressDAO addressFromJSON = GSONUtil.fromJSON( json, AddressDAO.class);
 				System.out.println( addressFromJSON);
@@ -61,13 +57,10 @@ public class AddressTest
 				System.out.println(SharedUtil.toDebugString(uid));
 			} catch (InstantiationException | IllegalAccessException
 					| ClassNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		
-		}
-		catch( Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		

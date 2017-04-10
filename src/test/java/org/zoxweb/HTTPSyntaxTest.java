@@ -1,6 +1,5 @@
 package org.zoxweb;
 
-
 import java.net.URI;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -8,11 +7,10 @@ import java.net.URLEncoder;
 import org.zoxweb.server.http.HTTPUtil;
 import org.zoxweb.shared.http.URIScheme;
 
+public class HTTPSyntaxTest {
 
-public class HTTPSyntaxTest
-{
-	public static void testURIParsing()
-	{
+	public static void testURIParsing() {
+
 		String uris[] =
 			{
 				"https://yahoo.com",
@@ -26,10 +24,8 @@ public class HTTPSyntaxTest
 			};
 		
 		
-		for (String str : uris)
-		{
-			try
-			{
+		for (String str : uris) {
+			try {
 				System.out.println("Full URL: " +str);
 				System.out.println("Host Info: " + HTTPUtil.parseHost(str));
 				System.out.println("URIScheme: " + URIScheme.match(str));
@@ -41,19 +37,14 @@ public class HTTPSyntaxTest
 				System.out.println(str.equals(uriEncoded) + " " + uriEncoded);
 				System.out.println(str + "\n" + uriDecoded);
 				System.out.println("===================================================");
-			}
-			catch(Exception e)
-			{
+			} catch(Exception e) {
 				e.printStackTrace();
 			}
 		}
 	}
-	
-	
-	
-	public static void main(String ...args)
-	{
+
+	public static void main(String[] args) {
 		testURIParsing();
 	}
-}
 
+}

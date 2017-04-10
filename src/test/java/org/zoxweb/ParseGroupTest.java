@@ -19,14 +19,9 @@ import java.util.List;
 
 import org.zoxweb.shared.util.SharedStringUtil;
 
-/**
- * @author mzebib
- *
- */
 public class ParseGroupTest 
 {
-	public static void main(String[] args)
-	{
+	public static void main(String[] args) {
 		String str = "Dear $$personal_title$$ $$first_name$$ $$last_name$$, {{braket,{sub-braket}}}";
 
 		List<CharSequence> listOfCharSeq = SharedStringUtil.parseGroup(str, "$$", "$$", false);

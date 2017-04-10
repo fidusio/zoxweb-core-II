@@ -23,15 +23,9 @@ import org.zoxweb.shared.data.AddressDAO;
 import org.zoxweb.shared.data.PhoneDAO;
 import org.zoxweb.shared.util.NVEntity;
 
-/**
- * @author mzebib
- *
- */
-public class ServerUtilTest 
-{
+public class ServerUtilTest {
 
-	public static void main(String[] args) 
-	{
+	public static void main(String[] args) {
 		List<NVEntity> list1 = new ArrayList<NVEntity>();
 		list1.add(new PhoneDAO());
 		list1.add(new AddressDAO());

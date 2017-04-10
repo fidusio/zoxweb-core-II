@@ -12,10 +12,10 @@ import org.zoxweb.shared.net.InetSocketAddressDAO;
 import org.zoxweb.shared.util.Const.DeviceType;
 import org.zoxweb.shared.util.SharedUtil;
 
-public class HTTPProxyTest 
-{
-	public static void main(String ...args)
-	{
+public class HTTPProxyTest {
+
+	public static void main(String ...args) {
+
 		String messages [] =
 			{
 				"connect zoxweb.com:443 HTTP/1.1\r\n"+
@@ -35,15 +35,11 @@ public class HTTPProxyTest
 				"simple body",
 				
 			};
-		
-		
-		
-		
-		for (String str: messages)
+
+		for (String message : messages)
 		{
-			try 
-			{
-				UByteArrayOutputStream ubaos = new UByteArrayOutputStream(str); 
+			try {
+				UByteArrayOutputStream ubaos = new UByteArrayOutputStream(message);
 				
 				HTTPMessageConfigInterface hcc = HTTPUtil.parseRawHTTPRequest(ubaos, null, true);
 				System.out.println(hcc);
@@ -61,17 +57,12 @@ public class HTTPProxyTest
 					System.out.println(DeviceType.lookup(SharedUtil.lookupValue(hcc.getHeaderParameters(), HTTPHeaderName.USER_AGENT.getName())));
 				}
 				System.out.println("Is Request complete " + HTTPUtil.checkRequestStatus(hcc));
-			}
-			catch(Exception e)
-			{
+			} catch(Exception e) {
 				e.printStackTrace();
 			}
 		}
-		
-		
-		
-		try
-		{
+
+		try {
 			int index = 0;
 			InetSocketAddressDAO proxys[] = {new InetSocketAddressDAO(args[index++]), new InetSocketAddressDAO(args[index++])};
 			HTTPMessageConfigInterface hcc = HTTPMessageConfig.createAndInit(args[index++], null, HTTPMethod.GET);
@@ -84,14 +75,13 @@ public class HTTPProxyTest
 			byte[][] contents = new byte[2][];
 			long deltas[] = new long[2];
 			long deltaTotal = 0;
-			for(int i = 0; i< loopCount; i++)
-			{
-				for (int j = 0; j < proxys.length; j++)
-				{
+
+			for (int i = 0; i< loopCount; i++) {
+				for (int j = 0; j < proxys.length; j++) {
+
 					InetSocketAddressDAO p = proxys[j];
 					contents[j] = null;
-					try
-					{
+					try {
 						hcc.setProxyAddress(p);
 						delta = System.currentTimeMillis();
 					
@@ -99,39 +89,28 @@ public class HTTPProxyTest
 						delta = System.currentTimeMillis() - delta;
 						deltas[j] = delta;
 						System.out.println(p + " delta " + delta);
-					}
-					catch(Exception e)
-					{
+					} catch(Exception e) {
 						e.printStackTrace();
 						System.out.println(p + " " + e);
 					}
 				}
 				
-				try
-				{
-					if (i > 5)
-					{
+				try {
+					if (i > 5) {
 						boolean result = SharedUtil.slowEquals(contents[0], contents[1]);
 						if(result)
 							deltaTotal += deltas[0] - deltas[1];
 						System.out.println("Result " + result + " difference "  + (deltas[0] - deltas[1]));
 					}
-				}
-				catch(Exception e)
-				{
+				} catch(Exception e) {
 					
 				}
 			}
 			
-			System.out.println("TotaDeltas " + deltaTotal);
+			System.out.println("Total: " + deltaTotal);
 			
-		}
-		catch(Exception e)
-		{
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
-		
-		
-		
 	}
 }

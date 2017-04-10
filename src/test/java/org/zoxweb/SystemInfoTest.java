@@ -1,34 +1,22 @@
 package org.zoxweb;
 
-
-
 import org.zoxweb.server.util.GSONUtil;
 import org.zoxweb.server.util.ServerUtil;
-
-
 import org.zoxweb.shared.data.AgreementDAO;
 import org.zoxweb.shared.data.SystemInfoDAO;
 import org.zoxweb.shared.net.InetSocketAddressDAO;
 import org.zoxweb.shared.net.NetworkInterfaceDAO;
-
-
 import org.zoxweb.shared.util.ArrayValues;
-
-
 import org.zoxweb.shared.util.NVEntity;
 
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-public class SystemInfoTest 
-{
+public class SystemInfoTest {
 
-	
-	public static void main( String ... args)
-	{
-		try
-		{
+	public static void main( String ... args) {
+		try {
 			SystemInfoDAO sys = ServerUtil.loadSystemInfoDAO();
 			GsonBuilder builder = new GsonBuilder();
 			builder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
@@ -39,8 +27,7 @@ public class SystemInfoTest
 			System.out.println( sys.getSystemProperties());
 			
 			
-			for ( NVEntity nve : sys.getNetworkInterfaces().values())
-			{
+			for (NVEntity nve : sys.getNetworkInterfaces().values()) {
 				NetworkInterfaceDAO nid = (NetworkInterfaceDAO) nve;
 				System.out.println( nid.getName() + " " + nid.getMACAddress());
 			}
@@ -57,11 +44,7 @@ public class SystemInfoTest
 			System.out.println("ApplicationDAOs:" + sys.getApplicationDAOs());
 			System.out.println(zwJson1);
 			System.out.println(sys.getNetworkInterfaces().size() + "," +sysFromJson.getNetworkInterfaces().size() );
-			
-			
-			
-			
-			
+
 //			Iterator<NetworkInterfaceDAO> it = sys.getNetworkInterfaces().values().iterator();
 			
 //			while(it.hasNext())
@@ -112,9 +95,7 @@ public class SystemInfoTest
 //			nvem.add(nid);
 //			
 //		}
-			
-			
-			
+
 		//sysFromJson = 	sys;	
 		System.out.println("size of nvem:" + sysFromJson.getNetworkInterfaces().size());
 		ArrayValues<NVEntity> nvem = (ArrayValues<NVEntity>) sysFromJson.getNetworkInterfaces();//lookup(SystemInfoDAO.NVC_NETWORK_INTERFACES.getName());
@@ -122,8 +103,7 @@ public class SystemInfoTest
 		
 		System.out.println("Eth4:" + nvem.get("eth4"));
 		//NetworkInterfaceDAO array[] = sysFromJson.getNetworkInterfaces().values();
-		for ( NVEntity nve : sys.getNetworkInterfaces().values())
-		{
+		for (NVEntity nve : sys.getNetworkInterfaces().values()) {
 			NetworkInterfaceDAO nid = (NetworkInterfaceDAO) nve;
 			System.out.println(nvem.get(nid.getName()));
 			if (counter %2 == 0)
@@ -141,14 +121,9 @@ public class SystemInfoTest
 		InetSocketAddressDAO addr2 = new InetSocketAddressDAO("zoxweb.com", 80);
 		System.out.println(addr1.equals(addr2));
 		
-		}
-		catch( Exception e)
-		{
+		} catch( Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	
-	
+
 }

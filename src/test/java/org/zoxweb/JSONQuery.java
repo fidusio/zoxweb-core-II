@@ -27,24 +27,18 @@ import org.zoxweb.shared.util.Const.RelationalOperator;
 
 import com.google.gson.Gson;
 
-/**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
- */
 public class JSONQuery 
 {
 	private static String test = "{\"canonical_id\":\"org.zoxweb.shared.accounting.FinancialTransactionDAO\", \"batch_size\":250, \"query\":[{\"creation_ts\":1435647600354, \"relational_operator\":\"GT\"},{\"logical_operator\":\"AND\"},{\"creation_ts\":1435710917354, \"relational_operator\":\"LT\"}]}";
 	
 	
-	public static void main(String ...args)
-	{
+	public static void main(String[] args) {
 		Gson gson = new Gson();
 		
 		QueryRequest qr = new QueryRequest();
 		qr.setCanonicalID("org.zoxweb.shared.accounting.FinancialTransactionDAO");
 		qr.setBatchSize(250);
-		
-		
+
 		ArrayList<QueryMarker> query = new ArrayList<QueryMarker>();
 		QueryMatchLong qm1 = new QueryMatchLong(RelationalOperator.GT, 1435647600354l, TimeStampDAO.Params.CREATION_TS);
 		query.add(qm1);
@@ -57,13 +51,10 @@ public class JSONQuery
 		System.out.println(gson.toJson(qr));
 		System.out.println(Long.class.toString());
 		
-		try
-		{
+		try {
 			QueryRequest qrFJ = GSONUtil.fromQueryRequest(test);
 			System.out.println(gson.toJson(qrFJ));
-		}
-		catch(Exception e)
-		{
+		} catch(Exception e) {
 			
 		}
 	}

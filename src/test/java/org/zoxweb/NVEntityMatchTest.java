@@ -18,15 +18,10 @@ package org.zoxweb;
 import org.zoxweb.shared.data.UserInfoDAO;
 import org.zoxweb.shared.util.SharedUtil;
 
-/**
- * @author mzebib
- *
- */
-public class NVEntityMatchTest 
-{
+public class NVEntityMatchTest {
 	
-	public static void main(String[] args)
-	{
+	public static void main(String[] args) {
+
 		UserInfoDAO user1 = new UserInfoDAO();
 		user1.setReferenceID("123456789");
 		user1.setFirstName("John");

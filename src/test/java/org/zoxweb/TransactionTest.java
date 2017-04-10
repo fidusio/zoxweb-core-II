@@ -28,20 +28,13 @@ import org.zoxweb.shared.accounting.TransactionType;
 import org.zoxweb.shared.accounting.TransactionDescriptor;
 import org.zoxweb.shared.accounting.BillingAccountDAO;
 
-/**
- * 
- * @author mzebib
- *
- */
-public class TransactionTest 
-{
+public class TransactionTest {
+
 	private static final DateFormat TIME_STAMP_FORMAT = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 	
-	public static void main(String[] args)
-	{
-		
-		try
-		{
+	public static void main(String[] args) {
+
+		try {
 			FinancialTransactionDAO transaction = new FinancialTransactionDAO();
 			BillingAccountDAO account = new BillingAccountDAO();
 			
@@ -72,26 +65,18 @@ public class TransactionTest
 			String json1 = GSONUtil.toJSON(account, true);
 			System.out.println("JSON Objects Comparison: "+ json1.equals(json));
 			
-			try
-			{
+			try {
 				System.out.println(account.getCurrentBalance().getCurrency());
 				System.out.println(account.getCurrentBalance());
 				System.out.println(account.applyTransaction(new FinancialTransactionDAO(new MoneyValueDAO(10))));
 				System.out.println(account.applyTransaction(new FinancialTransactionDAO(new MoneyValueDAO(15))));
-			}	
-			catch(Exception e)
-			{
+			} catch(Exception e) {
 				e.printStackTrace();
-				
 			}
 			
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	
-		
 	}
 	
 }

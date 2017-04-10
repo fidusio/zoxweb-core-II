@@ -17,25 +17,18 @@ package org.zoxweb;
 
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
+
 import org.zoxweb.server.http.HTTPCall;
 import org.zoxweb.shared.http.HTTPMessageConfig;
 import org.zoxweb.shared.http.HTTPMessageConfigInterface;
 import org.zoxweb.shared.http.HTTPMethod;
 import org.zoxweb.shared.util.SharedStringUtil;
 
-/**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
- */
-public class JsoupTest 
-{
-	public static void main(String ...args)
-	{
-		
-		
-		try
-		{
-		
+public class JsoupTest {
+
+	public static void main(String[] args) {
+
+        try {
 			int index = 0;
 			HTTPMessageConfigInterface hcc = HTTPMessageConfig.createAndInit(args[index++], null, HTTPMethod.GET);
 			String htmlBody = SharedStringUtil.toString(new HTTPCall(hcc).sendRequest().getData());
@@ -44,9 +37,7 @@ public class JsoupTest
 			System.out.println("Different:" + htmlBody.equals(filtered));
 			System.out.println("Different:" + filtered);
 			System.out.println("Different:" + htmlBody);
-		}
-		catch(Exception e)
-		{
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}

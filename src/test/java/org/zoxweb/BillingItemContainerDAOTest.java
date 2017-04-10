@@ -5,15 +5,12 @@ import java.math.BigDecimal;
 import org.zoxweb.shared.accounting.BillingItemsContainerDAO;
 import org.zoxweb.shared.accounting.BillingItemDAO;
 
-public class BillingItemContainerDAOTest 
-{
+public class BillingItemContainerDAOTest {
 
-	public static void main(String[] args)
-	{
+	public static void main(String[] args) {
 		BillingItemsContainerDAO container = new BillingItemsContainerDAO();
 		
-		for (int i = 0; i < 10; i++)
-		{
+		for (int i = 0; i < 10; i++) {
 			BillingItemDAO item = new BillingItemDAO();
 			item.setUnitCost(new BigDecimal(10));
 			item.setQuantity(new BigDecimal(1));
@@ -66,6 +63,7 @@ public class BillingItemContainerDAOTest
 		System.out.println("ADD Billing Item 5  [100 units x 4]");
 		container.addBillingItem(item5);
 		System.out.println("Number of Billing Items: " + container.getBillingItems().size() + " Total: " + container.getTotal());
+
 	}
 	
 }

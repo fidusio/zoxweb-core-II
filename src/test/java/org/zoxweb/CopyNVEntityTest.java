@@ -17,9 +17,9 @@ public class CopyNVEntityTest {
 		PhoneDAO phoneDAO = new PhoneDAO();
 		phoneDAO.setReferenceID("12345");
 		phoneDAO.setUserID("20000");
-		phoneDAO.setName("MZ Phone");
-		phoneDAO.setDescription("My personal number.");
-		phoneDAO.setNumber("3103027883");
+		phoneDAO.setName("My Phone");
+		phoneDAO.setDescription("My mobile number.");
+		phoneDAO.setNumber("5551234");
 		phoneDAO.setAreaCode("310");
 		phoneDAO.setCountryCode("+1");
 		phoneDAO.setPhoneType(PhoneType.MOBILE.name());

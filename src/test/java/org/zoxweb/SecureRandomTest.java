@@ -21,26 +21,15 @@ import org.zoxweb.server.security.CryptoUtil;
 import org.zoxweb.shared.crypto.CryptoConst.SecureRandomType;
 import org.zoxweb.shared.util.SharedUtil;
 
-/**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
- */
 public class SecureRandomTest 
 {
-	public static void main(String ...args)
-	{
-		for (SecureRandomType srt : SecureRandomType.values())
-		{
-			try
-			{
-				
+	public static void main(String[] args) {
+		for (SecureRandomType srt : SecureRandomType.values()) {
+			try {
 				SecureRandom sr = CryptoUtil.newSecureRandom(srt);
-				
 				System.out.println(SharedUtil.toCanonicalID(':',srt.getName(), sr.getAlgorithm(), sr.getProvider()));
 				
-			}
-			catch(Exception e)
-			{
+			} catch(Exception e) {
 				System.out.println(srt +" Not Supported");
 			}
 		}

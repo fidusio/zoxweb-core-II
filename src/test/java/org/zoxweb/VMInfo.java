@@ -26,25 +26,20 @@ import org.zoxweb.shared.util.Appointment;
 import org.zoxweb.shared.util.AppointmentDefault;
 import org.zoxweb.shared.util.Const;
 
-/**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
- */
-public class VMInfo 
-{
+public class VMInfo {
+
 	private static Logger log = Logger.getLogger("");
-	public static void main(String ...args)
-	{
+
+	public static void main(String ...args) {
 		Runtime run = Runtime.getRuntime();
 		System.out.println("Total memory:" + run.totalMemory()/Const.SizeInBytes.M.LENGTH);
 		System.out.println("Free  memory:" + run.freeMemory()/Const.SizeInBytes.M.LENGTH);
-		System.out.println("max   memory:" + run.maxMemory()/Const.SizeInBytes.M.LENGTH);
+		System.out.println("Max   memory:" + run.maxMemory()/Const.SizeInBytes.M.LENGTH);
 		long memory = run.totalMemory() - run.freeMemory();
 		System.out.println("Used memory:" + memory);
 		try {
 			System.out.println(GSONUtil.toJSON(RuntimeUtil.vmSnapshot(), true, false, true));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -52,10 +47,10 @@ public class VMInfo
 		VMMonitorTask vmmt = new VMMonitorTask(Const.SizeInBytes.K);
 		Appointment apt = new AppointmentDefault(Const.TimeInMillis.SECOND.MILLIS*5);
 		tsp.queue( log, apt, vmmt, log, apt, tsp);
-		for (int i = 0; i < 50; i++)
-		{
+
+		for (int i = 0; i < 50; i++) {
 			tsp.queue( log, new AppointmentDefault(Const.TimeInMillis.MILLI.MILLIS*(5+i)), new VMMonitorTask(Const.SizeInBytes.M), log);
 		}
-		
 	}
+
 }

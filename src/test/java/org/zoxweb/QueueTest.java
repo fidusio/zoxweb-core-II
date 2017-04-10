@@ -9,13 +9,9 @@ import org.zoxweb.shared.data.VMInfoDAO;
 import org.zoxweb.shared.util.SimpleQueueInterface;
 import org.zoxweb.shared.util.SimpleQueue;
 
+public class QueueTest {
 
-
-
-public class QueueTest 
-{
-	public static void main(String ...args)
-	{
+	public static void main(String[] args) {
 		int limit = 50000;
 		SimpleQueueInterface<Object> uQueue = new SimpleQueue<Object>();
 		ConcurrentLinkedQueue<Object> clQueue = new ConcurrentLinkedQueue<Object>();
@@ -23,24 +19,19 @@ public class QueueTest
 		ArrayBlockingQueue<Object> abQueue = new ArrayBlockingQueue<Object>(limit);
 		VMInfoDAO startVMID = RuntimeUtil.vmSnapshot();
 		Object o = new Object();
-		for (int j = 0; j < 30; j++)
-		{
-			
-			
+
+		for (int j = 0; j < 30; j++) {
 			System.out.println("\nTest run " + j);
-			for (int i = 0; i < limit; i++)
-			{
-				
+			for (int i = 0; i < limit; i++) {
 				uQueue.queue(new Object());
 				clQueue.add(o);
 				lbQueue.add(o);
 				abQueue.add(o);
 			}
 			
-			
 			long ts = System.nanoTime();
-			while(uQueue.dequeue() !=null)
-			{
+
+			while (uQueue.dequeue() != null) {
 				
 			}
 			
@@ -49,8 +40,8 @@ public class QueueTest
 			
 			
 			ts = System.nanoTime();
-			while(clQueue.poll() !=null)
-			{
+
+			while (clQueue.poll() != null) {
 				
 			}
 			
@@ -58,8 +49,8 @@ public class QueueTest
 			System.out.println( ts + " nanos ConcurrentLinkedQueue took  sec to dequeue " + limit + ":" + clQueue.size());
 			
 			ts = System.nanoTime();
-			while(lbQueue.poll() !=null)
-			{
+
+			while(lbQueue.poll() != null) {
 				
 			}
 			
@@ -67,8 +58,8 @@ public class QueueTest
 			System.out.println( ts + " nanos LinkedBlockingQueue took  sec to dequeue " + limit + ":" + lbQueue.size());
 			
 			ts = System.nanoTime();
-			while(abQueue.poll() !=null)
-			{
+
+			while(abQueue.poll() != null) {
 				
 			}
 			
@@ -76,12 +67,7 @@ public class QueueTest
 			System.out.println( ts + " nanos ArrayBlockingQueue took  sec to dequeue " + limit + ":" + abQueue.size());
 		
 		}
-		
-		
-		
-		
-		
-		
+
 		System.out.println();
 		System.out.println(startVMID);
 		System.out.println(RuntimeUtil.vmSnapshot());
@@ -92,8 +78,6 @@ public class QueueTest
 		uQueue.queue(o);
 		uQueue.queue(new Object());
 		uQueue.queue(new Object());
-		
-		
 
 		System.out.println(uQueue.size() + ":" +uQueue.contains(new Object()));
 		System.out.println(uQueue.size() + ":" +uQueue.contains(o));
@@ -101,10 +85,11 @@ public class QueueTest
 		System.out.println(uQueue.size() + ":" +uQueue.contains(o));
 		System.out.println(uQueue.size() + ":" +uQueue.contains(new Object()));
 		System.out.println(uQueue.size() + ":" +uQueue.contains(o));
+
 		int size = uQueue.size();
 		int counter = 0;
-		while(uQueue.dequeue() != null)
-		{
+
+		while(uQueue.dequeue() != null) {
 			counter++;
 		}
 		
@@ -118,6 +103,6 @@ public class QueueTest
 		uQueue.queue(new Object());
 		uQueue.queue(o);
 		System.out.println(uQueue.size() + ":" + uQueue.contains(o));
-		
 	}
+
 }

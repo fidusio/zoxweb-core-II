@@ -18,16 +18,11 @@ package org.zoxweb;
 import org.zoxweb.server.util.ApplicationConfigManager;
 import org.zoxweb.shared.data.ApplicationConfigDAO;
 
-/**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
- */
-public class ApplicationConfigTest 
-{
-	public static void main(String ...args)
-	{
-		try
-		{
+public class ApplicationConfigTest {
+
+	public static void main(String[] args) {
+
+		try {
 			System.out.println("Env Var:" + ApplicationConfigManager.getDefaultApplicationEnvVar());
 			ApplicationConfigDAO acd = ApplicationConfigManager.SINGLETON.loadDefault();
 			System.out.println("Config:" + ApplicationConfigManager.SINGLETON.loadDefault());
@@ -35,10 +30,9 @@ public class ApplicationConfigTest
 			System.out.println("Config file:" + ApplicationConfigManager.SINGLETON.locateFile(acd, "ApplicationConf.json"));
 			System.out.println("Cache dir:" + ApplicationConfigManager.SINGLETON.locateFile(acd, "cache_dir"));
 			System.out.println("Config file:" + ApplicationConfigManager.SINGLETON.readConfigurationContent(null, "mongod_conf"));
-		}
-		catch( Exception e)
-		{
+		} catch( Exception e) {
 			e.printStackTrace();
 		}
 	}
+
 }

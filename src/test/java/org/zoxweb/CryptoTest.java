@@ -22,30 +22,27 @@ import org.zoxweb.server.security.CryptoUtil;
 import org.zoxweb.shared.util.SharedBase64;
 import org.zoxweb.shared.util.SharedStringUtil;
 
-/**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
- */
-public class CryptoTest 
-{
-	public static void main( String ...args)
-	{
+public class CryptoTest {
+
+	public static void main( String[] args) {
 		SecureRandom sr = null;
+
 		try {
 			sr = CryptoUtil.defaultSecureRandom();
 		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 		System.out.println( sr.getAlgorithm());
 		byte randomBytes[] = new byte[768/8];
 		sr.nextBytes(randomBytes);
-		for ( int i=0 ; i < 20; i++)
-		{
+
+		for (int i=0 ; i < 20; i++) {
 			long ts = System.nanoTime();
 			sr.nextBytes(randomBytes);
 			ts = System.nanoTime() - ts;
 			System.out.println( ts+"\tnanos\t" + new String(SharedBase64.encode( randomBytes)) + ":" + SharedStringUtil.bytesToHex(randomBytes));
 		}
 	}
+
 }

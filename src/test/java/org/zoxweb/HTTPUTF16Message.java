@@ -1,6 +1,5 @@
 package org.zoxweb;
 
-
 import java.util.Date;
 import java.util.HashMap;
 
@@ -16,19 +15,14 @@ import org.zoxweb.shared.util.GetName;
 import org.zoxweb.shared.util.GetNameValue;
 import org.zoxweb.shared.util.NVBlob;
 import org.zoxweb.shared.util.NVGetNameValueGenericMap;
-
 import org.zoxweb.shared.util.NVPair;
-
 import org.zoxweb.shared.util.SharedStringUtil;
 
+public class HTTPUTF16Message {
 
-public class HTTPUTF16Message 
-{
-	public static void main(String[] args)
-	{
+	public static void main(String[] args) {
 		
-		try 
-		{
+		try {
 			String url = "https://secure-mrr.air2web.com";
 			String uri = "a2w_preRouter/xmlApiRouter";
 			HTTPMethod method = HTTPMethod.POST;
@@ -38,12 +32,9 @@ public class HTTPUTF16Message
 			
 			HTTPMessageConfigInterface hmci = HTTPMessageConfig.createAndInit(url, uri, method);
 			hmci.getHeaderParameters().add(new NVPair(HTTPHeaderName.CONTENT_TYPE, "text/xml"));
-			
-			
+
 			NVGetNameValueGenericMap params = new NVGetNameValueGenericMap(Params.HEADER_PARAMETERS.getNVConfig().getName(), new HashMap<GetName, GetNameValue<?>>());
-			
-			
-			
+
 //			hmci.getParameters().add(new NVPair("reply_to","26161"));
 //			hmci.getParameters().add(new NVPair("customer_id","1"));
 //			hmci.getParameters().add(new NVPair("recipient","13109899969"));
@@ -107,13 +98,7 @@ public class HTTPUTF16Message
 			//hmci.setCharset("UTF-8");
 			HTTPCall hc = new HTTPCall(hmci);
 			System.out.println(hc.sendRequest());
-			
-			
-			
-			
-		}
-		catch(Exception e)
-		{
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}

@@ -21,31 +21,25 @@ import java.util.List;
 
 import org.zoxweb.server.http.HTTPUtil;
 import org.zoxweb.server.io.IOUtil;
-
 import org.zoxweb.shared.http.HTTPMessageConfigInterface;
 import org.zoxweb.shared.http.HTTPResponseData;
 import org.zoxweb.shared.util.SharedStringUtil;
 
-/**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
- */
-public class FormParserTest 
-{
-	public static void main(String ...args)
-	{
-		try
-		{
+public class FormParserTest {
+
+	public static void main(String[] args) {
+		try {
 			String str = IOUtil.inputStreamToString(new FileInputStream("/temp/test.html"), true);
 			HTTPResponseData rd = new HTTPResponseData();
 			rd.setData(str.getBytes(SharedStringUtil.UTF_8));
 			rd.setResponseHeaders(new HashMap<String, List<String>>());
-			for (HTTPMessageConfigInterface hcci : HTTPUtil.extractFormsContent(rd, 0))
-				System.out.println(hcci);
-		}
-		catch(Exception e)
-		{
+
+			for (HTTPMessageConfigInterface hcci : HTTPUtil.extractFormsContent(rd, 0)) {
+                System.out.println(hcci);
+            }
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+
 }

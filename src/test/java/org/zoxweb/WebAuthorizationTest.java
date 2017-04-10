@@ -29,12 +29,11 @@ import org.zoxweb.shared.util.GetNameValue;
  * @author mnael
  *
  */
-public class WebAuthorizationTest 
-{
-	public static void main(String ...args)
-	{
-		try
-		{
+public class WebAuthorizationTest {
+
+	public static void main(String[] args) {
+
+		try {
 			HTTPMessageConfig hcc = new HTTPMessageConfig();
 			
 			int index = 0;
@@ -43,38 +42,23 @@ public class WebAuthorizationTest
 			
 			hcc.setMethod(HTTPMethod.POST);
 			
-			
-			
-			
-	
-			
 			List<GetNameValue<String>> tokens = new ArrayList<GetNameValue<String>>();
 			tokens.add(HTTPAuthorizationType.BASIC.toHTTPHeader("userName", ":passwordValue"));
 			
 			tokens.add(HTTPAuthorizationType.BEARER.toHTTPHeader("tokenValue"));
 			tokens.add(HTTPAuthorizationType.BASIC.toHTTPHeader("userName", null));
 			tokens.add(HTTPAuthorizationType.BASIC.toHTTPHeader(null, null));
-
-		
 			
-			
-			for(GetNameValue<String> toks : tokens)
-			{
-				System.out.println(toks + " " + HTTPAuthorizationType.parse(toks));
-				hcc.setAuthentication(HTTPAuthorizationType.parse(toks));
+			for (GetNameValue<String> token : tokens) {
+				System.out.println(token + " " + HTTPAuthorizationType.parse(token));
+				hcc.setAuthentication(HTTPAuthorizationType.parse(token));
 				System.out.println(GSONUtil.toJSON(hcc, true, false, true));
 				HTTPCall hc = new HTTPCall(hcc);
 				System.out.println(hc.sendRequest());
-				
 			}
-			
-			
-			
-					
-		}
-		catch(Exception e )
-		{
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
+
 }

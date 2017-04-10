@@ -17,33 +17,17 @@ package org.zoxweb;
 
 import org.zoxweb.shared.util.Const;
 
-/**
- * @author mzebib
- *
- */
-public class ConstTest
-{
-	
-	public static void main(String[] args)
-	{
-		
-		
-		for(Const.Month month : Const.Month.values())
-		{
+public class ConstTest {
+
+	public static void main(String[] args) {
+
+		for (Const.Month month : Const.Month.values()) {
 			System.out.println(month.getName());
 		}
 		
-		
-		
-		for(Const.DaysInMonth day : Const.DaysInMonth.values())
-		{
+		for (Const.DaysInMonth day : Const.DaysInMonth.values()) {
 			System.out.println(day.getValue());
 		}
-		
-		
-		
-		
-		
 	}
 
 }

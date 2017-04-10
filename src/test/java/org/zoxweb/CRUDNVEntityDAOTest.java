@@ -15,31 +15,21 @@
  */
 package org.zoxweb;
 
-import java.io.IOException;
-
 import org.zoxweb.server.util.GSONUtil;
 import org.zoxweb.shared.data.CRUDNVEntityDAO;
 import org.zoxweb.shared.data.FileInfoDAO;
 import org.zoxweb.shared.data.FolderInfoDAO;
 import org.zoxweb.shared.util.CRUD;
 
-/**
- * @author mzebib
- *
- */
-public class CRUDNVEntityDAOTest 
-{
+public class CRUDNVEntityDAOTest {
 	
-	public static void main(String... args)
-	{
+	public static void main(String[] args) {
+
 		CRUDNVEntityDAO crudNVE = new CRUDNVEntityDAO();
 		FolderInfoDAO folder = new FolderInfoDAO();
 		folder.setName("My Folder");
 		//folder.setStateOrProvince("CA");
-		
-		
-		
-		
+
 		FileInfoDAO nve = new FileInfoDAO();
 		nve.setName("File");
 		nve.setReferenceID("bata");
@@ -53,15 +43,12 @@ public class CRUDNVEntityDAOTest
 		System.out.println("CRUD: " + crudNVE.getCRUD());
 		System.out.println("NVEntity: " + crudNVE.getNVEntity());
 		
-		try 
-		{
+		try {
 			String json = GSONUtil.toJSON(crudNVE, true, true, true);
 			System.out.println("JSON: " + json);
 			crudNVE = GSONUtil.fromJSON(json, CRUDNVEntityDAO.class);
 			System.out.println("CRUD NVE: " + crudNVE);
-		} 
-		catch (IOException | InstantiationException | IllegalAccessException | ClassNotFoundException e) 
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		

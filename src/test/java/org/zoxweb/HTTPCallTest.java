@@ -1,8 +1,5 @@
 package org.zoxweb;
 
-
-
-
 import org.zoxweb.server.http.HTTPCall;
 import org.zoxweb.server.http.HTTPUtil;
 import org.zoxweb.server.security.SSLCheckDisabler;
@@ -15,10 +12,10 @@ import org.zoxweb.shared.http.HTTPResponseData;
 import org.zoxweb.shared.net.InetSocketAddressDAO;
 import org.zoxweb.shared.util.NVPair;
 
-public class HTTPCallTest 
-{
-	public static void main( String ...args)
-	{
+public class HTTPCallTest {
+
+	public static void main( String[] args) {
+
 		HTTPMessageConfigInterface hcc = new HTTPMessageConfig();
 		//hcc.setURL("http://10.0.1.15");
 		//hcc.setURI("amds/amds/amdsconfigservice");
@@ -33,9 +30,7 @@ public class HTTPCallTest
 //		ArrayList<GetNameValue<String>> parameters = new ArrayList<GetNameValue<String>>();
 //		parameters.add( new NVPair("com.ca.amds.client.rpc.config.AMDSConfigService", "reloadCache"));
 //		hcc.setParameters(parameters);
-		
-		
-		
+
 		hcc.setURL("http://10.0.1.12");
 		hcc.setURI("userRpm/SysRebootRpm.htm");
 		
@@ -51,44 +46,28 @@ public class HTTPCallTest
 		
 		try {
 			HTTPUtil.addHTTPPatch();
-		} catch (NoSuchFieldException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (SecurityException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (IllegalArgumentException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (IllegalAccessException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		
-		
+
 		HTTPCall call = new HTTPCall( hcc, SSLCheckDisabler.SINGLETON);
-		long ts = System.currentTimeMillis();
+        long ts = System.currentTimeMillis();
 		long delta = 0;
-		try 
-		{
-			
-			HTTPResponseData rd = call.sendRequest();
+
+		try {
+            HTTPResponseData rd = call.sendRequest();
 			delta = System.currentTimeMillis() - ts;
 			
 			System.out.println(rd);
-		} 
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			delta = System.currentTimeMillis() - ts;
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		System.out.println("send request took:" + (delta));
 		//hcc.setContent("Jello".getBytes());
 		
-		try 
-		{
+		try {
 			String json = GSONUtil.toJSON((HTTPMessageConfig)hcc, true, true, true);
 			System.out.println(json);
 			
@@ -97,10 +76,8 @@ public class HTTPCallTest
 			String json2 = GSONUtil.toJSON(hccFromJson, true, true, true);
 			System.out.println("json equals:"+json.equals(json2));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		
 		/// multi part test
 		
@@ -116,7 +93,6 @@ public class HTTPCallTest
 		
 		System.out.println(HTTPMimeType.lookup("Application/JSon ; charset=utf-8"));
 		System.out.println(multiHCC);
-		
-		
 	}
+
 }

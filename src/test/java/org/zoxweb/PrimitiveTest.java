@@ -17,23 +17,15 @@ package org.zoxweb;
 
 import java.nio.ByteBuffer;
 
-
 import org.zoxweb.shared.util.Const;
 import org.zoxweb.shared.util.BytesValue;
 import org.zoxweb.shared.util.SharedBase64;
 
+public class PrimitiveTest {
 
+	public static void main(String[] args) {
 
-/**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
- */
-public class PrimitiveTest 
-{
-	public static void main(String ...args)
-	{
-		int intVals[]=
-			{
+		int intVals[]= {
 				1,
 				0,
 				123456789,
@@ -43,15 +35,12 @@ public class PrimitiveTest
 				Integer.MIN_VALUE
 			};
 		
-		for (int v : intVals)
-		{
+		for (int v : intVals) {
 			byte[] bytes = BytesValue.INT.toBytes(v);
 			System.out.println("INT: " + BytesValue.INT.toValue(bytes) + ":" + v);
 			System.out.println(new String(SharedBase64.encode(bytes)));
 		}
-		
-		
-		
+
 		long longVals[]=
 			{
 				1,
@@ -65,10 +54,7 @@ public class PrimitiveTest
 				(long)Long.MIN_VALUE
 			};
 		
-		for (long v : longVals)
-		{
-			
-			
+		for (long v : longVals) {
 			Long value = new Long(v);
 			long delta = System.nanoTime();
 			byte[] bytesJ = ByteBuffer.allocate(Long.SIZE/Byte.SIZE).putLong(value).array();
@@ -81,12 +67,10 @@ public class PrimitiveTest
 			
 			System.out.println("LONG:  " + BytesValue.LONG.toValue(bytes) + ":" + v + " zw:" + Const.TimeInMillis.nanosToString(deltaZW) + ":" + Const.TimeInMillis.nanosToString(delta)+":" 
 					 + Const.TimeInMillis.nanosToString(delta-deltaZW) );
-			System.out.println("LONGJ: " + BytesValue.LONG.toValue(bytesJ) + ":" + v + " zw:" + Const.TimeInMillis.nanosToString(deltaZW) + ":" + Const.TimeInMillis.nanosToString(delta)+":" 
+			System.out.println("LONG: " + BytesValue.LONG.toValue(bytesJ) + ":" + v + " zw:" + Const.TimeInMillis.nanosToString(deltaZW) + ":" + Const.TimeInMillis.nanosToString(delta)+":"
 					 + Const.TimeInMillis.nanosToString(delta-deltaZW) );
 			System.out.println(new String(SharedBase64.encode(bytes)));
 		}
-		
-		
 
 		float floatVals[]=
 			{
@@ -99,10 +83,7 @@ public class PrimitiveTest
 				Float.MIN_VALUE,
 			};
 		
-		for (float v : floatVals)
-		{
-			
-			
+		for (float v : floatVals) {
 			Float value = new Float(v);
 			long delta = System.nanoTime();
 			byte[] bytesJ = ByteBuffer.allocate(Float.SIZE/Byte.SIZE).putFloat(value).array();

@@ -15,9 +15,6 @@
  */
 package org.zoxweb;
 
-
-
-//import org.zoxweb.shared.util.Const;
 import java.util.HashMap;
 
 import org.zoxweb.shared.util.GetName;
@@ -25,27 +22,17 @@ import org.zoxweb.shared.util.NVBase;
 import org.zoxweb.shared.util.NVPair;
 import org.zoxweb.shared.util.NVPairGetNameMap;
 import org.zoxweb.shared.util.SharedStringUtil;
-//import org.zoxweb.shared.util.SharedBase64;
 import org.zoxweb.shared.util.SharedUtil;
 
-
-/**
- * @author mzebib
- *
- */
 public class SharedUtilTest {
 
-	
 	private enum enumList{LEFT, RIGHT}
 
 	@SuppressWarnings("rawtypes")
-	public static void main(String[] arg)
-	{
-				
-
+	public static void main(String[] arg) {
 		String stringArray = "hi";
 		
-		for(int i = 0; i < enumList.values().length; i++) {
+		for (int i = 0; i < enumList.values().length; i++) {
 			stringArray = SharedUtil.toCanonicalID('/', enumList.values()[i]);
 		}
 		
@@ -53,12 +40,10 @@ public class SharedUtilTest {
 		
 		Class[] classType = {int.class, String.class, Float.class, Double.class, Exception.class, void.class, char.class};
 		
-		for(int i = 0; i < classType.length; i++)
-		{
+		for (int i = 0; i < classType.length; i++) {
 			System.out.println(classType[i] + ": " + SharedUtil.isPrimitive(classType[i]));
 		}
-		
-		
+
 		String prefix = "Mr. ";
 		String name = "Mr. Mustapha";
 		System.out.println(SharedUtil.removePrefix(prefix, name));

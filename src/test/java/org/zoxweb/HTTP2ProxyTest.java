@@ -20,13 +20,10 @@ import org.zoxweb.shared.util.Const.TimeInMillis;
 
 import org.zoxweb.shared.util.SharedUtil;
 
-public class HTTP2ProxyTest
-{
+public class HTTP2ProxyTest {
 	
-	public static void sendRequest(HTTPMessageConfigInterface hci) throws IOException
-	{
-		if (hci.getURL() == null)
-		{
+	public static void sendRequest(HTTPMessageConfigInterface hci) throws IOException {
+		if (hci.getURL() == null) {
 			hci.setURL(hci.getURI());
 			hci.setURI(null);
 		}
@@ -34,18 +31,12 @@ public class HTTP2ProxyTest
 		HTTPCall hc = new HTTPCall(hci, SSLCheckDisabler.SINGLETON);
 		System.out.println(hc.sendRequest());
 	}
-	
-	
-	
-	public static void main(String ...args)
-	{
-		
-		
-		try
-		{
+
+	public static void main(String[] args) {
+
+		try {
 			int index = 0;
 			long delta1 = 0;
-
 
 			//long delta2 = 0;
 			InetSocketAddressDAO proxyAddress = new InetSocketAddressDAO (args[index++]);
@@ -87,24 +78,20 @@ public class HTTP2ProxyTest
 			
 			//for (int i=0; i < 5; i++)
 			{
-			
-			
-			delta1 = System.nanoTime() - delta1;
-//			hmci.setProxyAddress(null);
-//			delta2 = System.nanoTime();
-//			HTTPResponseData rdNoProxy = hc.sendRequest();
-//			delta2 = System.nanoTime() - delta2;
-//			
-//			System.out.println(SharedUtil.slowEquals(rdProxy.getData(), rdNoProxy.getData()));
-//			System.out.println("Proxy time:" + TimeInMillis.nanosToString(delta1) + " no proxy time:" + TimeInMillis.nanosToString(delta2));
-			System.out.println(new String(ubaos.toByteArray()));
-			System.out.println("Proxy time:" + TimeInMillis.nanosToString(delta1));
-			
-			IOUtil.close(s);
+				delta1 = System.nanoTime() - delta1;
+	//			hmci.setProxyAddress(null);
+	//			delta2 = System.nanoTime();
+	//			HTTPResponseData rdNoProxy = hc.sendRequest();
+	//			delta2 = System.nanoTime() - delta2;
+	//
+	//			System.out.println(SharedUtil.slowEquals(rdProxy.getData(), rdNoProxy.getData()));
+	//			System.out.println("Proxy time:" + TimeInMillis.nanosToString(delta1) + " no proxy time:" + TimeInMillis.nanosToString(delta2));
+				System.out.println(new String(ubaos.toByteArray()));
+				System.out.println("Proxy time:" + TimeInMillis.nanosToString(delta1));
+
+				IOUtil.close(s);
 			}
-		}
-		catch(Exception e)
-		{
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}

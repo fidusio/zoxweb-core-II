@@ -2,9 +2,11 @@ package org.zoxweb;
 
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
+
 import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.Map;
+
 import org.zoxweb.shared.util.Const.Bool;
 
 import com.rabbitmq.client.AMQP.BasicProperties;
@@ -12,17 +14,15 @@ import com.rabbitmq.client.Channel;
 
 public class RabbitMQSend {
 
-
 	private  static String EXCHANGE = "";
-	public static void main(String[] args) 
-	{
+
+	public static void main(String[] args) {
 		long ts = System.currentTimeMillis();
-		try
-		{
+		try {
 			int index = 0;
 			boolean persistent = true;
-		// TODO Auto-generated method stub
-		 ConnectionFactory factory = new ConnectionFactory();
+
+			ConnectionFactory factory = new ConnectionFactory();
 		 	
 		 	factory.setHost(args[index++]);
 		 	//factory.setPort(port);
@@ -31,15 +31,15 @@ public class RabbitMQSend {
 		    factory.setUsername(args[index++]);
 		    factory.setPassword(args[index++]);
 		    int repeat = 1;
-		    if (args.length > index)
-		    {
+
+		    if (args.length > index) {
 		    	repeat = Integer.parseInt(args[index++]);
 		    }
 		    
-		    if (args.length > index)
-		    {
+		    if (args.length > index) {
 		    	persistent = Bool.lookupValue(args[index++]);
 		    }
+
 		    Connection connection = factory.newConnection();
 		    Channel channel = connection.createChannel();
 		    Map<String, Object> argsRM = new HashMap<String, Object>();
@@ -55,8 +55,8 @@ public class RabbitMQSend {
 //		    byte messages[][] = new byte[repeat][];
 		    
 		    SecureRandom sr = SecureRandom.getInstanceStrong();
-		    for (int i = 0; i < repeat; i++)
-		    {
+
+		    for (int i = 0; i < repeat; i++) {
 		    	//MessageProperties.PERSISTENT_BASIC
 		    	int priority =1  +sr.nextInt(9);
 		    	String message = "[" + i +"]:" + priority;
@@ -70,18 +70,14 @@ public class RabbitMQSend {
 		    	//messages[i] = message.getBytes();
 		    	//System.out.println(" [x] Sent '" + message + "'");
 		    	channel.basicPublish("", EXCHANGE, bp, message.getBytes());
-		    
 		    }
-		  
-		    
+
 		    channel.close();
 		    connection.close();
 		    
 		    ts = System.currentTimeMillis() - ts;
 		    System.out.println("Total sent " + repeat + " it took " + ts + "  rate per sec " + ((float)repeat/(float)ts)*1000);
-		}
-		catch(Exception e)
-		{
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
 		

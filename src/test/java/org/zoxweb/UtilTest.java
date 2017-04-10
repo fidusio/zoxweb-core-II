@@ -12,12 +12,7 @@ import org.zoxweb.shared.util.NVPair;
 
 public class UtilTest 
 {
-	public static void main( String ...args)
-	{
-		//String temp = "bede0101";
-		
-		
-		
+	public static void main(String[] args) {
 		byte buffer[] = SharedStringUtil.hexToBytes("bede0001");
 		byte buffer1[] = SharedStringUtil.hexToBytes("0xbede0001");
 		System.out.println( SharedStringUtil.bytesToHex(buffer1) + ":" + SharedStringUtil.bytesToHex(buffer));
@@ -26,15 +21,15 @@ public class UtilTest
 		System.out.println(":delta " +(ts2 -ts1));
 		
 		long array[] = new long[100];
-		for ( int i=0; i < array.length; i++)
-		{
+
+		for (int i=0; i < array.length; i++) {
 			array[i] = System.nanoTime();
 		}
 		
-		for ( int i=0; i < array.length; i++)
-		{
-			if ( i >0)
-				System.out.println(i+":delta " +(array[i]-array[i-1]));
+		for (int i=0; i < array.length; i++) {
+			if (i > 0) {
+			    System.out.println(i + ":delta " + (array[i] - array[i - 1]));
+            }
 		}
 		
 		TimeUnitType tut = TimeUnitType.NANOS;
@@ -42,20 +37,16 @@ public class UtilTest
 		System.out.println(HTTPMultiPartUtil.generateBoundary( tut));
 		ts = System.nanoTime() -ts;
 		
-		System.out.println(  tut  +":" + ts );
-		tut = TimeUnitType.MILLIS;
+		System.out.println(tut  + ":" + ts);
+
 		long total = 0;
-		for ( int i =0; i < 10; i++)
-		{
-			if ( i%2 == 0)
-			{
+
+		for (int i =0; i < 10; i++) {
+			if (i%2 == 0) {
 				tut = TimeUnitType.MILLIS;
-			}
-			else
-			{
-				tut = TimeUnitType.NANOS;
-			}
-				
+			} else {
+                tut = TimeUnitType.NANOS;
+            }
 			
 			ts = System.nanoTime();
 			String boundary  = HTTPMultiPartUtil.generateBoundary(tut);
@@ -68,21 +59,16 @@ public class UtilTest
 		try {
 			System.getProperties().store(System.out, "");
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		
-		
 		List<NVPair> result =  SharedUtil.toNVPairs("n1=v&n2=v", "=", "&");
-		
-		
+
 		System.out.println(result);
 		
 		result =  SharedUtil.toNVPairs("pam_unix(sshd:auth): authentication failure; logname= uid=0 euid=0 tty=ssh ruser= rhost=196.43.230.86  user=root", "=", " ");
 		System.out.println(result);
-		
-		
+
 		System.out.println(SharedUtil.toCanonicalID('-', null, "a", null));
 		System.out.println(SharedUtil.toCanonicalID(true, '-', "a", null));
 		System.out.println(SharedUtil.toCanonicalID(false, '-', "a", null, "b"));
@@ -90,6 +76,6 @@ public class UtilTest
 		System.out.println(concat);
 		String parsedContact[] = SharedStringUtil.parseString(concat, "-");
 		System.out.println(Arrays.toString(parsedContact));
-		
 	}
+
 }

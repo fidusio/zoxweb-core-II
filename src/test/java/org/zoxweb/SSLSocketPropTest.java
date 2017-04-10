@@ -8,30 +8,23 @@ import java.net.URLConnection;
 
 import org.zoxweb.server.security.SSLCheckDisabler;
 
-public class SSLSocketPropTest 
-{
-	public static void main(String[] args)
-	{
+public class SSLSocketPropTest {
+
+	public static void main(String[] args) {
 		
-		try
-		{
-			
-			
-			
+		try {
 			URL url = new URL("https://76.91.24.155:8443/index.jsp");
 			URLConnection con = url.openConnection();
 			SSLCheckDisabler.SINGLETON.updateURLConnection((HttpURLConnection) con);
 			Reader reader = new InputStreamReader(con.getInputStream());
 			while (true) {
 				int ch = reader.read();
-				if (ch==-1) {
+				if (ch == -1) {
 					break;
 				}
 				System.out.print((char)ch);
 			}
-		}
-		catch( Exception e )
-		{
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
 		

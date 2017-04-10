@@ -15,47 +15,35 @@
  */
 package org.zoxweb;
 
-
 import org.zoxweb.server.security.HashUtil;
 import org.zoxweb.shared.util.SharedStringUtil;
 
-/**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
- */
 public class HashTest 
 {
-	public static void main(String ...args)
-	{
-		try
-		{
+	public static void main(String[] args) {
+		try {
 			String alorigthm = null;
 			String seqs[] = null;
 			int index = 0;
-			for(int i = 0; i < args.length; i++)
-			{
-				if(i == 0)
-				{
+
+			for (int i = 0; i < args.length; i++) {
+				if (i == 0) {
 					alorigthm = args[i];
-				}
-				else
-				{
-					if (seqs == null)
-					{
+				} else {
+					if (seqs == null) {
 						seqs = new String[args.length - 1];
 					}
+
 					seqs[index++] = args[i];
 				}
 			}
-			
-			
+
 			byte hash[] = HashUtil.hashSequence(alorigthm, seqs);
 			System.out.println(SharedStringUtil.bytesToHex(hash).toLowerCase());
 			
-		}
-		catch(Exception e)
-		{
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
+
 	}
 }

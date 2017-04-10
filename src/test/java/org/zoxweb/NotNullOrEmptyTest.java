@@ -17,34 +17,24 @@ package org.zoxweb;
 
 import org.zoxweb.shared.filters.NotNullOrEmpty;
 
-/**
- * @author mzebib
- *
- */
-public class NotNullOrEmptyTest 
-{
-	public static void main(String[] args)
-	{
+public class NotNullOrEmptyTest {
+
+	public static void main(String[] args) {
 		NotNullOrEmpty nullOrEmptyFilter = NotNullOrEmpty.SINGLETON;
 		
 		String [] list = {" ", "example", null, "test"};
 		
 		System.out.println("Testing null or empty strings: ");
-		for (int i = 0; i < list.length; i++)
-		{
+
+		for (int i = 0; i < list.length; i++) {
 			
-			try
-			{
-				
+			try {
 				System.out.println("\"" + nullOrEmptyFilter.validate(list[i]) + "\" Valid");
 			}
 			catch (IllegalArgumentException e)
 			{
 				System.out.println("\"" + list[i] + "\" Invalid");
 			}
-
 		}
-		
 	}
-	
 }

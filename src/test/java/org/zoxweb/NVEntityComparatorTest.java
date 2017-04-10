@@ -27,15 +27,10 @@ import org.zoxweb.shared.data.CreditCardDAO;
 import org.zoxweb.shared.data.FormInfoDAO;
 import org.zoxweb.shared.util.NVEntityComparator;
 
-/**
- * @author mzebib
- *
- */
-public class NVEntityComparatorTest
-{
+public class NVEntityComparatorTest {
 	
-	private static void testFormInfoDAO()
-	{
+	private static void testFormInfoDAO() {
+
 		List<FormInfoDAO> list = new ArrayList<FormInfoDAO>();
 		
 		FormInfoDAO formInfo1 = new FormInfoDAO();
@@ -57,22 +52,23 @@ public class NVEntityComparatorTest
 		list.add(formInfo3);
 		
 		System.out.println("UNSORTED LIST");
-		for (FormInfoDAO doc : list)
-		{
+
+		for (FormInfoDAO doc : list) {
 			System.out.println("Document: " + doc);
 		}
 		
 		Collections.sort(list, new NVEntityComparator("form_reference.name", FormInfoDAO.NVC_FORM_INFO_DAO));
 		
 		System.out.println("SORTED LIST");
+
 		for (FormInfoDAO doc : list)
 		{
 			System.out.println("Document: " + doc);
 		}
 	}
 	
-	private static void testFinancialTransactionDAO()
-	{
+	private static void testFinancialTransactionDAO() {
+
 		List<FinancialTransactionDAO> list = new ArrayList<FinancialTransactionDAO>();
 		
 		FinancialTransactionDAO transaction1 = new FinancialTransactionDAO();
@@ -88,22 +84,21 @@ public class NVEntityComparatorTest
 		list.add(transaction3);
 		
 		System.out.println("UNSORTED LIST");
-		for (FinancialTransactionDAO trans : list)
-		{
+
+		for (FinancialTransactionDAO trans : list) {
 			System.out.println("Transaction: " + trans);
 		}
 		
 		Collections.sort(list, new NVEntityComparator("transaction_amount.money_value", FinancialTransactionDAO.NVC_FINANCIAL_TRANSACTION_DAO));
 		
 		System.out.println("SORTED LIST");
-		for (FinancialTransactionDAO trans : list)
-		{
+
+		for (FinancialTransactionDAO trans : list) {
 			System.out.println("Transaction: " + trans);
 		}
 	}
 	
-	public static void main(String[] args)
-	{
+	public static void main(String[] args) {
 		testFormInfoDAO();
 		testFinancialTransactionDAO();		
 	}

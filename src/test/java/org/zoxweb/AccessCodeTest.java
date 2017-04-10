@@ -21,10 +21,10 @@ import org.zoxweb.shared.security.AccessCodeDAO;
  * @author mnael
  *
  */
-public class AccessCodeTest 
-{
-	public static void main(String ...args)
-	{
+public class AccessCodeTest {
+
+	public static void main(String ...args) {
+
 		AccessCodeDAO acd = new AccessCodeDAO();
 		
 		acd.setAccessCode("Password");
@@ -38,40 +38,31 @@ public class AccessCodeTest
 				"",
 		};
 		
-		for(int i=0; i < toValidates.length; i++)
-		{
-			try
-			{
+		for (int i=0; i < toValidates.length; i++) {
+			try {
 				System.out.println(toValidates[i] + ":" + acd.validateAccessCode(toValidates[i]));
-			}
-			catch(Exception e)
-			{
+			} catch(Exception e) {
 				System.out.println(toValidates[i] + ":Error:" + e );
 			}
 		}
 		
 		acd.setAccessQuota(5);
+
 		for (int j=0; j<4; j ++)
-		for(int i=0; i < toValidates.length; i++)
-		{
-			try
-			{
+		for (int i=0; i < toValidates.length; i++) {
+			try {
 				System.out.println(toValidates[i] + ":" + acd.validateAccessCode(toValidates[i]));
-			}
-			catch(Exception e)
-			{
+			} catch(Exception e) {
 				System.out.println(toValidates[i] + ":Error:" + e );
 			}
 		}
+
 		acd.setAccessCode(null);
-		for(int i=0; i < toValidates.length; i++)
-		{
-			try
-			{
+
+		for (int i=0; i < toValidates.length; i++) {
+			try {
 				System.out.println(toValidates[i] + ":" + acd.validateAccessCode(toValidates[i]));
-			}
-			catch(Exception e)
-			{
+			} catch(Exception e) {
 				System.out.println(toValidates[i] + ":Error:" + e );
 			}
 		}

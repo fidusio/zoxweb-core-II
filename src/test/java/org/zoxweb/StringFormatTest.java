@@ -17,48 +17,30 @@ package org.zoxweb;
 
 import org.zoxweb.shared.http.HTTPMimeType;
 import org.zoxweb.shared.http.HTTPHeaderValue;
-
 import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
 
-/**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
- */
-public class StringFormatTest 
-{
-	public static void main( String ...args)
-	{
-		try
-		{
-			String [][] params =
-			{
+public class StringFormatTest {
+
+	public static void main(String[] args) {
+		try {
+			String[][] params = {
 					{HTTPMimeType.APPLICATION_JSON.getValue(), HTTPHeaderValue.CHARSET_UTF8.getValue()},
 					null,
 					{"", "mara", "fdr", " ", "test"},
 			};
-			
-			
-			
-			
-			for (String values[] : params)
-			{
-				try
-				{
+
+			for (String values[] : params) {
+				try {
 					System.out.println(SharedStringUtil.formatStringValues("; ", values));
-				}
-				catch(Exception e)
-				{
+				} catch(Exception e) {
 					e.printStackTrace();
 				}
 			}
 			
 			System.out.println(SharedStringUtil.formatStringValues("; ", HTTPMimeType.APPLICATION_JSON, HTTPHeaderValue.CHARSET_UTF8));
-			
-			
-			
-			String toBeParsed[] = 
-				{
+
+			String toBeParsed[] = {
 					"User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:44.0) Gecko/20100101 Firefox/44.0",
 					"Proxy-Connection: keep-alive",
 					"Connection: keep-alive",
@@ -66,17 +48,14 @@ public class StringFormatTest
 					"Accept:",
 				};
 			
-			for( String str : toBeParsed)
-			{
+			for (String str : toBeParsed) {
 				//System.out.println(SharedUtil.toNVPair(str, ":"));
 				System.out.println(SharedUtil.toNVPair(str, ":", true));
 				System.out.println(SharedUtil.toNVPair(str, ":", false));
 			}
-			
-		}
-		catch(Exception e)
-		{
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
+
 }

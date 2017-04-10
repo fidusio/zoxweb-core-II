@@ -18,22 +18,15 @@ package org.zoxweb;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-/**
- * @author mzebib
- *
- */
-public class CalendarTest 
-{
-	public static void main(String[] args)
-	{
+public class CalendarTest {
+
+	public static void main(String[] args) {
 		Calendar cal = new GregorianCalendar();
 		Calendar calToCheck = new GregorianCalendar();
 		
 		calToCheck.set(Calendar.YEAR, cal.get(Calendar.YEAR) - 13);
 		System.out.println(cal.getTime());
 		System.out.println(calToCheck.getTime());
-		
-		
 	}
 	
 }

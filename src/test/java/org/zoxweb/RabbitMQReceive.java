@@ -20,8 +20,7 @@ import com.rabbitmq.client.Channel;
 public class RabbitMQReceive {
 
     public static class ConsumerTask
-        implements Runnable
-    {
+        implements Runnable {
 
         volatile Channel channel;
         long id;
@@ -29,25 +28,18 @@ public class RabbitMQReceive {
         String uuid;
 
 
-        public void run()
-        {
-            try
-            {
+        public void run() {
+            try {
                 System.out.println( "START " + Thread.currentThread().getName() + ":" + id + ":" + message);
                 long timeToSleep = SecureRandom.getInstance("SHA1PRNG").nextInt(100) +1 ;
 		          try {
-
 					Thread.sleep(timeToSleep);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 
                 System.out.println( "END afer sleeping " + timeToSleep + ":"+ Thread.currentThread().getName() + ":" + id);
-
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -57,13 +49,12 @@ public class RabbitMQReceive {
     private static Executor executor = Executors.newCachedThreadPool();
 
 	private  static String EXCHANGE = "";
-	public static void main(String[] args) 
-	{
-		try
-		{
+
+	public static void main(String[] args) {
+		try {
 			int index = 0;
-		// TODO Auto-generated method stub
-		 ConnectionFactory factory = new ConnectionFactory();
+
+			ConnectionFactory factory = new ConnectionFactory();
 		 	
 		 	factory.setHost(args[index++]);
 		 	factory.setVirtualHost(args[index++]);
@@ -80,9 +71,7 @@ public class RabbitMQReceive {
 		    argsRM.put("x-max-length", 10000000);//10000000
 		    channel.queueDeclare(EXCHANGE, true, false, false, argsRM);
 		    //channel.queueDeclarePassive(QUEUE_NAME);
-		    
-		    
-		    
+
 		    
 		    //channel.exchangeDeclare(EXCHANGE, "fanout", true);
 		    //String queueName = channel.queueDeclare().getQueue();
@@ -107,7 +96,6 @@ public class RabbitMQReceive {
 //		          try {
 //					Thread.sleep(50);
 //				} catch (InterruptedException e) {
-//					// TODO Auto-generated catch block
 //					e.printStackTrace();
 //				}
 		          ConsumerTask ct = new ConsumerTask();
@@ -123,21 +111,13 @@ public class RabbitMQReceive {
 		        
 		      };
 		      channel.basicConsume(EXCHANGE, false, argsRM, consumer);
-		    
-		   
 //		      channel.close();
 //			  connection.close();
-		}
-		catch(Exception e)
-		{
+		} catch(Exception e) {
 			e.printStackTrace();
 			System.exit(-1);
 		}
-		
-		
-		
-		System.out.println("end of main");
-		
-	}
 
+		System.out.println("end of main");
+	}
 }

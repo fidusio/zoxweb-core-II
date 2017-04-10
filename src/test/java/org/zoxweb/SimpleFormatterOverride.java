@@ -16,22 +16,15 @@
 package org.zoxweb;
 
 import java.lang.reflect.Field;
-
 import java.util.logging.SimpleFormatter;
 
 import org.zoxweb.server.util.ReflectionUtil;
 
+public class SimpleFormatterOverride {
 
-/**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
- */
-public class SimpleFormatterOverride 
-{
-	public static void main(String ... args)
-	{
-		try
-		{
+	public static void main(String[] args) {
+
+		try {
 			Class<?> simpleFormatter = SimpleFormatter.class;
 			Field field = simpleFormatter.getDeclaredField("format");
 			field.setAccessible( true);
@@ -48,11 +41,7 @@ public class SimpleFormatterOverride
 //			modifiersField.setInt( field, oldModifier);
 			
 			System.out.println("" + ReflectionUtil.updateFinalStatic(simpleFormatter, "format", "marwan nael"));
-
-		
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

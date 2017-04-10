@@ -29,96 +29,67 @@ import org.zoxweb.shared.util.Const;
 import org.zoxweb.shared.util.Appointment;
 import org.zoxweb.shared.util.AppointmentDefault;
 
-/**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
- */
-public class TaskSchedulerProcessorTest 
-{
+public class TaskSchedulerProcessorTest {
+
 	private static final Lock lock = new ReentrantLock();
 	private static Object test = null;
+
 	static class TaskLockTest
-	extends TaskDefault
-	{
+			extends TaskDefault {
 
 		/**
 		 * @see org.zoxweb.server.task.TaskDefault#childExecuteTask(org.zoxweb.server.task.TaskEvent)
 		 */
 		@Override
-		protected void childExecuteTask(TaskEvent event)
-		{
-			// TODO Auto-generated method stub
+		protected void childExecuteTask(TaskEvent event) {
 			Integer index = (Integer) event.getTaskExecutorParameters()[0];
-			if (test == null)
-			{
-				try
-				{	
-					
+
+			if (test == null) {
+			    try {
 					System.out.println("["+ index +"]:" + "Will try to lock:" + Thread.currentThread());
 					lock.lock();
 					System.out.println("["+ index +"]:" + "Lock Aquired:" + Thread.currentThread());
-					if(test == null)
-					{
+
+					if (test == null) {
 						Object temp = new Object();
-						synchronized(temp)
-						{
-							try 
-							{
+						synchronized(temp) {
+							try {
 								long delta = System.nanoTime();
 								temp.wait(Const.TimeInMillis.SECOND.MILLIS*20);
 								delta = System.nanoTime() - delta;
 								System.out.println("["+ index +"]:" + "Waited " + Const.TimeInMillis.nanosToString(delta) + ":" + Thread.currentThread());
 							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 						}
 						test = temp;
 					}
-				}
-				finally
-				{
+				} finally {
 					lock.unlock();
 					System.out.println("["+ index +"]:" + "Unlocked:" + Thread.currentThread());
 				}
-			}
-			else
-			{
+			} else {
 				System.out.println("["+ index +"]:" + "Never locked:" + Thread.currentThread());
 			}
 			
 		}
-		
 	}
-	
-	
-	
-	
+
 	static class TaskExecutorImpl
-		implements TaskExecutor
-	{
+		implements TaskExecutor {
 
 		private int index = 0;
 		private static AtomicInteger counter = new AtomicInteger();
-		
-		
-		TaskExecutorImpl()
-		{
-			index = counter.incrementAndGet();
-			
-		}
-		/**
-		 * @see org.zoxweb.shared.util.TaskScheduler#getDelayInMillis()
-		 */
 
+		TaskExecutorImpl() {
+			index = counter.incrementAndGet();
+		}
 
 		/**
 		 * @see org.zoxweb.server.task.TaskExecutor#executeTask(org.zoxweb.server.task.TaskEvent)
 		 */
 		@Override
-		public void executeTask(TaskEvent event) 
-		{
-			// TODO Auto-generated method stub
+		public void executeTask(TaskEvent event) {
 			long ts = System.currentTimeMillis();
 			Appointment tScheduler = (Appointment) event.getTaskExecutorParameters()[0];
 			System.out.println(index+":Called at:" + ts + " exipration:" + tScheduler.getExpirationInMillis() + " delta:" + (ts-tScheduler.getExpirationInMillis()) + " delay:" +tScheduler.getDelayInMillis() + " " + Thread.currentThread().getName());
@@ -129,63 +100,51 @@ public class TaskSchedulerProcessorTest
 		 * @see org.zoxweb.server.task.TaskExecutor#finishTask(org.zoxweb.server.task.TaskEvent)
 		 */
 		@Override
-		public void finishTask(TaskEvent event) 
-		{
-			// TODO Auto-generated method stub
+		public void finishTask(TaskEvent event) {
+
 		}
-		
 	}
 	
-	public static void main(String ...args)
-	{
+	public static void main(String[] args)
+    {
 		TaskProcessor tp = new  TaskProcessor(50, Runtime.getRuntime().availableProcessors()*5, Thread.NORM_PRIORITY, true);
 		TaskSchedulerProcessor tsp = new TaskSchedulerProcessor(tp);
 		
 		TaskSchedulerAppointment tsa = null;
 		
-		for(int i = 0; i < 10; i++)
-		{
+		for(int i = 0; i < 10; i++) {
 			Appointment ts = new AppointmentDefault(Const.TimeInMillis.SECOND.MILLIS*1 + i*Const.TimeInMillis.SECOND.MILLIS);
 			TaskExecutorImpl tei = new TaskExecutorImpl();
 			
-			if (i == 0)
-			{
+			if (i == 0) {
 				tsa = tsp.queue(tsp, ts, tei, ts);
-			}
-			else
-				tsp.queue(tsp, ts, tei, ts);
-			if ( i > 5)
-			{
-				for (int j = 0; j < i; j++)
-				{
+			} else {
+                tsp.queue(tsp, ts, tei, ts);
+            }
+
+			if (i > 5) {
+				for (int j = 0; j < i; j++) {
 					ts = new AppointmentDefault(Const.TimeInMillis.SECOND.MILLIS*1 + i*Const.TimeInMillis.SECOND.MILLIS);
 					tei = new TaskExecutorImpl();
 					tsp.queue(tsp, ts, tei, ts);
 				}
 			}
 		}
-		
-		
-		
-		
+
 		Appointment tsold = new AppointmentDefault(-Const.TimeInMillis.SECOND.MILLIS);
 		TaskExecutorImpl teiold = new TaskExecutorImpl();
 		tsp.queue(tsp, tsold, teiold, tsold);
 		
-		for(int i = 0; i < 20; i++)
-		{
+		for (int i = 0; i < 20; i++) {
 			Appointment ts = new AppointmentDefault();
 			TaskExecutorImpl tei = new TaskExecutorImpl();
 			tsp.queue(tsp, ts, tei, ts);
 		}
-		
-		
-		while( tsp.pendingTasks() != 0)
-		{
+
+		while(tsp.pendingTasks() != 0) {
 			try {
 				Thread.sleep( Const.TimeInMillis.SECOND.MILLIS );
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -196,36 +155,33 @@ public class TaskSchedulerProcessorTest
 		//tsp = new TaskSchedulerProcessor( Appointment.EQUAL_MORE_COMPARATOR);
 		TaskSchedulerAppointment last = null;
 		TaskExecutorImpl tei = null;
-		
 		TaskSchedulerAppointment tsaToCancel = null;
-		for(int i = 0; i < 10; i++)
-		{
+
+		for (int i = 0; i < 10; i++) {
 			Appointment ts = new AppointmentDefault(Const.TimeInMillis.SECOND.MILLIS*1 + i*Const.TimeInMillis.SECOND.MILLIS);
 			tei = new TaskExecutorImpl();
 			tsp.queue(tsp, ts, tei, ts);
 			//System.out.println(i + " wait for " + (Const.TimeInMillis.SECOND.MILLIS*1 + i*Const.TimeInMillis.SECOND.MILLIS) );
-			if ( i > 5)
-			{
-				for (int j = 0; j < i; j++)
-				{
+			if ( i > 5) {
+				for (int j = 0; j < i; j++) {
 					ts = new AppointmentDefault(Const.TimeInMillis.SECOND.MILLIS*1 + i*Const.TimeInMillis.SECOND.MILLIS);
 					tei = new TaskExecutorImpl( );
 					
 					last = tsp.queue(tsp, ts, tei, ts);
-					if (tei.index == 99)
-					{
+					if (tei.index == 99) {
 						tsaToCancel = last;
 					}
 					//System.out.println(j + " wait for " + (Const.TimeInMillis.SECOND.MILLIS*1 + i*Const.TimeInMillis.SECOND.MILLIS) );
 				}
 			}
 		}
+
 		System.out.println("TaskSchedulerProcessor:" + tsp.pendingTasks() + " TaskProcessor:" + tp.pendingTasks());
-		if (tsaToCancel != null)
-		
-			tsaToCancel.cancel();
-		while( tsp.pendingTasks() != 0)
-		{
+		if (tsaToCancel != null) {
+		    tsaToCancel.cancel();
+        }
+
+		while( tsp.pendingTasks() != 0) {
 			try {
 				Thread.sleep( Const.TimeInMillis.SECOND.MILLIS);
 				if (last != null)
@@ -234,48 +190,35 @@ public class TaskSchedulerProcessorTest
 					last = null;
 				}
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		
-		
 
-		if (tsa != null)
-		{
+		if (tsa != null) {
 			tsa.setDelayInMillis(2000);
 		}
 		
 		int index = 0;
-		for (index = 0; index < 20; index++)
-		{
+
+		for (index = 0; index < 20; index++) {
 			tsp.queue(new AppointmentDefault(), new TaskEvent(tsp, new TaskLockTest(), index));
 		}
 		tsp.queue(new AppointmentDefault(Const.TimeInMillis.SECOND.MILLIS*21), new TaskEvent(tsp, new TaskLockTest(), index++));
 		
-		
-		
-		
-		while( tsp.pendingTasks() != 0)
-		{
+
+		while( tsp.pendingTasks() != 0) {
 			try {
 				Thread.sleep( Const.TimeInMillis.SECOND.MILLIS);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		
-		
-		
-		
-		
-		
+
+
 		System.out.println("TaskSchedulerProcessor 1 :" + tsp.pendingTasks() + " TaskProcessor:" + tp.pendingTasks());
 		tp.close();
 		System.out.println("TaskSchedulerProcessor 2 :" + tsp.pendingTasks() + " TaskProcessor:" + tp.pendingTasks());
 		tsp.close();
 		System.out.println("TaskSchedulerProcessor 3 :" + tsp.pendingTasks() + " TaskProcessor:" + tp.pendingTasks());
-		
 	}
 }

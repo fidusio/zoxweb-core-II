@@ -15,23 +15,15 @@
  */
 package org.zoxweb;
 
-
-
 import org.zoxweb.server.shiro.ShiroUtil;
 import org.zoxweb.shared.data.shiro.ShiroNVEntityCRUDs;
 import org.zoxweb.shared.data.shiro.ShiroPermissionDAO;
 import org.zoxweb.shared.data.shiro.ShiroRoleDAO;
 import org.zoxweb.shared.util.CRUD;
 
-/**
- * @author mzebib
- *
- */
-public class ShiroRoleDAOTest 
-{
+public class ShiroRoleDAOTest {
 
-	public static void main(String[] args)
-	{
+	public static void main(String[] args) {
 		ShiroRoleDAO role = new ShiroRoleDAO();
 		role.setName("Role 1");
 		role.setDomainID("zoxweb.com");
@@ -74,14 +66,9 @@ public class ShiroRoleDAOTest
 		
 		System.out.println(nvCRUDs.getCRUDs());
 		
-		for(CRUD c : CRUD.values())
-		{
-			System.out.println(c + " permission " + nvCRUDs.isPermitted(c));
+		for(CRUD crud : CRUD.values()) {
+			System.out.println(crud + " permission: " + nvCRUDs.isPermitted(crud));
 		}
-		
-		
-		
-		
 	}
 
 }

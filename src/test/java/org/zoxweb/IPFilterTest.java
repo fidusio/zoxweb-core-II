@@ -15,10 +15,6 @@
  */
 package org.zoxweb;
 
-
-
-
-
 import java.net.InetAddress;
 import java.util.List;
 
@@ -28,30 +24,20 @@ import org.zoxweb.server.util.GSONUtil;
 import org.zoxweb.shared.net.InetFilterDAO;
 import org.zoxweb.shared.security.SecurityStatus;
 
+public class IPFilterTest {
 
-/**
- * 
- * 
- */
-public class IPFilterTest 
-{
-	public static void main( String ... args)
-	{
-		
-		String ipArray[] = null;
-		
+	public static void main(String[] args) {
+
 //		String localhost = null;
 //		
 //		try 
 //		{
 //			localhost = InetAddress.getByName("localhost").getHostAddress();
 //		} catch (UnknownHostException e1) {
-//			// TODO Auto-generated catch block
 //			e1.printStackTrace();
 //		}
-		
-	
-		ipArray=new String[]{
+
+		String[] ipArray = new String[] {
 			"10.0.0.1",
 			"10.0.1.185",
 			"10.0.2.1",
@@ -62,10 +48,10 @@ public class IPFilterTest
 			"204.110.9.200",
 			"m2m.rubuspi.com"
 		};
+
 		InetFilterRulesManager ipfm = new InetFilterRulesManager();
 		
-		try
-		{
+		try {
 			InetFilterRule ifr = null;
 			
 			checkTest( ipfm, ipArray);
@@ -90,13 +76,7 @@ public class IPFilterTest
 
 			System.out.println();
 			checkTest( ipfm, ipArray);
-			
-			
-			
-			
-			
-			
-			
+
 			// this example demonstrate all 
 		
 			ipfm.addInetFilterProp(new InetFilterDAO("44.44.34.44", null), SecurityStatus.ALLOW);
@@ -124,33 +104,25 @@ public class IPFilterTest
 			System.out.println("Same test twice");
 			ipfm.addInetFilterProp("m2m.rubuspi.com-255.255.255.255-ALLOW");
 			checkTest( ipfm, ipArray);
-		}
-		catch(Exception e )
-		{
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
+
 	}
-	
-	
-	public static void checkTest( InetFilterRulesManager ipfm, String ...ipArray)
-	{
-		for ( String ip : ipArray)
-		{
+
+	public static void checkTest(InetFilterRulesManager ipfm, String[] ipArray) {
+		for (String ip : ipArray) {
 			
-			try
-			{
+			try {
 				InetAddress inet = InetAddress.getByName(ip);
 				byte[] address = inet.getAddress();
 				long ts = System.nanoTime();
 				SecurityStatus status = ipfm.checkIPSecurityStatus(address);
 				ts = System.nanoTime() - ts;
 				System.out.println("ip " + ip + " status " + status + ":" + ts + " nanos");
-			}
-			catch(Exception e)
-			{
+			} catch(Exception e) {
 				e.printStackTrace();
 			}
-			
 		}
 	}
 }

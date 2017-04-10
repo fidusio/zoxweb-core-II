@@ -33,119 +33,108 @@ import org.zoxweb.shared.util.SharedBase64;
 import org.zoxweb.shared.util.SharedUtil;
 
 
-/**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
- */
-public class FileSystemTest 
-{
+public class FileSystemTest {
+
 	@SuppressWarnings("resource")
-	public static void main(String ...args)
-	{
-		try
-		{
-			FileSystem fs = FileSystems.getDefault();
-			System.out.println(SharedUtil.toCanonicalID(',', fs, fs.provider(), fs.supportedFileAttributeViews()));
-			Iterable<FileStore> ifs = fs.getFileStores();
-			Iterator<FileStore> fsi = ifs.iterator();
-			while( fsi.hasNext())
-			{
-				FileStore fStore = fsi.next();
-				System.out.println(SharedUtil.toCanonicalID(',', fStore.name(),fStore.type(), fStore.getTotalSpace(), fStore.getUnallocatedSpace(), fStore.getUsableSpace()));
-				
-				
-			}
-			
-			File file = new File("/temp/dummy.lnk");
-			
-			RandomAccessFile pipe =  new RandomAccessFile(args[0], "rws");
-			FileChannel channel = pipe.getChannel();//FileChannel.open("/temp/dummy.lnk", FileChannel.MapMode.READ_WRITE);
-			
-			System.out.println( "channel:" + channel.isOpen());
-			
+	public static void main(String[] args) {
+
+		try {
+            FileSystem fs = FileSystems.getDefault();
+            System.out.println(SharedUtil.toCanonicalID(',', fs, fs.provider(), fs.supportedFileAttributeViews()));
+            Iterable<FileStore> ifs = fs.getFileStores();
+            Iterator<FileStore> fsi = ifs.iterator();
+
+            while (fsi.hasNext()) {
+                FileStore fStore = fsi.next();
+                System.out.println(SharedUtil.toCanonicalID(',', fStore.name(), fStore.type(), fStore.getTotalSpace(), fStore.getUnallocatedSpace(), fStore.getUsableSpace()));
+
+
+            }
+
+            File file = new File("/temp/dummy.lnk");
+
+            RandomAccessFile pipe = new RandomAccessFile(args[0], "rws");
+            FileChannel channel = pipe.getChannel();//FileChannel.open("/temp/dummy.lnk", FileChannel.MapMode.READ_WRITE);
+
+            System.out.println("channel:" + channel.isOpen());
+
 //			int read;
 //			while( (read = is.read()) != -1)
 //			{
 //				System.out.print( (char)read);
 //			}
-			
-			
-			
-			int  size= 4096;
-			MappedByteBuffer mbb = channel.map(FileChannel.MapMode.READ_WRITE, 0, size);
-			for ( int i = 0; i < SharedBase64.BASE_64.length; i++)
-			{
-				mbb.put( SharedBase64.BASE_64[i]);
-			}
-			System.exit(0);
-		
-			System.out.println( SharedUtil.toCanonicalID(',', file.canRead(), file.canWrite(), file.getName()));
-			
-			
-			
-			 PipedInputStream in = new PipedInputStream();
-			    PipedOutputStream out = new PipedOutputStream(in);
 
-			    Sender s = new Sender(out);
-			    Receiver r = new Receiver(in);
-			    Thread t1 = new Thread(s);
-			    Thread t2 = new Thread(r);
-			    t1.start();
-			    t2.start();
-			
-			
-		}
-		catch (Exception e)
-		{
+            int size = 4096;
+            MappedByteBuffer mbb = channel.map(FileChannel.MapMode.READ_WRITE, 0, size);
+
+            for (int i = 0; i < SharedBase64.BASE_64.length; i++) {
+                mbb.put(SharedBase64.BASE_64[i]);
+            }
+
+            System.exit(0);
+
+            System.out.println(SharedUtil.toCanonicalID(',', file.canRead(), file.canWrite(), file.getName()));
+
+            PipedInputStream in = new PipedInputStream();
+            PipedOutputStream out = new PipedOutputStream(in);
+
+            Sender s = new Sender(out);
+            Receiver r = new Receiver(in);
+            Thread t1 = new Thread(s);
+            Thread t2 = new Thread(r);
+            t1.start();
+            t2.start();
+        } catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	
 
-	static class Sender implements Runnable {
-	  OutputStream out;
+	static class Sender
+            implements Runnable {
+
+	    OutputStream out;
 	
-	  public Sender(OutputStream out) {
-	    this.out = out;
-	  }
-	
-	  public void run() {
-	    byte value;
-	
-	    try {
-	      for (int i = 0; i < 5; i++) {
-	        value = (byte) (Math.random() * 256);
-	        System.out.print("About to send " + value + ".. ");
-	        out.write(value);
-	        System.out.println("..sent..");
-	        Thread.sleep((long) (Math.random() * 1000));
-	      }
-	      out.close();
-	    } catch (Exception e) {
-	      e.printStackTrace();
-	    }
-	  }
+        public Sender(OutputStream out) {
+            this.out = out;
+        }
+
+        public void run() {
+            byte value;
+
+            try {
+                for (int i = 0; i < 5; i++) {
+                  value = (byte) (Math.random() * 256);
+                  System.out.print("About to send " + value + ".. ");
+                  out.write(value);
+                  System.out.println("..sent..");
+                  Thread.sleep((long) (Math.random() * 1000));
+                }
+                out.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 	}
 
 	static class Receiver implements Runnable {
-	  InputStream in;
-	
-	  public Receiver(InputStream in) {
-	    this.in = in;
-	  }
-	
-	  public void run() {
-	    int value;
-	
-	    try {
-	      while ((value = in.read()) != -1) {
-	        System.out.println("received " + (byte) value);
-	  }
-	  System.out.println("Pipe closed");
-	    } catch (Exception e) {
-	      e.printStackTrace();
-	    }
-	  }
-	}
+	    InputStream in;
+
+        public Receiver(InputStream in) {
+            this.in = in;
+        }
+
+        public void run() {
+            int value;
+
+            try {
+                while ((value = in.read()) != -1) {
+                System.out.println("received " + (byte) value);
+                }
+
+                System.out.println("Pipe closed");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

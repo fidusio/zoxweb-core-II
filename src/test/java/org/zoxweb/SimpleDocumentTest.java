@@ -17,24 +17,16 @@ package org.zoxweb;
 
 import org.zoxweb.shared.data.SimpleDocumentDAO;
 
-/**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
- */
-public class SimpleDocumentTest 
-{
-	public static void main(String ...args)
-	{
-		try
-		{
+public class SimpleDocumentTest {
+
+	public static void main(String[] args) {
+		try {
 			SimpleDocumentDAO sdd = new SimpleDocumentDAO();
-			sdd.setName("toto");
+			sdd.setName("John");
 			
 			System.out.println("" + sdd);
 			sdd.getCreationTime();
-		}
-		catch(Exception e)
-		{
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
 	}

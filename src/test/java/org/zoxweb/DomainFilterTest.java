@@ -17,14 +17,9 @@ package org.zoxweb;
 
 import org.zoxweb.shared.filters.FilterType;
 
-/**
- * @author mzebib
- *
- */
-public class DomainFilterTest 
-{
-    public static void main(String[] args)
-    {
+public class DomainFilterTest {
+
+    public static void main(String[] args) {
     	String[] values = 
 	    			{
 		    			"https://www.zoxweb.com/welcome",
@@ -34,24 +29,16 @@ public class DomainFilterTest
 		    			"www.admin.zoxweb.com",
 		    			"admin.zoxweb.com",
 		    			"www.zoxweb.com",
-		    			"m.zebib@yahoo.com",
-		    			"mzebib@admin.google.com",
 		    			"zoxweb.com",
 		    			"zoxweb",
-		    			"m.zebib@@yahoo.com",
-		    			"m.zebib@yahoo@yahoo.com",
 		    			"website.fr",
 		    			"www.jeb65465451515415845848548548441040000000000001011111111111111111111111111111111111111111.com"
 	    			};
     	
-    	for (String val : values)
-    	{    		
-    		try
-    		{
+    	for (String val : values) {
+    		try {
     			System.out.println("INPUT: " + val + "\nDOMAIN NAME: " + FilterType.DOMAIN.validate(val));
-    		}
-    		catch (Exception e)
-    		{
+    		} catch (Exception e) {
     			System.out.println("INVALID INPUT: " + val);
     		}
     		

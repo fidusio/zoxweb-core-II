@@ -23,15 +23,10 @@ import org.zoxweb.shared.filters.FilterType;
 import org.zoxweb.shared.util.DynamicEnumMap;
 import org.zoxweb.shared.util.NVPair;
 
-/**
- * @author mzebib
- *
- */
-public class JSONDemTest 
-{
+public class JSONDemTest {
 	
-	public static void main(String[] args)
-	{
+	public static void main(String[] args) {
+
 		DynamicEnumMap dem = new DynamicEnumMap();
 		dem.setReferenceID("123456798");
 		dem.setUserID("48654561");
@@ -43,13 +38,12 @@ public class JSONDemTest
 		dem.setStatic(true);
 		
 		List<NVPair> values = new ArrayList<NVPair>();
-		values.add(new NVPair("Email", "mzebib@zoxweb.com", FilterType.EMAIL));
+		values.add(new NVPair("Email", "jsmith@zoxweb.com", FilterType.EMAIL));
 		values.add(new NVPair("Website", "https://www.zoxweb.com", FilterType.URL));
 		
 		dem.setValue(values);
 		
-		try 
-		{
+		try {
 			System.out.println("JSON <==> DynamicEnumMap");
 			
 			// To JSON
@@ -61,9 +55,7 @@ public class JSONDemTest
 			String fromJSON = GSONUtil.toJSONDynamicEnumMap(fromDEM);
 			System.out.println("FromJSON: \n" + "DEM: "+ fromDEM + "\nJSON: " + fromJSON);
 			System.out.println("\nAre fromJSON and toJSON equal? " + fromJSON.equals(toJSON));
-		} 
-		catch (Exception e) 
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
@@ -83,8 +75,7 @@ public class JSONDemTest
 		list.add(dem2);
 		list.add(dem2);
 		
-		try 
-		{
+		try {
 			System.out.println("\nJSON <==> DynamicEnumMap List");
 			// To JSON
 			String toJSON = GSONUtil.toJSONDynamicEnumMapList(list);
@@ -95,9 +86,7 @@ public class JSONDemTest
 			String fromJSON = GSONUtil.toJSONDynamicEnumMapList(fromDEMList);
 			System.out.println("FromJSON: \n" + "DEM: "+ fromDEMList + "\nJSON: " + fromJSON);
 			System.out.println("\nAre fromJSON and toJSON equal? " + fromJSON.equals(toJSON));
-		} 
-		catch (Exception e) 
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
