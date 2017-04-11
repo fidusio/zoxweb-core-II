@@ -26,11 +26,9 @@ public class ProxyRealmConfigDAO
 	extends SetNameDescriptionDAO
 {
 
-
 	public ProxyRealmConfigDAO()
 	{
 		super(SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO);
-		// TODO Auto-generated constructor stub
 	}
 
 }
