@@ -20,12 +20,13 @@ package org.zoxweb.shared.util;
  * @author mzebib
  *
  */
-public interface SetNVConfig 
-	extends GetNVConfig 
-{
+public interface SetNVConfig
+		extends GetNVConfig {
+
 	/**
 	 * Set the NVConfig.
 	 * @param nvc
 	 */
 	public void setNVConfig(NVConfig nvc);
+
 }

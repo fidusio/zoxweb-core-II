@@ -16,10 +16,10 @@
 package org.zoxweb.shared.util;
 
 /**
- * This enum declares actions such as create, read, update and delete that can be used as event notification, 
+ *
+ * CRUD operations: create, read, update and delete. Used for event notification,
  * database action, or in any context where it is applicable.
  * @author mzebib
- *
  */
 public enum CRUD {
 	CREATE,

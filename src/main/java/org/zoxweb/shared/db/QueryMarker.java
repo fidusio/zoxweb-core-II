@@ -20,10 +20,8 @@ import java.io.Serializable;
 /**
  * The query marker interface.
  * @author mzebib
- *
  */
 public interface QueryMarker
-extends Serializable
-{
+        extends Serializable {
 	
 }

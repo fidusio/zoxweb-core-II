@@ -17,15 +17,12 @@ package org.zoxweb.server.shiro.authc;
 
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 
-
 @SuppressWarnings("serial")
 public class DomainAuthenticationInfo
-	extends SimpleAuthenticationInfo
-{
+		extends SimpleAuthenticationInfo {
 	
 	
-	public DomainAuthenticationInfo(Object principal, String userID, Object credentials, String realmName, String domainID, String applicationID) 
-	{
+	public DomainAuthenticationInfo(Object principal, String userID, Object credentials, String realmName, String domainID, String applicationID) {
 		 this.principals = new DomainPrincipalCollection(principal, userID, realmName, domainID, applicationID);
 	     this.credentials = credentials;   
 	}

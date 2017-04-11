@@ -31,15 +31,15 @@ import org.zoxweb.shared.http.HTTPStatusCode;
 import org.zoxweb.shared.security.AccessException;
 import org.zoxweb.shared.util.Const;
 
-public class ShiroProxyAuthentication 
-{
+public class ShiroProxyAuthentication {
+
 	public static final String AUTHENTICATION_URI = "shiro/loginProxy";
 	
 	private static final transient Logger log = Logger.getLogger(Const.LOGGER_NAME);
 	
 	public static  LoginStatusDAO login( String httpUrl, boolean sslCheckOff, String domainID, String appID, String realm, String username, String password )
-		throws AccessException, IOException
-	{
+		throws AccessException, IOException {
+
 		HTTPMessageConfig hcc = new HTTPMessageConfig();
 		hcc.setURL(httpUrl);
 		hcc.setURI(AUTHENTICATION_URI);
@@ -50,46 +50,31 @@ public class ShiroProxyAuthentication
 		
 		HTTPCallException httpCallException = null;
 		HTTPStatusCode status = null;
-		try
-		{
+		try {
 			rd = call.sendRequest();
 			status = HTTPStatusCode.statusByCode(rd.getStatus());
-			if (status == HTTPStatusCode.OK)
-			{
+			if (status == HTTPStatusCode.OK) {
 				try {
 					
 					String json = new String(rd.getData());
 					log.info("\n" +json);
 					return GSONUtil.fromJSON( json, LoginStatusDAO.class);
-				} catch (InstantiationException | IllegalAccessException
-						| ClassNotFoundException e) {
-					// TODO Auto-generated catch block
+				} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
 					e.printStackTrace();
 				}
 			}
-		}
-		catch (HTTPCallException e)
-		{
+		} catch (HTTPCallException e) {
 			httpCallException = e;
 			status = HTTPStatusCode.statusByCode( e.getResponseData().getStatus());
-		}
-		catch( IOException e)
-		{
+		} catch( IOException e) {
 			throw e;
 		}
-		
-		
-		if ( status == HTTPStatusCode.UNAUTHORIZED)
-		{
+
+		if (status == HTTPStatusCode.UNAUTHORIZED) {
 			throw new AccessException("Invalid credentials" );
 		}
-		
 
 		throw httpCallException;
-				
-			
-		
 	}
-	
-	
+
 }

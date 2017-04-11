@@ -15,48 +15,34 @@
  */
 package org.zoxweb.server.shiro.servlet;
 
-
 import javax.websocket.Session;
 
 import org.apache.shiro.subject.Subject;
+
 import org.zoxweb.shared.util.SharedUtil;
 
-/**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
- */
-public class ShiroWebSocketSession 
-{
+public class ShiroWebSocketSession {
 	private final Subject subject;
-	
-
 	private final Session session;
 	
-	public ShiroWebSocketSession(Session session, Subject subject)
-	{
+	public ShiroWebSocketSession(Session session, Subject subject) {
 		SharedUtil.checkIfNulls("Null Parameter", session, subject);
 		this.session = session;
 		this.subject = subject;
 	
 	}
-	
-	
-	
-	public final Subject getSubject()
-	{
+
+	public final Subject getSubject() {
 		return subject;
 	}
-	
-	
-	public final Session getSession()
-	{
+
+	public final Session getSession() {
 		return session;
 	}
-	
-	
 	
 //	public  void sendText(String txt) throws IOException
 //	{
 //		session.getBasicRemote().sendText(txt);
 //	}
+
 }

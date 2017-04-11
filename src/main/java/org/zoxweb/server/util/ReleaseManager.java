@@ -29,29 +29,27 @@ import org.zoxweb.shared.util.SharedUtil;
 /**
  * The release manager load and parse json release string and streams that represent application release objects
  */
-public class ReleaseManager 
-{
+public class ReleaseManager {
 	
 	public static final ReleaseManager SINGLETON = new ReleaseManager();
 	private HashMap<String, ApplicationVersionDAO> map = new HashMap<String, ApplicationVersionDAO>();
-	private ReleaseManager()
-	{
+
+	private ReleaseManager() {
 		
 	}
 	
 	
-	public ApplicationVersionDAO load(String dir, String appName) throws IOException
-	{
+	public ApplicationVersionDAO load(String dir, String appName)
+            throws IOException {
 		return load(ReleaseManager.class.getResourceAsStream(dir +appName + ".json"));
 	}
 	
-	public ApplicationVersionDAO load(InputStream is) throws IOException
-	{
+	public ApplicationVersionDAO load(InputStream is)
+            throws IOException {
 		return load(IOUtil.inputStreamToString(is, true));
 	}
 	
-	public synchronized ApplicationVersionDAO  load(String json)
-	{
+	public synchronized ApplicationVersionDAO load(String json) {
 		String name = null;
 		String description = null;
 		int major = 0;
@@ -61,12 +59,11 @@ public class ReleaseManager
 		List<CharSequence> tokens = SharedStringUtil.parseGroup(json, "{", "}", false);
 	
 		String attributes[] = tokens.get(0).toString().split(",");
-		for ( String attribute :attributes )
-		{
+
+		for (String attribute :attributes ) {
 			NVPair nvp = SharedUtil.toNVPair(attribute, ":", false);
 			nvp.setName(SharedStringUtil.filterString(nvp.getName(), "\""));
-			switch( nvp.getName())
-			{
+			switch( nvp.getName()) {
 			case "name":
 				name = SharedStringUtil.filterString(nvp.getValue(), "\"");
 				break;
@@ -84,17 +81,8 @@ public class ReleaseManager
 			break;
 			}
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		if ( !SharedStringUtil.isEmpty(name))
-		{
+
+		if (!SharedStringUtil.isEmpty(name)) {
 			ApplicationVersionDAO  ret = new ApplicationVersionDAO();
 		
 			ret.setName(name);
@@ -105,27 +93,24 @@ public class ReleaseManager
 			map.put(name.toLowerCase(), ret);
 		
 			return ret;
-
 		}
+
 		return null;
 	}
 	
-	public ApplicationVersionDAO lookup( String name)
-	{
+	public ApplicationVersionDAO lookup( String name) {
 		name = SharedStringUtil.toLowerCase(SharedStringUtil.trimOrNull(name));
 		return map.get(name);
 	}
-	
-	
-	public static void main( String ...args)
-	{
+
+	public static void main(String... args) {
 		String DEFAULT_DIR ="/org/zoxweb/conf/";
 		
 		try {
 			System.out.println(ReleaseManager.SINGLETON.load( DEFAULT_DIR, "jwput").toCanonicalID());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+
 }

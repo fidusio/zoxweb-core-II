@@ -15,7 +15,6 @@
  */
 package org.zoxweb.shared.api;
 
-
 import java.util.List;
 
 import org.zoxweb.shared.util.ArrayValues;
@@ -33,12 +32,11 @@ import org.zoxweb.shared.util.NVConfigEntity.ArrayType;
  * 
  */
 @SuppressWarnings("serial")
-public class APITokenDAO extends APIAccessTokenDAO
-{
+public class APITokenDAO
+		extends APIAccessTokenDAO {
 	
 	public enum Params
-	implements GetNVConfig
-	{
+			implements GetNVConfig {
 		API_CREDENTIALS_DAO(NVConfigManager.createNVConfigEntity("api_credentials_dao", "The Crendentials.", "APICredentialsDAO", true, true, APICredentialsDAO.class, ArrayType.NOT_ARRAY)),
 		API_CONFIG_INFO_DAO(NVConfigManager.createNVConfigEntity("api_config_info_dao", "The API config info", "APIConfigInfoDAO", true, true, APIConfigInfoDAO.class, ArrayType.NOT_ARRAY)),
 		API_TOKEN(NVConfigManager.createNVConfig("api_token", "The api token","APIToken", false, false, String.class)),
@@ -46,16 +44,14 @@ public class APITokenDAO extends APIAccessTokenDAO
 		EXTRA_PARAMETERS(NVConfigManager.createNVConfig("extra_parameters", "Extra configuration parameters", "ExtraParameters", false, true, true, String[].class, null)),
 		;
 		
-		private final NVConfig cType;
+		private final NVConfig nvc;
 		
-		Params(NVConfig c)
-		{
-			cType = c;
+		Params(NVConfig nvc) {
+			this.nvc = nvc;
 		}
 		
-		public NVConfig getNVConfig() 
-		{
-			return cType;
+		public NVConfig getNVConfig() {
+			return nvc;
 		}
 	
 	}	
@@ -75,79 +71,68 @@ public class APITokenDAO extends APIAccessTokenDAO
 																				false,
 																				APIAccessTokenDAO.NVC_API_ACCESS_TOKEN_DAO);
 	
-	public APITokenDAO()
-	{
+	public APITokenDAO() {
 		super(NVC_TOKEN_DAO);
 	}
-	
-	
 
-	
-	
-	public APICredentialsDAO getAPICredentialsDAO()
-	{
+	public APICredentialsDAO getAPICredentialsDAO() {
 		return lookupValue(Params.API_CREDENTIALS_DAO);
-		
 	}
 	
-	public void setAPICredentialsDAO(APICredentialsDAO apiCredentials)
-	{
+	public void setAPICredentialsDAO(APICredentialsDAO apiCredentials) {
 		setValue(Params.API_CREDENTIALS_DAO, apiCredentials);
 	}
-	
-	
-	public APIConfigInfo getAPIConfigInfo()
-	{
+
+	/**
+	 * Returns the APIConfigInfo.
+	 * @return
+	 */
+	public APIConfigInfo getAPIConfigInfo() {
 		return lookupValue(Params.API_CONFIG_INFO_DAO);
 	}
-	
-	
-	public void setAPIConfigInfo(APIConfigInfo apici)
-	{
-		setValue(Params.API_CONFIG_INFO_DAO, apici);
-	}
-	
-	
-	
+
 	/**
-	 * 
-	 * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
-	 * 
+	 * Sets the APIConfigInfo.
+	 * @param configInfo
+	 */
+	public void setAPIConfigInfo(APIConfigInfo configInfo) {
+		setValue(Params.API_CONFIG_INFO_DAO, configInfo);
+	}
+
+	/**
+	 * Returns the API token.
 	 * @return the api token
 	 * @deprecated
 	 */
-	public String getAPIToken()
-	{
+	public String getAPIToken() {
 		return lookupValue(Params.API_TOKEN);
 	}
 
 	/**
-	 * This method sets the API type name.
+	 * Sets the API token.
 	 * @param apiToken
 	 * @deprecated
 	 */
-	public void setAPIToken(String apiToken) 
-	{
+	public void setAPIToken(String apiToken) {
 		setValue(Params.API_TOKEN, apiToken);
 	}
-	
-	
-	
 
 	/**
+	 * Returns extra configurations.
 	 * @return configuration parameters
 	 */
 	@SuppressWarnings("unchecked")
-	public ArrayValues<NVPair> getExtraParameters()
-	{
+	public ArrayValues<NVPair> getExtraParameters() {
 		return (ArrayValues<NVPair>) lookup(Params.EXTRA_PARAMETERS);
 	}
-	
-	public void setExtraParameters(List<NVPair> val)
-	{
+
+	/**
+	 * Sets extra parameters.
+	 * @param val
+	 */
+	public void setExtraParameters(List<NVPair> val) {
 		getExtraParameters().add(val.toArray(new NVPair[0]), true);
 	}
 	
-	
-	
+
 }

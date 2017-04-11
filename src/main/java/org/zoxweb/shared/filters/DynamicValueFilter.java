@@ -24,9 +24,8 @@ import org.zoxweb.shared.util.ReferenceID;
  * @param <I>
  * @param <O>
  */
-public interface DynamicValueFilter<I, O> 
-	extends ValueFilter<I, O>, ReferenceID<String>
-{
+public interface DynamicValueFilter<I, O>
+		extends ValueFilter<I, O>, ReferenceID<String> {
 	
 	public String getValidationPattern();
 	

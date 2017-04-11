@@ -20,36 +20,27 @@ import org.apache.shiro.subject.Subject;
 import org.zoxweb.server.task.RunnableTask;
 import org.zoxweb.server.task.TaskEvent;
 
-/**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
- */
-abstract public class SubjectRunnableTask
-extends RunnableTask
-{
-	final protected Subject subject;
+public abstract class SubjectRunnableTask
+		extends RunnableTask {
+
+	protected final Subject subject;
 	
-	protected SubjectRunnableTask()
-	{
+	protected SubjectRunnableTask() {
 		this(SecurityUtils.getSubject());
 	}
 	
-	protected SubjectRunnableTask(Subject subject)
-	{
+	protected SubjectRunnableTask(Subject subject) {
 		this.subject = subject;
-		
 	}
-	public void executeTask(TaskEvent event) 
-	{
+
+	public void executeTask(TaskEvent event) {
 		this.te = event;
-		if (subject != null)
+
+		if (subject != null) {
 			subject.execute(this);
-		else
+		} else {
 			run();
-		
+		}
 	}
-
-
-	
 
 }

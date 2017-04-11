@@ -15,18 +15,9 @@
  */
 package org.zoxweb.shared.util;
 
-
-/**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
- */
 public interface DomainInfo
-	extends ReferenceID<String>,
-			SetName, 
-			SetDescription, 
-			DomainID<String>, 
-			CanonicalID
-{
+		extends ReferenceID<String>, SetName, SetDescription, DomainID<String>, CanonicalID {
+
 	boolean addNVConfigEntity(NVConfigEntity nvce);
 	
 	boolean deleteNVConfigEntity(NVConfigEntity nvce);
@@ -34,4 +25,5 @@ public interface DomainInfo
 	NVConfigEntity lookup(String byName);
 	
 	NVConfigEntity[] getAllNVConfigEntity();
+
 }

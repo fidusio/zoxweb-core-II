@@ -23,29 +23,26 @@ import org.zoxweb.shared.util.SetName;
 /**
  * The API service provider interface.
  * @author mzebib
- *
  */
 public interface APIServiceProvider<S>
 	extends SetDescription, 
 			SetName, 
-			CanonicalID
-{
+			CanonicalID {
+
 	/**
-	 * This method gets the store configuration parameters
+	 * Returns the data store configuration info.
 	 * @return APIConfigInfo
 	 */
 	public APIConfigInfo getAPIConfigInfo();
 	
 	/**
-	 * This method sets the store configuration parameters
+	 * Sets the data store configuration info.
 	 * @param configInfo object
 	 */
 	public void setAPIConfigInfo(APIConfigInfo configInfo);
-	
-	
 
-	/**
-	 * This method connects to the data store
+	/*
+	 * Connects to the data store
 	 * @return native connection 
 	 * @throws APIException in case of connection issues
 	 */
@@ -61,27 +58,26 @@ public interface APIServiceProvider<S>
 			throws APIException;
 	
 	/**
-	 * This method shuts down the data store.
+	 * Shuts down the data store.
 	 * @throws APIException in case of closure issue
 	 */
 	public void close() 
 			throws APIException;
 	
 	/**
-	 * This method checks if the store is active.
+	 * Checks if the store is active.
 	 * @return true if active
 	 */
 	public boolean isProviderActive();
-	
-	
+
 	/**
-	 * This method returns the exception handler.
+	 * Returns the exception handler.
 	 * @returnAPIExceptionHandler
 	 */
 	public APIExceptionHandler getAPIExceptionHandler();
 	
 	/**
-	 * This method sets the exception handler.
+	 * Sets the exception handler.
 	 * @param exceptionHandler object to map native exceptions to APIException
 	 */
 	public void setAPIExceptionHandler(APIExceptionHandler exceptionHandler);
@@ -92,16 +88,15 @@ public interface APIServiceProvider<S>
 	 * @return typed value
 	 */
 	public <T> T lookupProperty(GetName propertyName);
-	
-	
-	
+
 	/**
-	 * This method will return last time it was used or accessed
+	 * Returns last time it was used or accessed
 	 * @return time in millis last time accessed
 	 */
 	public long lastTimeAccessed();
+
 	/**
-	 * This method will return the delta between NOW and last time the object was used
+	 * Returns the delta between NOW and last time the object was used
 	 * @return time in millis for inactivity
 	 */
 	public long inactivityDuration();
@@ -110,9 +105,5 @@ public interface APIServiceProvider<S>
 	 * @return true if the current api instance is busy
 	 */
 	public boolean isBusy();
-	
-	
-	
-	
-	
+
 }

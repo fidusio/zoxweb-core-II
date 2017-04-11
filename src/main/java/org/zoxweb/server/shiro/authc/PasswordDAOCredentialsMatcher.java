@@ -21,60 +21,40 @@ import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.zoxweb.server.security.CryptoUtil;
 import org.zoxweb.shared.crypto.PasswordDAO;
 
-/**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
- */
 public class PasswordDAOCredentialsMatcher
-	implements CredentialsMatcher
-{
+	implements CredentialsMatcher {
 
 	/**
 	 * @see org.apache.shiro.authc.credential.CredentialsMatcher#doCredentialsMatch(org.apache.shiro.authc.AuthenticationToken, org.apache.shiro.authc.AuthenticationInfo)
 	 */
 	@Override
-	public boolean doCredentialsMatch(AuthenticationToken token, AuthenticationInfo info)
-	{
-		if(!token.getPrincipal().equals(info.getPrincipals().getPrimaryPrincipal()))
-		{
+	public boolean doCredentialsMatch(AuthenticationToken token, AuthenticationInfo info) {
+		if (!token.getPrincipal().equals(info.getPrincipals().getPrimaryPrincipal())) {
 			return false;
 		}
 		
-		try 
-		{
+		try {
 			
-			if (token instanceof DomainUsernamePasswordToken && ((DomainUsernamePasswordToken)token).isAutoAuthenticationEnabled())
-			{
+			if (token instanceof DomainUsernamePasswordToken && ((DomainUsernamePasswordToken)token).isAutoAuthenticationEnabled()) {
 				return true;
 			}
 			
 			PasswordDAO passwordDAO = (PasswordDAO) info.getCredentials();
 			String password = null;
 			
-			
-			if (token.getCredentials() instanceof char[])
-			{
+			if (token.getCredentials() instanceof char[]) {
 				password = new String ((char[])token.getCredentials());
-			}
-			else if (token.getCredentials() instanceof byte[])
-			{
+			} else if (token.getCredentials() instanceof byte[]) {
 				password = new String((byte[])token.getCredentials(), "UTF-8");
-			}
-			else if(token.getCredentials() instanceof String)
-			{
+			} else if(token.getCredentials() instanceof String) {
 				password = (String) token.getCredentials();
 			}
-			
 
 			return CryptoUtil.isPasswordValid(passwordDAO, password);
-		}
-		catch (Exception e )
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		
-		// TODO Auto-generated method stub
 		return false;
 	}
 

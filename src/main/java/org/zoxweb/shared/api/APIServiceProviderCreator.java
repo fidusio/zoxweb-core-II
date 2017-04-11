@@ -20,26 +20,24 @@ import org.zoxweb.shared.util.GetName;
 /**
  * The API service provider creator interface.
  * @author mzebib
- *
  */
 public interface APIServiceProviderCreator
-	extends GetName
-{
+		extends GetName {
+
 	/**
-	 * This method creates empty configuration information parameters.
+	 * Creates empty configuration information parameters.
 	 * @return APIConfigInfo
 	 */
 	public APIConfigInfo createEmptyConfigInfo();
 	
 	/**
-	 * This method returns the exception handler.
+	 * Returns the exception handler.
 	 * @return APIExceptionHandler
 	 */
 	public APIExceptionHandler getExeptionHandler();
 	
 	/**
-	 * This method creates the API based on the configuration information
-	 * parameters.
+	 * Creates the API based on the configuration parameters.
 	 * @param dataStore 
 	 * @param apiConfig
 	 * @return APIServiceProvider
@@ -49,6 +47,7 @@ public interface APIServiceProviderCreator
 			throws APIException;
 	
 	/**
+     * Returns the API token manager.
 	 * @return the api token manager
 	 */
 	public APITokenManager getAPITokenManager();

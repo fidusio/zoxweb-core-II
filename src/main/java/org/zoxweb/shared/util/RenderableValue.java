@@ -15,12 +15,8 @@
  */
 package org.zoxweb.shared.util;
 
-/**
- * @author mzebib
- *
- */
-public interface RenderableValue<V> 
-{
+
+public interface RenderableValue<V> {
 	
 	public V toValue();
 

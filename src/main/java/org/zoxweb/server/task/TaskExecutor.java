@@ -17,8 +17,6 @@ package org.zoxweb.server.task;
 
 import java.util.EventListener;
 
-
-
 /**
  * This interface must be implemented by any class that uses the TaskProcessor
  * Object 
@@ -26,8 +24,8 @@ import java.util.EventListener;
  *
  */
 public interface TaskExecutor
-extends EventListener
-{
+		extends EventListener {
+
 	/**
 	 * This method is called by the TaskProcesser ExecutorThead to execute a task
 	 * This method must not throw any exception and in case it want to share an response
@@ -41,4 +39,5 @@ extends EventListener
 	 * @param event
 	 */
 	public void finishTask(TaskEvent event);
+
 }

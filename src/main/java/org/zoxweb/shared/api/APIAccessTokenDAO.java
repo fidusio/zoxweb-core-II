@@ -2,8 +2,6 @@ package org.zoxweb.shared.api;
 
 import java.util.Date;
 
-
-
 import org.zoxweb.shared.data.TimeStampDAO;
 import org.zoxweb.shared.security.SecurityConsts.OAuthParam;
 import org.zoxweb.shared.util.Const;
@@ -14,9 +12,6 @@ import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVConfigEntityLocal;
 import org.zoxweb.shared.util.SharedUtil;
 
-
-
-
 /**
  * This class defines the box token object used to set up and refresh
  * access tokens for Box API.
@@ -24,20 +19,11 @@ import org.zoxweb.shared.util.SharedUtil;
  *
  */
 @SuppressWarnings("serial")
-public class APIAccessTokenDAO 
-	extends TimeStampDAO
-{
+public class APIAccessTokenDAO
+		extends TimeStampDAO {
 
-	/**
-	 * This enum includes the following box token variables:
-	 * access token, expires in, restricted to, token type,
-	 * refresh token, and creation time.
-	 * @author mzebib
-	 *
-	 */
 	public enum Token
-	implements GetNVConfig
-	{
+			implements GetNVConfig {
 //		ACCESS_TOKEN(NVConfigManager.createNVConfig("access_token", "Access token", "AccessToken", false, true, false, String.class, FilterType.ENCRYPT)),
 		ACCESS_TOKEN(OAuthParam.ACCESS_TOKEN.getNVConfig()),
 //		EXPIRES_IN(NVConfigManager.createNVConfig("expires_in", "Expiration time value", "ExpiresIn", false, true, Integer.class)),
@@ -48,8 +34,7 @@ public class APIAccessTokenDAO
 		REFRESH_TOKEN(OAuthParam.REFRESH_TOKEN.getNVConfig()),
 //		TOKEN_TYPE(NVConfigManager.createNVConfig("token_type", "Token type", "TokenType", false, true, String.class)),
 		TOKEN_TYPE(OAuthParam.TOKEN_TYPE.getNVConfig()),
-		
-		
+
 		;
 		
 		private final NVConfig cType;
@@ -58,12 +43,9 @@ public class APIAccessTokenDAO
 			cType = c;
 		}
 		
-		public NVConfig getNVConfig() 
-		{
-			// TODO Auto-generated method stub
+		public NVConfig getNVConfig() {
 			return cType;
 		}
-	
 	}
 	
 	/**
@@ -87,103 +69,92 @@ public class APIAccessTokenDAO
 	/**
 	 * This is the default constructor.
 	 */
-	public APIAccessTokenDAO()
-	{
+	public APIAccessTokenDAO() {
 		super(NVC_API_ACCESS_TOKEN_DAO);
 	}
 	
-	protected APIAccessTokenDAO(NVConfigEntity nvce)
-	{
+	protected APIAccessTokenDAO(NVConfigEntity nvce) {
 		super(nvce);
 	}
-	
-	
+
 	/**
+	 * Returns the access token.
 	 * @return the access token.
 	 */
-	public String getAccessToken() 
-	{
+	public String getAccessToken() {
 		return lookupValue(Token.ACCESS_TOKEN);
 	}
 	
 	/**
-	 * This method sets the access token.
+	 * Sets the access token.
 	 * @param token
 	 */
-	public void setAccessToken(String token) 
-	{
+	public void setAccessToken(String token) {
 		setValue(Token.ACCESS_TOKEN, token);
 	}
 	
 	/**
-	 * @return the expiration value.
+	 * Returns the token expiration.
+	 * @return the expiration token.
 	 */
-	public int getTokenExpiration() 
-	{
+	public int getTokenExpiration() {
 		return lookupValue(Token.EXPIRES_IN);
 	}
 	
 	/**
-	 * This method sets the expiration value.
+	 * Sets the token expiration.
 	 * @param value
 	 */
-	public void setTokenExpiration(int value)
-	{
+	public void setTokenExpiration(int value) {
 		setValue(Token.EXPIRES_IN, value);
 		setLastTimeUpdated(System.currentTimeMillis());
 	}
-	
-	
-	
+
 	/**
+	 * Returns the refresh token.
 	 * @return the refresh token.
 	 */
-	public String getRefreshToken() 
-	{
+	public String getRefreshToken() {
 		return lookupValue(Token.REFRESH_TOKEN);
 	}
 	
 	/**
-	 * This method sets the refresh token.
-	 * @param refereshToken
+	 * Sets the refresh token.
+	 * @param refreshToken
 	 */
-	public void setRefreshToken(String refereshToken) 
-	{
-		setValue(Token.REFRESH_TOKEN, refereshToken);
+	public void setRefreshToken(String refreshToken) {
+		setValue(Token.REFRESH_TOKEN, refreshToken);
 	}
 	
 	/**
+	 * Returns the token type.
 	 * @return  the token type.
 	 */
-	public String getTokenType() 
-	{
+	public String getTokenType() {
 		return lookupValue(Token.TOKEN_TYPE);
 	}
 	
 	/**
-	 * This method sets the token type.
+	 * Sets the token type.
 	 * @param type
 	 */
-	public void setTokenType(String type) 
-	{
+	public void setTokenType(String type) {
 		setValue(Token.TOKEN_TYPE, type);
 	}
-		
-	
+
 	/**
-	 * This method sets the creation time.
+	 * Sets the creation time.
 	 * @param time
 	 */
-	public void setCreationTime(Date time)
-	{
+	public void setCreationTime(Date time) {
 		setCreationTime(time.getTime());
 	}
 
 	/**
-	 * @return checks if the token has expired.
+	 * Check if the token is expired.
+	 * @return
 	 */
-	public boolean isTokenExpired()
-	{
+	public boolean isTokenExpired() {
 //		long expiration = getTokenExpiration();
 //		Const.TimeInMillis tim = getExpirationTimeUnit();
 //		if (tim == null)
@@ -196,16 +167,15 @@ public class APIAccessTokenDAO
 		
 		return (millisToExpire() < 0); 
 	}
-	
-	
-	public long millisToExpire()
-	{
+
+	public long millisToExpire() {
 		long expiration = getTokenExpiration();
 		Const.TimeInMillis tim = getExpirationTimeUnit();
-		if (tim == null)
-		{
+
+		if (tim == null) {
 			tim = Const.TimeInMillis.SECOND;
 		}
+
 		// zero or negative value token does not expire
 //		if (expiration <= 0)
 //			return Const.TimeInMillis.WEEK.MILLIS;
@@ -213,13 +183,12 @@ public class APIAccessTokenDAO
 		return ((getLastTimeUpdated() + expiration*tim.MILLIS) - System.currentTimeMillis()); 
 	}
 	
-	public TimeInMillis getExpirationTimeUnit()
-	{
+	public TimeInMillis getExpirationTimeUnit() {
 		return lookupValue(Token.EXPIRATION_UNIT);
 	}
 	
-	public void setExpirationTimeUnit(TimeInMillis unit)
-	{
+	public void setExpirationTimeUnit(TimeInMillis unit) {
 		setValue(Token.EXPIRATION_UNIT, unit);
 	}
+
 }

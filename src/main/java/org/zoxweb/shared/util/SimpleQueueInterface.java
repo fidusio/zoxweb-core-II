@@ -20,8 +20,8 @@ package org.zoxweb.shared.util;
  * @param <O> 
  */
 
-public interface SimpleQueueInterface<O>
-{
+public interface SimpleQueueInterface<O> {
+
 	/**
 	 * Contract to clear the queue content.
 	 */
@@ -73,4 +73,5 @@ public interface SimpleQueueInterface<O>
 	 * @return true if contained
 	 */
 	public boolean contains(O o);
-} 
+
+}

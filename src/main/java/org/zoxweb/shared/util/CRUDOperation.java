@@ -18,15 +18,15 @@ package org.zoxweb.shared.util;
 /**
  * The CRUD operation interface.
  * @author mzebib
- *
  * @param <V>
  */
-public interface CRUDOperation<V>
-{
+public interface CRUDOperation<V> {
+
 	/**
 	 * Applies CRUD to given variable.
 	 * @param crud operation 
 	 * @param v value to be applied to
 	 */
-	public void applyCRUD(CRUD crud, V v);	
+	public void applyCRUD(CRUD crud, V v);
+
 }

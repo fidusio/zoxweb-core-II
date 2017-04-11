@@ -27,69 +27,42 @@ import org.zoxweb.shared.util.Appointment;
 import org.zoxweb.shared.util.AppointmentDefault;
 
 
-/**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
- */
 public class TaskSchedulerProcessor
-implements Runnable, DaemonController
-{
-	
-	
+		implements Runnable, DaemonController {
+
 	public final class TaskSchedulerAppointment
-		implements Appointment
-	{
+			implements Appointment {
+
 		private Appointment appointment;
 		private TaskEvent taskEvent;
 
-		
-		private TaskSchedulerAppointment(Appointment ts, TaskEvent te)
-		{
+		private TaskSchedulerAppointment(Appointment ts, TaskEvent te) {
 			SharedUtil.checkIfNulls("TaskScheduler can't be null", ts);
 			appointment = ts;
 			this.taskEvent = te;
 		}
 
-		/**
-		 * @see org.zoxweb.shared.util.Appointment#getDelayInMillis()
-		 */
 		@Override
-		public long getDelayInMillis() 
-		{
-
+		public long getDelayInMillis() {
 			return appointment.getDelayInMillis();
 		}
 
-		/**
-		 * @see org.zoxweb.shared.util.Appointment#setDelayInMillis(long)
-		 */
 		@Override
-		public void setDelayInMillis(long delayInMillis)
-		{	
-			
+		public void setDelayInMillis(long delayInMillis) {
 			cancel();
 			appointment.setDelayInMillis(delayInMillis);
 			queue(this);
 		}
 
-		/**
-		 * @see org.zoxweb.shared.util.Appointment#getExpirationInMillis()
-		 */
 		@Override
-		public long getExpirationInMillis() 
-		{
+		public long getExpirationInMillis() {
 			return appointment.getExpirationInMillis();
 		}
 
-		/**
-		 * @see org.zoxweb.shared.util.Appointment#cancel()
-		 */
 		@Override
-		public boolean cancel()
-		{
+		public boolean cancel() {
 			return remove(this);
 		}
-		
 	}
 	
 	private TaskProcessor taskProcessor = null;
@@ -98,118 +71,83 @@ implements Runnable, DaemonController
 	private static final AtomicLong TSP_COUNTER = new AtomicLong(0);
 	private ConcurrentSkipListSet<TaskSchedulerAppointment> queue = null;
 	
-	public TaskSchedulerProcessor()
-	{
+	public TaskSchedulerProcessor() {
 		this( Appointment.EQUAL_COMPARATOR, null);
 	}
-	
 
-	
-	public TaskSchedulerProcessor(TaskProcessor tp)
-	{
+	public TaskSchedulerProcessor(TaskProcessor tp) {
 		this(Appointment.EQUAL_COMPARATOR, tp);
 	}
-	
-	
-	private TaskSchedulerProcessor(Comparator<Appointment> tsc, TaskProcessor tp)
-	{
+
+	private TaskSchedulerProcessor(Comparator<Appointment> tsc, TaskProcessor tp) {
 		SharedUtil.checkIfNulls("TaskSchedulerComparator can't be null", tsc);
 		queue =  new ConcurrentSkipListSet<TaskSchedulerAppointment>( tsc);
 		taskProcessor = tp;	
 		new Thread(this, "TSP-" + TSP_COUNTER.incrementAndGet()).start();
 	}
 
-	
-	
-	
-	
-	
-	public void close()
-	{
-		// TODO Auto-generated method stub
-		if (live)
-		{
-			synchronized(this)
-			{
+	public void close() {
+		if (live) {
+			synchronized(this) {
 				// check to avoid double penetration
-				if (live)
-				{
+				if (live) {
 					live = false;
 					notify();
 				}
 			}
-			
-			synchronized(queue)
-			{
+
+			synchronized(queue) {
 				queue.notify();
 			}
 		}
 	}
 
-	/**
-	 * @see org.zoxweb.shared.util.DaemonController#isClosed()
-	 */
 	@Override
-	public boolean isClosed()
-	{
-		// TODO Auto-generated method stub
+	public boolean isClosed() {
 		return !live;
 	}
 	
-	public TaskSchedulerAppointment queue(Object source,  Appointment ts, TaskExecutor te, Object ...params)
-	{
+	public TaskSchedulerAppointment queue(Object source,  Appointment ts, TaskExecutor te, Object... params) {
 		TaskEvent tEvent = new TaskEvent(source, te, params);
-		if(ts == null)
-		{
+
+		if (ts == null) {
 			ts = new AppointmentDefault();
 		}
+
 		return queue(new TaskSchedulerAppointment( ts, tEvent));
 	}
-	
-	
-	
-	public TaskSchedulerAppointment queue(Appointment ts, TaskEvent te)
-	{	
-		if(ts == null)
-		{
+
+	public TaskSchedulerAppointment queue(Appointment ts, TaskEvent te) {
+		if (ts == null) {
 			ts = new AppointmentDefault();
 		}
+
 		return queue(new TaskSchedulerAppointment( ts, te));
 	}
-	
-	
-	private TaskSchedulerAppointment queue(TaskSchedulerAppointment te)
-	{
-		if (!live)
-		{
+
+	private TaskSchedulerAppointment queue(TaskSchedulerAppointment te) {
+		if (!live) {
 			throw new IllegalArgumentException("TaskSchedulerProcessor is dead");
 		}
 		
-		synchronized(queue)
-		{
-			while(!queue.add(te))
-			{
-			
+		synchronized(queue) {
+			while(!queue.add(te)) {
 				te.appointment.setDelayInMillis(te.appointment.getDelayInMillis()+1);
-				
 			}
+
 			queue.notify();
 		}
 		
 		return te;
-		
 	}
 	
-	private TaskSchedulerAppointment dequeue()
-	{
-		synchronized( queue)
-		{
+	private TaskSchedulerAppointment dequeue() {
+		synchronized( queue) {
 			return queue.pollFirst();
 		}
 	}
 	
-	public boolean remove(TaskSchedulerAppointment tsa)
-	{
+	public boolean remove(TaskSchedulerAppointment tsa) {
 		return queue.remove(tsa);
 	}
 
@@ -217,76 +155,52 @@ implements Runnable, DaemonController
 	 * @see java.lang.Runnable#run()
 	 */
 	@Override
-	public void run() 
-	{
-		while(live)
-		{
+	public void run() {
+		while(live) {
 			long timeToWait = 0;
 			
-			do
-			{
+			do {
 				TaskSchedulerAppointment tSchedulerEvent = null;
-				synchronized( queue)
-				{
+
+				synchronized( queue) {
 					long delay = waitTime();
-					if ( delay <= 0)
-					{
+
+					if (delay <= 0) {
 						tSchedulerEvent = dequeue();
-					}
-					else
-					{
+					} else {
 						timeToWait = delay;
 					}	
 				}
 				
-				if ( tSchedulerEvent != null)
-				{
-					if (taskProcessor != null)
-					{
+				if (tSchedulerEvent != null) {
+					if (taskProcessor != null) {
 						taskProcessor.queueTask(tSchedulerEvent.taskEvent);
-					}
-					else 
-					{
+					} else {
 						// we need to execute task locally
-						try
-						{
+						try {
 							tSchedulerEvent.taskEvent.getTaskExecutor().executeTask(tSchedulerEvent.taskEvent);
-						}
-						catch( Throwable e)
-						{
+						} catch( Throwable e) {
 							e.printStackTrace();
 						}
 						
-						try
-						{
+						try {
 							tSchedulerEvent.taskEvent.getTaskExecutor().finishTask(tSchedulerEvent.taskEvent);
-						}
-						catch( Throwable e)
-						{
+						} catch( Throwable e) {
 							e.printStackTrace();
 						}
 					}
 				}
-				
-				
-			}while(timeToWait == 0);
-			
-			
-			
+
+			} while(timeToWait == 0);
+
 			// wait time for the wakeup
-			synchronized(queue)
-			{
+			synchronized(queue) {
 				timeToWait = waitTime();
-				if ( live && timeToWait > 0)
-				{
+				if (live && timeToWait > 0) {
 					
-					try 
-					{
+					try {
 						queue.wait(timeToWait);
-					}
-					catch (InterruptedException e)
-					{
-						// TODO Auto-generated catch block
+					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
 				}
@@ -294,25 +208,23 @@ implements Runnable, DaemonController
 		}
 	}
 	
-	public int pendingTasks()
-	{
-		//synchronized( queue)
+	public int pendingTasks() {
+		//synchronized(queue)
 		{
 			return queue.size();
 		}
 	}
 	
-	private long waitTime()
-	{
+	private long waitTime() {
 		long delay  = DEFAULT_TIMEOUT;
-		try
-		{
+
+		try {
 			TaskSchedulerAppointment tSchedulerEvent = queue.first();
 			delay = tSchedulerEvent.getExpirationInMillis() - System.currentTimeMillis();
+		} catch(NoSuchElementException e) {
+
 		}
-		catch(NoSuchElementException e)
-		{
-		}
+
 		return delay;
 	}
 	

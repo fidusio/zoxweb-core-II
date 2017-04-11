@@ -18,25 +18,21 @@ package org.zoxweb.shared.net;
 import java.io.IOException;
 import java.util.HashSet;
 
-/**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
- */
-public interface IPMapStore 
-{
+public interface IPMapStore {
 	
 	public boolean addIPMap(String ipAddress, String macAddress);
+
 	public String lookupMapFromIPAddress(String ipAddress) throws IOException;
+
 	public boolean removeIPAddress(String ipAddress);
 	
-	
 	public void clear();
+
 	public void addToIgnoreFilter(String ipOrMac);
-	
+
 	public void removeFromIgnoreFilter(String ipOrMac);
 	
 	public HashSet<String> getIgnoreFilter();
-	
 	
 	public int size();
 	

@@ -17,66 +17,37 @@ package org.zoxweb.shared.filters;
 
 import org.zoxweb.shared.util.SharedUtil;
 
-/**
- * 
- * @author mzebib
- *
- */
 @SuppressWarnings("serial")
-public class ReplacementFilter implements ValueFilter<String, String> 
-{
+public class ReplacementFilter
+		implements ValueFilter<String, String> {
 
 	private String replace, replacement;
-	
-	/**
-	 * 
-	 * @param toReplace
-	 * @param replacement
-	 */
-	public ReplacementFilter(String toReplace, String replacement)
-	{
+
+	public ReplacementFilter(String toReplace, String replacement) {
 		SharedUtil.checkIfNulls("params can't be null", toReplace, replacement);
 		this.replace = toReplace;
 		this.replacement = replacement;
 	}
-	
-	/**
-	 * 
-	 * @param v
-	 */
+
 	@Override
 	public String validate(String v) throws NullPointerException,
-			IllegalArgumentException 
-	{
-		
-		
-		if ( v != null)
-		{
+			IllegalArgumentException {
+
+		if (v != null) {
 			v = v.replace(replace, replacement);
 		}
-		
-		
+
 		return v;
 	}
 
-	/**
-	 * 
-	 * @param v
-	 */
 	@Override
-	public boolean isValid(String v) 
-	{
-		// TODO Auto-generated method stub
+	public boolean isValid(String v) {
 		return true;
 	}
 
-	/**
-	 * 
-	 */
+
 	@Override
-	public String toCanonicalID() 
-	{
-		// TODO Auto-generated method stub
+	public String toCanonicalID() {
 		return "static:ValueFilter:ReplacementFilter";
 	}
 

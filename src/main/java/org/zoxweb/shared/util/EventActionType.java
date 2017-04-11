@@ -16,12 +16,12 @@
 package org.zoxweb.shared.util;
 
 /**
- * This enum contains the actions: add, update, delete, and read that can be
+ * Contains the following actions: add, update, delete, and read that can be
  * used in event notification, database action, or any context where it
  * is applicable.
  */
-public enum EventActionType 
-{
+public enum EventActionType {
+
 	ADD,
 	UPDATE,
 	DELETE,

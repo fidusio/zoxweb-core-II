@@ -17,14 +17,14 @@ package org.zoxweb.shared.util;
 
 /**
  * The set hidden property interface.
- * 
  */
 public interface SetHidden
-	extends IsHidden
-{
+        extends IsHidden {
+
 	/**
 	 * Set hidden property.
 	 * @param hidden
 	 */
 	void setHidden(boolean hidden);
+
 }

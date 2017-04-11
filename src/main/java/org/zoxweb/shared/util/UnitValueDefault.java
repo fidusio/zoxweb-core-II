@@ -17,12 +17,8 @@ package org.zoxweb.shared.util;
 
 import org.zoxweb.shared.util.Const.Unit;
 
-/**
- * @author mzebib
- *
- */
 public class UnitValueDefault<V>
-	implements UnitValue<V> {
+		implements UnitValue<V> {
 
 	private V value;
 	private Unit unit;

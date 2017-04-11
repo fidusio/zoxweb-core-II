@@ -25,83 +25,58 @@ import org.zoxweb.shared.util.Appointment;
 import org.zoxweb.shared.util.AppointmentDefault;
 import org.zoxweb.shared.util.Const;
 
-/**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
- */
 public class VMMonitorTask
-	implements TaskExecutor
-{
+		implements TaskExecutor {
 	
 	private Logger log;
 	private Appointment appointment;
 	private TaskSchedulerProcessor tsp;
 	
 	
-	private Const.SizeInBytes sib = Const.SizeInBytes.B;
+	private Const.SizeInBytes sizeInBytes = Const.SizeInBytes.B;
 	
-	public VMMonitorTask()
-	{
+	public VMMonitorTask() {
 		
 	}
 	
-	public VMMonitorTask(Const.SizeInBytes sib)
-	{
-		if ( sib != null)
-		{
-			this.sib = sib;
+	public VMMonitorTask(Const.SizeInBytes sizeInBytes) {
+		if (sizeInBytes != null) {
+			this.sizeInBytes = sizeInBytes;
 		}
 	}
 
-	/**
-	 * @see org.zoxweb.server.task.TaskExecutor#executeTask(org.zoxweb.server.task.TaskEvent)
-	 */
 	@Override
-	public void executeTask(TaskEvent event) 
-	{
+	public void executeTask(TaskEvent event) {
 		Object[] params = event.getTaskExecutorParameters();
-		if(params != null)
-		{
+
+		if (params != null) {
 			int i = 0;
-			if (params.length > i)
-			{
+
+			if (params.length > i) {
 				log = (Logger) params[i++];
-				if (params.length > i)
-				{
+				if (params.length > i) {
 					appointment = (Appointment) params[i++];
-					if (params.length > i)
-					{
+					if (params.length > i) {
 						tsp = (TaskSchedulerProcessor) params[i++];
 					}
 				}
 			}
 		}
 		
-		if (log != null)
-		{
+		if (log != null) {
 			VMInfoDAO vmid = RuntimeUtil.vmSnapshot();
 			
-			log.info("Values in:" + sib + ", Used mem:"+ (vmid.getUsedMemory()/sib.LENGTH) + ", Max-mem:" + (vmid.getMaxMemory()/sib.LENGTH) + 
-					 ", Free-mem:"+ (vmid.getFreeMemory()/sib.LENGTH) + ", Total-mem:" + (vmid.getTotalMemory()/sib.LENGTH));
+			log.info("Values in:" + sizeInBytes + ", Used mem:"+ (vmid.getUsedMemory()/sizeInBytes.LENGTH) + ", Max-mem:" + (vmid.getMaxMemory()/sizeInBytes.LENGTH) +
+					 ", Free-mem:"+ (vmid.getFreeMemory()/sizeInBytes.LENGTH) + ", Total-mem:" + (vmid.getTotalMemory()/sizeInBytes.LENGTH));
 		}
-		
-		
 	}
 
-	/**
-	 * @see org.zoxweb.server.task.TaskExecutor#finishTask(org.zoxweb.server.task.TaskEvent)
-	 */
 	@Override
-	public void finishTask(TaskEvent event)
-	{
-		// TODO Auto-generated method stub
-		if(tsp != null && appointment != null)
-		{
+	public void finishTask(TaskEvent event) {
+		if (tsp != null && appointment != null) {
 			Appointment apt = new AppointmentDefault(appointment.getDelayInMillis());
 			tsp.queue(this, apt, this, log, apt, tsp);
 		}
 	}
-
-	
 
 }

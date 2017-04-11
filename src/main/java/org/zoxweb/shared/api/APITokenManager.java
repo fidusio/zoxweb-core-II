@@ -24,13 +24,11 @@ import org.zoxweb.shared.util.NVPair;
 
 /**
  * This interface must be implemented by APIProvider that requires and OAUTH2 token access
- * 
  */
-public interface APITokenManager 
-{
+public interface APITokenManager {
 	
-	public APITokenDAO activateToken(APIDataStore<?> dataStore, String userID, APIConfigInfo apiToken, NVPair ...params)
-		throws NullPointerException, IllegalArgumentException, IOException, AccessException, APIException;
+	public APITokenDAO activateToken(APIDataStore<?> dataStore, String userID, APIConfigInfo apiToken, NVPair... params)
+			throws NullPointerException, IllegalArgumentException, IOException, AccessException, APIException;
 	
 	
 	public APITokenDAO activateToken(APIDataStore<?> dataStore, ArrayValues<GetNameValue<String>> params)

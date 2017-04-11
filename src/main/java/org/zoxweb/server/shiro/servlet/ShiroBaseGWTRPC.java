@@ -34,38 +34,29 @@ import com.google.gwt.user.server.rpc.RPC;
 import com.google.gwt.user.server.rpc.RPCRequest;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-
 @SuppressWarnings("serial")
-abstract public class ShiroBaseGWTRPC 
-	extends RemoteServiceServlet 
-{
+public abstract class ShiroBaseGWTRPC
+	extends RemoteServiceServlet {
 	
 	private static final transient Logger log = Logger.getLogger(Const.LOGGER_NAME);
-	
-	
-	final private Object localDelegate;
-	
-	
-	
-	public ShiroBaseGWTRPC()
-	{
+
+	private final Object localDelegate;
+
+	public ShiroBaseGWTRPC() {
 		super();
 		localDelegate = this;
-		
 	}
 	
-	public ShiroBaseGWTRPC( Object delegate)
-	{
+	public ShiroBaseGWTRPC( Object delegate) {
 		super( delegate);
 		localDelegate = delegate;
 	}
+
+	protected abstract boolean isSecurityCheckRequired(Method method, Object[] parameters);
+
+	protected abstract boolean isSecureCommnunicationRequired(Method method, Object[] parameters);
 	
-	abstract protected boolean isSecurityCheckRequired(Method method, Object[] parameters);
-	
-	abstract protected boolean isSecureCommnunicationRequired(Method method, Object[] parameters);
-	
-	public static String toString(Method method,  HttpServletRequest req)
-	{
+	public static String toString(Method method,  HttpServletRequest req) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("URL:" + req.getRequestURL() + "\n");
 		sb.append("URI:" + req.getRequestURI() + "\n");
@@ -77,64 +68,52 @@ abstract public class ShiroBaseGWTRPC
 	}
 	
 	protected void checkSecurity(Object delgate, Method method, Object[] parameters)
-		throws AccessException
-	{
+		throws AccessException {
 		//log.info( toString(method, getServletRequest()));
 		
 		//log.info( this.getClass().getName() + "#" + method.getName());
 		// check if secure socket is required
-		if ( isSecureCommnunicationRequired( method, parameters))
-		{
+		if (isSecureCommnunicationRequired( method, parameters)) {
 			HttpServletRequest req = getThreadLocalRequest();
-			if ( !req.isSecure())
-			{
-				
+			if (!req.isSecure()) {
 				throw new AccessException("Connection not secure", "");
 			}
 		}
 		
 		// check sercurity permission
-		if (isSecurityCheckRequired(  method, parameters))
-		{
+		if (isSecurityCheckRequired(  method, parameters)) {
 			Subject subject = SecurityUtils.getSubject();
-			if ( !subject.isAuthenticated())
-			{
+			if (!subject.isAuthenticated()) {
 				// the current user is not authenticated
 				String url = (String) subject.getSession().getAttribute( SessionInfoDAO.LOGOUT_URL);
 				log.info("Subject NOT AUTHENICATED redirect:" + url);
 				throw new AccessException(subject + " not authenticated", url, true);
 			}
+
 			// check the resource access
 		}
 	}
 	
-	public String processCall(String payload) throws SerializationException 
-	{
+	public String processCall(String payload) throws SerializationException {
 	    // First, check for possible XSRF situation
 	    checkPermutationStrongName();
 	   
-	    try 
-	    {
+	    try {
 	      RPCRequest rpcRequest = RPC.decodeRequest(payload, localDelegate.getClass(), this);
 	      onAfterRequestDeserialized(rpcRequest);
 	      
 	      
 	      // invoke the security check here at this level
 	      
-	      try
-	      {
+	      try {
 	    	  checkSecurity( localDelegate, rpcRequest.getMethod(), rpcRequest.getParameters());
-	      }
-	      catch( AccessException e)
-	      {
+	      } catch( AccessException e) {
 	    	  return RPC.encodeResponseForFailure( rpcRequest.getMethod(),
 	    			  							   e,
 	    			  							   rpcRequest.getSerializationPolicy(),
 	    			  							   rpcRequest.getFlags());
 	      }
-	      
-	      
-	     
+
 	    	  return RPC.invokeAndEncodeResponse( localDelegate,
 	    			  							  rpcRequest.getMethod(),
 	    			  							  rpcRequest.getParameters(),
@@ -153,16 +132,13 @@ abstract public class ShiroBaseGWTRPC
 	      return RPC.encodeResponseForFailure(null, tokenException);
 	    }
 	  }
-	
-	
-	
-	public HttpServletRequest getServletRequest()
-	{
+
+	public HttpServletRequest getServletRequest() {
 		return getThreadLocalRequest();
 	}
 	
-	public HttpServletResponse getServletResponse()
-	{
+	public HttpServletResponse getServletResponse() {
 		return getThreadLocalResponse();
 	}
+
 }

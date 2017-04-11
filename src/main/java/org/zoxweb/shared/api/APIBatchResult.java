@@ -27,18 +27,13 @@ import org.zoxweb.shared.util.NVConfigManager;
 import org.zoxweb.shared.util.NVEntity;
 import org.zoxweb.shared.util.SharedUtil;
 
-/**
- * @author mzebib
- *
- */
 @SuppressWarnings("serial")
 public class APIBatchResult<V extends NVEntity>
-	extends SetNameDescriptionDAO
-{
+		extends SetNameDescriptionDAO {
 
 	public enum Params
-		implements GetNVConfig
-	{
+            implements GetNVConfig {
+
 		REPORT_ID(NVConfigManager.createNVConfig("report_id", "The report ID.", "ReportID", true, true, String.class)),
 		TOTAL_MATCHES(NVConfigManager.createNVConfig("total_matches", "The total number of matches.", "TotalMatches", true, true, Integer.class)),
 		START_RANGE(NVConfigManager.createNVConfig("start range", "The starting index of range.", "StartRange", true, true, Integer.class)),
@@ -47,18 +42,15 @@ public class APIBatchResult<V extends NVEntity>
 		
 		;
 		
-		private final NVConfig cType;
+		private final NVConfig nvc;
 		
-		Params(NVConfig c)
-		{
-			cType = c;
+		Params(NVConfig nvc) {
+            this.nvc = nvc;
 		}
 		
-		public NVConfig getNVConfig() 
-		{
-			return cType;
+		public NVConfig getNVConfig() {
+			return nvc;
 		}
-	
 	}
 
 	public static final NVConfigEntity NVC_API_BATCH_RESULT_DAO = new NVConfigEntityLocal("api_batch_result_dao",
@@ -77,16 +69,15 @@ public class APIBatchResult<V extends NVEntity>
 	/**
 	 * The default constructor.
 	 */
-	public APIBatchResult()
-	{
+	public APIBatchResult() {
 		super(NVC_API_BATCH_RESULT_DAO);
 	}
 	
 	/**
+     * Returns the report ID.
 	 * @return the report ID.
 	 */
-	public String getReportID()
-	{
+	public String getReportID() {
 		return lookupValue(Params.REPORT_ID);
 	}
 	
@@ -94,16 +85,14 @@ public class APIBatchResult<V extends NVEntity>
 	 * Sets the report ID.
 	 * @param id
 	 */
-	public void setReportID(String id)
-	{
+	public void setReportID(String id) {
 		setValue(Params.REPORT_ID, id);
 	}
 	
 	/**
 	 * @return the total number of matches in APIReportResults.
 	 */
-	public int getTotalMatches()
-	{
+	public int getTotalMatches() {
 		return lookupValue(Params.TOTAL_MATCHES);
 	}
 	
@@ -111,24 +100,23 @@ public class APIBatchResult<V extends NVEntity>
 	 * Sets the total number of matches in APIReportResults.
 	 * @param totalMatches
 	 */
-	public void setTotalMatches(int totalMatches)
-	{
+	public void setTotalMatches(int totalMatches) {
 		setValue(Params.TOTAL_MATCHES, totalMatches);
 	}
 
 	/**
+     * Returns the start range.
 	 * @return the start range.
 	 */
-	public int getStartRange()
-	{
+	public int getStartRange() {
 		return lookupValue(Params.START_RANGE);
 	}
 	
 	/**
+     * Returns the end range.
 	 * @return the end range.
 	 */
-	public int getEndRange()
-	{
+	public int getEndRange() {
 		return lookupValue(Params.END_RANGE);
 	}
 	
@@ -137,13 +125,13 @@ public class APIBatchResult<V extends NVEntity>
 	 * @param startRange
 	 * @param endRange
 	 */
-	public void setRange(int startRange, int endRange)
-	{
+	public void setRange(int startRange, int endRange) {
 		setValue(Params.START_RANGE, startRange);
 		setValue(Params.END_RANGE, endRange);
 	}
 	
 	/**
+     * Returns the batch.
 	 * @return the batch list.
 	 */
 	public List<NVEntity> getBatch()
@@ -161,11 +149,10 @@ public class APIBatchResult<V extends NVEntity>
 	}
 	
 	/**
-
-	 * @return true if last batch.
+     * Checks if last batch.
+     * @return true if last batch.
 	 */
-	public boolean isLastBatch()
-	{
+	public boolean isLastBatch() {
 		return (getTotalMatches() == getEndRange());
 	}
 

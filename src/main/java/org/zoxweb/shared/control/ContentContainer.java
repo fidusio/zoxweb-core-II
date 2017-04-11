@@ -16,12 +16,21 @@
 package org.zoxweb.shared.control;
 
 /**
- * @author mzebib
- *
+ * The content container interface.
+ * @param <T>
  */
-public interface ContentContainer<T>
-{	
+public interface ContentContainer<T> {
+
+    /**
+     * Returns the content.
+     * @return
+     */
 	public T getContent();
-	
+
+    /**
+     * Sets the content.
+     * @param content
+     */
 	public void setContent(T content);
+
 }

@@ -18,66 +18,61 @@ import org.zoxweb.shared.util.RemoteID;
 /**
  * The API transaction information interface.
  * @author mzebib
- *
  */
 public interface APITransactionInfo
-	extends RemoteID<String>
-{
+        extends RemoteID<String> {
+
 	/**
-	 * This method returns the message.
+	 * Returns the message.
 	 * @return APINotificationMessage
 	 */
 	public APINotificationMessage getMessage();
 	
 	/**
-	 * This method sets the message.
+	 * Sets the message.
 	 * @param message
 	 */
 	public void setMessage(APINotificationMessage message);
 	
 	
 	/**
-	 * This method returns the delivery status.
+	 * Returns the delivery status.
 	 * @return APINotificationStatus
 	 */
 	public APINotificationStatus getDeliverStatus();
 	
 	/**
-	 * This method sets the delivery status.
+	 * Sets the delivery status.
 	 * @param status
 	 */
 	public void setDeliverStatus(APINotificationStatus status);
-	
-	
+
 	/**
-	 * This method returns the updated time stamp.
+	 * Returns the updated time stamp.
 	 * @return the last itme updated in miilis
 	 */
 	public long getUpdateTimeStamp();
 	
 	/**
-	 * This method sets the updated time stamp.
+	 * Sets the updated time stamp.
 	 * @param ts
 	 * @throws IllegalArgumentException
 	 */
 	public void setUpdateTimeStamp(long ts) 
 			throws IllegalArgumentException;
-	
-	
+
 	/**
-	 * This method returns the created time stamp.
+	 * Returns the created time stamp.
 	 * @return creation time stamp in millis.
 	 */
 	public long getCreateTimeStamp();
 	
 	/**
-	 * This method sets the created time stamp.
+	 * Sets the created time stamp.
 	 * @param ts
 	 * @throws IllegalArgumentException
 	 */
-	public void setCreateTimeStamp(long ts) 
-			throws IllegalArgumentException;
-	
-	
-	
+	public void setCreateTimeStamp(long ts)
+            throws IllegalArgumentException;
+
 }

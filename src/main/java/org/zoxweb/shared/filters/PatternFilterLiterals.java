@@ -18,11 +18,10 @@ package org.zoxweb.shared.filters;
 /**
  * This class is used to filter pattern literals.
  * @author mzebib
- *
  */
 @SuppressWarnings("serial")
-public class PatternFilterLiterals implements ValueFilter<String, String>
-{
+public class PatternFilterLiterals implements ValueFilter<String, String> {
+
 	public static final String[][] PATTERN_LITERALS = {
 		{"[", "\\["},
 		{"]", "\\]"},
@@ -39,8 +38,7 @@ public class PatternFilterLiterals implements ValueFilter<String, String>
 		//{"/", "\\/"},
 		
 		};
-	
-	
+
 	/**
 	 * This variable declares that only one instance of this class can be 
 	 * created.
@@ -51,29 +49,22 @@ public class PatternFilterLiterals implements ValueFilter<String, String>
 	 * The default constructor is declared private to prevent
 	 * outside instantiation of this class.
 	 */
-	private PatternFilterLiterals()
-	{
+	private PatternFilterLiterals() {
 		
 	}
-	
-	/**
-	 * This method returns a string representation of this class.
-	 */
+
 	@Override
-	public String toCanonicalID() 
-	{
+	public String toCanonicalID() {
 		return null;
 	}
 
 	/**
-	 * This method validates the input expression based on the pattern.
+	 * Validates the input expression based on the pattern.
 	 * @param in
 	 */
 	@Override
-	public String validate(String in) throws NullPointerException, IllegalArgumentException 
-	{
-		for(String[] pattern : PATTERN_LITERALS)
-		{
+	public String validate(String in) throws NullPointerException, IllegalArgumentException {
+		for (String[] pattern : PATTERN_LITERALS) {
 			in = in.replace(pattern[0], pattern[1]);
 		}
 	
@@ -81,38 +72,30 @@ public class PatternFilterLiterals implements ValueFilter<String, String>
 	}
 
 	/**
-	 * This method check if the input expression is valid.
+	 * Checks if the given input expression is valid.
 	 * @param in
 	 */
 	@Override
-	public boolean isValid(String in) 
-	{
+	public boolean isValid(String in) {
 		return true;
 	}
 
 	/**
-	 * This method validates the input expression with the specified characters to be 
+	 * Validates the input expression with the specified characters to be
 	 * excluded from the literal pattern.
 	 * @param in
 	 * @param exclusionList
 	 * @return validated string
 	 */
-	public String validateWithExclusion(String in, String ... exclusionList)
-	{
-		for(String[] pattern : PATTERN_LITERALS)
-		{
-			if(exclusionList != null)
-			{
-				for(String exclude : exclusionList)
-				{
-					if(!pattern[0].equals(exclude))
-					{
+	public String validateWithExclusion(String in, String... exclusionList) {
+		for (String[] pattern : PATTERN_LITERALS) {
+			if (exclusionList != null) {
+				for (String exclude : exclusionList) {
+					if (!pattern[0].equals(exclude)) {
 						in = in.replace(pattern[0], pattern[1]);
 					}
 				}
-				
 			}
-		
 		}
 		
 		return in;

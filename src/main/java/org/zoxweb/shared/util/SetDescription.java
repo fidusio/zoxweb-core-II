@@ -18,14 +18,14 @@ package org.zoxweb.shared.util;
 /**
  * The set description interface.
  * @author mnael
- *
  */
-public interface SetDescription 
-	extends GetDescription 
-{
+public interface SetDescription
+		extends GetDescription {
+
 	/**
 	 * Set description property.
 	 * @param str
 	 */
 	public void setDescription(String str);
+
 }

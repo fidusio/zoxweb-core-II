@@ -19,57 +19,40 @@ import java.math.BigDecimal;
 
 import org.zoxweb.shared.util.SharedUtil;
 
-/**
- * @author mzebib
- *
- */
 @SuppressWarnings("serial")
-public class BigDecimalFilter 
-	implements ValueFilter<String, BigDecimal>
-{
+public class BigDecimalFilter
+		implements ValueFilter<String, BigDecimal> {
 
 	public static final BigDecimalFilter SINGLETON = new BigDecimalFilter();
 	
-	private BigDecimalFilter()
-	{
+	private BigDecimalFilter() {
 		
 	}
-	
 
 	@Override
-	public String toCanonicalID() 
-	{
+	public String toCanonicalID() {
 		return BigDecimalFilter.class.getName();
 	}
 
-
 	@Override
 	public BigDecimal validate(String in) 
-			throws NullPointerException, IllegalArgumentException
-	{
+			throws NullPointerException, IllegalArgumentException {
+
 		SharedUtil.checkIfNulls("Input empty or null.", in);
 		
-		try
-		{
+		try {
 			return new BigDecimal(in);
-		}
-		catch (NumberFormatException e)
-		{
+		} catch (NumberFormatException e) {
 			throw new IllegalArgumentException(e.getMessage());
 		}
 	}
 
-
 	@Override
-	public boolean isValid(String in) 
-	{
-		try
-		{
+	public boolean isValid(String in) {
+		try {
 			validate(in);
 			return true;
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			return false;
 		}
 	}

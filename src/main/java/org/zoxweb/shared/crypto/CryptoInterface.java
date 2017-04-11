@@ -17,13 +17,12 @@ package org.zoxweb.shared.crypto;
 
 import org.zoxweb.shared.security.AccessSecurityException;
 
-/**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
- */
-public interface CryptoInterface
-{
-	public byte[] hash(String mdAlgo, byte[] ...tokens) throws AccessSecurityException;
+public interface CryptoInterface {
+
+	public byte[] hash(String mdAlgo, byte[]... tokens)
+			throws AccessSecurityException;
 	
-	public byte[] hash(String mdAlgo, String ...tokens) throws AccessSecurityException;
+	public byte[] hash(String mdAlgo, String...tokens)
+			throws AccessSecurityException;
+
 }

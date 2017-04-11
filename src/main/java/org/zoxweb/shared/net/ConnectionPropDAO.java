@@ -22,8 +22,6 @@ import org.zoxweb.shared.util.SharedUtil;
 
 public class ConnectionPropDAO {
 
-	
-
 	private int bandwidthCapacity = 1;
 	private String name;	
 	private NICategory category;
@@ -31,40 +29,36 @@ public class ConnectionPropDAO {
 	private String niName;
 	private int routeID = 0;
 	private NIStatus status = NIStatus.OK;
-	
-	
-	public ConnectionPropDAO()
-	{
+
+	public ConnectionPropDAO() {
+
 	}
-	
-	
-	public ConnectionPropDAO( String niName,
+
+	public ConnectionPropDAO(String niName,
 							   String name,
 							   NIType niType,
 							   NICategory niCategory,
-							   int band)
-	{
+							   int band) {
 		setNIName( niName);
 		setName(name);
-		setType( niType);
-		setCategory( niCategory);
+		setType(niType);
+		setCategory(niCategory);
 		setBandwidthCapacity(band);
 	}
-	
-	/**
-	 * @return the network name
-	 */
-	public String getName() 
-	{
+
+    /**
+     * Returns the network name.
+     * @return the network name
+     */
+	public String getName() {
 		return name;
 	}
 	
 	/**
-	 * Set the network interface name
+	 * Sets the network interface name.
 	 * @param name
 	 */
-	public void setName(String name) 
-	{
+	public void setName(String name) {
 		SharedUtil.checkIfNulls("Can't have a null name",name);
 		this.name = name;
 	}
@@ -72,8 +66,7 @@ public class ConnectionPropDAO {
 	/**
 	 * @return the network interface category
 	 */
-	public NICategory getCategory() 
-	{
+	public NICategory getCategory() {
 		return category;
 	}
 
@@ -81,16 +74,15 @@ public class ConnectionPropDAO {
 	 * Set the network interface category
 	 * @param category
 	 */
-	public void setCategory(NICategory category) 
-	{
+	public void setCategory(NICategory category) {
 		SharedUtil.checkIfNulls("Can't have a null category",category);
 		this.category = category;
 	}
+
 	/**
 	 * @return the network interface type
 	 */
-	public NIType getType() 
-	{
+	public NIType getType() {
 		return type;
 	}
 
@@ -98,39 +90,34 @@ public class ConnectionPropDAO {
 	 * Set the network interface type
 	 * @param type
 	 */
-	public void setType(NIType type)
-	{
+	public void setType(NIType type) {
 		SharedUtil.checkIfNulls("Can have a null type",type);
 		this.type = type;
 	}
 	
 	/**
 	 * Change the network properties status
-	 * @param stat
-	 * @exception NullPointerException if stat is null
+	 * @param status
+	 * @exception NullPointerException if status is null
 	 */
-	protected void changeStatus( NIStatus stat)
-		throws NullPointerException
-	{
-		SharedUtil.checkIfNulls("Can't change null to null status", stat);
-		status = stat;
+	protected void changeStatus(NIStatus status)
+		throws NullPointerException {
+		SharedUtil.checkIfNulls("Can't change null to null status", status);
+		this.status = status;
 	}
-	
-	
+
 	/**
 	 * Get the current assigned status
 	 * @return the network interface status
 	 */
-	public NIStatus currentStatus()
-	{
+	public NIStatus currentStatus() {
 		return status;
 	}
 	
 	/**
 	 * @return the network interface set by the os name
 	 */
-	public String getNIName() 
-	{
+	public String getNIName() {
 		return niName;
 	}
 
@@ -138,25 +125,18 @@ public class ConnectionPropDAO {
 	 * Set the network interface name
 	 * @param niName
 	 */
-	public void setNIName(String niName) 
-	{
+	public void setNIName(String niName) {
 		this.niName = niName;
 	}
-	
-	
 
-	
-	
-	public String toString()
-	{
+	public String toString() {
 		return niName + "," + name + "," + type + "," + category +"," + currentStatus();
 	}
 	
 	/**
 	 * @return the bandwidth capacity associated with the current connection
 	 */
-	public int getBandwidthCapacity() 
-	{
+	public int getBandwidthCapacity() {
 		return bandwidthCapacity;
 	}
 
@@ -166,12 +146,12 @@ public class ConnectionPropDAO {
 	 * @param connectionCapacity
 	 * @exception IllegalArgumentException if the connection capacity is set less than 1
 	 */
-	public void setBandwidthCapacity(int connectionCapacity) 
-	{
-		if ( connectionCapacity < 1)
-		{
+	public void setBandwidthCapacity(int connectionCapacity) {
+
+		if (connectionCapacity < 1) {
 			throw new IllegalArgumentException("Connection capaticy can't be < 1" + connectionCapacity);
 		}
+
 		this.bandwidthCapacity = connectionCapacity;
 	}
 	
@@ -179,8 +159,7 @@ public class ConnectionPropDAO {
 	 * @return routeID that will be assigned with current connection, if the initial route id was set 
 	 * to zero the NIPropManager will assign the routeID automatically
 	 */
-	public int getRouteID()
-	{
+	public int getRouteID() {
 		return routeID;
 	}
 
@@ -188,12 +167,11 @@ public class ConnectionPropDAO {
 	 * Set the routeID of the current connection
 	 * @param maskMark
 	 */
-	public void setRouteID(int maskMark) 
-	{
-		if ( maskMark < 0)
-		{
+	public void setRouteID(int maskMark) {
+		if (maskMark < 0) {
 			throw new IllegalArgumentException("Connection mask must be > 0 " + maskMark);
 		}
+
 		this.routeID = maskMark;
 	}
 

@@ -1,8 +1,11 @@
 package org.zoxweb.shared.protocol;
 
-public enum MessageStatus 
-{
+/**
+ * Message statuses
+ */
+public enum MessageStatus {
 	COMPLETE,
 	PARTIAL,
 	INVALID,
+
 }

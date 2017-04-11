@@ -15,18 +15,17 @@
  */
 package org.zoxweb.shared.util;
 
-
 /**
  * The CRUD NVBase interface.
  * @author mzebib
- *
  */
 public interface CRUDNVBase
-	extends CRUDEvent
-{
+	extends CRUDEvent {
+
 	/**
 	 * Returns the NVBase.
 	 * @return the nv base value
 	 */
 	public NVBase<?> getNVBase();
+
 }

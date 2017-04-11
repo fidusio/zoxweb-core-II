@@ -25,66 +25,49 @@ import org.zoxweb.server.io.IOUtil;
 import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
 
-/**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
- */
-public class ZIPUtil 
-{
-	
-	
+public class ZIPUtil {
+
 	public static byte[] gzip(String str)
-			throws NullPointerException, IllegalArgumentException, IOException
-	{
+			throws NullPointerException, IllegalArgumentException, IOException {
 		return gzip(SharedStringUtil.getBytes(str));
 	}
 	
 	public static byte[] gzip(byte[] content)
-			throws NullPointerException, IllegalArgumentException, IOException
-	{
+			throws NullPointerException, IllegalArgumentException, IOException {
 		SharedUtil.checkIfNulls("Can't zip null content", content);
-		if (content.length == 0)
-		{
+		if (content.length == 0) {
 			throw new IllegalArgumentException("Content is empty");
 		}
+
 		ByteArrayOutputStream output = null;
 		GZIPOutputStream gzipOutputStream = null;
-		try
-		{
+
+		try {
 			output = new ByteArrayOutputStream(content.length);
 			gzipOutputStream = new GZIPOutputStream(output);
 			gzipOutputStream.write(content);
 			gzipOutputStream.flush();
 			gzipOutputStream.finish();
 			return output.toByteArray();
-		}
-		finally
-		{
+		} finally {
 			IOUtil.close(gzipOutputStream);
 		}
 	}
 	
 	public static byte[] gunzip(byte[] content)
-		throws NullPointerException, IllegalArgumentException, IOException
-	{
+		throws NullPointerException, IllegalArgumentException, IOException {
 		SharedUtil.checkIfNulls("Can't zip null content", content);
-		if (content.length == 0)
-		{
+
+		if (content.length == 0) {
 			throw new IllegalArgumentException("Content is empty");
 		}
 
 		GZIPInputStream gzipInputStream = null;
-		try
-		{
+		try {
 			return IOUtil.inputStreamToByteArray(new GZIPInputStream( new ByteArrayInputStream(content)), false).toByteArray();
-		}
-		finally
-		{
+		} finally {
 			IOUtil.close(gzipInputStream);
 		}
 	}
-	
-	
-	
-	
+
 }

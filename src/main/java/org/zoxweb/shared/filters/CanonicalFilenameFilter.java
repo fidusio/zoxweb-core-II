@@ -18,66 +18,52 @@ package org.zoxweb.shared.filters;
 import org.zoxweb.shared.util.Const;
 import org.zoxweb.shared.util.SharedStringUtil;
 
-/**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
- */
 @SuppressWarnings("serial")
 public class CanonicalFilenameFilter
-	implements ValueFilter<String, String> 
-{
+		implements ValueFilter<String, String> {
 
 	public static final CanonicalFilenameFilter SINGLETON = new CanonicalFilenameFilter();
 	
-	private CanonicalFilenameFilter()
-	{
+	private CanonicalFilenameFilter() {
 		
 	}
-	
-	/**
-	 * @see org.zoxweb.shared.util.CanonicalID#toCanonicalID()
-	 */
+
 	@Override
-	public String toCanonicalID()
-	{
+	public String toCanonicalID() {
 		return "static:ValueFilter:CanonicalFilenameFilter";
 	}
 
-	/**
-	 * @see org.zoxweb.shared.filters.ValueFilter#validate(java.lang.Object)
-	 */
 	@Override
-	public String validate(String filename) throws NullPointerException,
-			IllegalArgumentException
-	{
+	public String validate(String filename)
+			throws NullPointerException, IllegalArgumentException {
 		
 		filename = SharedStringUtil.trimOrNull( filename);
-		if (filename == null)
-		{
+
+		if (filename == null) {
 			return ""+Const.FilenameSep.SLASH;
 		}
+
 		Const.FilenameSep replaceWith = Const.FilenameSep.SLASH;
 		
-		for (Const.FilenameSep replace: Const.FilenameSep.values() )
-		{
-			if (replace == replaceWith)
+		for (Const.FilenameSep replace: Const.FilenameSep.values()) {
+			if (replace == replaceWith) {
 				continue;
+			}
+
 			filename = filename.replace(replace.sep, replaceWith.sep);
 		}
 		
 		String tokens[] = filename.split(""+Const.FilenameSep.SLASH);
 		StringBuilder ret = new StringBuilder();
-		for (String token : tokens)
-		{
-			if(!token.isEmpty())
-			{
+
+		for (String token : tokens) {
+			if(!token.isEmpty()) {
 				ret.append(replaceWith.sep);
 				ret.append(token);
 			}
 		}
 		
-		if (ret.length() == 0)
-		{
+		if (ret.length() == 0) {
 			ret.append(replaceWith.sep);
 		}
 		
@@ -85,12 +71,8 @@ public class CanonicalFilenameFilter
 		
 	}
 
-	/**
-	 * @see org.zoxweb.shared.filters.ValueFilter#isValid(java.lang.Object)
-	 */
 	@Override
-	public boolean isValid(String in)
-	{
+	public boolean isValid(String in) {
 		return validate(in).equals(in);
 	}
 

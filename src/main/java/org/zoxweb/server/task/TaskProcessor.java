@@ -16,13 +16,8 @@
 
 package org.zoxweb.server.task;
 
-
 import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
-
-
-
-
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Logger;
 
@@ -33,36 +28,22 @@ import org.zoxweb.shared.util.SimpleQueueInterface;
 import org.zoxweb.shared.util.SimpleQueue;
 import org.zoxweb.server.task.RunnableTask.RunnableTaskContainer;
 
-
-
-
-
-
-
-
 /**
  * The task executor object must be used when multiple worker thread are required to execute tasks in parallel
  * The number of worker thread should not exceed 2 times the numbers of cores of hardware thread on which the
  * application is running.
  *
  */
-
-
 public class TaskProcessor
-implements Runnable,
-		   DaemonController,
-		   Executor
-{
+		implements Runnable, DaemonController, Executor {
+
 	private static final transient Logger log = Logger.getLogger(TaskProcessor.class.getName());
 
 	public static final long WAIT_TIME = TimeUnit.MILLISECONDS.toMillis(500); 
 	private Thread thread;
 	private boolean live = true;
 	private BoundedSimpleQueue<TaskEvent>  tasksQueue;
-	/**
-	 * The tasks queue is used to add task to the task processor
-	 */
-	
+
 	/**
 	 * This is the worker thread queue is used by the TaskProcessor by dequeuing it and waiting for the queue
 	 * to be queued after each the ExecutorThread terminate a task
@@ -78,11 +59,9 @@ implements Runnable,
 	
 	/**
 	 * This is the worker thread that will execute the TaskExecutor.executeTask
-	 *
 	 */
 	protected class ExecutorThread
-		implements Runnable
-	{
+			implements Runnable {
 		
 		protected TaskEvent event = null;
 		protected final int counter = ++executorsCounter; 
@@ -90,8 +69,7 @@ implements Runnable,
 		protected long callCounter = 0;
 		
 		
-		protected ExecutorThread(String parentID, int priority)
-		{
+		protected ExecutorThread(String parentID, int priority) {
 			Thread temp = new Thread(this, parentID +"-ET-" + counter);
 			
 			temp.setPriority(priority);
@@ -99,16 +77,11 @@ implements Runnable,
 		}
 
 		@Override
-		public void run() 
-		{
+		public void run() {
 			// as long as the TaskProcessor is a live 
 			// the ExecutorThread thread will live
-			while(innerLive)
-			{
-				if (event != null)
-				{
-					
-					
+			while(innerLive) {
+				if (event != null) {
 					// do the work
 					TaskExecutor te = event.getTaskExecutor();
 					//TaskTerminationListener tel = event.getTaskTerminationListener();
@@ -116,40 +89,29 @@ implements Runnable,
 					
 					
 					//execute the task;
-					if ( te != null)
-					{
-						try
-						{
+					if (te != null) {
+						try {
 							te.executeTask(event);
-						}
-						catch(Throwable e)
-						{
+						} catch(Throwable e) {
 							e.printStackTrace();
 						}
 						
-						if (executorNotify)
-						{
-							synchronized (te) 
-							{
+						if (executorNotify) {
+							synchronized (te) {
 								te.notify();
 							}
 						}
 					}
 					
-					
 					// call the task finish task method
-					try
-					{
+					try {
 						te.finishTask(event);
-					}
-					catch( Throwable e)
-					{
+					} catch( Throwable e) {
 						e.printStackTrace();
 					}
-					if(executorNotify)
-					{
-						synchronized (te) 
-						{
+
+					if (executorNotify) {
+						synchronized (te) {
 							te.notify();
 						}
 					}
@@ -159,42 +121,31 @@ implements Runnable,
 					callCounter++;
 					// work is done reset the work event
 					queueInternalTask(null);
-					
 				}
 				
-				synchronized(this)
-				{
+				synchronized(this) {
 					// if the event is null
-					if (event == null)
-					{
-						try 
-						{
+					if (event == null) {
+						try {
 							// wait to be awaken by the TaskProcessor 
 							wait(WAIT_TIME);
-						} 
-						catch (InterruptedException e) 
-						{
-							// TODO Auto-generated catch block
+						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
 					}
 				}
 			}
-			
 		}
 		
 		/**
 		 * This method will queue one task
 		 * @param event if null it will reset the task can only be set to null by the ExecutorThread
 		 */
-		protected  void queueInternalTask( TaskEvent event)
-		{
-			synchronized(this)
-			{
+		protected  void queueInternalTask( TaskEvent event) {
+			synchronized(this) {
 				this.event = event;
 				
-				if (event == null)
-				{
+				if (event == null) {
 					// if the event is null we need 
 					// to queue the worker thread to
 					// the worker queue 
@@ -202,8 +153,7 @@ implements Runnable,
 					
 					// we need to notify the TaskProcessor that
 					// we are ready for work
-					synchronized(workersQueue)
-					{
+					synchronized(workersQueue) {
 						// notify the TaskProcessor thread
 						workersQueue.notify();
 					}
@@ -213,17 +163,14 @@ implements Runnable,
 				notify();
 			}
 		}
-		
 	}
-	
 	
 	/**
 	 * Create a task processor with default count of worker thread if the <code>core count > 1 core count*1.5 if core == 1 then it is 2</code>
 	 * @param taskQueueMaxSize
 	 */
 	public TaskProcessor(int taskQueueMaxSize)
-			throws IllegalArgumentException 
-	{
+			throws IllegalArgumentException {
 		this(taskQueueMaxSize, Runtime.getRuntime().availableProcessors()*2, Thread.NORM_PRIORITY, true);
 	}
 	

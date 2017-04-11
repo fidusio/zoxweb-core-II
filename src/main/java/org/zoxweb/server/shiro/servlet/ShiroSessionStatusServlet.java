@@ -29,41 +29,34 @@ import org.zoxweb.shared.http.HTTPMethod;
 import org.zoxweb.shared.http.HTTPStatusCode;
 import org.zoxweb.shared.util.Const;
 
-/**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
- */
+
 @SuppressWarnings("serial")
 public class ShiroSessionStatusServlet
-	extends ShiroBaseServlet
-{
+		extends ShiroBaseServlet {
 	
 	private static final transient Logger log = Logger.getLogger(Const.LOGGER_NAME);
 	
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
-		     throws ServletException,
-		            IOException
-	{
+            throws ServletException, IOException {
 		
 		Subject subject = SecurityUtils.getSubject();
-		if (subject == null || !subject.isAuthenticated())
-		{
+
+		if (subject == null || !subject.isAuthenticated()) {
 			log.info("security check required and user not authenticated");
-			if(subject != null && subject.getSession() != null)
-			{
-				try
-				{
+
+			if (subject != null && subject.getSession() != null) {
+				try {
 					subject.getSession().stop();
-				}
-				catch(InvalidSessionException e)
-				{
+				} catch(InvalidSessionException e) {
 					log.info("Error " + e);
 				}
 			}
+
 			resp.sendError(HTTPStatusCode.UNAUTHORIZED.CODE);
 			
 			return;
 		}
+
 		log.info("Subject check " + subject.getPrincipal() + ":" + subject.getSession().getId());
 		resp.setStatus(HTTPStatusCode.OK.CODE);
 	}
@@ -72,9 +65,7 @@ public class ShiroSessionStatusServlet
 	 * @see org.zoxweb.server.shiro.servlet.ShiroBaseServlet#isSecurityCheckRequired(org.zoxweb.shared.http.HTTPMethod, javax.servlet.http.HttpServletRequest)
 	 */
 	@Override
-	protected boolean isSecurityCheckRequired(HTTPMethod httpMethod, HttpServletRequest req)
-	{
-		// TODO Auto-generated method stub
+	protected boolean isSecurityCheckRequired(HTTPMethod httpMethod, HttpServletRequest req) {
 		return false;
 	}
 

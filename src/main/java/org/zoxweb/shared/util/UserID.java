@@ -17,9 +17,9 @@ package org.zoxweb.shared.util;
 
 /**
  * The user ID interface.
- * 
  */
 public interface UserID<T> {
+
 	/**
 	 * Returns the user ID.
 	 * @return typed user id 

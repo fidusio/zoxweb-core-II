@@ -15,9 +15,6 @@
  */
 package org.zoxweb.shared.crypto;
 
-
-
-
 import org.zoxweb.shared.crypto.CryptoConst.MDType;
 import org.zoxweb.shared.data.TimeStampDAO;
 import org.zoxweb.shared.util.GetNVConfig;
@@ -30,116 +27,94 @@ import org.zoxweb.shared.util.SharedUtil;
 
 @SuppressWarnings("serial")
 public class PasswordDAO
-extends TimeStampDAO
-implements CryptoDAO
-{
+		extends TimeStampDAO
+		implements CryptoDAO {
 	
 	private enum Params
-	implements GetNVConfig
-	{
+            implements GetNVConfig {
 
 		HASH_INTERATION(NVConfigManager.createNVConfig("hash_iteration", "Hash interration", "HashIteration", false, true, Integer.class)),
 		SALT(NVConfigManager.createNVConfig("salt", "The password salt", "Salt", false, true, byte[].class)),
 		PASSWORD(NVConfigManager.createNVConfig("password", "The password", "Password", false, true, byte[].class)),
-		;
+
+        ;
+
 		private final NVConfig nvc;
-		Params( NVConfig nvc)
-		{
+
+		Params(NVConfig nvc) {
 			this.nvc = nvc;
 		}
 		
 		@Override
 		public NVConfig getNVConfig() {
-			// TODO Auto-generated method stub
 			return nvc;
 		}	
 	}
-	
-	
+
 	public final static NVConfigEntity NVCE_PASSWORD_DAO = new NVConfigEntityLocal("password_dao", null, "PasswordDAO", false, true, false, false, PasswordDAO.class, SharedUtil.extractNVConfigs(Params.values()), null, false, TimeStampDAO.NVC_TIME_STAMP_DAO);
-	
-	
-	
-	/**
-	 * 
-	 * Default constructor.
-	 *
-	 */
-	public PasswordDAO() 
-	{
-		super( NVCE_PASSWORD_DAO);
-		// TODO Auto-generated constructor stub
+
+    /**
+     * The default constructor.
+     */
+    public PasswordDAO() {
+		super(NVCE_PASSWORD_DAO);
 	}
 
-	
-	
-	public synchronized void setName(MDType mdt)
-	{
+	public synchronized void setName(MDType mdt) {
 		SharedUtil.checkIfNulls("Null Message Digest", mdt);
 		
 		setName(mdt.getName());
-		
 	}
 
-	public synchronized void setName(String name)
-	{
+	public synchronized void setName(String name) {
 		SharedUtil.checkIfNulls("Null Message Digest", name);
 		MDType mdt = MDType.lookup(name);
-		if (mdt == null)
-		{
+
+		if (mdt == null) {
 			throw new IllegalArgumentException("Unssupported Message Digest:" + name);
 		}
 		
 		super.setName(mdt.getName());
-		
 	}
-	
-	
-	public synchronized int getHashIteration()
-	{
+
+	public synchronized int getHashIteration() {
 		return lookupValue( Params.HASH_INTERATION);
 	}
-	public synchronized void setHashIteration(int salt_iteration)
-	{
-		if (salt_iteration < 0)
-		{
+
+	public synchronized void setHashIteration(int salt_iteration) {
+		if (salt_iteration < 0) {
 			throw new IllegalArgumentException("Invalid interation value:" + salt_iteration);
 		}
+
 		setValue( Params.HASH_INTERATION, salt_iteration);
-		
 	}
-	public synchronized byte[] getSalt()
-	{
+
+	public synchronized byte[] getSalt() {
 		return lookupValue(Params.SALT);
 	}
-	public synchronized void setSalt(byte[] salt)
-	{
+
+	public synchronized void setSalt(byte[] salt) {
 		
 		setValue( Params.SALT, salt);
 	}
-	public synchronized byte[] getPassword()
-	{
+
+	public synchronized byte[] getPassword() {
 		return lookupValue(Params.PASSWORD);
 	}
-	public synchronized void setPassword( byte[] password)
-	{
+
+	public synchronized void setPassword( byte[] password) {
 		setValue(Params.PASSWORD, password);
-		
 	}
 
 	@Override
-	public String toCanonicalID()
-	{
-		
+	public String toCanonicalID() {
 		return SharedUtil.toCanonicalID(':', getName(),getHashIteration(), SharedStringUtil.bytesToHex(getSalt()), SharedStringUtil.bytesToHex( getPassword()));
 	}
-	
-	
+
 	public static PasswordDAO fromCanonicalID(String passwordCanonicalID)
-		throws NullPointerException, IllegalArgumentException
-	{
-		if (SharedStringUtil.isEmpty(passwordCanonicalID))
-		{
+		throws NullPointerException, IllegalArgumentException {
+
+		if (SharedStringUtil.isEmpty(passwordCanonicalID)) {
 			throw new NullPointerException("empty password");
 		}
 		
@@ -166,8 +141,5 @@ implements CryptoDAO
 		
 		return ret;
 	}
-	
-	
-	
-	
+
 }

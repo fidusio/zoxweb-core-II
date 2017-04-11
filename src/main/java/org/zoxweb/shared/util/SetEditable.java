@@ -18,14 +18,14 @@ package org.zoxweb.shared.util;
 /**
  * The set editable property interface.
  * @author mnael
- *
  */
-public interface SetEditable 
-extends IsEditable 
-{
+public interface SetEditable
+        extends IsEditable {
+
 	/**
 	 * Set editable property.
 	 * @param val
 	 */
 	public void setEditable(boolean val);
+
 }

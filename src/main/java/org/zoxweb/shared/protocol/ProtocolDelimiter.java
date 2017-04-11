@@ -18,14 +18,11 @@ package org.zoxweb.shared.protocol;
 import org.zoxweb.shared.util.GetNameValue;
 
 /**
- * This enum has a set of punctuation marks and implements 
- * the getName and getValue methods of the GetNameValue class.
- * @author mzebib
- *
+ * Punctuation marks.
  */
 public enum ProtocolDelimiter
-	implements GetNameValue<String>
-{
+		implements GetNameValue<String> {
+
 	COLON(":"),
 	COLON_PATH_ABEMPTY("://"),
 	CRLF("\r\n"),
@@ -35,55 +32,44 @@ public enum ProtocolDelimiter
 	QUESTION_MARK("?"),
 	SEMICOLON(";"),
 	SPACE(" "),
-	
-	
+
 	;
 	
 	private final String value;
-	private final byte bytes[];
-	
-	/**
-	 * This constructor builds ProtocolDelimiter 
-	 * object based on given inputs.
-	 * @param val
-	 */
-	ProtocolDelimiter(String val)
-	{
+	private final byte[] bytes;
+
+	ProtocolDelimiter(String val) {
 		value = val;
 		bytes = value.getBytes();
 	}
-	
-	/**
-	 * This method returns string name.
-	 */
+
+    /**
+     * Returns the name.
+     * @return
+     */
 	public final String getName() 
 	{
 		return name();
 	}
-	
-	/**
-	 * This method returns string value.
-	 */
-	public String toString()
-	{
+
+    /**
+     * Returns the value.
+     * @return
+     */
+	public final String getValue() {
 		return value;
 	}
 
-	/**
-	 * This method returns string value.
-	 */
-	public final String getValue() 
-	{
-		return value;
-	}
-	
-	/**
-	 * This method returns byte array.
-	 * @return bytes array
-	 */
-	public final byte[] getBytes()
-	{
+    /**
+     * Returns the bytes.
+     * @return
+     */
+	public final byte[] getBytes() {
 		return bytes;
 	}
+
+    public String toString() {
+        return value;
+    }
 		
 }

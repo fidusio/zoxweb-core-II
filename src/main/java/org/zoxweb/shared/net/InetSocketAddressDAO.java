@@ -15,8 +15,6 @@
  */
 package org.zoxweb.shared.net;
 
-
-
 import org.zoxweb.shared.data.SetNameDAO;
 import org.zoxweb.shared.util.NVConfig;
 import org.zoxweb.shared.util.NVConfigEntity;
@@ -26,83 +24,67 @@ import org.zoxweb.shared.util.SharedUtil;
 
 @SuppressWarnings("serial")
 public class InetSocketAddressDAO
-extends SetNameDAO
-{
+		extends SetNameDAO {
 	
 	private static final NVConfig INET_ADDRESS = NVConfigManager.createNVConfig("inet_address", "The ip address","InetAddress",true, false, String.class);
 	private static final NVConfig PORT = NVConfigManager.createNVConfig("port", "The port number","Port", true, false, int.class);
 	public static final NVConfigEntity NVC_INET_SOCKET_ADDRESS_DAO = new NVConfigEntityLocal("inet_socket_address_dao", null , "InetSocketAddressDAO", true, false, false, false, InetSocketAddressDAO.class, SharedUtil.toNVConfigList(INET_ADDRESS, PORT), null, false, SetNameDAO.NVC_NAME_DAO);
-	
-	
-	public InetSocketAddressDAO()
-	{
+
+	public InetSocketAddressDAO() {
 		super(NVC_INET_SOCKET_ADDRESS_DAO);
 	}
-	
-	
-	public InetSocketAddressDAO(String addressPort)
-	{
+
+	public InetSocketAddressDAO(String addressPort) {
 		this();
-		String params[] = addressPort.split(":");
+		String[] params = addressPort.split(":");
 		setInetAddress(params[0]);
-		if(params.length>1)
-			setPort(Integer.parseInt(params[1]));
-		else
-			setPort(-1);
+
+		if (params.length>1) {
+            setPort(Integer.parseInt(params[1]));
+        } else {
+            setPort(-1);
+        }
 	}
 	
-	public InetSocketAddressDAO(String address, int port)
-	{
+	public InetSocketAddressDAO(String address, int port) {
 		this();
 		setInetAddress(address);
 		setPort(port);
 	}
-	
-	
-	public String getInetAddress()
-	{
+
+	public String getInetAddress() {
 		return lookupValue(INET_ADDRESS);
 	}
 	
-	public void setInetAddress(String address)
-	{
+	public void setInetAddress(String address) {
 		setValue(INET_ADDRESS, address);
 	}
 	
-	public int getPort() 
-	{
+	public int getPort() {
 		return lookupValue(PORT);
 	}
 	
-	public void setPort(int port)
-	{
-		if (port < -1)
-		{
+	public void setPort(int port) {
+		if (port < -1) {
 			throw new IllegalArgumentException("Invalid port:" + port + " < 0 ");
 		}
+
 		setValue(PORT, port);
 	}
 
-	
-	public boolean equals(Object o)
-	{
-		if (o != null && o instanceof InetSocketAddressDAO)
-		{
-			if (getInetAddress() != null && getInetAddress().equalsIgnoreCase(((InetSocketAddressDAO)o).getInetAddress()))
-			{
-				if (getPort() == ((InetSocketAddressDAO)o).getPort())
-				{
+	public boolean equals(Object o) {
+		if (o != null && o instanceof InetSocketAddressDAO) {
+			if (getInetAddress() != null && getInetAddress().equalsIgnoreCase(((InetSocketAddressDAO)o).getInetAddress())) {
+				if (getPort() == ((InetSocketAddressDAO)o).getPort()) {
 					return true;
 				}
 			}
 		}
-		
-		
+
 		return false;
 	}
 	
-	public String toString()
-	{
+	public String toString() {
 		return SharedUtil.toCanonicalID(':',getInetAddress(), getPort());
 	}
 	

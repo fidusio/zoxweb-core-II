@@ -19,35 +19,26 @@ import java.util.Comparator;
 
 import org.zoxweb.shared.util.Const.RelationalOperator;
 
-/**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
- */
 public class AppointmentComparator
 		implements Comparator<Appointment> {
 
 	private RelationalOperator equality;
 	
-	public AppointmentComparator()
-	{
+	public AppointmentComparator() {
 		this( RelationalOperator.EQUAL);
 	}
 	
-	public AppointmentComparator(RelationalOperator equality)
-	{
+	public AppointmentComparator(RelationalOperator equality) {
 		this.equality = equality;
 	}
-	
-	
-	/**
-	 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
-	 */
+
 	@Override
 	public int compare(Appointment o1, Appointment o2) {
 		int result = 0;
 
 		if (o1 != null && o2 != null) {
 			result = (int)(o1.getExpirationInMillis() - o2.getExpirationInMillis());
+
 			if (result == 0) {
 				switch(equality)
 				{

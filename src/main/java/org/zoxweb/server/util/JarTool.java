@@ -33,64 +33,48 @@ import org.zoxweb.server.io.IOUtil;
 import org.zoxweb.shared.filters.MatchPatternFilter;
 import org.zoxweb.shared.util.SharedStringUtil;
 
-
-
-/**
- * 
- * @author mnael
- * @version 
- * @lastModifiedBy mnael
- * @lastModifiedAt Apr 13, 2014
- */
-public class JarTool 
-{
+public class JarTool {
 	
-	private JarTool()
-	{
+	private JarTool() {
 		
 	}
 	
-	public static URL findClassJarURL( Class<?> entryPointClass) throws IOException
-	{
+	public static URL findClassJarURL( Class<?> entryPointClass) throws IOException {
 		return entryPointClass.getProtectionDomain().getCodeSource().getLocation();
 	}
-	
-	
-	public static Map<String, URL> findFilesInJarAndExpandAsTempFiles(String jarFilename, boolean deleteOnExit, String ...searchCriteria) throws IOException
-	{
+
+	public static Map<String, URL> findFilesInJarAndExpandAsTempFiles(String jarFilename, boolean deleteOnExit, String ...searchCriteria) throws IOException {
 		HashMap<String, URL>  jarURLs = new HashMap<String, URL>();
 		MatchPatternFilter mpf = MatchPatternFilter.createMatchFilter(searchCriteria);
 		File jarFile = new File(jarFilename);
 		JarFile jf  = null;
-		try
-		{
+
+		try {
 			jf = new JarFile( jarFile);
 			Enumeration < JarEntry> eje = jf.entries();
 			jarURLs.put( jarFilename, jarFile.toURI().toURL());
 			FileOutputStream fos = null;
 			
-			while(eje.hasMoreElements())
-			{
+			while(eje.hasMoreElements()) {
 				JarEntry je = eje.nextElement();
 			
 				// look up for embedded jar files
 				
-				if (mpf.match(je.getName()))
-				{
-					
+				if (mpf.match(je.getName())) {
 					//System.out.println("jar found:" + je.getName());
-					try
-					{
+					try {
 						String fileExt = SharedStringUtil.valueAfterRightToken(je.getName(), ".");
-						if (fileExt.equals(je.getName()))
-						{
+						if (fileExt.equals(je.getName())) {
 							fileExt = "";
 						}
+
 						int length = je.getName().length() - fileExt.length();
 						// replace / with _
 						File tempFile = File.createTempFile(je.getName().substring(0, length), fileExt);
-						if (deleteOnExit)
+
+						if (deleteOnExit) {
 							tempFile.deleteOnExit();
+						}
 						
 						fos = new FileOutputStream(tempFile);
 						
@@ -98,34 +82,20 @@ public class JarTool
 						
 						
 						jarURLs.put(je.getName(), tempFile.toURI().toURL());
-						
-						
-					}
-					catch( Exception e)
-					{
+					} catch( Exception e) {
 						e.printStackTrace();
-					}
-					
-					finally
-					{
-						
+					} finally {
 						IOUtil.close(fos);
-						
 					}
 				}
 			}
-	
-		}
-		finally
-		{
+		} finally {
 			IOUtil.close(jf);
 		}
 		
 		return jarURLs;
 	}
-	
-	
-	
+
 	/**
      * Loads library from current JAR archive
      * 
@@ -195,13 +165,14 @@ public class JarTool
         System.load(temp.getAbsolutePath());
     }
 
-	
-	public static ClassLoader createClassLoader( HashMap<String, URL> urls, ClassLoader parent)
-	{
+	public static ClassLoader createClassLoader( HashMap<String, URL> urls, ClassLoader parent) {
 		URL[] all = urls.entrySet().toArray( new URL[0]);
-		if ( parent == null)
+
+		if (parent == null) {
 			return new URLClassLoader( all);
-		else 
+		} else {
 			return new URLClassLoader( all, parent);
+		}
 	}
+
 }

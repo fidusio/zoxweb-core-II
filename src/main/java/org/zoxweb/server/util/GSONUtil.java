@@ -65,8 +65,6 @@ import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.stream.JsonWriter;
 
-
-
 /**
  * This utility class convert NVEnity Object to json and a json object to an NVEntity.
  * It uses Gson from google 
@@ -80,42 +78,34 @@ final public class GSONUtil
 	
 	private GsonBuilder builder = null;
 	
-	private GSONUtil()
-	{
+	private GSONUtil() {
 		builder = new GsonBuilder();
 		builder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
 		builder.setPrettyPrinting();
 		log.info("Created");
 	}
 	
-	public static Gson create(boolean pretty)
-	{
-		if (pretty)
-		{
+	public static Gson create(boolean pretty) {
+		if (pretty) {
 			return SINGLETON.builder.create();
-		}
-		else
-		{
+		} else {
 			return new Gson();
 		}
 	}
 	
 	public static String toJSON(NVEntity nve, boolean indent) 
-			throws IOException
-	{
+			throws IOException {
 		return toJSON(nve, indent, true, true);
 	}
 	
 	public static String toJSON(NVEntity nve, boolean indent, boolean printNull, boolean printClassType) 
-			throws IOException
-	{
+			throws IOException {
 		StringWriter sw = new StringWriter();
 		JsonWriter writer = new JsonWriter(sw);
 		writer.setSerializeNulls(true);
 		writer.setHtmlSafe(true);
 		
-		if (indent)
-		{
+		if (indent) {
 			writer.setIndent("  ");
 		}
 		
@@ -127,15 +117,13 @@ final public class GSONUtil
 	}
 	
 	public static String toJSONWrapper(String wrapName, NVEntity nve, boolean indent, boolean printNull, boolean printClassType) 
-			throws IOException
-	{
+			throws IOException {
 		StringWriter sw = new StringWriter();
 		JsonWriter writer = new JsonWriter(sw);
 		writer.setSerializeNulls(true);
 		writer.setHtmlSafe(true);
 		
-		if (indent)
-		{
+		if (indent) {
 			writer.setIndent("  ");
 		}
 		
@@ -148,28 +136,24 @@ final public class GSONUtil
 		return sw.toString();
 	}
 	
-	public static QueryRequest fromQueryRequest(String json)
-	{
+	public static QueryRequest fromQueryRequest(String json) {
 		JsonElement je = new JsonParser().parse(json);
 		QueryRequest ret = null;
-		if (je instanceof JsonObject)
-		{
+		if (je instanceof JsonObject) {
 			ret = new QueryRequest();
 			JsonObject jo = (JsonObject) je;
 			ret.setCanonicalID(jo.get(MetaToken.CANONICAL_ID.getName()).getAsString());
 			JsonElement batchSize = jo.get("batch_size");
-			if (batchSize != null)
-			{
+
+			if (batchSize != null) {
 				ret.setBatchSize(batchSize.getAsInt());
 			}
 			
 			JsonArray jaFNs = (JsonArray) jo.get("field_names");
-			if (jaFNs != null)
-			{
+			if (jaFNs != null) {
 				List<String> fieldNames = new ArrayList<String>();
 				
-				for (int i = 0; i < jaFNs.size(); i++)
-				{
+				for (int i = 0; i < jaFNs.size(); i++) {
 					fieldNames.add(jaFNs.get(i).getAsString());
 				}
 				
@@ -177,29 +161,23 @@ final public class GSONUtil
 			}
 			
 			JsonArray jaQuery = (JsonArray) jo.get("query");
-			if (jaQuery != null)
-			{
+			if (jaQuery != null) {
 				List<QueryMarker> qms = new ArrayList<QueryMarker>();
-				for (int i = 0; i < jaQuery.size(); i++)
-				{
+				for (int i = 0; i < jaQuery.size(); i++) {
 					// get the query marker
 					JsonObject joQM = (JsonObject) jaQuery.get(i);
 					QueryMarker qm = null;
 					
 					JsonPrimitive lo = (JsonPrimitive) joQM.get(MetaToken.LOGICAL_OPERATOR.getName());
 					
-					if (lo != null)
-					{
+					if (lo != null) {
 						qm = Const.LogicalOperator.valueOf(lo.getAsString());
-					}
-					else
-					{
+					} else {
 						Const.RelationalOperator ro = null;
 						
 						JsonPrimitive jpRO = (JsonPrimitive) joQM.get(MetaToken.RELATIONAL_OPERATOR.getName());
 						
-						if (jpRO != null)
-						{
+						if (jpRO != null) {
 							ro = Const.RelationalOperator.valueOf(jpRO.getAsString());
 						}
 						
@@ -208,10 +186,8 @@ final public class GSONUtil
 						
 						Set<Map.Entry<String, JsonElement>> allParams = joQM.entrySet();
 						
-						for (Map.Entry<String, JsonElement> e : allParams)
-						{
-							if (!e.getKey().equals(MetaToken.RELATIONAL_OPERATOR.getName()))
-							{
+						for (Map.Entry<String, JsonElement> e : allParams) {
+							if (!e.getKey().equals(MetaToken.RELATIONAL_OPERATOR.getName())) {
 								name = e.getKey();
 								value = e.getValue();
 								break;
@@ -219,23 +195,18 @@ final public class GSONUtil
 						}
 						
 						// try to guess the type
-						if (value.isJsonPrimitive())
-						{
+						if (value.isJsonPrimitive()) {
 							JsonPrimitive jp = (JsonPrimitive) value;
 							
-							if (jp.isString())
-							{
+							if (jp.isString()) {
 								qm = new QueryMatchString(ro, jp.getAsString(), name);
-							}
-							else if (jp.isNumber())
-							{
+							} else if (jp.isNumber()) {
 								qm = new QueryMatchLong(ro, jp.getAsLong(), name);
 							}
 						}
 					}
 					
-					if (qm != null)
-					{
+					if (qm != null) {
 						qms.add(qm);
 					}
 				}
@@ -247,10 +218,8 @@ final public class GSONUtil
 		return ret;
 	}
 	
-	private static String toJSONValue(Enum <?> e)
-	{
-		if (e == null)
-		{
+	private static String toJSONValue(Enum <?> e) {
+		if (e == null) {
 			return null;
 		}
 		
@@ -259,67 +228,51 @@ final public class GSONUtil
 	
 	@SuppressWarnings("unchecked")
 	private static JsonWriter toJSON(JsonWriter writer, Class<? extends NVEntity> clazz, NVEntity nve, boolean printNull, boolean printClassType) 
-			throws IOException
-	{
+			throws IOException {
 		NVConfigEntity nvce = (NVConfigEntity) nve.getNVConfig();
 		
 		writer.beginObject();
 		
-		if (clazz!= null  && clazz != nve.getClass() || (clazz != null && printClassType))
-		{
+		if (clazz!= null  && clazz != nve.getClass() || (clazz != null && printClassType)) {
 			writer.name(MetaToken.CLASS_TYPE.getName()).value(nve.getClass().getName());
-		}
-		else if (nvce.getMetaType().isInterface() || Modifier.isAbstract(nvce.getMetaType().getModifiers()))
-		{
+		} else if (nvce.getMetaType().isInterface() || Modifier.isAbstract(nvce.getMetaType().getModifiers())) {
 			writer.name(MetaToken.CLASS_TYPE.getName()).value(nve.getClass().getName());
 		}
 	
 		List <NVConfig> attributes = nvce.getAttributes();
 		
-		for (int i = 0; i < attributes.size(); i++)
-		{
+		for (int i = 0; i < attributes.size(); i++) {
 			NVConfig nvc = attributes.get( i);
 			//Class<?> type = nvc.getMetaType();
 			
-			if (!printNull)
-			{
+			if (!printNull) {
 				Object tempObj = nve.lookupValue(nvc);
 				if (tempObj == null || 
 					(tempObj instanceof List && ((List<?>)tempObj).size() == 0) ||
-					(tempObj instanceof Map && ((Map<?,?>)tempObj).size() == 0))
-				{
+					(tempObj instanceof Map && ((Map<?,?>)tempObj).size() == 0)) {
 					continue;
 				}
 			}
 			
-			if (nvc.isArray())
-			{
+			if (nvc.isArray()) {
 				writer.name(nvc.getName());
 				
-				if (byte[].class.equals(nvc.getMetaType()))
-				{
+				if (byte[].class.equals(nvc.getMetaType())) {
 					byte[] value = nve.lookupValue(nvc);				
 					writer.value(value != null ?  new String(SharedBase64.encode(value)) : null);
-				}
-				else
-				{
+				} else {
 					writer.beginArray();
 					
-					if (nvc.isEnum())
-					{
+					if (nvc.isEnum()) {
 						List<Enum<?>> eAll = nve.lookupValue(nvc);
 						
-						for (Enum<?> e: eAll)
-						{
+						for (Enum<?> e: eAll) {
 							writer.value(toJSONValue(e));
 						}
-					}
-					else if (nvc.getMetaTypeBase() == String.class)
-					{
+					} else if (nvc.getMetaTypeBase() == String.class) {
 						ArrayValues<GetNameValue<String>> tempArray = (ArrayValues<GetNameValue<String>>) nve.lookup(nvc.getName());
 						
-						for (GetNameValue<String> nvp : tempArray.values())
-						{
+						for (GetNameValue<String> nvp : tempArray.values()) {
 							toJSON(writer, nvp, true, printNull);
 						}
 //						
@@ -339,58 +292,41 @@ final public class GSONUtil
 //								toJSON( writer, nvp, true, printNull);
 //							}
 //						}
-					}
-					else if (nvc.getMetaTypeBase() == Long.class)
-					{
+					} else if (nvc.getMetaTypeBase() == Long.class) {
 						List<Long> values = nve.lookupValue(nvc);
 						
-						for (long v : values)
-						{
+						for (long v : values) {
 							writer.value(v);
 						}
 					}
-					else if (nvc.getMetaTypeBase() == Integer.class)
-					{
+					else if (nvc.getMetaTypeBase() == Integer.class) {
 						List<Integer> values = nve.lookupValue(nvc);
 						
-						for (Integer v : values)
-						{
+						for (Integer v : values) {
 							writer.value(v);
 						}
-					}
-					else if (nvc.getMetaTypeBase() == Float.class)
-					{
+					} else if (nvc.getMetaTypeBase() == Float.class) {
 						List<Float> values = nve.lookupValue(nvc);
 						
-						for (Float v : values)
-						{
+						for (Float v : values) {
 							writer.value(v);
 						}
-					}
-					else if (nvc.getMetaTypeBase() == Double.class)
-					{
+					} else if (nvc.getMetaTypeBase() == Double.class) {
 						List<Double> values = nve.lookupValue(nvc);
 						
-						for (Double v : values)
-						{
+						for (Double v : values) {
 							writer.value(v);
 						}
-					}
-					else if (nvc.getMetaTypeBase() == Boolean.class)
-					{
+					} else if (nvc.getMetaTypeBase() == Boolean.class) {
 						List<Boolean> values = nve.lookupValue(nvc);
 						
-						for (boolean b : values)
-						{
+						for (boolean b : values) {
 							writer.value(b);
 						}
-					}
-					else if (nvc instanceof NVConfigEntity)
-					{
+					} else if (nvc instanceof NVConfigEntity) {
 						ArrayValues<NVEntity> tempArray = (ArrayValues<NVEntity>) nve.lookup(nvc.getName());
 						
-						for (NVEntity value : tempArray.values())
-						{
+						for (NVEntity value : tempArray.values()) {
 							toJSON( writer, (Class<? extends NVEntity>) nvc.getMetaTypeBase(), value, printNull, printClassType);
 						}						
 						
@@ -410,108 +346,71 @@ final public class GSONUtil
 //								toJSON( writer, (Class<? extends NVEntity>) nvc.getMetaTypeBase(), value, printNull);
 //							}
 //						}
-					}
-					else if (nvc.getMetaTypeBase() == Date.class)
-					{
+					} else if (nvc.getMetaTypeBase() == Date.class) {
 						List<Long> values = nve.lookupValue(nvc);
 						
-						for (long v : values)
-						{
+						for (long v : values) {
 							writer.value(v);
 						}
 					}
-					else if (nvc.getMetaTypeBase() == BigDecimal.class)
-					{
+					else if (nvc.getMetaTypeBase() == BigDecimal.class) {
 						List<BigDecimal> values = nve.lookupValue(nvc);
 						
-						for (BigDecimal v : values)
-						{
+						for (BigDecimal v : values) {
 							writer.value(v);
 						}
 					}
 					
 					writer.endArray();
 				}
-			}
-			else
-			{
-				if (nvc.isEnum())
-				{
-					if (nvc.getMetaTypeBase().isAssignableFrom(DynamicEnumMap.class))
-					{
+			} else {
+				if (nvc.isEnum()) {
+					if (nvc.getMetaTypeBase().isAssignableFrom(DynamicEnumMap.class)) {
 						writer.name(nvc.getName()).value((String) nve.lookupValue(nvc));
-					}
-					else
-					{
+					} else {
 						Enum<?> e = nve.lookupValue(nvc);
 						writer.name( nvc.getName()).value( toJSONValue(e));
 					}
-				}
-				else if (nvc.getMetaTypeBase() == String.class)
-				{
+				} else if (nvc.getMetaTypeBase() == String.class) {
 					
 					toJSON(writer, (NVPair)nve.lookup(nvc.getName()), false, printNull);
 					//writer.name( nvc.getName()).value((String)nve.lookupValue(nvc));
-				}
-				else if (nvc.getMetaTypeBase() == Long.class )
-				{
-					if ((long)nve.lookupValue(nvc) != 0)
-					{
+				} else if (nvc.getMetaTypeBase() == Long.class ) {
+					if ((long)nve.lookupValue(nvc) != 0) {
 						writer.name( nvc.getName()).value((long) nve.lookupValue(nvc));
 					}
-				}
-				else if (nvc.getMetaTypeBase() == Integer.class)
-				{
-					if ((int)nve.lookupValue(nvc) != 0)
-					{
+				} else if (nvc.getMetaTypeBase() == Integer.class) {
+					if ((int)nve.lookupValue(nvc) != 0) {
 						writer.name( nvc.getName()).value((int) nve.lookupValue(nvc));
 					}
-				}
-				else if (nvc.getMetaTypeBase() == Double.class)
-				{
-					if ((Double) nve.lookupValue(nvc) != 0)
-					{
+				} else if (nvc.getMetaTypeBase() == Double.class) {
+					if ((Double) nve.lookupValue(nvc) != 0) {
 						writer.name( nvc.getName()).value((double) nve.lookupValue(nvc));
 					}
-				}
-				else if (nvc.getMetaTypeBase() == Float.class)
-				{
-					if ((Float)nve.lookupValue(nvc) != 0)
-					{
+				} else if (nvc.getMetaTypeBase() == Float.class) {
+					if ((Float)nve.lookupValue(nvc) != 0) {
 						writer.name( nvc.getName()).value((float) nve.lookupValue(nvc));
 					}
-				}
-				else if (nvc.getMetaTypeBase() == Boolean.class)
-				{
+				} else if (nvc.getMetaTypeBase() == Boolean.class) {
 					writer.name(nvc.getName()).value((boolean) nve.lookupValue(nvc));
-				}
-				else if (nvc.getMetaTypeBase() == Date.class)
-				{
-					if ((long) nve.lookupValue(nvc) != 0)
-					{
+				} else if (nvc.getMetaTypeBase() == Date.class) {
+					if ((long) nve.lookupValue(nvc) != 0) {
 						writer.name( nvc.getName()).value((long)nve.lookupValue(nvc));
 					}
 				}
-				else if (nvc.getMetaTypeBase() == BigDecimal.class)
-				{
-					if ((BigDecimal) nve.lookupValue(nvc) != null)
-					{
+				else if (nvc.getMetaTypeBase() == BigDecimal.class) {
+					if ((BigDecimal) nve.lookupValue(nvc) != null) {
 						writer.name(nvc.getName()).value((BigDecimal) nve.lookupValue(nvc));
 					}
-				}
-				else if (nvc instanceof NVConfigEntity)
-				{
+				} else if (nvc instanceof NVConfigEntity) {
 					NVEntity tempNVE = (NVEntity)nve.lookupValue(nvc);
 					// we need to write the class type if the current object is derived from nvc.getClass()
 					// this is we important to accurately rebuild the object
 					
-					if (tempNVE != null)
-					{	
+					if (tempNVE != null) {
 						writer.name(nvc.getName());
 						toJSON( writer,  (Class<? extends NVEntity>) ((NVConfigEntity) nvc).getMetaType(), (NVEntity)nve.lookupValue(nvc), printNull, printClassType);
-					}
-					else if (printNull)
-					{
+					} else if (printNull) {
 						writer.name(nvc.getName());
 						writer.nullValue();
 					}
@@ -525,50 +424,40 @@ final public class GSONUtil
 	}
 	
 	private static JsonWriter toJSON(JsonWriter writer, GetNameValue<String> nvp, boolean isObject, boolean printNull)
-			throws IOException
-	{
-		if (nvp != null && (printNull || nvp.getValue() != null))
-		{
+			throws IOException {
+
+		if (nvp != null && (printNull || nvp.getValue() != null)) {
 			String referenceID = null;
 			ValueFilter<String, String> vf = null;
 			
-			if (nvp instanceof NVPair)
-			{
+			if (nvp instanceof NVPair) {
 				 referenceID = ((NVPair)nvp).getReferenceID();
 				 vf = ((NVPair)nvp).getValueFilter();
 			}
 			
 			//if ( object && isObject)
-			if (isObject)
-			{
+			if (isObject) {
 				//writer.name(nvp.getName());
 				writer.beginObject();
 			
-				if (referenceID != null)
-				{
+				if (referenceID != null) {
 					writer.name(MetaToken.REFERENCE_ID.getName()).value(referenceID);
 				}
 			
-				if (nvp.getName() == null)
-				{
+				if (nvp.getName() == null) {
 					writer.name(MetaToken.NAME.getName()).value(nvp.getName());
 					writer.name(MetaToken.VALUE.getName()).value(nvp.getValue());
-				}
-				else
-				{
+				} else {
 					writer.name(nvp.getName()).value(nvp.getValue());
 				}
 					
-				if (vf != null && FilterType.CLEAR != vf)
-				{
+				if (vf != null && FilterType.CLEAR != vf) {
 					writer.name(MetaToken.VALUE_FILTER.getName()).value(vf.toCanonicalID());
 				}
 				
 				writer.endObject();
 				
-			}
-			else
-			{
+			} else {
 				writer.name(nvp.getName()).value(nvp.getValue());
 			}
 			
@@ -578,79 +467,57 @@ final public class GSONUtil
 	}	
 	
 	public static <V extends NVEntity> V fromJSON(String json) 
-			throws InstantiationException, IllegalAccessException, ClassNotFoundException
-	{
+			throws InstantiationException, IllegalAccessException, ClassNotFoundException {
 		return fromJSON(json, null);
 	}
 	
 	public static Map<String, ?> fromJSONMap(String json) 
-			throws InstantiationException, IllegalAccessException, ClassNotFoundException
-	{
+			throws InstantiationException, IllegalAccessException, ClassNotFoundException {
 		Map<String, Object> ret = new HashMap<String, Object>();
 		
 		JsonElement je = new JsonParser().parse(json);
 		
 		log.info("JSONElement created from json (String): " + je);
 		
-		if (je instanceof JsonObject)
-		{
+		if (je instanceof JsonObject) {
 			JsonObject jo = (JsonObject) je;
 			
-			for (Entry<String, JsonElement> element : jo.entrySet())
-			{
-				if (!element.getValue().isJsonNull())
-				{
-					if (element.getValue().isJsonArray())
-					{
+			for (Entry<String, JsonElement> element : jo.entrySet()) {
+				if (!element.getValue().isJsonNull()) {
+					if (element.getValue().isJsonArray()) {
 						List<Object> list = new ArrayList<Object>();
 						
 						JsonArray jsonArray = element.getValue().getAsJsonArray();
 						
-						for (int i = 0; i < jsonArray.size(); i++)
-						{
-							if (jsonArray.get(i).isJsonObject())
-							{
+						for (int i = 0; i < jsonArray.size(); i++) {
+							if (jsonArray.get(i).isJsonObject()) {
 								NVEntity nve = fromJSON(jsonArray.get(i).getAsJsonObject(), null);
 								list.add(nve);
-							}
-							else if (jsonArray.get(i).isJsonPrimitive())
-							{
+							} else if (jsonArray.get(i).isJsonPrimitive()) {
 								JsonPrimitive jsonPrimitive = jsonArray.get(i).getAsJsonPrimitive();
 								
-								if (jsonPrimitive.isString())
-								{
+								if (jsonPrimitive.isString()) {
 									list.add(jsonArray.get(i).getAsString());
-								}
-								else if (jsonPrimitive.isBoolean())
-								{
+								} else if (jsonPrimitive.isBoolean()) {
 									list.add(jsonArray.get(i).getAsBoolean());
 								}
 							}
 						}
 
 						ret.put(element.getKey(), list);
-					}
-					else if (element.getValue().isJsonObject())
-					{
+					} else if (element.getValue().isJsonObject()) {
 						NVEntity nve = fromJSON(element.getValue().getAsJsonObject(), null);
 						ret.put(element.getKey(), nve);
-					}
-					else if (element.getValue().isJsonPrimitive())
-					{
+					} else if (element.getValue().isJsonPrimitive()) {
 						JsonPrimitive jsonPrimitive = element.getValue().getAsJsonPrimitive();
 						
-						if (jsonPrimitive.isString())
-						{
+						if (jsonPrimitive.isString()) {
 							ret.put(element.getKey(), jsonPrimitive.getAsString());
-						}
-						else if (jsonPrimitive.isBoolean())
-						{
+						} else if (jsonPrimitive.isBoolean()) {
 							ret.put(element.getKey(), jsonPrimitive.getAsBoolean());
 						}
 					}
-				}
-				else
-				{
+				} else {
 					ret.put(element.getKey(), null);
 				}
 			}
@@ -661,8 +528,7 @@ final public class GSONUtil
 	
 	@SuppressWarnings("unchecked")
 	public static String toJSONMap(Map<String, ?> map) 
-			throws IOException
-	{
+			throws IOException {
 		StringWriter sw = new StringWriter();
 		JsonWriter writer = new JsonWriter(sw);
 		writer.setSerializeNulls(true);
@@ -671,56 +537,38 @@ final public class GSONUtil
 		
 		writer.beginObject();
 
-		if (map != null && map.size() > 0)
-		{
-			for (Entry<String, ?> entry : map.entrySet())
-			{
+		if (map != null && map.size() > 0) {
+			for (Entry<String, ?> entry : map.entrySet()) {
 				Object value = entry.getValue();
 				
 				writer.name(entry.getKey());
 				
-				if (value != null)
-				{
-					if (value instanceof List)
-					{
+				if (value != null) {
+					if (value instanceof List) {
 						List<?> list = (List<?>) value;
 						
 						writer.beginArray();
 						
-						for (Object val : list)
-						{
-							if (val instanceof NVEntity)
-							{
+						for (Object val : list) {
+							if (val instanceof NVEntity) {
 								toJSON(writer, (Class<? extends NVEntity>) val.getClass(), (NVEntity) val, false, true);
-							}
-							else if (val instanceof String)
-							{
+							} else if (val instanceof String) {
 								writer.value((String) val);
-							}
-							else if (val instanceof Boolean)
-							{
+							} else if (val instanceof Boolean) {
 								writer.value((boolean) val);
 							}
 						}
 						
 						writer.endArray();
-					}
-					else if (value instanceof NVEntity)
-					{
+					} else if (value instanceof NVEntity) {
 						toJSON(writer, (Class<? extends NVEntity>) value.getClass(), (NVEntity) value, false, true);
-					}
-					else if (value instanceof String)
-					{
+					} else if (value instanceof String) {
 						writer.value((String) value);
-					}
-					else if (value instanceof Boolean)
-					{
+					} else if (value instanceof Boolean) {
 						writer.value((boolean) value);
 					}
-				}
-				else
-				{
-					writer.nullValue();
+				} else {
+				    writer.nullValue();
 				}
 			}
 		}
@@ -733,13 +581,11 @@ final public class GSONUtil
 	
 	@SuppressWarnings("unchecked")
 	public static <V extends NVEntity> V fromJSON(String json, Class<? extends NVEntity> clazz) 
-			throws InstantiationException, IllegalAccessException, ClassNotFoundException
-	{
+			throws InstantiationException, IllegalAccessException, ClassNotFoundException {
+
 		JsonElement je = new JsonParser().parse(json);
 		
-		if (je instanceof JsonObject)
-		{
-		
+		if (je instanceof JsonObject) {
 			return (V) fromJSON((JsonObject)je, clazz);
 		}
 		
@@ -748,62 +594,52 @@ final public class GSONUtil
 	
 	@SuppressWarnings("unchecked")
 	private static NVEntity fromJSON(JsonObject jo, Class<? extends NVEntity> clazz)
-			throws InstantiationException, IllegalAccessException, ClassNotFoundException
-	{
+			throws InstantiationException, IllegalAccessException, ClassNotFoundException {
+
 		// check if the jo has class name setup
 		// before creating the new instance
 		JsonElement classType = jo.get(MetaToken.CLASS_TYPE.getName());
-		if (classType !=null)
-		{
-			if (!classType.isJsonNull())
-			{
+
+		if (classType !=null) {
+			if (!classType.isJsonNull()) {
 				clazz = (Class<? extends NVEntity>) Class.forName( classType.getAsString());
 			}
 		}
 		
 		NVEntity nve = null;
 		
-		try
-		{
+		try {
 			nve = clazz.newInstance();
-		}
-		catch(InstantiationException ie)
-		{
-			ie.printStackTrace();
+		} catch(InstantiationException ie) {
+		    ie.printStackTrace();
 			log.info("Error class:" + clazz);
 			log.info("" + jo.toString());
 			throw ie;
 		}
 		
-		if (jo.get(MetaToken.REFERENCE_ID.getName()) != null && !jo.get(MetaToken.REFERENCE_ID.getName()).isJsonNull())
-		{
+		if (jo.get(MetaToken.REFERENCE_ID.getName()) != null && !jo.get(MetaToken.REFERENCE_ID.getName()).isJsonNull()) {
 			nve.setReferenceID(jo.get(MetaToken.REFERENCE_ID.getName()).getAsString());
 		}	
 		
 		NVConfigEntity mcEntity = (NVConfigEntity) nve.getNVConfig();
 	
 		List<NVConfig> nvconfigs = mcEntity.getAttributes();
-		
-		for (NVConfig nvc: nvconfigs)
-		{
+
+		for (NVConfig nvc: nvconfigs) {
 			Class<?> metaType = nvc.getMetaType();
 			JsonElement je = jo.get(nvc.getName());
 			
-			if (je != null && !je.isJsonNull())
-			{
+			if (je != null && !je.isJsonNull()) {
 				NVBase<?> nvb = nve.lookup(nvc.getName());
 				
-				if (nvc.isArray())
-				{
+				if (nvc.isArray()) {
 					//if ( nvb instanceof NVBase<List<NVEntity>>)
 					
 					//if ( NVEntity.class.isAssignableFrom( metaType.getComponentType()))
-					if (NVEntity.class.isAssignableFrom(nvc.getMetaTypeBase()))
-					{
+					if (NVEntity.class.isAssignableFrom(nvc.getMetaTypeBase())) {
 						ArrayValues<NVEntity> tempArray = (ArrayValues<NVEntity>) nvb;
 						JsonArray jsonArray = je.getAsJsonArray();
-						for (int i = 0; i< jsonArray.size(); i++)
-						{
+						for (int i = 0; i< jsonArray.size(); i++) {
 							JsonObject jobj = jsonArray.get(i).getAsJsonObject();
 //							try
 							{
@@ -818,124 +654,89 @@ final public class GSONUtil
 						}
 					}
 					// enum must be checked first
-					else if (metaType.getComponentType().isEnum())
-					{
+					else if (metaType.getComponentType().isEnum()) {
 						JsonArray jsonArray = je.getAsJsonArray();
 						NVBase<List<Enum<?>>> nel = (NVBase<List<Enum<?>>>) nvb;
 						
-						for (int i = 0; i< jsonArray.size(); i++)
-						{
+						for (int i = 0; i< jsonArray.size(); i++) {
 							String jobj = jsonArray.get(i).getAsString();
 							nel.getValue().add(SharedUtil.enumValue(metaType.getComponentType(), jobj));
 						}
-					}
-					else if (String[].class.equals(metaType))
-					{
+					} else if (String[].class.equals(metaType)) {
 						JsonArray jsonArray = je.getAsJsonArray();
 						ArrayValues<NVPair> nvpm = (ArrayValues<NVPair>) nvb;
 						
-						for (int i = 0; i< jsonArray.size(); i++)
-						{
+						for (int i = 0; i< jsonArray.size(); i++) {
 							JsonObject jobj = jsonArray.get(i).getAsJsonObject();
 							nvpm.add(toNVPair( jobj));	
 						}
-					}
-					else if (Long[].class.equals(metaType))
-					{
+					} else if (Long[].class.equals(metaType)) {
 						JsonArray jsonArray = je.getAsJsonArray();
 						NVBase<ArrayList<Long>> nval = (NVBase<ArrayList<Long>>) nvb;
 						
-						for (int i = 0; i< jsonArray.size(); i++)
-						{
+						for (int i = 0; i< jsonArray.size(); i++) {
 							nval.getValue().add( jsonArray.get(i).getAsLong());
 						}	
-					}
-					else if (byte[].class.equals(metaType))
-					{
+					} else if (byte[].class.equals(metaType)) {
 						String byteArray64 = je.getAsString();
 						
-						if (byteArray64 != null)
-						{
+						if (byteArray64 != null) {
 							nve.setValue(nvc, SharedBase64.decode(byteArray64.getBytes()));
 						}
-					}
-					else if (Integer[].class.equals(metaType))
-					{
+					} else if (Integer[].class.equals(metaType)) {
 						JsonArray jsonArray = je.getAsJsonArray();
 						NVBase<ArrayList<Integer>> nval = (NVBase<ArrayList<Integer>>) nvb;
 						
-						for (int i = 0; i< jsonArray.size(); i++)
-						{
+						for (int i = 0; i< jsonArray.size(); i++) {
 							nval.getValue().add((int) jsonArray.get(i).getAsLong());
 						}	
-					}
-					else if (Float[].class.equals(metaType))
-					{
+					} else if (Float[].class.equals(metaType)) {
 						JsonArray jsonArray = je.getAsJsonArray();
 						NVBase<ArrayList<Float>> nval = (NVBase<ArrayList<Float>>) nvb;
 						
-						for (int i = 0; i< jsonArray.size(); i++)
-						{
+						for (int i = 0; i< jsonArray.size(); i++) {
 							nval.getValue().add((float) jsonArray.get(i).getAsDouble());
 						}	
-					}
-					else if (Double[].class.equals(metaType))
-					{
+					} else if (Double[].class.equals(metaType)) {
 						JsonArray jsonArray = je.getAsJsonArray();
 						NVBase<ArrayList<Double>> nval = (NVBase<ArrayList<Double>>) nvb;
 						
-						for (int i = 0; i < jsonArray.size(); i++)
-						{
+						for (int i = 0; i < jsonArray.size(); i++) {
 							nval.getValue().add(jsonArray.get(i).getAsDouble());
 						}	
-					}
-					else if (Date[].class.equals(metaType))
-					{
+					} else if (Date[].class.equals(metaType)) {
 						JsonArray jsonArray = je.getAsJsonArray();
 						NVBase<ArrayList<Long>> nval = (NVBase<ArrayList<Long>>) nvb;
 						
-						for (int i = 0; i< jsonArray.size(); i++)
-						{
+						for (int i = 0; i< jsonArray.size(); i++) {
 							JsonPrimitive jp = (JsonPrimitive) jsonArray.get(i);
 							long tempDate = 0;
 							
-							if (jp.isString() && nvc.getValueFilter() != null)
-							{
+							if (jp.isString() && nvc.getValueFilter() != null) {
 								tempDate = (Long) nvc.getValueFilter().validate(jp.getAsString());
-							}
-							else
-							{
+							} else {
 								tempDate = jp.getAsLong();
 							}
 							
 							nval.getValue().add(tempDate);
 						}	
-					}
-					else if (BigDecimal[].class.equals(metaType))
-					{
+					} else if (BigDecimal[].class.equals(metaType)) {
 						JsonArray jsonArray = je.getAsJsonArray();
 						NVBase<ArrayList<BigDecimal>> nval = (NVBase<ArrayList<BigDecimal>>) nvb;
 						
-						for (int i = 0; i < jsonArray.size(); i++)
-						{
+						for (int i = 0; i < jsonArray.size(); i++) {
 							nval.getValue().add(jsonArray.get(i).getAsBigDecimal());
 						}	
 					}
 					
-				}
-				else // not array 
-				{
-					if (nvc instanceof NVConfigEntity)
-					{
-						if (!(je instanceof JsonNull))
-						{
+				} else {
+				    // not array
+					if (nvc instanceof NVConfigEntity) {
+						if (!(je instanceof JsonNull)) {
 							((NVBase<NVEntity>) nvb).setValue(fromJSON(je.getAsJsonObject(), (Class<? extends NVEntity>) nvc.getMetaType()));
 						}
-					}
-					else if (nvc.isEnum())
-					{
-						if (!(je instanceof JsonNull))
-						{
+					} else if (nvc.isEnum()) {
+						if (!(je instanceof JsonNull)) {
 //							if (metaType.isAssignableFrom( DynamicEnumMap.class))
 //							{
 //								
@@ -946,48 +747,28 @@ final public class GSONUtil
 								((NVBase<Enum<?>>)nvb).setValue(SharedUtil.enumValue(metaType, je.getAsString()));
 							}
 						}
-					}
-					else if (String.class.equals(metaType))
-					{
-						if (!(je instanceof JsonNull))
-						{
+					} else if (String.class.equals(metaType)) {
+						if (!(je instanceof JsonNull)) {
 							((NVPair) nvb).setValue(je.getAsString());
 						}
-					}
-					else if (Long.class.equals(metaType))
-					{ 
+					} else if (Long.class.equals(metaType)) {
 						((NVBase<Long>) nvb).setValue(je.getAsLong());
-					}
-					else if (Boolean.class.equals(metaType))
-					{
+					} else if (Boolean.class.equals(metaType)) {
 						 ((NVBase<Boolean>) nvb).setValue(je.getAsBoolean());
-					}
-					else if ( Integer.class.equals(metaType))
-					{
+					} else if ( Integer.class.equals(metaType)) {
 						 ((NVBase<Integer>) nvb).setValue((int)je.getAsLong());
-					}
-					else if (Float.class.equals(metaType))
-					{
+					} else if (Float.class.equals(metaType)) {
 						 ((NVBase<Float>) nvb).setValue((float)je.getAsDouble());
-					}
-					else if (Double.class.equals(metaType))
-					{
+					} else if (Double.class.equals(metaType)) {
 						 ((NVBase<Double>) nvb).setValue(je.getAsDouble());
-					}
-					else if (Date.class.equals(metaType))
-					{
+					} else if (Date.class.equals(metaType)) {
 						JsonPrimitive jp = (JsonPrimitive) je;
-						if (jp.isString() && nvc.getValueFilter() != null)
-						{
+						if (jp.isString() && nvc.getValueFilter() != null) {
 							((NVBase<Long>) nvb).setValue((Long) nvc.getValueFilter().validate(jp.getAsString()));
-						}
-						else
-						{
+						} else {
 							((NVBase<Long>) nvb).setValue(jp.getAsLong());
 						}
-					}
-					else if (BigDecimal.class.equals(metaType))
-					{
+					} else if (BigDecimal.class.equals(metaType)) {
 						((NVBase<BigDecimal>) nvb).setValue(je.getAsBigDecimal());
 					}
 					
@@ -999,53 +780,42 @@ final public class GSONUtil
 		return nve;
 	}
 	
-	private static NVPair toNVPair(JsonObject jo)
-	{
+	private static NVPair toNVPair(JsonObject jo) {
 		NVPair nvp = new NVPair();
 	
-		if (jo.get(MetaToken.NAME.getName())!= null && !jo.get(MetaToken.NAME.getName()).isJsonNull())
-		{
+		if (jo.get(MetaToken.NAME.getName())!= null && !jo.get(MetaToken.NAME.getName()).isJsonNull()) {
 			nvp.setName(jo.get(MetaToken.NAME.getName()).getAsString());
 		}
 		
-		if (jo.get(MetaToken.VALUE.getName()) != null && !jo.get(MetaToken.VALUE.getName()).isJsonNull())
-		{
+		if (jo.get(MetaToken.VALUE.getName()) != null && !jo.get(MetaToken.VALUE.getName()).isJsonNull()) {
 			nvp.setValue(jo.get(MetaToken.VALUE.getName()).getAsString());
 		}
 		
-		if (jo.get(MetaToken.REFERENCE_ID.getName()) != null)
-		{
+		if (jo.get(MetaToken.REFERENCE_ID.getName()) != null) {
 			nvp.setReferenceID(jo.get(MetaToken.REFERENCE_ID.getName()).getAsString());
 		}
 		
-		if (jo.get(MetaToken.VALUE_FILTER.getName()) != null)
-		{
+		if (jo.get(MetaToken.VALUE_FILTER.getName()) != null) {
 			ValueFilter<String, String> vf = (FilterType) SharedUtil.enumValue(FilterType.class, jo.get(MetaToken.VALUE_FILTER.getName()).getAsString());
 			
-			if (vf == null)
-			{
+			if (vf == null) {
 				vf = DynamicEnumMapManager.SINGLETON.lookup(jo.get(MetaToken.VALUE_FILTER.getName()).getAsString());
 			}
 			
-			if (vf != null)
-			{
+			if (vf != null) {
 				nvp.setValueFilter(vf);
 			}
 		}
 		
-		if (nvp.getName() == null && nvp.getValue() == null) 
-		{
+		if (nvp.getName() == null && nvp.getValue() == null) {
 			// we might have "name" : "value"
 			Iterator<Entry<String, JsonElement>> it = jo.entrySet().iterator();
-			while (it.hasNext())
-			{
+			while (it.hasNext()) {
 				Entry<String, JsonElement> nv = it.next();
 				String name = nv.getKey();
-				if (!MetaToken.REFERENCE_ID.getName().equals(name) && !MetaToken.VALUE_FILTER.getName().equals(name) )
-				{
+				if (!MetaToken.REFERENCE_ID.getName().equals(name) && !MetaToken.VALUE_FILTER.getName().equals(name) ) {
 					nvp.setName(name);
-					if (!nv.getValue().isJsonNull())
-					{
+					if (!nv.getValue().isJsonNull()) {
 						nvp.setValue(nv.getValue().getAsString());
 					}
 					
@@ -1058,14 +828,11 @@ final public class GSONUtil
 	}
 	
 	public static String toJSONs(List<? extends NVEntity> list, boolean indent, boolean printNull) 
-			throws IOException
-	{
+			throws IOException {
 		StringBuilder sb = new StringBuilder();
 		
-		for (NVEntity nve : list)
-		{
-			if (sb.length() > 0)
-			{
+		for (NVEntity nve : list) {
+			if (sb.length() > 0) {
 				sb.append('\n');
 			}
 			
@@ -1076,22 +843,21 @@ final public class GSONUtil
 	}
 	
 	public static String toJSONValues(NVEntity[] list, boolean indent, boolean printNull) 
-			throws IOException
-	{
+			throws IOException {
 		StringWriter sw = new StringWriter();
 		JsonWriter writer = new JsonWriter( sw);
 		writer.setSerializeNulls(true);
 		writer.setHtmlSafe(true);
-		if (indent)
-		{
+
+		if (indent) {
 			writer.setIndent("  ");
 		}
+
 		writer.beginObject();
 		writer.name(MetaToken.VALUES.getName());
 		writer.beginArray();
 		
-		for (NVEntity nve : list)
-		{
+		for (NVEntity nve : list) {
 			if (nve != null)
 			toJSON(writer, nve.getClass(), nve, printNull, true);
 		}
@@ -1104,18 +870,15 @@ final public class GSONUtil
 	}
 	
 	public static List<NVEntity> fromJSONValues(String json) 
-			throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException
-	{
+			throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		JsonElement je = new JsonParser().parse(json);
 		
-		if (je instanceof JsonObject)
-		{
+		if (je instanceof JsonObject) {
 			List<NVEntity> ret = new ArrayList<NVEntity>();
 		
 			JsonArray ja = 	(JsonArray) ((JsonObject) je).get(MetaToken.VALUES.getName());
 			
-			for (int i = 0; i < ja.size(); i++)
-			{
+			for (int i = 0; i < ja.size(); i++) {
 				ret.add(fromJSON((JsonObject)ja.get(i), null));
 			}
 			
@@ -1127,23 +890,17 @@ final public class GSONUtil
 
 	@SafeVarargs
 	@SuppressWarnings("unchecked")
-	public static <V extends NVEntity> List<V> fromJSONs(String json, Class<? extends NVEntity> ...classes)
-	{
+	public static <V extends NVEntity> List<V> fromJSONs(String json, Class<? extends NVEntity> ...classes) {
 		List<V> ret = new ArrayList<V>();
 		
 		List<CharSequence> tokens = SharedStringUtil.parseGroup(json, "{", "}", true);
 		
-		for (CharSequence token : tokens)
-		{
-			for (Class<? extends NVEntity> c : classes)
-			{
-				try
-				{
+		for (CharSequence token : tokens) {
+			for (Class<? extends NVEntity> c : classes) {
+				try {
 					NVEntity nve = fromJSON((String) token, c);
 					ret.add((V) nve);
-				}
-				catch (Exception e)
-				{
+				} catch (Exception e) {
 					
 				}
 			}
@@ -1153,63 +910,51 @@ final public class GSONUtil
 	}
 	
 	public static DynamicEnumMap fromJSONDynamicEnumMap(String json)
-			throws InstantiationException, IllegalAccessException, ClassNotFoundException
-	{
+			throws InstantiationException, IllegalAccessException, ClassNotFoundException {
 		DynamicEnumMap ret = new DynamicEnumMap();
 	
 		JsonElement je = new JsonParser().parse(json);
 
-		if (je instanceof JsonObject)
-		{
+		if (je instanceof JsonObject) {
 			JsonObject jo = (JsonObject) je;
 			
-			if (jo.get(MetaToken.REFERENCE_ID.getName()) != null && !jo.get(MetaToken.REFERENCE_ID.getName()).isJsonNull())
-			{
+			if (jo.get(MetaToken.REFERENCE_ID.getName()) != null && !jo.get(MetaToken.REFERENCE_ID.getName()).isJsonNull()) {
 				ret.setReferenceID(jo.get(MetaToken.REFERENCE_ID.getName()).getAsString());
 			}
 			
-			if (jo.get(MetaToken.USER_ID.getName()) != null && !jo.get(MetaToken.USER_ID.getName()).isJsonNull())
-			{
+			if (jo.get(MetaToken.USER_ID.getName()) != null && !jo.get(MetaToken.USER_ID.getName()).isJsonNull()) {
 				ret.setUserID(jo.get(MetaToken.USER_ID.getName()).getAsString());
 			}
 			
-			if (jo.get(MetaToken.ACCOUNT_ID.getName()) != null && !jo.get(MetaToken.ACCOUNT_ID.getName()).isJsonNull())
-			{
+			if (jo.get(MetaToken.ACCOUNT_ID.getName()) != null && !jo.get(MetaToken.ACCOUNT_ID.getName()).isJsonNull()) {
 				ret.setAccountID(jo.get(MetaToken.ACCOUNT_ID.getName()).getAsString());
 			}
 			
-			if (jo.get(MetaToken.NAME.getName()) != null && !jo.get(MetaToken.NAME.getName()).isJsonNull())
-			{
+			if (jo.get(MetaToken.NAME.getName()) != null && !jo.get(MetaToken.NAME.getName()).isJsonNull()) {
 				ret.setName(jo.get(MetaToken.NAME.getName()).getAsString());
 			}
 			
-			if (jo.get(MetaToken.DESCRIPTION.getName()) != null && !jo.get(MetaToken.DESCRIPTION.getName()).isJsonNull())
-			{
+			if (jo.get(MetaToken.DESCRIPTION.getName()) != null && !jo.get(MetaToken.DESCRIPTION.getName()).isJsonNull()) {
 				ret.setDescription(jo.get(MetaToken.DESCRIPTION.getName()).getAsString());
 			}
 			
-			if (jo.get(MetaToken.IS_FIXED.getName()) != null && !jo.get(MetaToken.IS_FIXED.getName()).isJsonNull())
-			{
+			if (jo.get(MetaToken.IS_FIXED.getName()) != null && !jo.get(MetaToken.IS_FIXED.getName()).isJsonNull()) {
 				ret.setFixed(jo.get(MetaToken.IS_FIXED.getName()).getAsBoolean());
 			}
-			
-			if (jo.get(MetaToken.STATIC.getName()) != null && !jo.get(MetaToken.STATIC.getName()).isJsonNull())
-			{
+
+			if (jo.get(MetaToken.STATIC.getName()) != null && !jo.get(MetaToken.STATIC.getName()).isJsonNull()) {
 				ret.setStatic(jo.get(MetaToken.STATIC.getName()).getAsBoolean());
 			}
 			
-			if (jo.get(MetaToken.IGNORE_CASE.getName()) != null && !jo.get(MetaToken.IGNORE_CASE.getName()).isJsonNull())
-			{
+			if (jo.get(MetaToken.IGNORE_CASE.getName()) != null && !jo.get(MetaToken.IGNORE_CASE.getName()).isJsonNull()) {
 				ret.setStatic(jo.get(MetaToken.IGNORE_CASE.getName()).getAsBoolean());
 			}
 			
-			if (jo.get(MetaToken.VALUE.getName()) != null && !jo.get(MetaToken.VALUE.getName()).isJsonNull())
-			{
+			if (jo.get(MetaToken.VALUE.getName()) != null && !jo.get(MetaToken.VALUE.getName()).isJsonNull()) {
 				List<NVPair> list = new ArrayList<NVPair>();
 				JsonArray jsonArray = jo.getAsJsonArray(MetaToken.VALUE.getName());
 				
-				for (int i = 0; i< jsonArray.size(); i++)
-				{
+				for (int i = 0; i< jsonArray.size(); i++) {
 					list.add(toNVPair(jsonArray.get(i).getAsJsonObject()));
 				}
 				
@@ -1221,8 +966,7 @@ final public class GSONUtil
 	}
 	
 	public static String toJSONDynamicEnumMap(DynamicEnumMap dem)
-			throws IOException
-	{
+			throws IOException {
 		StringWriter sw = new StringWriter();
 		JsonWriter writer = new JsonWriter(sw);
 		writer.setSerializeNulls(true);
@@ -1237,12 +981,10 @@ final public class GSONUtil
 	}
 	
 	private static JsonWriter toJSONDynamicEnumMap(JsonWriter writer, DynamicEnumMap dem) 
-			throws IOException
-	{
+			throws IOException {
 		writer.beginObject();
 		
-		if (dem != null)
-		{
+		if (dem != null) {
 			writer.name(MetaToken.REFERENCE_ID.getName()).value(dem.getReferenceID());
 			writer.name(MetaToken.USER_ID.getName()).value(dem.getUserID());
 			writer.name(MetaToken.ACCOUNT_ID.getName()).value(dem.getAccountID());
@@ -1255,8 +997,7 @@ final public class GSONUtil
 			writer.name(MetaToken.VALUE.getName());
 			writer.beginArray();
 			
-			for (NVPair nvp : dem.getValue())
-			{
+			for (NVPair nvp : dem.getValue()) {
 				toJSON(writer, nvp, true, true);
 			}
 			
@@ -1269,18 +1010,15 @@ final public class GSONUtil
 	}
 	
 	public static List<DynamicEnumMap> fromJSONDynamicEnumMapList(String json)
-			throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException
-	{
+			throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException {
 		JsonElement je = new JsonParser().parse(json);
 		
-		if (je instanceof JsonObject)
-		{
+		if (je instanceof JsonObject) {
 			List<DynamicEnumMap> ret = new ArrayList<DynamicEnumMap>();
 		
 			JsonArray ja = 	(JsonArray) ((JsonObject) je).get(MetaToken.VALUES.getName());
 			
-			for (int i = 0; i < ja.size(); i++)
-			{
+			for (int i = 0; i < ja.size(); i++) {
 				ret.add(fromJSONDynamicEnumMap(ja.get(i).toString()));
 			}
 			
@@ -1290,24 +1028,17 @@ final public class GSONUtil
 		return null;
 	}
 	
-	
-	
-	public static String toJSONQuery(QueryRequest qr)
-	{
+	public static String toJSONQuery(QueryRequest qr) {
 		JsonObject jsonObject = new JsonObject();
 		jsonObject.addProperty(MetaToken.CANONICAL_ID.getName(), qr.getCanonicalID());
 				
 		jsonObject.addProperty("batch_size", qr.getBatchSize());
 		
-		if (qr.getFieldNames() != null)
-		{
+		if (qr.getFieldNames() != null) {
 			JsonArray ja = new JsonArray();
-			
-			
-			for (String fn : qr.getFieldNames())
-			{
-				if (!SharedStringUtil.isEmpty(fn))
-				{
+
+			for (String fn : qr.getFieldNames()) {
+				if (!SharedStringUtil.isEmpty(fn)) {
 					ja.add(fn);
 				}
 			}
@@ -1315,41 +1046,31 @@ final public class GSONUtil
 			jsonObject.add("field_names", ja);
 		}
 		
-		if (qr.getQuery() != null)
-		{
+		if (qr.getQuery() != null) {
 			JsonArray ja = new JsonArray();
 			
-			for (QueryMarker qm : qr.getQuery())
-			{
-				if (qm != null)
-				{
+			for (QueryMarker qm : qr.getQuery()) {
+				if (qm != null) {
 					JsonObject qmJSON = new JsonObject();
-					if (qm instanceof GetNameValue)
-					{
-						if (qm instanceof QueryMatch)
-						{
+
+					if (qm instanceof GetNameValue) {
+						if (qm instanceof QueryMatch) {
 							QueryMatch<?> qMatch = (QueryMatch<?>) qm;
 							Object value = qMatch.getValue();
 							
-							if (value instanceof Number)
-							{
+							if (value instanceof Number) {
 								qmJSON.addProperty(qMatch.getName(),(Number)value);
-							}
-							else if (value instanceof String)
-							{
+							} else if (value instanceof String) {
 								qmJSON.addProperty(qMatch.getName(), (String) value);
-							}
-							else if (value instanceof Enum)
-							{
+							} else if (value instanceof Enum) {
 								qmJSON.addProperty(qMatch.getName(), ((Enum<?>) value).name());
 							}
 							
-							if (qMatch.getOperator() != null)
-								qmJSON.addProperty(MetaToken.RELATIONAL_OPERATOR.getName(), qMatch.getOperator().name());
+							if (qMatch.getOperator() != null) {
+                                qmJSON.addProperty(MetaToken.RELATIONAL_OPERATOR.getName(), qMatch.getOperator().name());
+                            }
 						}
-					}
-					else if (qm instanceof LogicalOperator)
-					{
+					} else if (qm instanceof LogicalOperator) {
 						qmJSON.addProperty(MetaToken.LOGICAL_OPERATOR.getName(), ((LogicalOperator)qm).name());
 					}
 					
@@ -1358,16 +1079,13 @@ final public class GSONUtil
 			}
 			
 			jsonObject.add("query", ja);
-			
 		}
-		
-		
+
 		return jsonObject.toString();
 	}
 
 	public static String toJSONDynamicEnumMapList(List<DynamicEnumMap> list)
-			throws IOException
-	{	
+			throws IOException {
 		StringWriter sw = new StringWriter();
 		JsonWriter writer = new JsonWriter( sw);
 		writer.setSerializeNulls(true);
@@ -1378,10 +1096,8 @@ final public class GSONUtil
 		writer.name(MetaToken.VALUES.getName());
 		writer.beginArray();
 		
-		for (DynamicEnumMap dem : list)
-		{
-			if (dem != null)
-			{
+		for (DynamicEnumMap dem : list) {
+			if (dem != null) {
 				toJSONDynamicEnumMap(writer, dem);
 			}
 		}

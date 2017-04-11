@@ -24,7 +24,7 @@ import java.io.Serializable;
  */
 @SuppressWarnings("serial")
 public class EnumList
-	implements Serializable {
+		implements Serializable {
 
 	private String enumClassName;
 	private Enum<?>[] enumList;

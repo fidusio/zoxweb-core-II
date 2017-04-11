@@ -25,19 +25,15 @@ import org.apache.shiro.subject.support.SubjectThreadState;
  *
  */
 public class SubjectSwap
-	implements AutoCloseable
-{
+		implements AutoCloseable {
+
 	private final SubjectThreadState  sts;
 	
-	public SubjectSwap(Subject toSwapWith)
-	{
-		if (toSwapWith != null)
-		{
+	public SubjectSwap(Subject toSwapWith) {
+		if (toSwapWith != null) {
 			sts = new SubjectThreadState(toSwapWith);
 			sts.bind();
-		}
-		else
-		{
+		} else {
 			sts = null;
 		}
 	}
@@ -46,9 +42,9 @@ public class SubjectSwap
 	 * Restore the previous subject context
 	 */
 	@Override
-	public void close() 
-	{
-		if (sts != null)
+	public void close() {
+		if (sts != null) {
 			sts.restore();
+		}
 	}
 }

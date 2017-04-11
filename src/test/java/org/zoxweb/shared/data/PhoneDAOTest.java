@@ -18,7 +18,6 @@ package org.zoxweb.shared.data;
 import java.io.IOException;
 
 import org.zoxweb.server.util.GSONUtil;
-import org.zoxweb.shared.data.PhoneDAO;
 import org.zoxweb.shared.filters.PhoneNumberFilterOLD;
 
 public class PhoneDAOTest {
@@ -33,8 +32,8 @@ public class PhoneDAOTest {
 		phone.setNumber("5551234");
 		
 		System.out.println(GSONUtil.toJSON(phone, true));
-		
-		
+
+
 	
 //		String str = "+1(310)   -302-7883";
 //		String p = str.replaceAll("[\\s-()+]", "");
@@ -50,7 +49,7 @@ public class PhoneDAOTest {
 		String[] numbers = {"+1-212-5551234xt55", "+650-444-1234", "1-444-4441234x22", null, "", "+1-44489", ""};
 		PhoneNumberFilterOLD filter = new PhoneNumberFilterOLD();
 		PhoneDAO phone2 = new PhoneDAO();
-				
+
 		for (int i = 0; i < numbers.length; i++ ) {
 			try {
 				phone2 = filter.validate(numbers[i]);

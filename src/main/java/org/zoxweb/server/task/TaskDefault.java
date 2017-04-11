@@ -17,51 +17,40 @@ package org.zoxweb.server.task;
 
 import java.util.concurrent.atomic.AtomicLong;
 
-
-
 /**
  * This class provides a default implementation of the TaskExecutor and TaskTerminationListener interface, it is
  * recommended to extend this class and customize the implementation to reflect the requirement of the new implementation 
  * @author mnael
  *
  */
-public abstract class TaskDefault 
-implements TaskExecutor
-{
+public abstract class TaskDefault
+		implements TaskExecutor {
+
 	protected AtomicLong executeCount =  new AtomicLong();
 	protected AtomicLong finishCount =  new AtomicLong();
 
-	
 	protected abstract void childExecuteTask(TaskEvent event);
 
-	
 	@Override
-	public void finishTask(TaskEvent event) 
-	{
+	public void finishTask(TaskEvent event) {
 		finishCount.incrementAndGet();	
 	}
 
 	@Override
-	public void executeTask(TaskEvent event) 
-	{
-		try
-		{
+	public void executeTask(TaskEvent event) {
+		try {
 			childExecuteTask(event);
-		}
-		catch( Exception e)
-		{
+		} catch( Exception e) {
 			e.printStackTrace();
 		}		
 		executeCount.incrementAndGet();
 	}
 	
-	public long getExecutionCallbackCount()
-	{
+	public long getExecutionCallbackCount() {
 		return executeCount.get();
 	}
 	
-	public long getTerminationCallbackCount()
-	{
+	public long getTerminationCallbackCount() {
 		return finishCount.get();
 	}
 	

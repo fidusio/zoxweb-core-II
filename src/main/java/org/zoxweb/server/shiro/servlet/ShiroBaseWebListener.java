@@ -23,31 +23,21 @@ import org.apache.shiro.web.env.EnvironmentLoaderListener;
 import org.apache.shiro.web.mgt.WebSecurityManager;
 import org.zoxweb.shared.util.Const;
 
-
-/**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
- */
 public abstract class ShiroBaseWebListener extends  EnvironmentLoaderListener {
 
 	private static final transient Logger log = Logger.getLogger(Const.LOGGER_NAME);
 	
 	protected abstract void init( WebSecurityManager wsm);
-	
-	
+
 	@Override
-	public void contextInitialized(ServletContextEvent sce)
-	{
+	public void contextInitialized(ServletContextEvent sce) {
 		log.info("Initialized");
 		init(initEnvironment(sce.getServletContext()).getWebSecurityManager());
-		
-
 	}	
 	
 	@Override
 	public void contextDestroyed(ServletContextEvent sce) {
-		// TODO Auto-generated method stub
 		super.contextDestroyed(sce);
-
 	}
+
 }

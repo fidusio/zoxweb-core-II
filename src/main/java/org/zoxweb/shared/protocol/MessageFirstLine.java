@@ -21,31 +21,29 @@ import org.zoxweb.shared.util.SharedUtil;
 
 @SuppressWarnings("serial")
 public class MessageFirstLine
-implements Serializable
-{
+        implements Serializable {
+
 	private String tokens[] = null;
-	
-	
-	public MessageFirstLine(String fullRequestLine)
-	{
+
+	public MessageFirstLine(String fullRequestLine) {
+
 		SharedUtil.checkIfNulls("Can't parse a null line", fullRequestLine);
-		String tokensTemp[] = fullRequestLine.split(" ");
-		if ( tokensTemp == null || tokensTemp.length < 3)
-		{
+		String[] tokensTemp = fullRequestLine.split(" ");
+
+		if (tokensTemp == null || tokensTemp.length < 3) {
 			throw new IllegalArgumentException("illegal tokens");
 		}
+
 		tokens = new String[3];
 		int index = 0;
-		for (int i = 0; i < tokens.length; i++)
-		{
+
+		for (int i = 0; i < tokens.length; i++) {
 			tokens[index] = tokensTemp[index++];
 		}
 		
-		if (tokensTemp.length > 3)
-		{
-			for (int i=index; i < tokensTemp.length; i++)
-			{
-				tokens[tokens.length -1]= " " + tokensTemp[i];
+		if (tokensTemp.length > 3) {
+			for (int i = index; i < tokensTemp.length; i++) {
+				tokens[tokens.length -1] = " " + tokensTemp[i];
 			}
 		}
 	}
@@ -53,26 +51,28 @@ implements Serializable
 	public String getFirstToken() {
 		return tokens[0];
 	}
+
 	public void setFirstToken(String tok1) {
 		tokens[0] = tok1;
 	}
+
 	public String getSecondToken() {
 		return tokens[1];
 	}
-	public void setSecondToken(String tok2) 
-	{
+
+	public void setSecondToken(String tok2) {
 		tokens[1] = tok2;
 	}
+
 	public String getThirdToken() {
 		return tokens[2];
 	}
-	public void setThirdToken(String tok3) 
-	{
+
+	public void setThirdToken(String tok3) {
 		tokens[2] = tok3;
 	}
 	
-	public String toString()
-	{
+	public String toString() {
 		return tokens[0] + " " + tokens[1] + " " + tokens[2];
 	}
 	

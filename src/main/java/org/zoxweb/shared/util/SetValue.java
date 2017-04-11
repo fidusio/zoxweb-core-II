@@ -15,7 +15,6 @@
  */
 package org.zoxweb.shared.util;
 
-
 /**
  * The setter part of the value interface.
  * @author mnael

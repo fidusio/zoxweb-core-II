@@ -21,12 +21,10 @@ import org.zoxweb.shared.util.SharedStringUtil;
 /**
  * This class filters the credit card number based on the credit card type.
  * @author mzebib
- *
  */
 @SuppressWarnings("serial")
-public class CreditCardNumberFilter 
-	implements ValueFilter<String, String>
-{
+public class CreditCardNumberFilter
+		implements ValueFilter<String, String> {
 	
 	/**
 	 * This variable declares that only one instance of this class can be 
@@ -38,47 +36,41 @@ public class CreditCardNumberFilter
 	 * The default constructor is declared private to prevent
 	 * outside instantiation of this class.
 	 */
-	private CreditCardNumberFilter()
-	{
+	private CreditCardNumberFilter() {
 		
 	}
 	
 	/**
 	 * Validates the credit card number.
-	 * @param ccNumber
+	 * @param creditCardNumber
 	 */
 	@Override
-	public String validate(String ccNumber) 
-			throws NullPointerException, IllegalArgumentException 
-	{	
-		CreditCardType type = CreditCardType.lookup(ccNumber);
+	public String validate(String creditCardNumber)
+			throws NullPointerException, IllegalArgumentException {
+		CreditCardType type = CreditCardType.lookup(creditCardNumber);
 		
-		if (type != null)
-		{
-			ccNumber = ccNumber.trim();
-			ccNumber = ccNumber.replaceAll("[ -]", "");
+		if (type != null) {
+            creditCardNumber = creditCardNumber.trim();
+            creditCardNumber = creditCardNumber.replaceAll("[ -]", "");
 			
-			return ccNumber;
+			return creditCardNumber;
 		}	
 
-		throw new IllegalArgumentException("Invalid credit card number: " + ccNumber);
+		throw new IllegalArgumentException("Invalid credit card number: " + creditCardNumber);
 
 	}
 
 	/**
 	 * Checks if the credit number is valid.
-	 * @param ccNumber
+	 * @param creditCardNumber
 	 */
 	@Override
-	public boolean isValid(String ccNumber) 
-	{
+	public boolean isValid(String creditCardNumber) {
 		try
 		{
-			validate(ccNumber);
+			validate(creditCardNumber);
 			return true;
-		}
-		catch(Exception e)
-		{
+		} catch(Exception e) {
 			return false;
 		}
 	
@@ -88,9 +80,8 @@ public class CreditCardNumberFilter
 	 * Returns string representation of this class.
 	 */
 	@Override
-	public String toCanonicalID() 
-	{
-		return  "CreditCardNumberFilter";
+	public String toCanonicalID() {
+		return "CreditCardNumberFilter";
 	}
 	
 	/**
@@ -100,39 +91,33 @@ public class CreditCardNumberFilter
 	 * @param code
 	 * @return validated CVV code
 	 */
-	public static String validateCVV(String ccNumber, String code)
-	{
+	public static String validateCVV(String ccNumber, String code) {
 		CreditCardType type = CreditCardType.lookup(ccNumber);
 		code = SharedStringUtil.trimOrNull(code);
 		
-		if (type == null)
-		{
+		if (type == null) {
 			throw new IllegalArgumentException("Invalid card number.");
 		}
 		
-		if (code == null)
-		{
+		if (code == null) {
 			throw new IllegalArgumentException("Security code is null.");
 		}
-		
-		
+
 		String patternAMEX = "[0-9]{4}";
 		String patternOther = "[0-9]{3}";
 		
 		String ret = null;
 		
 		switch (type)
-		{
+        {
 		case AMEX:
-			if (code.matches(patternAMEX))
-			{
+			if (code.matches(patternAMEX)) {
 				ret = code;
 			}
 			break;
 		case MASTER:
 		case VISA:
-			if (code.matches(patternOther))
-			{
+			if (code.matches(patternOther)) {
 				ret = code;
 			}
 			break;
@@ -140,8 +125,7 @@ public class CreditCardNumberFilter
 			break;
 		}
 		
-		if  (ret == null)
-		{
+		if (ret == null) {
 			throw new IllegalArgumentException("Invalid card security code: " + code);
 		}
 		
@@ -157,21 +141,17 @@ public class CreditCardNumberFilter
 	 * @throws IllegalArgumentException
 	 */
 	public static String validateCVVByType(CreditCardType type, String code)
-		throws IllegalArgumentException
-	{
+		throws IllegalArgumentException {
 		code = SharedStringUtil.trimOrNull(code);
 		
-		if (type == null)
-		{
+		if (type == null) {
 			throw new IllegalArgumentException("Invalid card type: " + type);
 		}
 		
-		if (code == null)
-		{
+		if (code == null) {
 			throw new IllegalArgumentException("Invalid card security code.");
 		}
-		
-		
+
 		String patternAMEX = "[0-9]{4}";
 		String patternOTHER = "[0-9]{3}";
 		
@@ -180,15 +160,13 @@ public class CreditCardNumberFilter
 		switch (type)
 		{
 		case AMEX:
-			if (code.matches(patternAMEX))
-			{
+			if (code.matches(patternAMEX)) {
 				ret = code;
 			}
 			break;
 		case MASTER:
 		case VISA:
-			if (code.matches(patternOTHER))
-			{
+			if (code.matches(patternOTHER)) {
 				ret = code;
 			}
 			break;
@@ -196,8 +174,7 @@ public class CreditCardNumberFilter
 			break;
 		}
 		
-		if (ret == null)
-		{
+		if (ret == null) {
 			throw new IllegalArgumentException("Invalid card security code: " + code);
 		}
 		

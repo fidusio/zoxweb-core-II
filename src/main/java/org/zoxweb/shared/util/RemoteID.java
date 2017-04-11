@@ -19,8 +19,8 @@ package org.zoxweb.shared.util;
  * The remote ID interface.
  * @author mzebib
  */
-public interface RemoteID<T> 
-{
+public interface RemoteID<T> {
+
 	/**
 	 * Get remote ID.
 	 * @return the object remote unique identifier

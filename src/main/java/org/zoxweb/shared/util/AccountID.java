@@ -18,10 +18,10 @@ package org.zoxweb.shared.util;
 /**
  * The account ID interface.
  * @author mzebib
- *
  * @param <T>
  */
 public interface AccountID<T> {
+
 	/**
 	 * Returns the account ID.
 	 * @return the typed account id

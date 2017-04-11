@@ -18,21 +18,15 @@ package org.zoxweb.server.util;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
-/**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
- */
-public class ReflectionUtil 
-{
-	private ReflectionUtil()
-	{
+public class ReflectionUtil {
+
+	private ReflectionUtil() {
 		
 	}
 	
 	
 	public static Object updateFinalStatic(Class<?> clazz, String fieldName, Object newValue) 
-			throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException  
-	{
+			throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 	
 		Field field = clazz.getDeclaredField(fieldName);
 		boolean fieldAccessible = field.isAccessible();
@@ -53,4 +47,5 @@ public class ReflectionUtil
 		
 		return ret;
    }
+
 }

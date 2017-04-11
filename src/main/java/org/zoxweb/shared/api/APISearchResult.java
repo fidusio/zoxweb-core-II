@@ -20,10 +20,6 @@ import java.util.List;
 import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.TimeStampInterface;
 
-/**
- * @author mzebib
- *
- */
 @SuppressWarnings("serial")
 public class APISearchResult<T>
 	implements TimeStampInterface

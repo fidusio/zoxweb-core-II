@@ -20,11 +20,10 @@ import java.io.Closeable;
 /**
  * The Daemon controller termination interface.
  * @author mzebib
- *
  */
 public interface DaemonController
-extends Closeable
-{
+		extends Closeable {
+
 	/**
 	 * This method checks if the controller is terminated.
 	 * @return true if closed

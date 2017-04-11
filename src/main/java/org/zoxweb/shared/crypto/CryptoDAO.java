@@ -20,7 +20,6 @@ import org.zoxweb.shared.util.SetDescription;
 import org.zoxweb.shared.util.SetName;
 
 public interface CryptoDAO
-	extends SetName, SetDescription, CanonicalID
-{
+		extends SetName, SetDescription, CanonicalID {
 	
 }

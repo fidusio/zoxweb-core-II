@@ -14,10 +14,10 @@
  * the License.
  */
 package org.zoxweb.server.task;
+
 import java.util.EventObject;
 
 import org.zoxweb.shared.util.ReferenceID;
-
 
 /**
  * This event is used to encapsulate the content of a Task Execution, it is mainly used by the TaskProcessor object.
@@ -26,26 +26,21 @@ import org.zoxweb.shared.util.ReferenceID;
  */
 @SuppressWarnings("serial")
 public class TaskEvent
-extends EventObject
-implements ReferenceID<String>
-{
+		extends EventObject
+		implements ReferenceID<String> {
+
 	private final TaskExecutor te;
 	private final Object[] params;
 	private Object executionResult = null;
 	private String refID = null;
-	
 
-	
-	
-	
 	/**
 	 * Create a task event
 	 * @param source generating the event
 	 * @param te the implementation that will execute the event
 	 * @param taskExecutorparams the task executor parameters
 	 */
-	public TaskEvent(Object source, TaskExecutor te, Object... taskExecutorparams)
-	{
+	public TaskEvent(Object source, TaskExecutor te, Object... taskExecutorparams) {
 		super(source);
 		this.te = te;
 		this.params = taskExecutorparams;
@@ -57,18 +52,15 @@ implements ReferenceID<String>
 	 * execute of the task.
 	 * @return
 	 */
-	protected TaskExecutor getTaskExecutor()
-	{
+	protected TaskExecutor getTaskExecutor() {
 		return te;
 	}
-	
-	
+
 	/**
 	 * This method return the parameters that will used inside the TaskExecutor.executeTask() method
 	 * @return parameters
 	 */
-	public Object[] getTaskExecutorParameters()
-	{
+	public Object[] getTaskExecutorParameters() {
 		return params;
 	}
 	
@@ -76,8 +68,7 @@ implements ReferenceID<String>
 	 * This method will return the result of the execution.
 	 * @return result
 	 */
-	public Object getExecutionResult() 
-	{
+	public Object getExecutionResult() {
 		return executionResult;
 	}
 
@@ -87,8 +78,7 @@ implements ReferenceID<String>
 	 * the interpretation of the result is up to the TaskTerminationListener.taskFinished() method to interpret
 	 * @param executionResult
 	 */
-	public void setExecutionResult(Object executionResult) 
-	{
+	public void setExecutionResult(Object executionResult) {
 		this.executionResult = executionResult;
 	}
 	
@@ -96,8 +86,7 @@ implements ReferenceID<String>
 	 * This is custom reference id that context dependent
 	 * @return string id
 	 */
-	public String getReferenceID() 
-	{
+	public String getReferenceID() {
 		return refID;
 	}
 
@@ -105,8 +94,8 @@ implements ReferenceID<String>
 	 * Gets the custom id 
 	 * @param customRef
 	 */
-	public void setReferenceID(String customRef) 
-	{
+	public void setReferenceID(String customRef) {
 		this.refID = customRef;
-	}	
+	}
+
 }

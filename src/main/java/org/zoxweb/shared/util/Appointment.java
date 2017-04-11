@@ -19,10 +19,8 @@ import java.util.Comparator;
 
 import org.zoxweb.shared.util.Const.RelationalOperator;
 
-
 /**
  * The appointment interface.
- *
  */
 public interface Appointment {
 	
@@ -39,7 +37,7 @@ public interface Appointment {
 	 * Set the delay time in millis
 	 * @param delayInMillis
 	 */
-	public void setDelayInMillis( long delayInMillis);
+	public void setDelayInMillis(long delayInMillis);
 	
 	/**
 	 * Returns the expiration in real time.

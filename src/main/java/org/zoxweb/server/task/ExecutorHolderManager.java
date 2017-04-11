@@ -12,43 +12,29 @@ import java.util.concurrent.locks.ReentrantLock;
 import org.zoxweb.shared.util.LifeCycleMonitor;
 import org.zoxweb.shared.util.SharedUtil;
 
-/**
- * 
- * @author mnael
- *
- */
 public class ExecutorHolderManager
-	implements LifeCycleMonitor<ExecutorHolder<?>>,
-			   AutoCloseable
-{
+		implements LifeCycleMonitor<ExecutorHolder<?>>, AutoCloseable {
+
 	public static final ExecutorHolderManager SINGLETON = new ExecutorHolderManager();
 
-	volatile private Map<String, ExecutorHolder<?>> map = new HashMap<String, ExecutorHolder<?>>();
-	volatile private Lock lock = new ReentrantLock();
+	private volatile Map<String, ExecutorHolder<?>> map = new HashMap<String, ExecutorHolder<?>>();
+	private volatile Lock lock = new ReentrantLock();
 	
-	private ExecutorHolderManager()
-	{
+	private ExecutorHolderManager() {
 		
 	}
 	
-	
-	public ExecutorService createCachedThreadPool(String name)
-	{
-		
+	public ExecutorService createCachedThreadPool(String name) {
 		ExecutorService ret = null;
-		try
-		{
+
+		try {
 			ret = new ExecutorServiceHolder(Executors.newCachedThreadPool(), this, name, null);
-		}
-		catch(IllegalArgumentException e)
-		{
+		} catch(IllegalArgumentException e) {
 			e.printStackTrace();
 			throw e;
 		}
-		
-		
+
 		return ret;
-		
 	}
 	
 	/**
@@ -61,18 +47,17 @@ public class ExecutorHolderManager
 	 */
 	@SuppressWarnings("unchecked")
 	public <T extends Executor> T register(Executor exec, String name)
-		throws NullPointerException, IllegalArgumentException
-	{
+			throws NullPointerException, IllegalArgumentException {
 		
 		SharedUtil.checkIfNulls("Executor cannot be null", exec);
-		if (exec instanceof ExecutorHolder)
-		{
+
+		if (exec instanceof ExecutorHolder) {
 			throw new IllegalArgumentException("Cannot resigter an ExecutorHolder: " + exec);
 		}
+
 		T ret = null;
-		try
-		{
-			
+
+		try {
 			// do not change sequence because of inheritance
 			if (exec instanceof ScheduledExecutorService)
 				ret = (T) new ScheduledExecutorServiceHolder((ScheduledExecutorService)exec, this, name, null);
@@ -80,97 +65,70 @@ public class ExecutorHolderManager
 				ret = (T) new ExecutorServiceHolder((ExecutorService)exec, this, name, null);
 			else	
 				ret = (T) new ExecutorHolder<Executor>(exec, this, name, null);
-		}
-		catch(IllegalArgumentException e)
-		{
+		} catch(IllegalArgumentException e) {
 			e.printStackTrace();
 			throw e;
 		}
-		
-		
+
 		return ret;
 	}
-	
-	
-	
-	public void terminate(String name)
-	{
-		try
-		{
+
+	public void terminate(String name) {
+		try {
 			lock.lock();
 			ExecutorHolder<?> eh = map.get(name);
-			if(eh != null)
-			{
-				try
-				{
+			if (eh != null) {
+				try {
 					eh.close();
-				}
-				catch(Exception e)
-				{
+				} catch(Exception e) {
 					
 				}
 			}
 			
-		}
-		finally
-		{
+		} finally {
 			lock.unlock();
 		}
 	}
 	
 	public ExecutorService createFixedThreadPool(String name, int nThreads)
-			throws NullPointerException, IllegalArgumentException
-	{
+			throws NullPointerException, IllegalArgumentException {
 		return register(Executors.newFixedThreadPool(nThreads), name);
 	}
 	
 	public ScheduledExecutorService createScheduledThreadPool(String name, int nThreads)
-			throws NullPointerException, IllegalArgumentException
-	{
+			throws NullPointerException, IllegalArgumentException {
 		return register(Executors.newScheduledThreadPool(nThreads), name);
 	}
-	
-	
-	
-	public int size()
-	{
+
+	public int size() {
 		return map.size();
 	}
 
 	@Override
-	public boolean created(ExecutorHolder<?> t)
-	{
-		try
-		{
+	public boolean created(ExecutorHolder<?> t) {
+		try {
 			lock.lock();
-			if (map.get(t.getName()) == null)
-			{
+
+			if (map.get(t.getName()) == null) {
 				map.put(t.getName(), t);
 				return true;
 			}
-		}
-		finally
-		{
+		} finally {
 			lock.unlock();
 		}
 		
 		return false;
-	
 	}
 
 	@Override
-	public boolean terminated(ExecutorHolder<?> t) 
-	{
-		try
-		{
+	public boolean terminated(ExecutorHolder<?> t) {
+		try {
 			lock.lock();
-			if (map.remove(t.getName()) != null)
-			{	
+
+			if (map.remove(t.getName()) != null) {
 				return true;
 			}
-		}
-		finally
-		{
+		} finally {
 			lock.unlock();
 		}
 		
@@ -179,25 +137,18 @@ public class ExecutorHolderManager
 
 
 	@Override
-	public void close()
-	{
-		// TODO Auto-generated method stub
-		try
-		{
+	public void close() {
+		try {
 			lock.lock();
-			for (ExecutorHolder<?>ev : map.values().toArray(new ExecutorHolder<?>[0]))
-			{
+
+			for (ExecutorHolder<?>ev : map.values().toArray(new ExecutorHolder<?>[0])) {
 				ev.close();
 			}
+
 			map.clear();
-		}
-		
-		finally
-		{
+		} finally {
 			lock.unlock();
 		}
 	}
-	
-	
 	
 }

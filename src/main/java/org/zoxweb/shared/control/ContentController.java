@@ -16,11 +16,16 @@
 package org.zoxweb.shared.control;
 
 /**
- * @author mzebib
- *
+ * The content controller interface.
+ * @param <T>
  */
-public interface ContentController<T>
-{
+public interface ContentController<T> {
 
+    /**
+     * Switches content.
+     * @param content
+     * @return
+     */
 	public T switchContent(T content);
+
 }

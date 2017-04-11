@@ -18,22 +18,33 @@ package org.zoxweb.shared.util;
 import java.util.List;
 
 /**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
+ * The array values interface.
+ * @param <T>
  */
-public interface ArrayValues<T> 
-{
+public interface ArrayValues<T> {
+
 	T get(String str);
+
 	T get(GetName getName);
+
 	int size();
+
 	T[] values();
+
 	T add(T v);
+
 	T remove(T v);
+
 	T remove(String str);
+
 	void clear();
+
 	void add(T[]vals, boolean clear);
+
 	List<T> search(String... criteria);
+
 	boolean isFixed();
+
 	void setFixed(boolean isFixed);
 	
 }

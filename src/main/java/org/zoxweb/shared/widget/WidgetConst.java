@@ -3,12 +3,10 @@ package org.zoxweb.shared.widget;
 import org.zoxweb.shared.util.GetName;
 import org.zoxweb.shared.util.SetNameValue;
 
-public class WidgetConst 
-{
+public class WidgetConst {
 	
 	public enum CSSStyle
-		implements GetName
-	{
+            implements GetName {
 		
 		TEXTBOX_DEFAULT("gwt-TextBox"),
 		TEXTBOX_ERROR("gwt-TextBox-error"),
@@ -20,22 +18,20 @@ public class WidgetConst
 	
 		private String name;
 		
-		CSSStyle(String name)
-		{
+		CSSStyle(String name) {
 			this.name = name;
 		}
 		
 		@Override
-		public String getName() 
-		{
+		public String getName() {
 			return name;
 		}
 		
 	}
 	
 	public enum ImageURL
-		implements SetNameValue<String>
-	{
+			implements SetNameValue<String> {
+
 		ADD("Add", "images/add-icon.png"),
 		RESET("Reset", "images/desktop-toolbar-icons/refresh-icon.png"),
 		SAVE("Save", "images/save-icon.png"),
@@ -72,8 +68,7 @@ public class WidgetConst
 		private String name;
 		private String value;
 		
-		ImageURL(String name, String value)
-		{
+		ImageURL(String name, String value) {
 			this.name = name;
 			this.value = value;
 		}
@@ -85,20 +80,17 @@ public class WidgetConst
 		}
 		
 		@Override
-		public void setName(String name) 
-		{
+		public void setName(String name) {
 			this.name = name;
 		}		
 		
 		@Override
-		public String getValue()
-		{
+		public String getValue() {
 			return value;
 		}
 		
 		@Override
-		public void setValue(String value) 
-		{
+		public void setValue(String value) {
 			this.value = value;
 		}
 		

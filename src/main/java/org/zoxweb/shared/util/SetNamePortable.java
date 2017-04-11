@@ -17,41 +17,29 @@ package org.zoxweb.shared.util;
 
 import java.io.Serializable;
 
-/**
- * 
- */
 @SuppressWarnings("serial")
 public class SetNamePortable
-	implements SetName, Serializable
-{
+        implements SetName, Serializable {
+
 	private String name;
-	public SetNamePortable()
-	{
+
+	public SetNamePortable() {
 		
 	}
-	public SetNamePortable(String name)
-	{
+
+	public SetNamePortable(String name) {
 		setName(name);
 	}
-	
 
-	/**
-	 * @see org.zoxweb.shared.util.GetName#getName()
-	 */
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return name;
 	}
 
-
-	/**
-	 * @see org.zoxweb.shared.util.SetName#setName(java.lang.String)
-	 */
 	@Override
-	public void setName(String name)
-	{
+	public void setName(String name) {
 		SharedUtil.checkIfNulls("Null name", name);
 		this.name = name;
 	}
+
 }

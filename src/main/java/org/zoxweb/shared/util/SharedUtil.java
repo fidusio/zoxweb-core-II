@@ -31,7 +31,7 @@ import org.zoxweb.shared.filters.GetValueFilter;
 import org.zoxweb.shared.filters.ValueFilter;
 
 /**
- * Contains utility methods shared between the client and the server.
+ * Contains shared utility methods.
  * @author mzebib
  *
  */
@@ -1322,8 +1322,7 @@ public class SharedUtil {
 	 * @param toAdd
 	 * @return merged list + toAdd
 	 */
-	public static List<NVConfigEntity> merge(List<NVConfigEntity> list, NVConfigEntity... toAdd) 
-	{
+	public static List<NVConfigEntity> merge(List<NVConfigEntity> list, NVConfigEntity... toAdd) {
 		if (list == null) {
 			list = new ArrayList<NVConfigEntity>();
 		}
@@ -1437,7 +1436,6 @@ public class SharedUtil {
 //		return first;
 //	}
 	
-	
 	/**
 	 * 
 	 * @param list
@@ -1515,8 +1513,7 @@ public class SharedUtil {
 	 * @param match
 	 * @return index of the match, -1 if no match found
 	 */
-	public static int indexOf(byte[] buffer, byte match[])
-	{
+	public static int indexOf(byte[] buffer, byte match[]) {
 		return indexOf(buffer, 0, buffer.length, match, 0, match.length);
 	}
 
@@ -1581,8 +1578,7 @@ public class SharedUtil {
 	 * @param str
 	 * @return matching index
 	 */
-	public static int indexOfIgnoreCase(byte[] buffer, String str)
-	{
+	public static int indexOfIgnoreCase(byte[] buffer, String str) {
 		return indexOf(buffer, 0, buffer.length, str, 0, str.length(), true);
 	}
 	
@@ -1890,17 +1886,13 @@ public class SharedUtil {
 		return ret;
 	}
 	
-	public static boolean doesNameExistNVList(List<NVPair> list, String name)
-	{
+	public static boolean doesNameExistNVList(List<NVPair> list, String name) {
 		return lookup(list, name) != null;
 	}
-	
-	
-	public static <V extends TimeStampInterface> V touch(V ts, CRUD ...ops)
-	{
+
+	public static <V extends TimeStampInterface> V touch(V ts, CRUD ...ops) {
 		SharedUtil.checkIfNulls("Document info is null.", ts);
-		
-		
+
 		if (ts.getCreationTime() == 0) {
 			ts.setCreationTime(System.currentTimeMillis());
 		}
@@ -1908,8 +1900,7 @@ public class SharedUtil {
 		if (ops == null || ops.length ==0) {
 			ts.setLastTimeUpdated(System.currentTimeMillis());
 			ts.setLastTimeRead(System.currentTimeMillis());
-		}
-		else {
+		} else {
 			for (CRUD op : ops) {
 				if (op != null) {
 					switch(op)
@@ -1954,8 +1945,7 @@ public class SharedUtil {
 		if (autoCloseable != null) {
 			try {
 				autoCloseable.close();
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				
 			}
 		}

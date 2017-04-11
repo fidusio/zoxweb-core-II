@@ -1,7 +1,5 @@
 package java.nio;
 
-
-
 /**
  * This class was created to prevent unnecessary buffer, this class CAN NOT invoked or used in the code directly it will cause 
  * class load security exception, it must used in the context of ByteBufferUtil class in tandem with UByteArrayOutputStream  

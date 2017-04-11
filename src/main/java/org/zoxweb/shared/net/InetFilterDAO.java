@@ -31,17 +31,13 @@ import org.zoxweb.shared.util.SharedUtil;
  * The ip filter object is used to mask and filter ip sets
  * 
  * @author mnael
- * 
  */
-
 @SuppressWarnings("serial")
 public class InetFilterDAO
-extends SetNameDescriptionDAO
-{
+		extends SetNameDescriptionDAO {
 	
 	public enum Params
-	implements GetNVConfig
-	{
+			implements GetNVConfig {
 		IP(NVConfigManager.createNVConfig("ip_address", "IP Address", "IP", false, true, String.class)),
 		//FILTER(NVConfigManager.createNVConfig("filter", "Filter", "Filter", false, true, String.class)),
 		NET_MASK(NVConfigManager.createNVConfig("network_mask", "Network Mask", "NetMask", false, true, String.class)),
@@ -50,13 +46,11 @@ extends SetNameDescriptionDAO
 	
 		private final NVConfig cType;
 		
-		Params(NVConfig c)
-		{
+		Params(NVConfig c) {
 			cType = c;
 		}
 		
-		public NVConfig getNVConfig() 
-		{
+		public NVConfig getNVConfig() {
 			return cType;
 		}
 	
@@ -68,8 +62,7 @@ extends SetNameDescriptionDAO
 	 * Default constructor for the bean consistency
 	 * 
 	 */
-	public InetFilterDAO()
-	{
+	public InetFilterDAO() {
 		super(NVC_INET_FILTER_DAO);
 	}
 
@@ -83,18 +76,14 @@ extends SetNameDescriptionDAO
 //		this();
 //		setFilter(filter);
 //	}
-	
-	
-	
+
 
 	/**
 	 * Create a filter based on the ip address and the nework mask
-	 * 
 	 * @param ip
 	 * @param mask
 	 */
-	public InetFilterDAO(String ip, String mask)
-	{
+	public InetFilterDAO(String ip, String mask) {
 		this();
 		setIP(ip);
 		setNetworkMask(mask);
@@ -122,58 +111,43 @@ extends SetNameDescriptionDAO
 
 	/**
 	 * Get the ip, null if no set
-	 * 
 	 * @return the ip 
 	 */
-	public String getIP() 
-	{
+	public String getIP() {
 		return lookupValue(Params.IP);
 	}
 
 	/**
 	 * Set the ip
-	 * 
 	 * @param ip
 	 */
-	public void setIP(String ip)
-	{
+	public void setIP(String ip) {
 		setValue(Params.IP, ip);
-
 	}
 
 	/**
 	 * Get the network mask, null if not set
-	 * 
 	 * @return network mask
 	 */
-	public String getNetworkMask()
-	{
+	public String getNetworkMask() {
 		return lookupValue(Params.NET_MASK);
 	}
 
 	/**
 	 * Set the network mask.
-	 * 
 	 * @param mask
 	 */
-	public void setNetworkMask(String mask)
-	{
+	public void setNetworkMask(String mask) {
 		setValue(Params.NET_MASK , mask);
-
 	}
 	
-	public String getNetwork()
-	{
+	public String getNetwork() {
 		return lookupValue(Params.NETWORK);
 	}
 
-	
-	public void setNetwork(String network)
-	{
+	public void setNetwork(String network) {
 		setValue(Params.NETWORK , network);
 
 	}
-
-
 
 }

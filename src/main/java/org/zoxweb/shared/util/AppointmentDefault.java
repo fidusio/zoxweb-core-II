@@ -17,72 +17,40 @@ package org.zoxweb.shared.util;
 
 import java.io.Serializable;
 
-/**
- * 
- * 
- */
 @SuppressWarnings("serial")
 public class AppointmentDefault
-	implements Appointment, Serializable
-{
+		implements Appointment, Serializable {
 	
 	private long delay;
 	private long expiration;
-	
-	/**
-	 * Create an appointment now
-	 */
-	public AppointmentDefault()
-	{
+
+	public AppointmentDefault() {
 		this(0);
 	}
 	
-	public AppointmentDefault(long delayInMillis)
-	{
+	public AppointmentDefault(long delayInMillis) {
 		setDelayInMillis(delayInMillis);
 	}
-	
-	
-	/**
-	 * @see org.zoxweb.shared.util.Appointment#getDelayInMillis()
-	 */
+
 	@Override
-	public long getDelayInMillis() 
-	{
-		// TODO Auto-generated method stub
+	public long getDelayInMillis() {
 		return delay;
 	}
 
-	/**
-	 * @see org.zoxweb.shared.util.Appointment#setDelayInMillis(long)
-	 */
 	@Override
-	public synchronized void setDelayInMillis(long delayInMillis) 
-	{
-		// TODO Auto-generated method stub
+	public synchronized void setDelayInMillis(long delayInMillis) {
 		delay = delayInMillis;
 		expiration = System.currentTimeMillis() + delay;
-		
 	}
 
-	/**
-	 * @see org.zoxweb.shared.util.Appointment#getExpirationInMillis()
-	 */
 	@Override
-	public synchronized long getExpirationInMillis() 
-	{
-		// TODO Auto-generated method stub
+	public synchronized long getExpirationInMillis() {
 		return expiration;
 	}
 
-	/**
-	 * @see org.zoxweb.shared.util.Appointment#cancel()
-	 */
 	@Override
 	public boolean cancel() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
-	
 }

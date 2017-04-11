@@ -23,8 +23,8 @@ import java.io.Serializable;
  * @author mnael
  *
  */
-public interface CanonicalID  
-	extends Serializable {
+public interface CanonicalID
+		extends Serializable {
 
 	/**
 	 * Converts the implementing object in its canonical form.

@@ -15,14 +15,11 @@
  */
 package org.zoxweb.shared.util;
 
-
 /**
  * The CRUD NVConfig interface.
  * @author mzebib
- *
  */
 public interface CRUDNVConfig
-	extends CRUDEvent, GetNVConfig
-{
+	extends CRUDEvent, GetNVConfig {
 	
 }

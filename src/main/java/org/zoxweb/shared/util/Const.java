@@ -18,20 +18,15 @@ package org.zoxweb.shared.util;
 import org.zoxweb.shared.db.QueryMarker;
 
 /**
- * This class contains various lists of constants declared as enums or as arrays.
+ * Contains constants and enums.
  * @author mzebib
- *
  */
-public class Const
-{
-	/**
-	 * Initializes LOGGER_NAME constant.
-	 */
+public class Const {
+
 	public static final String LOGGER_NAME = "zoxweb-core";
 	
 
-	public enum JavaClassVersion
-	{
+	public enum JavaClassVersion {
 		//VER_1_0("1.0", 45, 3),
 		VER_1_1("1.1", 45, 3),
 		VER_1_2("1.2", 46, 0),
@@ -58,8 +53,6 @@ public class Const
 		public String toString() {
 			return version + "," + major + "." + minor;
 		}
-		
-		
 		public static JavaClassVersion lookup(int major, int minor) {
 			for (JavaClassVersion ver : values()) {
 				if (ver.major == major && ver.minor == minor) {
@@ -70,8 +63,7 @@ public class Const
 			return VER_UNKOWN;
 		}
 		
-		public static JavaClassVersion lookup(String version)
-		{
+		public static JavaClassVersion lookup(String version) {
 			if(!SharedStringUtil.isEmpty(version)) {
 				for (JavaClassVersion ver : values()) {
 					if (ver.version.equalsIgnoreCase(version)) {
@@ -84,10 +76,9 @@ public class Const
 		}
 	}
 	
-	
 	public enum Bool
-		implements GetName, GetValue<Boolean>
-	{
+			implements GetName, GetValue<Boolean> {
+
 		TRUE("true", true),
 		FALSE("false", false),
 		ON("on", true),
@@ -146,8 +137,7 @@ public class Const
 		PENDING,
 		SUSPENDED,
 	}
-	
-	
+
 	public enum ResourceType {
 		FILE,
 		FOLDER,
@@ -157,8 +147,8 @@ public class Const
 	}
 
 	public enum Unit
-		implements GetName
-	{
+		implements GetName {
+
 		EM("em"),
 		PIXEL("px"),
 		PERCENT("%"),
@@ -192,8 +182,8 @@ public class Const
 	}
 	
 	public enum DeviceType
-		implements GetName
-	{
+		implements GetName {
+
 		ANDROID("Android"),
 		IPAD("iPad"),
 		IPHONE("iPhone"),
@@ -230,14 +220,14 @@ public class Const
 	 * Number of bits inside a byte
 	 */
 	//public static final int BITS_IN_BYTE = 8;
+
 	/**
 	 * This enum represents size in bytes of default memory constants.
 	 * @author mnael
-	 *
 	 */
 	public enum SizeInBytes
-		implements GetName
-	{
+            implements GetName {
+
 		// Byte
 		B("B", 1),
 		
@@ -344,10 +334,9 @@ public class Const
 	/**
 	 * This enum represents units of time in milliseconds.
 	 * @author mzebib
-	 *
 	 */
-	public enum TimeInMillis
-	{
+	public enum TimeInMillis {
+
 		// One millisecond
 		MILLI(1, "millis"),
 		
@@ -371,7 +360,7 @@ public class Const
 		public final long MILLIS;
 		private final String tokens[];
 		
-		TimeInMillis(long duration, String ...tokens) {
+		TimeInMillis(long duration, String... tokens) {
 			this.MILLIS = duration;
 			this.tokens = tokens;
 		}
@@ -457,8 +446,8 @@ public class Const
 	}
 	
 	public enum TimeZoneOffset
-		implements GetName
-	{
+            implements GetName {
+
 		UTC_LESS_1200("UTC-12:00", '-', 12, 0),
 		UTC_LESS_1100("UTC-11:00", '-', 11, 0),
 		UTC_LESS_1000("UTC-10:00", '-', 10, 0),
@@ -538,15 +527,15 @@ public class Const
 		public int getOffsetInMillis(TimeZoneOffset timeZone) {
 			return getOffsetInMinutes(timeZone)*1000;
 		}
+
 	}
 
 	/**
 	 * Represents data type in bytes.
 	 * @author mzebib
-	 *
 	 */
-	public enum TypeInBytes
-	{
+	public enum TypeInBytes {
+
 		BYTE(1),
 		SHORT(2),
 		INT(4),
@@ -562,62 +551,51 @@ public class Const
 		TypeInBytes(int s) {
 			size = s;
 		}
-		
-		
-		
-		public static byte[] bytesToBytes(byte b)
-		{
+
+		public static byte[] bytesToBytes(byte b) {
 			byte ret[] = new byte[1];
 			ret[0] = b;
 			return ret;
  		}
 
-		public static byte[] shortToBytes(short val)
-		{
+		public static byte[] shortToBytes(short val) {
 			byte ret[] = new byte[SHORT.size];
 			
-			for(int i = 0; i < ret.length; i++)
-			{
+			for (int i = 0; i < ret.length; i++) {
 				ret[i] = (byte) (val >> (8*(ret.length-1-i)));
 			}
 			
 			return ret;
 		}
 		
-		
-		public static byte[] intToBytes(int val)
-		{
+		public static byte[] intToBytes(int val) {
 			byte ret[] = new byte[INT.size];
 			
-			for(int i = 0; i < ret.length; i++)
-			{
+			for (int i = 0; i < ret.length; i++) {
 				ret[i] = (byte) (val >> (8*(ret.length-1-i)));
 			}
 			
 			return ret;
 		}
 		
-		public static byte[] longToBytes(long val)
-		{
+		public static byte[] longToBytes(long val) {
+
 			byte ret[] = new byte[LONG.size];
 			
-			for(int i = 0; i < ret.length; i++)
-			{
+			for (int i = 0; i < ret.length; i++) {
 				ret[i] = (byte) (val >> (8*(ret.length-1-i)));
 			}
 			
 			return ret;
 		}
-
 	}
 	
 	/**
-	 * This enum declares the file type.
+	 * Document types
 	 * @author mzebib
-	 *
 	 */
 	public enum DocumentType
-		implements GetName {
+            implements GetName {
 		FILE("File"),
 		FOLDER("Folder"),
 		FORM("Form")
@@ -639,8 +617,8 @@ public class Const
 	}
 
 	public enum DayOfWeek
-		implements GetNameValue<Integer>
-	{
+		implements GetNameValue<Integer> {
+
 		SUNDAY("Sunday", 0),
 		MONDAY("Monday", 1),
 		TUESDAY("Tuesday", 2),
@@ -670,16 +648,15 @@ public class Const
 		}
 
 	}
-	
-	
+
 	/**
-	 * This enum represents months in Gregorian calendar year.
+	 * Months of Gregorian calendar.
 	 * @author mzebib
 	 *
 	 */
 	public enum Month
-		implements GetName
-	{
+		implements GetName {
+
 		JANUARY("01-Jan"),
 		FEBRUARY("02-Feb"),
 		MARCH("03-Mar"),
@@ -700,8 +677,7 @@ public class Const
 		Month(String name) {
 			this.name = name;
 		}
-		
-		
+
 		@Override
 		public String getName() {
 			return name;
@@ -715,8 +691,8 @@ public class Const
 	 *
 	 */
 	public enum DaysInMonth
-		implements GetValue<Integer>
-	{
+		implements GetValue<Integer> {
+
 		ONE(1),
 		TWO(2),
 		THREE(3),
@@ -765,8 +741,8 @@ public class Const
 	}
 
 	public enum DayPeriod
-		implements GetName
-	{
+            implements GetName {
+
 		AM("AM"),
 		PM("PM")
 		;
@@ -786,22 +762,19 @@ public class Const
 	}
 	
 
-	public enum Bidi
-	{
+	public enum Bidi {
 		LTR,
 		RTL
 
 		;
 	}
-		
-	/**
-	 * This enum contains logical operators.
-	 * @author mzebib
-	 *
-	 */
+
+    /**
+     * Logical operators
+     */
 	public enum LogicalOperator 
-		implements GetValue<String>, QueryMarker
-	{
+		implements GetValue<String>, QueryMarker {
+
 		AND("AND"),
 		OR("OR"),
 		
@@ -823,14 +796,12 @@ public class Const
 		}
 	}
 
-	/**
-	 * This enum contains relational operators.
-	 * @author mzebib
-	 *
-	 */
-	public enum RelationalOperator 
-		implements GetValue<String>
-	{
+    /**
+     * Relational operators
+     */
+	public enum RelationalOperator
+            implements GetValue<String> {
+
 		EQUAL("="),
 		NOT_EQUAL("!="),
 		GT(">"),
@@ -856,8 +827,7 @@ public class Const
 	 * Utility Date pattern that can be used on the client and server side.
 	 */
 	public enum DateTimePattern
-		implements GetValue<String>
-	{
+            implements GetValue<String> {
 		
 		GMT_ZZZ("+00:00"),
 		YEAR_MONTH_TZ("yyyy-MM ZZZ"),
@@ -885,17 +855,17 @@ public class Const
 	 * @author mzebib
 	 *
 	 */
-	public enum NVDisplayProp
-	{
+	public enum NVDisplayProp {
 		DEFAULT,
 		NAME,
 		NAME_VALUE,
 		VALUE
 	}
 
-
-	public enum ScanStatus
-	{
+    /**
+     * Scan statuses
+     */
+	public enum ScanStatus {
 		OK, // ok no infection
 		INFECTED, // infected
 		FAILED, // failed not known
@@ -904,7 +874,7 @@ public class Const
 	
 	
 	/**
-	 * 
+	 * Return types
 	 * @author mnael
 	 *
 	 */

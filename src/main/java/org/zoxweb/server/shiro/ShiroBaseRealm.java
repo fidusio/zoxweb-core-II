@@ -15,7 +15,6 @@
  */
 package org.zoxweb.server.shiro;
 
-
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -36,27 +35,17 @@ import org.zoxweb.shared.crypto.PasswordDAO;
 import org.zoxweb.shared.data.shiro.ShiroRulesManager;
 import org.zoxweb.shared.util.Const;
 
-/**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
- */
 public abstract class ShiroBaseRealm
-	extends AuthorizingRealm
-	implements ShiroRulesManager
-{
+		extends AuthorizingRealm
+		implements ShiroRulesManager {
 
-	
 	private static final transient Logger log = Logger.getLogger(Const.LOGGER_NAME);
-	
-	
+
 	protected boolean permissionsLookupEnabled = false;
 	
-	/**
-	 * @see org.apache.shiro.realm.AuthorizingRealm#doGetAuthorizationInfo(org.apache.shiro.subject.PrincipalCollection)
-	 */
+
 	@Override
-	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) 
-	 {
+	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		
        //null usernames are invalid
        if (principals == null) {
@@ -66,34 +55,32 @@ public abstract class ShiroBaseRealm
        log.info("PrincipalCollection class:" + principals.getClass());
      
 
-       if ( principals instanceof DomainPrincipalCollection )
-	   {
+       if (principals instanceof DomainPrincipalCollection) {
 	        String userID = (String) getAvailablePrincipal(principals);
 	        String domainID   = ((DomainPrincipalCollection) principals).getDomainID();
 	        Set<String> roleNames = getUserRoles(domainID, userID);
 	        Set<String> permissions = null;
 	         
-	        if(isPermissionsLookupEnabled()) 
-	        {
+	        if (isPermissionsLookupEnabled()) {
 	        	permissions = getUserPermissions(domainID, userID, roleNames);
 	        }
+
 	        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo(roleNames);
 	        info.setStringPermissions(permissions);
 	        return info;
-		}
+       }
+
        throw new AuthorizationException("Not a domain info");
-   }
+	}
 
 	/**
 	 * @see org.apache.shiro.realm.AuthenticatingRealm#doGetAuthenticationInfo(org.apache.shiro.authc.AuthenticationToken)
 	 */
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token)
-			throws AuthenticationException
-	{
+			throws AuthenticationException {
 		
-		if ( token instanceof DomainUsernamePasswordToken)
-		{
+		if (token instanceof DomainUsernamePasswordToken) {
 			log.info( "Domain based authentication");
 			DomainUsernamePasswordToken upToken = (DomainUsernamePasswordToken) token;
 	        String userName = upToken.getUsername();
@@ -101,13 +88,13 @@ public abstract class ShiroBaseRealm
 	        String userID = upToken.getUserID();
 	        log.info( domainID +":"+userName);
 	        // Null username is invalid
-	        if (userName == null)
-	        {
+	        if (userName == null) {
 	            throw new AccountException("Null usernames are not allowed by this realm.");
 	        }
+
 	        PasswordDAO password = getUserPassword(domainID, userName);
-	        if (password == null)
-	        {
+
+	         if (password == null) {
 	        	throw new UnknownAccountException("No account found for user [" + userID + "]");
 	        }
 
@@ -119,17 +106,13 @@ public abstract class ShiroBaseRealm
 	protected abstract PasswordDAO getUserPassword(String domainID, String userID);
 	protected abstract Set<String> getUserRoles(String domainID, String userID);
 	protected abstract Set<String> getUserPermissions(String domainID, String userID, Set<String> roleNames);
-	
-	
-
 
 	public boolean isPermissionsLookupEnabled()
 	{
 		return permissionsLookupEnabled;
 	}
 
-	public void setPermissionsLookupEnabled(boolean permissionsLookupEnabled)
-	{
+	public void setPermissionsLookupEnabled(boolean permissionsLookupEnabled) {
 		this.permissionsLookupEnabled = permissionsLookupEnabled;
 	}
 

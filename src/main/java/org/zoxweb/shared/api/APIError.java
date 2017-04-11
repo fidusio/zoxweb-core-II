@@ -26,18 +26,13 @@ import org.zoxweb.shared.util.NVConfigEntityLocal;
 import org.zoxweb.shared.util.NVConfigManager;
 import org.zoxweb.shared.util.SharedUtil;
 
-/**
- * @author mzebib
- *
- */
 @SuppressWarnings("serial")
-public class APIError 
-	extends SetNameDescriptionDAO
-{
+public class APIError
+		extends SetNameDescriptionDAO {
 
 	public enum Params
-		implements GetNVConfig
-	{
+            implements GetNVConfig {
+
 		CODE(NVConfigManager.createNVConfig("code", "Error code", "Code", false, true, String.class)),
 		MESSAGE(NVConfigManager.createNVConfig("message", "Error message", "Message", false, true, String.class)),
 		CAUSE(NVConfigManager.createNVConfig("cause", "Error cause", "Cause", false, true, String.class)),
@@ -48,16 +43,14 @@ public class APIError
 		
 		;	
 	
-		private final NVConfig cType;
+		private final NVConfig nvc;
 		
-		Params(NVConfig c)
-		{
-			cType = c;
+		Params(NVConfig nvc) {
+			this.nvc = nvc;
 		}
 		
-		public NVConfig getNVConfig() 
-		{
-			return cType;
+		public NVConfig getNVConfig() {
+			return nvc;
 		}
 	}
 
@@ -76,22 +69,18 @@ public class APIError
 	
 
 	
-	public APIError(String message)
-	{
+	public APIError(String message) {
 		this();
 		setMessage(message);
 	}
 	
-	public APIError(String message, String code)
-	{
+	public APIError(String message, String code) {
 		this();
 		setMessage(message);
 		setCode(code);
 	}
-	
-	
-	public APIError(String message, String code, String cause)
-	{
+
+	public APIError(String message, String code, String cause) {
 		this();
 		setMessage(message);
 		setCode(code);
@@ -100,30 +89,21 @@ public class APIError
 	
 	
 	
-	public APIError(Exception e)
-	{
+	public APIError(Exception e) {
 		this();
 		setException(e);
-		
-
-		
 	}
 	
-	public APIError(Exception e, String code)
-	{
+	public APIError(Exception e, String code) {
 		this(e);
 		setCode(code);
-		
 	}
-	
-	
-	public APIError()
-	{
+
+	public APIError() {
 		super(REST_ERROR);
 	}
 	
-	public String getCode()
-	{
+	public String getCode() {
 		return lookupValue(Params.CODE);
 	}
 	

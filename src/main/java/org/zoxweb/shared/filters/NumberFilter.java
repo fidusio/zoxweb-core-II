@@ -24,12 +24,11 @@ import org.zoxweb.shared.util.SharedUtil;
  *
  */
 @SuppressWarnings("serial")
-public class NumberFilter 
-	implements ValueFilter<String, String>
-{
+public class NumberFilter
+		implements ValueFilter<String, String> {
+
 	private static final String PATTERN = "[0-9]+";
 
-	
 	/**
 	 * This variable declares that only one instance of this class can be 
 	 * created.
@@ -40,57 +39,44 @@ public class NumberFilter
 	 * The default constructor is declared private to prevent
 	 * outside instantiation of this class.
 	 */
-	private NumberFilter()
-	{
+	private NumberFilter() {
 		
 	}
-	
-	
-	/**
-	 * 
-	 */
+
 	@Override
-	public String toCanonicalID() 
-	{
+	public String toCanonicalID() {
 		return NumberFilter.class.getName();
 	}
 
 	/**
-	 * This method validates the given number.
+	 * Validates the given number.
 	 * @param in
 	 * @throws NullPointerException
 	 * @throws IllegalArgumentException
 	 */
 	@Override
 	public String validate(String in) 
-			throws NullPointerException, IllegalArgumentException 
-	{
+			throws NullPointerException, IllegalArgumentException {
+
 		SharedUtil.checkIfNulls("Given number is empty or null.", in);
 		
-		if (in.matches(PATTERN))
-		{
+		if (in.matches(PATTERN)) {
 			return in;
-		}
-		else
-		{
+		} else {
 			throw new IllegalArgumentException("Invalid number: " +  in);
 		}
 	}
 
 	/**
-	 * This method checks if the number is valid.
+	 * Checks if the given number is valid.
 	 * @param in
 	 * @return true if valid
 	 */
 	@Override
-	public boolean isValid(String in) 
-	{
-		try
-		{
+	public boolean isValid(String in) {
+		try {
 			validate(in);
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			return false;
 		}
 		

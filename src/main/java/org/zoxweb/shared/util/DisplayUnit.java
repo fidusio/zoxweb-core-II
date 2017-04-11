@@ -1,9 +1,7 @@
 package org.zoxweb.shared.util;
 
-import org.zoxweb.shared.util.GetName;
-
 public enum DisplayUnit
-	implements GetName {
+        implements GetName {
 
 	EM("EM"),
 	PERCENT("%"),

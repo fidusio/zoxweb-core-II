@@ -108,10 +108,8 @@ public class AESCrypt {
 	/**
 	 * Prints a debug message on standard output if DEBUG mode is turned on.
 	 */
-	private static  void dbg(String message) 
-	{
-		if (debug) 
-		{
+	private static  void dbg(String message) {
+		if (debug) {
 			System.out.println("[AESCrypt] " + message);
 		}
 	}
@@ -120,10 +118,8 @@ public class AESCrypt {
 	/**
 	 * Prints a debug message on standard output if DEBUG mode is turned on.
 	 */
-	private static void dbg(String message, byte[] bytes) 
-	{
-		if (debug) 
-		{
+	private static void dbg(String message, byte[] bytes) {
+		if (debug) {
 			StringBuilder buffer = new StringBuilder();
 			buffer.append(message);
 			buffer.append("[");
@@ -329,10 +325,8 @@ public class AESCrypt {
 	 * @throws GeneralSecurityException if the platform does not support the required cryptographic methods.
 	 * @throws UnsupportedEncodingException if UTF-16 encoding is not supported.
 	 */
-	public AESCrypt(byte password[]) throws GeneralSecurityException, UnsupportedEncodingException 
-	{
-		try 
-		{
+	public AESCrypt(byte password[]) throws GeneralSecurityException, UnsupportedEncodingException {
+		try {
 			//debug = dbg;
 			setPassword(password);
 			random = CryptoUtil.defaultSecureRandom();
@@ -350,8 +344,7 @@ public class AESCrypt {
 	 * @throws GeneralSecurityException if the platform does not support the required cryptographic methods.
 	 * @throws UnsupportedEncodingException if UTF-16 encoding is not supported.
 	 */
-	public AESCrypt(String password) throws GeneralSecurityException, UnsupportedEncodingException 
-	{
+	public AESCrypt(String password) throws GeneralSecurityException, UnsupportedEncodingException {
 		this( password.getBytes("UTF-16LE"));
 	}
 	
@@ -371,8 +364,7 @@ public class AESCrypt {
 	 * @param pass 
 	 * @throws UnsupportedEncodingException if UTF-16 encoding is not supported.
 	 */
-	public void setPassword(byte pass[]) throws UnsupportedEncodingException 
-	{
+	public void setPassword(byte pass[]) throws UnsupportedEncodingException {
 		SharedUtil.checkIfNulls("Can't have a null password", pass);
 		this.password = pass;
 		dbg("Using password: ", this.password);
@@ -390,8 +382,7 @@ public class AESCrypt {
 	 * @throws GeneralSecurityException if the platform does not support the required cryptographic methods.
 	 */
 	public void encrypt(int version, String fromPath, String toPath)
-			throws IOException, GeneralSecurityException 
-	{
+			throws IOException, GeneralSecurityException {
 		encrypt( version, new File(fromPath), new File( toPath));
 	}
 	
@@ -407,19 +398,15 @@ public class AESCrypt {
 	 * @throws GeneralSecurityException if the platform does not support the required cryptographic methods.
 	 */
 	public void encrypt(int version, File fromPath, File toPath)
-			throws IOException, GeneralSecurityException 
-	{
+			throws IOException, GeneralSecurityException {
 		
 		FileInputStream fis = null;
 		FileOutputStream fos = null;
-		try
-		{
+		try {
 			fis = new FileInputStream( fromPath);
 			fos = new FileOutputStream( toPath);
 			encrypt( version, new BufferedInputStream( fis), new BufferedOutputStream( fos));
-		}
-		finally
-		{
+		} finally {
 			IOUtil.close(fis);
 			IOUtil.close(fos);
 		}
@@ -804,15 +791,10 @@ public class AESCrypt {
 	}
 	
 	
-	public static void main(String[] args) 
-	{
-		
-		try 
-		{
-			if (args.length < 2) 
-			{
+	public static void main(String[] args) {
+		try {
+			if (args.length < 2) {
 				error( null);
-
 			}
 			
 			String from = args[1];
@@ -829,12 +811,9 @@ public class AESCrypt {
 			{
 			case "e":
 			case "-e":
-				if ( args.length == 2)
-				{
+				if (args.length == 2) {
 					to = from + EXT;
-				}
-				else
-				{
+				} else {
 					to = args[2];
 				}
 				aes.encrypt(2, from, to);
@@ -842,19 +821,13 @@ public class AESCrypt {
 				break;
 			case "d":
 			case "-d":
-				if ( args.length == 2)
-				{
-					if ( from.endsWith(EXT))
-					{
+				if (args.length == 2) {
+					if (from.endsWith(EXT)) {
 						to = from.substring(0, from.length() - EXT.length());
-					}
-					else
-					{
+					} else {
 						error("No destination path is defined");
 					}
-				}
-				else
-				{
+				} else {
 					to = args[2];
 				}
 				aes.decrypt(from, to);

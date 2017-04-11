@@ -3,8 +3,8 @@ package org.zoxweb.shared.protocol;
 import org.zoxweb.shared.util.GetName;
 
 public enum MessageMarker
-implements GetName
-{
+		implements GetName {
+
 	START,
 	END,
 	HEADER_START,
@@ -12,21 +12,19 @@ implements GetName
 	CONTENT_START,
 	CONTENT_END;
 
-	
 	private final String name;
-	MessageMarker()
-	{
+
+	MessageMarker() {
 		this.name= name().toLowerCase();
 	}
+
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return name;
 	}
 	
-	public String toString()
-	{
+	public String toString() {
 		return getName();
-				
 	}
+
 }

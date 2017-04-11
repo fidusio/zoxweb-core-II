@@ -21,11 +21,12 @@ package org.zoxweb.shared.util;
  *
  */
 public interface SetMandatory
-	extends IsMandatory
-{
+		extends IsMandatory {
+
 	/**
 	 * Set mandatory property.
 	 * @param mandatory
 	 */
 	 void setMandatory(boolean mandatory);
+
 }

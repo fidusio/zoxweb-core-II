@@ -1,9 +1,7 @@
 package org.zoxweb.server.task;
 
-
 import java.util.UUID;
 import java.util.concurrent.Executor;
-
 
 import org.zoxweb.shared.util.GetDescription;
 import org.zoxweb.shared.util.GetName;
@@ -16,34 +14,26 @@ import org.zoxweb.shared.util.SharedUtil;
  *
  * @param <E> Executor
  */
-public class ExecutorHolder<E extends Executor>
-	implements Executor,
-			   GetName,
-	           GetDescription,
-	           AutoCloseable
-{
+public class ExecutorHolder<E
+		extends Executor>
+		implements Executor, GetName, GetDescription, AutoCloseable {
 
 	protected final E es;
 	private final String name;
 	private final String description;
 	protected final LifeCycleMonitor<ExecutorHolder<?>> lcm;
-	volatile private boolean closed = false;
-	
-	
-	
+	private volatile boolean closed = false;
+
 	public ExecutorHolder(Executor es, LifeCycleMonitor<ExecutorHolder<?>> lcm)
-			throws NullPointerException, IllegalArgumentException
-	{
+			throws NullPointerException, IllegalArgumentException {
 		this(es, lcm, null, null);
 	}
-	
-	
+
 	public ExecutorHolder(Executor es, LifeCycleMonitor<ExecutorHolder<?>> lcm, String name)
-			throws NullPointerException, IllegalArgumentException
-	{
+			throws NullPointerException, IllegalArgumentException {
 		this(es, lcm, name, null);
-		
 	}
+
 	/**
 	 * 
 	 * @param es Executor to be registered, mandatory
@@ -55,55 +45,45 @@ public class ExecutorHolder<E extends Executor>
 	 */
 	@SuppressWarnings("unchecked")
 	public ExecutorHolder(Executor es, LifeCycleMonitor<ExecutorHolder<?>> lcm, String name, String description)
-		throws NullPointerException, IllegalArgumentException
-	{
+		throws NullPointerException, IllegalArgumentException {
+
 		SharedUtil.checkIfNulls("Executor or LifeCycleMonitor null", es, lcm);
 		this.es = (E) es;
 		this.name = name != null ? name : UUID.randomUUID().toString();
 		this.description = description;
 		this.lcm = lcm;
-		if (!lcm.created(this))
-		{
+
+		if (!lcm.created(this)) {
 			throw new IllegalArgumentException(name + " already registered.");
 		}
 		
 	}
+
 	@Override
 	public void execute(Runnable command) {
-		// TODO Auto-generated method stub
 		es.execute(command);
 	}
 	
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
 		return description;
 	}
 
-
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return name;
 	}
 
-
 	@Override
 	public void close() {
-		// TODO Auto-generated method stub
-		if (!closed)
-		{
-			synchronized(this)
-			{
-				if (!closed)
-				{
-					if(es instanceof AutoCloseable)
-					{
-						try 
-						{
+		if (!closed) {
+			synchronized(this) {
+				if (!closed) {
+					if (es instanceof AutoCloseable) {
+						try {
 							((AutoCloseable)es).close();
 						} catch (Exception e) {
-							// TODO: handle exception
+
 						}
 					}
 					lcm.terminated(this);
@@ -114,9 +94,8 @@ public class ExecutorHolder<E extends Executor>
 		}
 	}
 
-	
-	public String toString()
-	{
+	@Override
+	public String toString() {
 		return getName() + ", " + es;
 	}
 }

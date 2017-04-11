@@ -15,55 +15,33 @@
  */
 package org.zoxweb.server.task;
 
-/**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
- */
 public abstract class RunnableTask
-implements TaskExecutor, Runnable
-{
+		implements TaskExecutor, Runnable {
 
-	static class RunnableTaskContainer extends RunnableTask 
-	{
+	static class RunnableTaskContainer extends RunnableTask {
 
-		@Override
-		public void run() 
-		{
+	    @Override
+		public void run() {
 			TaskEvent te = attachedEvent();
 			((Runnable)te.getTaskExecutorParameters()[0]).run();
 		}
-
 	}
-	
-	
+
 	protected TaskEvent te;
-	
-	/**
-	 * @see org.zoxweb.server.task.TaskExecutor#executeTask(org.zoxweb.server.task.TaskEvent)
-	 */
+
 	@Override
-	public void executeTask(TaskEvent event) 
-	{
+	public void executeTask(TaskEvent event) {
 		this.te = event;
 		run();
-		
 	}
 
-	/**
-	 * @see org.zoxweb.server.task.TaskExecutor#finishTask(org.zoxweb.server.task.TaskEvent)
-	 */
 	@Override
-	public void finishTask(TaskEvent event) 
-	{
-		// TODO Auto-generated method stub
-		
+	public void finishTask(TaskEvent event) {
+
 	}
 	
-	protected TaskEvent attachedEvent()
-	{
+	protected TaskEvent attachedEvent() {
 		return te;
 	}
-	
-	
 
 }

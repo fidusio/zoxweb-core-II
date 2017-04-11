@@ -16,11 +16,9 @@
 package org.zoxweb.shared.crypto;
 
 /**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
+ * Key lock types
  */
-public enum KeyLockType 
-{
+public enum KeyLockType {
 	// User ID
 	USER_ID,
 	// Domain ID
@@ -32,5 +30,8 @@ public enum KeyLockType
 	// NVEntity
 	NVENTITY,
 	// Encrypted password
-	PASSWORD,
+	PASSWORD
+
+    ;
+
 }

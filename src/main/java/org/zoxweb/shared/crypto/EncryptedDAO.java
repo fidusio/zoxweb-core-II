@@ -15,8 +15,6 @@
  */
 package org.zoxweb.shared.crypto;
 
-
-
 import org.zoxweb.shared.data.TimeStampDAO;
 import org.zoxweb.shared.util.ArrayValues;
 import org.zoxweb.shared.util.GetNVConfig;
@@ -31,9 +29,9 @@ import org.zoxweb.shared.util.SharedUtil;
 
 @SuppressWarnings("serial")
 public class EncryptedDAO
-extends TimeStampDAO
-implements CryptoDAO
-{
+		extends TimeStampDAO
+		implements CryptoDAO {
+
 	//private String algoName;
 	//private String description;
 //	private String subject[];// optional
@@ -48,8 +46,7 @@ implements CryptoDAO
 	
 	
 	protected enum Params
-	implements GetNVConfig
-	{
+			implements GetNVConfig {
 
 		SUBJECT_PORPERTIES(NVConfigManager.createNVConfig("subject_properties", "Subject properties", "SubjectPropeties", false, true, true, false, String[].class, null)),
 		ALGO_PROPERTIES(NVConfigManager.createNVConfig("algo_properties", "Algorithm properties", "AlgorithmProperties", false, true, true, false, String[].class, null)),
@@ -60,36 +57,31 @@ implements CryptoDAO
 		HINT(NVConfigManager.createNVConfig("hint", "Hint of the encrypted message", "Hint", false, true, String.class)),
 		HMAC_ALOG_NAME(NVConfigManager.createNVConfig("hmac_algo_name", "The HMAC algorithm name", "HMACAlgoName", true, true, String.class)),
 		HMAC(NVConfigManager.createNVConfig("hmac", "The HMAC Value", "HMAC", true, true, byte[].class)),
+
 		;
+
 		private final NVConfig nvc;
-		Params( NVConfig nvc)
-		{
+
+		Params(NVConfig nvc) {
 			this.nvc = nvc;
 		}
 		
 		@Override
 		public NVConfig getNVConfig() {
-			// TODO Auto-generated method stub
 			return nvc;
 		}	
 	}
-	
-	
-	public final static NVConfigEntity NVCE_ENCRYPTED_DAO = new NVConfigEntityLocal("encrypted_dao", null, "EncryptedDAO", false, true, false, false, EncryptedDAO.class, SharedUtil.extractNVConfigs(Params.values()), null, false, TimeStampDAO.NVC_TIME_STAMP_DAO);
-	
 
-	public EncryptedDAO()
-	{
+	public final static NVConfigEntity NVCE_ENCRYPTED_DAO = new NVConfigEntityLocal("encrypted_dao", null, "EncryptedDAO", false, true, false, false, EncryptedDAO.class, SharedUtil.extractNVConfigs(Params.values()), null, false, TimeStampDAO.NVC_TIME_STAMP_DAO);
+
+	public EncryptedDAO() {
 		super(NVCE_ENCRYPTED_DAO);
 	}
-	
-	
-	protected EncryptedDAO( NVConfigEntity nvce)
-	{
+
+	protected EncryptedDAO( NVConfigEntity nvce) {
 		super(nvce);
 	}
-	
-	
+
 	/**
 	 * Get the list of principals
 	 * @return null or the list
@@ -100,101 +92,77 @@ implements CryptoDAO
 		return (ArrayValues<NVPair>) lookup(Params.SUBJECT_PORPERTIES);
 	}
 	
-	public void setSubjectProperties(ArrayValues<NVPair> subject)
-	{
-		if (subject == null)
-		{
+	public void setSubjectProperties(ArrayValues<NVPair> subject) {
+		if (subject == null) {
 			getSubjectProperties().clear();
-		}
-		else
+		} else {
 			getSubjectProperties().add(subject.values(), true);
-		
+		}
 	}
-	
-	
 
 	@SuppressWarnings("unchecked")
-	public ArrayValues<NVPair>getAlgoProperties() 
-	{
+	public ArrayValues<NVPair>getAlgoProperties() {
 		return (ArrayValues<NVPair>) lookup(Params.ALGO_PROPERTIES);
 	}
 
-	public void setAlgoProperties(ArrayValues<NVPair> algo_parameters) 
-	{
-		if (algo_parameters == null)
-		{
+	public void setAlgoProperties(ArrayValues<NVPair> algo_parameters) {
+		if (algo_parameters == null) {
 			getAlgoProperties().clear();
-		}
-		else
-		{
+		} else {
 			getAlgoProperties().add(algo_parameters.values(), true);
 		}
 	}
 
-	public byte[] getIV() 
-	{
+	public byte[] getIV() {
 		return lookupValue(Params.IV);
 	}
 
-	public void setIV(byte[] iv) 
-	{
+	public void setIV(byte[] iv) {
 		setValue(Params.IV, iv);
 	}
 
-	public byte[] getEncryptedData()
-	{
+	public byte[] getEncryptedData() {
 		return lookupValue(Params.ENCRYPTED_DATA);
 	}
 
-	public void setEncryptedData(byte[] encrypted_data)
-	{
+	public void setEncryptedData(byte[] encrypted_data) {
 		setValue(Params.ENCRYPTED_DATA, encrypted_data);
 	}
 
-	public String getExpirationTime()
-	{
+	public String getExpirationTime() {
 		return lookupValue(Params.EXPIRATION_TIME);
 	}
 
-	public void setExpirationTime(String expiration_time)
-	{
+	public void setExpirationTime(String expiration_time) {
 		setValue(Params.EXPIRATION_TIME, expiration_time);
 	}
 
-	public String getHint()
-	{
+	public String getHint() {
 		return lookupValue(Params.HINT);
 	}
 
-	public void setHint(String hint)
-	{
+	public void setHint(String hint) {
 		setValue(Params.HINT, hint);
 	}
 
-	public String getHMACAlgoName()
-	{
+	public String getHMACAlgoName() {
 		return lookupValue(Params.HMAC_ALOG_NAME);
 	}
 
-	public void setHMACAlgoName(String hmac_algo_name)
-	{
+	public void setHMACAlgoName(String hmac_algo_name) {
 		setValue(Params.HMAC_ALOG_NAME, hmac_algo_name);
 	}
 
-	public byte[] getHMAC()
-	{
+	public byte[] getHMAC() {
 		return lookupValue(Params.HMAC);
 	}
 
-	public void setHMAC(byte[] hmac)
-	{
+	public void setHMAC(byte[] hmac) {
 		setValue(Params.HMAC, hmac);
 	}
 
 	@Override
 	public String toCanonicalID() {
-		// TODO Auto-generated method stub
-		
 		StringBuilder sb = new StringBuilder();
 	
 		sb.append(getName());
@@ -218,34 +186,25 @@ implements CryptoDAO
 		sb.append(getHMACAlgoName());
 		sb.append(':');
 		sb.append(new String(SharedBase64.encode(getHMAC())));
-		
-		
-		
-		
+
 		return sb.toString();
 	}
 
-	
-	public long getDataLength()
-	{
+	public long getDataLength() {
 		return lookupValue(Params.DATA_LENGTH);
 	}
-	
-	
-	public void setDataLength(long data_length)
-	{
-		if (data_length < 0)
+
+	public void setDataLength(long data_length) {
+		if (data_length < 0) {
 			throw new IllegalArgumentException("Illegal data length " + data_length);
+		}
+
 		setValue(Params.DATA_LENGTH, data_length);
 	}
-	
-	
-	
+
 	public static EncryptedDAO fromCanonicalID(String encryptedDAOCanonicalFormat)
-			throws NullPointerException, IllegalArgumentException
-		{
-			if (SharedStringUtil.isEmpty(encryptedDAOCanonicalFormat))
-			{
+			throws NullPointerException, IllegalArgumentException {
+			if (SharedStringUtil.isEmpty(encryptedDAOCanonicalFormat)) {
 				throw new NullPointerException("empty dao");
 			}
 			
@@ -266,8 +225,7 @@ implements CryptoDAO
 				ret.setHint(tokens[index++]);
 				ret.setHMACAlgoName(tokens[index++]);
 				ret.setHMAC(SharedBase64.decode(tokens[index++].getBytes()));
-				
-				
+
 				break;
 			default:
 				throw new IllegalArgumentException("Invalid enrypted dao format");	

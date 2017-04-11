@@ -14,13 +14,10 @@ import org.zoxweb.shared.util.SimpleQueue;
  * again.
  */
 public class BoundedSimpleQueue<O>
-extends SimpleQueue<O>
-{
+		extends SimpleQueue<O> {
 
 	private int highMark;
-
 	private int lowMark;
-
 	private boolean boundMode = false;
 	
 	/**
@@ -35,9 +32,11 @@ extends SimpleQueue<O>
 	 */
 	public BoundedSimpleQueue(int lowMark, int highMark)
 			throws IllegalArgumentException {
-		if (highMark <= lowMark || highMark < 0 || lowMark < 0)
+
+		if (highMark <= lowMark || highMark < 0 || lowMark < 0) {
 			throw new IllegalArgumentException("Invalid queue parameters "
 					+ " highMark " + highMark + " lowMark " + lowMark);
+		}
 
 		this.highMark = highMark;
 		this.lowMark = lowMark;

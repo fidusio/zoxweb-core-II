@@ -21,11 +21,12 @@ package org.zoxweb.shared.util;
  *
  */
 public interface SetName
-	extends GetName
-{
+		extends GetName {
+
 	/**
 	 * Set name property.
 	 * @param name
 	 */
 	 void setName(String name);
+
 }

@@ -16,12 +16,21 @@
 package org.zoxweb.shared.control;
 
 /**
- * @author mzebib
- *
+ * The content controller setter interface.
+ * @param <T>
  */
-public interface ContentControllerSetter<T>
-{
+public interface ContentControllerSetter<T> {
+
+    /**
+     * Returns the content controller.
+     * @return
+     */
 	public ContentController<T> getController();
-	
+
+    /**
+     * Sets the content controller.
+     * @param controller
+     */
 	public void setController(ContentController<T> controller);
+
 }

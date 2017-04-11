@@ -18,14 +18,14 @@ package org.zoxweb.shared.util;
 /**
  * The set a display name interface.
  * @author mnael
- *
  */
 public interface SetDisplayName
-	extends GetDisplayName
-{
+		extends GetDisplayName {
+
 	/**
 	 * Set display name property.
 	 * @param displayName
 	 */
 	public void setDisplayName(String displayName);
+
 }

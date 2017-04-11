@@ -15,7 +15,6 @@
  */
 package org.zoxweb.shared.security;
 
-
 public interface IsSecure
 {
 	/**

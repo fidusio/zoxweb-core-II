@@ -15,7 +15,6 @@
  */
 package org.zoxweb.server.shiro;
 
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.logging.Logger;
@@ -35,74 +34,58 @@ import org.zoxweb.shared.util.Const;
 import org.zoxweb.shared.util.NVPair;
 import org.zoxweb.shared.util.SharedUtil;
 
-public class ShiroProxyRealm extends AuthorizingRealm
-{
+public class ShiroProxyRealm extends AuthorizingRealm {
 	private static final transient Logger log = Logger.getLogger(Const.LOGGER_NAME);
 	private boolean permissionsLookupEnabled = false;
-	
-	
+
 	private String proxyURL;
 	private HashMap <String, LoginStatusDAO> loginMap = new HashMap<String, LoginStatusDAO>();
-	
-	
+
 	@Override
-	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) 
-	{
+	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		String username = (String) getAvailablePrincipal(principals);
 	    String domain   = ((DomainPrincipalCollection) principals).getDomainID();
 	    
 	    String domainUser = SharedUtil.toCanonicalID(':', domain, username);
 	    
 	    LoginStatusDAO lsDAO = loginMap.get(domainUser);
-	 
-		
-		
+
 		HashSet<String> roles = new HashSet<String>();
-		for ( NVPair nvp: lsDAO.getUserRoles())
-		{
+
+		for (NVPair nvp: lsDAO.getUserRoles()) {
 			roles.add( nvp.getValue());
 		}
-		
-	
-		
+
 		SimpleAuthorizationInfo ret = new SimpleAuthorizationInfo( roles);
 		
-		if( isPermissionsLookupEnabled())
-		{
+		if(isPermissionsLookupEnabled()) {
 			HashSet<String> permissions = new HashSet<String>();
-			for ( NVPair nvp: lsDAO.getUserPermissions())
-			{
+
+			for (NVPair nvp: lsDAO.getUserPermissions()) {
 				permissions.add( nvp.getValue());
 			}
+
 			ret.setStringPermissions(permissions);
 		}
-		
-		// must remove the 
-		
-		// TODO Auto-generated method stub
-		return ret;
+
+        return ret;
 	}
 
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) 
-			throws AuthenticationException
-	{
-		// TODO Auto-generated method stub
-		
+			throws AuthenticationException {
+
 		String domainID = null;
 		String applicationID = null;
 		String userID = null;
 		
-		if ( proxyURL != null && token instanceof DomainUsernamePasswordToken)
-		{
+		if (proxyURL != null && token instanceof DomainUsernamePasswordToken) {
 			domainID = ((DomainUsernamePasswordToken)token).getDomainID();
 			applicationID = ((DomainUsernamePasswordToken)token).getApplicationID();
 			userID = ((DomainUsernamePasswordToken)token).getUserID();
 			
 			
-			try 
-			{
-				
+			try {
 				DomainAuthenticationInfo ret = null;
 				String domainUser = SharedUtil.toCanonicalID(':', domainID, token.getPrincipal());
 				LoginStatusDAO lsDAO = loginMap.get(domainUser);
@@ -119,19 +102,14 @@ public class ShiroProxyRealm extends AuthorizingRealm
 				return ret;
 				
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				throw new AuthenticationException( e.getMessage());
-			} 
-			
-		
-			
+			}
 		}
 		
 		throw new AuthenticationException("Invalid token");
-		
-		
-//		
+
+
 //		DomainAuthenticationInfo ret = new DomainAuthenticationInfo(token.getPrincipal(), token.getCredentials(), getName() , domainID, applicationID);
 //		log.info( "" + token.getPrincipal() );
 //		if ( !"marwan".equals(token.getPrincipal()))
@@ -140,16 +118,11 @@ public class ShiroProxyRealm extends AuthorizingRealm
 //		return ret;
 	}
 
-	
-	
-	public void setPermissionsLookupEnabled(boolean permissionsLookupEnabled)
-	{
+	public void setPermissionsLookupEnabled(boolean permissionsLookupEnabled) {
         this.permissionsLookupEnabled = permissionsLookupEnabled;
     }
-	
-	
-	public boolean isPermissionsLookupEnabled()
-	{
+
+	public boolean isPermissionsLookupEnabled() {
 		return permissionsLookupEnabled;
 	}
 
@@ -160,4 +133,5 @@ public class ShiroProxyRealm extends AuthorizingRealm
 	public void setProxyURL(String proxyURL) {
 		this.proxyURL = proxyURL;
 	}
+
 }

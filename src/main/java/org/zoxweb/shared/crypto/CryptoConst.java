@@ -18,84 +18,72 @@ package org.zoxweb.shared.crypto;
 import org.zoxweb.shared.util.GetName;
 import org.zoxweb.shared.util.SharedUtil;
 
-public final class CryptoConst
-{
-	private CryptoConst()
-	{
+public final class CryptoConst {
+
+	private CryptoConst() {
+
 	}
-	
-	
-	
-	
-	
-	
+
 	public enum MDType
-		implements GetName
-	{
+            implements GetName {
+
 		MD5("md5"),
 		SHA_1("sha-1"),
 		SHA_224("sha-224"),
 		SHA_256("sha-256"),
 		SHA_384("sha-384"),
-		SHA_512("sha-512"),
-		;
-		
-		
+		SHA_512("sha-512")
+
+        ;
+
 		private final String name;
-		MDType(String name)
-		{
+
+		MDType(String name) {
 			this.name = name;
 		}
 	
 		@Override
-		public String getName()
-		{
-			// TODO Auto-generated method stub
+		public String getName() {
 			return name;
 		}
-		
-		public String toString()
-		{
+
+		@Override
+		public String toString() {
 			return getName();
 		}
 		
-		public static MDType lookup(String mdName)
-		{
+		public static MDType lookup(String mdName) {
 			return (MDType) SharedUtil.lookupEnum(MDType.values(), mdName);
 		}
 	}
 	
-	
-	
-	
+
 	public enum DataMDType
-	implements GetName
-	{
+            implements GetName {
+
 		MD5_ENCRYPTED("MD5-ENCRYPTED"),
 		MD5_ORIGINAL("MD5-ORIGINAL"),
 		SHA_256_ENCRYPTED("SHA-256-ENCRYPTED"),
-		SHA_256_ORIGINAL("SHA-256-ORIGINAL"),
+		SHA_256_ORIGINAL("SHA-256-ORIGINAL")
+
 		;
 
 		private final String name;
-		DataMDType(String name)
-		{
+
+		DataMDType(String name) {
 			this.name = name;
 		}
+
 		@Override
 		public String getName() {
-			// TODO Auto-generated method stub
 			return name;
 		}
 		
-		public static MDType toMDType(String name)
-		{
+		public static MDType toMDType(String name) {
 			return toMDType((DataMDType)SharedUtil.lookupEnum(DataMDType.values(), name));
 		}
 		
-		public static MDType toMDType(DataMDType dmdt)
-		{
-			
+		public static MDType toMDType(DataMDType dmdt) {
 			MDType ret = null;
 			switch(dmdt)
 			{
@@ -109,48 +97,42 @@ public final class CryptoConst
 			case SHA_256_ORIGINAL:
 				ret = MDType.SHA_256;
 				break;
-			
-				
 			}
 			
 			return ret;
 		}
-		
 	}
 	
 	
 	public enum SecureRandomType
-		implements GetName
-	{
+            implements GetName {
+
 		SECURE_RANDOM_VM_DEFAULT("DefaultVM"),
 		SECURE_RANDOM_VM_STRONG("DefaultVMStrong"),
 		NATIVE("NativePRNG"),
-		SHA1PRNG("SHA1PRNG"),
+		SHA1PRNG("SHA1PRNG")
+
 		;
-			
-		
-		;
+
 		private final String name;
-		SecureRandomType(String name)
-		{
+
+		SecureRandomType(String name) {
 			this.name = name;
 		}
 	
 		@Override
-		public String getName()
-		{
-			// TODO Auto-generated method stub
+		public String getName() {
 			return name;
 		}
-		
-		public String toString()
-		{
+
+        @Override
+		public String toString() {
 			return getName();
 		}
 		
-		public static SecureRandomType lookup(String mdName)
-		{
+		public static SecureRandomType lookup(String mdName) {
 			return (SecureRandomType) SharedUtil.lookupEnum(SecureRandomType.values(), mdName);
 		}
 	}
+
 }

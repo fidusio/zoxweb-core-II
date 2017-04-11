@@ -15,12 +15,8 @@
  */
 package org.zoxweb.shared.filters;
 
+public interface GetValueFilter<I, O> {
 
-/**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
- */
-public interface GetValueFilter<I, O> 
-{
 	public ValueFilter<I,O> getValueFilter();
+
 }

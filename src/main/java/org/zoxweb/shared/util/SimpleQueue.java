@@ -148,7 +148,7 @@ public class SimpleQueue<O>
 	public synchronized boolean contains(O o) {
 		QueueNode<O> temp = head;
 
-		while(temp.next != null) {
+		while (temp.next != null) {
 			if (temp.obj == o) {
 				return true;
 			} else if (equalityEnabled && temp.obj != null && temp.obj.equals(o)) {

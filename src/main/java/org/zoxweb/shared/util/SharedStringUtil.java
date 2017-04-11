@@ -19,7 +19,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * This class is used for string utilities shared between the client and the server.
  * @author mzebib
@@ -213,8 +212,8 @@ public final class SharedStringUtil {
 	 * @throws NullPointerException if any of the parameters is null
 	 */
 	public static List<CharSequence> parseGroup(CharSequence token, CharSequence sd, CharSequence ed, boolean includeDelimiters)
-		throws NullPointerException
-	{
+		throws NullPointerException {
+
 		ArrayList<CharSequence> ret = new ArrayList<CharSequence>();
 		MatchToken startToken = new MatchToken( sd);
 		MatchToken endToken = new MatchToken( ed);
@@ -226,8 +225,7 @@ public final class SharedStringUtil {
 				startToken,
 				endToken
 		};
-		do
-		{
+		do {
 			tokenList = reverseTokens(sameToken, tokenList);
 			currentMatch = nextMatch(token, currentMatch.index +currentMatch.token.length(), tokenList);
 
@@ -279,8 +277,7 @@ public final class SharedStringUtil {
 	public static String trimOrEmpty(String str) {
 		if (str != null) {
 			str = str.trim();
-		}		
-		else {
+		} else {
 			str = "";
 		}
 		
@@ -369,8 +366,7 @@ public final class SharedStringUtil {
 	 * @param token
 	 * @return a substring to the right of the specified index if both val and token are not null,
 	 */
-	public static String valueAfterLeftToken(String val, String token)
-	{
+	public static String valueAfterLeftToken(String val, String token) {
 		if (val != null && token != null) {
 			int lastIndex = val.indexOf(token);
 			
@@ -650,8 +646,7 @@ public final class SharedStringUtil {
 	public static <V> String format(String name, V value, String nameValueSep, boolean quotedValue) {
 		StringBuilder sb = new StringBuilder();
 		
-		if (name != null)
-		{
+		if (name != null) {
 			sb.append(name);
 			sb.append(nameValueSep);
 		}
@@ -708,7 +703,7 @@ public final class SharedStringUtil {
 		return ret.toString();
 	}
 
-	public static String formatStringValues(String sep, GetValue<?> ...values) {
+	public static String formatStringValues(String sep, GetValue<?>... values) {
 
 		SharedUtil.checkIfNulls("Null Parameter", sep, values);	
 		StringBuilder ret = new StringBuilder();
@@ -888,8 +883,7 @@ public final class SharedStringUtil {
 	 * @param postToken
 	 * @return string of hex that represent the buffer content
 	 */
-	public static String bytesToHex(String preToken, byte buffer[], int offset, int len, String postToken)
-	{
+	public static String bytesToHex(String preToken, byte buffer[], int offset, int len, String postToken) {
 		StringBuilder sb = null;
 		
 		if (buffer != null) {

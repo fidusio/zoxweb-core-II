@@ -17,10 +17,6 @@ package org.zoxweb.shared.util;
 
 import java.io.Serializable;
 
-/**
- * TimeStampInterface
- * 
- */
 public interface TimeStampInterface
 		extends Serializable {
 

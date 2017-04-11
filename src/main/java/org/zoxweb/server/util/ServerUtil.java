@@ -20,14 +20,12 @@ import java.beans.XMLEncoder;
 import java.io.BufferedReader;
 
 import java.io.FileInputStream;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
-
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -38,10 +36,7 @@ import java.util.Map;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-
-
 import org.zoxweb.server.io.IOUtil;
-
 import org.zoxweb.server.net.NetUtil;
 import org.zoxweb.shared.data.SystemInfoDAO;
 import org.zoxweb.shared.net.NetworkInterfaceDAO;
@@ -50,24 +45,11 @@ import org.zoxweb.shared.util.NVPair;
 import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
 
+public final class ServerUtil {
 
-
-
-/**
- * 
- * @author mnael
- */
-public final class ServerUtil 
-{
-	
-	
-	private ServerUtil()
-	{
+	private ServerUtil() {
 		
 	}
-	
-	
-	
 
 	/**
 	 * Secure random
@@ -78,88 +60,65 @@ public final class ServerUtil
 	 * Utility global lock
 	 */
 	public final static Lock LOCK = new ReentrantLock();
-		
 
-	
+
 	/**
 	 * Utility method to wait on a object
 	 * @param obj to be synchronized and wait on
 	 * @param millis to wait
 	 * @param nanos to wait
 	 */
-	public static void waitNano(Object obj, long millis, int nanos)
-	{
-		synchronized(obj)
-		{
-			try 
-			{
+	public static void waitNano(Object obj, long millis, int nanos) {
+		synchronized(obj) {
+			try {
 				obj.wait(millis, nanos);
 				
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 	}
-	
-	
+
 	/**
 	 * Utility method to wait on a object
 	 * @param obj to be synchronized and wait on
 	 * @param millis to wait
 	 */
-	public static void waitNano(Object obj, long millis)
-	{
-		synchronized(obj)
-		{
-			try 
-			{
+	public static void waitNano(Object obj, long millis) {
+		synchronized(obj) {
+			try {
 				obj.wait(millis);
 				
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 	}
-	
-	
+
 	/**
-	 * This methods will concatenate two arrays as one
+	 * Concatenates two arrays as one
 	 * @param array1
 	 * @param array2
 	 * @return concatenated type array
 	 */
-	public static <T> T[] concat(T[] array1, T[] array2) 
-	{
-		
-		
-		
-		  if ( array1 != null && array2 != null)
-		  {
-			  T[] result = Arrays.copyOf(array1, array1.length + array2.length);
-			  System.arraycopy(array2, 0, result, array1.length, array2.length);
-			  return result;
-		  }
-		
-		
-		  if ( array1 == null && array2 != null)
-		  {
-			  return array2;
-		  }
-		  
-		  if ( array1 != null && array2 == null)
-		  {
-			  return array1;
-		  }
-		  
-		
-		  
-		  return null;
+	public static <T> T[] concat(T[] array1, T[] array2) {
+        if (array1 != null && array2 != null) {
+          T[] result = Arrays.copyOf(array1, array1.length + array2.length);
+          System.arraycopy(array2, 0, result, array1.length, array2.length);
+          return result;
+        }
+
+        if (array1 == null && array2 != null) {
+          return array2;
+        }
+
+        if (array1 != null && array2 == null) {
+          return array1;
+        }
+
+        return null;
 	}
-	
-	
-	
+
 	/**
 	 * This method reads files based on the file name/location
 	 * on the computer and stores the data in an array list of 
@@ -168,89 +127,70 @@ public final class ServerUtil
 	 * @return string list
 	 * @throws IOException in case of IO error
 	 */
-	public static List<String> toStringList(String fileName) throws IOException
-	{
+	public static List<String> toStringList(String fileName)
+            throws IOException {
 	   
 		List<String> ret = null;
 		FileInputStream fis = null;
 		
-		try
-		{
+		try {
 			fis = new FileInputStream(fileName);
 			ret = toStringList(fis);
-		}
-		
-		finally
-		{
+		} finally {
 			IOUtil.close(fis);
 		}
 		
 		return ret;
-	    
 	}
-	
-	
+
 	/**
 	 * This method is used to convert input streams to an
 	 * array list of strings.
-	 * @param inputStream
+	 * @param is
 	 * @return string list
 	 * @throws IOException
 	 */
-	public static List<String> toStringList(InputStream inputStream) throws IOException
-	{
+	public static List<String> toStringList(InputStream is)
+            throws IOException {
 	    
 	    BufferedReader textReader = null;
 
 	    ArrayList<String> messageList = new ArrayList<String>();
 
-	    try
-	    {
-	    	textReader = new BufferedReader(new InputStreamReader(inputStream));
+	    try {
+	    	textReader = new BufferedReader(new InputStreamReader(is));
 	    	String line = textReader.readLine();
 		        
-		        while (line != null) 
-		        {
-		            messageList.add(line);
-		            line = textReader.readLine();
-		        }
-	    }
-
-	    finally
-	    {  	
+            while (line != null) {
+                messageList.add(line);
+                line = textReader.readLine();
+            }
+	    } finally {
 	    	IOUtil.close(textReader);
-	    	IOUtil.close(inputStream);
+	    	IOUtil.close(is);
 	    }
 	           
 	    return messageList;
 	    
 	}
-	
-	
 
-	
-	public static Object[] readXMLToBeans( InputStream is)
-	{
+	public static Object[] readXMLToBeans(InputStream is) {
 		XMLDecoder decoder = new XMLDecoder(is);
 		ArrayList<Object> ret = new ArrayList<Object>();
-		
-		
-		try
-		{
-			do
-			{
+
+		try {
+			do {
 				ret.add(decoder.readObject());
 				
 				
-			}while(true);
+			} while(true);
 			
-		}
-		catch ( Exception e)
-		{
+		} catch (Exception e) {
 			//e.printStackTrace();
 		}
-		IOUtil.close( decoder);
-		IOUtil.close( is);
+
+		IOUtil.close(decoder);
+		IOUtil.close(is);
 		
 		return ret.toArray();
 	}
@@ -260,104 +200,69 @@ public final class ServerUtil
 	 * @param os
 	 * @param objs
 	 */
-	public static void writeBeansToXML( OutputStream os, Object... objs)
-	{
+	public static void writeBeansToXML(OutputStream os, Object... objs) {
 		
 		XMLEncoder enc = new XMLEncoder( os);
 		
-		for( Object o : objs)
-		{
+		for( Object o : objs) {
 			enc.writeObject( o);
 		}
+
 		enc.flush();
 		IOUtil.close( enc);
 		IOUtil.close( os);
 	}
-	
 
-	
-	
-
-	
-	
-
-	
-	
-	
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Load the systeminfo 
 	 * @param includeNetworkDetails true add networking info
 	 * @return SystemInfoDAO
 	 */
-	public static SystemInfoDAO loadSystemInfoDAO(boolean includeNetworkDetails) 
-	{
+	public static SystemInfoDAO loadSystemInfoDAO(boolean includeNetworkDetails) {
 		SystemInfoDAO ret = new SystemInfoDAO();
+
 		Map.Entry<?, ?> all[] = System.getProperties().entrySet().toArray( new Map.Entry[0]);
-		for ( Map.Entry<?, ?>e : all)
-		{
+
+		for ( Map.Entry<?, ?>e : all) {
 			ret.getSystemProperties().add( new NVPair( (String)e.getKey(), (String)e.getValue()));
 		}
-		
-		
-		
-		if (includeNetworkDetails)
-		{
-			try
-			{
-			Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+
+		if (includeNetworkDetails) {
+			try {
+			    Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
 			
-			for (;interfaces.hasMoreElements();)
-			{
-				NetworkInterface ni = interfaces.nextElement();
-				if ( !ni.isPointToPoint() && !ni.isLoopback() && !ni.isVirtual() && ni.getHardwareAddress() != null )
-				{
-					NetworkInterfaceDAO niDAO = new NetworkInterfaceDAO();
-					niDAO.setMACAddress(SharedStringUtil.bytesToHex(ni.getHardwareAddress(), ":"));
-					niDAO.setName( ni.getName());
-					niDAO.setDisplayName( ni.getDisplayName());
-				
-				
-					Enumeration<InetAddress> addresses = ni.getInetAddresses();
-					while( addresses.hasMoreElements())
-					{
-						
-						niDAO.getInetAddresses().add(NetUtil.toInetAddressDAO(addresses.nextElement()));
-					}
-					
-					ret.getNetworkInterfaces().add(niDAO);
-					
-				}
-				
-			}
-			}
-			catch(IOException e)
-			{
-				
+                for (;interfaces.hasMoreElements();) {
+                    NetworkInterface ni = interfaces.nextElement();
+
+                    if (!ni.isPointToPoint() && !ni.isLoopback() && !ni.isVirtual() && ni.getHardwareAddress() != null ) {
+                        NetworkInterfaceDAO niDAO = new NetworkInterfaceDAO();
+                        niDAO.setMACAddress(SharedStringUtil.bytesToHex(ni.getHardwareAddress(), ":"));
+                        niDAO.setName( ni.getName());
+                        niDAO.setDisplayName( ni.getDisplayName());
+
+
+                        Enumeration<InetAddress> addresses = ni.getInetAddresses();
+
+                        while (addresses.hasMoreElements()) {
+                            niDAO.getInetAddresses().add(NetUtil.toInetAddressDAO(addresses.nextElement()));
+                        }
+
+                        ret.getNetworkInterfaces().add(niDAO);
+                    }
+
+                }
+			} catch(IOException e) {
+
 			}
 		}
 		
 		return ret;
 	}
-	
-	
-	public static SystemInfoDAO loadSystemInfoDAO()
-	{
+
+	public static SystemInfoDAO loadSystemInfoDAO() {
 		return loadSystemInfoDAO(true);
 	}
-	
-	
-	
-	
+
 //	public static void configureLogger(Logger logger, String filename) throws SecurityException, IOException
 //	{
 //		 // This block configure the logger with handler and formatter  
@@ -372,23 +277,19 @@ public final class ServerUtil
 //        fh.setFormatter(formatter); 
 //        logger.info("Logger activated");
 //	}
-	
-	
+
 	/**
 	 * Create delay in nanos
 	 * @param nanos to delay
 	 * @return the difference
 	 */
-	private static long delayInNanos(long nanos)
-	{
+	private static long delayInNanos(long nanos) {
 		
 		long stopAt = System.nanoTime() + nanos;
 		
-		
-		do
-		{
+		do {
 			
-		}while(System.nanoTime() < stopAt);
+		} while(System.nanoTime() < stopAt);
 		
 		return System.nanoTime() - stopAt;
 	}
@@ -401,16 +302,10 @@ public final class ServerUtil
 	 * @param timeToSleepNanos
 	 * @return delay
 	 */
-	public static long delay(long timeToSleepNanos)
-	{		
-		
-		
-		if(timeToSleepNanos <= 1000000) 
-		{
+	public static long delay(long timeToSleepNanos) {
+		if (timeToSleepNanos <= 1000000) {
 			return delayInNanos(timeToSleepNanos);
-		}
-		else 
-		{
+		} else {
 			final long endingTime = System.nanoTime() + timeToSleepNanos;
 			long remainingTime = timeToSleepNanos;
 			//while( remainingTime > 0)
@@ -419,24 +314,19 @@ public final class ServerUtil
 				int ns = (int) remainingTime % 1000000;
 				if (ms > 0)
 				{
-					try 
-					{
+					try {
 						Thread.sleep(ms, ns);
 					} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-				}
-				else
-				{
+				} else {
 					delayInNanos(ns);
 				}
 					
 				return System.nanoTime() - endingTime;
-				}
+            }
 		
-			}
-
+        }
 	}
 	
 	/**
@@ -445,51 +335,41 @@ public final class ServerUtil
 	 * @param clazz to be matched with
 	 * @return true if all the list object are matching
 	 */
-	public static boolean areAllInstancesMatchingType(List<?> list, Class<?> clazz)
-	{		
+	public static boolean areAllInstancesMatchingType(List<?> list, Class<?> clazz) {
 		SharedUtil.checkIfNulls("Null list or class.", list, clazz);
 		
-		if (list.size() > 0)
-		{
-			for (int i = 0; i < list.size(); i++)
-			{
-				if (list.get(i) != null && !clazz.isAssignableFrom(list.get(i).getClass()))
-				{
+		if (list.size() > 0) {
+			for (int i = 0; i < list.size(); i++) {
+				if (list.get(i) != null && !clazz.isAssignableFrom(list.get(i).getClass())) {
 					return false;
 				}
 			}
-			
 		}
 		
 		return true;
 	}
 	
 	
-	public static void main( String ... args)
-	{
-		try 
-		{
+	public static void main(String ... args) {
+		try {
 			SystemInfoDAO siDAO = loadSystemInfoDAO();
 			System.out.println(SharedUtil.toCanonicalID(':', siDAO.getName(), siDAO.getDescription()));
 			System.out.println(siDAO.getSystemProperties());
 			NVEntity[] allInterfaces = siDAO.getNetworkInterfaces().values();
 			//Iterator<NetworkInterfaceDAO> it = (Iterator<NetworkInterfaceDAO> )allInterfaces.iterator();
-			for (int i = 0; i < allInterfaces.length; i++)
-			{
+			for (int i = 0; i < allInterfaces.length; i++) {
 				NetworkInterfaceDAO niDAO = (NetworkInterfaceDAO) allInterfaces[i];
 				System.out.println( SharedUtil.toCanonicalID( ',', i, niDAO.getName(), niDAO.getMACAddress()));
 				System.out.println( niDAO.getInetAddresses());
 			}
+
 			System.out.println(GSONUtil.toJSON(siDAO, true));
 			
 			System.out.println(siDAO.getContent().getClass().getName());
 			
-		}
-		catch (Exception e) 
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 	}
 	
 }

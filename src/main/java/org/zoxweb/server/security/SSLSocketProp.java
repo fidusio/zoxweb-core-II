@@ -21,8 +21,7 @@ import java.net.URLConnection;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLSocketFactory;
 
-public interface SSLSocketProp 
-{
+public interface SSLSocketProp {
 	
 	/**
 	 * Return the SSLFactory
@@ -46,4 +45,5 @@ public interface SSLSocketProp
 	 * @param con
 	 */
 	public void updateURLConnection(URLConnection con);
+
 }

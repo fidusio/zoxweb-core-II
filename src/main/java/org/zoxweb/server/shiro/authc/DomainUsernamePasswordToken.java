@@ -18,32 +18,26 @@ package org.zoxweb.server.shiro.authc;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.zoxweb.shared.util.SharedStringUtil;
 
-
 @SuppressWarnings("serial")
-public class DomainUsernamePasswordToken 
-extends UsernamePasswordToken 
-{
+public class DomainUsernamePasswordToken
+		extends UsernamePasswordToken {
+
 	private String domain_id;
 	private String application_id;
 	private String user_id;
 	private boolean autoAuthenticationEnabled = false;
-	
 
-
-	public DomainUsernamePasswordToken()
-	{
+	public DomainUsernamePasswordToken() {
 		
 	}
 	
 	public DomainUsernamePasswordToken(final String usnernanme, final String password,
-            final boolean rememberMe, final String host, final String domainID)
-	{
+            final boolean rememberMe, final String host, final String domainID) {
 		this(usnernanme, password, rememberMe, host, domainID, null);
 	}
 	
 	public DomainUsernamePasswordToken(final String usnernanme, final String password,
-            final boolean rememberMe, final String host, final String domainID, String applicationID)
-	{
+            final boolean rememberMe, final String host, final String domainID, String applicationID) {
 		super(SharedStringUtil.toLowerCase(usnernanme), password, rememberMe, host);
 		setDomainID(domainID);
 		setApplicationID(applicationID);
@@ -51,46 +45,37 @@ extends UsernamePasswordToken
 	}
 	
 	
-	public String getDomainID() 
-	{
+
+	public String getDomainID() {
 		return domain_id;
 	}
-	public void setDomainID(String domainID) 
-	{
-	
+
+	public void setDomainID(String domainID) {
 		this.domain_id = SharedStringUtil.trimOrEmpty(SharedStringUtil.toLowerCase(domainID));
 	}
 	
-	public String getApplicationID()
-	{
+	public String getApplicationID() {
 		return application_id;
 	}
 
-
-
-	public void setApplicationID(String applicationID)
-	{
+	public void setApplicationID(String applicationID) {
 		this.application_id = SharedStringUtil.trimOrEmpty(SharedStringUtil.toLowerCase(applicationID));
 	}
 	
-	public String getUserID()
-	{
+	public String getUserID() {
 		return user_id;
 	}
 	
-	public void setUserID(String userID)
-	{
+	public void setUserID(String userID) {
 		user_id = userID;
 	}
 	
-	
-	public boolean isAutoAuthenticationEnabled()
-	{
+	public boolean isAutoAuthenticationEnabled() {
 		return autoAuthenticationEnabled;
 	}
 
-	public void setAutoAuthenticationEnabled(boolean autoAuthenticationEnabled)
-	{
+	public void setAutoAuthenticationEnabled(boolean autoAuthenticationEnabled) {
 		this.autoAuthenticationEnabled = autoAuthenticationEnabled;
 	}
+
 }

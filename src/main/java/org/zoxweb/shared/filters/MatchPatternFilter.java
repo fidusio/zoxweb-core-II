@@ -21,23 +21,18 @@ import java.util.List;
 import org.zoxweb.shared.util.GetValue;
 import org.zoxweb.shared.util.SharedStringUtil;
 
-/**
- * 
- * @author mzebib
- *
- */
 @SuppressWarnings("serial")
 public class MatchPatternFilter
-	implements ValueFilter<String, String>
-{
+		implements ValueFilter<String, String> {
+
 	/**
-	 * This enum consits of match literal characters.
+	 * Match literal characters.
 	 * @author mzebib
 	 *
 	 */
 	public enum MatchLiteral
-		implements GetValue<String>
-	{
+		implements GetValue<String> {
+
 		ASTERIK("*"),
 		CASE_INSENSITIVE("-i"),
 		RECURSIVE("-r"),
@@ -47,14 +42,12 @@ public class MatchPatternFilter
 		
 		private String value;
 		
-		MatchLiteral(String value)
-		{
+		MatchLiteral(String value) {
 			this.value = value;
 		}
 	
 		@Override
-		public String getValue() 
-		{
+		public String getValue() {
 			return value;
 		}
 		
@@ -78,8 +71,7 @@ public class MatchPatternFilter
 	/**
 	 * The constructor is declared private to prevent outside instantiation of this class.
 	 */
-	private MatchPatternFilter()
-	{
+	private MatchPatternFilter() {
 		
 	}
 	
@@ -87,8 +79,7 @@ public class MatchPatternFilter
 	 * Checks whether pattern is recursive.
 	 * @return true if recursive
 	 */
-	public boolean isRecursive()
-	{
+	public boolean isRecursive() {
 		return isRecursive;
 	}
 	
@@ -96,8 +87,7 @@ public class MatchPatternFilter
 	 * Checks whether pattern is case sensitive.
 	 * @return true if case sensitive
 	 */
-	public boolean isCaseSensitive()
-	{
+	public boolean isCaseSensitive() {
 		return isCaseSensitive;
 	}
 	
@@ -106,17 +96,14 @@ public class MatchPatternFilter
 	 * @param value
 	 * @return true if match found
 	 */
-	public boolean match(String value)
-	{
-		if (!isCaseSensitive())
-		{
+	public boolean match(String value) {
+
+	    if (!isCaseSensitive()) {
 			value = value.toLowerCase();
 		}
 		
-		for (String pattern : getMatchPatterns())
-		{
-			if (value.matches(pattern))
-			{
+		for (String pattern : getMatchPatterns()) {
+			if (value.matches(pattern)) {
 				return true;
 			}
 		}
@@ -128,8 +115,7 @@ public class MatchPatternFilter
 	 * Returns the list of match patterns.
 	 * @return match pattern
 	 */
-	public String[] getMatchPatterns()
-	{
+	public String[] getMatchPatterns() {
 		return matchPatterns.toArray(new String[0]);
 	}
 	
@@ -139,21 +125,17 @@ public class MatchPatternFilter
 	 * @param val
 	 * @return
 	 */
-	private String preFilter(String pattern, String val)
-	{
+	private String preFilter(String pattern, String val) {
 		int currentIndex = 0;
 		
-		if (pattern.indexOf(MatchLiteral.ASTERIK.getValue()) != -1)
-		{
+		if (pattern.indexOf(MatchLiteral.ASTERIK.getValue()) != -1) {
 			currentIndex = pattern.indexOf(MatchLiteral.ASTERIK.getValue());
 		}
 		
-		while (currentIndex != -1)
-		{
+		while (currentIndex != -1) {
 			int index = pattern.indexOf(MatchLiteral.ASTERIK.getValue(), currentIndex + 1);
 			
-			if (currentIndex + 1 == index)
-			{
+			if (currentIndex + 1 == index) {
 				throw new IllegalArgumentException("The given string contains consecutive index with same character: " + pattern);
 			}
 			
@@ -167,22 +149,18 @@ public class MatchPatternFilter
 	 * Adds the given the pattern to the list of match patterns.
 	 * @param pattern
 	 */
-	private void addPattern(String pattern)
-	{
-		if (!isCaseSensitive())
-		{
+	private void addPattern(String pattern) {
+		if (!isCaseSensitive()) {
 			pattern = pattern.toLowerCase();
 		}
 		
-		if (pattern.contains(MatchLiteral.ASTERIK.getValue()))
-		{
+		if (pattern.contains(MatchLiteral.ASTERIK.getValue())) {
 			pattern = preFilter(pattern, MatchLiteral.ASTERIK.getValue());
 			pattern = SharedStringUtil.embedText(pattern, MatchLiteral.ASTERIK.getValue(), ASTERIK_CHARACTER_PATTERN);
 
 		}
 		
-		if (pattern.contains(MatchLiteral.QUESTION_MARK.getValue()))
-		{
+		if (pattern.contains(MatchLiteral.QUESTION_MARK.getValue())) {
 			pattern = SharedStringUtil.embedText(pattern, MatchLiteral.QUESTION_MARK.getValue(), SINGLE_CHARACTER_PATTERN);
 		}
 		
@@ -196,29 +174,23 @@ public class MatchPatternFilter
 	 * @param matchCriteria
 	 * @return pattern filter
 	 */
-	public static MatchPatternFilter createMatchFilter(String... matchCriteria)
-	{
+	public static MatchPatternFilter createMatchFilter(String... matchCriteria) {
 		MatchPatternFilter mpf = new MatchPatternFilter();
 		
-		for (String str : matchCriteria)
-		{
-			if (!SharedStringUtil.isEmpty(str))
-			{
-				if (str.equals(MatchLiteral.RECURSIVE.getValue()))
-				{
+		for (String str : matchCriteria) {
+			if (!SharedStringUtil.isEmpty(str)) {
+				if (str.equals(MatchLiteral.RECURSIVE.getValue())) {
 					mpf.isRecursive = true;
-				}
-				else if (str.equals(MatchLiteral.CASE_INSENSITIVE.getValue()))
-				{
+				} else if (str.equals(MatchLiteral.CASE_INSENSITIVE.getValue())) {
 					mpf.isCaseSensitive = false;
 				}
 			}
 		}
 		
-		for (String str : matchCriteria)
-		{
-			if (!SharedStringUtil.isEmpty(str) || !str.equals(MatchLiteral.RECURSIVE.getValue()) || !str.equals(MatchLiteral.CASE_INSENSITIVE.getValue()))
-			{
+		for (String str : matchCriteria) {
+			if (!SharedStringUtil.isEmpty(str)
+                    || !str.equals(MatchLiteral.RECURSIVE.getValue())
+                    || !str.equals(MatchLiteral.CASE_INSENSITIVE.getValue())) {
 				mpf.addPattern(str);
 			}
 		}
@@ -227,28 +199,23 @@ public class MatchPatternFilter
 	}
 
 	@Override
-	public String toCanonicalID() 
-	{
+	public String toCanonicalID() {
 		return null;
 	}
 
-
 	@Override
 	public String validate(String in) 
-			throws NullPointerException, IllegalArgumentException 
-	{
-		if (isValid(in))
-		{
+			throws NullPointerException, IllegalArgumentException {
+
+	    if (isValid(in)) {
 			return in;
 		}
 		
 		throw new IllegalArgumentException("Invalid input: " + in);
 	}
 
-
 	@Override
-	public boolean isValid(String in) 
-	{
+	public boolean isValid(String in) {
 		return match(in);
 	}
 	

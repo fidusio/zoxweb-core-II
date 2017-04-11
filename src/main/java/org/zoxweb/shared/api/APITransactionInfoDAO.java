@@ -27,20 +27,13 @@ import org.zoxweb.shared.util.SharedUtil;
  * This class extends the API transaction information interface to create
  * the API transaction information data access object.
  * @author mzebib
- *
  */
 @SuppressWarnings("serial")
 public class APITransactionInfoDAO 
 	extends SetNameDescriptionDAO
 	implements APITransactionInfo
 {
-	/**
-	 * This enum contains the following variables:
-	 * message, delivery status, updated time stamp,
-	 * created time stamp, and remote ID.
-	 * @author mzebib
-	 *
-	 */
+
 	public enum Params
 		implements GetNVConfig
 	{
@@ -54,13 +47,11 @@ public class APITransactionInfoDAO
 		
 		private final NVConfig cType;
 		
-		Params(NVConfig c)
-		{
+		Params(NVConfig c) {
 			cType = c;
 		}
 		
-		public NVConfig getNVConfig() 
-		{
+		public NVConfig getNVConfig() {
 			return cType;
 		}
 	
@@ -84,13 +75,11 @@ public class APITransactionInfoDAO
 																			false,
 																			SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO
 																		);
-	
-	
+
 	/**
 	 * This is the default constructor.
 	 */
-	public APITransactionInfoDAO()
-	{
+	public APITransactionInfoDAO() {
 		super(NVC_API_TRANSACTION_INFO_DAO);
 	}
 	
@@ -102,102 +91,91 @@ public class APITransactionInfoDAO
 //	{
 //		super(SharedUtil.merge(list, NVC_API_TRANSACTION_INFO_DAO));
 //	}
-	
-	
+
 	/**
-	 * This method returns the message.
+	 * Returns the message.
 	 */
 	@Override
-	public APINotificationMessage getMessage() 
-	{
+	public APINotificationMessage getMessage() {
 		return lookupValue(Params.MESSAGE);
 	}
 
 	/**
-	 * This method sets the message.
+	 * Sets the message.
 	 * @param message
 	 */
 	@Override
-	public void setMessage(APINotificationMessage message) 
-	{
+	public void setMessage(APINotificationMessage message) {
 		setValue(Params.MESSAGE, message);
 	}
 
 	/**
-	 * This method returns the delivery status.
+	 * Returns the delivery status.
 	 */
 	@Override
-	public APINotificationStatus getDeliverStatus() 
-	{
+	public APINotificationStatus getDeliverStatus() {
 		return lookupValue(Params.DELIVER_STATUS);
 	}
 
 	/**
-	 * This method sets the delivery status.
+	 * Sets the delivery status.
 	 * @param status
 	 */
 	@Override
-	public void setDeliverStatus(APINotificationStatus status) 
-	{
+	public void setDeliverStatus(APINotificationStatus status) {
 		setValue(Params.DELIVER_STATUS, status);
 	}
 
 	/**
-	 * This method returns the updated time stamp.
+	 * Returns the update time stamp.
 	 */
 	@Override
-	public long getUpdateTimeStamp() 
-	{
+	public long getUpdateTimeStamp() {
 		return lookupValue(Params.UPDATE_TIME_STAMP);
 	}
 
 	/**
-	 * This method sets the updated time stamp.
+	 * Sets the update time stamp.
 	 * @param ts
 	 */
 	@Override
 	public void setUpdateTimeStamp(long ts) 
-			throws IllegalArgumentException 
-	{
+			throws IllegalArgumentException {
 		setValue(Params.UPDATE_TIME_STAMP, ts);
 	}
 
 	/**
-	 * This method returns the created time stamp.
+	 * Returns the create time stamp.
 	 */
 	@Override
-	public long getCreateTimeStamp() 
-	{
+	public long getCreateTimeStamp() {
 		return lookupValue(Params.CREATE_TIME_STAMP);
 	}
 
 	/**
-	 * This method sets the created time stamp.
+	 * Sets the create time stamp.
 	 * @param ts
 	 */
 	@Override
 	public void setCreateTimeStamp(long ts) 
-			throws IllegalArgumentException 
-	{
+			throws IllegalArgumentException {
 		setValue(Params.CREATE_TIME_STAMP, ts);
 	}
 
 	/**
-	 * This method returns the remote ID.
+	 * Returns the remote ID.
 	 */
 	@Override
-	public String getRemoteID() 
-	{
+	public String getRemoteID() {
 		return lookupValue(Params.REMOTE_ID);
 	}
 
 	/**
-	 * This method sets the remote ID.
+	 * Sets the remote ID.
 	 * @param remoteProviderID
 	 */
 	@Override
-	public void setRemoteID(String remoteProviderID) 
-	{
+	public void setRemoteID(String remoteProviderID) {
 		setValue(Params.REMOTE_ID, remoteProviderID);
 	}
 

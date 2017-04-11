@@ -48,97 +48,72 @@ import java.security.cert.X509Certificate;
  * Note: using this class in production is no recommended since it will not validate the end point of the connection
  */
 public class SSLCheckDisabler
-implements SSLSocketProp
-{
-	
-	
+		implements SSLSocketProp {
+
 	private SSLSocketFactory disabledSSLFactory = null;
 	
 	private HostnameVerifier allHostsValid = null;
-	
-	
+
 	//private SSLSocketFactory defaultSSLFactory = null;
 	
 	//private HostnameVerifier defaultHostnameVerifier = null;
-	
-	
+
 	/**
 	 * The SINGLETON class created
 	 */
 	public static final SSLCheckDisabler SINGLETON = new SSLCheckDisabler();
 	
 	
-	private SSLCheckDisabler()
-	{
-		try 
-		{
+	private SSLCheckDisabler() {
+		try {
 			disableSSLValidation();
-		} 
-		catch (KeyManagementException e)
-		{
-			// TODO Auto-generated catch block
+		} catch (KeyManagementException e) {
 			e.printStackTrace();
-		}
-		catch (NoSuchAlgorithmException e)
-		{
-			// TODO Auto-generated catch block
+		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
 	/**
 	 * Return the bogus SSL factory
 	 */
-	public SSLSocketFactory getSSLFactory()
-	{
+	public SSLSocketFactory getSSLFactory() {
 		return  disabledSSLFactory;
 	}
-	
-	
 	
 	/**
 	 * Return the bogus hostname verifier
 	 */
-	public HostnameVerifier getHostnameVerifier()
-	{
+	public HostnameVerifier getHostnameVerifier() {
 		return allHostsValid;
 	}
-	
-	/**
-	 * 
-	 */
-	public void updateURLConnection(URLConnection con)
-	{
-		if ( con != null && con instanceof HttpsURLConnection)
-		{
+
+	public void updateURLConnection(URLConnection con) {
+		if (con != null && con instanceof HttpsURLConnection) {
 			((HttpsURLConnection)con).setSSLSocketFactory(getSSLFactory());
 			((HttpsURLConnection)con).setHostnameVerifier(getHostnameVerifier());
 		}
 	}
-	
 	
 	/**
 	 * Create a bogus SSL factory and hostname verifier
 	 * @throws NoSuchAlgorithmException
 	 * @throws KeyManagementException
 	 */
-	private void disableSSLValidation() throws NoSuchAlgorithmException, KeyManagementException
-	{
+	private void disableSSLValidation() throws NoSuchAlgorithmException, KeyManagementException {
 		//defaultSSLFactory = HttpsURLConnection.getDefaultSSLSocketFactory();
 		//defaultHostnameVerifier = HttpsURLConnection.getDefaultHostnameVerifier();
 		TrustManager[] trustAllCerts = new TrustManager[] {
-				new X509TrustManager()
-				{
+				new X509TrustManager() {
 					public java.security.cert.X509Certificate[] getAcceptedIssuers()
 					{
 					return null;
 					}
-					public void checkClientTrusted(X509Certificate[] certs, String authType)
-					{
+					public void checkClientTrusted(X509Certificate[] certs, String authType) {
+
 					}
-					public void checkServerTrusted(X509Certificate[] certs, String authType)
-					{
+					public void checkServerTrusted(X509Certificate[] certs, String authType) {
+
 					}
 			}
 		};
@@ -155,11 +130,7 @@ implements SSLSocketProp
 				return true;
 			}
 		};
-	
-		
 	}
-	
-	
 
 	/**
 	 * Return the system default SSL Factory

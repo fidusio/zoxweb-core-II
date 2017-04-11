@@ -20,14 +20,14 @@ import java.io.Serializable;
 /**
  * The CRUD event interface.
  * @author mzebib
- *
  */
 public interface CRUDEvent
-	extends  Serializable
-{
+	extends  Serializable {
+
 	/**
 	 * Returns the CRUD.
 	 * @return crud value
 	 */
 	public CRUD getCRUD();
+
 }

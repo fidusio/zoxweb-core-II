@@ -20,8 +20,7 @@ package org.zoxweb.shared.util;
  *
  */
 public interface SetCanonicalID 
-	extends CanonicalID
-{
+	extends CanonicalID {
 	
 	String getCanonicalID();
 	
