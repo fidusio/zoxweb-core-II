@@ -25,18 +25,16 @@ import org.zoxweb.shared.util.NVConfigManager;
 import org.zoxweb.shared.util.SharedUtil;
 
 /**
- * 
- * @author mzebib
  *
  */
 @SuppressWarnings("serial")
 public class VMInfoDAO 
-	extends SetNameDescriptionDAO 
+    extends SetNameDescriptionDAO
 {
 
 	public enum Param
 		implements GetNVConfig
-	{
+    {
 		CORE_COUNT(NVConfigManager.createNVConfig("core_count", "Number of available CPU cores", "CoreCount", true, true, Integer.class)),
 		FREE_MEMORY(NVConfigManager.createNVConfig("free_memory", "Free memory", "FreeMemory", true, true, Long.class)),
 		TOTAL_MEMORY(NVConfigManager.createNVConfig("total_memory", "Total memory", "TotalMemory", true, true, Long.class)),
@@ -60,20 +58,20 @@ public class VMInfoDAO
 	}
 	
 	public static final NVConfigEntity NVC_VMINFO_DAO = new NVConfigEntityLocal(
-																					"vm_info_dao", 
-																					null, 
-																					"VMInfoDAO", 
-																					true, 
-																					false, 
-																					false, 
-																					false, 
-																					AddressDAO.class, 
-																					SharedUtil.extractNVConfigs(Param.values()),
-																					null, 
-																					false, 
-																					SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO
-																				);
-	
+            "vm_info_dao",
+            null,
+            VMInfoDAO.class.getSimpleName(),
+            true,
+            false,
+            false,
+            false,
+            VMInfoDAO.class,
+            SharedUtil.extractNVConfigs(Param.values()),
+            null,
+            false,
+            SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO
+    );
+
 	/**
 	 * The default constructor.
 	 */

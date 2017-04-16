@@ -24,8 +24,6 @@ import org.zoxweb.shared.util.NVConfigManager;
 import org.zoxweb.shared.util.SharedUtil;
 
 /**
- * 
- * @author mzebib
  *
  */
 @SuppressWarnings("serial")
@@ -36,52 +34,50 @@ public class SecureDocumentDAO
 		// timestamp
 		// message id ie refid
 		// content as NVEntity
-	
-	public enum Params
+
+	public enum Param
 		implements GetNVConfig
 	{
 		CONTENT(NVConfigManager.createNVConfig("content", "Content of the document", "Content", false, true, false, false, String.class, FilterType.ENCRYPT)),
-		
+
 		;
-		
-		private final NVConfig cType;
-		
-		Params(NVConfig c)
+
+		private final NVConfig nvc;
+
+        Param(NVConfig nvc)
 		{
-			cType = c;
+			this.nvc = nvc;
 		}
-		
-		public NVConfig getNVConfig() 
+
+		public NVConfig getNVConfig()
 		{
-			return cType;
+			return nvc;
 		}
 	}
-	
+
 	public static final NVConfigEntity NVC_SECURE_DOCUMENT_DAO = new NVConfigEntityLocal(
-																						    "secure_document_dao",
-																							"Secure Note",
-																							"SecureNote", 
-																							true,
-																							false,
-																							false,
-																							false,
-																							SecureDocumentDAO.class,
-																							SharedUtil.extractNVConfigs(Params.values()),
-																							null,
-																							false,
-																							SimpleDocumentDAO.NVC_SIMPLE_DOCUMENT_DAO
-																						);
-	
-	
+            "secure_document_dao",
+            "Secure Note",
+            "SecureNote",
+            true,
+            false,
+            false,
+            false,
+            SecureDocumentDAO.class,
+            SharedUtil.extractNVConfigs(Param.values()),
+            null,
+            false,
+            SimpleDocumentDAO.NVC_SIMPLE_DOCUMENT_DAO
+    );
+
+
 	/**
 	 * The default constructor.
 	 */
-	public SecureDocumentDAO() 
+	public SecureDocumentDAO()
 	{
 		super(NVC_SECURE_DOCUMENT_DAO);
 	}
-	
-	
 
-	
+
 }

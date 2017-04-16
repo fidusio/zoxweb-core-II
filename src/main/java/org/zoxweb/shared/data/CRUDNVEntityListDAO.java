@@ -39,28 +39,28 @@ public class CRUDNVEntityListDAO
 	implements CRUDNVEntityList
 {
 
-	public enum Params
+	public enum Param
 		implements GetNVConfig
 	{
 		CRUD_OP(NVConfigManager.createNVConfig("crud_op", "CRUD operation", "CRUDOperation", true, false, CRUD.class)),
 		NVE_LIST(NVConfigManager.createNVConfigEntity("nve_list", "NVEntity", "NVEntity", false, true, NVEntity.class, ArrayType.LIST)),
 
 		;
-	
-		private final NVConfig cType;
-		
-		Params(NVConfig c)
-		{
-			cType = c;
-		}
-		
-		public NVConfig getNVConfig()
-		{
-			return cType;
-		}
+
+        private final NVConfig nvc;
+
+        Param(NVConfig nvc)
+        {
+            this.nvc = nvc;
+        }
+
+        public NVConfig getNVConfig()
+        {
+            return nvc;
+        }
 	}
 	
-	public static final NVConfigEntity NVC_CRUD_NVENTITY_LIST_DAO = new NVConfigEntityLocal("crud_nventity_list_dao", null , "CRUDNVEntityListDAO", true, false, false, false, CRUDNVEntityListDAO.class, SharedUtil.extractNVConfigs(Params.values()), null, false, SetNameDAO.NVC_NAME_DAO);
+	public static final NVConfigEntity NVC_CRUD_NVENTITY_LIST_DAO = new NVConfigEntityLocal("crud_nventity_list_dao", null , "CRUDNVEntityListDAO", true, false, false, false, CRUDNVEntityListDAO.class, SharedUtil.extractNVConfigs(Param.values()), null, false, SetNameDAO.NVC_NAME_DAO);
 
 	public CRUDNVEntityListDAO()
 	{
@@ -77,23 +77,23 @@ public class CRUDNVEntityListDAO
 	@Override
 	public CRUD getCRUD() 
 	{
-		return lookupValue(Params.CRUD_OP);
+		return lookupValue(Param.CRUD_OP);
 	}
 	
 	public void setCRUD(CRUD crud)
 	{
-		setValue(Params.CRUD_OP, crud);
+		setValue(Param.CRUD_OP, crud);
 	}
 	
 	@Override
 	public List<NVEntity> getNVEntityList()
 	{
-		return lookupValue(Params.NVE_LIST);
+		return lookupValue(Param.NVE_LIST);
 	}
 	
 	public void setNVEntityList(List<NVEntity> nve)
 	{
-		setValue(Params.NVE_LIST, nve);
+		setValue(Param.NVE_LIST, nve);
 	}
 
 }

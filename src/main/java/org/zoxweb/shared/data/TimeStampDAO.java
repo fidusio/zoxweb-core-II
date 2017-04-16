@@ -26,17 +26,15 @@ import org.zoxweb.shared.util.SharedUtil;
 import org.zoxweb.shared.util.TimeStampInterface;
 
 /**
- * 
- * @author mzebib
  *
  */
 @SuppressWarnings("serial")
-abstract public class TimeStampDAO
+public abstract class TimeStampDAO
 	extends SetNameDescriptionDAO
 	implements TimeStampInterface
 {
 	
-	public enum Params
+	public enum Param
 		implements GetNVConfig
 	{
 		CREATION_TS(NVConfigManager.createNVConfig("creation_ts", "Creation timestamp (in millis).", "CreationTS", true, false, false, true, Date.class, null)),
@@ -45,36 +43,36 @@ abstract public class TimeStampDAO
 		
 		;
 	
-		private final NVConfig cType;
-		
-		Params(NVConfig c)
+		private final NVConfig nvc;
+
+        Param(NVConfig nvc)
 		{
-			cType = c;
+            this.nvc = nvc;
 		}
 		
 		public NVConfig getNVConfig()
 		{
-			return cType;
+			return nvc;
 		}
 	}
 	
 	public static final NVConfigEntity NVC_TIME_STAMP_DAO = new NVConfigEntityLocal(
-																						"time_stamp_dao", 
-																						null, 
-																						"TimeStampDAO", 
-																						true, 
-																						false, 
-																						false, 
-																						false, 
-																						TimeStampDAO.class, 
-																						SharedUtil.extractNVConfigs(Params.values()), 
-																						null, 
-																						false, 
-																						SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO
-																					);
-	
+	        "time_stamp_dao",
+            null,
+            TimeStampDAO.class.getSimpleName(),
+            true,
+            false,
+            false,
+            false,
+            TimeStampDAO.class,
+            SharedUtil.extractNVConfigs(Param.values()),
+            null,
+            false,
+            SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO
+    );
+
 	/**
-	 * This constructor instantiates TimeStampDAO based on given NVConfigEntity.
+	 * This constructor instantiates TimeStampDAO with given NVConfigEntity.
 	 * @param nvce
 	 */
 	protected TimeStampDAO(NVConfigEntity nvce)
@@ -83,12 +81,12 @@ abstract public class TimeStampDAO
 	}
 	
 	/**
-	 * Gets the time (in milliseconds) when the file was created or uploaded into a system or domain.
+	 * Returns the time (in milliseconds) when the file was created or uploaded into a system or domain.
 	 * @return creation time
 	 */
 	public long getCreationTime() 
 	{
-		return lookupValue(Params.CREATION_TS);
+		return lookupValue(Param.CREATION_TS);
 	}
 	
 	/**
@@ -97,16 +95,16 @@ abstract public class TimeStampDAO
 	 */
 	public void setCreationTime(long ts) 
 	{
-		setValue(Params.CREATION_TS, ts);
+		setValue(Param.CREATION_TS, ts);
 	}
 	
 	/**
-	 * Gets the last time (in milliseconds) the file was updated.
+	 * Returns the last time (in milliseconds) the file was updated.
 	 * @return last time updated 
 	 */
 	public long getLastTimeUpdated() 
 	{
-		return lookupValue(Params.LAST_UPDATE_TS);
+		return lookupValue(Param.LAST_UPDATE_TS);
 	}
 	
 	/**
@@ -115,16 +113,16 @@ abstract public class TimeStampDAO
 	 */
 	public void setLastTimeUpdated(long ts) 
 	{
-		setValue(Params.LAST_UPDATE_TS, ts);
+		setValue(Param.LAST_UPDATE_TS, ts);
 	}
 	
 	/**
-	 * Gets the last time (in milliseconds) the file was read.
+	 * Returns the last time (in milliseconds) the file was read.
 	 * @return last time read 
 	 */
 	public long getLastTimeRead() 
 	{
-		return lookupValue(Params.LAST_READ_TS);
+		return lookupValue(Param.LAST_READ_TS);
 	}
 	
 	/**
@@ -133,7 +131,7 @@ abstract public class TimeStampDAO
 	 */
 	public void setLastTimeRead(long ts) 
 	{
-		setValue(Params.LAST_READ_TS, ts);
+		setValue(Param.LAST_READ_TS, ts);
 	}
 	
 }

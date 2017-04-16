@@ -26,32 +26,30 @@ import org.zoxweb.shared.util.SharedUtil;
 import org.zoxweb.shared.util.NVConfigEntity.ArrayType;
 
 /**
- * 
- * @author mzebib
  *
  */
 @SuppressWarnings("serial")
 public class FormInfoDAO
 	extends DocumentInfoDAO
 {
-	public enum Params
-		implements GetNVConfig
+	public enum Param
+        implements GetNVConfig
 	{
 		FORM_REFERENCE(NVConfigManager.createNVConfigEntity("form_reference", "The form reference", "FormReference", false, true, NVEntity.class, ArrayType.NOT_ARRAY)),
 		
 		;
-	
-		private final NVConfig cType;
-		
-		Params(NVConfig c)
-		{
-			cType = c;
-		}
-		
-		public NVConfig getNVConfig() 
-		{
-			return cType;
-		}
+
+        private final NVConfig nvc;
+
+        Param(NVConfig nvc)
+        {
+            this.nvc = nvc;
+        }
+
+        public NVConfig getNVConfig()
+        {
+            return nvc;
+        }
 	}
 
 	public static final NVConfigEntity NVC_FORM_INFO_DAO = new NVConfigEntityLocal(
@@ -63,7 +61,7 @@ public class FormInfoDAO
 																					false, 
 																					false, 
 																					FormInfoDAO.class, 
-																					SharedUtil.extractNVConfigs(Params.values()), 
+																					SharedUtil.extractNVConfigs(Param.values()),
 																					null, 
 																					false, 
 																					DocumentInfoDAO.NVC_DOCUMENT_INFO_DAO
@@ -87,11 +85,12 @@ public class FormInfoDAO
 	}
 	
 	/**
-	 * @return the form reference.
+     * Returns the referenced NVEntity.
+	 * @return the form reference
 	 */
 	public NVEntity getFormReference()
 	{
-		return lookupValue(Params.FORM_REFERENCE);
+		return lookupValue(Param.FORM_REFERENCE);
 	}
 	
 	/**
@@ -100,7 +99,7 @@ public class FormInfoDAO
 	 */
 	public void setFormReference(NVEntity nve)
 	{
-		setValue(Params.FORM_REFERENCE, nve);
+		setValue(Param.FORM_REFERENCE, nve);
 	}
 	
 //	public String getName()

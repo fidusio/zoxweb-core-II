@@ -19,8 +19,6 @@ import org.zoxweb.shared.util.CRUD;
 import org.zoxweb.shared.util.CRUDEvent;
 
 /**
- * 
- * @author mzebib
  *
  */
 @SuppressWarnings("serial")

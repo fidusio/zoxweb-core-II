@@ -27,8 +27,6 @@ import org.zoxweb.shared.util.SharedUtil;
 import org.zoxweb.shared.util.NVConfigEntity.ArrayType;
 
 /**
- * 
- * @author mzebib
  *
  */
 @SuppressWarnings("serial")
@@ -58,19 +56,19 @@ public class UserInfoDAO
 	}
 	
 	public static final NVConfigEntity NVC_USER_INFO_DAO = new NVConfigEntityLocal(
-																						"user_info_dao", 
-																						null , 
-																						"UserInfoDAO", 
-																						true, 
-																						false, 
-																						false, 
-																						false, 
-																						UserInfoDAO.class, 
-																						SharedUtil.extractNVConfigs(Param.values()),
-																						null, 
-																						false, 
-																						UserInfoBaseDAO.NVC_USER_INFO_BASE_DAO
-																					);
+	        "user_info_dao",
+            null ,
+            UserInfoDAO.class.getSimpleName(),
+            true,
+            false,
+            false,
+            false,
+            UserInfoDAO.class,
+            SharedUtil.extractNVConfigs(Param.values()),
+            null,
+            false,
+            UserInfoBaseDAO.NVC_USER_INFO_BASE_DAO
+    );
 																				
 	
 	/**

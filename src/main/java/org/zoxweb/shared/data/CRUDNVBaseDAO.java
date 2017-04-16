@@ -20,8 +20,6 @@ import org.zoxweb.shared.util.CRUDNVBase;
 import org.zoxweb.shared.util.NVBase;
 
 /**
- * 
- * @author mzebib
  *
  */
 @SuppressWarnings("serial")

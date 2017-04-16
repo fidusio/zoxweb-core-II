@@ -16,48 +16,55 @@
 package org.zoxweb.shared.data;
 
 /**
- * The SearchCriteria interface.
+ * The search criteria interface.
  * @author mzebib
- *
  */
 public interface SearchCriteria 
 {
 	/**
+     * Returns the text.
 	 * @return the text
 	 */
 	public String getText();
 	
 	/**
+     * Sets the text.
 	 * @param text the text to set
 	 */
 	public void setText(String text);
 	
 	/**
+     * Checks if recursive.
 	 * @return the recursive
 	 */
 	public boolean isRecursive();
 	
 	/**
+     * Sets recursive.
 	 * @param recursive the recursive to set
 	 */
 	public void setRecursive(boolean recursive);
 	
 	/**
+     * Checks if case sensitive.
 	 * @return the caseSensitive
 	 */
 	public boolean isCaseSensitive();
 	
 	/**
+     * Sets case sensitive.
 	 * @param caseSensitive the caseSensitive to set
 	 */
 	public void setCaseSensitive(boolean caseSensitive);
 	
 	/**
+     * Checks if exact match.
 	 * @return the exactMatch
 	 */
 	public boolean isExactMatch();
 	
 	/**
+     * Sets exact match.
 	 * @param exactMatch the exactMatch to set
 	 */
 	public void setExactMatch(boolean exactMatch);

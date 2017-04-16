@@ -25,54 +25,51 @@ import org.zoxweb.shared.util.SharedUtil;
 import org.zoxweb.shared.util.NVConfigEntity.ArrayType;
 
 /**
- * 
- * @author mzebib
  *
  */
 @SuppressWarnings("serial")
 public class MessageDAO
-	extends TimeStampDAO
+    extends TimeStampDAO
 {
 		// sender id in this case user id
 		// timestamp
 		// message id ie refid
 		// content as NVEntity
 	
-	public enum Params
+	public enum Param
 		implements GetNVConfig
 	{
 		CONTENT(NVConfigManager.createNVConfigEntity("content", "Content", "Content", true, true, NVEntity.class, ArrayType.NOT_ARRAY)),
 		
 		;
-		
-		private final NVConfig cType;
-		
-		Params(NVConfig c)
-		{
-			cType = c;
-		}
-		
-		public NVConfig getNVConfig() 
-		{
-			return cType;
-		}
-	
+
+        private final NVConfig nvc;
+
+        Param(NVConfig nvc)
+        {
+            this.nvc = nvc;
+        }
+
+        public NVConfig getNVConfig()
+        {
+            return nvc;
+        }
 	}
 	
 	public static final NVConfigEntity NVC_MESSAGE_DAO = new NVConfigEntityLocal(
-																					"message_dao",
-																					null,
-																					"MessageDAO", 
-																					true,
-																					false,
-																					false,
-																					false,
-																					DataContentDAO.class,
-																					SharedUtil.extractNVConfigs(Params.values()),
-																					null,
-																					false,
-																					TimeStampDAO.NVC_TIME_STAMP_DAO
-																				);
+            "message_dao",
+            null,
+            "MessageDAO",
+            true,
+            false,
+            false,
+            false,
+            DataContentDAO.class,
+            SharedUtil.extractNVConfigs(Param.values()),
+            null,
+            false,
+            TimeStampDAO.NVC_TIME_STAMP_DAO
+    );
 	
 	
 	/**
@@ -85,12 +82,12 @@ public class MessageDAO
 	
 	
 	/**
-	 * Gets the content.
+	 * Returns the content.
 	 * @return content
 	 */
 	public NVEntity getContent()
 	{
-		return lookupValue(Params.CONTENT);
+		return lookupValue(Param.CONTENT);
 	}
 	
 	/**
@@ -99,7 +96,7 @@ public class MessageDAO
 	 */
 	public void setContent(NVEntity content)
 	{
-		setValue(Params.CONTENT, content);
+		setValue(Param.CONTENT, content);
 	}
 	
 }

@@ -255,7 +255,7 @@ public class ClamAVClient
 	    	
 	    	ret.getScanResult().setLength(ret.getScanResult().getLength() + read);
 	        // The format of the chunk is: '<length><data>' where <length> is the size of the following data in bytes expressed as a 4 byte unsigned
-	        // integer in network byte order and <data> is the actual chunk. Streaming is terminated by sending a zero-length chunk.
+	        // integer in network byte inventory and <data> is the actual chunk. Streaming is terminated by sending a zero-length chunk.
 	    	//ByteBuffer.allocate(4).putInt(read).array();
 	        byte[] chunkSize = TypeInBytes.intToBytes(read); 
 	        outs.write(chunkSize);

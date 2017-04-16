@@ -20,7 +20,6 @@ import org.zoxweb.shared.util.GetName;
 /**
  * This enum contains personal name titles.
  * @author mzebib
- *
  */
 public enum PersonalNameTitle 
 	implements GetName
@@ -31,17 +30,17 @@ public enum PersonalNameTitle
 	
 	;
 	
-	private final String title;
+	private final String name;
 	
-	PersonalNameTitle(String title)
+	PersonalNameTitle(String name)
 	{
-		this.title = title;
+		this.name = name;
 	}
 	
 	@Override
 	public String getName() 
 	{
-		return title;
+		return name;
 	}
 
 }

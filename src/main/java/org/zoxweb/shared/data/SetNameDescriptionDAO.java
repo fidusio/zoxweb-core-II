@@ -33,12 +33,27 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 @SuppressWarnings("serial")
 public abstract class SetNameDescriptionDAO
-	extends SetNameDAO
-	implements SetDescription
+    extends SetNameDAO
+    implements SetDescription
 {
-	public static final NVConfigEntity NVC_NAME_DESCRIPTION_DAO = new NVConfigEntityLocal(null, null , null, true, false, false, false, SetNameDescriptionDAO.class, SharedUtil.toNVConfigList(DataParam.DESCRIPTION.getNVConfig()), null, false, SetNameDAO.NVC_NAME_DAO);
 
-	protected SetNameDescriptionDAO(NVConfigEntity nvce) {
+	public static final NVConfigEntity NVC_NAME_DESCRIPTION_DAO = new NVConfigEntityLocal(
+            null,
+            null ,
+            null,
+            true,
+            false,
+            false,
+            false,
+            SetNameDescriptionDAO.class,
+            SharedUtil.toNVConfigList(DataParam.DESCRIPTION.getNVConfig()),
+            null,
+            false,
+            SetNameDAO.NVC_NAME_DAO
+    );
+
+	protected SetNameDescriptionDAO(NVConfigEntity nvce)
+    {
 		super(nvce);
 	}
 
@@ -48,7 +63,8 @@ public abstract class SetNameDescriptionDAO
 	 */
 	@Column(name = "description")
 	@Override
-	public String getDescription() {
+	public String getDescription()
+    {
 		return lookupValue(DataParam.DESCRIPTION);
 	}
 
@@ -58,7 +74,8 @@ public abstract class SetNameDescriptionDAO
 	 */
 	@Override
 	public void setDescription(String description) 
-			throws NullPointerException, IllegalArgumentException {
+			throws NullPointerException, IllegalArgumentException
+    {
 		setValue(DataParam.DESCRIPTION, description);
 	}
 

@@ -66,7 +66,7 @@ public class CanonicalIDDAO
 	}
 	
 	/**
-	 * Gets canonical ID.
+	 * Returns canonical ID.
 	 */
 	@Override
 	public String getCanonicalID() 

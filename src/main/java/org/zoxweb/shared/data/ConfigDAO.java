@@ -44,7 +44,8 @@ public class ConfigDAO
 	 *
 	 */
 	
-	private volatile  Object attachement;
+	private volatile  Object attachment;
+
 	public enum Param
 		implements GetNVConfig
 	{
@@ -160,13 +161,13 @@ public class ConfigDAO
 	}
 	
 	
-	public Object attachement()
+	public Object attachment()
 	{
-		return attachement;
+		return attachment;
 	}
 	
-	public void attach(Object attachement)
+	public void attach(Object attachment)
 	{
-		this.attachement = attachement;
+		this.attachment = attachment;
 	}
 }

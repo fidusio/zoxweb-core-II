@@ -29,8 +29,6 @@ import org.zoxweb.shared.util.SharedUtil;
 import org.zoxweb.shared.util.NVConfigEntity.ArrayType;
 
 /**
- * 
- * @author mzebib
  *
  */
 @SuppressWarnings("serial")
@@ -39,24 +37,25 @@ public class FolderInfoDAO
 	implements NVEntityContainer
 {
 	
-	public enum Params
+	public enum Param
 		implements GetNVConfig
 	{
 		NVC_NAME(NVConfigManager.createNVConfig("name", null,"Name", true, true, String.class)),
 		CONTENT(NVConfigManager.createNVConfigEntity("content", "The folder content", "Content", false, true, NVEntity[].class, ArrayType.REFERENCE_ID_MAP)),
 		
 		;
-	
-		private final NVConfig cType;
-		Params( NVConfig c)
-		{
-			cType = c;
-		}
-		
-		public NVConfig getNVConfig() 
-		{
-			return cType;
-		}
+
+        private final NVConfig nvc;
+
+        Param(NVConfig nvc)
+        {
+            this.nvc = nvc;
+        }
+
+        public NVConfig getNVConfig()
+        {
+            return nvc;
+        }
 	}
 	
 	public static final NVConfigEntity NVC_FOLDER_INFO_DAO = new NVConfigEntityLocal(
@@ -68,7 +67,7 @@ public class FolderInfoDAO
 																						false, 
 																						false, 
 																						FolderInfoDAO.class, 
-																						SharedUtil.extractNVConfigs(Params.values()), 
+																						SharedUtil.extractNVConfigs(Param.values()),
 																						null, 
 																						false, 
 																						DocumentInfoDAO.NVC_DOCUMENT_INFO_DAO
@@ -83,13 +82,13 @@ public class FolderInfoDAO
 	}
 	
 	/**
-	 * Gets the folder content.
-	 * @return folder contenet
+	 * Returns the folder content.
+	 * @return folder content
 	 */
 	@SuppressWarnings("unchecked")
 	public ArrayValues<NVEntity> getFolderContent()
 	{
-		return (ArrayValues<NVEntity>) lookup(Params.CONTENT);
+		return (ArrayValues<NVEntity>) lookup(Param.CONTENT);
 	}
 	
 	/**
@@ -99,7 +98,7 @@ public class FolderInfoDAO
 	@SuppressWarnings("unchecked")
 	public void setFolderContent(ArrayValues<NVEntity> values)
 	{
-		ArrayValues<NVEntity> content = (ArrayValues<NVEntity>) lookup(Params.CONTENT);
+		ArrayValues<NVEntity> content = (ArrayValues<NVEntity>) lookup(Param.CONTENT);
 		content.add(values.values(), true);
 	}
 	
@@ -110,7 +109,7 @@ public class FolderInfoDAO
 	@SuppressWarnings("unchecked")
 	public void setFolderContent(List<NVEntity> values)
 	{
-		ArrayValues<NVEntity> content = (ArrayValues<NVEntity>) lookup(Params.CONTENT);
+		ArrayValues<NVEntity> content = (ArrayValues<NVEntity>) lookup(Param.CONTENT);
 		content.add(values.toArray(new NVEntity[0]), true);
 	}
 

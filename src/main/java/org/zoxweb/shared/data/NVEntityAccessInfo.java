@@ -28,8 +28,6 @@ import org.zoxweb.shared.util.SharedUtil;
 import org.zoxweb.shared.data.TimeStampDAO;
 
 /**
- * 
- * @author mzebib
  *
  */
 @SuppressWarnings("serial")
@@ -46,33 +44,33 @@ public class NVEntityAccessInfo
 		
 		;
 		
-		private final NVConfig cType;
+		private final NVConfig nvc;
 		
-		Param(NVConfig c)
+		Param(NVConfig nvc)
 		{
-			cType = c;
+			this.nvc = nvc;
 		}
 		
 		public NVConfig getNVConfig() 
 		{
-			return cType;
+			return nvc;
 		}
 	}
 	
 	public static final NVConfigEntity NVC_NVENTITY_ACCESS_INFO = new NVConfigEntityLocal(  
-																							"nventity_access_info",
-																							null, 
-																							"NVEntityAccessInfo", 
-																							true, 
-																							false,
-																							false,
-																							false,
-																							NVEntityAccessInfo.class,
-																							SharedUtil.extractNVConfigs(Param.values()),
-																							null, 
-																							false,
-																							TimeStampDAO.NVC_TIME_STAMP_DAO
-																					 	);
+            "nventity_access_info",
+            null,
+            "NVEntityAccessInfo",
+            true,
+            false,
+            false,
+            false,
+            NVEntityAccessInfo.class,
+            SharedUtil.extractNVConfigs(Param.values()),
+            null,
+            false,
+            TimeStampDAO.NVC_TIME_STAMP_DAO
+    );
 	
 	/**
 	 * The default constructor. 

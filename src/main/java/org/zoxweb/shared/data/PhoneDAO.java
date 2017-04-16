@@ -29,7 +29,6 @@ import org.zoxweb.shared.util.SharedUtil;
  * This class defines the phone data access object used to create phone numbers 
  * associated with an account.
  * @author mzebib
- *
  */
 @SuppressWarnings("serial")
 public class PhoneDAO 
@@ -44,7 +43,7 @@ public class PhoneDAO
 	 * @author mzebib
 	 *
 	 */
-	public enum Params
+	public enum Param
 		implements GetNVConfig
 	{
 		PHONE_TYPE(NVConfigManager.createNVConfig("phone_type", "Phone_type", "PhoneType", false, true, false, String.class, DataConst.PHONE_TYPES)),
@@ -54,36 +53,35 @@ public class PhoneDAO
 		EXTENSION(NVConfigManager.createNVConfig("extension", "Extension", "Extension", false, true, String.class)),
 		
 		;
-		
-		private final NVConfig cType;
-		
-		Params(NVConfig c)
-		{
-			cType = c;
-		}
-		
-		public NVConfig getNVConfig() 
-		{
-			return cType;
-		}
+
+        private final NVConfig nvc;
+
+        Param(NVConfig nvc)
+        {
+            this.nvc = nvc;
+        }
+
+        public NVConfig getNVConfig()
+        {
+            return nvc;
+        }
 
 	}
 	
 	public static final NVConfigEntity NVC_PHONE_DAO = new NVConfigEntityLocal(
-																				"phone_dao", 
-																				null, 
-																				"Phone", 
-																				true, 
-																				false, 
-																				false, 
-																				false, 
-																				PhoneDAO.class, 
-																				SharedUtil.extractNVConfigs(Params.values()), 
-																				null, 
-																				false, 
-																				SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO
-																			  );
-	
+            "phone_dao",
+            null,
+            "Phone",
+            true,
+            false,
+            false,
+            false,
+            PhoneDAO.class,
+            SharedUtil.extractNVConfigs(Param.values()),
+            null,
+            false,
+            SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO
+    );
 	
 	/**
 	 * The default constructor.
@@ -93,13 +91,8 @@ public class PhoneDAO
 		super(NVC_PHONE_DAO);
 	}
 	
-//	protected PhoneDAO(List<NVConfigEntity> list)
-//	{
-//		super(SharedUtil.merge(list, NVC_PHONE_DAO));
-//	}
-	
 	/**
-	 * Gets canonical ID.
+	 * Returns the canonical ID.
 	 */
 	public String toCanonicalID()
 	{
@@ -107,12 +100,12 @@ public class PhoneDAO
 	}
 	
 	/**
-	 * Gets the phone type.
+	 * Returns the phone type.
 	 * @return phone type
 	 */
 	public String getPhoneType() 
 	{
-		return lookupValue(Params.PHONE_TYPE);
+		return lookupValue(Param.PHONE_TYPE);
 	}
 	
 	/**
@@ -121,16 +114,16 @@ public class PhoneDAO
 	 */
 	public void setPhoneType(String type) 
 	{
-		setValue(Params.PHONE_TYPE, type);
+		setValue(Param.PHONE_TYPE, type);
 	}
 	
 	/**
-	 * Gets the country code.
+	 * Returns the country code.
 	 * @return country code
 	 */
 	public String getCountryCode() 
 	{
-		return lookupValue(Params.COUNTRY_CODE);
+		return lookupValue(Param.COUNTRY_CODE);
 	}
 	
 	/**
@@ -139,16 +132,16 @@ public class PhoneDAO
 	 */
 	public void setCountryCode(String code) 
 	{
-		setValue(Params.COUNTRY_CODE, code);
+		setValue(Param.COUNTRY_CODE, code);
 	}
 	
 	/**
-	 * Gets the area code.
+	 * Returns the area code.
 	 * @return area code
 	 */
 	public String getAreaCode() 
 	{
-		return lookupValue(Params.AREA_CODE);
+		return lookupValue(Param.AREA_CODE);
 	}
 	
 	/**
@@ -157,16 +150,16 @@ public class PhoneDAO
 	 */
 	public void setAreaCode(String area) 
 	{
-		setValue(Params.AREA_CODE, area);
+		setValue(Param.AREA_CODE, area);
 	}
 	
 	/**
-	 * Gets the number.
+	 * Returns the number.
 	 * @return phone number
 	 */
 	public String getNumber() 
 	{
-		return lookupValue(Params.NUMBER);
+		return lookupValue(Param.NUMBER);
 	}
 	
 	/**
@@ -175,16 +168,16 @@ public class PhoneDAO
 	 */
 	public void setNumber(String number) 
 	{
-		setValue(Params.NUMBER, number);
+		setValue(Param.NUMBER, number);
 	}
 	
 	/**
-	 * Gets the extension.
+	 * Returns the extension.
 	 * @return extension
 	 */
 	public String getExtension() 
 	{
-		return lookupValue(Params.EXTENSION);
+		return lookupValue(Param.EXTENSION);
 	}
 	
 	/**
@@ -193,7 +186,7 @@ public class PhoneDAO
 	 */
 	public void setExtension(String ext) 
 	{
-		setValue(Params.EXTENSION, ext);
+		setValue(Param.EXTENSION, ext);
 	}
 
 }

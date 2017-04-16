@@ -18,51 +18,62 @@ package org.zoxweb.shared.data;
 import org.zoxweb.shared.util.SubjectID;
 
 /**
- * The SubjectInfo interface.
- * @author mzebib
- *
+ * The subject info interface.
  */
 public interface SubjectInfo
 	extends SubjectID<String>
 {
+
+    /**
+     * Returns the title.
+     * @return title
+     */
+    public String getTitle();
+
+    /**
+     * Sets the title.
+     * @param title
+     */
+    public void setTitle(String title);
+
 	/**
-	 * Gets the first name.
+	 * Returns the first name.
 	 * @return fist name 
 	 */
 	public String getFirstName();
 	
 	/**
 	 * Sets the first name.
-	 * @param first
+	 * @param firstName
 	 */
-	public void setFirstName(String first);
+	public void setFirstName(String firstName);
 
 	/**
-	 * Gets the middle name.
+	 * Returns the middle name.
 	 * @return middle name
 	 */
 	public String getMiddleName();
 	
 	/**
 	 * Sets the middle name.
-	 * @param middle
+	 * @param middleName
 	 */
-	public void setMiddleName(String middle);
+	public void setMiddleName(String middleName);
 	
 	/**
-	 * Gets the last name.
+	 * Returns the last name.
 	 * @return last name
 	 */
 	public String getLastName();
 	
 	/**
 	 * Sets the last name.
-	 * @param last
+	 * @param lastName
 	 */
-	public void setLastName(String last);
+	public void setLastName(String lastName);
 	
 	/**
-	 * Gets the primary email.
+	 * Returns the primary email.
 	 * @return primary email
 	 */
 	public String getPrimaryEmail();
@@ -72,17 +83,5 @@ public interface SubjectInfo
 	 * @param email
 	 */
 	public void setPrimaryEmail(String email);
-	
-	/**
-	 * Gets the title.
-	 * @return title 
-	 */
-	public String getTitle();
-	
-	/**
-	 * Sets the title.
-	 * @param title
-	 */
-	public void setTitle(String title);
 		
 }

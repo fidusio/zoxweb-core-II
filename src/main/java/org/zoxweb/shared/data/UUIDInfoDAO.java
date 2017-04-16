@@ -29,8 +29,6 @@ import org.zoxweb.shared.util.NVEntity;
 import org.zoxweb.shared.util.SharedUtil;
 
 /**
- * 
- * @author mzebib
  *
  */
 @SuppressWarnings("serial")
@@ -39,12 +37,8 @@ public class UUIDInfoDAO
 {
 	
 	public enum Param
-		implements GetNVConfig
+        implements GetNVConfig
 	{
-//		boolean mandatory,
-//		  boolean editable,
-//		  boolean isUnique,
-//		  boolean isHidden,
 		ACCESS_COUNTER(NVConfigManager.createNVConfig("access_counter", "The access count(-1) never expire, 0 expired, > 0 still valid","AccessCounter", false, false, false, false, Long.class, null)),
 		EXPIRATION_TS(NVConfigManager.createNVConfig("expiration_ts", "Time in millis when the UUID will expire","Expiration", false, false, false, false, Date.class, null)),
 		RESOURCE_ID(NVConfigManager.createNVConfig("resource_id", "Resource identifier usually a reference_id","ResourceID", true, false, false, false, String.class, null)),
@@ -73,19 +67,19 @@ public class UUIDInfoDAO
 	}
 	
 	public static final NVConfigEntity NVC_UUID_INFO_DAO = new NVConfigEntityLocal(
-																						"uuid_info_dao", 
-																						null, 
-																						"UUIDInfoDAO", 
-																						true, 
-																						false, 
-																						false, 
-																						false, 
-																						UUIDInfoDAO.class, 
-																						SharedUtil.extractNVConfigs(Param.values()),
-																						null, 
-																						false, 
-																						TimeStampDAO.NVC_TIME_STAMP_DAO
-																					);
+	        "uuid_info_dao",
+            null,
+            UUIDInfoDAO.class.getSimpleName(),
+            true,
+            false,
+            false,
+            false,
+            UUIDInfoDAO.class,
+            SharedUtil.extractNVConfigs(Param.values()),
+            null,
+            false,
+            TimeStampDAO.NVC_TIME_STAMP_DAO
+    );
 	
 	
 	/**

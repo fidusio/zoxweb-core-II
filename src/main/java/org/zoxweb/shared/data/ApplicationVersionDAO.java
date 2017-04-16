@@ -34,7 +34,7 @@ public class ApplicationVersionDAO
 	implements CanonicalID
 {
 	
-	public enum Params
+	public enum Param
 		implements GetNVConfig
 	{
 		//FIRST_NAME( NVConfigManager.createNVConfig("first_name", "First name", "FirstName", true, true, String.class)),
@@ -44,10 +44,9 @@ public class ApplicationVersionDAO
 		
 		;
 
-
         private final NVConfig nvc;
 
-        Params(NVConfig nvc)
+        Param(NVConfig nvc)
         {
             this.nvc = nvc;
         }
@@ -59,19 +58,19 @@ public class ApplicationVersionDAO
 	}
 	
 	public static final NVConfigEntity NVC_APPLICATION_VERSION_DAO = new NVConfigEntityLocal(
-																							"application_version_dao", 
-																							null, 
-																							"ApplicationVersionDAO", 
-																							true, 
-																							false, 
-																							false, 
-																							false, 
-																							ApplicationVersionDAO.class, 
-																							SharedUtil.extractNVConfigs(Params.values()), 
-																							null, 
-																							false, 
-																							SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO
-																						);
+            "application_version_dao",
+            null,
+            "ApplicationVersionDAO",
+            true,
+            false,
+            false,
+            false,
+            ApplicationVersionDAO.class,
+            SharedUtil.extractNVConfigs(Param.values()),
+            null,
+            false,
+            SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO
+    );
 	
 	
 	/**
@@ -92,12 +91,12 @@ public class ApplicationVersionDAO
 //	}
 	
 	/**
-	 * Gets the major number of the version.
+	 * Returns the major number of the version.
 	 * @return the major value
 	 */
 	public int getMajor()
 	{
-		return lookupValue(Params.MAJOR);
+		return lookupValue(Param.MAJOR);
 	}
 	
 	/**
@@ -106,16 +105,16 @@ public class ApplicationVersionDAO
 	 */
 	public void setMajor(int major)
 	{
-		setValue(Params.MAJOR, major);
+		setValue(Param.MAJOR, major);
 	}
 	
 	/**
-	 * Gets the minor number of the version.
+	 * Returns the minor number of the version.
 	 * @return the minor value
 	 */
 	public int getMinor()
 	{
-		return lookupValue(Params.MINOR);
+		return lookupValue(Param.MINOR);
 	}
 
 	/**
@@ -129,7 +128,7 @@ public class ApplicationVersionDAO
 			throw new IllegalArgumentException(minor + " invalid minor value valid [0-9]");
 		}
 		
-		setValue(Params.MINOR, minor);
+		setValue(Param.MINOR, minor);
 	}
 	
 	/**
@@ -138,7 +137,7 @@ public class ApplicationVersionDAO
 	 */
 	public int getNano()
 	{
-		return lookupValue(Params.NANO);
+		return lookupValue(Param.NANO);
 	}
 	
 	/**
@@ -152,7 +151,7 @@ public class ApplicationVersionDAO
 			throw new IllegalArgumentException(nano + " invalid nano value valid [0-9]");
 		}
 		
-		setValue(Params.NANO, nano);
+		setValue(Param.NANO, nano);
 	}
 	
 	/**

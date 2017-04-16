@@ -35,8 +35,6 @@ public class AgreementDAO
 	 * This enum contains the following variables:
 	 * agreement title, agreement content, and 
 	 * agreement check title.
-	 * @author mzebib
-	 *
 	 */
 	public enum Param
 		implements GetNVConfig
@@ -63,19 +61,19 @@ public class AgreementDAO
 	}
 	
 	public static final NVConfigEntity NVC_AGREEMENT_DAO = new NVConfigEntityLocal(
-																						"agreement_dao", 
-																						null, 
-																						"AgreementDAO", 
-																						true, 
-																						false, 
-																						false, 
-																						false, 
-																						AgreementDAO.class,
-																						SharedUtil.extractNVConfigs(Param.values()),
-																						null, 
-																						false, 
-																						SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO
-																					);
+        "agreement_dao",
+        null,
+        "Agreement",
+        true,
+        false,
+        false,
+        false,
+        AgreementDAO.class,
+        SharedUtil.extractNVConfigs(Param.values()),
+        null,
+        false,
+        SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO
+    );
 	
 	
 	/**

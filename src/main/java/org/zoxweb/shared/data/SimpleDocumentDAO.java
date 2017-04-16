@@ -32,46 +32,41 @@ import org.zoxweb.shared.util.SharedUtil;
 public class SimpleDocumentDAO
 	extends TimeStampDAO
 {
-		// sender id in this case user id
-		// timestamp
-		// message id ie refid
-		// content as NVEntity
-	
-	public enum Params
+
+	public enum Param
 		implements GetNVConfig
 	{
 		CONTENT(NVConfigManager.createNVConfig("content", "Content of the document", "Content", false, true, false, false, String.class, FilterType.CLEAR)),
 		
 		;
 		
-		private final NVConfig cType;
-		
-		Params(NVConfig c)
+		private final NVConfig nvc;
+
+        Param(NVConfig nvc)
 		{
-			cType = c;
+			this.nvc = nvc;
 		}
 		
 		public NVConfig getNVConfig() 
 		{
-			return cType;
+			return nvc;
 		}
 	}
 	
 	public static final NVConfigEntity NVC_SIMPLE_DOCUMENT_DAO = new NVConfigEntityLocal(
-																						    "simple_document_dao",
-																							"Simple note object",
-																							"SimpleNote", 
-																							true,
-																							false,
-																							false,
-																							false,
-																							SimpleDocumentDAO.class,
-																							SharedUtil.extractNVConfigs(Params.values()),
-																							null,
-																							false,
-																							TimeStampDAO.NVC_TIME_STAMP_DAO
-																						);
-	
+            "simple_document_dao",
+            "Simple note",
+            "SimpleNote",
+            true,
+            false,
+            false,
+            false,
+            SimpleDocumentDAO.class,
+            SharedUtil.extractNVConfigs(Param.values()),
+            null,
+            false,
+            TimeStampDAO.NVC_TIME_STAMP_DAO
+    );
 	
 	/**
 	 * The default constructor.
@@ -91,12 +86,12 @@ public class SimpleDocumentDAO
 	}
 	
 	/**
-	 * Gets content.
+	 * Returns content.
 	 * @return content
 	 */
 	public String getContent()
 	{
-		return lookupValue(Params.CONTENT);
+		return lookupValue(Param.CONTENT);
 	}
 	
 	/**
@@ -105,7 +100,7 @@ public class SimpleDocumentDAO
 	 */
 	public void setContent(String content)
 	{
-		setValue(Params.CONTENT, content);
+		setValue(Param.CONTENT, content);
 	}
 	
 }

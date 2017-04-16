@@ -15,16 +15,13 @@
  */
 package org.zoxweb.shared.data;
 
-import org.zoxweb.shared.data.SetNameDescriptionDAO;
 import org.zoxweb.shared.util.CRUD;
 import org.zoxweb.shared.util.DisplayUnit;
 import org.zoxweb.shared.util.GetNVConfig;
 import org.zoxweb.shared.util.NVConfig;
 import org.zoxweb.shared.util.NVConfigEntity;
-//import org.zoxweb.shared.util.NVConfigEntity.ArrayType;
 import org.zoxweb.shared.util.NVConfigEntityLocal;
 import org.zoxweb.shared.util.NVConfigManager;
-//import org.zoxweb.shared.util.NVEntity;
 import org.zoxweb.shared.util.SharedUtil;
 
 /**
@@ -37,7 +34,7 @@ public class DocumentOperationDAO
 	extends SetNameDescriptionDAO
 {
 	
-	public enum Params
+	public enum Param
 		implements GetNVConfig
 	{
 		X_COORDINATE(NVConfigManager.createNVConfig("x_coordinate", "The x-coordinate", "X coordinate", true, true, String.class)),
@@ -49,36 +46,34 @@ public class DocumentOperationDAO
 		API_CONFIG_REF_ID(NVConfigManager.createNVConfig("api_config_dao_reference_id", "APIConfigInfo reference ID", "APIConfigReferenceID", true, false, String.class)),
 		
 		;
-		
-		private final NVConfig cType;
-		
-		Params(NVConfig c)
-		{
-			cType = c;
-		}
-		
-		public NVConfig getNVConfig() 
-		{
-			return cType;
-		}
 
+        private final NVConfig nvc;
 
+        Param(NVConfig nvc)
+        {
+            this.nvc = nvc;
+        }
+
+        public NVConfig getNVConfig()
+        {
+            return nvc;
+        }
 	}
 
 	public static final NVConfigEntity NVC_DOCUMENT_OPERATION_DAO = new NVConfigEntityLocal(
-																								"document_operation_dao", 
-																								null , 
-																								"DocumentOperationDAO", 
-																								true, 
-																								false, 
-																								false, 
-																								false, 
-																								DocumentOperationDAO.class, 
-																								SharedUtil.extractNVConfigs(Params.values()), 
-																								null, 
-																								false, 
-																								SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO
-																							);
+            "document_operation_dao",
+            null ,
+            "DocumentOperationDAO",
+            true,
+            false,
+            false,
+            false,
+            DocumentOperationDAO.class,
+            SharedUtil.extractNVConfigs(Param.values()),
+            null,
+            false,
+            SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO
+    );
 	
 	
 	/**
@@ -87,16 +82,15 @@ public class DocumentOperationDAO
 	public DocumentOperationDAO()
 	{
 		super(NVC_DOCUMENT_OPERATION_DAO);
-
 	}
 	
 	/**
-	 * Gets the x-coordinate value.
+	 * Returns the x-coordinate value.
 	 * @return x coordinate
 	 */
 	public String getXCoordinate() 
 	{
-		return lookupValue(Params.X_COORDINATE);
+		return lookupValue(Param.X_COORDINATE);
 	}
 	
 	/**
@@ -105,16 +99,16 @@ public class DocumentOperationDAO
 	 */
 	public void setXCoordinate(String x) 
 	{
-		setValue(Params.X_COORDINATE, x);
+		setValue(Param.X_COORDINATE, x);
 	}
 	
 	/**
-	 * Gets the y-coordinate value.
+	 * Returns the y-coordinate value.
 	 * @return y coordinate
 	 */
 	public String getYCoordinate() 
 	{
-		return lookupValue(Params.Y_COORDINATE);
+		return lookupValue(Param.Y_COORDINATE);
 	}
 	
 	/**
@@ -123,16 +117,16 @@ public class DocumentOperationDAO
 	 */
 	public void setYCoordinate(String y) 
 	{
-		setValue(Params.Y_COORDINATE, y);
+		setValue(Param.Y_COORDINATE, y);
 	}
 	
 	/**
-	 * Gets the FolderInfoDAO object reference ID.
+	 * Returns the FolderInfoDAO object reference ID.
 	 * @return folder reference id
 	 */
 	public String getFolderInfoReferenceID() 
 	{
-		return lookupValue(Params.FOLDER_REF_ID);
+		return lookupValue(Param.FOLDER_REF_ID);
 	}
 	
 	/**
@@ -141,16 +135,16 @@ public class DocumentOperationDAO
 	 */
 	public void setFolderInfoReferenceID(String refID)
 	{
-		setValue(Params.FOLDER_REF_ID, refID);
+		setValue(Param.FOLDER_REF_ID, refID);
 	}
 	
 	/**
-	 * Gets the APIConfigInfo object reference ID.
+	 * Returns the APIConfigInfo object reference ID.
 	 * @return api config reference id
 	 */
 	public String getAPIConfigInfoReferenceID() 
 	{
-		return lookupValue(Params.API_CONFIG_REF_ID);
+		return lookupValue(Param.API_CONFIG_REF_ID);
 	}
 	
 	/**
@@ -159,16 +153,16 @@ public class DocumentOperationDAO
 	 */
 	public void setAPIConfigInfoReferenceID(String refID)
 	{
-		setValue(Params.API_CONFIG_REF_ID, refID);
+		setValue(Param.API_CONFIG_REF_ID, refID);
 	}
 	
 	/**
-	 * Gets the display unit.
+	 * Returns the display unit.
 	 * @return displau unit
 	 */
 	public DisplayUnit getUnit()
 	{
-		return lookupValue(Params.UNIT);
+		return lookupValue(Param.UNIT);
 	}
 	
 	/**
@@ -177,29 +171,29 @@ public class DocumentOperationDAO
 	 */
 	public void setUnit(DisplayUnit unit)
 	{
-		setValue(Params.UNIT, unit);
+		setValue(Param.UNIT, unit);
 	}
 	
 	/**
-	 * Gets the requested operation on the document (if null the interpretation is service specific).
+	 * Returns the requested operation on the document (if null the interpretation is service specific).
 	 * @return crud operation
 	 */
 	public CRUD getOperation()
 	{
-		return lookupValue(Params.OPERATION);
+		return lookupValue(Param.OPERATION);
 	}
 	
 	/**
 	 * Sets the operation.
-	 * @param op
+	 * @param operation
 	 */
-	public void setOperation(CRUD op)
+	public void setOperation(CRUD operation)
 	{
-		setValue(Params.OPERATION, op);
+		setValue(Param.OPERATION, operation);
 	}
 	
 	/**
-	 * Gets the document reference ID.
+	 * Returns the document reference ID.
 	 * @return document reference id
 	 */
 	public String getDocumentInfoReferenceID()

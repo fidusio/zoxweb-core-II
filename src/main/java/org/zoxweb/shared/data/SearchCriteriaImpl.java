@@ -18,7 +18,6 @@ package org.zoxweb.shared.data;
 /**
  * The SearchCriteriaImpl class is an implementation of the SearchCriteria interface.
  * @author mzebib
- *
  */
 public class SearchCriteriaImpl
 	implements SearchCriteria
@@ -34,11 +33,11 @@ public class SearchCriteriaImpl
 	 */
 	public SearchCriteriaImpl()
 	{
-		
+
 	}
 	
 	/**
-	 * Gets text.
+	 * Returns text.
 	 * @return text
 	 */
 	@Override

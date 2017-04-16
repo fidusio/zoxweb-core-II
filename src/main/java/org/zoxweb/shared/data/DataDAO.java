@@ -31,7 +31,7 @@ import org.zoxweb.shared.util.SharedUtil;
 /**
  * This class is used to define parameters used by devices 
  * which transmit messages. All message classes will extend
- * this class in order to obtain the applicable message parameters.
+ * this class in inventory to obtain the applicable message parameters.
  * @author mzebib
  *
  */
@@ -53,7 +53,7 @@ implements SetCanonicalID
 	 * This constructor creates a MessageBase object
 	 * based on a defined list and a set value for 
 	 * the time stamp.
-	 * @param list
+	 * @param nvce
 	 */
 	protected DataDAO(NVConfigEntity nvce) 
 	{
@@ -149,14 +149,12 @@ implements SetCanonicalID
 
 	@Override
 	public String toCanonicalID() {
-		// TODO Auto-generated method stub
 		return getCanonicalID();
 	}
 
 	@Override
 	public String getCanonicalID() 
 	{
-		// TODO Auto-generated method stub
 		return lookupValue(DataParam.CANONICAL_ID);
 	}
 

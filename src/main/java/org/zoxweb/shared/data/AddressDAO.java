@@ -62,19 +62,19 @@ public class  AddressDAO
 	}
 	
 	public static final NVConfigEntity NVC_ADDRESS_DAO = new NVConfigEntityLocal(
-																					"address_dao", 
-																					null , 
-																					"Address", 
-																					true, 
-																					false, 
-																					false, 
-																					false, 
-																					AddressDAO.class, 
-																					SharedUtil.extractNVConfigs(Param.values()),
-																					null, 
-																					false, 
-																					SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO
-																				);
+            "address_dao",
+            null ,
+            "Address",
+            true,
+            false,
+            false,
+            false,
+            AddressDAO.class,
+            SharedUtil.extractNVConfigs(Param.values()),
+            null,
+            false,
+            SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO
+    );
 	
 	/**
 	 * The default constructor creates an AddressDAO instance.

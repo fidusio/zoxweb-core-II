@@ -39,10 +39,10 @@ public class JSONQuery {
 		qr.setBatchSize(250);
 
 		ArrayList<QueryMarker> query = new ArrayList<QueryMarker>();
-		QueryMatchLong qm1 = new QueryMatchLong(RelationalOperator.GT, 1435647600354l, TimeStampDAO.Params.CREATION_TS);
+		QueryMatchLong qm1 = new QueryMatchLong(RelationalOperator.GT, 1435647600354l, TimeStampDAO.Param.CREATION_TS);
 		query.add(qm1);
 		query.add(LogicalOperator.AND);
-		QueryMatchLong qm2 = new QueryMatchLong(RelationalOperator.LT, 1435710917354l, TimeStampDAO.Params.CREATION_TS);
+		QueryMatchLong qm2 = new QueryMatchLong(RelationalOperator.LT, 1435710917354l, TimeStampDAO.Param.CREATION_TS);
 		query.add(qm2);
 		qr.setQuery(query);
 		

@@ -23,17 +23,16 @@ import org.zoxweb.shared.util.NVConfigManager;
 import org.zoxweb.shared.util.SharedUtil;
 
 /**
- * 
- * @author mzebib
+ *
  *
  */
 @SuppressWarnings("serial")
 public class RuntimeResultDAO
-	extends SetNameDescriptionDAO
+    extends SetNameDescriptionDAO
 {
 	
 	public enum ResultAttribute
-		implements GetNVConfig
+        implements GetNVConfig
 	{
 		EXIT_CODE(NVConfigManager.createNVConfig("exit_code", "Process exit code", "ExitCode", false, true, int.class)),
 		OUTPUT(NVConfigManager.createNVConfig("output", "Process input stream", "Output", false, true, String.class)),
@@ -41,16 +40,16 @@ public class RuntimeResultDAO
 		
 		;	
 	
-		private final NVConfig cType;
+		private final NVConfig nvc;
 		
-		ResultAttribute(NVConfig c)
+		ResultAttribute(NVConfig nvc)
 		{
-			cType = c;
+			this.nvc = nvc;
 		}
 		
 		public NVConfig getNVConfig() 
 		{
-			return cType;
+			return nvc;
 		}
 	}
 	
@@ -126,7 +125,7 @@ public class RuntimeResultDAO
 	}
 	
 	/**
-	 * Gets the error data.
+	 * Returns the error data.
 	 * @return error data
 	 */
 	public String getErrorData()

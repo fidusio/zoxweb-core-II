@@ -30,14 +30,13 @@ import org.zoxweb.shared.util.SharedUtil;
 /**
  * 
  * @author mzebib
- *
  */
 @SuppressWarnings("serial")
 public class MessageTemplateDAO 
 	extends SimpleDocumentDAO
 {
 	
-	public enum Params
+	public enum Param
 		implements GetNVConfig
 	{
 		BODY_CONTENT(NVConfigManager.createNVConfig("body_content", "Body content", "BodyContent", true, true, String.class)),
@@ -47,34 +46,34 @@ public class MessageTemplateDAO
 		POST_TOKEN_TAG(NVConfigManager.createNVConfig("post_token_tag", "The post token tag.", "PostTokenTag", false, true, String.class)),
 				
 		;
-		
-		private final NVConfig cType;
-		
-		Params(NVConfig c)
-		{
-			cType = c;
-		}
-		
-		public NVConfig getNVConfig() 
-		{
-			return cType;
-		}
+
+        private final NVConfig nvc;
+
+        Param(NVConfig nvc)
+        {
+            this.nvc = nvc;
+        }
+
+        public NVConfig getNVConfig()
+        {
+            return nvc;
+        }
 	}
 	
 	public static final NVConfigEntity NVC_MESSAGE_TEMPLATE_DAO = new NVConfigEntityLocal(
-																							"message_template_dao",
-																							null,
-																							"MessageTemplateDAO", 
-																							true,
-																							false,
-																							false,
-																							false,
-																							MessageTemplateDAO.class,
-																							SharedUtil.extractNVConfigs(Params.values()),
-																							null,
-																							false,
-																							SimpleDocumentDAO.NVC_SIMPLE_DOCUMENT_DAO
-																						);
+            "message_template_dao",
+            null,
+            "MessageTemplateDAO",
+            true,
+            false,
+            false,
+            false,
+            MessageTemplateDAO.class,
+            SharedUtil.extractNVConfigs(Param.values()),
+            null,
+            false,
+            SimpleDocumentDAO.NVC_SIMPLE_DOCUMENT_DAO
+    );
 																					
 	
 	/**
@@ -86,13 +85,15 @@ public class MessageTemplateDAO
 	}
 	
 	/**
-	 * Gets the message body content.
+	 * Returns the message body content.
 	 * @return body content
 	 */
 	public String getBodyContent() 
 	{
 		if (getContent() == null)
-			return lookupValue(Params.BODY_CONTENT);
+        {
+            return lookupValue(Param.BODY_CONTENT);
+        }
 		
 		return getContent();
 	}
@@ -108,13 +109,13 @@ public class MessageTemplateDAO
 	}	
 	
 	/**
-	 * Gets the message body tags.
+	 * Returns the message body tags.
 	 * @return tags
 	 */
 	@SuppressWarnings("unchecked")
 	public ArrayValues<NVPair> getBodyTags()
 	{		
-		return (ArrayValues<NVPair>) lookup(Params.BODY_TAGS);
+		return (ArrayValues<NVPair>) lookup(Param.BODY_TAGS);
 	}
 	
 	/**
@@ -124,7 +125,7 @@ public class MessageTemplateDAO
 	@SuppressWarnings("unchecked")
 	public void setBodyTags(ArrayValues<NVPair> tags)
 	{
-		ArrayValues<NVPair> content = (ArrayValues<NVPair>) lookup(Params.BODY_TAGS);
+		ArrayValues<NVPair> content = (ArrayValues<NVPair>) lookup(Param.BODY_TAGS);
 		content.add(tags.values(), true);
 	}	
 	
@@ -135,17 +136,17 @@ public class MessageTemplateDAO
 	@SuppressWarnings("unchecked")
 	public void setBodyTags(List<NVPair> tags)
 	{
-		ArrayValues<NVPair> content = (ArrayValues<NVPair>) lookup(Params.BODY_TAGS);
+		ArrayValues<NVPair> content = (ArrayValues<NVPair>) lookup(Param.BODY_TAGS);
 		content.add(tags.toArray(new NVPair[0]), true);
 	}
 	
 	/**
-	 * Gets the message title.
+	 * Returns the message title.
 	 * @return title
 	 */
 	public String getTitle()
 	{
-		return lookupValue(Params.TITLE);
+		return lookupValue(Param.TITLE);
 	}
 
 	/**
@@ -154,16 +155,16 @@ public class MessageTemplateDAO
 	 */
 	public void setTitle(String title)
 	{
-		setValue(Params.TITLE, title);
+		setValue(Param.TITLE, title);
 	}
 	
 	/**
-	 * Gets the pre-token tag.
+	 * Returns the pre-token tag.
 	 * @return pretag
 	 */
 	public String getPreTag() 
 	{
-		return  lookupValue(Params.PRE_TOKEN_TAG);
+		return  lookupValue(Param.PRE_TOKEN_TAG);
 	}
 	
 	/**
@@ -172,16 +173,16 @@ public class MessageTemplateDAO
 	 */
 	public void setPreTag(String preTokenTag) 
 	{
-		setValue(Params.PRE_TOKEN_TAG, preTokenTag);
+		setValue(Param.PRE_TOKEN_TAG, preTokenTag);
 	}
 	
 	/**
-	 * Gets the post-token tag.
+	 * Returns the post-token tag.
 	 * @return post tag
 	 */
 	public String getPostTag() 
 	{
-		return  lookupValue(Params.POST_TOKEN_TAG);
+		return  lookupValue(Param.POST_TOKEN_TAG);
 	}
 
 	/**
@@ -190,7 +191,7 @@ public class MessageTemplateDAO
 	 */
 	public void setPostTag(String postTokenTag)
 	{
-		setValue(Params.POST_TOKEN_TAG, postTokenTag);
+		setValue(Param.POST_TOKEN_TAG, postTokenTag);
 	}
 	
 }

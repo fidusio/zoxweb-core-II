@@ -27,8 +27,6 @@ import org.zoxweb.shared.util.SharedUtil;
 import org.zoxweb.shared.api.APIFileInfoMap;
 
 /**
- * 
- * @author mzebib
  *
  */
 @SuppressWarnings("serial")
@@ -59,7 +57,7 @@ public class FileInfoDAO
 		}
 	}
 	
-	public enum Params
+	public enum Param
 		implements GetNVConfig
 	{
 		CONTENT_TYPE(NVConfigManager.createNVConfig("content_type", "File content type","ContentType", false, true, String.class)),
@@ -71,18 +69,18 @@ public class FileInfoDAO
 		REMOTE_FID(NVConfigManager.createNVConfigEntity("remote_file_info_dao", "The remote file info dao", "RemoteFileInfoDAO", true, false,  FileInfoDAO.class, ArrayType.NOT_ARRAY)),
 	
 		;
-	
-		private final NVConfig cType;
-		
-		Params(NVConfig c)
-		{
-			cType = c;
-		}
-		
-		public NVConfig getNVConfig() 
-		{
-			return cType;
-		}
+
+        private final NVConfig nvc;
+
+        Param(NVConfig nvc)
+        {
+            this.nvc = nvc;
+        }
+
+        public NVConfig getNVConfig()
+        {
+            return nvc;
+        }
 	}
 	
 	
@@ -99,7 +97,7 @@ public class FileInfoDAO
 																						false, 
 																						false, 
 																						FileInfoDAO.class, 
-																						SharedUtil.extractNVConfigs(Params.values()), 
+																						SharedUtil.extractNVConfigs(Param.values()),
 																						null, 
 																						false, 
 																						NVC_DOCUMENT_INFO_DAO
@@ -138,7 +136,7 @@ public class FileInfoDAO
 	 */
 	public String getContentType()
 	{
-		return lookupValue(Params.CONTENT_TYPE);
+		return lookupValue(Param.CONTENT_TYPE);
 	}
 	
 	/**
@@ -147,7 +145,7 @@ public class FileInfoDAO
 	 */
 	public void setContentType(String ct)
 	{
-		setValue(Params.CONTENT_TYPE, ct);
+		setValue(Param.CONTENT_TYPE, ct);
 	}
 	
 	/**
@@ -156,7 +154,7 @@ public class FileInfoDAO
 	 */
 	public long getLength() 
 	{
-		return lookupValue(Params.LENGTH);
+		return lookupValue(Param.LENGTH);
 	}
 	
 	/**
@@ -165,7 +163,7 @@ public class FileInfoDAO
 	 */
 	public void setLength(long id) 
 	{
-		setValue(Params.LENGTH, id);
+		setValue(Param.LENGTH, id);
 	}
 	
 //	/**
@@ -192,7 +190,7 @@ public class FileInfoDAO
 	 */
 	public FileType getFileType()
 	{
-		return lookupValue(Params.FILE_TYPE);
+		return lookupValue(Param.FILE_TYPE);
 	}
 	
 	/**
@@ -201,7 +199,7 @@ public class FileInfoDAO
 	 */
 	public void setFileType(FileType type)
 	{
-		setValue(Params.FILE_TYPE, type);
+		setValue(Param.FILE_TYPE, type);
 	}
 	
 	/**
@@ -210,7 +208,7 @@ public class FileInfoDAO
 	 */
 	public String getResourceLocation() 
 	{
-		return lookupValue(Params.RESOURCE_LOCATOR);
+		return lookupValue(Param.RESOURCE_LOCATOR);
 	}
 
 	/**
@@ -219,7 +217,7 @@ public class FileInfoDAO
 	 */
 	public void setResourceLocation(String location) 
 	{
-		setValue(Params.RESOURCE_LOCATOR, location);
+		setValue(Param.RESOURCE_LOCATOR, location);
 	}
 	
 	/**
@@ -228,7 +226,7 @@ public class FileInfoDAO
 	 */
 	public String getFullPathName() 
 	{
-		return lookupValue(Params.FULL_PATH_NAME);
+		return lookupValue(Param.FULL_PATH_NAME);
 	}
 
 	/**
@@ -237,7 +235,7 @@ public class FileInfoDAO
 	 */
 	public void setFullPathName(String fullPathName) 
 	{
-		setValue(Params.FULL_PATH_NAME, fullPathName);
+		setValue(Param.FULL_PATH_NAME, fullPathName);
 	}
 	
 	
@@ -247,7 +245,7 @@ public class FileInfoDAO
 	 */
 	public String getResourceID() 
 	{
-		return lookupValue( Params.RESOURCE_ID);
+		return lookupValue(Param.RESOURCE_ID);
 	}
 
 	/**
@@ -256,7 +254,7 @@ public class FileInfoDAO
 	 */
 	public void setResourceID(String location) 
 	{
-		setValue(Params.RESOURCE_ID, location);
+		setValue(Param.RESOURCE_ID, location);
 	}
 
 	/**
@@ -284,7 +282,7 @@ public class FileInfoDAO
 	@Override
 	public FileInfoDAO getRemoteFileInfo()
 	{
-		return lookupValue(Params.REMOTE_FID);
+		return lookupValue(Param.REMOTE_FID);
 	}
 
 	/**
@@ -296,7 +294,7 @@ public class FileInfoDAO
 	{
 		if (info != this)
 		{
-			setValue(Params.REMOTE_FID, info);
+			setValue(Param.REMOTE_FID, info);
 		}
 	}
 	

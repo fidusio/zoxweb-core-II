@@ -37,7 +37,6 @@ import org.zoxweb.shared.util.SharedUtil;
 /**
  * The SharedDataUtil class is a utility class.
  * @author mzebib
- *
  */
 public class SharedDataUtil 
 {
@@ -138,8 +137,7 @@ public class SharedDataUtil
 		
 		return ret;
 	}
-	
-	
+
 	public static List<NVEntity> search(FolderInfoDAO entry, String ...args)
 	{
 		SharedUtil.checkIfNulls("Null parameters", entry, args);
@@ -676,8 +674,10 @@ public class SharedDataUtil
 				{
 					ArrayValues<NVEntity> toAdds = (ArrayValues<NVEntity>) nveToCopy.lookup(nvc);
 					
-					if (toAdds != null) {
-						for (NVEntity toAdd : toAdds.values()) {
+					if (toAdds != null)
+					{
+						for (NVEntity toAdd : toAdds.values())
+						{
 							NVEntity copiedNVE = copyNVEntity(factory, toAdd, deep, omitRefID, omitUserID);
 							((ArrayValues<NVEntity>) ret.lookup(nvc)).add(copiedNVE);
 						}		
@@ -687,13 +687,16 @@ public class SharedDataUtil
 				{
 					NVEntity value = nveToCopy.lookupValue(nvc);
 
-					if (value != null) {
+					if (value != null)
+					{
 						ret.setValue(nvc, copyNVEntity(factory, value, deep, omitRefID, omitUserID));
 					}
 				}
 			}
-			else {
-				if (nveToCopy.lookupValue(nvc) != null) {
+			else
+            {
+				if (nveToCopy.lookupValue(nvc) != null)
+				{
 					ret.setValue(nvc, nveToCopy.lookupValue(nvc));
 				}
 			}

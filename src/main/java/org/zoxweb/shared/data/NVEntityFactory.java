@@ -20,7 +20,6 @@ import org.zoxweb.shared.util.NVEntity;
 /**
  * The NVEntityFactory interface.
  * @author mzebib
- *
  */
 public interface NVEntityFactory 
 {
@@ -30,4 +29,5 @@ public interface NVEntityFactory
 	 * @return typed nventity
 	 */
 	<V extends NVEntity> V createNVEntity(String className);
+
 }

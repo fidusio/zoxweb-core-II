@@ -20,8 +20,6 @@ import org.zoxweb.shared.util.CRUDNVConfig;
 import org.zoxweb.shared.util.NVConfig;
 
 /**
- * 
- * @author mzebib
  *
  */
 @SuppressWarnings("serial")

@@ -36,8 +36,6 @@ public class DataContentDAO
 	/**
 	 * This enum contains data content variables which include:
 	 * canonical ID, content type, content, and language.
-	 * @author mzebib
-	 *
 	 */
 	public enum Param
 		implements GetNVConfig
@@ -47,18 +45,18 @@ public class DataContentDAO
 		LANGUAGE(NVConfigManager.createNVConfig("language", "language", "Language", true, true, String.class)),
 		
 		;
-		
-		private final NVConfig cType;
-		
-		Param(NVConfig c)
-		{
-			cType = c;
-		}
-		
-		public NVConfig getNVConfig() 
-		{
-			return cType;
-		}
+
+        private final NVConfig nvc;
+
+        Param(NVConfig nvc)
+        {
+            this.nvc = nvc;
+        }
+
+        public NVConfig getNVConfig()
+        {
+            return nvc;
+        }
 
 	}
 	

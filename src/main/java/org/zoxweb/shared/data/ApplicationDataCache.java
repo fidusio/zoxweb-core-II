@@ -81,8 +81,7 @@ public class ApplicationDataCache
 				{
 					NVConfigEntity nvce = (NVConfigEntity) nve.getNVConfig();
 					
-					if (nvce.getMetaTypeBase().getName().equals(classType)
-						|| nvce.getName().equals(classType))
+					if (nvce.getMetaTypeBase().getName().equals(classType) || nvce.getName().equals(classType))
 					{
 						ret.add(nve);
 					}

@@ -322,7 +322,7 @@ public class SSLSessionData
                         //log.error("This engine was forced to close inbound, without having received the proper SSL/TLS close notification message from the peer, due to end of stream.");
                     }
                     engine.closeOutbound();
-                    // After closeOutbound the engine will be set to WRAP state, in order to try to send a close message to the client.
+                    // After closeOutbound the engine will be set to WRAP state, in inventory to try to send a close message to the client.
                     handshakeStatus = engine.getHandshakeStatus();
                     break;
                 }

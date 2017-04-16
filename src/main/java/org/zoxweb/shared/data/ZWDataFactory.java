@@ -29,28 +29,7 @@ import org.zoxweb.shared.api.APIBatchResult;
 import org.zoxweb.shared.api.APIConfigInfoDAO;
 import org.zoxweb.shared.api.APICredentialsDAO;
 import org.zoxweb.shared.api.APIError;
-import org.zoxweb.shared.data.AddressDAO;
-import org.zoxweb.shared.data.AgreementDAO;
-import org.zoxweb.shared.data.ApplicationVersionDAO;
-import org.zoxweb.shared.data.AssociationDAO;
-import org.zoxweb.shared.data.CRUDNVEntityDAO;
-import org.zoxweb.shared.data.CreditCardDAO;
-import org.zoxweb.shared.data.DataContentDAO;
-import org.zoxweb.shared.data.DocumentOperationDAO;
-import org.zoxweb.shared.data.DomainInfoDAO;
-import org.zoxweb.shared.data.FileInfoDAO;
-import org.zoxweb.shared.data.FolderInfoDAO;
-import org.zoxweb.shared.data.FormInfoDAO;
-import org.zoxweb.shared.data.MerchantDAO;
-import org.zoxweb.shared.data.MessageTemplateDAO;
-import org.zoxweb.shared.data.NVEntityFactory;
 import org.zoxweb.shared.util.NVEntityInstance;
-import org.zoxweb.shared.data.PhoneDAO;
-import org.zoxweb.shared.data.RuntimeResultDAO;
-import org.zoxweb.shared.data.SystemInfoDAO;
-import org.zoxweb.shared.data.UserIDDAO;
-import org.zoxweb.shared.data.UserInfoDAO;
-import org.zoxweb.shared.data.VMInfoDAO;
 import org.zoxweb.shared.data.shiro.ShiroNVEntityCRUDs;
 import org.zoxweb.shared.data.shiro.ShiroPermissionDAO;
 import org.zoxweb.shared.data.shiro.ShiroRoleDAO;
@@ -893,7 +872,8 @@ public class ZWDataFactory
 			{
 				for (NVEntityTypeClass nveTypeClass : NVEntityTypeClass.values())
 				{
-					if (canonicalID.equals(nveTypeClass.getNVConfigEntity().toCanonicalID()) || canonicalID.equals(nveTypeClass.getNVConfigEntity().getName()))
+					if (canonicalID.equals(nveTypeClass.getNVConfigEntity().toCanonicalID())
+                            || canonicalID.equals(nveTypeClass.getNVConfigEntity().getName()))
 					{
 						type = nveTypeClass;
 						break;
@@ -907,14 +887,16 @@ public class ZWDataFactory
 			}
 		}
 		
-		for(NVEntityFactory fac : factoriesSet)
+		for (NVEntityFactory fac : factoriesSet)
 		{
 			V ret = fac.createNVEntity(canonicalID);
+
 			if (ret != null)
 			{
 				return ret;
 			}
 		}
+
 		return null;
 	}
 

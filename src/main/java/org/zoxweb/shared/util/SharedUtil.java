@@ -174,7 +174,7 @@ public class SharedUtil
 	/**
 	 * This utility method look for the matching enum in case insensitive fashion.
 	 * 
-	 * <br>It will try different matches with the following order:
+	 * <br>It will try different matches with the following inventory:
 	 * <ol>
 	 * <li> try match enum.name();
 	 * <li> try match enum.toString();

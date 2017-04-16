@@ -64,9 +64,9 @@ public class NIOConfig
 			{
 				ConfigDAO config = (ConfigDAO)nve;
 				
-				if (config.attachement() instanceof ProtocolSessionFactory)
+				if (config.attachment() instanceof ProtocolSessionFactory)
 				{
-					ProtocolSessionFactory<?> psf = (ProtocolSessionFactory<?>) config.attachement();
+					ProtocolSessionFactory<?> psf = (ProtocolSessionFactory<?>) config.attachment();
 					
 					if (psf.getIncomingSSLSessionDataFactory() != null && psf instanceof NIOTunnelFactory)
 					{
@@ -143,9 +143,9 @@ public class NIOConfig
 			if (nve instanceof ConfigDAO)
 			{
 				ConfigDAO config = (ConfigDAO)nve;
-				if (config.attachement() instanceof NIOTunnelFactory)
+				if (config.attachment() instanceof NIOTunnelFactory)
 				{
-					NIOTunnelFactory nioTF = (NIOTunnelFactory) config.attachement();
+					NIOTunnelFactory nioTF = (NIOTunnelFactory) config.attachment();
 					try 
 					{
 						String remote_host = SharedUtil.getValue(config.getProperties().get("remote_host"));
@@ -155,7 +155,7 @@ public class NIOConfig
 						{
 							ConfigDAO factory = (ConfigDAO)configDAO.getContent().get(ssl_engine);
 							if (factory != null)
-								nioTF.setIncomingSSLSessionDataFactory((SSLSessionDataFactory) factory.attachement());
+								nioTF.setIncomingSSLSessionDataFactory((SSLSessionDataFactory) factory.attachment());
 						}
 						
 						
@@ -165,9 +165,9 @@ public class NIOConfig
 						e.printStackTrace();
 					}
 				}
-				else if (config.attachement() instanceof NIOProxyProtocolFactory)
+				else if (config.attachment() instanceof NIOProxyProtocolFactory)
 				{
-					NIOProxyProtocolFactory nioPPF = (NIOProxyProtocolFactory) config.attachement();
+					NIOProxyProtocolFactory nioPPF = (NIOProxyProtocolFactory) config.attachment();
 					try 
 					{
 						InetFilterRulesManager incomingIFRM =  new InetFilterRulesManager();

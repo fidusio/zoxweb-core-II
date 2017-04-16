@@ -28,7 +28,7 @@ import org.zoxweb.shared.util.SetMandatory;
  * and the filter value. This interface extends interfaces which include 
  * methods declared to set the following properties: name, description, 
  * mandatory, editable, and display name. The Serialization interface is 
- * extended in order to enable serialization for NVConfig.
+ * extended in inventory to enable serialization for NVConfig.
  * @author mzebib
  *
  */

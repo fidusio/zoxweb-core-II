@@ -42,7 +42,6 @@ public class DataConst
 		
 	}
 	
-	
 	public enum ContextAccess
 	{
 		// the context access is based on the account
@@ -54,29 +53,23 @@ public class DataConst
 		// the context access is based on the user
 		USER_ID,
 	}
-	
-	
-	
+
 	
 	public enum DataParam
-	implements GetNVConfig
+	    implements GetNVConfig
 	{
 		CANONICAL_ID(NVConfigManager.createNVConfig("canonical_id", "Canonical ID", "CanonicalID", true, false, String.class)),
 		DESCRIPTION(NVConfigManager.createNVConfig("description", null, "Description", false, true, String.class)),
 		NAME(NVConfigManager.createNVConfig("name", null,"Name", false, true, String.class)),
 		;
 		
-		private NVConfig nvConfig;
+		private NVConfig nvc;
 		
-		DataParam(NVConfig config)
+		DataParam(NVConfig nvc)
 		{
-			nvConfig = config;
+            this.nvc = nvc;
 		}
-		
-		
-		
-		
-		
+
 		public String toString()
 		{
 			return getNVConfig().getName();
@@ -89,16 +82,12 @@ public class DataConst
 		@Override
 		public NVConfig getNVConfig()
 		{
-			// TODO Auto-generated method stub
-			return nvConfig;
+			return nvc;
 		}
 	}
 	
-	
-	
 	/**
-	 * Dynamic enum map:
-	 * Personal titles
+	 * Dynamic enum map: Personal titles
 	 */
 	public final static DynamicEnumMap PERSONAL_TITLES =
 			new DynamicEnumMap("Personal Titles",
@@ -112,11 +101,9 @@ public class DataConst
 					
 			);
 	
-	
-	
+
 	/**
-	 * Dynamic enum map: 
-	 * Gender
+	 * Dynamic enum map: Gender
 	 */
 	public final static DynamicEnumMap GENDER =
 			new DynamicEnumMap("Gender",
@@ -129,9 +116,7 @@ public class DataConst
 
 	
 	/**
-	 * Dynamic enum map: 
-	 * States, federal district, and territories of the 
-	 * United States.
+	 * Dynamic enum map: States, federal district, and territories of the United States.
 	 */
 	public final static DynamicEnumMap US_STATES = 
 			new DynamicEnumMap("US States",
@@ -249,11 +234,9 @@ public class DataConst
 					//	U.S. Virgin Islands
 					new NVPair("VI", "U.S. Virgin Islands")
 			);
-	
-	
+
 	/**
-	 * Dynamic enum map: 
-	 * Provinces and territories of Canada.
+	 * Dynamic enum map: Provinces and territories of Canada
 	 */
 	public final static DynamicEnumMap CANADIAN_PROVINCES = 
 			new DynamicEnumMap("Canadian Provinces",
@@ -287,8 +270,7 @@ public class DataConst
 			);
 	
 	/**
-	 * Dynamic enum map: 
-	 * Countries and regions
+	 * Dynamic enum map: Countries and regions
 	 */
 	public final static DynamicEnumMap COUNTRIES = 
 			new DynamicEnumMap("Countries", 
@@ -784,8 +766,7 @@ public class DataConst
 	
 
 	/**
-	 * Dynamic enum map:
-	 * Phone types
+	 * Dynamic enum map: Phone types
 	 */
 	public final static DynamicEnumMap PHONE_TYPES = 
 			new DynamicEnumMap("Phone Types",
@@ -803,8 +784,7 @@ public class DataConst
 			);
 	
 	/**
-	 * Dynamic enum map:
-	 * Country codes
+	 * Dynamic enum map: Country codes
 	 */
 	public final static DynamicEnumMap COUNTRY_CODES = 
 			new DynamicEnumMap("Country Codes",
@@ -1232,8 +1212,7 @@ public class DataConst
 			);
 
 	/**
-	 * Dynamic enum map:
-	 * Currency
+	 * Dynamic enum map: Currency
 	 */
 	public final static DynamicEnumMap CURRENCY = 
 			new DynamicEnumMap("Currency",
@@ -1270,11 +1249,7 @@ public class DataConst
 		}
 	}
 	
-	/**
-	 * 
-	 * @author mzebib
-	 *
-	 */
+
 	public enum DocumentStatus 
 		implements GetName
 	{
@@ -1352,7 +1327,7 @@ public class DataConst
 	
 	
 	public enum APIProperty
-	implements GetName
+	    implements GetName
 	{
 		RETRY_DELAY("retry_delay"),
 		ASYNC_CREATE("async_create"),

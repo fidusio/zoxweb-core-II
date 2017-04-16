@@ -29,8 +29,6 @@ import org.zoxweb.shared.util.SharedUtil;
 import org.zoxweb.shared.util.NVConfigEntity.ArrayType;
 
 /**
- * 
- * @author mzebib
  *
  */
 @SuppressWarnings("serial")
@@ -39,7 +37,7 @@ public class NVEntityContainerDAO
 	implements NVEntityContainer
 {
 
-	public enum Params
+	public enum Param
 		implements GetNVConfig
 	{
 		
@@ -47,33 +45,33 @@ public class NVEntityContainerDAO
 		
 		;
 		
-		private final NVConfig cType;
-		
-		Params(NVConfig c)
+		private final NVConfig nvc;
+
+        Param(NVConfig nvc)
 		{
-			cType = c;
+            this.nvc = nvc;
 		}
 		
 		public NVConfig getNVConfig() 
 		{
-			return cType;
+			return nvc;
 		}
 	}
 
 	public static final NVConfigEntity NVC_NVENTITY_CONTAINER_DAO = new NVConfigEntityLocal(
-																								"nventity_container_dao", 
-																								null, 
-																								"Dossier", 
-																								true, 
-																								false, 
-																								false, 
-																								false, 
-																								NVEntityContainerDAO.class, 
-																								SharedUtil.extractNVConfigs(Params.values()), 
-																								null, 
-																								false, 
-																								CanonicalIDDAO.NVC_CANONICAL_ID_DAO
-																							);
+            "nventity_container_dao",
+            null,
+            "Dossier",
+            true,
+            false,
+            false,
+            false,
+            NVEntityContainerDAO.class,
+            SharedUtil.extractNVConfigs(Param.values()),
+            null,
+            false,
+            CanonicalIDDAO.NVC_CANONICAL_ID_DAO
+    );
 	
 	/**
 	 * The default constructor.
@@ -99,7 +97,7 @@ public class NVEntityContainerDAO
 	@SuppressWarnings("unchecked")
 	public ArrayValues<NVEntity> getContent()
 	{
-		return (ArrayValues<NVEntity>) lookup(Params.CONTENT);
+		return (ArrayValues<NVEntity>) lookup(Param.CONTENT);
 	}
 	
 	/**
@@ -126,7 +124,7 @@ public class NVEntityContainerDAO
 	 */
 	public List<NVEntity> getContentAsList()
 	{
-		return lookupValue(Params.CONTENT);
+		return lookupValue(Param.CONTENT);
 	}
 
 	/**

@@ -17,7 +17,7 @@ public class FormConfigInfoDAO
 	extends CanonicalIDDAO
 	implements DomainID<String>
 {
-	public enum Params
+	public enum Param
 		implements GetNVConfig
 	{
 		NVC_NAME(NVConfigManager.createNVConfig("name", null,"Name", true, true, String.class)),
@@ -29,19 +29,18 @@ public class FormConfigInfoDAO
 		DEFAULT_VALUES(NVConfigManager.createNVConfig("default_values", "The default values", "DefaultValues", false, true, true, String[].class, null)),
 		
 		;
-	
-		private final NVConfig cType;
-		
-		Params(NVConfig c)
-		{
-			cType = c;
-		}
-		
-		public NVConfig getNVConfig() 
-		{
-			return cType;
-		}
-		
+
+        private final NVConfig nvc;
+
+        Param(NVConfig nvc)
+        {
+            this.nvc = nvc;
+        }
+
+        public NVConfig getNVConfig()
+        {
+            return nvc;
+        }
 	}
 	
 	public static final NVConfigEntity NVC_FORM_CONFIG_INFO_DAO = new NVConfigEntityLocal
@@ -54,7 +53,7 @@ public class FormConfigInfoDAO
 																	false, 
 																	false, 
 																	FormConfigInfoDAO.class, 
-																	SharedUtil.extractNVConfigs(Params.values()),
+																	SharedUtil.extractNVConfigs(Param.values()),
 																	null, 
 																	false, 
 																	CanonicalIDDAO.NVC_CANONICAL_ID_DAO
@@ -70,31 +69,31 @@ public class FormConfigInfoDAO
 	@Override
 	public String getDomainID()
 	{
-		return lookupValue(Params.DOMAIN_ID);
+		return lookupValue(Param.DOMAIN_ID);
 	}
 
 	@Override
 	public void setDomainID(String domainID)
 	{
-		setValue(Params.DOMAIN_ID, domainID);
+		setValue(Param.DOMAIN_ID, domainID);
 	}
 	
 
 	public String getFormCanonicalID() 
 	{
-		return lookupValue(Params.FORM_CANONICAL_ID);
+		return lookupValue(Param.FORM_CANONICAL_ID);
 	}
 
 
 	public void setFormCanonicalID(String formClassName)
 	{
-		setValue(Params.FORM_CANONICAL_ID, formClassName);
+		setValue(Param.FORM_CANONICAL_ID, formClassName);
 	}
 	
 	@SuppressWarnings("unchecked")
 	public ArrayValues<NVPair> getDefaultParameters()
 	{
-		return (ArrayValues<NVPair>) lookup(Params.DEFAULT_VALUES);
+		return (ArrayValues<NVPair>) lookup(Param.DEFAULT_VALUES);
 	}
 	
 	public void setDefaultParameters(ArrayValues<NVPair> values)
@@ -109,22 +108,22 @@ public class FormConfigInfoDAO
 	
 	public String getDocumentStoreRefID()
 	{
-		return lookupValue(Params.DOCUMENT_STORE_REF_ID);
+		return lookupValue(Param.DOCUMENT_STORE_REF_ID);
 	}
 	
 	public void  setDocumentStoreRefID(String documentStoreRefID)
 	{
-		setValue(Params.DOCUMENT_STORE_REF_ID, documentStoreRefID);
+		setValue(Param.DOCUMENT_STORE_REF_ID, documentStoreRefID);
 	}
 	
 	public String getDefaultLocation()
 	{
-		return lookupValue(Params.DEFAULT_LOCATION);
+		return lookupValue(Param.DEFAULT_LOCATION);
 	}
 	
 	public void  setDefaultLocation(String defaulLocation)
 	{
-		setValue(Params.DEFAULT_LOCATION, defaulLocation);
+		setValue(Param.DEFAULT_LOCATION, defaulLocation);
 	}
 	
 }

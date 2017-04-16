@@ -37,7 +37,7 @@ public class CRUDNVEntityDAO
 	implements CRUDNVEntity
 {
 
-	public enum Params
+	public enum Param
 		implements GetNVConfig
 	{
 		CRUD_OP(NVConfigManager.createNVConfig("crud_op", "CRUD operation", "CRUDOperation", true, false, CRUD.class)),
@@ -45,21 +45,21 @@ public class CRUDNVEntityDAO
 		REVISION_TRACKING(NVConfigManager.createNVConfig("revision_tracking", "Revision Tracking", "RevisionTracking", false, false, Boolean.class))
 
 		;
-	
-		private final NVConfig cType;
-		
-		Params(NVConfig c)
-		{
-			cType = c;
-		}
-		
-		public NVConfig getNVConfig()
-		{
-			return cType;
-		}
+
+        private final NVConfig nvc;
+
+        Param(NVConfig nvc)
+        {
+            this.nvc = nvc;
+        }
+
+        public NVConfig getNVConfig()
+        {
+            return nvc;
+        }
 	}
 	
-	public static final NVConfigEntity NVC_CRUD_NVENTITY_DAO = new NVConfigEntityLocal("crud_nventity_dao", null , "CRUDNVEntityDAO", true, false, false, false, CRUDNVEntityDAO.class, SharedUtil.extractNVConfigs(Params.values()), null, false, SetNameDAO.NVC_NAME_DAO);
+	public static final NVConfigEntity NVC_CRUD_NVENTITY_DAO = new NVConfigEntityLocal("crud_nventity_dao", null , "CRUDNVEntityDAO", true, false, false, false, CRUDNVEntityDAO.class, SharedUtil.extractNVConfigs(Param.values()), null, false, SetNameDAO.NVC_NAME_DAO);
 
 	public CRUDNVEntityDAO()
 	{
@@ -84,35 +84,34 @@ public class CRUDNVEntityDAO
 	@Override
 	public CRUD getCRUD() 
 	{
-		return lookupValue(Params.CRUD_OP);
+		return lookupValue(Param.CRUD_OP);
 	}
 	
 	public void setCRUD(CRUD crud)
 	{
-		setValue(Params.CRUD_OP, crud);
+		setValue(Param.CRUD_OP, crud);
 	}
 	
 	@Override
 	public NVEntity getNVEntity() 
 	{
-		return lookupValue(Params.NVE);
+		return lookupValue(Param.NVE);
 	}
 	
 	public void setNVEntity(NVEntity nve)
 	{
-		setValue(Params.NVE, nve);
+		setValue(Param.NVE, nve);
 	}
 
 	@Override
 	public boolean isRevisionTrackingEnabled()
 	{
-		// TODO Auto-generated method stub
-		return lookupValue(Params.REVISION_TRACKING);
+		return lookupValue(Param.REVISION_TRACKING);
 	}
 	
 	public void setRevisionTrackingEnabled(boolean revTracking)
 	{
-		setValue(Params.REVISION_TRACKING, revTracking);
+		setValue(Param.REVISION_TRACKING, revTracking);
 	}
 
 }

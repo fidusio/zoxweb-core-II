@@ -40,7 +40,7 @@ public class UserIDDAO
 	 * This enum includes the following parameters:
 	 * primary email and user information.
 	 */
-	public enum Params
+	public enum Param
 		implements GetNVConfig
 	{
 		PRIMARY_EMAIL(NVConfigManager.createNVConfig("primary_email", "Primary email address", "PrimaryEmail", true, true, true, String.class, FilterType.EMAIL)),
@@ -50,7 +50,7 @@ public class UserIDDAO
 
         private final NVConfig nvc;
 
-        Params(NVConfig nvc)
+        Param(NVConfig nvc)
         {
             this.nvc = nvc;
         }
@@ -62,7 +62,20 @@ public class UserIDDAO
 
 	}
 	
-	public static final NVConfigEntity NVC_USER_ID_DAO = new NVConfigEntityLocal("user_id_dao", null , "UserIDDAO", true, false, false, false, UserIDDAO.class, SharedUtil.extractNVConfigs(Params.values()), null, false, SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO);
+	public static final NVConfigEntity NVC_USER_ID_DAO = new NVConfigEntityLocal(
+	        "user_id_dao",
+            null ,
+            UserIDDAO.class.getSimpleName(),
+            true,
+            false,
+            false,
+            false,
+            UserIDDAO.class,
+            SharedUtil.extractNVConfigs(Param.values()),
+            null,
+            false,
+            SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO
+    );
 	
 	
 	/**
@@ -70,21 +83,17 @@ public class UserIDDAO
 	 */
 	public UserIDDAO()
 	{
-		super(NVC_USER_ID_DAO);
+	    super(NVC_USER_ID_DAO);
 	}
 
-//	protected UserIDDAO(List<NVConfigEntity> list)
-//	{
-//		super(SharedUtil.merge(list, NVC_USER_ID_DAO));
-//	}
 	
 	/**
-	 * Gets the primary email.
+	 * Returns the primary email.
 	 * @return primary email
 	 */
 	public String getPrimaryEmail() 
 	{
-		return lookupValue(Params.PRIMARY_EMAIL);
+		return lookupValue(Param.PRIMARY_EMAIL);
 	}
 	
 	/**
@@ -93,16 +102,16 @@ public class UserIDDAO
 	 */
 	public void setPrimaryEmail(String email)
 	{
-		setValue(Params.PRIMARY_EMAIL, email);
+		setValue(Param.PRIMARY_EMAIL, email);
 	}
 	
 	/**
-	 * Gets the user information.
+	 * Returns the user information.
 	 * @return user info dao
 	 */
 	public UserInfoDAO getUserInfo() 
 	{
-		return lookupValue(Params.USER_INFO);
+		return lookupValue(Param.USER_INFO);
 	}
 	
 	/**
@@ -111,17 +120,17 @@ public class UserIDDAO
 	 */
 	public void setUserInfo(UserInfoDAO user)
 	{
-		setValue(Params.USER_INFO, user);
+		setValue(Param.USER_INFO, user);
 	}
 	
 	/**
-	 * Gets the user ID.
+	 * Returns the user ID.
 	 * @return user id
 	 */
 	@Override
 	public String getUserID()
 	{
-		return getReferenceID();
+	    return getReferenceID();
 	}
 	
 }

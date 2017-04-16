@@ -31,7 +31,6 @@ import org.zoxweb.shared.util.SharedUtil;
  * This class defines the credit card data access object used to create 
  * credit card information.
  * @author mzebib
- *
  */
 @SuppressWarnings("serial")
 public class CreditCardDAO 
@@ -43,9 +42,8 @@ public class CreditCardDAO
 	 * card type, card holder name, card number, expiration date,
 	 * and security code.
 	 * @author mzebib
-	 *
 	 */
-	public enum Params
+	public enum Param
 		implements GetNVConfig
 	{
 		CARD_TYPE(NVConfigManager.createNVConfig("credit_card_type", "Type of credit card", "CreditCardType", true, true, CreditCardType.class)),
@@ -58,10 +56,9 @@ public class CreditCardDAO
 		
 		;
 
-
         private final NVConfig nvc;
 
-        Params(NVConfig nvc)
+        Param(NVConfig nvc)
         {
             this.nvc = nvc;
         }
@@ -73,19 +70,19 @@ public class CreditCardDAO
 	}
 	
 	public static final NVConfigEntity NVC_CREDIT_CARD_DAO = new NVConfigEntityLocal(
-																						"credit_card_dao", 
-																						null , 
-																						"CreditCardDAO", 
-																						true, 
-																						false, 
-																						false, 
-																						false, 
-																						CreditCardDAO.class, 
-																						SharedUtil.extractNVConfigs(Params.values()), 
-																						null, 
-																						false, 
-																						SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO
-																					);
+        "credit_card_dao",
+        null ,
+        "CreditCardDAO",
+        true,
+        false,
+        false,
+        false,
+        CreditCardDAO.class,
+        SharedUtil.extractNVConfigs(Param.values()),
+        null,
+        false,
+        SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO
+    );
 	
 	
 	/**
@@ -95,17 +92,14 @@ public class CreditCardDAO
 	{
 		super( NVC_CREDIT_CARD_DAO);
 	}
-		
 
-		
-	
 	/**
-	 * Gets the credit card type.
+	 * Returns the credit card type.
 	 * @return the credit card type
 	 */
 	public CreditCardType getCardType() 
 	{
-		return lookupValue(Params.CARD_TYPE);
+		return lookupValue(Param.CARD_TYPE);
 	}
 	
 	/**
@@ -114,16 +108,16 @@ public class CreditCardDAO
 	 */
 	public void setCardType(CreditCardType type) 
 	{
-		setValue(Params.CARD_TYPE, type);
+		setValue(Param.CARD_TYPE, type);
 	}
 	
 	/**
-	 * Gets the card holder name.
+	 * Returns the card holder name.
 	 * @return name of card holder
 	 */
 	public String getCardHolderName() 
 	{
-		return lookupValue(Params.CARD_HOLDER_NAME);
+		return lookupValue(Param.CARD_HOLDER_NAME);
 	}
 	
 	/**
@@ -132,16 +126,16 @@ public class CreditCardDAO
 	 */
 	public void setCardHolderName(String name) 
 	{
-		setValue(Params.CARD_HOLDER_NAME, name);
+		setValue(Param.CARD_HOLDER_NAME, name);
 	}
 	
 	/**
-	 * Gets the card number.
+	 * Returns the card number.
 	 * @return the card number
 	 */
 	public String getCardNumber()
 	{	
-		return lookupValue(Params.CARD_NUMBER);
+		return lookupValue(Param.CARD_NUMBER);
 	}
 
 	/**
@@ -151,16 +145,16 @@ public class CreditCardDAO
 	public void setCardNumber(String number)
 	{
 //		setValue(CreditCard.CARD_NUMBER, CreditCardNumberFilter.SINGLETON.validate(number));
-		setValue(Params.CARD_NUMBER, number);
+		setValue(Param.CARD_NUMBER, number);
 	}
 		
 	/**
-	 * Gets the expiration date.
+	 * Returns the expiration date.
 	 * @return the expiration date in millis since 1970-01-01
 	 */
 	public long getExpirationDate()
 	{
-		return lookupValue(Params.EXPIRATION_DATE);
+		return lookupValue(Param.EXPIRATION_DATE);
 	}
 	
 	/**
@@ -169,16 +163,16 @@ public class CreditCardDAO
 	 */
 	public void setExpirationDate(long date) 
 	{
-		setValue(Params.EXPIRATION_DATE, date);				
+		setValue(Param.EXPIRATION_DATE, date);
 	}
 	
 	/**
-	 * Gets the security code.
+	 * Returns the security code.
 	 * @return the security code
 	 */
 	public String getSecurityCode()
 	{
-		return lookupValue(Params.SECURITY_CODE);
+		return lookupValue(Param.SECURITY_CODE);
 	}
 	
 	/**
@@ -187,7 +181,7 @@ public class CreditCardDAO
 	 */
 	public void setSecurityCode(String code)
 	{
-		setValue(Params.SECURITY_CODE, CreditCardNumberFilter.validateCVV(getCardNumber(), code));				
+		setValue(Param.SECURITY_CODE, CreditCardNumberFilter.validateCVV(getCardNumber(), code));
 	}
 	
 }

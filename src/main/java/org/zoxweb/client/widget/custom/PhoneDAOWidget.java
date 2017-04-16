@@ -129,8 +129,8 @@ public class PhoneDAOWidget
 		
 		hpLinkPlaceHolder.add(anchorLink);
 		
-		phoneType = new NVDynamicEnumWidget(PhoneDAO.Params.PHONE_TYPE.getNVConfig(), Const.NVDisplayProp.VALUE, false);
-		countryCode = new NVDynamicEnumWidget(PhoneDAO.Params.COUNTRY_CODE.getNVConfig(), Const.NVDisplayProp.VALUE, false);
+		phoneType = new NVDynamicEnumWidget(PhoneDAO.Param.PHONE_TYPE.getNVConfig(), Const.NVDisplayProp.VALUE, false);
+		countryCode = new NVDynamicEnumWidget(PhoneDAO.Param.COUNTRY_CODE.getNVConfig(), Const.NVDisplayProp.VALUE, false);
 		
 		areaCodeValidator = new ValueFilterHandler<String>(tbAreaCode, NumberFilter.SINGLETON, style.invalid());
         setValidator.add(areaCodeValidator);

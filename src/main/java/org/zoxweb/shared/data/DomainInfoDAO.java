@@ -55,7 +55,7 @@ public class DomainInfoDAO
 	}
 
 	/**
-	 * Gets the domain ID;
+	 * Returns the domain ID;
 	 * @return the domain id
 	 */
 	@Override

@@ -170,7 +170,8 @@ public class ApplicationConfigDAO
 	{
 		return properties;
 	}
-	
+
+	@Override
 	public String toString()
 	{
 		return "" + properties;

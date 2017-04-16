@@ -37,7 +37,7 @@ abstract public class DocumentInfoDAO
 	extends TimeStampDAO
 {
 	
-	public enum Params
+	public enum Param
 		implements GetNVConfig
 	{
 		DOCUMENT_STATUS(NVConfigManager.createNVConfig("document_status", "Document status", "DocumentStatus", true, true, DocumentStatus.class)),
@@ -48,18 +48,18 @@ abstract public class DocumentInfoDAO
 		PROPERTIES(NVConfigManager.createNVConfig("properties", "Document unique properties", "DocumentExtraProperties", false, true, true, false, String[].class, null)),
 		
 		;
-		
-		private final NVConfig cType;
-		
-		Params(NVConfig c)
-		{
-			cType = c;
-		}
-		
-		public NVConfig getNVConfig()
-		{
-			return cType;
-		}
+
+        private final NVConfig nvc;
+
+        Param(NVConfig nvc)
+        {
+            this.nvc = nvc;
+        }
+
+        public NVConfig getNVConfig()
+        {
+            return nvc;
+        }
 	}
 	
 	public static final NVConfigEntity NVC_DOCUMENT_INFO_DAO = new NVConfigEntityLocal(
@@ -71,17 +71,14 @@ abstract public class DocumentInfoDAO
 																							false, 
 																							false,
 																							DocumentInfoDAO.class, 
-																							SharedUtil.extractNVConfigs(Params.values()), 
+																							SharedUtil.extractNVConfigs(Param.values()),
 																							null, 
 																							false, 
 																							TimeStampDAO.NVC_TIME_STAMP_DAO
 																						);//,SharedUtil.extractNVConfigs( new Params[]{Params.REFERENCE_ID, Params.NAME, Params.LENGTH}));
 	
-	
-	/**
-	 * 
-	 * @param nvce
-	 */
+
+
 	protected DocumentInfoDAO(NVConfigEntity nvce)
 	{
 		super(nvce);
@@ -106,12 +103,12 @@ abstract public class DocumentInfoDAO
 //	}
 	
 	/**
-	 * Gets the document status.
+	 * Returns the document status.
 	 * @return status
 	 */
 	public DocumentStatus getStatus()
 	{
-		return lookupValue(Params.DOCUMENT_STATUS);
+		return lookupValue(Param.DOCUMENT_STATUS);
 	}
 	
 	/**
@@ -120,45 +117,45 @@ abstract public class DocumentInfoDAO
 	 */
 	public void setStatus(DocumentStatus status)
 	{
-		setValue(Params.DOCUMENT_STATUS, status);
+		setValue(Param.DOCUMENT_STATUS, status);
 	}	
 	
 	/**
-	 * Get the URL location where the document is stored.
+	 * Returns the URL location where the document is stored.
 	 * @return the api config reference id
 	 */
 	public String getAPIConfigInfoReferenceID() 
 	{
-		return lookupValue(Params.API_CONFIG_INFO_REF_ID);
+		return lookupValue(Param.API_CONFIG_INFO_REF_ID);
 	}
 	
 	/**
-	 * Set the URL location where the document is stored.
+	 * Sets the URL location where the document is stored.
 	 * @param aci
 	 */
 	public void setAPIConfigInfoReferenceID(String aci) 
 	{
-		setValue(Params.API_CONFIG_INFO_REF_ID, aci);
+		setValue(Param.API_CONFIG_INFO_REF_ID, aci);
 	}
 	
 	/**
-	 * Get the document properties.
+	 * Returns the document properties.
 	 * @return config properties
 	 */
 	@SuppressWarnings("unchecked")
 	public ArrayValues<NVPair> getProperties()
 	{
-		return (ArrayValues<NVPair>) lookup(Params.PROPERTIES.getNVConfig().getName());
+		return (ArrayValues<NVPair>) lookup(Param.PROPERTIES.getNVConfig().getName());
 	}
 	
 	/**
-	 * Set the document properties.
+	 * Sets the document properties.
 	 * @param properties
 	 */
 	public void setProperties(ArrayValues<NVPair> properties)
 	{
 		@SuppressWarnings("unchecked")
-		ArrayValues<NVPair> arrayValues = (ArrayValues<NVPair>) lookup(Params.PROPERTIES.getNVConfig().getName());
+		ArrayValues<NVPair> arrayValues = (ArrayValues<NVPair>) lookup(Param.PROPERTIES.getNVConfig().getName());
 		arrayValues.add(properties.values(), true);
 		//setValue( Params.PROPERTIES, fileProps);
 	}
@@ -170,7 +167,7 @@ abstract public class DocumentInfoDAO
 	public void setProperties(List<NVPair> properties)
 	{
 		@SuppressWarnings("unchecked")
-		ArrayValues<NVPair> arrayValues = (ArrayValues<NVPair>) lookup(Params.PROPERTIES.getNVConfig().getName());
+		ArrayValues<NVPair> arrayValues = (ArrayValues<NVPair>) lookup(Param.PROPERTIES.getNVConfig().getName());
 		arrayValues.add(properties.toArray(new NVPair[0]), true);
 		//setValue( Params.PROPERTIES, fileProps);
 	}
@@ -181,7 +178,7 @@ abstract public class DocumentInfoDAO
 	 */
 	public boolean isLink()
 	{
-		return lookupValue(Params.IS_LINK);
+		return lookupValue(Param.IS_LINK);
 	}
 	
 	/**
@@ -190,16 +187,16 @@ abstract public class DocumentInfoDAO
 	 */
 	public void setLink(boolean link)
 	{
-		setValue(Params.IS_LINK, link);
+		setValue(Param.IS_LINK, link);
 	}
 	
 	/**
-	 * Gets the HashSHA256.
+	 * Returns the HashSHA256.
 	 * @return sha256
 	 */
 	public String getHashSHA256()
 	{
-		return lookupValue(Params.HASH_SHA_256);
+		return lookupValue(Param.HASH_SHA_256);
 	}
 	
 	/**
@@ -208,7 +205,7 @@ abstract public class DocumentInfoDAO
 	 */
 	public void setHashSHA256(String sha256)
 	{
-		setValue(Params.HASH_SHA_256, sha256);
+		setValue(Param.HASH_SHA_256, sha256);
 	}
 	
 }

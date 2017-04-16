@@ -34,8 +34,8 @@ import org.zoxweb.shared.util.NVConfigEntity.ArrayType;
 public class AssociationDAO
 	extends SetNameDescriptionDAO	
 {
-	public enum Params
-	implements GetNVConfig
+	public enum Param
+	    implements GetNVConfig
 	{
 		ASSOCIATED(NVConfigManager.createNVConfigEntity("associated", "The mapped reference", "Mapped", false, true, NVEntity.class, ArrayType.NOT_ARRAY)),
 		MAPPED(NVConfigManager.createNVConfigEntity("mapped", "The mapped to reference", "MappedTo", false, true, NVEntity.class, ArrayType.NOT_ARRAY)),
@@ -45,7 +45,7 @@ public class AssociationDAO
 
         private final NVConfig nvc;
 
-        Params(NVConfig nvc)
+        Param(NVConfig nvc)
         {
             this.nvc = nvc;
         }
@@ -59,47 +59,44 @@ public class AssociationDAO
 	/**
 	 * This NVConfigEntity type constant is set to an instantiation of a NVConfigEntityLocal object based on AddressDAO.
 	 */
-	public static final NVConfigEntity NVC_ASSOCIATION_DAO = new NVConfigEntityLocal("association_dao", null , "AssociationDAO", true, false, false, false, AssociationDAO.class, SharedUtil.extractNVConfigs(Params.values()), null, false, SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO);//,SharedUtil.extractNVConfigs( new Params[]{Params.REFERENCE_ID, Params.NAME, Params.LENGTH}));
+	public static final NVConfigEntity NVC_ASSOCIATION_DAO = new NVConfigEntityLocal("association_dao", null , "AssociationDAO", true, false, false, false, AssociationDAO.class, SharedUtil.extractNVConfigs(Param.values()), null, false, SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO);//,SharedUtil.extractNVConfigs( new Params[]{Params.REFERENCE_ID, Params.NAME, Params.LENGTH}));
 
 
-	/**
-	 */
 	public AssociationDAO()
 	{
 		super(NVC_ASSOCIATION_DAO);
-		// TODO Auto-generated constructor stub
 	}
-	
 	
 	public NVEntity getAssociated()
 	{
-		return lookupValue(Params.ASSOCIATED);
+		return lookupValue(Param.ASSOCIATED);
 	}
 	
 	public void setAssociated(NVEntity associated)
 	{
-		setValue(Params.ASSOCIATED, associated);
+		setValue(Param.ASSOCIATED, associated);
 	}
 	
+
 	public NVEntity getMapped()
 	{
-		return lookupValue(Params.MAPPED);
+		return lookupValue(Param.MAPPED);
 	}
 	
 	public void setMapped(NVEntity mapped)
 	{
-		setValue(Params.MAPPED, mapped);
+		setValue(Param.MAPPED, mapped);
 	}
 	
 	
 	public String getAssociationType()
 	{
-		return lookupValue(Params.MAP_TYPE);
+		return lookupValue(Param.MAP_TYPE);
 	}
 	
 	public void setAssociationType(String mapType)
 	{
-		setValue(Params.MAP_TYPE, mapType);
+		setValue(Param.MAP_TYPE, mapType);
 	}
 	
 }

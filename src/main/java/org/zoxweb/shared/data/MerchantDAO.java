@@ -32,8 +32,6 @@ import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
 
 /**
- * 
- * @author mzebib
  *
  */
 @SuppressWarnings("serial")
@@ -41,7 +39,7 @@ public class MerchantDAO
 	extends SetNameDescriptionDAO 
 {
 	
-	public enum Merchant
+	public enum Param
 		implements GetNVConfig
 	{
 		LIST_OF_DOMAIN_IDS(NVConfigManager.createNVConfigEntity("domain_ids", "Domain ID", "DomainIDs", true, true, DomainInfoDAO.NVC_DOMAIN_INFO_DAO, ArrayType.LIST)),
@@ -53,35 +51,34 @@ public class MerchantDAO
 		ADDITIONAL_INFOS(NVConfigManager.createNVConfig("additional_info", "Additional information", "AdditionalInfos", false, true, String[].class)),
 		
 		;
-		
-		private final NVConfig cType;
-		
-		Merchant(NVConfig c)
-		{
-			cType = c;
-		}
-		
-		public NVConfig getNVConfig() 
-		{
-			return cType;
-		}
 
+        private final NVConfig nvc;
+
+        Param(NVConfig nvc)
+        {
+            this.nvc = nvc;
+        }
+
+        public NVConfig getNVConfig()
+        {
+            return nvc;
+        }
 	}
 	
 	public static final NVConfigEntity NVC_MERCHANT_DAO = new NVConfigEntityLocal(
-																					"merchant_dao", 
-																					null, 
-																					"MerchantDAO", 
-																					true, 
-																					false, 
-																					false, 
-																					false, 
-																					MerchantDAO.class, 
-																					SharedUtil.extractNVConfigs(Merchant.values()), 
-																					null, 
-																					true, 
-																					SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO
-																				);
+            "merchant_dao",
+            null,
+            "MerchantDAO",
+            true,
+            false,
+            false,
+            false,
+            MerchantDAO.class,
+            SharedUtil.extractNVConfigs(Param.values()),
+            null,
+            true,
+            SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO
+    );
 	
 	/**
 	 * The default constructor.
@@ -90,19 +87,14 @@ public class MerchantDAO
 	{
 		super(NVC_MERCHANT_DAO);
 	}
-
-//	protected MerchantDAO(List<NVConfigEntity> list)
-//	{
-//		super(SharedUtil.merge(list, NVC_MERCHANT_DAO));
-//	}
 	
 	/**
-	 * Gets the domain ID.
+	 * Returns the domain ID.
 	 * @return list of domain ids
 	 */
 	public List<DomainID<String>> getDomainIDs() 
 	{
-		return lookupValue(Merchant.LIST_OF_DOMAIN_IDS);
+		return lookupValue(Param.LIST_OF_DOMAIN_IDS);
 	}
 	
 	/**
@@ -111,16 +103,16 @@ public class MerchantDAO
 	 */
 	public void setDomainID(List<DomainID<String>> domainIDs)
 	{
-		setValue(Merchant.LIST_OF_DOMAIN_IDS, domainIDs);
+		setValue(Param.LIST_OF_DOMAIN_IDS, domainIDs);
 	}
 	
 	/**
-	 * Gets the company type.
+	 * Returns the company type.
 	 * @return company type
 	 */
 	public String getCompanyType() 
 	{
-		return lookupValue(Merchant.COMPANY_TYPE);
+		return lookupValue(Param.COMPANY_TYPE);
 	}
 	
 	/**
@@ -129,16 +121,16 @@ public class MerchantDAO
 	 */
 	public void setCompanyType(String type)
 	{
-		setValue(Merchant.COMPANY_TYPE, type);
+		setValue(Param.COMPANY_TYPE, type);
 	}
 	
 	/**
-	 * Gets list of addresses.
+	 * Returns list of addresses.
 	 * @return list of addresses
 	 */
 	public ArrayList<AddressDAO> getListOfAddresses() 
 	{
-		return lookupValue(Merchant.LIST_OF_ADDRESSES);
+		return lookupValue(Param.LIST_OF_ADDRESSES);
 	}
 	
 	/**
@@ -147,16 +139,16 @@ public class MerchantDAO
 	 */
 	public void setListOfAddresses(ArrayList<AddressDAO> list) 
 	{
-		setValue(Merchant.LIST_OF_ADDRESSES, list);
+		setValue(Param.LIST_OF_ADDRESSES, list);
 	}
 	
 	/**
-	 * Gets list of phones.
+	 * Returns list of phones.
 	 * @return list of phones
 	 */
 	public ArrayList<PhoneDAO> getListOfPhones() 
 	{
-		return lookupValue(Merchant.LIST_OF_PHONES);
+		return lookupValue(Param.LIST_OF_PHONES);
 	}
 	
 	/**
@@ -165,16 +157,16 @@ public class MerchantDAO
 	 */
 	public void setListOfPhones(ArrayList<PhoneDAO> list) 
 	{
-		setValue(Merchant.LIST_OF_PHONES, list);
+		setValue(Param.LIST_OF_PHONES, list);
 	}
 	
 	/**
-	 * Gets list of domain emails.
+	 * Returns list of domain emails.
 	 * @return list of emails 
 	 */
 	public ArrayList<NVPair> getListOfDomainEmails() 
 	{
-		return lookupValue(Merchant.LIST_OF_DOMAIN_EMAILS);
+		return lookupValue(Param.LIST_OF_DOMAIN_EMAILS);
 	}
 	
 	/**
@@ -183,16 +175,16 @@ public class MerchantDAO
 	 */
 	public void setListOfDomainEmails(ArrayList<NVPair> list) 
 	{
-		setValue(Merchant.LIST_OF_DOMAIN_EMAILS, list);
+		setValue(Param.LIST_OF_DOMAIN_EMAILS, list);
 	}
 	
 	/**
-	 * Gets list of payment information.
+	 * Returns list of payment information.
 	 * @return list of payment infos
 	 */
 	public ArrayList<PaymentInfoDAO> getListOfPaymentInfos() 
 	{
-		return lookupValue(Merchant.LIST_OF_PAYMENT_INFOS);
+		return lookupValue(Param.LIST_OF_PAYMENT_INFOS);
 	}
 	
 	/**
@@ -201,16 +193,16 @@ public class MerchantDAO
 	 */
 	public void setListOfPaymentInfos(ArrayList<PaymentInfoDAO> list) 
 	{
-		setValue(Merchant.LIST_OF_PAYMENT_INFOS, list);
+		setValue(Param.LIST_OF_PAYMENT_INFOS, list);
 	}
 	
 	/**
-	 * Gets additional information.
+	 * Returns additional information.
 	 * @return list of additional info
 	 */
 	public ArrayList<NVPair> getAdditonalInfos() 
 	{
-		return lookupValue(Merchant.ADDITIONAL_INFOS);
+		return lookupValue(Param.ADDITIONAL_INFOS);
 	}
 	
 	/**
@@ -219,7 +211,7 @@ public class MerchantDAO
 	 */
 	public void setAdditionalInfos(ArrayList<NVPair> info)
 	{
-		setValue(Merchant.ADDITIONAL_INFOS, info);
+		setValue(Param.ADDITIONAL_INFOS, info);
 	}
 	
 	/**

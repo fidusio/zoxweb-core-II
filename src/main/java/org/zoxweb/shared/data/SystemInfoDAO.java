@@ -60,7 +60,7 @@ public class SystemInfoDAO
 	}
 	
 	/**
-	 * Gets the system properties.
+	 * Returns the system properties.
 	 * @return system properties
 	 */
 	@SuppressWarnings("unchecked")
@@ -79,7 +79,7 @@ public class SystemInfoDAO
 	}
 	
 	/**
-	 * Gets the ApplicationDAO objects.
+	 * Returns the ApplicationDAO objects.
 	 * @return application daos
 	 */
 	public ArrayValues<NVEntity> getApplicationDAOs() 
@@ -97,7 +97,7 @@ public class SystemInfoDAO
 	}
 
 	/**
-	 * Gets the network interfaces.
+	 * Returns the network interfaces.
 	 * @return network interfaces array
 	 */
 	@SuppressWarnings("unchecked")
@@ -116,7 +116,7 @@ public class SystemInfoDAO
 //	}
 
 	/**
-	 * Gets the system assigned ID (the ID is a globally assigned identifier).
+	 * Returns the system assigned ID (the ID is a globally assigned identifier).
 	 * @return system id
 	 */
 	public String getSystemID() 
@@ -134,7 +134,7 @@ public class SystemInfoDAO
 	}
 
 	/**
-	 * Gets canonical ID.
+	 * Returns canonical ID.
 	 * @return canonical id
 	 */
 	@Override
@@ -144,7 +144,7 @@ public class SystemInfoDAO
 	}
 
 	/**
-	 * Gets the application properties.
+	 * Returns the application properties.
 	 * @return properties
 	 */
 	@SuppressWarnings("unchecked")
@@ -163,7 +163,7 @@ public class SystemInfoDAO
 	}
 
 	/**
-	 * Gets the domain ID.
+	 * Returns the domain ID.
 	 */
 	@Override
 	public String getDomainID()

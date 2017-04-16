@@ -38,33 +38,47 @@ public abstract class SetNameDAO
 	extends ReferenceIDDAO
 	implements SetName
 {
-	
 
-	public static final NVConfigEntity NVC_NAME_DAO = new NVConfigEntityLocal(null, null , null, true, false, false, false, SetNameDAO.class, SharedUtil.toNVConfigList(DataParam.NAME.getNVConfig()), null, false, ReferenceIDDAO.NVC_REFERENCE_ID_DAO);
+	public static final NVConfigEntity NVC_NAME_DAO = new NVConfigEntityLocal(
+            null,
+            null ,
+            null,
+            true,
+            false,
+            false,
+            false,
+            SetNameDAO.class,
+            SharedUtil.toNVConfigList(DataParam.NAME.getNVConfig()),
+            null,
+            false,
+            ReferenceIDDAO.NVC_REFERENCE_ID_DAO
+    );
 
-	protected SetNameDAO(NVConfigEntity nvce) {
+	protected SetNameDAO(NVConfigEntity nvce)
+    {
 		super(nvce);
 	}
 	
 	/**
-	 * Returns the name value.
+	 * Returns the name.
 	 * @return name
 	 */
 	@Column(name = "name")
 	@Override
-	public String getName() {
+	public String getName()
+    {
 		return lookupValue(DataParam.NAME);
 	}
 
 	/**
-	 * Sets the name value.
+	 * Sets the name.
 	 * @param name
 	 */
 	@Override
 	public void setName(String name) 
-			throws NullPointerException, IllegalArgumentException {
+        throws NullPointerException, IllegalArgumentException
+    {
 		setValue(DataParam.NAME, name);
 	}
-	
 
 }
