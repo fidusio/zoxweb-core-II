@@ -20,7 +20,8 @@ package org.zoxweb.shared.util;
  * @author mzebib
  *
  */
-public interface GetName {
+public interface GetName
+{
 
 	/**
 	 * @return the name of the object 

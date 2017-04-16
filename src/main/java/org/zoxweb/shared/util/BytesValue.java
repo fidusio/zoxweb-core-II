@@ -15,16 +15,33 @@
  */
 package org.zoxweb.shared.util;
 
-
 /**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
+ *
+ * @param <V>
  */
 public interface BytesValue<V>
 {
+    /**
+     *
+     * @param v
+     * @return
+     */
 	byte[] toBytes(V v);
-	
+
+    /**
+     *
+     * @param bytes
+     * @return
+     */
 	V toValue(byte[] bytes);
+
+    /**
+     *
+     * @param bytes
+     * @param offset
+     * @param length
+     * @return
+     */
 	V toValue(byte[] bytes, int offset, int length);
 	
 	public static final BytesValue<Integer> INT = new  BytesValue<Integer>()
@@ -33,28 +50,31 @@ public interface BytesValue<V>
 		{
 			int val = in.intValue();
 			byte buffer[] = new byte[Integer.SIZE/Byte.SIZE];
+
 			for (int i = buffer.length; i > 0; i--)
 			{
 				buffer[i-1] = (byte)val;
 				val = val >> 8;
 			}
+
 			return buffer;
 		}
 		
 		public Integer toValue(byte buffer[], int offset, int length)
 		{
 			int value = 0;
+
 			for (int i = offset; i < length; i++)
 			{
 				value = (value << 8) + (buffer[i] & 0xff);
 			}
+
 			return value;
 		}
 
 		@Override
 		public Integer toValue(byte[] bytes) 
 		{
-			// TODO Auto-generated method stub
 			return toValue(bytes, 0, bytes.length);
 		}
 	};
@@ -65,17 +85,16 @@ public interface BytesValue<V>
 		{
 			long val = in.longValue();
 			byte buffer[] = new byte[Long.SIZE/Byte.SIZE];
+
 			for (int i = buffer.length; i > 0; i--)
 			{
 				buffer[i-1] = (byte)val;
 				val = val >> 8;
 			}
+
 			return buffer;
-			
 		}
-	
-		
-		
+
 		/**
 		 * @param bytes array
 		 * @param offset
@@ -85,19 +104,21 @@ public interface BytesValue<V>
 		public Long toValue(byte[] bytes, int offset, int length)
 		{
 			long value = 0;
+
 			for (int i = offset; i < length; i++)
 			{
 				value = (value << 8) + (bytes[i] & 0xff);
 			}
+
 			return value;
 		}
 
 		@Override
 		public Long toValue(byte[] bytes)
 		{
-			// TODO Auto-generated method stub
 			return toValue(bytes, 0, bytes.length);
 		}
+
 	};
 	
 	
@@ -107,16 +128,16 @@ public interface BytesValue<V>
 		{
 			int val = Float.floatToIntBits(in);
 			byte buffer[] = new byte[Float.SIZE/Byte.SIZE];
+
 			for (int i = buffer.length; i > 0; i--)
 			{
 				buffer[i-1] = (byte)val;
 				val = val >> 8;
 			}
+
 			return buffer;	
 		}
-	
-		
-		
+
 		/**
 		 * @param bytes
 		 * @param offset
@@ -126,10 +147,12 @@ public interface BytesValue<V>
 		public Float toValue(byte bytes[], int offset, int length)
 		{
 			int value = 0;
+
 			for (int i = offset; i < length; i++)
 			{
 				 value = (value << 8) + (bytes[i] & 0xff);
 			}
+
 			return Float.intBitsToFloat(value);
 		}
 		
@@ -137,21 +160,22 @@ public interface BytesValue<V>
 		{
 			return toValue(bytes, 0, bytes.length);
 		}
+
 	};
-	
-	
-	
+
 	public static final BytesValue<Double> DOUBLE = new BytesValue<Double>()
 	{
 		public byte[] toBytes(Double in)
 		{
 			long val = Double.doubleToLongBits(in);
 			byte buffer[] = new byte[Double.SIZE/Byte.SIZE];
+
 			for (int i = buffer.length; i > 0; i--)
 			{
 				buffer[i-1] = (byte)val;
 				val = val >> 8;
 			}
+
 			return buffer;
 		}
 	
@@ -159,10 +183,12 @@ public interface BytesValue<V>
 		public Double toValue(byte bytes[], int offset, int length)
 		{
 			long value = 0;
+
 			for (int i = offset; i < length; i++)
 			{
 				 value = (value << 8) + (bytes[i] & 0xff);
 			}
+
 			return Double.longBitsToDouble(value);
 		}
 		
@@ -170,8 +196,7 @@ public interface BytesValue<V>
 		{
 			return toValue(bytes, 0, bytes.length);
 		}
-	};
 
-	
+	};
 		
 }

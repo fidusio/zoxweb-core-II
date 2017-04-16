@@ -29,16 +29,14 @@ public class HTTPRawFormatter
 	private List<GetNameValue<String>> headers;
 	private byte[] content;
 	private UByteArrayOutputStream ubaos;
-	
-	
+
 	public HTTPRawFormatter (HTTPRequestLine rrl, List<GetNameValue<String>> headers, byte[] content)
 	{
 		this.firstLine = rrl.toString();
 		this.headers = headers;
 		this.content = content;
 	}
-	
-	
+
 	public HTTPRawFormatter (String firstLine, List<GetNameValue<String>> headers, byte[] content)
 	{
 		this.firstLine = firstLine;
@@ -48,32 +46,35 @@ public class HTTPRawFormatter
 	
 	public synchronized UByteArrayOutputStream  format()
 	{
-		if ( ubaos == null)
+		if (ubaos == null)
 		{
 			ubaos = new UByteArrayOutputStream();
 			ubaos.write(firstLine);
 			ubaos.write(ProtocolDelimiter.CRLF.getBytes());
-			if ( headers != null)
+			if (headers != null)
 			{
-				for ( GetNameValue<String> gnv : headers)
+				for (GetNameValue<String> gnv : headers)
 				{
 					ubaos.write(gnv.getName());
 					ubaos.write(ProtocolDelimiter.COLON.getBytes());
 					String value = gnv.getValue();
-					if ( value != null && value.length() > 0)
+
+					if (value != null && value.length() > 0)
 					{
-						if ( value.charAt(0) != ' ')
+						if (value.charAt(0) != ' ')
 						{
 							ubaos.write(' ');
 						}
+
 						ubaos.write( value);
 					}
 					ubaos.write(ProtocolDelimiter.CRLF.getBytes());
 				}
 			}
+
 			ubaos.write(ProtocolDelimiter.CRLF.getBytes());
 			
-			if ( content != null)
+			if (content != null)
 			{
 				ubaos.write(content);
 			}

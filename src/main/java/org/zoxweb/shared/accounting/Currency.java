@@ -20,7 +20,6 @@ import org.zoxweb.shared.util.GetValue;
 /**
  * This enum contains currencies.
  * @author mzebib
- *
  */
 public enum Currency
 	implements GetValue<String>
@@ -28,13 +27,13 @@ public enum Currency
 	//	United States dollar
 	USD("$"),
 	//	Euro
-	EUR("€"),
+	EUR("ï¿½"),
 	//	Canadian dollar
 	CAD("$"),
 	//	Japanese yen
-	JPY("¥"),
+	JPY("ï¿½"),
 	//	Pound sterling
-	GBP("£"),
+	GBP("ï¿½"),
 	//	Swiss franc 
 	CHF("Fr"),
 	

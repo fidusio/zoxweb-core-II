@@ -19,15 +19,23 @@ package org.zoxweb.client.websocket;
 /**
  * This interface declares three methods used for Websocket which include:
  * opening the socket, listening for a message, and then closing the socket.
- * @author mzebib
- *
  */
 public interface ZWWebSocketListener {
 
+    /**
+     *
+     */
     void onClose();
 
+    /**
+     *
+     * @param msg
+     */
     void onMessage(String msg);
 
+    /**
+     *
+     */
     void onOpen();
 
 }

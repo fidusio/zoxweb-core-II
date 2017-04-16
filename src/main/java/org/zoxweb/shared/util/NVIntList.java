@@ -27,7 +27,7 @@ public class NVIntList
 	extends NVBase<List<Integer>> 
 {
 	/**
-	 * Default constructor used for Java Bean Compiler.
+	 * The default constructor (Java Bean compliant).
 	 */
 	public NVIntList()
 	{

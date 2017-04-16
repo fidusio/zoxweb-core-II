@@ -19,28 +19,35 @@ import org.zoxweb.shared.util.SharedUtil;
 
 @SuppressWarnings("serial")
 public class ChainedFilter
-        implements ValueFilter<String, String> {
+    implements ValueFilter<String, String>
+{
 	
 	private ValueFilter<String, String>[] vfs;
 
-	public ChainedFilter() {
+	public ChainedFilter()
+    {
 		
 	}
 	
 	@SuppressWarnings("unchecked")
-	public ChainedFilter(ValueFilter<String, String>... vfs) {
+	public ChainedFilter(ValueFilter<String, String>... vfs)
+    {
 		setValueFilters(vfs);
 	}
 	
 	@Override
-	public String toCanonicalID() {
+	public String toCanonicalID()
+    {
 		ValueFilter<String, String>[] filters = getValueFilters();
 		
-		if (filters != null) {
+		if (filters != null)
+		{
 			String[] ret = new String[filters.length];
 			
-			for (int i = 0; i < filters.length; i++) {
-				if (filters[i] != null) {
+			for (int i = 0; i < filters.length; i++)
+			{
+				if (filters[i] != null)
+				{
 					ret[i] = filters[i].toCanonicalID();
 				}
 			}
@@ -53,12 +60,16 @@ public class ChainedFilter
 
 	@Override
 	public String validate(String in) 
-			throws NullPointerException, IllegalArgumentException {
+        throws NullPointerException, IllegalArgumentException
+    {
 		SharedUtil.checkIfNulls("Null or empty input", in);
 		
-		if (getValueFilters() != null) {
-			for (ValueFilter<String, String> vf : getValueFilters()) {
-				if (vf != null) {
+		if (getValueFilters() != null)
+		{
+			for (ValueFilter<String, String> vf : getValueFilters())
+			{
+				if (vf != null)
+				{
 					in = vf.validate(in);
 				}
 			}
@@ -68,28 +79,38 @@ public class ChainedFilter
 	}
 
 	@Override
-	public boolean isValid(String in) {
-		try {
+	public boolean isValid(String in)
+    {
+		try
+        {
 			validate(in);
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+        {
 			return false;
 		}
 		
 		return true;
 	}
 	
-	public ValueFilter<String, String>[] getValueFilters() {
+	public ValueFilter<String, String>[] getValueFilters()
+    {
 		return vfs;
 	}
 	
-	public void setValueFilters(ValueFilter<String, String>[] vfs) {
+	public void setValueFilters(ValueFilter<String, String>[] vfs)
+    {
 		this.vfs = vfs;
 	}
 	
-	public boolean isFilterSupported(ValueFilter<?, ?> toCheck) {
-		if (getValueFilters() != null) {
-			for (ValueFilter<String, String> vf : getValueFilters()) {
-				if (SharedUtil.equals(vf, toCheck)) {
+	public boolean isFilterSupported(ValueFilter<?, ?> toCheck)
+    {
+		if (getValueFilters() != null)
+		{
+			for (ValueFilter<String, String> vf : getValueFilters())
+			{
+				if (SharedUtil.equals(vf, toCheck))
+				{
 					return true;
 				}
 			}
@@ -98,13 +119,16 @@ public class ChainedFilter
 		return false;
 	}
 	
-	public static boolean isFilterSupported(ValueFilter<?, ?> toCheck, ValueFilter<?,?> toCheckFor) {
+	public static boolean isFilterSupported(ValueFilter<?, ?> toCheck, ValueFilter<?,?> toCheckFor)
+    {
 		boolean ret = false;
 		
-		if (toCheck != null && toCheckFor != null) {
+		if (toCheck != null && toCheckFor != null)
+		{
 			ret = SharedUtil.equals(toCheck, toCheckFor);
 
-			if (!ret && toCheck instanceof ChainedFilter) {
+			if (!ret && toCheck instanceof ChainedFilter)
+			{
 				ret = ((ChainedFilter)toCheck).isFilterSupported(toCheckFor);
 			}
 		}

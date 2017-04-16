@@ -16,7 +16,6 @@
 
 package org.zoxweb.server.http;
 
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -26,29 +25,22 @@ import org.zoxweb.server.io.UByteArrayOutputStream;
 import org.zoxweb.shared.http.HTTPHeaderName;
 import org.zoxweb.shared.protocol.ProtocolDelimiter;
 import org.zoxweb.shared.util.GetNameValue;
-
 import org.zoxweb.shared.util.SharedUtil;
 
 public class HTTPRawMessage 
 {
-
-	
 	private UByteArrayOutputStream ubaos;
-	
 	private int endOfHeadersIndex = -1;
-	
-	
 	private int contentLength = -1;
-	
 	private List<GetNameValue<String>> headers = null;
 	private String firstLine = null;
 	
-	public HTTPRawMessage( byte fullMessage[])
+	public HTTPRawMessage(byte fullMessage[])
 	{
-		this( fullMessage, 0 , fullMessage.length);
+		this(fullMessage, 0 , fullMessage.length);
 	}
 	
-	public HTTPRawMessage( byte fullMessage[], int offset, int len)
+	public HTTPRawMessage(byte fullMessage[], int offset, int len)
 	{
 		ubaos = new UByteArrayOutputStream( len);
 		ubaos.write( fullMessage, offset, len);
@@ -60,8 +52,7 @@ public class HTTPRawMessage
 		this(new UByteArrayOutputStream());
 	}
 	
-	
-	
+
 	public HTTPRawMessage(UByteArrayOutputStream ubaos)
 	{
 		this.ubaos = ubaos;
@@ -76,31 +67,28 @@ public class HTTPRawMessage
 	{
 		return headers;
 	}
-	
-	
+
 	public UByteArrayOutputStream getUBAOS()
 	{
 		return ubaos;
 	}
-	
-	
-	
+
 	private void parseRawHeaders()
 	{
-		
-		if ( endOfHeadersIndex != -1)
+		if (endOfHeadersIndex != -1)
 		{
 			headers = new ArrayList<GetNameValue<String>>();
 			int lineCounter =0;
-			for(int i=0; i < endOfHeadersIndex;)
+			for (int i=0; i < endOfHeadersIndex;)
 			{
 				int endOfCurrentLine = ubaos.indexOf(i, ProtocolDelimiter.CRLF.getBytes(), 0, ProtocolDelimiter.CRLF.getBytes().length);
 				
-				if ( endOfCurrentLine != -1 )
+				if (endOfCurrentLine != -1)
 				{
 					lineCounter++;
 					String oneLine = new String(Arrays.copyOfRange(ubaos.getInternalBuffer(), i, endOfCurrentLine));
-					if ( lineCounter > 1)
+
+					if (lineCounter > 1)
 					{
 						headers.add(SharedUtil.toNVPair(oneLine, ":", true));
 					}
@@ -109,15 +97,12 @@ public class HTTPRawMessage
 						firstLine = oneLine;
 					}
 				}
+
 				i=endOfCurrentLine+ProtocolDelimiter.CRLF.getBytes().length;
 			}
 		}
 		
 	}
-	
-	
-	
-	
 	
 	public synchronized boolean isMessageComplete()
 	{
@@ -125,14 +110,13 @@ public class HTTPRawMessage
 		{
 			if (contentLength !=-1)
 			{
-				return  ((endOfHeadersIndex + contentLength + ProtocolDelimiter.CRLFCRLF.getBytes().length) == endOfMessageIndex()); 
+				return ((endOfHeadersIndex + contentLength + ProtocolDelimiter.CRLFCRLF.getBytes().length) == endOfMessageIndex());
 			}
 			
 			return true;
 		}
 		return false;
 	}
-	
 	
 	public int endOfMessageIndex()
 	{
@@ -145,34 +129,30 @@ public class HTTPRawMessage
 		return endOfHeadersIndex;
 	}
 	
-	
-	
-	
 	public byte[] getRawHeaders()
 	{
-		if ( endOfHeadersIndex != -1 )
+		if (endOfHeadersIndex != -1 )
 		{
 			return Arrays.copyOfRange(ubaos.getInternalBuffer(), 0, endOfHeadersIndex);
 		}
 		
 		return null;
 	}
-	
-	
-	
-	
+
 	public synchronized void parse()
 	{
-		if ( endOfHeadersIndex() == -1)
+		if (endOfHeadersIndex() == -1)
 		{
 			// detect end of message
 			endOfHeadersIndex = ubaos.indexOf(ProtocolDelimiter.CRLFCRLF.getBytes());
-			if ( endOfHeadersIndex != -1)
+
+			if (endOfHeadersIndex != -1)
 			{
 				parseRawHeaders();
 			
 				GetNameValue<String> clNV = SharedUtil.lookupNV( headers, HTTPHeaderName.CONTENT_LENGTH.getName());
-				if ( clNV != null)
+
+				if (clNV != null)
 				{
 					try
 					{
@@ -186,8 +166,7 @@ public class HTTPRawMessage
 			}
 		}
 	}
-	
-	
+
 	public int getContentLength()
 	{
 		return contentLength;
@@ -195,30 +174,20 @@ public class HTTPRawMessage
 	
 	public byte[] getRawContent()
 	{
-		if ( endOfHeadersIndex !=-1)
+		if (endOfHeadersIndex !=-1)
 		{
 			return Arrays.copyOfRange(ubaos.getInternalBuffer(), endOfHeadersIndex+4, endOfMessageIndex());
 		}
 		
 		return null;
 	}
-	
-	
-
 
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		return "HTTPRawMessage [endOfMessage=" + endOfHeadersIndex
 				+ ", contentLength=" + contentLength + ", headers=" + headers
 				+ ", firstLine=" + firstLine + ", baos=" +ubaos.size()+"]";
 	}
 
-
-	
-	
-	
-	
-	
-	
-	
 }

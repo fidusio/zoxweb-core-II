@@ -17,8 +17,13 @@ package org.zoxweb.shared.util;
 
 import org.zoxweb.shared.util.Const.Unit;
 
+/**
+ * The unit value interface.
+ * @param <V>
+ */
 public interface UnitValue<V>
-		extends SetValue<V> {
+    extends SetValue<V>
+{
 
 	/**
 	 * Returns the unit.

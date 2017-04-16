@@ -28,7 +28,8 @@ import org.zoxweb.shared.util.CanonicalID;
  * @param <O> Output filtered value
  */
 public interface ValueFilter<I extends Object, O extends Object>
-		extends Serializable, CanonicalID {
+    extends Serializable, CanonicalID
+{
 
 	/**
 	 * Validate the object
@@ -37,7 +38,8 @@ public interface ValueFilter<I extends Object, O extends Object>
 	 * @throws NullPointerException if in is null
 	 * @throws IllegalArgumentException if in is invalid
 	 */
-	public O validate(I in) throws NullPointerException, IllegalArgumentException;
+	public O validate(I in)
+        throws NullPointerException, IllegalArgumentException;
 	
 	
 	/**

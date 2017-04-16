@@ -19,7 +19,8 @@ package org.zoxweb.shared.control;
  * The content controller interface.
  * @param <T>
  */
-public interface ContentController<T> {
+public interface ContentController<T>
+{
 
     /**
      * Switches content.

@@ -18,12 +18,16 @@ package org.zoxweb.client.data;
 import com.google.gwt.i18n.client.TimeZone;
 
 /**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
+ * Date and time utilities.
  */
-public class DateTimeUtil {
+public final class DateTimeUtil
+{
 
-	private DateTimeUtil() {
+	/**
+	 * The constructor is declared final to prevent instantiation.
+	 */
+	private DateTimeUtil()
+	{
 		
 	}
 	

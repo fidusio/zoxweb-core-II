@@ -38,7 +38,7 @@ public class UUIDInfoDAO
 	extends TimeStampDAO 
 {
 	
-	public enum Params
+	public enum Param
 		implements GetNVConfig
 	{
 //		boolean mandatory,
@@ -58,18 +58,18 @@ public class UUIDInfoDAO
 		UUID(NVConfigManager.createNVConfig("uuid", "UUID ","UUID", true, false, true, false, String.class, null)),
 		
 		;
-	
-		private final NVConfig cType;
-		
-		Params(NVConfig c)
-		{
-			cType = c;
-		}
-		
-		public NVConfig getNVConfig()
-		{
-			return cType;
-		}
+
+        private final NVConfig nvc;
+
+        Param(NVConfig nvc)
+        {
+            this.nvc = nvc;
+        }
+
+        public NVConfig getNVConfig()
+        {
+            return nvc;
+        }
 	}
 	
 	public static final NVConfigEntity NVC_UUID_INFO_DAO = new NVConfigEntityLocal(
@@ -81,7 +81,7 @@ public class UUIDInfoDAO
 																						false, 
 																						false, 
 																						UUIDInfoDAO.class, 
-																						SharedUtil.extractNVConfigs(Params.values()), 
+																						SharedUtil.extractNVConfigs(Param.values()),
 																						null, 
 																						false, 
 																						TimeStampDAO.NVC_TIME_STAMP_DAO
@@ -97,12 +97,12 @@ public class UUIDInfoDAO
 	}
 	
 	/**
-	 * Gets expiration time (in milliseconds, -1 for never expires).
+	 * Returns expiration time (in milliseconds, -1 for never expires).
 	 * @return expiratrion time
 	 */
 	public long getExpirationTime() 
 	{
-		return lookupValue(Params.EXPIRATION_TS);
+		return lookupValue(Param.EXPIRATION_TS);
 	}
 	
 	/**
@@ -111,16 +111,16 @@ public class UUIDInfoDAO
 	 */
 	public void setExpirationTime(long ts) 
 	{
-		setValue(Params.EXPIRATION_TS, ts);
+		setValue(Param.EXPIRATION_TS, ts);
 	}
 	
 	/**
-	 * Gets the access count (in milliseconds, -1 for never expires).
+	 * Returns the access count (in milliseconds, -1 for never expires).
 	 * @return access count
 	 */
 	public long getAccessCount()
 	{
-		return lookupValue(Params.ACCESS_COUNTER);
+		return lookupValue(Param.ACCESS_COUNTER);
 	}
 	
 	/**
@@ -129,136 +129,133 @@ public class UUIDInfoDAO
 	 */
 	public synchronized void setAccessCount(long ac) 
 	{
-		setValue(Params.ACCESS_COUNTER, ac);
+		setValue(Param.ACCESS_COUNTER, ac);
 	}
 	
 	/**
-	 * Gets UUID.
+	 * Returns the UUID.
 	 * @return uuid
 	 */
 	public String getUUID() 
 	{
-		return lookupValue(Params.UUID);
+		return lookupValue(Param.UUID);
 	}
 	
 	/**
-	 * Sets UUID.
+	 * Sets the UUID.
 	 * @param uuid
 	 */
 	public void setUUID(String uuid) 
 	{
-		setValue(Params.UUID, uuid);
+		setValue(Param.UUID, uuid);
 	}
 	
 	/**
-	 * Gets resource ID.
+	 * Returns the resource ID.
 	 * @return resource id
 	 */
 	public String getResourceID()
 	{
-		return lookupValue(Params.RESOURCE_ID);
+		return lookupValue(Param.RESOURCE_ID);
 	}
 	
 	/**
-	 * Sets resource ID.
+	 * Sets the resource ID.
 	 * @param resourceID
 	 */
 	public void setResourceID(String resourceID) 
 	{
-		setValue(Params.RESOURCE_ID, resourceID);
+		setValue(Param.RESOURCE_ID, resourceID);
 	}
-	
-	
+
 	/**
-	 * Gets resource canonical ID.
+	 * Returns the resource canonical ID.
 	 * @return resource canonical id
 	 */
 	public String getResourceCanonicalID()
 	{
-		return lookupValue(Params.RESOURCE_CANONICAL_ID);
+		return lookupValue(Param.RESOURCE_CANONICAL_ID);
 	}
 	
 	/**
-	 * Sets resource canonicalID.
+	 * Sets the resource canonical ID.
 	 * @param resourceID
 	 */
 	public void setResourceCanonicalID(String resourceID) 
 	{
-		setValue(Params.RESOURCE_CANONICAL_ID, resourceID);
+		setValue(Param.RESOURCE_CANONICAL_ID, resourceID);
 	}
-	
-	
-	
+
 	/**
-	 * Get content.
+	 * Returns the content.
 	 * @return content 
 	 */
 	public NVEntity getContent()
 	{
-		return lookupValue(Params.CONTENT);
+		return lookupValue(Param.CONTENT);
 	}
 	
 	/**
-	 * Set content.
+	 * Sets the content.
 	 * @param content
 	 */
 	public void setContent(NVEntity content) 
 	{
-		setValue(Params.CONTENT, content);
+		setValue(Param.CONTENT, content);
 	}
 	
 	/**
-	 * Gets resource type.
+	 * Returns the resource type.
 	 * @return resource type 
 	 */
 	public ResourceType getResourceType()
 	{
-		return lookupValue(Params.RESOURCE_TYPE);
+		return lookupValue(Param.RESOURCE_TYPE);
 	}
 	
 	/**
-	 * Sets resource type.
+	 * Sets the resource type.
 	 * @param resourceType
 	 */
 	public void setResourceType(ResourceType resourceType) 
 	{
-		setValue(Params.RESOURCE_TYPE, resourceType);
+		setValue(Param.RESOURCE_TYPE, resourceType);
 	}
 	
 	/**
-	 * Gets resource CRUD.
+	 * Returns the resource CRUD.
 	 * @return crud
 	 */
 	public CRUD getResourceCRUD()
 	{
-		return lookupValue(Params.RESOURCE_CRUD);
+		return lookupValue(Param.RESOURCE_CRUD);
 	}
 	
 	/**
-	 * Sets resource CRUD.
+	 * Sets the resource CRUD.
 	 * @param crud
 	 */
 	public void setResourceCRUD(CRUD crud) 
 	{
-		setValue(Params.RESOURCE_CRUD, crud);
+		setValue(Param.RESOURCE_CRUD, crud);
 	}
 	
 	/**
-	 * Gets session ID.
+	 * Returns the session ID.
 	 * @return session id
 	 */
 	public String getSessionID()
 	{
-		return lookupValue(Params.SESSION_ID);
+		return lookupValue(Param.SESSION_ID);
 	}
 	
 	/**
-	 * Sets session ID.
+	 * Sets the session ID.
 	 * @param sessionID
 	 */
 	public void setSessionID(String sessionID) 
 	{
-		setValue(Params.SESSION_ID, sessionID);
+		setValue(Param.SESSION_ID, sessionID);
 	}
 
 }

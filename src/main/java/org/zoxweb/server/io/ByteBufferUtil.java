@@ -5,17 +5,13 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.ByteChannel;
 import java.util.HashMap;
-
 import java.util.Map;
-//import java.util.logging.Logger;
-
 
 import org.zoxweb.shared.util.SharedUtil;
 import org.zoxweb.shared.util.SimpleQueue;
 
 public class ByteBufferUtil 
 {
-	
 	public enum BufferType 
 	{
 		DIRECT, 
@@ -31,8 +27,7 @@ public class ByteBufferUtil
 //	private Method limit = null;
 //	private volatile long counter = 0;
 	private Map<Integer, SimpleQueue<ByteBuffer>> cachedBuffers = new HashMap<Integer, SimpleQueue<ByteBuffer>>();
-	
-	
+
 	public static final int DEFAULT_BUFFER_SIZE = 4096;
 	public static final int CACHE_LIMIT = 256;
 	
@@ -55,28 +50,25 @@ public class ByteBufferUtil
 		
 	}
 	
-	
-	
-	
-	
 	private void cache0(ByteBuffer bb)
 	{
 		synchronized(cachedBuffers)
 		{
 			if (bb != null)
 			{
-				
 				SimpleQueue<ByteBuffer> sq = cachedBuffers.get(bb.capacity());
+
 				if (sq == null)
 				{
 					sq = new SimpleQueue<ByteBuffer>(false);
 					//System.out.println("new capacity:" + bb.capacity());
 					cachedBuffers.put(bb.capacity(), sq);
 				}
+
 				if (sq.size() < CACHE_LIMIT)
-				{	
+				{
 					bb.clear();
-					if(!sq.contains(bb))
+					if (!sq.contains(bb))
 					{
 						sq.queue(bb);
 					}
@@ -85,22 +77,21 @@ public class ByteBufferUtil
 		}
 	}
 	
-	
 	private  ByteBuffer toByteBuffer0(BufferType bType, byte[] buffer, int offset, int length, boolean copy)
 	{
-			
 		ByteBuffer bb = null;
 		SimpleQueue<ByteBuffer> sq = null;
+
 		synchronized(cachedBuffers)
 		{
 			sq = cachedBuffers.get(length-offset);
+
 			if (sq != null)
 			{
 				bb = sq.dequeue();
 			}
 		}
-		
-		
+
 //		if (constructor != null)
 //		{
 //			try 
@@ -127,7 +118,6 @@ public class ByteBufferUtil
 //			} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
 //					| InvocationTargetException e) 
 //			{
-//				// TODO Auto-generated catch block
 //				e.printStackTrace();
 //			}
 //
@@ -149,6 +139,7 @@ public class ByteBufferUtil
 				bb = ByteBuffer.allocate(length-offset);
 				//log.info("["+ (counter++) + "]must create new buffer:" + bb.capacity() + " " + bb.getClass().getName());
 			}
+
 			if (copy)
 			{
 				bb.put(buffer, offset, length);
@@ -185,7 +176,6 @@ public class ByteBufferUtil
 //			} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
 //					| InvocationTargetException e) 
 //			{
-//				// TODO Auto-generated catch block
 //				e.printStackTrace();
 //			}
 //
@@ -216,7 +206,6 @@ public class ByteBufferUtil
 	
 	public static void write(ByteChannel bc, UByteArrayOutputStream ubaos) throws IOException
 	{
-		
 //		ByteBuffer bb = SINGLETON.toByteBuffer0(ubaos);
 //		while(bb.hasRemaining())
 //			bc.write(bb);
@@ -227,15 +216,18 @@ public class ByteBufferUtil
 	public static void write(ByteChannel bc, byte array[], int off, int len) throws IOException
 	{
 		SharedUtil.checkIfNulls("null byte channel", bc);
+
 		if (off < 0)
 		{
 			throw new IllegalArgumentException("invalid offset " + off);
 		}
+
 		ByteBuffer bb = allocateByteBuffer(BufferType.HEAP, DEFAULT_BUFFER_SIZE);
+
 		try
 		{
-			
 			int end = off + len;
+
 			if (end > array.length)
 			{
 				end = array.length;
@@ -243,7 +235,6 @@ public class ByteBufferUtil
 			
 			for (int offset = off; offset < end;)
 			{
-				
 				int length = offset+bb.capacity() > end ? end - offset : bb.capacity();
 	
 				bb.clear();
@@ -258,37 +249,30 @@ public class ByteBufferUtil
 		}
 	}
 	
-	
 	public static ByteBuffer allocateByteBuffer(BufferType bType, int capacity)
 	{
 		return SINGLETON.toByteBuffer0(bType, null, 0, capacity, false);
 	}
-	
-	
+
 	public static ByteBuffer allocateByteBuffer(BufferType bType, byte buffer[], int offset, int length, boolean copy)
 	{
 		return SINGLETON.toByteBuffer0(bType, buffer, offset, length, copy);
 	}
-	
-	
-	
+
 	public static void write(ByteChannel bc, ByteBuffer bb) throws IOException
 	{
 		bb.flip();
+
 		while(bb.hasRemaining())
+		{
 			bc.write(bb);
+		}
 	}
-	
-	
 	
 	public static String toString(ByteBuffer bb) throws IOException
 	{
-		
-		
-		
 		UByteArrayOutputStream ubaos = new UByteArrayOutputStream();
 		write(ubaos, bb);
-		
 
 		return ubaos.toString();
 	}
@@ -317,11 +301,11 @@ public class ByteBufferUtil
 //		}
 //		
 //	}
-	
-	
+
 	public static void write(UByteArrayOutputStream ubaos, ByteBuffer bb) throws IOException
 	{
 		bb.flip();
+
 		for (int i = 0; i < bb.limit(); i++)
 		{
 			ubaos.write(bb.get());

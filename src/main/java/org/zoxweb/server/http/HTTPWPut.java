@@ -15,7 +15,6 @@
  */
 package org.zoxweb.server.http;
 
-
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -34,7 +33,6 @@ import org.zoxweb.shared.util.NVPair;
 import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
 
-
 /**
  * JMPut: java mput is a command line form processor
  * @author mnael
@@ -42,13 +40,10 @@ import org.zoxweb.shared.util.SharedUtil;
  */
 public class HTTPWPut 
 {
-	
 
-	
-	
 	public static void error( String error)
 	{
-		if ( error != null)
+		if (error != null)
 		{
 			System.out.println("Error:" + error);
 		}
@@ -76,18 +71,16 @@ public class HTTPWPut
 		hcc.setURL(destURL.getProtocol() +"://"+ destURL.getHost() );
 		hcc.setURI(destURL.getPath());
 		hcc.setMultiPartEncoding(isMutliPart);
+
 		if (headers != null)
 		{
 			hcc.setHeaderParameters(headers);
 		}
+
 		HTTPCall hc = new HTTPCall( hcc, disableSSLCheck ? SSLCheckDisabler.SINGLETON : null);
-		
-		
-		
 		
 		//System.out.println( hcc);
 		return hc.sendRequest();
-		
 	}
 	
 	public static void main(String ...args)
@@ -95,24 +88,21 @@ public class HTTPWPut
 		ArrayList <GetNameValue<String>> params = new ArrayList<GetNameValue<String>>();
 		ArrayList <GetNameValue<String>> hParams = new ArrayList<GetNameValue<String>>();
 		
-		
 		URL destURL=null;
 		boolean disableSSL = false;
 		boolean multipart = false;
 		String user = null;
 		String password = null;
 		
-		if ( args.length <2)
+		if (args.length <2)
 		{
 			error("missing parameters");
 		}
 		
-		for( String arg : args)
+		for (String arg : args)
 		{
 			String nameval[] = SharedStringUtil.parseNameValue(arg, "=");
-			
-			
-			
+
 			try
 			{
 				if (nameval.length == 1)
@@ -122,11 +112,12 @@ public class HTTPWPut
 						disableSSL = true;
 					}
 					else
-						destURL = new URL( nameval[0]);
+					{
+						destURL = new URL(nameval[0]);
+					}
 				}
 				else if (nameval.length == 2)
 				{
-					
 					if ("-user".equalsIgnoreCase(nameval[0]))
 					{
 						user = nameval[1];
@@ -141,37 +132,34 @@ public class HTTPWPut
 					InputStream tempIS = null;
 					File tempFile = null;
 					URL tempURL = null;
+
 					try
 					{
 						// support 2 mode local filename or fully qualified url
 						tempURL = new URL(nameval[1]);
 						multipart = true;
 					}
-					catch( Exception e)
+					catch (Exception e)
 					{
 						//e.printStackTrace();
 						
 						try
 						{
-							
-							
 							tempFile = new File(nameval[1]);
-							if ( tempFile.exists() && tempFile.isFile())
+
+							if (tempFile.exists() && tempFile.isFile())
 							{
 								tempIS  = new BufferedInputStream( new FileInputStream( tempFile));
 							}
-						
-							
-							
+
 							multipart = true;
 						
 						}
-						catch(Exception e1)
+						catch (Exception e1)
 						{
 							e1.printStackTrace();
 						}
 					}
-					
 					
 					//GetNameValue<String> gnv = SharedUtil.lookupNV(params, nameval[0], ".");
 					
@@ -180,9 +168,10 @@ public class HTTPWPut
 					// this is a trick
 					// if name has [name].url
 					String canonicalName[] = SharedStringUtil.parseNameValue(nameval[0], ".");
-					if ( canonicalName.length == 2)
+
+					if (canonicalName.length == 2)
 					{
-						if ( canonicalName[1].equalsIgnoreCase("url") && (tempURL != null || tempIS != null))
+						if (canonicalName[1].equalsIgnoreCase("url") && (tempURL != null || tempIS != null))
 						{
 							sep = ".";
 							nameval[0] = canonicalName[0];
@@ -196,61 +185,53 @@ public class HTTPWPut
 							continue;
 						}
 					}
-					
-					
-					
+
 					HTTPMultiPartParameter p = (HTTPMultiPartParameter)SharedUtil.lookupNV(params, nameval[0], sep);
-					if ( p == null)
+
+					if (p == null)
 					{
 						p = new HTTPMultiPartParameter();
 						add = true;
 					}
 					
-					if ( tempURL!= null || tempIS != null)
+					if (tempURL!= null || tempIS != null)
 					{
-						
-						//System.out.println("url:" + temp);
-						
 						p.setName( nameval[0]);
-						
-						
-						
+
 						String value = p.getValue();
 						p.setValue(null);
-						if ( value != null)
+
+						if (value != null)
 						{
-							p.setFileName( value);
+							p.setFileName(value);
 						}
-						else if ( tempURL != null)
+						else if (tempURL != null)
 						{
-							p.setFileName( tempURL.getFile());
+							p.setFileName(tempURL.getFile());
 						}
-						else if ( tempFile != null)
+						else if (tempFile != null)
 						{
-							p.setFileName( tempFile.getName());
+							p.setFileName(tempFile.getName());
 						}
-						
-						
-						
-						if ( tempURL != null)
+
+						if (tempURL != null)
+						{
 							p.setURL( tempURL);
-						if ( tempIS != null)
+						}
+
+						if (tempIS != null)
+						{
 							p.setInputStreamValue(tempIS, true);
-						//System.out.println("file:" + temp.getFile());
-						
-						//InputStream is = temp.openStream();
-						//System.out.println("is:" + is);
-						//p.setInputStreamValue( is, true);
-					
+						}
 					}
 					else
 					{
-						
 						p.setName(nameval[0]);
 						
 						String value = p.getFileName();
 						p.setValue(null);
-						if ( value != null)
+
+						if (value != null)
 						{
 							p.setFileName( nameval[1]);
 						}
@@ -258,45 +239,36 @@ public class HTTPWPut
 						{
 							p.setValue( nameval[1]);
 						}
-						
-						
-						
-					
 					}
-					
-					
-					if ( add )
+
+					if (add)
 					{
 						params.add( p);	
 					}
-					
-					
 				}
 			}
-			catch( Exception e)
+			catch (Exception e)
 			{
 				e.printStackTrace();
 			}
 		}
-		if ( destURL == null)
+
+		if (destURL == null)
 		{
 			error("Missing URL");
 		}
-		
 
 		try
 		{
-			
 			HTTPResponseData rd =  wPut(destURL, disableSSL, multipart, user, password, hParams, params);
 			System.out.println("status:" + rd.getStatus());
 			System.out.println(new String(rd.getData()) );
 		}
-		catch( Exception e )
+		catch (Exception e )
 		{
 			e.printStackTrace();
 			error(null);
 		}
-		 
-	
 	}
+
  }

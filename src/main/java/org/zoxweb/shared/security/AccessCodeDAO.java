@@ -34,18 +34,15 @@ import org.zoxweb.shared.util.SharedUtil;
  */
 @SuppressWarnings("serial")
 public class AccessCodeDAO 
-extends SetNameDescriptionDAO
-implements SetCanonicalID
+    extends SetNameDescriptionDAO
+    implements SetCanonicalID
 {
 	/**
-	 * This enum contains login token parameters.
-	 * @author mzebib
-	 *
+	 * Contains login token parameters.
 	 */
 	public enum Params
 		implements GetNVConfig
 	{
-		
 		ACCESS_CODE(NVConfigManager.createNVConfig("access_code", "The Acces Code", "AccessCode", false, true, false, String.class, FilterType.ENCRYPT)),
 		ACCESS_COUNT(NVConfigManager.createNVConfig("access_count", "Number of times this access code was used", "AccessCount",false, false, Long.class)),
 		ACCESS_QUOTA(NVConfigManager.createNVConfig("access_quota", "Maximum times the access code can be used 0 for ever", "AccessQuota",true, true, Long.class)),
@@ -54,19 +51,18 @@ implements SetCanonicalID
 		DESCRIPTION(NVConfigManager.createNVConfig("description", null, "Description", false, true, false, true, false, String.class, null)),
 		SESSION_DURATION(NVConfigManager.createNVConfig("session_duration", "The session duration in millis", "SessionDuration", false, true, Long.class)),
 		
-		
 		;
 		
-		private final NVConfig cType;
+		private final NVConfig nvc;
 		
-		Params(NVConfig c)
+		Params(NVConfig nvc)
 		{
-			cType = c;
+            this.nvc = nvc;
 		}
 		
 		public NVConfig getNVConfig() 
 		{
-			return cType;
+			return nvc;
 		}
 	}
 	
@@ -90,13 +86,11 @@ implements SetCanonicalID
 		super(NVC_ACCESS_CODE_DAO);
 	}
 	
-	
 	public String getAccessCode()
 	{
 		return lookupValue(Params.ACCESS_CODE);
 	}
-	
-	
+
 	public synchronized void setAccessCode(String code)
 	{
 		setValue(Params.ACCESS_CODE, SharedStringUtil.trimOrNull(code));
@@ -118,8 +112,6 @@ implements SetCanonicalID
 		setValue(Params.ACCESS_QUOTA, limit);
 	}
 	
-	
-	
 	public long getAccessQuota()
 	{
 		return lookupValue(Params.ACCESS_QUOTA);
@@ -139,11 +131,12 @@ implements SetCanonicalID
 	public synchronized long validateAccessCode(String toValidate)
 		throws AccessException
 	{
-		
 		String currentAccessCode = getAccessCode();
+
 		if(currentAccessCode != null)
 		{
 			toValidate = SharedStringUtil.trimOrNull(toValidate);
+
 			if (toValidate == null)
 			{
 				throw new AccessException("Invalid access code");
@@ -163,6 +156,7 @@ implements SetCanonicalID
 		
 		
 		setAccessCount(getAccessCount() + 1);
+
 		if (getAccessQuota() > 0 && getAccessCount() > getAccessQuota())
 		{
 			throw new AccessException("Access Code Denied validatation quota reached.");
@@ -172,16 +166,14 @@ implements SetCanonicalID
 		
 	}
 
-
 	/* (non-Javadoc)
 	 * @see org.zoxweb.shared.util.CanonicalID#toCanonicalID()
 	 */
 	@Override
-	public String toCanonicalID() {
-		// TODO Auto-generated method stub
+	public String toCanonicalID()
+    {
 		return getCanonicalID();
 	}
-
 
 	/* (non-Javadoc)
 	 * @see org.zoxweb.shared.util.SetCanonicalID#getCanonicalID()
@@ -189,10 +181,8 @@ implements SetCanonicalID
 	@Override
 	public String getCanonicalID()
 	{
-		// TODO Auto-generated method stub
 		return lookupValue(Param.CANONICAL_ID);
 	}
-
 
 	/* (non-Javadoc)
 	 * @see org.zoxweb.shared.util.SetCanonicalID#setCanonicalID(java.lang.String)
@@ -200,10 +190,8 @@ implements SetCanonicalID
 	@Override
 	public void setCanonicalID(String canonicalID) 
 	{
-		// TODO Auto-generated method stub
 		setValue(Params.CANONICAL_ID, canonicalID);
 	}
-	
 	
 	/**
 	 * Get the session duration in milli second -1 for ever, 0 it the caller default session duration
@@ -211,7 +199,6 @@ implements SetCanonicalID
 	 */
 	public long getSessionDuration()
 	{
-		// TODO Auto-generated method stub
 		return lookupValue(Params.SESSION_DURATION);
 	}
 
@@ -223,4 +210,5 @@ implements SetCanonicalID
 	{
 		setValue(Params.SESSION_DURATION, duration);
 	}
+
 }

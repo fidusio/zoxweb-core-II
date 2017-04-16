@@ -18,50 +18,47 @@ package org.zoxweb.shared.util;
 import java.io.Serializable;
 
 /**
- *The NVConfigNameMap interface.
- * 
+ * The NVConfigNameMap interface.
  */
 public interface NVConfigNameMap
-	extends SetName,
-			SetDisplayName,
-			Serializable
+	extends SetName, SetDisplayName, Serializable
 {
 	/**
-	 * This method returns the name of the NVConfig.
+	 * Returns the name of the NVConfig.
 	 * This parameter is mandatory.
 	 * @return name 
 	 */
 	public String getName();
 	
 	/**
-	 * This method sets the name of NVConfig. 
+	 * Sets the name of NVConfig.
 	 * This parameter is mandatory.
 	 * @param name 
 	 */
 	public void setName(String name);
 	
 	/**
-	 * This method returns the name of the mapped NVConfig.
+	 * Returns the name of the mapped NVConfig.
 	 * This parameter is optional. 
 	 * @return mapped name 
 	 */
 	public String getMappedName();
 	
 	/**
-	 * This method sets the name of the NVConfig.
+	 * Sets the name of the NVConfig.
 	 * This parameter is optional.
 	 * @param mappedName
 	 */
 	public void setMappedName(String mappedName);
 	
 	/**
-	 * This method returns the display name of the NVConfig.
+	 * Returns the display name of the NVConfig.
 	 * @return display name
 	 */
 	public String getDisplayName();
 	
 	/**
-	 * This method sets the display name of the NVConfig.
+	 * Sets the display name of the NVConfig.
 	 * @param displayName
 	 */
 	public void setDisplayName(String displayName);

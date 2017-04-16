@@ -21,7 +21,6 @@ import java.util.List;
 /**
  * This class declares NVBase as a list of NVEntity type. 
  * @author mzebib
- *
  */
 @SuppressWarnings("serial")
 public class NVEntityReferenceList 
@@ -32,7 +31,7 @@ public class NVEntityReferenceList
 	//private NVConfigEntity nvce;
 	
 	/**
-	 * Default constructor used for Java Bean Compiler.
+	 * The default constructor (Java Bean compliant).
 	 */
 	public NVEntityReferenceList()
 	{
@@ -85,7 +84,6 @@ public class NVEntityReferenceList
 	@Override
 	public synchronized NVEntity add(NVEntity v)
 	{
-		// TODO Auto-generated method stub
 		if  (value.add(v))
 		{
 			return v;
@@ -97,6 +95,7 @@ public class NVEntityReferenceList
 	public synchronized NVEntity remove(String str)
 	{
 		NVEntity toRemove = get(str);
+
 		if (toRemove != null)
 		{
 			remove(toRemove);
@@ -108,8 +107,8 @@ public class NVEntityReferenceList
 	 * @see org.zoxweb.shared.util.ArrayValues#remove(java.lang.Object)
 	 */
 	@Override
-	public synchronized NVEntity remove(NVEntity v) {
-		// TODO Auto-generated method stub
+	public synchronized NVEntity remove(NVEntity v)
+    {
 		if (value.remove(v))
 		{
 			return v;
@@ -143,7 +142,6 @@ public class NVEntityReferenceList
 	@Override
 	public void clear()
 	{
-		// TODO Auto-generated method stub
 		value.clear();
 	}
 
@@ -158,7 +156,7 @@ public class NVEntityReferenceList
 			clear();
 		}
 		
-		if ( vals != null)
+		if (vals != null)
 		{
 			for (NVEntity nve : vals)
 			{
@@ -171,8 +169,8 @@ public class NVEntityReferenceList
 	
 	
 	@Override
-	public List<NVEntity> search(String... criteria) {
-		// TODO Auto-generated method stub
+	public List<NVEntity> search(String... criteria)
+    {
 		return SharedUtil.search(value, criteria);
 	}
 
@@ -180,8 +178,8 @@ public class NVEntityReferenceList
 	 * @see org.zoxweb.shared.util.ArrayValues#isFixed()
 	 */
 	@Override
-	public boolean isFixed() {
-		// TODO Auto-generated method stub
+	public boolean isFixed()
+    {
 		return false;
 	}
 
@@ -189,10 +187,9 @@ public class NVEntityReferenceList
 	 * @see org.zoxweb.shared.util.ArrayValues#setFixed(boolean)
 	 */
 	@Override
-	public void setFixed(boolean isFixed) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void setFixed(boolean isFixed)
+    {
 
+	}
 	
 }

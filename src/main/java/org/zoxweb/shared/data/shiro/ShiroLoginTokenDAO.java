@@ -33,18 +33,15 @@ public class ShiroLoginTokenDAO
 	private static final NVConfig NVC_REALM = NVConfigManager.createNVConfig("realm", "The realm","realm", false, true, String.class);
 	private static final NVConfig NVC_USER_ID = NVConfigManager.createNVConfig("user_id", "The user","UserID", true, true, String.class);
 	private static final NVConfig NVC_PASSWORD = NVConfigManager.createNVConfig("password", "The password","Password", true, true, String.class);
-	
-	
-	
-	
+
 	private static final NVConfigEntity NVC_LOGIN_TOKEN_DAO = new NVConfigEntityLocal("shiro_login_token_dao", "The login token dao", "ShiroLoginTokenDAO", true, false, false, false, ShiroLoginTokenDAO.class, SharedUtil.toNVConfigList( NVC_DOMAIN_ID, NVC_APPLICATION_ID, NVC_REALM, NVC_USER_ID, NVC_PASSWORD), null, false, SetNameDAO.NVC_NAME_DAO);
+
 	public ShiroLoginTokenDAO()
 	{
-		super( NVC_LOGIN_TOKEN_DAO);
+		super(NVC_LOGIN_TOKEN_DAO);
 	}
-	
-	
-	public ShiroLoginTokenDAO( String domainID, String applicationID, String realm, String userID, String password)
+
+	public ShiroLoginTokenDAO(String domainID, String applicationID, String realm, String userID, String password)
 	{
 		this();
 		setUserID( userID);
@@ -52,15 +49,15 @@ public class ShiroLoginTokenDAO
 		setPassword( password);
 		setDomainID( domainID);
 		setRealm( realm);
-		
 	}
 	
-	
+	@Override
 	public String getUserID()
 	{
 		return lookupValue( NVC_USER_ID);
 	}
-	
+
+    @Override
 	public void setUserID( String user)
 	{
 		setValue( NVC_USER_ID, user);

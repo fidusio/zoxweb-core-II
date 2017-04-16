@@ -39,8 +39,6 @@ public class UserIDDAO
 	/**
 	 * This enum includes the following parameters:
 	 * primary email and user information.
-	 * @author mzebib
-	 *
 	 */
 	public enum Params
 		implements GetNVConfig
@@ -49,18 +47,18 @@ public class UserIDDAO
 		USER_INFO(NVConfigManager.createNVConfigEntity("user_info", "User information", "UserInfo", true, true, UserInfoDAO.NVC_USER_INFO_DAO)),
 		
 		;
-		
-		private final NVConfig cType;
-		
-		Params(NVConfig c)
-		{
-			cType = c;
-		}
-		
-		public NVConfig getNVConfig() 
-		{
-			return cType;
-		}
+
+        private final NVConfig nvc;
+
+        Params(NVConfig nvc)
+        {
+            this.nvc = nvc;
+        }
+
+        public NVConfig getNVConfig()
+        {
+            return nvc;
+        }
 
 	}
 	
@@ -120,6 +118,7 @@ public class UserIDDAO
 	 * Gets the user ID.
 	 * @return user id
 	 */
+	@Override
 	public String getUserID()
 	{
 		return getReferenceID();

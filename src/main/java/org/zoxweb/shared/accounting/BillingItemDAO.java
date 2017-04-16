@@ -28,8 +28,6 @@ import org.zoxweb.shared.util.SharedUtil;
 import org.zoxweb.shared.util.NVConfigEntity.ArrayType;
 
 /**
- * 
- * @author mzebib
  *
  */
 @SuppressWarnings("serial")
@@ -38,7 +36,7 @@ public class BillingItemDAO
 {
 
 	public enum Params
-		implements GetNVConfig
+        implements GetNVConfig
 	{
 		NVE_REFERENCE(NVConfigManager.createNVConfigEntity("nve_reference", "The NVEntity reference.", "NVEntityReference", false, true, NVEntity.class, ArrayType.NOT_ARRAY)),
 		UNIT_COST(NVConfigManager.createNVConfig("unit_cost", "The unt cost (i.e. hours and/or minutes).", "UnitCost", false, true, BigDecimal.class)),
@@ -93,7 +91,7 @@ public class BillingItemDAO
 	}
 	
 	/**
-	 * Gets referenced NVEntity.
+	 * Returns referenced NVEntity.
 	 * @return the referenced NVEntity
 	 */
 	public NVEntity getNVEntityReference()
@@ -111,7 +109,7 @@ public class BillingItemDAO
 	}
 	
 	/**
-	 * Gets the unit cost.
+	 * Returns the unit cost.
 	 * @return the cost of on unit
 	 */
 	public BigDecimal getUnitCost()
@@ -129,7 +127,7 @@ public class BillingItemDAO
 	}
 	
 	/**
-	 * Gets the quantity.
+	 * Returns the quantity.
 	 * @return the quantity
 	 */
 	public BigDecimal getQuantity()

@@ -15,9 +15,7 @@
  */
 package org.zoxweb.shared.data.shiro;
 
-
 import java.util.ArrayList;
-
 
 import org.zoxweb.shared.data.SetNameDAO;
 import org.zoxweb.shared.data.SetNameDescriptionDAO;
@@ -33,8 +31,9 @@ import org.zoxweb.shared.util.SharedUtil;
 public class ShiroCollectionAssociationDAO
 	extends SetNameDAO
 {
-	private enum Params
-	implements GetNVConfig
+
+	private enum Param
+	    implements GetNVConfig
 	{
 		SHIRO_DAO(NVConfigManager.createNVConfigEntity("shiro_dao", "The shiro dao", "ShiroDAO", false, false, ShiroDAO.class, ArrayType.NOT_ARRAY)),
 		ASSOCIATED_DAOS(NVConfigManager.createNVConfigEntity("associated_daos", "The shiro associated daos", "AssociatedDAOS", false, false, ShiroDAO[].class, ArrayType.LIST)),
@@ -44,55 +43,64 @@ public class ShiroCollectionAssociationDAO
 		;
 
 		private final NVConfig nvc;
-		Params( NVConfig nvc)
+
+        Param( NVConfig nvc)
 		{
 			this.nvc = nvc;
 		}
+
 		@Override
 		public NVConfig getNVConfig() 
 		{
 			return nvc;
 		}
-		
 	}
 	
-	final private static NVConfigEntity NVC_SHIRO_COLLECTION_ASSOCIATION_DAO = new NVConfigEntityLocal("shiro_collection_association_dao", "" , "ShiroCollectionAssociationDAO", false, true, false, false,
-			ShiroCollectionAssociationDAO.class, SharedUtil.extractNVConfigs(Params.values()), null, false, SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO);
+	private static final NVConfigEntity NVC_SHIRO_COLLECTION_ASSOCIATION_DAO = new NVConfigEntityLocal("shiro_collection_association_dao", "" , "ShiroCollectionAssociationDAO", false, true, false, false,
+			ShiroCollectionAssociationDAO.class, SharedUtil.extractNVConfigs(Param.values()), null, false, SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO);
 	
 	public ShiroCollectionAssociationDAO() 
 	{
 		super( NVC_SHIRO_COLLECTION_ASSOCIATION_DAO);
-		
 	}
 	
-	public ShiroDAO getShiroDAO() {
-		return lookupValue(Params.SHIRO_DAO);
+	public ShiroDAO getShiroDAO()
+    {
+		return lookupValue(Param.SHIRO_DAO);
 	}
-	public void setShiroDAO(ShiroDAO shiroDao) {
-		
-		setValue(Params.SHIRO_DAO, shiroDao);
+
+	public void setShiroDAO(ShiroDAO shiroDao)
+    {
+		setValue(Param.SHIRO_DAO, shiroDao);
 	}
-	public ArrayList<ShiroDAO> getAssociatedDAOs() {
-		
-		return lookupValue(Params.ASSOCIATED_DAOS);
+
+	public ArrayList<ShiroDAO> getAssociatedDAOs()
+    {
+		return lookupValue(Param.ASSOCIATED_DAOS);
 	}
-	public void setAssociatedDAOs(ArrayList< ShiroDAO> associatedDao) {
-		
-		setValue(Params.ASSOCIATED_DAOS, associatedDao);
+
+	public void setAssociatedDAOs(ArrayList< ShiroDAO> associatedDao)
+    {
+		setValue(Param.ASSOCIATED_DAOS, associatedDao);
 	}
-	public ShiroAssociationType getAssociationType() {
-	
-		return lookupValue( Params.SHIRO_ASSOCIATION_TYPE);
+
+	public ShiroAssociationType getAssociationType()
+    {
+		return lookupValue( Param.SHIRO_ASSOCIATION_TYPE);
 	}
-	public void setAssociationType(ShiroAssociationType associationType) {
-		
-		setValue(Params.SHIRO_ASSOCIATION_TYPE, associationType);
+
+	public void setAssociationType(ShiroAssociationType associationType)
+    {
+		setValue(Param.SHIRO_ASSOCIATION_TYPE, associationType);
 	}
-	public ArrayList<ShiroDAO> getToBeAssociatedDAOs() {
-		return lookupValue(Params.TO_BE_ASSOCIATED_DAOS);
+
+	public ArrayList<ShiroDAO> getToBeAssociatedDAOs()
+    {
+		return lookupValue(Param.TO_BE_ASSOCIATED_DAOS);
 	}
+
 	public void setToBeAssociatedDAOs(ArrayList< ShiroDAO> toAssociateDao) {
-		setValue(Params.TO_BE_ASSOCIATED_DAOS, toAssociateDao);
+		setValue(Param.TO_BE_ASSOCIATED_DAOS, toAssociateDao);
 	}
 	
 }

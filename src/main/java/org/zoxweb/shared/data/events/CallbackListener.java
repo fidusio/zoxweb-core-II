@@ -16,14 +16,23 @@
 package org.zoxweb.shared.data.events;
 
 /**
- * @author mzebib
- * @param <F> 
- * @param <T> 
- *
+ * The call back listener interface.
+ * @param <F>
+ * @param <T>
  */
 public interface CallbackListener<F, T>
 {
+
+    /**
+     * Executes callback failure.
+     * @param caught
+     */
 	void onFailure(F caught);
 
+    /**
+     * Executes callback success.
+     * @param result
+     */
 	void onSuccess(T result);
+
 }

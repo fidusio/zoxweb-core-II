@@ -32,7 +32,6 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 /**
  * The AddressDAO widget.
  * @author mzebib
- *
  */
 @SuppressWarnings("serial")
 public class AddressDAOWidget 
@@ -135,8 +134,8 @@ public class AddressDAOWidget
 		
 		hpLinkPlaceHolder.add(anchorLink);
         
-		stateOrProvince =  new NVStringWidget(null, AddressDAO.Params.STATE_PROVINCE.getNVConfig());  
-		country = new NVDynamicEnumWidget(AddressDAO.Params.COUNTRY.getNVConfig(), Const.NVDisplayProp.VALUE, false);
+		stateOrProvince =  new NVStringWidget(null, AddressDAO.Param.STATE_PROVINCE.getNVConfig());
+		country = new NVDynamicEnumWidget(AddressDAO.Param.COUNTRY.getNVConfig(), Const.NVDisplayProp.VALUE, false);
 		
 		((ListBox) country.getWidget()).addChangeHandler(new ChangeHandler()
 		{

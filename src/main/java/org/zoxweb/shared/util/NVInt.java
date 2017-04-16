@@ -25,7 +25,7 @@ public class NVInt
 	extends NVBase<Integer> 
 {
 	/**
-	 * Default constructor used for Java Bean Compiler.
+	 * The default constructor (Java Bean compliant).
 	 */
 	public NVInt()
 	{
@@ -41,4 +41,5 @@ public class NVInt
 	{
 		super(name, val);
 	}
+
 }

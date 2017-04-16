@@ -19,23 +19,35 @@ import com.google.gwt.event.shared.GwtEvent;
 import org.zoxweb.shared.util.CRUDNVBase;
 
 public class CRUDNVBaseEvent
-		extends GwtEvent<CRUDNVBaseHandler> {
+	extends GwtEvent<CRUDNVBaseHandler>
+{
 
 	public final static Type<CRUDNVBaseHandler> TYPE = new Type<CRUDNVBaseHandler>();
 
 	private final CRUDNVBase crudNVBase;
 	
-	public CRUDNVBaseEvent( CRUDNVBase crudNVBase) {
+	public CRUDNVBaseEvent(CRUDNVBase crudNVBase)
+	{
 		this.crudNVBase = crudNVBase;
 	}
-	
+
+	/**
+	 * Returns the associated type.
+	 * @return
+	 */
 	@Override
-	public Type<CRUDNVBaseHandler> getAssociatedType() {
+	public Type<CRUDNVBaseHandler> getAssociatedType()
+	{
 		return TYPE;
 	}
 
+	/**
+	 * Dispatches given handler.
+	 * @param handler
+	 */
 	@Override
-	protected void dispatch(CRUDNVBaseHandler handler) {
+	protected void dispatch(CRUDNVBaseHandler handler)
+	{
 		handler.applyCRUD(crudNVBase.getCRUD(), crudNVBase.getNVBase());
 	}
 	

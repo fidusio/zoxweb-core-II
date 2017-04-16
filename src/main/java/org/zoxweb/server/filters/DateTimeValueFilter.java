@@ -21,54 +21,59 @@ import java.util.TimeZone;
 
 import org.zoxweb.shared.filters.ValueFilter;
 
-/**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
- */
+
 @SuppressWarnings("serial")
 public class DateTimeValueFilter
 	implements ValueFilter<String, Long>
 {
-	private SimpleDateFormat  sdf = null;
-	public DateTimeValueFilter(String pattern, String tz)
+
+	private SimpleDateFormat sdf = null;
+
+	public DateTimeValueFilter(String pattern, String timezone)
 	{
 		sdf = new SimpleDateFormat(pattern);
-		sdf.setTimeZone(TimeZone.getTimeZone(tz));
+		sdf.setTimeZone(TimeZone.getTimeZone(timezone));
 	}
-	
-	
+
 	/**
 	 * @see org.zoxweb.shared.util.CanonicalID#toCanonicalID()
+	 * @return
 	 */
 	@Override
 	public String toCanonicalID()
 	{
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	/**
 	 * @see org.zoxweb.shared.filters.ValueFilter#validate(java.lang.Object)
+	 * @param in value to be validated
+	 * @return
+	 * @throws NullPointerException
+	 * @throws IllegalArgumentException
 	 */
 	@Override
-	public Long validate(String in) throws NullPointerException,
-			IllegalArgumentException
+	public Long validate(String in)
+        throws NullPointerException, IllegalArgumentException
 	{
-		// TODO Auto-generated method stub
-		try {
+		try
+		{
 			return sdf.parse(in).getTime();
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
+		}
+		catch (ParseException e)
+		{
 			throw new IllegalArgumentException(e.getMessage());
 		}
 	}
 
 	/**
 	 * @see org.zoxweb.shared.filters.ValueFilter#isValid(java.lang.Object)
+	 * @param in value to be checked
+	 * @return
 	 */
 	@Override
-	public boolean isValid(String in) {
-		// TODO Auto-generated method stub
+	public boolean isValid(String in)
+	{
 		return false;
 	}
 

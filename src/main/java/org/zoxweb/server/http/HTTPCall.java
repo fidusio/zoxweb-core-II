@@ -13,8 +13,6 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-
-
 package org.zoxweb.server.http;
 
 import java.io.ByteArrayOutputStream;
@@ -28,7 +26,6 @@ import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
-import org.zoxweb.server.http.HTTPMultiPartUtil;
 import org.zoxweb.server.io.CloseEnabledInputStream;
 import org.zoxweb.server.io.IOUtil;
 import org.zoxweb.server.security.SSLSocketProp;
@@ -46,7 +43,6 @@ import org.zoxweb.shared.util.NVPair;
 import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
 
-
 public class HTTPCall 
 {
 	private HTTPMessageConfigInterface hcc;
@@ -57,8 +53,7 @@ public class HTTPCall
 	private OutputStream osBypass;
 	private CloseEnabledInputStream contentAsIS;
 	//private boolean embedParamsInURI;
-	
-	
+
 	static
 	{
 		try
@@ -71,7 +66,6 @@ public class HTTPCall
 		}
 	}
 	
-	
 	public HTTPCall(HTTPMessageConfigInterface params)
 	{
 		this( params, null, null, null, null, null);
@@ -81,12 +75,7 @@ public class HTTPCall
 	{
 		this( params, ssp, null, null, null, null);
 	}
-	
-	
 
-	
-	
-	
 	public HTTPCall(HTTPMessageConfigInterface params,
 					SSLSocketProp ssp,
 					String urlOverride,

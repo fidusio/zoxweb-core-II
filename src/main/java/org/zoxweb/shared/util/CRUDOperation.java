@@ -20,7 +20,8 @@ package org.zoxweb.shared.util;
  * @author mzebib
  * @param <V>
  */
-public interface CRUDOperation<V> {
+public interface CRUDOperation<V>
+{
 
 	/**
 	 * Applies CRUD to given variable.

@@ -20,8 +20,7 @@ import org.zoxweb.shared.http.HTTPMethod;
 import com.google.gwt.http.client.RequestBuilder;
 
 /**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
+ *
  */
 public class ZWRequestBuilder
 		extends RequestBuilder {
@@ -30,7 +29,8 @@ public class ZWRequestBuilder
 	 * @param method to applied
 	 * @param url parameter
 	 */
-	public ZWRequestBuilder(HTTPMethod method, String url) {
+	public ZWRequestBuilder(HTTPMethod method, String url)
+    {
 		this(method.getName(), url);
 	}
 
@@ -38,7 +38,8 @@ public class ZWRequestBuilder
 	 * @param httpMethod as string
 	 * @param url parameter
 	 */
-	public ZWRequestBuilder(String httpMethod, String url) {
+	public ZWRequestBuilder(String httpMethod, String url)
+    {
 		super(httpMethod, url);
 	}
 

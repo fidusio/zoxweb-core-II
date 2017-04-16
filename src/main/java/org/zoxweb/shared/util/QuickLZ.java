@@ -12,6 +12,7 @@
 //
 // Version: 1.5.0 final
 package org.zoxweb.shared.util;
+
 public final class QuickLZ
 {
 	// Streaming mode not supported

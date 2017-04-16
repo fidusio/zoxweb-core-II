@@ -26,7 +26,8 @@ import org.zoxweb.shared.util.AppointmentDefault;
 import org.zoxweb.shared.util.Const;
 
 public class VMMonitorTask
-		implements TaskExecutor {
+    implements TaskExecutor
+{
 	
 	private Logger log;
 	private Appointment appointment;
@@ -39,31 +40,40 @@ public class VMMonitorTask
 		
 	}
 	
-	public VMMonitorTask(Const.SizeInBytes sizeInBytes) {
-		if (sizeInBytes != null) {
+	public VMMonitorTask(Const.SizeInBytes sizeInBytes)
+    {
+		if (sizeInBytes != null)
+		{
 			this.sizeInBytes = sizeInBytes;
 		}
 	}
 
 	@Override
-	public void executeTask(TaskEvent event) {
+	public void executeTask(TaskEvent event)
+    {
 		Object[] params = event.getTaskExecutorParameters();
 
-		if (params != null) {
+		if (params != null)
+		{
 			int i = 0;
 
-			if (params.length > i) {
+			if (params.length > i)
+			{
 				log = (Logger) params[i++];
-				if (params.length > i) {
+				if (params.length > i)
+				{
 					appointment = (Appointment) params[i++];
-					if (params.length > i) {
+
+					if (params.length > i)
+					{
 						tsp = (TaskSchedulerProcessor) params[i++];
 					}
 				}
 			}
 		}
 		
-		if (log != null) {
+		if (log != null)
+		{
 			VMInfoDAO vmid = RuntimeUtil.vmSnapshot();
 			
 			log.info("Values in:" + sizeInBytes + ", Used mem:"+ (vmid.getUsedMemory()/sizeInBytes.LENGTH) + ", Max-mem:" + (vmid.getMaxMemory()/sizeInBytes.LENGTH) +
@@ -72,8 +82,10 @@ public class VMMonitorTask
 	}
 
 	@Override
-	public void finishTask(TaskEvent event) {
-		if (tsp != null && appointment != null) {
+	public void finishTask(TaskEvent event)
+    {
+		if (tsp != null && appointment != null)
+		{
 			Appointment apt = new AppointmentDefault(appointment.getDelayInMillis());
 			tsp.queue(this, apt, this, log, apt, tsp);
 		}

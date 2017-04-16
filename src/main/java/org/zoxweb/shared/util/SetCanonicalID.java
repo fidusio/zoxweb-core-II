@@ -15,12 +15,10 @@
  */
 package org.zoxweb.shared.util;
 
-/**
- * @author mzebib
- *
- */
+
 public interface SetCanonicalID 
-	extends CanonicalID {
+	extends CanonicalID
+{
 	
 	String getCanonicalID();
 	

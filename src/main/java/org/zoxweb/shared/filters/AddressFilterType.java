@@ -19,65 +19,85 @@ import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
 
 public enum AddressFilterType
-        implements ValueFilter<String, String> {
+    implements ValueFilter<String, String>
+{
 
 	CANADA_POSTAL_CODE
 	{
 		private static final String REGEX = "^([ABCEGHJKLMNPRSTVXY]\\d[ABCEGHJKLMNPRSTVWXYZ])\\ {0,1}(\\d[ABCEGHJKLMNPRSTVWXYZ]\\d)$";
 		
-		public String toCanonicalID() {
+		public String toCanonicalID()
+        {
 			return null;
 		}
 
 		public String validate(String in) 
-				throws NullPointerException, IllegalArgumentException {
+            throws NullPointerException, IllegalArgumentException
+        {
 
 			in = SharedStringUtil.trimOrNull(in);
 			SharedUtil.checkIfNulls("Postal code is null.", in);
 			
 			in = in.toUpperCase();
 			
-			if (in.matches(REGEX)) {
+			if (in.matches(REGEX))
+			{
 				return in;
-			} else {
+			}
+			else
+            {
 				throw new IllegalArgumentException("Invalid postal code: " + in);
 			}
 		}
 		
-		public boolean isValid(String in) {
-			try {
+		public boolean isValid(String in)
+        {
+			try
+            {
 				validate(in);
 				return true;
-			} catch (Exception e) {
+			}
+			catch (Exception e)
+            {
 				return false;
 			}
 		}
 	},
-	
-	US_ZIP_CODE {
+	US_ZIP_CODE
+    {
 		private static final String REGEX = "^\\d{5}";
 		
-		public String toCanonicalID() {
+		public String toCanonicalID()
+        {
 			return null;
 		}
 
 		public String validate(String in) 
-				throws NullPointerException, IllegalArgumentException {
+            throws NullPointerException, IllegalArgumentException
+        {
 			in = SharedStringUtil.trimOrNull(in);
+
 			SharedUtil.checkIfNulls("ZIP code is null.", in);
 			
-			if (in.matches(REGEX)) {
+			if (in.matches(REGEX))
+			{
 				return in;
-			} else {
+			}
+			else
+            {
 				throw new IllegalArgumentException("Invalid ZIP code: " + in);
 			}
 		}
 		
-		public boolean isValid(String in) {
-			try {
+		public boolean isValid(String in)
+        {
+			try
+            {
 				validate(in);
 				return true;
-			} catch (Exception e) {
+			}
+			catch (Exception e)
+            {
 				return false;
 			}
 		}
@@ -86,18 +106,21 @@ public enum AddressFilterType
 	;
 
 	@Override
-	public String toCanonicalID() {
+	public String toCanonicalID()
+    {
 		return null;
 	}
 
 	@Override
 	public String validate(String in) 
-			throws NullPointerException, IllegalArgumentException {
+        throws NullPointerException, IllegalArgumentException
+    {
 		return null;
 	}
 	
 	@Override
-	public boolean isValid(String in) {
+	public boolean isValid(String in)
+    {
 		return false;
 	}
 

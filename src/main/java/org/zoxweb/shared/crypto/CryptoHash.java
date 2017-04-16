@@ -1,35 +1,29 @@
 /*
- * Copyright 2017 ZoxWeb.com LLC.
- *
+ * Copyright (c) 2012-2015 ZoxWeb.com LLC.
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- *
+ * 
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.zoxweb.shared.util;
+package org.zoxweb.shared.crypto;
 
-/**
- * Created by mnael on 3/31/2017.
- * This interface is mainly used to associate a global id like a uuid with an object.
- * The global id is unique globally across APPS and systems it can be used as a uniqueexchange identifier
- */
-public interface GlobalID<T>
+import org.zoxweb.shared.security.AccessSecurityException;
+
+public interface CryptoHash
 {
-    /**
-     * @return the global identifier of the object
-     */
-    T getGlobalID();
 
-    /**
-     * @param gid the global identifier of the object.
-     */
-    void setGlobalID(T gid);
+	public byte[] hash(String mdAlgo, byte[]... tokens)
+			throws AccessSecurityException;
+	
+	public byte[] hash(String mdAlgo, String... tokens)
+			throws AccessSecurityException;
 
 }

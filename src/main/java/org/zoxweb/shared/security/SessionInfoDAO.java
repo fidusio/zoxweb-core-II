@@ -3,7 +3,6 @@ package org.zoxweb.shared.security;
 /**
  * This class defines session information data access object.
  * @author mzebib
- *
  */
 public class SessionInfoDAO 
 {
@@ -16,4 +15,5 @@ public class SessionInfoDAO
 	 * Initializes LOGOUT_URL constant.
 	 */
 	public static final String LOGOUT_URL = "LOGOUT_URL";
+
 }

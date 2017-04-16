@@ -16,9 +16,8 @@
 package org.zoxweb.shared.accounting;
 
 /**
- * This enum contains transaction descriptors.
+ * Contains transaction descriptors.
  * @author mzebib
- *
  */
 public enum TransactionDescriptor 
 {

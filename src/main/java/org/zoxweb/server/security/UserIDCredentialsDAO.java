@@ -37,17 +37,16 @@ import org.zoxweb.shared.util.SharedUtil;
  */
 @SuppressWarnings("serial")
 public class UserIDCredentialsDAO
-		extends SetNameDescriptionDAO {
+    extends SetNameDescriptionDAO
+{
 
 	/**
 	 * This enum contains user status with a specified status
 	 * expiration time.
-	 * @author mzebib
-	 *
 	 */
 	public enum UserStatus
-            implements GetValue<Long> {
-
+        implements GetValue<Long>
+    {
 		// Note: 
 		//	0 = no expiration time
 		// -1 = expiration time is irrelevant
@@ -61,16 +60,16 @@ public class UserIDCredentialsDAO
 
 		private final long EXPIRATION_TIME;
 		
-		UserStatus(long time) {
+		UserStatus(long time)
+        {
 			EXPIRATION_TIME = time;
 		}
-		
-		
+
 		@Override
-		public Long getValue() {
+		public Long getValue()
+        {
 			return EXPIRATION_TIME;
 		}
-		
 	}
 
 	/**
@@ -81,7 +80,8 @@ public class UserIDCredentialsDAO
 	 *
 	 */
 	public enum UserCredentials
-            implements GetNVConfig {
+        implements GetNVConfig
+    {
 
 		//USER_ID_DAO(NVConfigManager.createNVConfigEntity("user_id_dao", "User ID data access object.", "UserIDDAO", true, true, UserIDDAO.NVC_USER_ID_DAO)),
 		USER_STATUS(NVConfigManager.createNVConfig("user_status", "User status", "UserStatus", true, true, UserStatus.class)),
@@ -94,11 +94,13 @@ public class UserIDCredentialsDAO
 		
 		private final NVConfig nvc;
 
-		UserCredentials(NVConfig nvc) {
+		UserCredentials(NVConfig nvc)
+        {
 			this.nvc = nvc;
 		}
 		
-		public NVConfig getNVConfig() {
+		public NVConfig getNVConfig()
+        {
 			return nvc;
 		}
 	}
@@ -124,7 +126,8 @@ public class UserIDCredentialsDAO
 	/**
 	 * This is the default constructor.
 	 */
-	public UserIDCredentialsDAO() {
+	public UserIDCredentialsDAO()
+    {
 		super(NVC_USER_ID_CREDENTIALS_DAO);
 	}
 
@@ -132,7 +135,8 @@ public class UserIDCredentialsDAO
 	 * Returns the user status.
 	 * @return UserStatus
 	 */
-	public UserStatus getUserStatus() {
+	public UserStatus getUserStatus()
+    {
 		return lookupValue(UserCredentials.USER_STATUS);
 	}
 	
@@ -140,7 +144,8 @@ public class UserIDCredentialsDAO
 	 * Sets the user status.
 	 * @param status
 	 */
-	public void setUserStatus(UserStatus status) {
+	public void setUserStatus(UserStatus status)
+    {
 		setValue(UserCredentials.USER_STATUS, status);
 	}
 
@@ -148,7 +153,8 @@ public class UserIDCredentialsDAO
 	 * Returns the time stamp of the last status update.
 	 * @return in millis last status update
 	 */
-	public long getLastStatusUpdateTimestamp() {
+	public long getLastStatusUpdateTimestamp()
+    {
 		return lookupValue(UserCredentials.LAST_STATUS_UPDATE_TIMESTAMP);
 	}
 	
@@ -156,7 +162,8 @@ public class UserIDCredentialsDAO
 	 * Sets the time stamp for the last status update.
 	 * @param timestamp
 	 */
-	public void setLastStatusUpdateTimestamp(long timestamp) {
+	public void setLastStatusUpdateTimestamp(long timestamp)
+    {
 		setValue(UserCredentials.LAST_STATUS_UPDATE_TIMESTAMP, timestamp);
 	}
 	
@@ -164,7 +171,8 @@ public class UserIDCredentialsDAO
 	 * Returns the pending token.
 	 * @return the pending token
 	 */
-	public String getPendingToken() {
+	public String getPendingToken()
+    {
 		return lookupValue(UserCredentials.PENDING_TOKEN);
 	}
 	
@@ -172,7 +180,8 @@ public class UserIDCredentialsDAO
 	 * Sets the pending token.
 	 * @param token
 	 */
-	public void setPendingToken(String token) {
+	public void setPendingToken(String token)
+    {
 		setValue(UserCredentials.PENDING_TOKEN, token);
 	}
 	
@@ -181,7 +190,8 @@ public class UserIDCredentialsDAO
 	 * Returns the pending pin.
 	 * @return pending pin
 	 */
-	public String getPendingPin() {
+	public String getPendingPin()
+    {
 		return lookupValue(UserCredentials.PENDING_PIN);
 	}
 	
@@ -189,7 +199,8 @@ public class UserIDCredentialsDAO
 	 * Sets the pending pin.
 	 * @param pin
 	 */
-	public void setPendingPin(String pin) {
+	public void setPendingPin(String pin)
+    {
 	    setValue(UserCredentials.PENDING_PIN, pin);
 	}
 
@@ -197,7 +208,8 @@ public class UserIDCredentialsDAO
 	 * Returns the password.
 	 * @return password dao
 	 */
-	public PasswordDAO getPassword() {
+	public PasswordDAO getPassword()
+    {
 		return lookupValue(UserCredentials.PASSWORD);
 	}
 	
@@ -205,7 +217,8 @@ public class UserIDCredentialsDAO
 	 * Sets the password.
 	 * @param password
 	 */
-	public void setPassword(PasswordDAO password) {
+	public void setPassword(PasswordDAO password)
+    {
 		setValue(UserCredentials.PASSWORD, password);
 	}
 	

@@ -16,44 +16,42 @@
 package org.zoxweb.shared.util;
 
 /**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
+ *
+ * @param <T>
  */
 @SuppressWarnings("serial")
 public class ReferenceIDPortable<T>
-	implements ReferenceID<T>
+    implements ReferenceID<T>
 {
-
-	
-	
 	private T type;
+
 	public ReferenceIDPortable()
 	{
 		
 	}
-	
-	
+
 	public ReferenceIDPortable(T val)
 	{
 		setReferenceID(val);
 	}
-	/**
-	 * @see org.zoxweb.shared.util.ReferenceID#getReferenceID()
-	 */
+
+    /**
+     * @see org.zoxweb.shared.util.ReferenceID#getReferenceID()
+     * @return
+     */
 	@Override
 	public T getReferenceID()
 	{
-		// TODO Auto-generated method stub
 		return type;
 	}
 
-	/**
-	 * @see org.zoxweb.shared.util.ReferenceID#setReferenceID(java.lang.Object)
-	 */
+    /**
+     * @see org.zoxweb.shared.util.ReferenceID#setReferenceID(java.lang.Object)
+     * @param id
+     */
 	@Override
 	public void setReferenceID(T id) 
 	{
-		// TODO Auto-generated method stub
 		type = id;
 	}
 

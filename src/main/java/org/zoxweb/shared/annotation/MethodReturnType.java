@@ -14,10 +14,9 @@
  * the License.
  */
 package org.zoxweb.shared.annotation;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-
-
 
 /**
  * @author mnael
@@ -30,6 +29,7 @@ import java.lang.annotation.RetentionPolicy;
 public @interface MethodReturnType 
 {
 	Class<?> classMetaType();
+
 	boolean isArray() default false;
 	
 }

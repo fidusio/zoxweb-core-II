@@ -19,12 +19,10 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- *The NVConfig attributes map interface.
- * 
+ * The NVConfig attributes map interface.
  */
 public interface NVConfigAttributesMap
-	extends Serializable, 
-			ReferenceID<String>
+    extends Serializable, ReferenceID<String>
 {
 	/**
 	 * This method returns the attributes map.

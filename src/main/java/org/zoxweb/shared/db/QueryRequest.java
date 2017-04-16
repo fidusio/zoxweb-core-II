@@ -24,7 +24,8 @@ import org.zoxweb.shared.util.SharedStringUtil;
 
 @SuppressWarnings("serial")
 public class QueryRequest
-        implements Serializable,SetCanonicalID {
+    implements Serializable,SetCanonicalID
+{
 
 	private String canonical_id;
 	private int batch_size;
@@ -32,7 +33,8 @@ public class QueryRequest
 	private List<QueryMarker> query;
 
 	@Override
-	public String getCanonicalID() {
+	public String getCanonicalID()
+    {
 		return canonical_id;
 	}
 
@@ -40,7 +42,8 @@ public class QueryRequest
 	 * Set the request canonical ID, the canonical id can be the class name
 	 */
 	@Override
-	public void setCanonicalID(String id) {
+	public void setCanonicalID(String id)
+    {
 		canonical_id = id;
 	}
 
@@ -49,7 +52,8 @@ public class QueryRequest
 	 * 
 	 * @return batch size
 	 */
-	public int getBatchSize() {
+	public int getBatchSize()
+    {
 		return batch_size;
 	}
 
@@ -57,7 +61,8 @@ public class QueryRequest
      * Sets the batch size.
      * @param batch_size
      */
-	public void setBatchSize(int batch_size) {
+	public void setBatchSize(int batch_size)
+    {
 		this.batch_size = batch_size;
 	}
 
@@ -65,55 +70,72 @@ public class QueryRequest
 	 * List if field names than the caller is interested in if null all the fields a required
 	 * @return field names
 	 */
-	public List<String> getFieldNames() {
-		return field_names;
+	public List<String> getFieldNames()
+    {
+        return field_names;
 	}
 
-	public void setFieldNames(List<String> fieldNames) {
+	public void setFieldNames(List<String> fieldNames)
+    {
 		this.field_names = fieldNames;
 	}
 
-	public void setFieldNames(String... fieldNames) {
-		if (fieldNames != null) {
+	public void setFieldNames(String... fieldNames)
+    {
+		if (fieldNames != null)
+		{
 			field_names = new ArrayList<String>();
 
-			for (String fn : fieldNames) {
-				if (!SharedStringUtil.isEmpty(fn)) {
+			for (String fn : fieldNames)
+			{
+				if (!SharedStringUtil.isEmpty(fn))
+				{
                     field_names.add(fn);
                 }
 			}
-		} else {
+		}
+		else
+        {
 			this.field_names = null;
 		}
 	}
 
-	public List<QueryMarker> getQuery() {
+	public List<QueryMarker> getQuery()
+    {
 		return query;
 	}
 
-	public void setQuery(List<QueryMarker> query) {
+	public void setQuery(List<QueryMarker> query)
+    {
 		this.query = query;
 	}
 	
-	
-	public void setQuery(QueryMarker ...markers) {
-		if (markers != null) {
+	public void setQuery(QueryMarker... markers)
+    {
+		if (markers != null)
+		{
 			query = new ArrayList<QueryMarker>();
 
-			if (markers != null) {
-				for (QueryMarker qm: markers) {
-					if (qm != null) {
+			if (markers != null)
+			{
+				for (QueryMarker qm: markers)
+				{
+					if (qm != null)
+					{
 						query.add(qm);
 					}
 				}
 			}
-		} else {
+		}
+		else
+        {
 			query = null;
 		}
 	}
 
 	@Override
-	public String toCanonicalID() {
+	public String toCanonicalID()
+    {
 		return canonical_id;
 	}
 

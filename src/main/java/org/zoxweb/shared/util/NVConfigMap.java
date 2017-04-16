@@ -18,11 +18,9 @@ package org.zoxweb.shared.util;
 /**
  * The NVConfigMap interface.
  * @author mzebib
- *
  */
 public interface NVConfigMap
-	extends NVConfigNameMap, 
-			SetNVConfig
+	extends NVConfigNameMap, SetNVConfig
 {
 	/**
 	 * This method returns the mapped NVConfig.
@@ -35,4 +33,5 @@ public interface NVConfigMap
 	 * @param nvc
 	 */
 	public void setMappedNVConfig(NVConfig nvc);
+
 }

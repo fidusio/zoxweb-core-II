@@ -22,77 +22,71 @@ import java.util.List;
  * This interface extends the NVConfig interface and methods of NVConfig
  * type are declared in this interface.
  * @author mzebib
- *
  */
 public interface NVConfigEntity
-	extends NVConfig,
-			ReferenceID<String>,
-			DomainID<String>, 
-			CanonicalID
+	extends NVConfig, ReferenceID<String>, DomainID<String>, CanonicalID
 {
 	
-	public enum ArrayType
-	{
+	public enum ArrayType {
 		NOT_ARRAY,
 		LIST,
 		GET_NAME_MAP,
 		REFERENCE_ID_MAP
 	}
-	
-	
+
 	/**
-	 * This method returns the list of attributes of NVConfig type.
+	 * Returns the list of attributes of NVConfig type.
 	 * @return list of meta attribute
 	 */
 	public List<NVConfig> getAttributes();
 	
 	/**
-	 * This method sets the list of attributes of NVConfig type.
+	 * Sets the list of attributes of NVConfig type.
 	 * @param attList is an array list of NVConfig type
 	 */
 	public void setAttributes(List<NVConfig> attList);
 	
 	/**
-	 * This method returns the list of the specified attributes of 
+	 * Returns the list of the specified attributes of
 	 * NVConfig type to be displayed.
 	 * @return display attributes
 	 */
 	public List<NVConfig> getDisplayAttributes();
 	
 	/**
-	 * This method sets the list of attributes of NVConfig type to be displayed.
+	 * Sets the list of attributes of NVConfig type to be displayed.
 	 * @param attList is an array list of NVConfig type
 	 */
 	public void setDisplayAttributes(List<NVConfig> attList);
 	
 	/**
-	 * This method looks up the matching NVConfig by name.
+	 * Looks up the matching NVConfig by name.
 	 * @param name is an array list of NVConfig type
 	 * @return nvconfig matching name
 	 */
 	public NVConfig lookup(String name);
 	
 	/**
-	 * This method looks up the matching NVConfig by enum value.
+	 * Looks up the matching NVConfig by enum value.
 	 * @param e is of generic enum type
 	 * @return  nvconfig matching e
 	 */
 	public NVConfig lookup(Enum<?> e);
 	
 //	/**
-//	 * This method checks whether meta initialization is complete or not.
+//	 * Checks whether meta initialization is complete or not.
 //	 * @return
 //	 */
 //	boolean isMetaInitComplete();
 //	
 //	/**
-//	 * This method sets the status of the meta initialization. 
+//	 * Sets the status of the meta initialization.
 //	 * @param stat is of boolean type
 //	 */
 //	void setMetaInitComplete( boolean stat);
 	
 	/**
-	 * This method sets the referenced NVConfigEntity.
+	 * Sets the referenced NVConfigEntity.
 	 * @param nvce
 	 */
 	void setReferencedNVConfigEntity(NVConfigEntity nvce);
@@ -106,20 +100,20 @@ public interface NVConfigEntity
 	boolean isReferenced();
 	
 	/**
-	 * This method checks whether attribute validation is required.
+	 * Checks whether attribute validation is required.
 	 * @return true if attribute validation is required.
 	 */
 	public boolean isAttributesValidationRequired();
 
 	/**
-	 * This method sets attribute validation requirement.
+	 * Sets attribute validation requirement.
 	 * @param attributesValidationRequired
 	 */
 	public void setAttributesValidationRequired(boolean attributesValidationRequired);
-	
-	
+
 	public ArrayType getArrayType();
-	
+
+
 	public void setArrayType(ArrayType at);
 	
 	

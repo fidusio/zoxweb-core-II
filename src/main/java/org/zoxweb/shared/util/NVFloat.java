@@ -25,7 +25,7 @@ public class NVFloat
 	extends NVBase<Float> 
 {
 	/**
-	 * Default constructor used for Java Bean Compiler.
+	 * The default constructor (Java Bean compliant).
 	 */
 	public NVFloat()
 	{

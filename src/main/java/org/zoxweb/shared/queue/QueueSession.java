@@ -4,8 +4,8 @@ package org.zoxweb.shared.queue;
  * The queue session interface.
  */
 public interface QueueSession
-		extends AutoCloseable {
-
+    extends AutoCloseable
+{
 	/**
 	 * Adds consumer listener.
 	 * @param ql

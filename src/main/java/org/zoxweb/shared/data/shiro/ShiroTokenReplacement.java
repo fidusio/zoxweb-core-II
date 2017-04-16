@@ -15,32 +15,31 @@
  */
 package org.zoxweb.shared.data.shiro;
 
-
 import org.zoxweb.shared.util.GetValue;
 import org.zoxweb.shared.util.SharedStringUtil;
 
-
 public enum ShiroTokenReplacement
-implements GetValue<String>
+    implements GetValue<String>
 {
-	SUBJECT_ID("$$SUBJECT_ID$$");
+	SUBJECT_ID("$$SUBJECT_ID$$")
 	;
 	
 	private final String tokenValue;
-	ShiroTokenReplacement( String tokenValue)
+
+	ShiroTokenReplacement(String tokenValue)
 	{
 		this.tokenValue = tokenValue;
 	}
+
 	@Override
-	public String getValue() {
-		// TODO Auto-generated method stub
+	public String getValue()
+    {
 		return tokenValue;
 	}
 	
-	public String replace( String text, String value )
+	public String replace(String text, String value)
 	{
-		return SharedStringUtil.embedText(text, SharedStringUtil.toLowerCase(tokenValue),  SharedStringUtil.toLowerCase(value));
+		return SharedStringUtil.embedText(text, SharedStringUtil.toLowerCase(tokenValue), SharedStringUtil.toLowerCase(value));
 	}
-
 
 }

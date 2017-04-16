@@ -30,15 +30,14 @@ import org.zoxweb.shared.util.NVEntity;
 import org.zoxweb.shared.util.SharedUtil;
 
 /**
- * 
- * 
+ *
  */
 @SuppressWarnings("serial")
 public class ShiroAssociationRuleDAO
 	extends	TimeStampDAO 
 {
 	
-	public enum Params
+	public enum Param
 		implements GetNVConfig
 	{
 
@@ -52,23 +51,23 @@ public class ShiroAssociationRuleDAO
 		PATTERN(NVConfigManager.createNVConfig("pattern", "Shiro compatible pattern", "Pattern", true, true, String.class)),
 		;
 		
-		private final NVConfig cType;
-		
-		Params(NVConfig c)
+		private final NVConfig nvc;
+
+        Param(NVConfig nvc)
 		{
-			cType = c;
+			this.nvc = nvc;
 		}
 		
 		public NVConfig getNVConfig() 
 		{
-			return cType;
+			return nvc;
 		}
 	}
 	
 	/**
 	 * This NVConfigEntity type constant is set to an instantiation of a NVConfigEntityLocal object based on UserIDDAO.
 	 */
-	public static final NVConfigEntity NVC_SHIRO_ASSOCIATION_RULE_DAO = new NVConfigEntityLocal("shiro_association_rule_dao", null , "ShiroAssociationRuleDAO", true, false, false, false, ShiroAssociationRuleDAO.class, SharedUtil.extractNVConfigs(Params.values()), null, false, TimeStampDAO.NVC_TIME_STAMP_DAO);
+	public static final NVConfigEntity NVC_SHIRO_ASSOCIATION_RULE_DAO = new NVConfigEntityLocal("shiro_association_rule_dao", null , "ShiroAssociationRuleDAO", true, false, false, false, ShiroAssociationRuleDAO.class, SharedUtil.extractNVConfigs(Param.values()), null, false, TimeStampDAO.NVC_TIME_STAMP_DAO);
 	
 	
 	private String dynamicPattern;
@@ -106,9 +105,10 @@ public class ShiroAssociationRuleDAO
 	
 	public ShiroAssociationType getAssociationType()
 	{
-		return lookupValue(Params.ASSOCIATION_TYPE);
+		return lookupValue(Param.ASSOCIATION_TYPE);
 	}
-	
+
+    @Override
 	public void setName(String name)
 	{
 		if (name != null)
@@ -122,46 +122,47 @@ public class ShiroAssociationRuleDAO
 	
 	public void setAssociationType(ShiroAssociationType assType)
 	{
-		setValue(Params.ASSOCIATION_TYPE, assType);
+		setValue(Param.ASSOCIATION_TYPE, assType);
 	}
 	
 	
 	public String getAssociate()
 	{
-		return lookupValue(Params.ASSOCIATE);
+		return lookupValue(Param.ASSOCIATE);
 	}
 	
 	public void setAssociate(String associate)
 	{
-		setValue(Params.ASSOCIATE, associate);
+		setValue(Param.ASSOCIATE, associate);
 	}
 	
 	
 	public String getReferenceType()
 	{
-		return lookupValue(Params.REFERENCE_TYPE);
+		return lookupValue(Param.REFERENCE_TYPE);
 	}
 	
 	public void setReferenceType(String associateRefType)
 	{
-		setValue(Params.REFERENCE_TYPE, associateRefType);
+		setValue(Param.REFERENCE_TYPE, associateRefType);
 	}
 	
 	
 	public String getAssociatedTo()
 	{
-		return lookupValue(Params.ASSOCIATED_TO);
+		return lookupValue(Param.ASSOCIATED_TO);
 	}
 	
 	public void setAssociatedTo(String associatedTo)
 	{
-		setValue(Params.ASSOCIATED_TO, associatedTo);
+		setValue(Param.ASSOCIATED_TO, associatedTo);
 	}
 	
 	
 	public String getPattern()
 	{
-		String ret = lookupValue(Params.PATTERN);
+		String ret = lookupValue(Param.PATTERN);
+
 		if (ret == null)
 		{
 			return getDynamicPattern();
@@ -172,24 +173,24 @@ public class ShiroAssociationRuleDAO
 	
 	public void setPattern(String pattern)
 	{
-		setValue(Params.PATTERN, pattern);
+		setValue(Param.PATTERN, pattern);
 	}
-	
-	
+
 	public CRUD getCRUD()
 	{
-		return lookupValue(Params.ASSOCIATION_CRUD);
+		return lookupValue(Param.ASSOCIATION_CRUD);
 	}
 	
 	public void setCRUD(CRUD crud)
 	{
-		setValue(Params.ASSOCIATION_CRUD, crud);
+		setValue(Param.ASSOCIATION_CRUD, crud);
 	}
 	
 	
 	public Date getExpiration()
 	{
-		Long val = lookupValue(Params.EXPIRATION);
+		Long val = lookupValue(Param.EXPIRATION);
+
 		if (val == null || val == -1)
 		{
 			return null;
@@ -202,26 +203,25 @@ public class ShiroAssociationRuleDAO
 	{
 		if (date == null)
 		{
-			setValue(Params.EXPIRATION, (long)-1);
+			setValue(Param.EXPIRATION, (long)-1);
 		}
 		else
 		{
-			setValue(Params.EXPIRATION, date.getTime());
+			setValue(Param.EXPIRATION, date.getTime());
 		}
 		
 	}
 	
 	public Status getAssociationStatus()
 	{
-		return lookupValue(Params.ASSOCIATION_STATUS);
+		return lookupValue(Param.ASSOCIATION_STATUS);
 	}
 	
 	public void setAssociationStatus(Status status)
 	{
-		setValue(Params.ASSOCIATION_STATUS, status);
+		setValue(Param.ASSOCIATION_STATUS, status);
 	}
-	
-	
+
 	private synchronized String getDynamicPattern()
 	{
 		if (dynamicPattern == null)

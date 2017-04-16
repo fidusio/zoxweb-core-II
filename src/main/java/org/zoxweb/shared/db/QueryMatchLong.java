@@ -6,21 +6,27 @@ import org.zoxweb.shared.util.GetName;
 
 @SuppressWarnings("serial")
 public class QueryMatchLong
-		extends QueryMatch<Long> {
+    extends QueryMatch<Long>
+{
 	
-	public QueryMatchLong() {
+	public QueryMatchLong()
+    {
 		
 	}
 	
-	public QueryMatchLong(RelationalOperator operator, long value, String... names) {
+	public QueryMatchLong(RelationalOperator operator, long value, String... names)
+    {
 		super(operator, value, names);
 	}
 	
-	public QueryMatchLong(RelationalOperator operator, long value, GetName... names) {
+	public QueryMatchLong(RelationalOperator operator, long value, GetName... names)
+    {
 		super(operator, value, names);
 	}
 	
-	public QueryMatchLong(RelationalOperator operator, long value, GetNVConfig... gnvs) {
+	public QueryMatchLong(RelationalOperator operator, long value, GetNVConfig... gnvs)
+    {
 		super(operator, value, gnvs);
 	}
+
 }

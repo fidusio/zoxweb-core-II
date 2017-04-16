@@ -16,13 +16,17 @@
 package org.zoxweb.shared.data.events;
 
 /**
- * @author mzebib
- *
+ * The add action listener interface.
+ * @param <V>
  */
 public interface AddActionListener<V>
 	extends ActionBaseListener<V>
 {
-	
+
+    /**
+     * Executes add action for specified input.
+     * @param v
+     */
 	public void actionAdd(V v);
 
 }

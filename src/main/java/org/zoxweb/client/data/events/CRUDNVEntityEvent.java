@@ -20,25 +20,27 @@ import org.zoxweb.shared.util.CRUDNVEntity;
 import com.google.gwt.event.shared.GwtEvent;
 
 public class CRUDNVEntityEvent
-		extends GwtEvent<CRUDNVEntityHandler> {
-
+	extends GwtEvent<CRUDNVEntityHandler>
+{
 	public final static Type<CRUDNVEntityHandler> TYPE = new Type<CRUDNVEntityHandler>();
 
 	private final CRUDNVEntity crudNVEntity;
 	
-	public CRUDNVEntityEvent(CRUDNVEntity crudNVEntity) {
+	public CRUDNVEntityEvent(CRUDNVEntity crudNVEntity)
+	{
 		this.crudNVEntity = crudNVEntity;
 	}
 
 	@Override
-	public Type<CRUDNVEntityHandler> getAssociatedType() {
+	public Type<CRUDNVEntityHandler> getAssociatedType()
+	{
 		return TYPE;
 	}
 
 	@Override
-	protected void dispatch(CRUDNVEntityHandler handler) {
+	protected void dispatch(CRUDNVEntityHandler handler)
+	{
 		handler.applyCRUD(crudNVEntity.getCRUD(), crudNVEntity.getNVEntity());
 	}
-	
 	
 }

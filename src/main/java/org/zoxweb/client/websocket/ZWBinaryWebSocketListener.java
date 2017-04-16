@@ -16,16 +16,18 @@
 
 package org.zoxweb.client.websocket;
 
-
 /**
  * This interface extends WebsocketListener and declares the message listener 
  * method with byte array as an input parameter.
- * @author mzebib
- *
  */
 public interface ZWBinaryWebSocketListener 
-	extends ZWWebSocketListener {
+	extends ZWWebSocketListener
+{
 
+    /**
+     *
+     * @param bytes
+     */
     void onMessage(byte[] bytes);
 
 }

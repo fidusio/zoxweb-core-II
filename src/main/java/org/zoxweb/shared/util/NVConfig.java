@@ -45,7 +45,7 @@ public interface NVConfig
 			Serializable
 {
 	/**
-	 * This method returns the class type of NVConfig.
+	 * Returns the class type of NVConfig.
 	 * @return class meta type
 	 */
 	public Class<?> getMetaType();
@@ -64,17 +64,15 @@ public interface NVConfig
 	public boolean isTypeReferenceID();
 	
 	public void setTypeReferenceID(boolean type);
-	
-	
-	
+
 	/**
-	 * This method sets the class type of NVConfig.
+	 * Sets the class type of NVConfig.
 	 * @param type is of generic class type
 	 */
 	public void setMetaType(Class<?> type);
 	
 	/**
-	 * This method returns the value filter.
+	 * Returns the value filter.
 	 * @return
 	 */
 	//public ValueFilter<?,?> getValueFilter();

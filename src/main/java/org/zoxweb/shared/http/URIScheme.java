@@ -37,10 +37,13 @@ implements GetNameValue<Integer>
 		if (uri != null)
 		{
 			uri = uri.toLowerCase().trim();
+
 			for (URIScheme us: URIScheme.values())
 			{
-				if(uri.startsWith(us.getName()))
-					return us;
+				if (uri.startsWith(us.getName()))
+                {
+                    return us;
+                }
 			}
 		}
 		

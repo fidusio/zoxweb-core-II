@@ -21,78 +21,66 @@ import java.io.Writer;
 import java.security.MessageDigest;
 
 /**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
+ *
  */
 public class MultiDigestWriter
 	extends FilterWriter
 	implements MultiDigestInterface
 {
-
 	
 	private MultiDigest md = new MultiDigest();
+
 	/**
-	 * [Optional - Please state the purpose of this constructor; especially if multiple constructors exist.].
-	 * 
+     * *
 	 * @param out
 	 * @param digests 
 	 */
-	public MultiDigestWriter(Writer out, MessageDigest ...digests)
+	public MultiDigestWriter(Writer out, MessageDigest... digests)
 	{
 		super(out);
-		// TODO Auto-generated constructor stub
 		md.setMessageDigests(digests);
 	}
 	
-	
-	
-	public void write(char cbuf[], int off, int len) throws IOException
+	public void write(char cbuf[], int off, int len)
+        throws IOException
 	{
 		out.write(cbuf, off, len);
 		md.update(cbuf, off, len);
 	}
 
-
-
 	/**
 	 * @see org.zoxweb.server.io.MultiDigestInterface#setMessageDigests(java.security.MessageDigest[])
 	 */
 	@Override
-	public void setMessageDigests(MessageDigest[] digests) {
-		// TODO Auto-generated method stub
+	public void setMessageDigests(MessageDigest[] digests)
+    {
 		md.setMessageDigests(digests);
 	}
-
-
 
 	/**
 	 * @see org.zoxweb.server.io.MultiDigestInterface#getMessageDigests()
 	 */
 	@Override
-	public MessageDigest[] getMessageDigests() {
-		// TODO Auto-generated method stub
+	public MessageDigest[] getMessageDigests()
+    {
 		return md.getMessageDigests();
 	}
-
-
 
 	/**
 	 * @see org.zoxweb.server.io.MultiDigestInterface#on(boolean)
 	 */
 	@Override
-	public void on(boolean on) {
-		// TODO Auto-generated method stub
+	public void on(boolean on)
+    {
 		md.on(on);
 	}
-
-
 
 	/**
 	 * @see org.zoxweb.server.io.MultiDigestInterface#totalBytes()
 	 */
 	@Override
-	public long totalBytes() {
-		// TODO Auto-generated method stub
+	public long totalBytes()
+    {
 		return md.totalBytes();
 	}
 

@@ -31,9 +31,6 @@ extends ShiroAssociationDAO
 	{
 		super( ShiroAssociationType.ROLE_TO_ROLEGROUP, roleGroup, role);
 	}
-	
-	
-	
 
 	public ShiroRoleDAO getRole()
 	{
@@ -54,14 +51,14 @@ extends ShiroAssociationDAO
 	}
 
 	@Override
-	public String getAccountID() {
-		// TODO Auto-generated method stub
+	public String getAccountID()
+    {
 		return null;
 	}
 
 	@Override
 	public void setAccountID(String accountID) {
-		// TODO Auto-generated method stub
-		
+
 	}
+
 }

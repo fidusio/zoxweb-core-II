@@ -20,10 +20,10 @@ import org.zoxweb.shared.util.SharedUtil;
  */
 @SuppressWarnings("serial")
 public class APIAccessTokenDAO
-		extends TimeStampDAO {
+    extends TimeStampDAO {
 
 	public enum Token
-			implements GetNVConfig {
+        implements GetNVConfig {
 //		ACCESS_TOKEN(NVConfigManager.createNVConfig("access_token", "Access token", "AccessToken", false, true, false, String.class, FilterType.ENCRYPT)),
 		ACCESS_TOKEN(OAuthParam.ACCESS_TOKEN.getNVConfig()),
 //		EXPIRES_IN(NVConfigManager.createNVConfig("expires_in", "Expiration time value", "ExpiresIn", false, true, Integer.class)),

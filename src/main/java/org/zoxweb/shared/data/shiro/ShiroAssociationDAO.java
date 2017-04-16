@@ -27,15 +27,10 @@ import org.zoxweb.shared.util.SharedUtil;
 
 @SuppressWarnings("serial")
 public abstract class ShiroAssociationDAO
-extends SetNameDAO
-implements ShiroDAO
+    extends SetNameDAO
+    implements ShiroDAO
 {
-	
-	
-	
 
-	
-	
 	private static final NVConfig NVC_ASSOCIATON_TYPE = NVConfigManager.createNVConfig("association_type", "The Association Type","AssociationType", true, false, ShiroAssociationType.class);
 	private static final NVConfig NVC_ASSOCIATION = NVConfigManager.createNVConfigEntity("association", "The Association","Association", true, false, ShiroDomainDAO.class, ArrayType.NOT_ARRAY);
 	private static final NVConfig NVC_ASSOCIATED_TO = NVConfigManager.createNVConfigEntity("associated_to", "The Associated to","AssociatedTo", true, false, ShiroDomainDAO.class, ArrayType.NOT_ARRAY);
@@ -51,38 +46,49 @@ implements ShiroDAO
 		setAssociation(association);
 	}
 
-	public ShiroAssociationType getAssociationType() {
+	public ShiroAssociationType getAssociationType()
+    {
 		return lookupValue(NVC_ASSOCIATON_TYPE);
 	}
-	public void setAssociationType(ShiroAssociationType associationType) {
+
+	public void setAssociationType(ShiroAssociationType associationType)
+    {
 		setValue(NVC_ASSOCIATON_TYPE, associationType);
 		//this.associationType = associationType;
 	}
-	public ShiroDomainDAO getAssociation() {
+
+	public ShiroDomainDAO getAssociation()
+    {
 		return lookupValue(NVC_ASSOCIATION);
 		//return association;
 	}
+
 	public void setAssociation(ShiroDomainDAO association) {
 		setValue( NVC_ASSOCIATION, association);
 		//this.association = association;
 	}
-	public ShiroDomainDAO getAssociatedTo() {
+
+	public ShiroDomainDAO getAssociatedTo()
+    {
 		return lookupValue(NVC_ASSOCIATED_TO);
 		//return associatedTo;
 	}
-	public void setAssociatedTo(ShiroDomainDAO associatedTo) {
+
+	public void setAssociatedTo(ShiroDomainDAO associatedTo)
+    {
 		setValue( NVC_ASSOCIATED_TO, associatedTo);
 		//this.associatedTo = associatedTo;
 	}
-	
+
+    @Override
 	public String toString()
 	{
 		return toCanonicalID();
 	}
 	
 	@Override
-	public String toCanonicalID() {
-		// TODO Auto-generated method stub
+	public String toCanonicalID()
+    {
 		return SharedUtil.toCanonicalID(CAN_ID_SEP, getAssociatedTo().getDomainID(), getAssociatedTo().getName(), getAssociation().getName());
 	}
 	

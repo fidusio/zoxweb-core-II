@@ -15,8 +15,6 @@
  */
 package org.zoxweb.shared.util;
 
-
-
 import org.zoxweb.shared.filters.ValueFilter;
 import org.zoxweb.shared.util.NVConfigEntity.ArrayType;
 
@@ -29,8 +27,7 @@ import org.zoxweb.shared.util.NVConfigEntity.ArrayType;
 public class NVConfigManager 
 {
 	/**
-	 * The default constructor is declared private to prevent the 
-	 * instantiation of this class.
+	 * The constructor is declared private to prevent instantiation of this class.
 	 */
 	private NVConfigManager()
 	{
@@ -38,7 +35,7 @@ public class NVConfigManager
 	}
 	
 	/**
-	 * This method creates an NVConfig object based on the NVConfig parameters:
+	 * Creates an NVConfig object based on the NVConfig parameters:
 	 * @param name
 	 * @param description
 	 * @param displayName
@@ -53,7 +50,7 @@ public class NVConfigManager
 	}
 	
 	/**
-	 * This method creates an NVConfig object based on the following parameters:
+	 * Creates an NVConfig object based on the following parameters:
 	 * @param name
 	 * @param description
 	 * @param displayName
@@ -69,7 +66,7 @@ public class NVConfigManager
 	}
 	
 	/**
-	 * This method creates an NVConfig object based on the following parameters:
+	 * Creates an NVConfig object based on the following parameters:
 	 * @param name
 	 * @param description
 	 * @param displayName
@@ -93,9 +90,21 @@ public class NVConfigManager
 	{
 		return new NVConfigPortable(name, description, displayName, mandatory, editable, isUnique, isHidden, false, type, vf);
 	}
-	
-	
-	
+
+    /**
+     *
+     * @param name
+     * @param description
+     * @param displayName
+     * @param mandatory
+     * @param editable
+     * @param isUnique
+     * @param isHidden
+     * @param isRefID
+     * @param type
+     * @param vf
+     * @return
+     */
 	public static NVConfig createNVConfig(String name,
 										  String  description,
 										  String displayName,
@@ -109,18 +118,18 @@ public class NVConfigManager
 	{
 		return new NVConfigPortable(name, description, displayName, mandatory, editable, isUnique, isHidden, isRefID, type, vf);
 	}
-	
-	/**
-	 * This method an NVConfig object based on the following parameters:
-	 * @param name
-	 * @param description
-	 * @param displayName
-	 * @param mandatory
-	 * @param edit
-	 * @param type
-	 * @param at
-	 * @return NVConfig
-	 */
+
+    /**
+     * Creates an NVConfig object based on the following parameters.
+     * @param name
+     * @param description
+     * @param displayName
+     * @param mandatory
+     * @param edit
+     * @param type
+     * @param at
+     * @return NVConfig
+     */
 	public static NVConfig createNVConfigEntity(String name, 
 											    String description,
 											    String displayName,
@@ -131,32 +140,33 @@ public class NVConfigManager
 	{
 		return new NVConfigEntityLocal(name, description, displayName, mandatory, edit, type, at);
 	}
-	
-	/**
-	 * This method creates an NVConfigEntity object based on the following parameters:
-	 * @param name
-	 * @param description
-	 * @param displayName
-	 * @param mandatory
-	 * @param edit
-	 * @param nvce
-	 * @return NVConfig
-	 */
+
+    /**
+     * Creates an NVConfigEntity object based on the following parameters.
+     * @param name
+     * @param description
+     * @param displayName
+     * @param mandatory
+     * @param edit
+     * @param nvce
+     * @return
+     */
 	public static NVConfig createNVConfigEntity(String name, String  description, String displayName, boolean mandatory, boolean edit, NVConfigEntity nvce)
 	{
 		return new NVConfigEntityLocal(name, description, displayName, mandatory, edit, false, false, nvce, ArrayType.NOT_ARRAY);
 	}
-	
-	/**
-	 * This method creates an NVConfigEntity object based on the following parameters:
-	 * @param name
-	 * @param description
-	 * @param displayName
-	 * @param mandatory
-	 * @param edit
-	 * @param nvce
-	 * @return NVConfig
-	 */
+
+    /**
+     * Creates an NVConfigEntity object based on the following parameters.
+     * @param name
+     * @param description
+     * @param displayName
+     * @param mandatory
+     * @param edit
+     * @param nvce
+     * @param at
+     * @return
+     */
 	public static NVConfig createNVConfigEntity(String name, 
 												String description,
 												String displayName, 
@@ -168,8 +178,20 @@ public class NVConfigManager
 		return new NVConfigEntityLocal(name, description, displayName, mandatory, edit, false, false, nvce, at);
 	}
 
-	
-	
+
+    /**
+     *
+     * @param name
+     * @param description
+     * @param displayName
+     * @param mandatory
+     * @param edit
+     * @param unique
+     * @param hidden
+     * @param nvce
+     * @param at
+     * @return
+     */
 	public static NVConfig createNVConfigEntity(String name,
 												String description,
 												String displayName, 

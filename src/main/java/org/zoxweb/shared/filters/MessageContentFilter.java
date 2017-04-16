@@ -10,7 +10,8 @@ import org.zoxweb.shared.api.APINotificationMessage;
  */
 @SuppressWarnings("serial")
 public class MessageContentFilter
-		implements ValueFilter<APINotificationMessage, String> {
+    implements ValueFilter<APINotificationMessage, String>
+{
 
 	/**
 	 * Initializes delimiter constant.
@@ -26,7 +27,8 @@ public class MessageContentFilter
 	 * The default constructor is declared private to prevent
 	 * outside instantiation of this class.
 	 */
-	private MessageContentFilter() {
+	private MessageContentFilter()
+    {
 		
 	}
 	
@@ -34,7 +36,8 @@ public class MessageContentFilter
 	 * Returns a string representation of the class.
 	 */
 	@Override
-	public String toCanonicalID() {
+	public String toCanonicalID()
+    {
 		return null;
 	}
 
@@ -45,16 +48,20 @@ public class MessageContentFilter
 	 */
 	@Override
 	public String validate(APINotificationMessage in)
-			throws NullPointerException, IllegalArgumentException {
+        throws NullPointerException, IllegalArgumentException
+    {
 
 		String bodyContent = in.getBodyTemplate();
 
-		if (!SharedStringUtil.isEmpty(bodyContent)) {
-			for (NVPair nvp : in.getBodyTags().values()) {
+		if (!SharedStringUtil.isEmpty(bodyContent))
+		{
+			for (NVPair nvp : in.getBodyTags().values())
+			{
 				String preTag = in.getPreTag() != null ? in.getPreTag() : DEFAULT_DELIMITER;
 				String postTag = in.getPostTag() != null ? in.getPostTag() : DEFAULT_DELIMITER;
 
-				if (nvp.getValue() != null) {
+				if (nvp.getValue() != null)
+				{
 					bodyContent = bodyContent.replace(preTag + nvp.getName() + postTag, nvp.getValue());
 				}
 			}
@@ -69,7 +76,8 @@ public class MessageContentFilter
 	 * @return true if valid
 	 */
 	@Override
-	public boolean isValid(APINotificationMessage in) {
+	public boolean isValid(APINotificationMessage in)
+    {
 		return in != null;
 	}
 

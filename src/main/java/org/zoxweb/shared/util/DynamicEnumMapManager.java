@@ -22,9 +22,9 @@ import java.util.List;
 /**
  * The class is used to manage dynamic enum maps.
  * @author mzebib
- *
  */
-public class DynamicEnumMapManager {
+public class DynamicEnumMapManager
+{
 
 	/**
 	 * This variable declares that only one instance of this class can be created.
@@ -40,7 +40,8 @@ public class DynamicEnumMapManager {
 	 * The default constructor is declared private to prevent
 	 * outside instantiation of this class.
 	 */
-	private DynamicEnumMapManager() {
+	private DynamicEnumMapManager()
+    {
 
 	}
 
@@ -48,7 +49,8 @@ public class DynamicEnumMapManager {
 	 * This method returns all dynamic enum maps.
 	 * @return the map
 	 */
-	public HashMap<String, DynamicEnumMap> getAllEnumMaps() {
+	public HashMap<String, DynamicEnumMap> getAllEnumMaps()
+    {
 		return allEnumMaps;
 	}
 
@@ -57,7 +59,8 @@ public class DynamicEnumMapManager {
 	 * @param allEnumMaps
 	 * @deprecated caller must never invoke this method
 	 */
-	public void setAllEnumMaps(HashMap<String, DynamicEnumMap> allEnumMaps) {
+	public void setAllEnumMaps(HashMap<String, DynamicEnumMap> allEnumMaps)
+    {
 		this.allEnumMaps = allEnumMaps;
 	}
 
@@ -65,30 +68,35 @@ public class DynamicEnumMapManager {
 	 * Adds a dynamic enum map.
 	 * @param enumMap enum map object
 	 */
-	public synchronized DynamicEnumMap addDynamicEnumMap(DynamicEnumMap enumMap) {
+	public synchronized DynamicEnumMap addDynamicEnumMap(DynamicEnumMap enumMap)
+    {
 		SharedUtil.checkIfNulls("Can't add null values", enumMap);
 		
 		DynamicEnumMap currentDEM = allEnumMaps.get(enumMap.getName());
 		
-		if (currentDEM != null) {
+		if (currentDEM != null)
+		{
 			currentDEM.setValue(enumMap.getValue());
 			currentDEM.setReferenceID(enumMap.getReferenceID());
 			return currentDEM;
-		} else {
+		}
+		else
+		    {
 			allEnumMaps.put(enumMap.getName(), enumMap);
 			return enumMap;
 		}
-
 	}
 	
 	/**
 	 * Deletes a dynamic enum map based on the given name.
 	 * @param name
 	 */
-	public synchronized DynamicEnumMap deleteDynamicEnumMap(String name) {
+	public synchronized DynamicEnumMap deleteDynamicEnumMap(String name)
+    {
 		DynamicEnumMap toDelete = lookup(name);
 		
-		if (toDelete != null) {
+		if (toDelete != null)
+		{
 			return allEnumMaps.remove(toDelete.getName());
 		}
 		
@@ -100,10 +108,12 @@ public class DynamicEnumMapManager {
 	 * @param enumMapName
 	 * @return tehe map
 	 */
-	public DynamicEnumMap lookup(String enumMapName) {
+	public DynamicEnumMap lookup(String enumMapName)
+    {
 		DynamicEnumMap ret = allEnumMaps.get(enumMapName);
 		
-		if (ret == null && enumMapName != null) {
+		if (ret == null && enumMapName != null)
+		{
 			ret = allEnumMaps.get(SharedUtil.toCanonicalID(':', DynamicEnumMap.NAME_PREFIX, enumMapName));
 		}
 		
@@ -114,7 +124,8 @@ public class DynamicEnumMapManager {
 	 * Returns the number of entries.
 	 * @return size
 	 */
-	public int size() {
+	public int size()
+    {
 		return allEnumMaps.size();
 	}
 	
@@ -123,17 +134,24 @@ public class DynamicEnumMapManager {
 	 * Clears all entries.
 	 * @param keepStatic
 	 */
-	public synchronized void clear(boolean keepStatic) {
-		if (!keepStatic) {
+	public synchronized void clear(boolean keepStatic)
+    {
+		if (!keepStatic)
+		{
 			allEnumMaps.clear();
-		} else {
+		}
+		else
+        {
 			String allEnumTypeNames[] = allEnumMaps.keySet().toArray(new String[0]);
 			
-			for (String enumTypeName : allEnumTypeNames) {
+			for (String enumTypeName : allEnumTypeNames)
+			{
 				DynamicEnumMap dem = lookup(enumTypeName);
 				
-				if (dem != null) {
-					if (!dem.isStatic()) {
+				if (dem != null)
+				{
+					if (!dem.isStatic())
+					{
 						deleteDynamicEnumMap(enumTypeName );
 					}
 				}
@@ -147,14 +165,17 @@ public class DynamicEnumMapManager {
 	 * @param names
 	 * @return DynamicEnumMap
 	 */
-	public synchronized DynamicEnumMap addDynamicEnumMap(String enumName, String... names) {
+	public synchronized DynamicEnumMap addDynamicEnumMap(String enumName, String... names)
+    {
 		DynamicEnumMap ret = lookup(enumName);
 		
-		if (ret == null) {
+		if (ret == null)
+		{
 			ret = new DynamicEnumMap();
 			ret.setName(enumName);
 			
-			for (String name : names) {
+			for (String name : names)
+			{
 				ret.addEnumValue(new NVPair(name, (String)null));
 			}
 			
@@ -170,14 +191,17 @@ public class DynamicEnumMapManager {
 	 * @param values
 	 * @return DynamicEnumMap
 	 */
-	public synchronized DynamicEnumMap addDynamicEnumMap(String name, Enum<?>... values) {
+	public synchronized DynamicEnumMap addDynamicEnumMap(String name, Enum<?>... values)
+    {
 		DynamicEnumMap ret = lookup(name);
 		
-		if (ret == null) {
+		if (ret == null)
+		{
 			ret = new DynamicEnumMap();
 			ret.setName(name);
 			
-			for (Enum<?> value : values) {
+			for (Enum<?> value : values)
+			{
 				ret.addEnumValue(value);
 			}
 			
@@ -191,7 +215,8 @@ public class DynamicEnumMapManager {
 	 * Returns an array of all dynamic enum maps.
 	 * @return all DynamicEnumMap
 	 */
-	public DynamicEnumMap[] getAll() {
+	public DynamicEnumMap[] getAll()
+    {
 		return allEnumMaps.values().toArray(new DynamicEnumMap[0]);
 	}
 	
@@ -202,7 +227,8 @@ public class DynamicEnumMapManager {
 	 * @throws IllegalArgumentException
 	 */
 	public static void validateDynamicEnumMap(DynamicEnumMap dem)
-		throws NullPointerException, IllegalArgumentException {
+		throws NullPointerException, IllegalArgumentException
+    {
 		SharedUtil.checkIfNulls("Dynamic enum map is null.", dem);
 		
 		List<NVPair> values = dem.getValue();
@@ -211,24 +237,27 @@ public class DynamicEnumMapManager {
 		
 		HashSet<String> names = new HashSet<String>();
 		
-		for (int i = 0; i < values.size(); i++) {
+		for (int i = 0; i < values.size(); i++)
+		{
 			NVPair nvp = values.get(i);
 			
-			if (nvp == null) {
+			if (nvp == null)
+			{
 				throw new NullPointerException("Dynamic enum value at index " + i + " is null.");
 			}
 			
-			if (SharedStringUtil.isEmpty(nvp.getName())) {
+			if (SharedStringUtil.isEmpty(nvp.getName()))
+			{
 				throw new IllegalArgumentException("Dynamic enum name at index " + i + " is empty or null.");
 			}
 			
 			names.add(nvp.getName());
 			
 			//	This check must be made after name is added because sequence matters in this case.
-			if (names.size() != i + 1) {
+			if (names.size() != i + 1)
+			{
 				throw new IllegalArgumentException("Duplicate enum names exist.");
 			}
 		}
 	}
-	
 }

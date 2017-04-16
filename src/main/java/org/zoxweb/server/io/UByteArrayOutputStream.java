@@ -30,17 +30,14 @@ import org.zoxweb.shared.util.SharedUtil;
 
 /**
  * The UByteArrayOutputStream class.
- * 
  */
 public class UByteArrayOutputStream 
 	extends ByteArrayOutputStream 
 	implements Externalizable, InternalBufferAccess
 {
-	
 
 	/**
 	 * Create a byte array output stream.
-	 * 
 	 */
 	public UByteArrayOutputStream() 
 	{
@@ -55,9 +52,7 @@ public class UByteArrayOutputStream
 	{
 		super(size);
 	}
-	
-	
-	
+
 	
 	public UByteArrayOutputStream(String str)
 	{
@@ -68,21 +63,18 @@ public class UByteArrayOutputStream
 	 * 
 	 * @param buffer
 	 */
-	public UByteArrayOutputStream(byte buffer[])
+	public UByteArrayOutputStream(byte[] buffer)
 	{
 		this(buffer, 0, buffer.length);
 	}
-	
-	
 
-	
 	/**
 	 * 
 	 * @param buffer
 	 * @param offset
 	 * @param len
 	 */
-	public UByteArrayOutputStream(byte buffer[] , int offset, int len)
+	public UByteArrayOutputStream(byte[] buffer , int offset, int len)
 	{
 		super(buffer.length);
 		write(buffer, offset, len);
@@ -96,7 +88,7 @@ public class UByteArrayOutputStream
 	public synchronized void writeExternal(ObjectOutput out) throws IOException 
 	{
 		out.writeInt(count);
-		byte newBuffer[] = new byte[ count];
+		byte[] newBuffer = new byte[ count];
 		System.arraycopy( buf, 0, newBuffer, 0, count);
 		((ObjectOutputStream)out).writeUnshared( newBuffer);
 		
@@ -117,7 +109,7 @@ public class UByteArrayOutputStream
 	 */
 	public synchronized ByteArrayInputStream toByteArrayInputStream()
 	{
-		byte tempBuf[] = buf;
+		byte[] tempBuf = buf;
 		int tempCount = size();
 		buf = new byte[32];
 		reset();
@@ -149,7 +141,7 @@ public class UByteArrayOutputStream
 	 * @param match
 	 * @return index of the match, -1 no match found
 	 */
-	public int indexOf(byte match[])
+	public int indexOf(byte[] match)
 	{
 		return SharedUtil.indexOf(getInternalBuffer(), 0, size(), match, 0, match.length);
 	}
@@ -162,7 +154,7 @@ public class UByteArrayOutputStream
 	 * @param length
 	 * @return index
 	 */
-	public int indexOf(int startAt, byte match[], int offset, int length)
+	public int indexOf(int startAt, byte[] match, int offset, int length)
 	{
 		return SharedUtil.indexOf(getInternalBuffer(), startAt, size(), match, offset, length);
 	}
@@ -185,22 +177,21 @@ public class UByteArrayOutputStream
 	{
 		return buf[index];
 	}
-	
-	
+
 	public static UByteArrayOutputStream diff(UByteArrayOutputStream baos1, UByteArrayOutputStream baos2)
 	{
 		UByteArrayOutputStream ret = new UByteArrayOutputStream();
 		// check condition
 		{
-			byte buff1[] = baos1.getInternalBuffer();
-			byte buff2[] = baos2.getInternalBuffer();
+			byte[] buff1 = baos1.getInternalBuffer();
+			byte[] buff2 = baos2.getInternalBuffer();
 			for (int i = 0; i < baos2.size(); i++)
 			{
 				byte diff = buff2[i];
 				
 				if (i < baos1.size())
 				{
-					diff =  (byte) ((byte)diff-(byte)buff1[i]);
+					diff = (byte) ((byte)diff-(byte)buff1[i]);
 				}
 				
 				ret.write((byte) diff);
@@ -224,22 +215,20 @@ public class UByteArrayOutputStream
 			return true;
 		}
 		
-		if (baos1 != null && baos2!= null)
+		if (baos1 != null && baos2 != null && baos1.size() == baos2.size())
 		{
-			if (baos1.size() == baos2.size())
-			{
-				int len = baos1.size();
-				
-				for (int i =0; i < len; i++)
-				{
-					if (baos1.buf[i] !=  baos2.buf[i])
-					{
-						return false;
-					}
-				}
-				
-				return true;
-			}
+            int len = baos1.size();
+
+            for (int i =0; i < len; i++)
+            {
+                if (baos1.buf[i] !=  baos2.buf[i])
+                {
+                    return false;
+                }
+            }
+
+            return true;
+
 		}
 		
 		return false;
@@ -247,27 +236,21 @@ public class UByteArrayOutputStream
 
 	/**
 	 * Write a string to the data buffer
-	 * 
 	 * @param str
 	 */
 	public synchronized void write(String str)
 	{
 		write(SharedStringUtil.getBytes(str), 0, str.length());
 	}
-	
-	/**
-	 * 
-	 * @param buf
-	 */
-	public synchronized void write(byte buf[])
+
+	@Override
+	public synchronized void write(byte[] buf)
 	{
 		write(buf, 0, buf.length);
 	}
 
-
 	/**
 	 * Insert a string at the specified location
-	 * 
 	 * @param index
 	 * @param str
 	 * @throws IndexOutOfBoundsException 
@@ -303,49 +286,48 @@ public class UByteArrayOutputStream
 		buf[index] = b;
 		
 	}
-	
-	/**
-	 * 
-	 */
+
 	public UByteArrayOutputStream clone()
 	{
 		return new UByteArrayOutputStream(getInternalBuffer(), 0, size()); 
 	}
-	
 		
 	/**
 	 * Insert a byte array at the specified location
-	 * 
 	 * @param index
 	 * @param array
 	 * @throws IndexOutOfBoundsException 
 	 */
-	public synchronized void insertAt(int index, byte array[])
+	public synchronized void insertAt(int index, byte[] array)
 			throws IndexOutOfBoundsException 
 	{
 		if (index < 0)
+		{
 			throw new IndexOutOfBoundsException("Invalid index " + index);
+		}
 		
 		if (index > size()) 
 		{
-			throw new IndexOutOfBoundsException("Index " + index
-					+ "bigger than size " + size());
+			throw new IndexOutOfBoundsException("Index " + index + "bigger than size " + size());
 		}
 
 		if (array.length == 0)
+		{
 			return;
+		}
+
 		// set the new size
 		int newCount = count + array.length;
 		
 		if (newCount > buf.length) 
 		{
-			byte newbuf[] = new byte[Math.max(buf.length << 1, newCount)];
+			byte[] newbuf = new byte[Math.max(buf.length << 1, newCount)];
 			System.arraycopy(buf, 0, newbuf, 0, count);
 			buf = newbuf;
 		}
 
 		int remainderLength = count - index;
-		byte remainderBuf[] = null;
+		byte[] remainderBuf = null;
 		// copy the remainder
 
 		if (remainderLength > 0) 
@@ -359,16 +341,14 @@ public class UByteArrayOutputStream
 
 		// copy remainder;
 		if (remainderLength > 0)
-			System.arraycopy(remainderBuf, 0, buf, index + array.length,
-					remainderBuf.length);
+		{
+			System.arraycopy(remainderBuf, 0, buf, index + array.length, remainderBuf.length);
+		}
 
 		count = newCount;
 	}
 
-	/**
-	 * 
-	 * @param obj
-	 */
+	@Override
 	public synchronized boolean equals(Object obj) 
 	{
 		if (obj != null && obj instanceof UByteArrayOutputStream)
@@ -408,35 +388,33 @@ public class UByteArrayOutputStream
 	public synchronized void removeAt(int index, int length)
 			throws IndexOutOfBoundsException 
 	{
-		if (index < 0 || length < 0 || index >= count
-				|| (index + length) > count)
-			throw new IndexOutOfBoundsException("Size " + count + " index "
-					+ index + " length " + length);
+		if (index < 0 || length < 0 || index >= count || (index + length) > count)
+		{
+			throw new IndexOutOfBoundsException("Size " + count + " index " + index + " length " + length);
+		}
 
 		if (length == 0)
+		{
 			return;
+		}
 
 		int newCount = count - length;
 
-		System.arraycopy(buf, index + length, buf, index, count
-				- (index + length));
+		System.arraycopy(buf, index + length, buf, index, count - (index + length));
 		
 		count = newCount;
 	}
 	
 	/**
-	 * Shift the data left from to
-	 * @param from index
-	 * @param to index
+	 * Shift the data left.
+	 * @param from start index
+	 * @param to end index
 	 */
 	public synchronized void shiftLeft(int from, int to)
 	{
-
-		if (from < 0 || to < 0 || from > count || to > count
-				|| to > from)
+		if (from < 0 || to < 0 || from > count || to > count || to > from)
 		{
-			throw new IndexOutOfBoundsException("Size " + count + " from "
-					+ from + " to " + to);
+			throw new IndexOutOfBoundsException("Size " + count + " from " + from + " to " + to);
 		}
 		
 		if (from == count && to == 0)
@@ -445,17 +423,18 @@ public class UByteArrayOutputStream
 			return;
 		}
 		
-		
 		if (from == to)
+		{
 			return;
+		}
 		
 		System.arraycopy(buf, from, buf, to, count - from);
 		
 		count = count - (from-to);
-		
 	}
 	
 	/**
+	 * Returns the internal buffer.
 	 * @return internal buffer 
 	 */
 	public byte[] getInternalBuffer()

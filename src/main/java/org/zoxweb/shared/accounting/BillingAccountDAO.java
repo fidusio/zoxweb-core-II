@@ -38,9 +38,8 @@ public class BillingAccountDAO
 {
 	
 	public enum Params
-		implements GetNVConfig
+        implements GetNVConfig
 	{
-		
 		CURRENT_BALANCE(NVConfigManager.createNVConfigEntity("current_balance", "Current balance", "CurrentBalance", true, true, MoneyValueDAO.class, ArrayType.NOT_ARRAY)),
 		PAYMENT_INFO(NVConfigManager.createNVConfigEntity("payment_info", "Payment info", "PaymentInfo", false, true, PaymentInfoDAO.class, ArrayType.NOT_ARRAY)),
 		
@@ -93,7 +92,7 @@ public class BillingAccountDAO
 	}
 		
 	/**
-	 * Gets the current balance.
+	 * Returns the current balance.
 	 * @return MoneyValueDAO
 	 */
 	public MoneyValueDAO getCurrentBalance() 
@@ -111,7 +110,7 @@ public class BillingAccountDAO
 	}
 	
 	/**
-	 * Gets the payment information.
+	 * Returns the payment information.
 	 * @return PaymentInfoDAO
 	 */
 	public PaymentInfoDAO getPaymentInfo()

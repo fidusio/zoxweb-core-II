@@ -45,96 +45,128 @@ import java.util.*;
 // <A HREF="/resources/classes/Acme.tar.gz">Fetch the entire Acme package.</A>
 // <P>
 // @see Acme.Utils#match
-
 @SuppressWarnings("serial")
 public class WildcardDictionary 
-extends Dictionary<Object, Object> 
-implements java.io.Serializable 
+	extends Dictionary<Object, Object>
+	implements java.io.Serializable
 {
 
-	
-
 	private Vector<Object> keys;
-
 	private Vector<Object> elements;
 
-	// / Constructor.
-	public WildcardDictionary() {
+	public WildcardDictionary()
+	{
 		keys = new Vector<Object>();
 		elements = new Vector<Object>();
 	}
 
-	// / Returns the number of elements contained within the dictionary.
+	/**
+	 * Returns the number of elements contained within the dictionary.
+	 * @return
+	 */
 	public int size() {
 		return elements.size();
 	}
 
-	// / Returns true if the dictionary contains no elements.
-	public boolean isEmpty() {
+	/**
+	 * Returns true if the dictionary contains no elements.
+	 * @return
+	 */
+	public boolean isEmpty()
+	{
 		return size() == 0;
 	}
 
-	// / Returns an enumerereration of the dictionary's keys.
-	public Enumeration<Object> keys() {
+	/**
+	 * Returns an enumeration of the dictionary's keys
+	 * @return
+	 */
+	public Enumeration<Object> keys()
+	{
 		return keys.elements();
 	}
 
-	// / Returns an enumerereration of the elements. Use the Enumeration methods
-	// on the returned object to fetch the elements sequentially.
-	public Enumeration<Object> elements() {
+	/**
+	 * Returns an enumeration of the elements. Use the Enumeration methods
+	 * on the returned object to fetch the elements sequentially.
+	 * @return
+	 */
+	public Enumeration<Object> elements()
+	{
 		return elements.elements();
 	}
 
-	// / Gets the object associated with the specified key in the dictionary.
-	// The key is assumed to be a String, which is matched against
-	// the wildcard-pattern keys in the dictionary.
-	// @param key the string to match
-	// @returns the element for the key, or null if there's no match
-	// @see Acme.Utils#match
-	public synchronized Object get(Object key) {
+	/**
+	 * Gets the object associated with the specified key in the dictionary.
+	 * The key is assumed to be a String, which is matched against
+	 * the wildcard-pattern keys in the dictionary.
+	 * @param key the string to match
+	 * @return the element for the key, or null if there's no match
+	 */
+	public synchronized Object get(Object key)
+	{
 		String sKey = (String) key;
-		for (int i = 0; i < keys.size(); ++i) {
+
+		for (int i = 0; i < keys.size(); ++i)
+		{
 			String thisKey = (String) keys.elementAt(i);
+
 			if (match(thisKey, sKey))
+			{
 				return elements.elementAt(i);
+			}
 		}
+
 		return null;
 	}
 
-	// / Puts the specified element into the Dictionary, using the specified
-	// key. The element may be retrieved by doing a get() with the same
-	// key. The key and the element cannot be null.
-	// @param key the specified wildcard-pattern key
-	// @param value the specified element
-	// @return the old value of the key, or null if it did not have one.
-	// @exception NullPointerException If the value of the specified
-	// element is null.
-	public synchronized Object put(Object key, Object element) {
+	/**
+	 * Puts the specified element into the Dictionary, using the specified key.
+	 * The element may be retrieved by doing a get() with the same key.
+	 * The key and the element cannot be null.
+	 * @param key the specified wildcard-pattern key
+	 * @param element the specified element
+	 * @return
+	 */
+	public synchronized Object put(Object key, Object element)
+	{
 		int i = keys.indexOf(key);
-		if (i != -1) {
+
+		if (i != -1)
+		{
 			Object oldElement = elements.elementAt(i);
 			elements.setElementAt(element, i);
 			return oldElement;
-		} else {
+		}
+		else
+			{
 			keys.addElement(key);
 			elements.addElement(element);
 			return null;
 		}
 	}
 
-	// / Removes the element corresponding to the key. Does nothing if the
-	// key is not present.
-	// @param key the key that needs to be removed
-	// @return the value of key, or null if the key was not found.
-	public synchronized Object remove(Object key) {
+	/**
+	 * Removes the element corresponding to the key. Does nothing if the
+	 * key is not present.
+	 * @param key the key that needs to be removed
+	 * @return the value of key, or null if the key was not found
+	 */
+	public synchronized Object remove(Object key)
+	{
 		int i = keys.indexOf(key);
-		if (i != -1) {
+
+		if (i != -1)
+		{
 			Object oldElement = elements.elementAt(i);
 			keys.removeElementAt(i);
 			elements.removeElementAt(i);
 			return oldElement;
-		} else
+		}
+		else
+		{
 			return null;
+		}
 	}
 
 	/**
@@ -146,12 +178,22 @@ implements java.io.Serializable
 			for (int s = 0;; ++p, ++s) {
 				boolean sEnd = (s >= string.length());
 				boolean pEnd = (p >= pattern.length() || pattern.charAt(p) == '|');
+
 				if (sEnd && pEnd)
+				{
 					return true;
+				}
+
 				if (sEnd || pEnd)
+				{
 					break;
+				}
+
 				if (pattern.charAt(p) == '?')
+				{
 					continue;
+				}
+
 				if (pattern.charAt(p) == '*') {
 					int i;
 					++p;
@@ -164,19 +206,27 @@ implements java.io.Serializable
 							return true;
 					break;
 				}
+
 				if (pattern.charAt(p) != string.charAt(s))
+				{
 					break;
+				}
 			}
+
 			p = pattern.indexOf('|', p);
+
 			if (p == -1)
+			{
 				return false;
+			}
 		}
 	}
 
 	/**
-	 * Deletes all elements and keys.
+	 * Removes all elements and keys.
 	 */
-	public void removeAllElements() {
+	public void removeAllElements()
+	{
 		elements.clear();
 		keys.clear();
 	}

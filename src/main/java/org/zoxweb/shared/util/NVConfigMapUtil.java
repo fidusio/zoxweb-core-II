@@ -18,13 +18,11 @@ package org.zoxweb.shared.util;
 /**
  * This utility class includes methods used to manage NVConfigMap.
  * @author mzebib
- * 
  */
 public class NVConfigMapUtil 
 {
 	/**
-	 * This constructor is declared private to prevent outside
-	 * instantiation of this class.
+	 * This constructor is declared private to prevent instantiation of this class.
 	 */
 	private NVConfigMapUtil()
 	{
@@ -32,7 +30,7 @@ public class NVConfigMapUtil
 	}
 	
 	/**
-	 * This method returns the display based on NVConfig and NVConfigNameMap inputs.
+	 * Returns the display based on NVConfig and NVConfigNameMap inputs.
 	 * @param nvc
 	 * @param nvcnm
 	 * @return display string
@@ -49,18 +47,22 @@ public class NVConfigMapUtil
 			if (nvc.getName() != null && nvc.getName().equals(nvcnm.getName()))
 			{
 				if (nvcnm.getDisplayName() != null)
-					return nvcnm.getDisplayName();
+                {
+                    return nvcnm.getDisplayName();
+                }
 			}
 		}
 		
 		if (nvc.getDisplayName() != null)
-			return nvc.getDisplayName();
+        {
+            return nvc.getDisplayName();
+        }
 		
 		return nvc.getName();
 	}
 	
 	/**
-	 * This method returns the display name based on NVConfig and NVConfigAttributesMap inputs.
+	 * Returns the display name based on NVConfig and NVConfigAttributesMap inputs.
 	 * @param nvc
 	 * @param map
 	 * @return display name
@@ -76,7 +78,7 @@ public class NVConfigMapUtil
 		
 		if (map != null)
 		{
-			nvcnm = map.lookup(nvc.getName());
+		    nvcnm = map.lookup(nvc.getName());
 		}
 		
 		return toDisplayName(nvc, nvcnm);
@@ -89,7 +91,7 @@ public class NVConfigMapUtil
 	 * @return toString
 	 */
 	public static String toString(NVEntity nve, NVConfigAttributesMap map)
-	{		
+	{
 		return toString(nve, map, false);
 	}
 	
@@ -198,7 +200,6 @@ public class NVConfigMapUtil
 		}
 		
 		return sb.toString();
-		
 	}
 
 }

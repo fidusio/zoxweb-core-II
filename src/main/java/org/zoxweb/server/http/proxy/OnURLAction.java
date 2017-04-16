@@ -17,76 +17,88 @@ package org.zoxweb.server.http.proxy;
 
 @SuppressWarnings("serial")
 public class OnURLAction 
-implements java.io.Serializable 
+	implements java.io.Serializable
 {
 
-	
-
 	private String customerrortext = null, desc = null, newlocation = null;
-
 	private boolean log, block, customtext, http_rq, anotherlocation;
 
-	public OnURLAction(String desc) {
+	public OnURLAction(String desc)
+	{
 		this.desc = desc;
 	}
 
-	public void denyAccess(String customerrortext) {
+	public void denyAccess(String customerrortext)
+	{
 		this.block = true;
 		this.customtext = true;
 		this.customerrortext = customerrortext;
 	}
 
-	public void denyAccess() {
+	public void denyAccess()
+	{
 		block = true;
 	}
 
-	public void logAccess() {
+	public void logAccess()
+	{
 		log = true;
 	}
 
-	public void anotherLocation(String newlocation) {
+	public void anotherLocation(String newlocation)
+	{
 		this.anotherlocation = true;
 		this.newlocation = newlocation;
 	}
 
-	public boolean onAccesssDeny() {
+	public boolean onAccesssDeny()
+	{
 		return block;
 	}
 
-	public boolean onAccessLog() {
+	public boolean onAccessLog()
+	{
 		return log;
 	}
 
-	public boolean onAccessDenyWithCustomText() {
+	public boolean onAccessDenyWithCustomText()
+	{
 		return customtext;
 	}
 
-	public boolean onAccessSendHTTPRequest() {
+	public boolean onAccessSendHTTPRequest()
+	{
 		return http_rq;
 	}
 
-	public boolean onAccessRedirect() {
+	public boolean onAccessRedirect()
+	{
 		return this.anotherlocation;
 	}
 
-	public String newLocation() {
+	public String newLocation()
+	{
 		return this.newlocation;
 	}
 
-	public void setHTTPAction(boolean http_rq, String httppath) {
+	public void setHTTPAction(boolean http_rq, String httppath)
+	{
 		this.http_rq = http_rq;
 		// this.httppath=httppath;
 	}
 
-	public String getCustomErrorText() {
+	public String getCustomErrorText()
+	{
 		return customerrortext;
 	}
 
-	public String getDescription() {
+	public String getDescription()
+	{
 		return desc;
 	}
 
-	public String toString() {
+	public String toString()
+	{
 		return desc;
 	}
 

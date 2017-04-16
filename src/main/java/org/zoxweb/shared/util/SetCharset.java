@@ -1,7 +1,8 @@
 package org.zoxweb.shared.util;
 
 public interface SetCharset
-		extends GetCharset {
+    extends GetCharset
+{
 
 	void setCharset(String charset);
 

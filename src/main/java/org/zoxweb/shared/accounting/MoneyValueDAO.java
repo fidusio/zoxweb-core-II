@@ -35,7 +35,6 @@ public class MoneyValueDAO
 	extends SetNameDescriptionDAO
 	implements RenderableValue<String>
 {
-	
 
 	/**
 	 * Sets the default currency to U.S. dollar (USD).
@@ -167,7 +166,7 @@ public class MoneyValueDAO
 	}
 	
 	/**
-	 * Gets the currency.
+	 * Returns the currency.
 	 * @return currency
 	 */
 	public Currency getCurrency() 
@@ -185,7 +184,7 @@ public class MoneyValueDAO
 	}
 	
 	/**
-	 * Gets the value.
+	 * Returns the value.
 	 * @return value
 	 */
 	public BigDecimal getValue()

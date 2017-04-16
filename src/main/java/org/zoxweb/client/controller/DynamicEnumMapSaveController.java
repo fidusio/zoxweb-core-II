@@ -37,7 +37,8 @@ public class DynamicEnumMapSaveController
 {
 
 	@Override
-	public void actionSave(DynamicEnumMap dem, AsyncCallback<DynamicEnumMap> callback) {
+	public void actionSave(DynamicEnumMap dem, AsyncCallback<DynamicEnumMap> callback)
+	{
 		HTTPMessageConfigInterface hcc = HTTPMessageConfig.createAndInit(null, "api" /*FSConst.URIs.API_DYNAMIC_ENUM_MAP.getValue()*/, HTTPMethod.PATCH);
 		
 		Map<String, Object> map = new HashMap<String, Object>();

@@ -155,11 +155,11 @@ public class NetUtil
 	 * @throws IOException
 	 */
 	public static Inet4Address getIPV4MainAddress(NetworkInterface ni)
-			throws IOException 
+        throws IOException
 	{
-		
-		Inet4Address addresses[] = getIPV4AllAddresses( ni);
-		if ( addresses != null && addresses.length > 0)
+		Inet4Address[] addresses = getIPV4AllAddresses( ni);
+
+		if (addresses != null && addresses.length > 0)
 		{
 			return addresses[addresses.length -1];
 		}
@@ -336,8 +336,9 @@ public class NetUtil
 	public static Inet6Address getIPV6MainAddress(NetworkInterface ni)
 			throws IOException 
 	{
-		Inet6Address addresses[] = getIPV6AllAddresses( ni);
-		if ( addresses != null && addresses.length > 0)
+		Inet6Address[] addresses = getIPV6AllAddresses( ni);
+
+		if (addresses != null && addresses.length > 0)
 		{
 			return addresses[addresses.length -1];
 		}
@@ -399,7 +400,8 @@ public class NetUtil
 		//dbg("mask long " + maskLong);
 
 		
-		byte maskAddress[] = new byte[4];
+		byte[] maskAddress = new byte[4];
+
 		for (int i=0; i < maskAddress.length; i++)
 		{
 			maskAddress[  maskAddress.length - (1+i)] = (byte)maskLong;//maskAddress[ maskAddress.length - (1+i)] ;
@@ -413,7 +415,7 @@ public class NetUtil
 	public static InetAddress getNetwork(InterfaceAddress ia) throws IOException
 	{
 		InetAddress address = ia.getAddress();
-		byte addressBytes[] = address.getAddress();
+		byte[] addressBytes = address.getAddress();
 		short mask = ia.getNetworkPrefixLength();
 		
 		long maskLong = (addressBytes.length == 4) ? 0xffffffffL : 0xffffffffffffL;
@@ -457,9 +459,9 @@ public class NetUtil
 	public static byte[] getNetwork(byte[] addressBytes, byte[] maskBytes) 
 			throws IOException
 	{
-		byte networkBytes[] = new byte[addressBytes.length];
+		byte[] networkBytes = new byte[addressBytes.length];
 		
-		for ( int i = 0; i < networkBytes.length; i++)
+		for (int i = 0; i < networkBytes.length; i++)
 		{
 			networkBytes[i] = (byte)(addressBytes[i] & maskBytes[i]);
 		}
@@ -512,7 +514,7 @@ public class NetUtil
 		return ret;
 	}
 	
-	public static String generateRoutingScript(ConnectionPropDAO nis[]) throws IOException
+	public static String generateRoutingScript(ConnectionPropDAO[] nis) throws IOException
 	{
 		StringBuilder sb = new StringBuilder("#!/bin/sh\n");
 		sb.append("# Automatically generated bonding script " + new Date() + "\n");

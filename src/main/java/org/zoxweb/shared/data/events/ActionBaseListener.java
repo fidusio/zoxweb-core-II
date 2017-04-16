@@ -16,8 +16,8 @@
 package org.zoxweb.shared.data.events;
 
 /**
- * @author mzebib
- *
+ * The action base listener interface inherited by all action listener interfaces.
+ * @param <V>
  */
 public interface ActionBaseListener<V>
 {

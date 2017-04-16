@@ -20,7 +20,9 @@ package org.zoxweb.shared.filters;
  * @author mzebib
  */
 @SuppressWarnings("serial")
-public class PatternFilterLiterals implements ValueFilter<String, String> {
+public class PatternFilterLiterals
+    implements ValueFilter<String, String>
+{
 
 	public static final String[][] PATTERN_LITERALS = {
 		{"[", "\\["},
@@ -49,12 +51,14 @@ public class PatternFilterLiterals implements ValueFilter<String, String> {
 	 * The default constructor is declared private to prevent
 	 * outside instantiation of this class.
 	 */
-	private PatternFilterLiterals() {
+	private PatternFilterLiterals()
+    {
 		
 	}
 
 	@Override
-	public String toCanonicalID() {
+	public String toCanonicalID()
+    {
 		return null;
 	}
 
@@ -63,8 +67,11 @@ public class PatternFilterLiterals implements ValueFilter<String, String> {
 	 * @param in
 	 */
 	@Override
-	public String validate(String in) throws NullPointerException, IllegalArgumentException {
-		for (String[] pattern : PATTERN_LITERALS) {
+	public String validate(String in)
+        throws NullPointerException, IllegalArgumentException
+    {
+		for (String[] pattern : PATTERN_LITERALS)
+		{
 			in = in.replace(pattern[0], pattern[1]);
 		}
 	
@@ -76,7 +83,8 @@ public class PatternFilterLiterals implements ValueFilter<String, String> {
 	 * @param in
 	 */
 	@Override
-	public boolean isValid(String in) {
+	public boolean isValid(String in)
+    {
 		return true;
 	}
 
@@ -87,11 +95,16 @@ public class PatternFilterLiterals implements ValueFilter<String, String> {
 	 * @param exclusionList
 	 * @return validated string
 	 */
-	public String validateWithExclusion(String in, String... exclusionList) {
-		for (String[] pattern : PATTERN_LITERALS) {
-			if (exclusionList != null) {
-				for (String exclude : exclusionList) {
-					if (!pattern[0].equals(exclude)) {
+	public String validateWithExclusion(String in, String... exclusionList)
+    {
+		for (String[] pattern : PATTERN_LITERALS)
+		{
+			if (exclusionList != null)
+			{
+				for (String exclude : exclusionList)
+				{
+					if (!pattern[0].equals(exclude))
+					{
 						in = in.replace(pattern[0], pattern[1]);
 					}
 				}

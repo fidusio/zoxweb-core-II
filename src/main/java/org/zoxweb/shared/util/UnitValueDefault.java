@@ -18,28 +18,33 @@ package org.zoxweb.shared.util;
 import org.zoxweb.shared.util.Const.Unit;
 
 public class UnitValueDefault<V>
-		implements UnitValue<V> {
+    implements UnitValue<V>
+{
 
 	private V value;
 	private Unit unit;
 
 	@Override
-	public void setValue(V value) {
+	public void setValue(V value)
+    {
 		this.value = value;
 	}
 
 	@Override
-	public V getValue() {
+	public V getValue()
+    {
 		return value;
 	}
 
 	@Override
-	public Unit getUnit() {
+	public Unit getUnit()
+    {
 		return unit;
 	}
 
 	@Override
-	public void setUnit(Unit unit) {
+	public void setUnit(Unit unit)
+    {
 		this.unit = unit;
 	}
 

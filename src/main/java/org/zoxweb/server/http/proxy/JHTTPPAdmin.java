@@ -19,9 +19,8 @@ import java.util.Enumeration;
 import java.util.Properties;
 import java.io.IOException;
 
-
-
-public class JHTTPPAdmin {
+public class JHTTPPAdmin
+{
 	/***************************************************************************
 	 * Artem Melnik Known problems: 1. no overflow checks 2. argument parsing is
 	 * loose (e.g. filter= can be equal to anotherfilter=) 3. doesn't understand
@@ -45,74 +44,104 @@ public class JHTTPPAdmin {
 	/** perform admin functions 
 	 * @param infilename 
 	 * @param inserver */
-	public JHTTPPAdmin(String infilename, JHTTPPServer inserver) {
+	public JHTTPPAdmin(String infilename, JHTTPPServer inserver)
+	{
 		server = inserver;
 		myfilename = infilename;
 	}
 
-	public void WebAdmin() throws IOException {
+	public void WebAdmin()
+			throws IOException
+	{
 		String filename = myfilename;
 		parseRequest(filename);
 		String app = (String) p.get("requesturl");
 
-		if (app != null && app.equalsIgnoreCase(server.WEB_CONFIG_FILE)) {
-
+		if (app != null && app.equalsIgnoreCase(server.WEB_CONFIG_FILE))
+		{
 			String command = (String) p.get("command");
 			int sid = 0;
-			try {
+
+			try
+			{
 				sid = Integer.parseInt((String) p.get("sid"));
-			} catch (NumberFormatException e_nfe) {
+			}
+			catch (NumberFormatException e_nfe)
+			{
 				sid = 0;
 			}
-			if (command != null) {
-				if (command.equals("auth")) {
+
+			if (command != null)
+			{
+				if (command.equals("auth"))
+				{
 					String user = (String) p.get("user");
 					String passw = (String) p.get("p");
 					server.AuthenticateUser(user, passw);
-					if (server.config_auth != 0) {
+					if (server.config_auth != 0)
+					{
 						server.config_session_id = (long) (Math.random() * 100000);
 						status = "Access granted";
 						stat = 3;
-					} else {
+					}
+					else
+					{
 						status = "Acess forbidden";
 						stat = 2;
 					}
-				} else if (server.config_auth != 0
-						&& sid == server.config_session_id) {
-					if (command.equals("logout")) {
+				}
+				else if (server.config_auth != 0 && sid == server.config_session_id)
+				{
+					if (command.equals("logout"))
+					{
 						server.AuthenticateUser("", "");
 						server.config_session_id = 0;
 						status = "Logged out.";
 						stat = 1;
-					} else if (command.equals("shutdown")) {
+					}
+					else if (command.equals("shutdown"))
+					{
 						server.close();
-					} else if (command.equals("update_password")) {
+					}
+					else if (command.equals("update_password"))
+					{
 						String a = (String) p.get("old_pass");
 						String b = (String) p.get("new_pass");
 						String c = (String) p.get("new_pass2");
 
-						if (!a.equals(server.config_password)) {
+						if (!a.equals(server.config_password))
+						{
 							status = "Enter the correct old password.";
 							stat = 5;
-						} else if (a.equals(b)) {
+						}
+						else if (a.equals(b))
+						{
 							status = "Old and new password must be different.";
 							stat = 5;
-						} else if (a == null || b == null) {
+						}
+						else if (a == null || b == null)
+						{
 							status = "You must enter a password. (should be at least 8 characters long)";
 							stat = 5;
-						} else {
-							if (b.equals(c)) {
+						}
+						else
+						{
+							if (b.equals(c))
+							{
 								server.config_password = b;
 								server.saveSettings();
 								stat = 5;
 								status = "Password sucessfully updated.";
 							}
 						}
-					} else if (command.equals("savefilter")) {
+					}
+					else if (command.equals("savefilter"))
+					{
 						String filterurl = (String) p.get("filter");
 						String action = (String) p.get("action");
 
-						if (filterurl != null && action != null) {
+						if (filterurl != null && action != null)
+						{
 							JHTTPPURLMatch a = new JHTTPPURLMatch(filterurl,
 									false/* set to real */, Integer
 											.parseInt(action), ""/*
@@ -124,7 +153,9 @@ public class JHTTPPAdmin {
 																					// match
 							server.getWildcardDictionary().put(filterurl, a);
 						}
-					} else if (command.equals("global")) {
+					}
+					else if (command.equals("global"))
+					{
 						String a = (String) p.get("debug");
 						server.setDebugEnabled(a != null);
 						a = (String) p.get("use_proxy");
@@ -136,25 +167,36 @@ public class JHTTPPAdmin {
 						a = (String) p.get("filter_http");
 						server.filter_http = (a != null);
 						a = (String) p.get("http_useragent");
+
 						if (a != null)
+						{
 							server.setUserAgent(a);
+						}
+
 						a = (String) p.get("block_urls");
 						JHTTPPServer.block_urls = (a != null);
 						a = (String) p.get("enable_cookies_by_default");
 						server.enableCookiesByDefault(a != null);
 						a = (String) p.get("port");
-						if (a != null) {
-							try {
+
+						if (a != null)
+						{
+							try
+							{
 								server.setProxyPort(Integer.parseInt(a));
 							} catch (NumberFormatException e_easx) {
 								server.setProxyPort(server.DEFAULT_SERVER_PORT);
 							}
 						}
+
 						a = (String) p.get("log_access");
 						server.log_access = (a != null);
 						a = (String) p.get("log_access_filename");
+
 						if (a != null)
+						{
 							server.log_access_filename = a;
+						}
 
 						// a = (String) p.get("remote_proxy_hostname");
 						// if (a != null) server.config_user = a;
@@ -165,14 +207,20 @@ public class JHTTPPAdmin {
 						server.saveSettings(); // save settings
 						status = "Changes saved.";
 						stat = 4;
-					} else if (command.equals("deletefilter")) {
+					}
+					else if (command.equals("deletefilter"))
+					{
 						String filterid = (String) p.get("filterid");
+
 						if (filterid != null)
+						{
 							server.getWildcardDictionary().remove(filterid);
+						}
 
 					}
 				} // end if (server.config_auth != 0)
-				else {
+				else
+				{
 					status = "You must log in to excute this command ("
 							+ command + ").";
 					stat = 1;
@@ -180,23 +228,27 @@ public class JHTTPPAdmin {
 					server.config_auth = 0;
 				}
 			}// end if command != null
-			else {
+			else
+			{
 				server.config_auth = 0;
 				server.config_session_id = 0;
 			}
 		}// if app
 	}// end void
 
-	public void parseRequest(String filename) {
+	public void parseRequest(String filename)
+	{
 		p = new Properties();
 		int filenamelen = filename.length();
 
 		int ixQmark = filename.indexOf("?");
 		if (ixQmark != -1) {
-			String request = JHTTPPUtil.urlDecoder(filename.substring(
-					ixQmark + 1, filenamelen));
+			String request = JHTTPPUtil.urlDecoder(filename.substring(ixQmark + 1, filenamelen));
+
 			if (server.isDebugEnabled())
+			{
 				System.out.println("\trequest: " + request);
+			}
 
 			p.put("requesturl", filename.substring(0, ixQmark));
 			if (server.isDebugEnabled())

@@ -35,8 +35,8 @@ public class NVEntityArrayController
 	// uri = FSConst.URIs.API_DATA_MANAGER.getValue();
 	
 	@Override
-	public void actionAdd(String v, AsyncCallback<NVEntity> callback) {
-		
+	public void actionAdd(String v, AsyncCallback<NVEntity> callback)
+	{
 		HTTPMessageConfigInterface hcc = HTTPMessageConfig.createAndInit(null, uri, HTTPMethod.POST);
 		hcc.setContentType(HTTPMimeType.APPLICATION_JSON);
 		hcc.getParameters().add(new NVPair(APIParameters.CLASS_NAME.getName(), v));

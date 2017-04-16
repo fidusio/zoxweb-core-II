@@ -32,7 +32,7 @@ public class ShiroRoleDAO
 	extends ShiroDomainDAO
 {
 	
-	public enum Params
+	public enum Param
 		implements GetNVConfig
 	{
 		
@@ -40,21 +40,21 @@ public class ShiroRoleDAO
 	
 		;
 		
-		private final NVConfig cType;
-		
-		Params(NVConfig c)
+		private final NVConfig nvc;
+
+        Param(NVConfig nvc)
 		{
-			cType = c;
+			this.nvc = nvc;
 		}
 		
 		public NVConfig getNVConfig() 
 		{
-			return cType;
+			return nvc;
 		}
 	}
 	
 	public static final NVConfigEntity NVC_SHIRO_ROLE_DAO = new NVConfigEntityLocal("shiro_role_dao", "Shiro role dao object" , "ShiroRoleDAO", 
-			false, true, false, false, ShiroRoleDAO.class, SharedUtil.extractNVConfigs(Params.values()), null, false, ShiroDomainDAO.NVC_SHIRO_DOMAIN_DAO);
+			false, true, false, false, ShiroRoleDAO.class, SharedUtil.extractNVConfigs(Param.values()), null, false, ShiroDomainDAO.NVC_SHIRO_DOMAIN_DAO);
 	
 	public ShiroRoleDAO()
 	{
@@ -107,7 +107,7 @@ public class ShiroRoleDAO
 	@SuppressWarnings("unchecked")
 	public ArrayValues<NVEntity> getPermissions()
 	{
-		return (ArrayValues<NVEntity>) lookup(Params.PERMISSIONS);
+		return (ArrayValues<NVEntity>) lookup(Param.PERMISSIONS);
 	}
 	
 	public void setPermissions(ArrayValues<NVEntity> values)

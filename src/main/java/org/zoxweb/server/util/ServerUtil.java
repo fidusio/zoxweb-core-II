@@ -45,9 +45,11 @@ import org.zoxweb.shared.util.NVPair;
 import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
 
-public final class ServerUtil {
+public final class ServerUtil
+{
 
-	private ServerUtil() {
+	private ServerUtil()
+    {
 		
 	}
 
@@ -61,19 +63,22 @@ public final class ServerUtil {
 	 */
 	public final static Lock LOCK = new ReentrantLock();
 
-
 	/**
 	 * Utility method to wait on a object
 	 * @param obj to be synchronized and wait on
 	 * @param millis to wait
 	 * @param nanos to wait
 	 */
-	public static void waitNano(Object obj, long millis, int nanos) {
-		synchronized(obj) {
-			try {
+	public static void waitNano(Object obj, long millis, int nanos)
+    {
+		synchronized(obj)
+        {
+			try
+            {
 				obj.wait(millis, nanos);
-				
-			} catch (InterruptedException e) {
+			}
+			catch (InterruptedException e)
+            {
 				e.printStackTrace();
 			}
 		}
@@ -84,12 +89,15 @@ public final class ServerUtil {
 	 * @param obj to be synchronized and wait on
 	 * @param millis to wait
 	 */
-	public static void waitNano(Object obj, long millis) {
+	public static void waitNano(Object obj, long millis)
+    {
 		synchronized(obj) {
-			try {
+			try
+            {
 				obj.wait(millis);
-				
-			} catch (InterruptedException e) {
+			}
+			catch (InterruptedException e)
+            {
 				e.printStackTrace();
 			}
 		}
@@ -101,19 +109,23 @@ public final class ServerUtil {
 	 * @param array2
 	 * @return concatenated type array
 	 */
-	public static <T> T[] concat(T[] array1, T[] array2) {
-        if (array1 != null && array2 != null) {
-          T[] result = Arrays.copyOf(array1, array1.length + array2.length);
-          System.arraycopy(array2, 0, result, array1.length, array2.length);
-          return result;
+	public static <T> T[] concat(T[] array1, T[] array2)
+    {
+	    if (array1 != null && array2 != null)
+        {
+            T[] result = Arrays.copyOf(array1, array1.length + array2.length);
+            System.arraycopy(array2, 0, result, array1.length, array2.length);
+            return result;
         }
 
-        if (array1 == null && array2 != null) {
-          return array2;
+        if (array1 == null && array2 != null)
+        {
+            return array2;
         }
 
-        if (array1 != null && array2 == null) {
-          return array1;
+        if (array1 != null && array2 == null)
+        {
+            return array1;
         }
 
         return null;
@@ -128,15 +140,18 @@ public final class ServerUtil {
 	 * @throws IOException in case of IO error
 	 */
 	public static List<String> toStringList(String fileName)
-            throws IOException {
-	   
+            throws IOException
+    {
 		List<String> ret = null;
 		FileInputStream fis = null;
 		
-		try {
+		try
+        {
 			fis = new FileInputStream(fileName);
 			ret = toStringList(fis);
-		} finally {
+		}
+		finally
+        {
 			IOUtil.close(fis);
 		}
 		
@@ -151,21 +166,25 @@ public final class ServerUtil {
 	 * @throws IOException
 	 */
 	public static List<String> toStringList(InputStream is)
-            throws IOException {
-	    
+            throws IOException
+    {
 	    BufferedReader textReader = null;
 
 	    ArrayList<String> messageList = new ArrayList<String>();
 
-	    try {
+	    try
+        {
 	    	textReader = new BufferedReader(new InputStreamReader(is));
 	    	String line = textReader.readLine();
 		        
-            while (line != null) {
+            while (line != null)
+            {
                 messageList.add(line);
                 line = textReader.readLine();
             }
-	    } finally {
+	    }
+	    finally
+        {
 	    	IOUtil.close(textReader);
 	    	IOUtil.close(is);
 	    }
@@ -174,18 +193,22 @@ public final class ServerUtil {
 	    
 	}
 
-	public static Object[] readXMLToBeans(InputStream is) {
+	public static Object[] readXMLToBeans(InputStream is)
+    {
 		XMLDecoder decoder = new XMLDecoder(is);
 		ArrayList<Object> ret = new ArrayList<Object>();
 
-		try {
+		try
+        {
 			do {
 				ret.add(decoder.readObject());
 				
 				
 			} while(true);
 			
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+        {
 			//e.printStackTrace();
 		}
 
@@ -200,11 +223,13 @@ public final class ServerUtil {
 	 * @param os
 	 * @param objs
 	 */
-	public static void writeBeansToXML(OutputStream os, Object... objs) {
+	public static void writeBeansToXML(OutputStream os, Object... objs)
+    {
 		
 		XMLEncoder enc = new XMLEncoder( os);
 		
-		for( Object o : objs) {
+		for( Object o : objs)
+		{
 			enc.writeObject( o);
 		}
 
@@ -218,23 +243,29 @@ public final class ServerUtil {
 	 * @param includeNetworkDetails true add networking info
 	 * @return SystemInfoDAO
 	 */
-	public static SystemInfoDAO loadSystemInfoDAO(boolean includeNetworkDetails) {
+	public static SystemInfoDAO loadSystemInfoDAO(boolean includeNetworkDetails)
+    {
 		SystemInfoDAO ret = new SystemInfoDAO();
 
 		Map.Entry<?, ?> all[] = System.getProperties().entrySet().toArray( new Map.Entry[0]);
 
-		for ( Map.Entry<?, ?>e : all) {
+		for ( Map.Entry<?, ?>e : all)
+		{
 			ret.getSystemProperties().add( new NVPair( (String)e.getKey(), (String)e.getValue()));
 		}
 
-		if (includeNetworkDetails) {
-			try {
+		if (includeNetworkDetails)
+		{
+			try
+            {
 			    Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
 			
-                for (;interfaces.hasMoreElements();) {
+                for (;interfaces.hasMoreElements();)
+                {
                     NetworkInterface ni = interfaces.nextElement();
 
-                    if (!ni.isPointToPoint() && !ni.isLoopback() && !ni.isVirtual() && ni.getHardwareAddress() != null ) {
+                    if (!ni.isPointToPoint() && !ni.isLoopback() && !ni.isVirtual() && ni.getHardwareAddress() != null )
+                    {
                         NetworkInterfaceDAO niDAO = new NetworkInterfaceDAO();
                         niDAO.setMACAddress(SharedStringUtil.bytesToHex(ni.getHardwareAddress(), ":"));
                         niDAO.setName( ni.getName());
@@ -243,7 +274,8 @@ public final class ServerUtil {
 
                         Enumeration<InetAddress> addresses = ni.getInetAddresses();
 
-                        while (addresses.hasMoreElements()) {
+                        while (addresses.hasMoreElements())
+                        {
                             niDAO.getInetAddresses().add(NetUtil.toInetAddressDAO(addresses.nextElement()));
                         }
 
@@ -251,7 +283,9 @@ public final class ServerUtil {
                     }
 
                 }
-			} catch(IOException e) {
+			}
+			catch(IOException e)
+            {
 
 			}
 		}
@@ -259,7 +293,8 @@ public final class ServerUtil {
 		return ret;
 	}
 
-	public static SystemInfoDAO loadSystemInfoDAO() {
+	public static SystemInfoDAO loadSystemInfoDAO()
+    {
 		return loadSystemInfoDAO(true);
 	}
 
@@ -283,8 +318,8 @@ public final class ServerUtil {
 	 * @param nanos to delay
 	 * @return the difference
 	 */
-	private static long delayInNanos(long nanos) {
-		
+	private static long delayInNanos(long nanos)
+    {
 		long stopAt = System.nanoTime() + nanos;
 		
 		do {
@@ -302,10 +337,14 @@ public final class ServerUtil {
 	 * @param timeToSleepNanos
 	 * @return delay
 	 */
-	public static long delay(long timeToSleepNanos) {
-		if (timeToSleepNanos <= 1000000) {
+	public static long delay(long timeToSleepNanos)
+    {
+		if (timeToSleepNanos <= 1000000)
+		{
 			return delayInNanos(timeToSleepNanos);
-		} else {
+		}
+		else
+		    {
 			final long endingTime = System.nanoTime() + timeToSleepNanos;
 			long remainingTime = timeToSleepNanos;
 			//while( remainingTime > 0)
@@ -314,12 +353,17 @@ public final class ServerUtil {
 				int ns = (int) remainingTime % 1000000;
 				if (ms > 0)
 				{
-					try {
+					try
+                    {
 						Thread.sleep(ms, ns);
-					} catch (InterruptedException e) {
+					}
+					catch (InterruptedException e)
+                    {
 						e.printStackTrace();
 					}
-				} else {
+				}
+				else
+                {
 					delayInNanos(ns);
 				}
 					
@@ -335,12 +379,16 @@ public final class ServerUtil {
 	 * @param clazz to be matched with
 	 * @return true if all the list object are matching
 	 */
-	public static boolean areAllInstancesMatchingType(List<?> list, Class<?> clazz) {
+	public static boolean areAllInstancesMatchingType(List<?> list, Class<?> clazz)
+    {
 		SharedUtil.checkIfNulls("Null list or class.", list, clazz);
 		
-		if (list.size() > 0) {
-			for (int i = 0; i < list.size(); i++) {
-				if (list.get(i) != null && !clazz.isAssignableFrom(list.get(i).getClass())) {
+		if (!list.isEmpty())
+		{
+			for (int i = 0; i < list.size(); i++)
+			{
+				if (list.get(i) != null && !clazz.isAssignableFrom(list.get(i).getClass()))
+				{
 					return false;
 				}
 			}
@@ -350,7 +398,8 @@ public final class ServerUtil {
 	}
 	
 	
-	public static void main(String ... args) {
+	public static void main(String... args)
+    {
 		try {
 			SystemInfoDAO siDAO = loadSystemInfoDAO();
 			System.out.println(SharedUtil.toCanonicalID(':', siDAO.getName(), siDAO.getDescription()));
@@ -367,7 +416,9 @@ public final class ServerUtil {
 			
 			System.out.println(siDAO.getContent().getClass().getName());
 			
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+        {
 			e.printStackTrace();
 		}
 	}

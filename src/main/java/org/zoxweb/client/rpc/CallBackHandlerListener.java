@@ -16,13 +16,19 @@
 
 package org.zoxweb.client.rpc;
 
-public interface CallBackHandlerListener {
+public interface CallBackHandlerListener
+{
 
+	/**
+	 *
+	 */
 	public void callBackInitiated();
+
+	/**
+	 *
+	 */
 	public void callBackEnded();
-	
-	
-	
+
 	/**
 	 * This method is called when a exception is returned by the server.
 	 * An implementation example:

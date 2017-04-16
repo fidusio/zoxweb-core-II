@@ -25,7 +25,6 @@ import org.zoxweb.shared.util.SharedUtil;
 /**
  * The AgreementDAO class defines agreement data access object used to create agreements.
  * @author mzebib
- *
  */
 @SuppressWarnings("serial")
 public class AgreementDAO 
@@ -39,7 +38,7 @@ public class AgreementDAO
 	 * @author mzebib
 	 *
 	 */
-	public enum Params
+	public enum Param
 		implements GetNVConfig
 	{
 		AGREEMENT_TITLE(NVConfigManager.createNVConfig("agreement_title", "The title of the agreement.", "AgreementTitle", true, true, String.class)),
@@ -47,19 +46,19 @@ public class AgreementDAO
 		AGREEMENT_CHECK_TITLE(NVConfigManager.createNVConfig("agreement_check_title", "The title of the agreement check box.", "AgreementCheckTitle", false, true, String.class)),
 
 		;
-		
-		private final NVConfig cType;
-		
-		Params (NVConfig c)
-		{
-			cType = c;
-		}
 
-		@Override
-		public NVConfig getNVConfig() 
-		{
-			return cType;
-		}
+
+        private final NVConfig nvc;
+
+        Param(NVConfig nvc)
+        {
+            this.nvc = nvc;
+        }
+
+        public NVConfig getNVConfig()
+        {
+            return nvc;
+        }
 	
 	}
 	
@@ -72,7 +71,7 @@ public class AgreementDAO
 																						false, 
 																						false, 
 																						AgreementDAO.class,
-																						SharedUtil.extractNVConfigs(Params.values()), 
+																						SharedUtil.extractNVConfigs(Param.values()),
 																						null, 
 																						false, 
 																						SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO
@@ -127,7 +126,7 @@ public class AgreementDAO
 	 */
 	public String getAgreementTitle() 
 	{
-		return lookupValue(Params.AGREEMENT_TITLE);
+		return lookupValue(Param.AGREEMENT_TITLE);
 	}
 	
 	/**
@@ -136,7 +135,7 @@ public class AgreementDAO
 	 */
 	public void setAgreementTitle(String title) 
 	{
-		setValue(Params.AGREEMENT_TITLE, title);
+		setValue(Param.AGREEMENT_TITLE, title);
 	}
 	
 	/**
@@ -145,7 +144,7 @@ public class AgreementDAO
 	 */
 	public String getAgreementContent() 
 	{
-		return lookupValue(Params.AGREEMENT_CONTENT);
+		return lookupValue(Param.AGREEMENT_CONTENT);
 	}
 	
 	/**
@@ -154,7 +153,7 @@ public class AgreementDAO
 	 */
 	public void setAgreementContent(String content) 
 	{
-		setValue(Params.AGREEMENT_CONTENT, content);
+		setValue(Param.AGREEMENT_CONTENT, content);
 	}
 	
 	/**
@@ -163,7 +162,7 @@ public class AgreementDAO
 	 */
 	public String getAgreementCheckTitle() 
 	{
-		return lookupValue(Params.AGREEMENT_CHECK_TITLE);
+		return lookupValue(Param.AGREEMENT_CHECK_TITLE);
 	}
 	
 	/**
@@ -172,7 +171,7 @@ public class AgreementDAO
 	 */
 	public void setAgreementCheckTitle(String checkTitle) 
 	{
-		setValue(Params.AGREEMENT_CHECK_TITLE, checkTitle);
+		setValue(Param.AGREEMENT_CHECK_TITLE, checkTitle);
 	}
 	
 }

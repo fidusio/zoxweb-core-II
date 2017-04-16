@@ -21,22 +21,27 @@ import javax.servlet.ServletContextEvent;
 
 import org.apache.shiro.web.env.EnvironmentLoaderListener;
 import org.apache.shiro.web.mgt.WebSecurityManager;
+
 import org.zoxweb.shared.util.Const;
 
-public abstract class ShiroBaseWebListener extends  EnvironmentLoaderListener {
+public abstract class ShiroBaseWebListener
+    extends EnvironmentLoaderListener
+{
 
 	private static final transient Logger log = Logger.getLogger(Const.LOGGER_NAME);
 	
-	protected abstract void init( WebSecurityManager wsm);
+	protected abstract void init(WebSecurityManager wsm);
 
 	@Override
-	public void contextInitialized(ServletContextEvent sce) {
+	public void contextInitialized(ServletContextEvent sce)
+    {
 		log.info("Initialized");
 		init(initEnvironment(sce.getServletContext()).getWebSecurityManager());
 	}	
 	
 	@Override
-	public void contextDestroyed(ServletContextEvent sce) {
+	public void contextDestroyed(ServletContextEvent sce)
+    {
 		super.contextDestroyed(sce);
 	}
 

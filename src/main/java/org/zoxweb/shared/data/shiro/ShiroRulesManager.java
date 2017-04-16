@@ -20,8 +20,7 @@ import java.util.List;
 import org.zoxweb.shared.db.QueryMarker;
 
 /**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
+ *
  */
 public interface ShiroRulesManager 
 {
@@ -32,4 +31,5 @@ public interface ShiroRulesManager
 	public void updateShiroRule(ShiroAssociationRuleDAO sard);
 	
 	List<ShiroAssociationRuleDAO> search(QueryMarker ...queryCriteria);
+
 }

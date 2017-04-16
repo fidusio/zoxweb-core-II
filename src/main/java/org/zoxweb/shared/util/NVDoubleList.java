@@ -26,9 +26,10 @@ import java.util.List;
 public class NVDoubleList
 	extends NVBase<List<Double>> 
 {
-	/**
-	 * Default constructor used for Java Bean Compiler.
-	 */
+
+    /**
+     * The default constructor (Java Bean compliant).
+     */
 	public NVDoubleList()
 	{
 		
@@ -43,4 +44,5 @@ public class NVDoubleList
 	{
 		super(name, value);
 	}
+
 }

@@ -19,26 +19,31 @@ import java.io.Serializable;
 
 @SuppressWarnings("serial")
 public class SetNamePortable
-        implements SetName, Serializable {
+    implements SetName, Serializable
+{
 
 	private String name;
 
-	public SetNamePortable() {
+	public SetNamePortable()
+    {
 		
 	}
 
-	public SetNamePortable(String name) {
+	public SetNamePortable(String name)
+    {
 		setName(name);
 	}
 
 	@Override
-	public String getName() {
+	public String getName()
+    {
 		return name;
 	}
 
 	@Override
-	public void setName(String name) {
-		SharedUtil.checkIfNulls("Null name", name);
+	public void setName(String name)
+    {
+		SharedUtil.checkIfNulls("Name is null.", name);
 		this.name = name;
 	}
 

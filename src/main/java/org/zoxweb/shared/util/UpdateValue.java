@@ -17,10 +17,9 @@ package org.zoxweb.shared.util;
 
 /**
  * The update value interface.
- * @author mzebib
- *
  */
-public interface UpdateValue<V> {
+public interface UpdateValue<V>
+{
 
 	/**
 	 * Updates the value.

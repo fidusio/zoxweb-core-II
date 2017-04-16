@@ -13,56 +13,38 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-
 package org.zoxweb.shared.data.shiro;
-
-
 
 @SuppressWarnings("serial")
 public class ShiroSubjectRoleDAO
-extends ShiroAssociationDAO
+    extends ShiroAssociationDAO
 {
 
-
-	
 	public ShiroSubjectRoleDAO()
 	{
-		super( ShiroAssociationType.ROLE_TO_SUBJECT, null, null);
+	    super(ShiroAssociationType.ROLE_TO_SUBJECT, null, null);
 	}
 	
 	public ShiroSubjectRoleDAO(ShiroSubjectDAO subject, ShiroRoleDAO role)
 	{
-		super( ShiroAssociationType.ROLE_TO_SUBJECT, subject, role);
-		
+		super(ShiroAssociationType.ROLE_TO_SUBJECT, subject, role);
 	}
-	
-	
-	
-	
-
-
 
 	public ShiroSubjectDAO getSubject() {
 		return (ShiroSubjectDAO) getAssociatedTo();
 	}
 
-
-
 	public void setSubject(ShiroSubjectDAO subject) {
 		setAssociatedTo( subject);
 	}
-
-
 
 	public ShiroRoleDAO getRole() {
 		return (ShiroRoleDAO) getAssociation();
 	}
 
-
-
 	public void setRole(ShiroRoleDAO role)
 	{
-		setAssociation(role);
+	    setAssociation(role);
 	}
 
 }

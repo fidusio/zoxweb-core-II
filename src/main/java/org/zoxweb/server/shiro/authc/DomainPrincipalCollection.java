@@ -20,35 +20,36 @@ import org.zoxweb.shared.util.SharedStringUtil;
 
 @SuppressWarnings("serial")
 public class DomainPrincipalCollection
-		extends SimplePrincipalCollection {
+    extends SimplePrincipalCollection
+{
 
 	protected String domain_id;
 	protected String application_id;
 	protected String user_id;
 
-
-
 	/**
-	 * 
-
+     *
 	 * @param principal the login id ie email
 	 * @param userID unique user domain identifier 
 	 * @param realmName
 	 * @param domainID
 	 * @param applicationID
 	 */
-	public DomainPrincipalCollection(Object principal, String userID, String realmName, String domainID, String applicationID) {
+	public DomainPrincipalCollection(Object principal, String userID, String realmName, String domainID, String applicationID)
+    {
 		super(principal, realmName);
 		domain_id = SharedStringUtil.toLowerCase(domainID);
 		application_id = SharedStringUtil.toLowerCase(applicationID);
 		user_id = userID;
     }
 	
-    public String getDomainID() {
+    public String getDomainID()
+    {
 		return domain_id;
 	}
 	
-	public String getApplicationID() {
+	public String getApplicationID()
+    {
 		return application_id;
 	}
 
@@ -57,7 +58,8 @@ public class DomainPrincipalCollection
 	 *
 	 * @return user id
 	 */
-	public String getUserID() {
+	public String getUserID()
+    {
 		return user_id;
 	}
 

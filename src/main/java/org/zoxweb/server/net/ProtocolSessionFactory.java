@@ -1,7 +1,5 @@
 package org.zoxweb.server.net;
 
-
-
 import java.util.logging.Logger;
 
 import org.zoxweb.server.net.security.SSLSessionDataFactory;

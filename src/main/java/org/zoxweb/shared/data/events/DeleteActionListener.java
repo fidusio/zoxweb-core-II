@@ -16,13 +16,17 @@
 package org.zoxweb.shared.data.events;
 
 /**
- * @author mzebib
- *
+ * The delete action listener interface.
+ * @param <V>
  */
 public interface DeleteActionListener<V>
 	extends ActionBaseListener<V>
 {
-	
+
+    /**
+     * Executes delete action for specified input.
+     * @param v
+     */
 	public void actionDelete(V v);
 
 }

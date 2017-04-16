@@ -24,18 +24,17 @@ import org.zoxweb.shared.util.NVConfig;
 import org.zoxweb.shared.util.NVConfigManager;
 import org.zoxweb.shared.util.Const.TimeInMillis;
 
-
 /**
- * @author mnael
- *
+ * Security constants.
  */
 public final class SecurityConsts
 {
 	/**
-	 * Non Instantiatable object
+	 * The constructor is declared private to prevent instantiation.
 	 */
 	private SecurityConsts()
 	{
+
 	}
 	
 	public enum OAuthParam
@@ -52,8 +51,9 @@ public final class SecurityConsts
 		CODE(NVConfigManager.createNVConfig("code", "The code", "Code", true, true, String.class)),
 		GRANT_TYPE(NVConfigManager.createNVConfig("grant_type", "The grant type", "GrantType", true, true, String.class)),
 		REFRESH_TOKEN(NVConfigManager.createNVConfig("refresh_token", "Refresh token", "RefreshToken", false, true, false, String.class, FilterType.ENCRYPT)),
-		TOKEN_TYPE(NVConfigManager.createNVConfig("token_type", "Token type", "TokenType", false, true, String.class)),
-		;
+		TOKEN_TYPE(NVConfigManager.createNVConfig("token_type", "Token type", "TokenType", false, true, String.class))
+
+        ;
 		
 		private NVConfig nvConfig;
 		
@@ -69,15 +69,14 @@ public final class SecurityConsts
 		@Override
 		public String getName()
 		{
-			// TODO Auto-generated method stub
 			return getNVConfig().getName();
 		}
-		
+
+		@Override
 		public String toString()
 		{
 			return getName();
 		}
-
 
 		/* (non-Javadoc)
 		 * @see org.zoxweb.shared.util.GetNVConfig#getNVConfig()
@@ -85,15 +84,12 @@ public final class SecurityConsts
 		@Override
 		public NVConfig getNVConfig()
 		{
-			// TODO Auto-generated method stub
 			return nvConfig;
 		}
 	}
-	
-	
-	
+
 	public enum SystemURI
-	implements GetValue<String>
+	    implements GetValue<String>
 	{
 		REGISTER(HTTPMethod.POST, "register"),
 		DEREGISTER(HTTPMethod.POST, "deregister"),
@@ -103,18 +99,19 @@ public final class SecurityConsts
 
 		private final HTTPMethod method;
 		private final String value;
+
 		SystemURI(HTTPMethod method, String value)
 		{
 			this.method = method;
 			this.value = value;
 		}
+
 		/* (non-Javadoc)
 		 * @see org.zoxweb.shared.util.GetValue#getValue()
 		 */
 		@Override
 		public String getValue()
 		{
-			// TODO Auto-generated method stub
 			return value;
 		}
 		
@@ -122,7 +119,7 @@ public final class SecurityConsts
 		{
 			return method;
 		}
+
 	}
-	
-	
+
 }

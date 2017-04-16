@@ -38,7 +38,7 @@ public abstract class UserInfoBaseDAO
 	extends SetNameDescriptionDAO
 {
 	
-	public enum Params
+	public enum Param
 		implements GetNVConfig
 	{
 		TITLE(NVConfigManager.createNVConfig("title", "Personal name title", "Title", false, true, false, String.class, DataConst.PERSONAL_TITLES)),
@@ -52,18 +52,18 @@ public abstract class UserInfoBaseDAO
 		ADDITIONAL_INFO(NVConfigManager.createNVConfig("additional_info", "Additional information", "AdditionalInfo", false, true, String[].class)),
 		
 		;
-		
-		private final NVConfig cType;
-		
-		Params(NVConfig c)
-		{
-			cType = c;
-		}
-		
-		public NVConfig getNVConfig() 
-		{
-			return cType;
-		}
+
+        private final NVConfig nvc;
+
+        Param(NVConfig nvc)
+        {
+            this.nvc = nvc;
+        }
+
+        public NVConfig getNVConfig()
+        {
+            return nvc;
+        }
 	}
 
 	public static final NVConfigEntity NVC_USER_INFO_BASE_DAO = new NVConfigEntityLocal(
@@ -75,7 +75,7 @@ public abstract class UserInfoBaseDAO
 																							false, 
 																							false, 
 																							UserInfoBaseDAO.class, 
-																							SharedUtil.extractNVConfigs(Params.values()), 
+																							SharedUtil.extractNVConfigs(Param.values()),
 																							null, 
 																							false, 
 																							SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO
@@ -96,7 +96,7 @@ public abstract class UserInfoBaseDAO
 	 */
 	public String getTitle() 
 	{
-		return lookupValue(Params.TITLE);
+		return lookupValue(Param.TITLE);
 	}
 	
 	/**
@@ -105,7 +105,7 @@ public abstract class UserInfoBaseDAO
 	 */
 	public void setTitle(String title) 
 	{
-		setValue(Params.TITLE, title);
+		setValue(Param.TITLE, title);
 	}
 	
 	/**
@@ -114,7 +114,7 @@ public abstract class UserInfoBaseDAO
 	 */
 	public String getFirstName() 
 	{
-		return lookupValue(Params.FIRST_NAME);
+		return lookupValue(Param.FIRST_NAME);
 	}
 	
 	/**
@@ -123,7 +123,7 @@ public abstract class UserInfoBaseDAO
 	 */
 	public void setFirstName(String firstName) 
 	{
-		setValue(Params.FIRST_NAME, firstName);
+		setValue(Param.FIRST_NAME, firstName);
 	}
 	
 	/**
@@ -132,7 +132,7 @@ public abstract class UserInfoBaseDAO
 	 */
 	public String getMiddleName() 
 	{
-		return lookupValue(Params.MIDDLE_NAME);
+		return lookupValue(Param.MIDDLE_NAME);
 	}
 	
 	/**
@@ -141,7 +141,7 @@ public abstract class UserInfoBaseDAO
 	 */
 	public void setMiddleName(String middleName) 
 	{
-		setValue(Params.MIDDLE_NAME, middleName);
+		setValue(Param.MIDDLE_NAME, middleName);
 	}
 	
 	/**
@@ -150,7 +150,7 @@ public abstract class UserInfoBaseDAO
 	 */
 	public String getLastName() 
 	{
-		return lookupValue(Params.LAST_NAME);
+		return lookupValue(Param.LAST_NAME);
 	}
 	
 	/**
@@ -159,7 +159,7 @@ public abstract class UserInfoBaseDAO
 	 */
 	public void setLastName(String lastName) 
 	{
-		setValue(Params.LAST_NAME, lastName);
+		setValue(Param.LAST_NAME, lastName);
 	}
 	
 	/**
@@ -168,7 +168,7 @@ public abstract class UserInfoBaseDAO
 	 */
 	public long getDOB() 
 	{
-		return lookupValue(Params.DOB);
+		return lookupValue(Param.DOB);
 	}
 	
 	/**
@@ -177,7 +177,7 @@ public abstract class UserInfoBaseDAO
 	 */
 	public void setDOB(long dob) 
 	{
-		setValue(Params.DOB, dob);
+		setValue(Param.DOB, dob);
 	}
 	
 	/**
@@ -186,7 +186,7 @@ public abstract class UserInfoBaseDAO
 	 */
 	public List<AddressDAO> getListOfAddresses() 
 	{
-		return lookupValue(Params.LIST_OF_ADDRESSES);
+		return lookupValue(Param.LIST_OF_ADDRESSES);
 	}
 	
 	/**
@@ -195,7 +195,7 @@ public abstract class UserInfoBaseDAO
 	 */
 	public void setListOfAddresses(List<AddressDAO> list) 
 	{
-		setValue(Params.LIST_OF_ADDRESSES, list);
+		setValue(Param.LIST_OF_ADDRESSES, list);
 	}
 	
 	/**
@@ -204,7 +204,7 @@ public abstract class UserInfoBaseDAO
 	 */
 	public List<PhoneDAO> getListOfPhones() 
 	{
-		return lookupValue(Params.LIST_OF_PHONES);
+		return lookupValue(Param.LIST_OF_PHONES);
 	}
 	
 	/**
@@ -213,7 +213,7 @@ public abstract class UserInfoBaseDAO
 	 */
 	public void setListOfPhones(List<PhoneDAO> list)
 	{
-		setValue(Params.LIST_OF_PHONES, list);
+		setValue(Param.LIST_OF_PHONES, list);
 	}
 	
 	
@@ -221,7 +221,7 @@ public abstract class UserInfoBaseDAO
 	@SuppressWarnings("unchecked")
 	public ArrayValues<NVPair> getEmails()
 	{
-		return (ArrayValues<NVPair>) lookup(Params.LIST_OF_EMAILS);
+		return (ArrayValues<NVPair>) lookup(Param.LIST_OF_EMAILS);
 	}
 	
 	
@@ -231,7 +231,7 @@ public abstract class UserInfoBaseDAO
 	 */
 	public List<NVPair> getListOfEmails() 
 	{
-		return lookupValue(Params.LIST_OF_EMAILS);
+		return lookupValue(Param.LIST_OF_EMAILS);
 	}
 	
 	/**
@@ -240,7 +240,7 @@ public abstract class UserInfoBaseDAO
 	 */
 	public void setListOfEmails(List<NVPair> list)
 	{
-		setValue(Params.LIST_OF_EMAILS, list);
+		setValue(Param.LIST_OF_EMAILS, list);
 	}
 	
 	/**
@@ -249,7 +249,7 @@ public abstract class UserInfoBaseDAO
 	 */
 	public List<NVPair> getAdditonalInfo() 
 	{
-		return lookupValue(Params.ADDITIONAL_INFO);
+		return lookupValue(Param.ADDITIONAL_INFO);
 	}
 	
 	/**
@@ -258,6 +258,6 @@ public abstract class UserInfoBaseDAO
 	 */
 	public void setAdditionalInfo(List<NVPair> info)
 	{
-		setValue(Params.ADDITIONAL_INFO, info);
+		setValue(Param.ADDITIONAL_INFO, info);
 	}
 }

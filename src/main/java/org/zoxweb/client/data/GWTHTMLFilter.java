@@ -17,7 +17,8 @@ package org.zoxweb.client.data;
 
 import com.google.gwt.regexp.shared.RegExp;
 
-public class GWTHTMLFilter {
+public class GWTHTMLFilter
+{
 	
 	public final static String tagStart =
 		"^\\<\\w+((\\s+\\w+(\\s*\\=\\s*(?:\".*?\"|'.*?'|[^'\"\\>\\s]+))?)+\\s*|\\s*)\\>";
@@ -43,10 +44,12 @@ public class GWTHTMLFilter {
      * @param str of type html to be checked
      * @return true is html
      */
-    public static boolean isHTML(String str) {
+    public static boolean isHTML(String str)
+    {
         boolean ret = false;
         
-        if (str != null) {
+        if (str != null)
+        {
             ret = htmlPattern.test(str);
         }
         

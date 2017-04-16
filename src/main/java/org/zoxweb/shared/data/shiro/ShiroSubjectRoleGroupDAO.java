@@ -17,7 +17,7 @@ package org.zoxweb.shared.data.shiro;
 
 @SuppressWarnings("serial")
 public class ShiroSubjectRoleGroupDAO
-extends ShiroAssociationDAO
+    extends ShiroAssociationDAO
 {
 
 	public ShiroSubjectRoleGroupDAO()
@@ -27,12 +27,8 @@ extends ShiroAssociationDAO
 	
 	public ShiroSubjectRoleGroupDAO( ShiroSubjectDAO subject, ShiroRoleGroupDAO roleGroup)
 	{
-		
-		super( ShiroAssociationType.ROLEGROUP_TO_SUBJECT, subject, roleGroup);
-	
+	    super( ShiroAssociationType.ROLEGROUP_TO_SUBJECT, subject, roleGroup);
 	}
-	
-	
 	
 	public ShiroSubjectDAO getSubject() {
 		return (ShiroSubjectDAO) getAssociatedTo();

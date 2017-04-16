@@ -35,16 +35,16 @@ public class LoginTokenDAO
 		
 		;
 		
-		private final NVConfig cType;
+		private final NVConfig nvc;
 		
-		Param(NVConfig c)
+		Param(NVConfig nvc)
 		{
-			cType = c;
+			this.nvc = nvc;
 		}
 		
 		public NVConfig getNVConfig() 
 		{
-			return cType;
+			return nvc;
 		}
 	}
 	

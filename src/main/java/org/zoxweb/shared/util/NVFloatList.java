@@ -26,6 +26,7 @@ import java.util.List;
 public class NVFloatList 
 	extends NVBase<List<Float>>
 {
+
 	/**
 	 * Default constructor used for Java Bean Compiler.
 	 */
@@ -43,4 +44,5 @@ public class NVFloatList
 	{
 		super(name, value);
 	}
+
 }

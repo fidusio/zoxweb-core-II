@@ -20,26 +20,32 @@ import java.util.Comparator;
 import org.zoxweb.shared.util.Const.RelationalOperator;
 
 public class AppointmentComparator
-		implements Comparator<Appointment> {
+    implements Comparator<Appointment>
+{
 
 	private RelationalOperator equality;
 	
-	public AppointmentComparator() {
-		this( RelationalOperator.EQUAL);
+	public AppointmentComparator()
+    {
+		this(RelationalOperator.EQUAL);
 	}
 	
-	public AppointmentComparator(RelationalOperator equality) {
+	public AppointmentComparator(RelationalOperator equality)
+    {
 		this.equality = equality;
 	}
 
 	@Override
-	public int compare(Appointment o1, Appointment o2) {
+	public int compare(Appointment o1, Appointment o2)
+    {
 		int result = 0;
 
-		if (o1 != null && o2 != null) {
+		if (o1 != null && o2 != null)
+		{
 			result = (int)(o1.getExpirationInMillis() - o2.getExpirationInMillis());
 
-			if (result == 0) {
+			if (result == 0)
+			{
 				switch(equality)
 				{
 				case EQUAL:

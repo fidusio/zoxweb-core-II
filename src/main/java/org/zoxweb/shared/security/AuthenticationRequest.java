@@ -42,7 +42,6 @@ public class AuthenticationRequest
 	extends AuthenticationBase
 	
 {
-	
 	public enum Params
 		implements GetNVConfig
 	{
@@ -86,16 +85,10 @@ public class AuthenticationRequest
 		super(NVC_AUTHENTICATON_REQUEST);
 	}
 
-
-
-
-	
-	
 	public String getAccessCode()
 	{
 		return lookupValue(Params.ACCESS_CODE);
 	}
-	
 	
 	public void setAccessCode(String code)
 	{

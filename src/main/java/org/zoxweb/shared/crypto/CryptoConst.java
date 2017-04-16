@@ -18,15 +18,17 @@ package org.zoxweb.shared.crypto;
 import org.zoxweb.shared.util.GetName;
 import org.zoxweb.shared.util.SharedUtil;
 
-public final class CryptoConst {
+public final class CryptoConst
+{
 
-	private CryptoConst() {
+	private CryptoConst()
+    {
 
 	}
 
 	public enum MDType
-            implements GetName {
-
+            implements GetName
+    {
 		MD5("md5"),
 		SHA_1("sha-1"),
 		SHA_224("sha-224"),
@@ -38,29 +40,32 @@ public final class CryptoConst {
 
 		private final String name;
 
-		MDType(String name) {
+		MDType(String name)
+        {
 			this.name = name;
 		}
 	
 		@Override
-		public String getName() {
+		public String getName()
+        {
 			return name;
 		}
 
 		@Override
-		public String toString() {
+		public String toString()
+        {
 			return getName();
 		}
 		
-		public static MDType lookup(String mdName) {
+		public static MDType lookup(String mdName)
+        {
 			return (MDType) SharedUtil.lookupEnum(MDType.values(), mdName);
 		}
 	}
-	
 
 	public enum DataMDType
-            implements GetName {
-
+        implements GetName
+    {
 		MD5_ENCRYPTED("MD5-ENCRYPTED"),
 		MD5_ORIGINAL("MD5-ORIGINAL"),
 		SHA_256_ENCRYPTED("SHA-256-ENCRYPTED"),
@@ -70,20 +75,24 @@ public final class CryptoConst {
 
 		private final String name;
 
-		DataMDType(String name) {
+		DataMDType(String name)
+        {
 			this.name = name;
 		}
 
 		@Override
-		public String getName() {
+		public String getName()
+        {
 			return name;
 		}
 		
-		public static MDType toMDType(String name) {
+		public static MDType toMDType(String name)
+        {
 			return toMDType((DataMDType)SharedUtil.lookupEnum(DataMDType.values(), name));
 		}
 		
-		public static MDType toMDType(DataMDType dmdt) {
+		public static MDType toMDType(DataMDType dmdt)
+        {
 			MDType ret = null;
 			switch(dmdt)
 			{
@@ -102,11 +111,10 @@ public final class CryptoConst {
 			return ret;
 		}
 	}
-	
-	
-	public enum SecureRandomType
-            implements GetName {
 
+	public enum SecureRandomType
+        implements GetName
+    {
 		SECURE_RANDOM_VM_DEFAULT("DefaultVM"),
 		SECURE_RANDOM_VM_STRONG("DefaultVMStrong"),
 		NATIVE("NativePRNG"),
@@ -116,21 +124,25 @@ public final class CryptoConst {
 
 		private final String name;
 
-		SecureRandomType(String name) {
+		SecureRandomType(String name)
+        {
 			this.name = name;
 		}
 	
 		@Override
-		public String getName() {
+		public String getName()
+        {
 			return name;
 		}
 
         @Override
-		public String toString() {
+		public String toString()
+        {
 			return getName();
 		}
 		
-		public static SecureRandomType lookup(String mdName) {
+		public static SecureRandomType lookup(String mdName)
+        {
 			return (SecureRandomType) SharedUtil.lookupEnum(SecureRandomType.values(), mdName);
 		}
 	}

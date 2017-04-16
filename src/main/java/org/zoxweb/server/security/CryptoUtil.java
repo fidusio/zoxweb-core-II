@@ -63,15 +63,16 @@ import org.zoxweb.shared.util.Const;
 import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
 
-public class CryptoUtil {
-	
+public class CryptoUtil
+{
 	/**
 	 * Name of the secure random algorithm
 	 */
 	public static SecureRandomType SECURE_RANDOM_ALGO = null;
 	
 	
-	private static final Lock lock = new ReentrantLock();
+	private static final Lock LOCK = new ReentrantLock();
+
 	/**
 	 * Default string encoding UTF-8
 	 */
@@ -89,12 +90,8 @@ public class CryptoUtil {
 	 */
 	public static final int AES_BLOCK_SIZE = 16;
 	public static final int MIN_KEY_BYTES = 6;
-	
-	
+
 	public static final String KEY_STORE_TYPE = "JCEKS";
-	 
-	
-	
 	public static final String HMAC_SHA_256 = "HmacSHA256";
 	public static final String SHA_256 = "SHA-256";
 	public static final String AES = "AES";
@@ -103,12 +100,16 @@ public class CryptoUtil {
 	
 	public static final int SALT_LENGTH = 32;
 	
-	public static byte[] generateRandomBytes( SecureRandom sr, int size) throws NullPointerException, IllegalArgumentException, NoSuchAlgorithmException {
-		if (size < 1) {
+	public static byte[] generateRandomBytes( SecureRandom sr, int size)
+        throws NullPointerException, IllegalArgumentException, NoSuchAlgorithmException
+    {
+		if (size < 1)
+		{
 			throw new IllegalArgumentException("invalid size " + size + " must be greater than zero.");
 		}
 		
-		if (sr == null) {
+		if (sr == null)
+		{
 			sr = defaultSecureRandom();
 		}
 
@@ -120,8 +121,8 @@ public class CryptoUtil {
 	
 	
 	public static SecureRandom newSecureRandom(SecureRandomType srt) 
-			throws NoSuchAlgorithmException {
-
+        throws NoSuchAlgorithmException
+    {
 		switch(srt)
 		{
 		case SECURE_RANDOM_VM_STRONG:
@@ -135,57 +136,62 @@ public class CryptoUtil {
 		}
 	}
 	
-	public static SecureRandom defaultSecureRandom() throws NoSuchAlgorithmException {
-		if (SECURE_RANDOM_ALGO == null) {
-			try {
-				lock.lock();
+	public static SecureRandom defaultSecureRandom()
+        throws NoSuchAlgorithmException
+    {
+		if (SECURE_RANDOM_ALGO == null)
+		{
+			try
+            {
+                LOCK.lock();
 
-				if (SECURE_RANDOM_ALGO == null) {
-					for (SecureRandomType srt : SecureRandomType.values()) {
-						try {
+				if (SECURE_RANDOM_ALGO == null)
+				{
+					for (SecureRandomType srt : SecureRandomType.values())
+					{
+						try
+                        {
 							newSecureRandom(srt);	
 							SECURE_RANDOM_ALGO = srt;
 							//System.out.println("Default secure algorithm:"+srt);
 							break;
-						} catch(NoSuchAlgorithmException e) {
+						}
+						catch(NoSuchAlgorithmException e)
+                        {
 							//e.printStackTrace();
 						}		
 					}
 				}	
-			} finally {
-				lock.unlock();
+			}
+			finally
+            {
+                LOCK.unlock();
 			}
 		}
 		
 		return newSecureRandom(SECURE_RANDOM_ALGO);
 	}
 	
-	
-	
-	public static PasswordDAO hashedPassword(String algo, 
-											 int saltLength,
-											 int saltIteration,
-											 String password) throws NullPointerException, IllegalArgumentException, NoSuchAlgorithmException
+	public static PasswordDAO hashedPassword(String algo, int saltLength, int saltIteration, String password)
+        throws NullPointerException, IllegalArgumentException, NoSuchAlgorithmException
 	{
 		SharedUtil.checkIfNulls("Null parameter", algo, password);
 		return hashedPassword(MDType.lookup(algo), saltLength, saltIteration, password);
 	}
 
-	public static PasswordDAO hashedPassword(MDType algo, 
-											 int saltLength,
-											 int saltIteration,
-											 String password) throws NullPointerException, IllegalArgumentException, NoSuchAlgorithmException
+	public static PasswordDAO hashedPassword(MDType algo, int saltLength, int saltIteration, String password)
+        throws NullPointerException, IllegalArgumentException, NoSuchAlgorithmException
 	{
 		SharedUtil.checkIfNulls("Null parameter", algo, password);
-		byte paswd[] = SharedStringUtil.getBytes(password);
-		
+		byte[] paswd = SharedStringUtil.getBytes(password);
 
 		return hashedPassword(algo, saltLength, saltIteration, paswd);
 	}
 	
 	public static PasswordDAO mergeContent(PasswordDAO password, PasswordDAO toMerge)
 	{
-		synchronized(password) {
+		synchronized(password)
+        {
 			password.setName(toMerge.getName());
 			password.setHashIteration(toMerge.getHashIteration());
 			password.setSalt(toMerge.getSalt());
@@ -195,24 +201,25 @@ public class CryptoUtil {
 		return password;
 	}
 	
-	public static PasswordDAO hashedPassword(MDType algo, 
-											 int saltLength,
-											 int saltIteration,
-											 byte password[]) throws NullPointerException, IllegalArgumentException, NoSuchAlgorithmException
+	public static PasswordDAO hashedPassword(MDType algo, int saltLength, int saltIteration, byte[] password)
+        throws NullPointerException, IllegalArgumentException, NoSuchAlgorithmException
 	{
 		SharedUtil.checkIfNulls("Null parameter", algo, password);
-		if (password.length < 6) {
+		if (password.length < 6)
+		{
 			throw new IllegalArgumentException("password length too short");
 		}
-		
 	
 		 // Generate a random salt
         SecureRandom random = defaultSecureRandom();
-        if (saltLength < SALT_LENGTH) {
+
+        if (saltLength < SALT_LENGTH)
+        {
         	saltLength = SALT_LENGTH;
         }
 
-        if (saltIteration < 0) {
+        if (saltIteration < 0)
+        {
         	saltIteration = 0;
         }
         
@@ -224,52 +231,58 @@ public class CryptoUtil {
         passwordDAO.setPassword(hashWithInterations( md, salt, password, saltIteration, false));
 		passwordDAO.setHashIteration(saltIteration);
 		passwordDAO.setName(algo);
+
 		return passwordDAO;	
 	}
 	
 	public static boolean isPasswordValid(PasswordDAO passwordDAO, String password)
-		throws NullPointerException, IllegalArgumentException, NoSuchAlgorithmException {
+		throws NullPointerException, IllegalArgumentException, NoSuchAlgorithmException
+    {
 		SharedUtil.checkIfNulls("Null values", passwordDAO, password);
 		byte genHash[] =  hashWithInterations(MessageDigest.getInstance( passwordDAO.getName()), passwordDAO.getSalt(), SharedStringUtil.getBytes(password), passwordDAO.getHashIteration(), false);
 		return SharedUtil.slowEquals(genHash,  passwordDAO.getPassword());
 	}
-	
-	
-	
 
 	public static void validatePassword(final PasswordDAO passwordDAO, String password)
-			throws NullPointerException, IllegalArgumentException, AccessException {
+        throws NullPointerException, IllegalArgumentException, AccessException {
 		SharedUtil.checkIfNulls("Null values", passwordDAO, password);
 		validatePassword(passwordDAO, password.toCharArray());
 	}
 
 	
 	public static void validatePassword(final PasswordDAO passwordDAO, final char[] password)
-			throws NullPointerException, IllegalArgumentException, AccessException {
+        throws NullPointerException, IllegalArgumentException, AccessException
+    {
 
 		SharedUtil.checkIfNulls("Null values", passwordDAO, password);
 		boolean valid = false;
 
-		try {
+		try
+        {
 			valid = isPasswordValid(passwordDAO, new String(password));
-		} catch ( NoSuchAlgorithmException  e) {
+		}
+		catch (NoSuchAlgorithmException  e)
+        {
 			//e.printStackTrace();
 			throw new AccessException("Invalid Credentials");
 		}
 
-		if (!valid) {
+		if (!valid)
+		{
 			throw new AccessException("Invalid Credentials");
 		}
 	}
 
 	public static EncryptedKeyDAO rekeyEncrytedKeyDAO(final EncryptedKeyDAO toBeRekeyed, String originalKey, String newKey)
-			throws NullPointerException, IllegalArgumentException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException, SignatureException {
+        throws NullPointerException, IllegalArgumentException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException, SignatureException
+    {
 		SharedUtil.checkIfNulls("Null parameter", originalKey, toBeRekeyed, newKey);
 		return rekeyEncrytedKeyDAO(toBeRekeyed, SharedStringUtil.getBytes(originalKey), SharedStringUtil.getBytes(newKey));
 	}
 	
 	public static EncryptedKeyDAO rekeyEncrytedKeyDAO(final EncryptedKeyDAO toBeRekeyed, final byte[] originalKey, final byte[] newKey)
-			throws NullPointerException, IllegalArgumentException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException, SignatureException {
+        throws NullPointerException, IllegalArgumentException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException, SignatureException
+    {
 		SharedUtil.checkIfNulls("Null parameter", originalKey, toBeRekeyed, newKey);
 		byte[] decyptedKey = decryptEncryptedDAO(toBeRekeyed, originalKey);
 
@@ -277,39 +290,47 @@ public class CryptoUtil {
 	}
 	
 	public static EncryptedKeyDAO createEncryptedKeyDAO(String key) 
-			throws NullPointerException, IllegalArgumentException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
+        throws NullPointerException,
+               IllegalArgumentException,
+               InvalidKeyException,
+               NoSuchAlgorithmException,
+               NoSuchPaddingException,
+               InvalidAlgorithmParameterException,
+               IllegalBlockSizeException,
+               BadPaddingException
+    {
 		return createEncryptedKeyDAO(SharedStringUtil.getBytes(key));
 	}
 
 	public static EncryptedKeyDAO createEncryptedKeyDAO(final byte key[])
-			throws NullPointerException,
-			       IllegalArgumentException,
-			       NoSuchAlgorithmException,
-				   NoSuchPaddingException,
-				   InvalidKeyException,
-				   InvalidAlgorithmParameterException,
-				   IllegalBlockSizeException,
-				   BadPaddingException
+        throws NullPointerException,
+               IllegalArgumentException,
+               NoSuchAlgorithmException,
+               NoSuchPaddingException,
+               InvalidKeyException,
+               InvalidAlgorithmParameterException,
+               IllegalBlockSizeException,
+               BadPaddingException
 	{
 		
 		return (EncryptedKeyDAO) encryptDAO(new EncryptedKeyDAO(), key, null);
 	}
 
-	public static  EncryptedDAO encryptDAO(final EncryptedDAO ekd,
-										   final byte key[],
-										   byte data[])
-			throws NullPointerException,
-				   IllegalArgumentException,
-				   NoSuchAlgorithmException,
-				   NoSuchPaddingException,
-				   InvalidKeyException,
-				   InvalidAlgorithmParameterException,
-				   IllegalBlockSizeException,
-				   BadPaddingException
+	public static  EncryptedDAO encryptDAO(final EncryptedDAO ekd, final byte key[], byte data[])
+        throws NullPointerException,
+               IllegalArgumentException,
+               NoSuchAlgorithmException,
+               NoSuchPaddingException,
+               InvalidKeyException,
+               InvalidAlgorithmParameterException,
+               IllegalBlockSizeException,
+               BadPaddingException
 	{
 	
 		SharedUtil.checkIfNulls("Null key", key, ekd);
-		if (key.length < MIN_KEY_BYTES) {
+
+		if (key.length < MIN_KEY_BYTES)
+		{
 			throw new IllegalArgumentException("Key too short " + key.length*Byte.SIZE + "(bits) min size " + Const.SizeInBytes.B.sizeInBits(MIN_KEY_BYTES) +"(bits)");
 		}
 
@@ -336,7 +357,8 @@ public class CryptoUtil {
 		hmac.update(SharedStringUtil.getBytes(ekd.getHMACAlgoName().toLowerCase()));
 
 
-		if (data == null) {
+		if (data == null)
+		{
 			data = generateKey((int) Const.SizeInBytes.B.sizeInBits(AES_256_KEY_SIZE), AES).getEncoded();
 		}
 		
@@ -345,28 +367,25 @@ public class CryptoUtil {
 		
 		// create a new key and encrypted with the key
 		
-		
-		
-		
 		ekd.setIV(ivSpec.getIV());
 		
 		// create a loop to read the data in the size of 16 bytes
 		// write the output to a byteoputput stream
 		
-		
-		
-			
-		
-		if (data.length % AES_BLOCK_SIZE != 0 || data.length == 0) {
+
+		if (data.length % AES_BLOCK_SIZE != 0 || data.length == 0)
+		{
 			UByteArrayOutputStream baos = new UByteArrayOutputStream();
 			baos.write(data);	
 
-			while ((baos.size() % AES_BLOCK_SIZE) != 0 || baos.size() == 0) {
+			while ((baos.size() % AES_BLOCK_SIZE) != 0 || baos.size() == 0)
+            {
 				// padding
 				// instead of zero 
 				// add the size
 				baos.write(baos.size());
 			}
+
 			IOUtil.close(baos);
 			data = baos.toByteArray();
 		}
@@ -386,13 +405,13 @@ public class CryptoUtil {
 	
 	
 	public static byte[] decryptEncryptedDAO(final EncryptedDAO ekd, final String key) 
-			throws NoSuchAlgorithmException,
-				   NoSuchPaddingException,
-				   InvalidKeyException,
-				   InvalidAlgorithmParameterException,
-				   IllegalBlockSizeException,
-				   BadPaddingException,
-				   SignatureException
+        throws NoSuchAlgorithmException,
+               NoSuchPaddingException,
+               InvalidKeyException,
+               InvalidAlgorithmParameterException,
+               IllegalBlockSizeException,
+               BadPaddingException,
+               SignatureException
 				 
 	{
 		return decryptEncryptedDAO(ekd, SharedStringUtil.getBytes(key));
@@ -400,16 +419,15 @@ public class CryptoUtil {
 	
 	
 	public static byte[] decryptEncryptedDAO(final EncryptedDAO ekd, final byte key[]) 
-			throws NoSuchAlgorithmException,
-				   NoSuchPaddingException,
-				   InvalidKeyException,
-				   InvalidAlgorithmParameterException,
-				   IllegalBlockSizeException,
-				   BadPaddingException,
-				   SignatureException
+        throws NoSuchAlgorithmException,
+               NoSuchPaddingException,
+               InvalidKeyException,
+               InvalidAlgorithmParameterException,
+               IllegalBlockSizeException,
+               BadPaddingException,
+               SignatureException
 				  
 	{
-		
 		// create iv vector
 		MessageDigest digest = MessageDigest.getInstance(SHA_256);
 		IvParameterSpec ivSpec = new IvParameterSpec(ekd.getIV());
@@ -424,15 +442,14 @@ public class CryptoUtil {
 		hmac.update(SharedStringUtil.getBytes(ekd.getDescription().toLowerCase()));
 		hmac.update(SharedStringUtil.getBytes(ekd.getHMACAlgoName().toLowerCase()));
 		hmac.update(BytesValueFilter.SINGLETON.validate(ekd.getDataLength()));
-		
-		
+
 		hmac.update(ekd.getEncryptedData());
-		
-		
-		if ( !SharedUtil.slowEquals(ekd.getHMAC(), hmac.doFinal()))
+
+		if (!SharedUtil.slowEquals(ekd.getHMAC(), hmac.doFinal()))
 		{
 			throw new SignatureException("Data tempered with");
 		}
+
 		byte decryptedData[] = cipher.doFinal(ekd.getEncryptedData());
 		byte toRet[] = decryptedData;
 		
@@ -442,47 +459,43 @@ public class CryptoUtil {
 			toRet = new byte[(int) ekd.getDataLength()];
 			System.arraycopy(decryptedData, 0, toRet, 0, toRet.length);
 		}
-		
-		
+
 		return toRet;
 	}
-	
-	
+
 	public static Key getKeyFromKeyStore(final InputStream keyStoreIS,
 										 String keyStoreType,
 										 String keystorePass,
 										 String alias,
 										 String keyPass)
-		throws KeyStoreException,
-			   NoSuchAlgorithmException,
-			   CertificateException,
-			   IOException,
-			   UnrecoverableKeyException
+		throws KeyStoreException, NoSuchAlgorithmException, CertificateException, IOException, UnrecoverableKeyException
 	{
-		try {
+		try
+        {
 			KeyStore keystore = loadKeyStore(keyStoreIS, keyStoreType,  keystorePass.toCharArray()); 
 
-			if (!keystore.containsAlias(alias)) {
+			if (!keystore.containsAlias(alias))
+			{
 				throw new IllegalArgumentException("Alias for key not found");
 			}
 		
 			Key key = keystore.getKey(alias, keyPass.toCharArray());
 		
 			return key;
-		} finally {
+		}
+		finally
+        {
 			
 		}
-		
 	}
 
-	
 	public static SSLContext initSSLContext(final String keyStoreFilename, String keyStoreType, final char[] keyStorePassword, 
-			final char[] crtPassword,
-			final String trustStoreFilename, final char[] trustStorePassword) 
-			throws GeneralSecurityException, IOException
+			final char[] crtPassword, final String trustStoreFilename, final char[] trustStorePassword)
+        throws GeneralSecurityException, IOException
 	{
 		FileInputStream ksfis = null;
 		FileInputStream tsfis = null;
+
 		try 
 		{
 			ksfis = new FileInputStream(keyStoreFilename);
@@ -499,20 +512,25 @@ public class CryptoUtil {
 	
 	public static SSLContext initSSLContext(final InputStream keyStoreIS, String keyStoreType, final char[] keyStorePassword, final char[] crtPassword,
 			final InputStream trustStoreIS, final char[] trustStorePassword) 
-			throws GeneralSecurityException, IOException
+        throws GeneralSecurityException, IOException
 	{
 		KeyStore ks = CryptoUtil.loadKeyStore(keyStoreIS, keyStoreType, keyStorePassword);
 		KeyStore ts = null;
 		KeyManagerFactory kmf =  KeyManagerFactory.getInstance("SunX509");
 		TrustManagerFactory tmf = TrustManagerFactory.getInstance("SunX509");
-		if (trustStoreIS != null) {
+
+		if (trustStoreIS != null)
+		{
 			ts = CryptoUtil.loadKeyStore(trustStoreIS, keyStoreType, trustStorePassword);
 		}
 
-		if (crtPassword != null) {
+		if (crtPassword != null)
+		{
 			kmf.init(ks, crtPassword);
 			tmf.init(ts != null ? ts : ks);
-		} else {
+		}
+		else
+		    {
 			kmf.init(ks, keyStorePassword);
 			tmf.init(ts != null ? ts : ks);
 		}
@@ -531,64 +549,76 @@ public class CryptoUtil {
 			                                		String newKeystorePass,
 			                                		String newAlias,
 			                                		String newKeyPass)
-		throws KeyStoreException,
-			   NoSuchAlgorithmException,
-			   CertificateException,
-			   IOException,
-			   UnrecoverableKeyException
+		throws KeyStoreException, NoSuchAlgorithmException, CertificateException, IOException, UnrecoverableKeyException
 	{
-		try {
+		try
+        {
 		
 			KeyStore keystore = loadKeyStore(keyStoreIS, keyStoreType,  keystorePass.toCharArray()); 
 		
 			if (!keystore.containsAlias(alias)) 
-				throw new IllegalArgumentException("Alias for key not found");
+            {
+                throw new IllegalArgumentException("Alias for key not found");
+            }
 		
 			Key key = keystore.getKey(alias, keyPass.toCharArray());
 			keystore.deleteEntry(alias);
 			keystore.setKeyEntry(newAlias, key, newKeyPass.toCharArray(), null);
 			keystore.store(keyStoreOS, newKeystorePass.toCharArray());
 
-		} finally {
+		}
+		finally
+        {
 			IOUtil.close(keyStoreOS);
 		}
-		
 	}
-	
-	
-	public static KeyStore createKeyStore(String keyStoreFilename, String keyStoreType, String keyStorePass) throws IOException, KeyStoreException, NoSuchAlgorithmException, CertificateException
+
+	public static KeyStore createKeyStore(String keyStoreFilename, String keyStoreType, String keyStorePass)
+        throws IOException, KeyStoreException, NoSuchAlgorithmException, CertificateException
 	{
 		return createKeyStore( new File(keyStoreFilename), keyStoreType, keyStorePass, false);
 	}
 
-	public static KeyStore createKeyStore(final File keyStoreFile, String keyStoreType, String keyStorePass, final boolean fileOverride) throws IOException, KeyStoreException, NoSuchAlgorithmException, CertificateException
+	public static KeyStore createKeyStore(final File keyStoreFile, String keyStoreType, String keyStorePass, final boolean fileOverride)
+        throws IOException, KeyStoreException, NoSuchAlgorithmException, CertificateException
 	{
 		OutputStream os = null;
-		if (keyStoreFile.exists()) {
-			if (!fileOverride) {
+
+		if (keyStoreFile.exists())
+		{
+			if (!fileOverride)
+			{
 				throw new IllegalArgumentException("File already exist");
 			}
-		} else {
+		}
+		else
+        {
 			keyStoreFile.createNewFile();
 		}
 		
-		try {
+		try
+        {
 			os = new FileOutputStream(keyStoreFile);
 			return createKeyStore( os, keyStoreType, keyStorePass);
-		} finally {
+		}
+		finally
+        {
 			IOUtil.close(os);
 		}
 	}
 	
 	
-	public static KeyStore createKeyStore(final OutputStream keyStoreOS, String keyStoreType, String keyStorePass) throws KeyStoreException, NoSuchAlgorithmException, CertificateException, IOException
+	public static KeyStore createKeyStore(final OutputStream keyStoreOS, String keyStoreType, String keyStorePass)
+        throws KeyStoreException, NoSuchAlgorithmException, CertificateException, IOException
 	{
 		KeyStore ret = KeyStore.getInstance(keyStoreType);
 		
 		try
 		{
 			ret.store(keyStoreOS, keyStorePass.toCharArray());
-		} finally {
+		}
+		finally
+        {
 			IOUtil.close(keyStoreOS);
 		}
 		
@@ -596,19 +626,20 @@ public class CryptoUtil {
 	}
 	
 	public static final KeyStore loadKeyStore(final InputStream keyStoreIS, String keyStoreType, final char[] keyStorePassword) 
-			throws KeyStoreException, NoSuchAlgorithmException, CertificateException, IOException
+        throws KeyStoreException, NoSuchAlgorithmException, CertificateException, IOException
 	{
-		try {
+		try
+        {
 			KeyStore keystore = KeyStore.getInstance(keyStoreType);
 			keystore.load(keyStoreIS, keyStorePassword);
 			return keystore;
-		} finally {
+		}
+		finally
+        {
 			
 			IOUtil.close(keyStoreIS);
 		}
 	}
-	
-	
 	
 	public static byte[] hashWithInterations(MessageDigest digest,
 											 byte salt[],
@@ -618,7 +649,9 @@ public class CryptoUtil {
 	{
 		// reset the digest
 		digest.reset();
-		if (salt != null) {
+
+		if (salt != null)
+		{
 			// insert the salt
 			digest.update(salt);
 		}
@@ -631,10 +664,12 @@ public class CryptoUtil {
 		{
 			digest.reset();
 			digest.update(hashed);
+
 			if (rechewdata)
 			{
 				digest.update(data);
 			}
+
 			hashed = digest.digest();
 		}
 		return hashed;
@@ -657,9 +692,10 @@ public class CryptoUtil {
 			random.nextBytes(bytes);
 			digest.update(bytes);
 		}
+
 		System.arraycopy(digest.digest(), 0, bytes, 0, bytes.length);
+
 		return bytes;
-		
 	}
 	
 	
@@ -669,8 +705,5 @@ public class CryptoUtil {
 		kg.init(keySizeInBits, (SecureRandom)defaultSecureRandom());
 		return kg.generateKey();
 	}
-	
 
-	
-	
 }

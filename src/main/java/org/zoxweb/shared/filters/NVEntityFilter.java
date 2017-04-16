@@ -20,20 +20,24 @@ import org.zoxweb.shared.util.NVEntity;
 
 @SuppressWarnings("serial")
 public class NVEntityFilter
-		implements ValueFilter<NVEntity, NVEntity> {
-	
+    implements ValueFilter<NVEntity, NVEntity>
+{
 	private NVConfigEntity[] nvces;
 	
-	public NVEntityFilter(NVConfigEntity... nvces) {
+	public NVEntityFilter(NVConfigEntity... nvces)
+    {
 		this.nvces = nvces;
 	}
 	
 	@Override
-	public String toCanonicalID() {
+	public String toCanonicalID()
+    {
 		StringBuilder sb = new StringBuilder();
 		
-		for (NVConfigEntity nvce : nvces) {
-			if (sb.length() > 0) {
+		for (NVConfigEntity nvce : nvces)
+		{
+			if (sb.length() > 0)
+			{
 				sb.append(", ");
 			}
 			
@@ -45,24 +49,32 @@ public class NVEntityFilter
 	
 	@Override
 	public NVEntity validate(NVEntity in) 
-			throws NullPointerException, IllegalArgumentException {
-
-		if (in != null) {
-			if (isValid(in)) {
+        throws NullPointerException, IllegalArgumentException
+    {
+		if (in != null)
+		{
+			if (isValid(in))
+			{
 				return in;
 			}
 			
 			throw new IllegalArgumentException("Invalid NVEntity: " +  in);
-		} else {
+		}
+		else
+        {
 			throw new NullPointerException("Null NVEntity: " +  in);
 		}
 	}
 
 	@Override
-	public boolean isValid(NVEntity in) {
-		if (in != null) {
-			for (NVConfigEntity nvce : nvces) {
-				if (nvce.getMetaType() == in.getClass()) {
+	public boolean isValid(NVEntity in)
+    {
+		if (in != null)
+		{
+			for (NVConfigEntity nvce : nvces)
+			{
+				if (nvce.getMetaType() == in.getClass())
+				{
 					return true;
 				}
 			}

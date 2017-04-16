@@ -15,7 +15,6 @@
  */
 package org.zoxweb.server.io;
 
-
 import java.security.MessageDigest;
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicLong;
@@ -23,12 +22,12 @@ import java.util.concurrent.atomic.AtomicLong;
 import org.zoxweb.shared.util.SharedStringUtil;
 
 /**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
+ *
  */
 public class MultiDigest
-implements MultiDigestInterface
+    implements MultiDigestInterface
 {
+
 	private boolean on = true;
 	private AtomicLong totalBytes = new AtomicLong();
 	
@@ -39,7 +38,6 @@ implements MultiDigestInterface
 	
 	/**
      * Associates the specified message digest with this stream.
-     *
      * @param digests the message digest to be associated with this stream.
      */
     public void setMessageDigests(MessageDigest[] digests)
@@ -49,7 +47,6 @@ implements MultiDigestInterface
     
     /**
      * Returns the message digest associated with this stream.
-     *
      * @return the message digest associated with this stream.
      */
     public MessageDigest[] getMessageDigests() {
@@ -61,7 +58,6 @@ implements MultiDigestInterface
      * it is on, a call to one of the <code>write</code> methods results in an
      * update on the message digest.  But when it is off, the message
      * digest is not updated.
-     *
      * @param on true to turn the digest function on, false to turn it off.
      */
     public void on(boolean on) 
@@ -69,19 +65,18 @@ implements MultiDigestInterface
         this.on = on;
     }
     
-    
     public long totalBytes()
     {
     	return totalBytes.get();
     }
-    
-    
+
     /**
+     *
      * @return Prints a string representation of this digest output stream and its associated message digest object.
      */
      public String toString()
      {
-         return "Total byes:" + totalBytes +  ". Digests:" + Arrays.toString(digests);
+         return "Total bytes:" + totalBytes +  ". Digests:" + Arrays.toString(digests);
      }
      
      public void update(byte b[], int off, int len)
@@ -89,10 +84,13 @@ implements MultiDigestInterface
     	 if (on && b != null) 
          {
          	totalBytes.addAndGet(len);
-         	if(digests != null)
+
+         	if (digests != null)
          	{
-         		for(MessageDigest digest : digests)
-         			digest.update(b, off, len);
+         		for (MessageDigest digest : digests)
+                {
+                    digest.update(b, off, len);
+                }
          	}
          }
      }

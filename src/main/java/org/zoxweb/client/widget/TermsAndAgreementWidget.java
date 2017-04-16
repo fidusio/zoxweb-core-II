@@ -187,8 +187,8 @@ public class TermsAndAgreementWidget
 							
 							if (SharedStringUtil.contains(contentEncoding, HTTPHeaderValue.CONTENT_ENCODING_LZ, true))
 							{
-								byte data[] = SharedBase64.decode(SharedStringUtil.getBytes(response.getText()));
-								byte unzipped [] = QuickLZ.decompress(data);
+								byte[] data = SharedBase64.decode(SharedStringUtil.getBytes(response.getText()));
+								byte[] unzipped = QuickLZ.decompress(data);
 								json = SharedStringUtil.toString(unzipped);								
 							}
 							else

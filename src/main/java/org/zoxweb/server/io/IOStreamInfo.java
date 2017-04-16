@@ -8,6 +8,7 @@ import java.net.Socket;
 public class IOStreamInfo
 	implements AutoCloseable
 {
+
 	public volatile InputStream is;
 	public volatile OutputStream os;
 	public volatile Socket s;
@@ -18,20 +19,23 @@ public class IOStreamInfo
 		this.os = os;
 	}
 	
-	public IOStreamInfo(Socket socket) throws IOException
+	public IOStreamInfo(Socket socket)
+		throws IOException
 	{
 		this(socket.getInputStream(), socket.getOutputStream());
 		s = socket;
 	}
 	
-	public IOStreamInfo(Socket socket, int timeout) throws IOException
+	public IOStreamInfo(Socket socket, int timeout)
+		throws IOException
 	{
 		this(socket.getInputStream(), socket.getOutputStream());
 		socket.setSoTimeout(timeout);
 	}
 
 	@Override
-	public void close() throws IOException
+	public void close()
+		throws IOException
 	{
 		IOUtil.close(is);
 		IOUtil.close(os);

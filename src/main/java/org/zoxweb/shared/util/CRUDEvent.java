@@ -22,7 +22,8 @@ import java.io.Serializable;
  * @author mzebib
  */
 public interface CRUDEvent
-	extends  Serializable {
+	extends  Serializable
+{
 
 	/**
 	 * Returns the CRUD.

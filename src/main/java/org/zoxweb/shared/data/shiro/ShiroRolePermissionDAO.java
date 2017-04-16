@@ -15,17 +15,13 @@
  */
 package org.zoxweb.shared.data.shiro;
 
-
 import org.zoxweb.shared.util.SharedUtil;
 
 @SuppressWarnings("serial")
 public class ShiroRolePermissionDAO
-extends ShiroAssociationDAO
+    extends ShiroAssociationDAO
 {
 
-
-
-	
 	public ShiroRolePermissionDAO()
 	{
 		super( ShiroAssociationType.PERMISSION_TO_ROLE, null, null);
@@ -35,7 +31,8 @@ extends ShiroAssociationDAO
 	{
 		super( ShiroAssociationType.PERMISSION_TO_ROLE, role, permission);
 	}
-	
+
+	@Override
 	public String toString()
 	{
 		return toCanonicalID();
@@ -44,34 +41,27 @@ extends ShiroAssociationDAO
 	@Override
 	public String toCanonicalID() 
 	{
-		// TODO Auto-generated method stub
 		return SharedUtil.toCanonicalID(CAN_ID_SEP, getAssociatedTo().getDomainID(), getAssociatedTo().getName(), getPermission().getName(), getPermission().getPermissionPattern());
 	}
 
-
-
-	public ShiroPermissionDAO getPermission() {
+	public ShiroPermissionDAO getPermission()
+    {
 		return (ShiroPermissionDAO) getAssociation();
 	}
-
-
 
 	public void setPermission(ShiroPermissionDAO permission)
 	{
 		setAssociation( permission);
 	}
 
-
-
-	public ShiroRoleDAO getRole() {
+	public ShiroRoleDAO getRole()
+    {
 		return (ShiroRoleDAO) getAssociatedTo();
 	}
 
-
-
-	public void setRole(ShiroRoleDAO role) {
+	public void setRole(ShiroRoleDAO role)
+    {
 		setAssociatedTo( role);
 	}
-
 
 }

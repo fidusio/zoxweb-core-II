@@ -20,7 +20,8 @@ package org.zoxweb.shared.util;
  * @author mzebib
  *
  */
-public interface GetDisplayName {
+public interface GetDisplayName
+{
 
 	/**
 	 * Returns the display name of an object which is usually

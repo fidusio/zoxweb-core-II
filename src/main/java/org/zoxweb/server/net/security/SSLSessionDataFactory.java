@@ -1,7 +1,5 @@
 package org.zoxweb.server.net.security;
 
-
-
 import java.util.concurrent.Executor;
 
 import javax.net.ssl.SSLContext;
@@ -11,15 +9,8 @@ import org.zoxweb.shared.util.SharedUtil;
 
 public class SSLSessionDataFactory 
 {
-	
-	
-	
-	
 	private SSLContext sslContext;
 	private volatile Executor executor;
-	
-	
-	
 
 	public SSLSessionDataFactory()
 	{
@@ -31,14 +22,13 @@ public class SSLSessionDataFactory
 		setSSLContext(sslContext);
 		setExecutor(executor);
 	}
-	
-	
-	
+
 	public void setSSLContext(SSLContext sslContext)
 	{
 		SharedUtil.checkIfNulls("Can't have a null sllContext", sslContext);
 		this.sslContext = sslContext;
 	}
+
 	public SSLContext getSSLContext()
 	{
 		return sslContext;
@@ -63,4 +53,5 @@ public class SSLSessionDataFactory
 		
 		return ret;
 	}
+
 }

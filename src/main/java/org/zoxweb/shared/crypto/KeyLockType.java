@@ -18,14 +18,15 @@ package org.zoxweb.shared.crypto;
 /**
  * Key lock types
  */
-public enum KeyLockType {
+public enum KeyLockType
+{
 	// User ID
 	USER_ID,
 	// Domain ID
 	DOMAIN_ID,
 	// System ID
 	SYSTEM_ID,
-	// shared folder
+	// Shared folder
 	FOLDER_ID,
 	// NVEntity
 	NVENTITY,
@@ -33,5 +34,4 @@ public enum KeyLockType {
 	PASSWORD
 
     ;
-
 }

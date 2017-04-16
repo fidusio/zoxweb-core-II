@@ -24,15 +24,13 @@ import java.util.List;
  * this class. First, a constructor is defined with a given delimiter value that
  * cannot be changed once the object is created. Second, a method parses the message 
  * based on a delimiter that can be changed and can be accessed outside the class.
- * @author mzebib
- *
+ * *
  */
 public class ByteBufferParser 
 {
 	private UByteArrayOutputStream uboas = new UByteArrayOutputStream();
 	private byte[] delimiter;
-	
-	
+
 	/**
 	 * This constructor initiates a ByteBufferParser object based 
 	 * on uboas and delimiter values. This constructor throws an 
@@ -43,19 +41,22 @@ public class ByteBufferParser
 	 */
 	public ByteBufferParser(UByteArrayOutputStream uboas, byte[] delimeter)
 	{
-		
-		if(uboas == null || delimeter == null)
+		if (uboas == null || delimeter == null)
+		{
 			throw new NullPointerException("uboas and/or delimiter cannot be null.");
+		}
 		
-		if(delimeter.length == 0)
+		if (delimeter.length == 0)
+		{
 			throw new IllegalArgumentException("Empty delimiter is not accepted.");
+		}
 		
 		this.uboas = uboas;
 		this.delimiter = delimeter;
 	}
 
 	/**
-	 * This method returns the output byte array stream.
+	 * Returns the output byte array stream.
 	 * @return the byte array out stream
 	 */
 	public final UByteArrayOutputStream getOutputByteArrayStream() 
@@ -64,7 +65,7 @@ public class ByteBufferParser
 	}
 
 	/**
-	 * This method returns the delimiter value. 
+	 * Returns the delimiter value.
 	 * @return the delimiter 
 	 */
 	public final byte[] getDelimiter() 
@@ -73,18 +74,17 @@ public class ByteBufferParser
 	}
 
 	/**
-	 * This method parses the data based on the delimiter
+	 * Parses the data based on the delimiter
 	 * value of the ByteBufferParser object.
 	 * @return the parsed byte arrays
 	 */
 	public List<byte[]> parse()
 	{
-		
 		return parse(delimiter);
 	}
 	
 	/**
-	 * This method parses the data based on given delimiter
+	 * Parses the data based on given delimiter
 	 * value as parameter. The delimiter value can be changed
 	 * from outside the class.
 	 * @param delim
@@ -92,7 +92,6 @@ public class ByteBufferParser
 	 */
 	public List<byte[]> parse(byte[] delim)
 	{
-		
 		return parse(uboas, delim);
 	}
 
@@ -110,19 +109,22 @@ public class ByteBufferParser
 	 */
 	public static List<byte[]> parse(UByteArrayOutputStream uboas, byte[] delim)
 	{
-		
-		if(uboas == null || delim == null)
+		if (uboas == null || delim == null)
+		{
 			throw new NullPointerException("uboas and/or delimiter cannot be null.");
+		}
 		
-		if(delim.length == 0)
+		if (delim.length == 0)
+		{
 			throw new IllegalArgumentException("Empty delimiter is not accepted.");
+		}
 		
 		int match = 0;
 		ArrayList<byte[]> matchedTokens = new ArrayList<byte[]>();
 		
-		synchronized (uboas) {
-
-			while((match = uboas.indexOf(delim)) != -1)
+		synchronized (uboas)
+		{
+			while ((match = uboas.indexOf(delim)) != -1)
 			{
 				byte[] message = Arrays.copyOf(uboas.getInternalBuffer(),match);
 				uboas.removeAt(0, match + delim.length);
@@ -132,7 +134,5 @@ public class ByteBufferParser
 				
 		return matchedTokens;
 	}
-	
-	
-	
+
 }

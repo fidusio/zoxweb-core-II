@@ -18,9 +18,9 @@ package org.zoxweb.shared.util;
 /**
  * The hidden property interface.
  * @author mzebib
- *
  */
-public interface IsHidden {
+public interface IsHidden
+{
 
 	/**
 	 * Checks if property is hidden.

@@ -15,15 +15,13 @@
  */
 package org.zoxweb.server.io;
 
-
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.security.MessageDigest;
 import java.util.logging.Logger;
 
 /**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
+ *
  */
 public class FilteredPrintWriter
 	extends PrintWriter
@@ -38,10 +36,9 @@ public class FilteredPrintWriter
 	 * @param out
 	 * @param digests 
 	 */
-	public FilteredPrintWriter(Writer out, MessageDigest ...digests)
+	public FilteredPrintWriter(Writer out, MessageDigest... digests)
 	{
 		super(out);
-		// TODO Auto-generated constructor stub
 		mdw.setMessageDigests(digests);
 	}
 

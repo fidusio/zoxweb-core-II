@@ -26,11 +26,12 @@ import org.zoxweb.shared.util.SharedUtil;
 
 @SuppressWarnings("serial")
 public class EncryptedKeyDAO
-		extends EncryptedDAO {
+    extends EncryptedDAO
+{
 
 	protected enum Params
-			implements GetNVConfig {
-
+        implements GetNVConfig
+    {
 		KEY_LOCK_TYPE(NVConfigManager.createNVConfig("key_lock_type", "Key lock type", "KeyLockType", true, true, KeyLockType.class)),
 		OBJECT_REFERENCE_CLASS_NAME(NVConfigManager.createNVConfig("object_reference_class_name", "Object reference class name", "ObjectReferenceClassName", true, true, String.class)),
 		//OBJECT_REFERENCE(NVConfigManager.createNVConfigEntity("object_reference", "Object reference", "ObjectReference", false, true, NVEntity.class, null)),
@@ -38,12 +39,14 @@ public class EncryptedKeyDAO
 
 		private final NVConfig nvc;
 
-		Params( NVConfig nvc) {
+		Params( NVConfig nvc)
+        {
 			this.nvc = nvc;
 		}
 		
 		@Override
-		public NVConfig getNVConfig() {
+		public NVConfig getNVConfig()
+        {
 			return nvc;
 		}
 	} 
@@ -51,20 +54,23 @@ public class EncryptedKeyDAO
 	public final static NVConfigEntity NVCE_ENCRYPTED_KEY_DAO = new NVConfigEntityLocal("encrypted_key_dao", null, "EncryptedKeyDAO", false, true, false, false, EncryptedKeyDAO.class, SharedUtil.extractNVConfigs(Params.values()), null, false, EncryptedDAO.NVCE_ENCRYPTED_DAO);
 	
 	
-	public EncryptedKeyDAO() {
+	public EncryptedKeyDAO()
+    {
 		super(NVCE_ENCRYPTED_KEY_DAO);
 	}
-	
 
-	protected EncryptedKeyDAO(NVConfigEntity nvce) {
+	protected EncryptedKeyDAO(NVConfigEntity nvce)
+    {
 		super(nvce);
 	}
 
-	public KeyLockType getKeyLockType() {
+	public KeyLockType getKeyLockType()
+    {
 		return lookupValue(Params.KEY_LOCK_TYPE);
 	}
 	
-	public void setKeyLockType(KeyLockType klt) {
+	public void setKeyLockType(KeyLockType klt)
+    {
 		setValue(Params.KEY_LOCK_TYPE, klt);
 	}
 	
@@ -73,7 +79,8 @@ public class EncryptedKeyDAO
 //		return lookupValue(Params.OBJECT_REFERENCE);
 //	}
 	
-	public void setObjectReference(NVEntity nve) {
+	public void setObjectReference(NVEntity nve)
+    {
 		//setValue(Params.OBJECT_REFERENCE, nve);
 
         if (nve.getReferenceID() == null) {
@@ -84,11 +91,13 @@ public class EncryptedKeyDAO
 		setObjectReferenceClassName(nve.getClass().getName());
 	}
 
-	public String getObjectReferenceClassName() {
+	public String getObjectReferenceClassName()
+    {
 		return lookupValue(Params.OBJECT_REFERENCE_CLASS_NAME);
 	}
 	
-	public void setObjectReferenceClassName(String classMame) {
+	public void setObjectReferenceClassName(String classMame)
+    {
 		setValue(Params.OBJECT_REFERENCE_CLASS_NAME, classMame);
 	}
 	

@@ -16,7 +16,8 @@
 package org.zoxweb.shared.util;
 
 public interface SetCaseSensitive
-		extends IsCaseSensitive {
+    extends IsCaseSensitive
+{
 
 	 void setCaseInsensitive(boolean caseInsensitive);
 

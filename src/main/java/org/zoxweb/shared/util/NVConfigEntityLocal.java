@@ -24,7 +24,6 @@ import java.util.List;
  * that can only be within the domain that it was created within.
  * The properties of this class are not exportable.
  * @author mnael
- *
  */
 @SuppressWarnings("serial")
 public class NVConfigEntityLocal
@@ -33,7 +32,8 @@ public class NVConfigEntityLocal
 {
 
 	@Override
-	public String toString() {
+	public String toString()
+    {
 		return "NVConfigEntityLocal [byReference=" + byReference
 				+ ", attrList=" + attrList + ", displayList=" + displayList
 				+ ", attributesValidationRequired="
@@ -66,13 +66,7 @@ public class NVConfigEntityLocal
 	private transient ArrayType arrayType = null;
 	//private transient boolean fullyInitialized = false;
 	private transient String domainID = null;
-	
-
-
-	
-	
 	private String referenceID = null;
-	
 
 	/**
 	 * This is the default constructor which instantiates 
@@ -99,7 +93,7 @@ public class NVConfigEntityLocal
 	 * @param displayList
 	 * @param attributesValidationRequired
 	 */
-	public NVConfigEntityLocal(	String name, 
+	public NVConfigEntityLocal(String name,
 								String  description,
 								String displayName,
 								boolean man,
@@ -113,16 +107,17 @@ public class NVConfigEntityLocal
 								NVConfigEntity superClass)
 	{
 		super(name,description, displayName, man, edit, isUnique, isHidden, false, type, null);
+
 		if (name == null && type != null)
 		{
 			setName(type.getName());
 		}
 		
-		if ( superClass != null)
+		if (superClass != null)
 		{
 			attrList = SharedUtil.mergeMeta(attrList, superClass.getAttributes());
-			
 		}
+
 		setAttributes(attrList);
 		setDisplayAttributes(displayList);
 		setAttributesValidationRequired(attributesValidationRequired);
@@ -234,7 +229,7 @@ public class NVConfigEntityLocal
 	
 	
 	/**
-	 * This method returns the NVConfig array list of
+	 * Returns the NVConfig array list of
 	 * attributes.
 	 */
 	public List<NVConfig> getAttributes() 
@@ -248,7 +243,7 @@ public class NVConfigEntityLocal
 	}
 
 	/**
-	 * This method sets the NVConfig array list 
+	 * Sets the NVConfig array list
 	 * of attributes.
 	 * @param attrList
 	 */
@@ -277,8 +272,8 @@ public class NVConfigEntityLocal
 				
 				
 				fastMap.put(attrName, nvc);
-				
 			}
+
 			for(NVConfig nvcToPurge : toPurge)
 			{
 				this.attrList.remove(nvcToPurge);
@@ -289,7 +284,7 @@ public class NVConfigEntityLocal
 
 
 	/**
-	 * This method returns the specified list of attributes
+	 * Returns the specified list of attributes
 	 * to be displayed.
 	 */
 	public List<NVConfig> getDisplayAttributes() 
@@ -304,7 +299,7 @@ public class NVConfigEntityLocal
 
 	
 	/**
-	 * This method sets the specified list of attributes
+	 * Sets the specified list of attributes
 	 * to be displayed.
 	 * @param displayList
 	 */
@@ -314,7 +309,7 @@ public class NVConfigEntityLocal
 	}
 
 	/**
-	 * This method looks up the matching NVConfig 
+	 * Looks up the matching NVConfig
 	 * by name.
 	 * @param name
 	 */
@@ -327,11 +322,12 @@ public class NVConfigEntityLocal
 		}
 		
 		NVConfig ret = fastMap.get(name.toLowerCase());
+
 		if (ret == null && name.indexOf('.') != -1)
 		{
-			
 			String subNames [] = name.split("\\.");
 			NVConfigEntity nvcs = this;
+
 			for (int i = 0; i < subNames.length; i++)
 			{
 				ret = nvcs.lookup(subNames[i]);
@@ -345,11 +341,7 @@ public class NVConfigEntityLocal
 					return null;
 				}
 			}
-			
 		}
-		
-		
-		
 		
 		return ret;
 		
@@ -366,7 +358,7 @@ public class NVConfigEntityLocal
 	}
 
 	/**
-	 * This method looks up the matching NVConfig 
+	 * Looks up the matching NVConfig
 	 * by enum value.
 	 * @param e
 	 */
@@ -436,7 +428,7 @@ public class NVConfigEntityLocal
 	 */
 	public Class<?> getMetaType() 
 	{
-		if ( byReference != null)
+		if (byReference != null)
 		{
 			return byReference.getMetaType();
 		}
@@ -485,7 +477,9 @@ public class NVConfigEntityLocal
 	public String toCanonicalID() 
 	{
 		if (!SharedStringUtil.isEmpty(getDomainID()))
-			return SharedUtil.toCanonicalID('.', getDomainID(), getName());
+        {
+            return SharedUtil.toCanonicalID('.', getDomainID(), getName());
+        }
 		
 		return getName();
 	}
@@ -494,8 +488,8 @@ public class NVConfigEntityLocal
 	 * @see org.zoxweb.shared.util.ReferenceID#getReferenceID()
 	 */
 	@Override
-	public String getReferenceID() {
-		// TODO Auto-generated method stub
+	public String getReferenceID()
+    {
 		return referenceID;
 	}
 
@@ -514,16 +508,18 @@ public class NVConfigEntityLocal
 	@Override
 	public ArrayType getArrayType()
 	{
-		if ( arrayType == null)
+		if (arrayType == null)
 		{
-			if ( isArray())
+			if (isArray())
 			{
 				return ArrayType.LIST;
 			}
 			else
-				return ArrayType.NOT_ARRAY;
+            {
+                return ArrayType.NOT_ARRAY;
+            }
 		}
-		// TODO Auto-generated method stub
+
 		return arrayType;
 	}
 
@@ -531,13 +527,14 @@ public class NVConfigEntityLocal
 	 * @see org.zoxweb.shared.util.NVConfigEntity#setArrayType(org.zoxweb.shared.util.NVConfigEntity.ArrayType)
 	 */
 	@Override
-	public void setArrayType(ArrayType at) {
-		// TODO Auto-generated method stub
+	public void setArrayType(ArrayType at)
+    {
 		if (at == null)
 		{
 			at = ArrayType.NOT_ARRAY;
 		}
+
 		arrayType = at;
 	}
-	
+
 }

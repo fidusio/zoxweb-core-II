@@ -26,10 +26,10 @@ import java.util.Map;
 import org.zoxweb.shared.util.GetName;
 import org.zoxweb.shared.util.GetNameValue;
 import org.zoxweb.shared.util.SetNameValue;
+
 public class HTTPMultiPartParameter
-implements SetNameValue<String>
+	implements SetNameValue<String>
 {
-	
 
 	private String name;
 	private String value;
@@ -41,8 +41,7 @@ implements SetNameValue<String>
 	private InputStream inputStream;
 	private boolean autoClose;
 	
-	
-	
+
 	public HTTPMultiPartParameter()
 	{
 		
@@ -54,29 +53,26 @@ implements SetNameValue<String>
 		setValue( value);
 	}
 	
-	
-	
-	
 	public void addHeader(GetName gv,  @SuppressWarnings("unchecked") GetNameValue<String> ...gnvs)
 	{
-		addHeader( gv.getName(), gnvs);
+		addHeader(gv.getName(), gnvs);
 	}
 	
 	public synchronized void addHeader(String headerName, @SuppressWarnings("unchecked") GetNameValue<String> ...gnvs)
 	{
 		 ArrayList<GetNameValue<String>> list = headers.get(headerName);
-		 if ( list == null)
+
+		 if (list == null)
 		 {
 			 list = new ArrayList<GetNameValue<String>>();
 			 headers.put(headerName, list);
 		 }
 		 
-		 for ( GetNameValue<String>  gnv: gnvs)
+		 for (GetNameValue<String>  gnv: gnvs)
 		 {
 			 list.add( gnv);
 		 }
 	}
-	
 	
 	public Map<String, ArrayList<GetNameValue<String>>>  getHeaders()
 	{
@@ -84,30 +80,28 @@ implements SetNameValue<String>
 	}
 
 	@Override
-	public String getValue() {
-		// TODO Auto-generated method stub
+	public String getValue()
+	{
 		return value;
 	}
 
 	@Override
-	public void setValue(String value) {
-		// TODO Auto-generated method stub
+	public void setValue(String value)
+	{
 		this.value = value;
 	}
 
 	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
+	public String getName()
+	{
 		return name;
 	}
 
 	@Override
 	public void setName(String name)
 	{
-		// TODO Auto-generated method stub
 		this.name = name;
 	}
-
 	
 	public InputStream getInputStreamValue() 
 	{
@@ -134,7 +128,6 @@ implements SetNameValue<String>
 		this.content = content;
 	}
 	
-	
 	/**
 	 * If the file name is set that mean this is a file upload
 	 * @return the file name
@@ -149,11 +142,13 @@ implements SetNameValue<String>
 		this.fileName = fileName;
 	}
 
-	public boolean isAutoClose() {
+	public boolean isAutoClose()
+	{
 		return autoClose;
 	}
 
-	public URL getURL() {
+	public URL getURL()
+	{
 		return url;
 	}
 

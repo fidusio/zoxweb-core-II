@@ -80,17 +80,20 @@ public class WidgetConst {
 		}
 		
 		@Override
-		public void setName(String name) {
+		public void setName(String name)
+        {
 			this.name = name;
 		}		
 		
 		@Override
-		public String getValue() {
+		public String getValue()
+        {
 			return value;
 		}
 		
 		@Override
-		public void setValue(String value) {
+		public void setValue(String value)
+        {
 			this.value = value;
 		}
 		

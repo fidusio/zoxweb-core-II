@@ -116,7 +116,7 @@ implements Runnable, Closeable
 				{
 					try
 					{
-						String parsed[] = args[index].split(",");
+						String[] parsed = args[index].split(",");
 						int port = Integer.parseInt(parsed[0]);
 						InetSocketAddressDAO remoteAddress = new InetSocketAddressDAO(parsed[1]);
 						ServerSocketChannel ssc = ServerSocketChannel.open();
@@ -142,7 +142,7 @@ implements Runnable, Closeable
 				{
 					try
 					{
-						String parsed[] = args[index].split(",");
+						String[] parsed = args[index].split(",");
 						int port = Integer.parseInt(parsed[0]);
 						InetSocketAddressDAO remoteAddress = new InetSocketAddressDAO(parsed[1]);
 						new SecureNetworkTunnel(sslssf, port, remoteAddress);

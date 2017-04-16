@@ -20,7 +20,8 @@ import org.zoxweb.shared.util.SharedStringUtil;
 
 @SuppressWarnings("serial")
 public class CanonicalFilenameFilter
-		implements ValueFilter<String, String> {
+    implements ValueFilter<String, String>
+{
 
 	public static final CanonicalFilenameFilter SINGLETON = new CanonicalFilenameFilter();
 	
@@ -29,24 +30,29 @@ public class CanonicalFilenameFilter
 	}
 
 	@Override
-	public String toCanonicalID() {
+	public String toCanonicalID()
+    {
 		return "static:ValueFilter:CanonicalFilenameFilter";
 	}
 
 	@Override
 	public String validate(String filename)
-			throws NullPointerException, IllegalArgumentException {
+        throws NullPointerException, IllegalArgumentException
+    {
 		
 		filename = SharedStringUtil.trimOrNull( filename);
 
-		if (filename == null) {
-			return ""+Const.FilenameSep.SLASH;
+		if (filename == null)
+		{
+			return "" + Const.FilenameSep.SLASH;
 		}
 
 		Const.FilenameSep replaceWith = Const.FilenameSep.SLASH;
 		
-		for (Const.FilenameSep replace: Const.FilenameSep.values()) {
-			if (replace == replaceWith) {
+		for (Const.FilenameSep replace: Const.FilenameSep.values())
+		{
+			if (replace == replaceWith)
+			{
 				continue;
 			}
 
@@ -56,14 +62,17 @@ public class CanonicalFilenameFilter
 		String tokens[] = filename.split(""+Const.FilenameSep.SLASH);
 		StringBuilder ret = new StringBuilder();
 
-		for (String token : tokens) {
-			if(!token.isEmpty()) {
+		for (String token : tokens)
+		{
+			if (!token.isEmpty())
+			{
 				ret.append(replaceWith.sep);
 				ret.append(token);
 			}
 		}
 		
-		if (ret.length() == 0) {
+		if (ret.length() == 0)
+		{
 			ret.append(replaceWith.sep);
 		}
 		
@@ -72,7 +81,8 @@ public class CanonicalFilenameFilter
 	}
 
 	@Override
-	public boolean isValid(String in) {
+	public boolean isValid(String in)
+    {
 		return validate(in).equals(in);
 	}
 

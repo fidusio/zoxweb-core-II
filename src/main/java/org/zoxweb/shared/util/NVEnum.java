@@ -18,14 +18,13 @@ package org.zoxweb.shared.util;
 /**
  * This class declares NVBase of enum type.
  * @author mzebib
- *
  */
 @SuppressWarnings("serial")
 public class NVEnum
 	extends NVBase<Enum<?>>
 {
 	/**
-	 * Default constructor used for Java Bean Compiler.
+	 * The default constructor (Java Bean compliant).
 	 */
 	public NVEnum()
 	{

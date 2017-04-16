@@ -18,10 +18,9 @@ package org.zoxweb.shared.util;
 /**
  * This class contains methods that set and retrieve the values for
  * token, sourcePostIndex, and sourcePreIndex.
- * @author mzebib
- *
  */
-public class StringToken {
+public class StringToken
+{
 
 	private String token;
 	private int sourcePostIndex;
@@ -30,7 +29,8 @@ public class StringToken {
 	/**
 	 * This constructor can be accessed outside the class.
 	 */
-	public StringToken() {
+	public StringToken()
+    {
 		
 	}
 	
@@ -41,7 +41,8 @@ public class StringToken {
 	 * @param sourcePreIndex
 	 * @param sourcePostIndex
 	 */
-	public StringToken(String token, int sourcePreIndex, int sourcePostIndex) {
+	public StringToken(String token, int sourcePreIndex, int sourcePostIndex)
+    {
 		setToken( token);
 		setSourcePreIndex( sourcePreIndex);
 		setSourcePostIndex( sourcePostIndex);
@@ -51,7 +52,8 @@ public class StringToken {
 	 * Returns token.
 	 * @return token
 	 */
-	public String getToken() {
+	public String getToken()
+    {
 		return token;
 	}
 	
@@ -59,7 +61,8 @@ public class StringToken {
 	 * Sets token.
 	 * @param token
 	 */
-	public void setToken(String token) {
+	public void setToken(String token)
+    {
 		this.token = token;
 	}
 	
@@ -67,7 +70,8 @@ public class StringToken {
 	 * Returns sourcePostIndex.
 	 * @return index
 	 */ 
-	public int getSourcePostIndex() {
+	public int getSourcePostIndex()
+    {
 		return sourcePostIndex;
 	}
 	
@@ -75,7 +79,8 @@ public class StringToken {
 	 * Sets sourcePostIndex.
 	 * @param sourcePostIndex
 	 */
-	public void setSourcePostIndex(int sourcePostIndex) {
+	public void setSourcePostIndex(int sourcePostIndex)
+    {
 		this.sourcePostIndex = sourcePostIndex;
 	}
 	
@@ -83,7 +88,8 @@ public class StringToken {
 	 * Returns the sourcePreIndex.
 	 * @return index
 	 */
-	public int getSourcePreIndex() {
+	public int getSourcePreIndex()
+    {
 		return sourcePreIndex;
 	}
 	
@@ -91,7 +97,8 @@ public class StringToken {
 	 * Sets the sourcePreIndex.
 	 * @param sourcePreIndex
 	 */
-	public void setSourcePreIndex(int sourcePreIndex) {
+	public void setSourcePreIndex(int sourcePreIndex)
+    {
 		this.sourcePreIndex = sourcePreIndex;
 	}
 

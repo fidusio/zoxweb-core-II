@@ -75,7 +75,7 @@ public class BillingItemsContainerDAO
 	}
 	
 	/**
-	 * Gets billing status.
+	 * Returns billing status.
 	 * @return status
 	 */
 	public String getBillingStatus()
@@ -93,7 +93,7 @@ public class BillingItemsContainerDAO
 	}
 	
 	/**
-	 * Gets billing items as an array values of BillingItemDAO.
+	 * Returns billing items as an array values of BillingItemDAO.
 	 * @return list of items
 	 */
 	@SuppressWarnings("unchecked")
@@ -121,7 +121,7 @@ public class BillingItemsContainerDAO
 	}
 	
 	/**
-	 * Gets the total.
+	 * Returns the total.
 	 * @return total as BigDecimal
 	 */
 	public BigDecimal getTotal()

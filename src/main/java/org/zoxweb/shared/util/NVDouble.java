@@ -18,14 +18,13 @@ package org.zoxweb.shared.util;
 /**
  * This class declares NVBase of double type.
  * @author mzebib
- *
  */
 @SuppressWarnings("serial")
 public class NVDouble 
 	extends NVBase<Double> 
 {
 	/**
-	 * Default constructor used for Java Bean Compiler.
+	 * The default constructor (Java Bean compliant).
 	 */
 	public NVDouble()
 	{
@@ -41,4 +40,5 @@ public class NVDouble
 	{
 		super(name, value);
 	}
+
 }

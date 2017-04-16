@@ -22,13 +22,11 @@ import org.zoxweb.shared.filters.ValueFilter;
 /**
  * This class declares NVBase of string type.
  * @author mzebib
- *
  */
 @SuppressWarnings("serial")
 public class NVPair
 	extends NVBase<String>
-	implements SetValueFilter<String, String>,
-			   SetCharset
+	implements SetValueFilter<String, String>, SetCharset
 {
 	private ValueFilter<String, String> valueFilter;
 	private String charset = null;
@@ -141,8 +139,6 @@ public class NVPair
 		this.valueFilter = valueFilter;
 	}
 	
-	
-	
 	public synchronized void setValue(String v)
 	{
 		if (v != null && getValueFilter() != null)
@@ -157,14 +153,14 @@ public class NVPair
 	}
 
 	@Override
-	public String getCharset() {
-		// TODO Auto-generated method stub
+	public String getCharset()
+    {
 		return charset;
 	}
 
 	@Override
-	public void setCharset(String charset) {
-		// TODO Auto-generated method stub
+	public void setCharset(String charset)
+    {
 		this.charset = charset;
 	}
 	

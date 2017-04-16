@@ -21,6 +21,7 @@ import org.zoxweb.shared.util.CRUDOperation;
 import org.zoxweb.shared.util.NVBase;
 
 public interface CRUDNVBaseHandler
-        extends EventHandler, CRUDOperation<NVBase<?>> {
+    extends EventHandler, CRUDOperation<NVBase<?>>
+{
 
 }

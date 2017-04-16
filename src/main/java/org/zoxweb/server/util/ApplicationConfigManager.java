@@ -32,7 +32,8 @@ import org.zoxweb.shared.util.Const;
 import org.zoxweb.shared.util.GetValue;
 import org.zoxweb.shared.util.SharedUtil;
 
-public class ApplicationConfigManager {
+public class ApplicationConfigManager
+{
 
 	private static final transient Logger log = Logger.getLogger(Const.LOGGER_NAME);
 	public static final ApplicationConfigManager SINGLETON = new ApplicationConfigManager();
@@ -45,7 +46,8 @@ public class ApplicationConfigManager {
 															ApplicationDefaultParam.VAR_DIR
 	};
 	
-	private ApplicationConfigManager() {
+	private ApplicationConfigManager()
+    {
 		
 	}
 
@@ -54,28 +56,35 @@ public class ApplicationConfigManager {
 	private File defaultFile = null;
 	private long defaultFileLastAccess = 0;
 
-	public synchronized ApplicationConfigDAO loadDefault() throws NullPointerException, IOException {
+	public synchronized ApplicationConfigDAO loadDefault()
+        throws NullPointerException, IOException
+    {
 		return load();
 	}
 
-	public static String getDefaultApplicationEnvVar() {
+	public static String getDefaultApplicationEnvVar()
+    {
 		String envURLLocation = System.getenv(ApplicationConfigDAO.DEFAULT_APPLICATION_ENV_VAR);
 
-		if (envURLLocation == null) {
+		if (envURLLocation == null)
+		{
             envURLLocation = System.getProperty(ApplicationConfigDAO.DEFAULT_APPLICATION_ENV_VAR);
         }
 
 		return envURLLocation;
 	}
 
-	public static String getDefaultApplicationEnvVar(String defaultValue) {
+	public static String getDefaultApplicationEnvVar(String defaultValue)
+    {
 		String envURLLocation = System.getenv(ApplicationConfigDAO.DEFAULT_APPLICATION_ENV_VAR);
 
-		if (envURLLocation == null) {
+		if (envURLLocation == null)
+		{
             envURLLocation = System.getProperty(ApplicationConfigDAO.DEFAULT_APPLICATION_ENV_VAR);
         }
 
-		if (envURLLocation == null) {
+		if (envURLLocation == null)
+		{
 			System.getProperties().put(ApplicationConfigDAO.DEFAULT_APPLICATION_ENV_VAR, defaultValue);
 			return defaultValue;
 		}
@@ -83,18 +92,23 @@ public class ApplicationConfigManager {
 		return envURLLocation;
 	}
 
-	private ApplicationConfigDAO load() throws NullPointerException, IOException {
-		if (defaultFile == null) {
+	private ApplicationConfigDAO load()
+        throws NullPointerException, IOException
+    {
+		if (defaultFile == null)
+		{
             defaultFile = new File(SharedUtil.toCanonicalID('/', getDefaultApplicationEnvVar(), ApplicationDefaultParam.CONF_DIR.getValue()), ApplicationConfigDAO.DEFAULT_APPLICATION_CONF_FILENAME);
         }
 
-		if (!defaultFile.exists()) {
+		if (!defaultFile.exists())
+		{
 			System.out.println(ApplicationConfigDAO.DEFAULT_APPLICATION_ENV_VAR + "=" + getDefaultApplicationEnvVar());
 			log.info( defaultFile + " not found");
 			throw new FileNotFoundException(defaultFile.getName());
 		}
 		
-		if (defaultFile.lastModified() != defaultFileLastAccess) {
+		if (defaultFile.lastModified() != defaultFileLastAccess)
+		{
 			System.out.println(ApplicationConfigDAO.DEFAULT_APPLICATION_ENV_VAR + "=" + getDefaultApplicationEnvVar());
 			String jsonString = IOUtil.inputStreamToString( defaultFile.toURI().toURL().openStream(), true);
 			defaultACD =  GSONUtil.create(true).fromJson(jsonString, ApplicationConfigDAO.class);
@@ -105,32 +119,38 @@ public class ApplicationConfigManager {
 	}
 
 	public  ApplicationConfigDAO load(InputStream is)
-            throws NullPointerException, IOException {
+        throws NullPointerException, IOException
+    {
 		String jsonString = IOUtil.inputStreamToString( is, true);
 		ApplicationConfigDAO ret = GSONUtil.create(true).fromJson(jsonString, ApplicationConfigDAO.class);	
 		return ret;
 	}
 
-	public String concatAsDirName(ApplicationConfigDAO acd, String varName) {
+	public String concatAsDirName(ApplicationConfigDAO acd, String varName)
+    {
 		String base = getDefaultApplicationEnvVar();
 		String varValue = acd.lookupValue(varName);
 		
-		if (varValue != null) {
+		if (varValue != null)
+		{
 			return SharedUtil.toCanonicalID('/', base, varValue) +"/";
 		}
 		
 		return base;
 	}
 	
-	public String concatWithEnvVar(String ...vars) {
+	public String concatWithEnvVar(String... vars)
+    {
 		String base = getDefaultApplicationEnvVar();
 
-		if (vars != null) {
+		if (vars != null)
+		{
 			String values[] = new String[vars.length+1];
 			int index = 0;
 			values[index++] = base;
 
-			for (String s: vars) {
+			for (String s: vars)
+			{
 				values[index++] = s;
 			}
 
@@ -140,51 +160,64 @@ public class ApplicationConfigManager {
 		return base;
 	}
 	
-	public void save(ApplicationConfigDAO acd) throws NullPointerException, IOException {
+	public void save(ApplicationConfigDAO acd)
+        throws NullPointerException, IOException
+    {
 		//File file = new File(concatAsDirName( acd, acd.lookupValue(ApplicationDefaultParam.CONF_DIR)), ApplicationConfigDAO.DEFAULT_APPLICATION_CONF_FILENAME);
 		File file = new File(SharedUtil.toCanonicalID('/', getDefaultApplicationEnvVar(), ApplicationDefaultParam.CONF_DIR.getValue()), ApplicationConfigDAO.DEFAULT_APPLICATION_CONF_FILENAME);	
 		String jsonString =  GSONUtil.create(true).toJson(acd);
 		
 		FileOutputStream fos = null;
-		try {
+
+		try
+        {
 			fos = new FileOutputStream( file);
 			fos.write( jsonString.getBytes());
-		} finally {
+		}
+		finally
+        {
 			IOUtil.close( fos);
 		}	
 	}
 
 	public File locateFile(ApplicationConfigDAO acd, String varName)
-            throws NullPointerException, IOException {
+        throws NullPointerException, IOException
+    {
 		
-		if (acd == null) {
+		if (acd == null)
+		{
 			acd = loadDefault();
 		}
 		
 		String varValue = acd.lookupValue(varName);
 
-		if (varValue == null) {
+		if (varValue == null)
+		{
 			varValue = varName;
 		}
 		
 		
 		// varValue is an absolute file
 		File file = new File(varValue);
-		if (file.exists()) {
+		if (file.exists())
+		{
             return file;
         }
 
 		// varValue is a file in conf dir
 		file = new File(concatWithEnvVar(), varValue);
 
-		if (file.exists()) {
+		if (file.exists())
+		{
             return file;
         }
 		
-		for (GetValue<?> dir: DEFAULT_DIR_NAMES) {
+		for (GetValue<?> dir: DEFAULT_DIR_NAMES)
+		{
 			file = new File( concatWithEnvVar((String)dir.getValue(),varValue));
 
-			if (file.exists()) {
+			if (file.exists())
+			{
                 return file;
             }
 		}
@@ -193,16 +226,21 @@ public class ApplicationConfigManager {
 	}
 
 	public String readConfigurationContent(ApplicationConfigDAO acd, String varName)
-            throws NullPointerException, IOException {
+        throws NullPointerException, IOException
+    {
 		File configFile = locateFile(acd, varName);
 
-		if (configFile != null && configFile.isFile()) {
+		if (configFile != null && configFile.isFile())
+		{
 			InputStream is = null;
 
-			try {
+			try
+            {
 				is = new FileInputStream(configFile);
 				return IOUtil.inputStreamToString( is, true);
-			} finally {
+			}
+			finally
+            {
 				// this close is required just in case we encouter IO error
 				// to prevent unclosed file descriptors
 				IOUtil.close(is);
@@ -213,14 +251,18 @@ public class ApplicationConfigManager {
 	}
 	
 	public void save(ApplicationConfigDAO scd, OutputStream os)
-            throws NullPointerException, IOException {
-		
+        throws NullPointerException, IOException
+    {
 		String jsonString = GSONUtil.create(true).toJson(scd);
 
-		try {
+		try
+        {
 			os.write( jsonString.getBytes());
-		} finally {
+		}
+		finally
+        {
 			IOUtil.close( os);
 		}
 	}
+
 }

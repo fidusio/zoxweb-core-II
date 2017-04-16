@@ -53,18 +53,19 @@ public class ConfigDAO
 		PROPERTIES(NVConfigManager.createNVConfig("properties", "Configuration properties", "Properties", false, true, String[].class)),
 		CONTENT(NVConfigManager.createNVConfigEntity("content", "Sub configuration", "Content", false, true, NVEntity[].class, ArrayType.GET_NAME_MAP)),
 		;
-		
-		private final NVConfig cType;
-		
-		Param(NVConfig c)
-		{
-			cType = c;
-		}
-		
-		public NVConfig getNVConfig() 
-		{
-			return cType;
-		}
+
+
+        private final NVConfig nvc;
+
+        Param(NVConfig nvc)
+        {
+            this.nvc = nvc;
+        }
+
+        public NVConfig getNVConfig()
+        {
+            return nvc;
+        }
 
 	}
 	

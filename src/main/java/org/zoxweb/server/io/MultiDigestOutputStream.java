@@ -26,8 +26,8 @@ import java.security.MessageDigest;
  * 
  */
 public class MultiDigestOutputStream
-extends FilterOutputStream
-implements MultiDigestInterface
+    extends FilterOutputStream
+    implements MultiDigestInterface
 {
 
 //    private boolean on = true;

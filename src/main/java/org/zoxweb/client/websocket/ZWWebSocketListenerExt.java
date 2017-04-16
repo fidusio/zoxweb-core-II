@@ -18,12 +18,13 @@ package org.zoxweb.client.websocket;
 
 /**
  * This interface extends WebsocketListener and declares a listener error method.
- * @author mzebib
- *
  */
 public interface ZWWebSocketListenerExt
-        extends ZWWebSocketListener {
+    extends ZWWebSocketListener {
 
+    /**
+     *
+     */
     void onError();
 
 }

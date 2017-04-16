@@ -17,8 +17,12 @@ package org.zoxweb.shared.util;
 
 import java.io.Serializable;
 
+/**
+ * The timestamp interface.
+ */
 public interface TimeStampInterface
-		extends Serializable {
+    extends Serializable
+{
 
 	/**
 	 * Returns the time is millis when the file was created or uploaded into a system or domain.

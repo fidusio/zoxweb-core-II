@@ -18,10 +18,10 @@ package org.zoxweb.shared.util;
 /**
  * The setter part of the naming interface.
  * @author mzebib
- *
  */
 public interface SetName
-		extends GetName {
+    extends GetName
+{
 
 	/**
 	 * Set name property.

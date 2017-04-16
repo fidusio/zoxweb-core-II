@@ -25,7 +25,7 @@ implements IsClosed
 	{
 		private InputStream is;
 		private OutputStream os;
-	    IsClosed counterParts[];
+	    IsClosed[] counterParts;
 		private boolean closedStat = false;
 		StreamRelay(InputStream is, OutputStream os)
 		{
@@ -62,9 +62,9 @@ implements IsClosed
 		public void run() 
 		{
 			if(debug) log.info("started");
-			byte buffer[] = new byte[4096];
-			// TODO Auto-generated method stub
+			byte[] buffer = new byte[4096];
 			int read = 0;
+
 			while(!isClosed() && read != -1)
 			{
 				try

@@ -34,15 +34,17 @@ import org.zoxweb.shared.util.Const;
 import org.zoxweb.shared.util.NVPair;
 import org.zoxweb.shared.util.SharedUtil;
 
-public class ShiroProxyRealm extends AuthorizingRealm {
+public class ShiroProxyRealm extends AuthorizingRealm
+{
 	private static final transient Logger log = Logger.getLogger(Const.LOGGER_NAME);
-	private boolean permissionsLookupEnabled = false;
 
+	private boolean permissionsLookupEnabled = false;
 	private String proxyURL;
 	private HashMap <String, LoginStatusDAO> loginMap = new HashMap<String, LoginStatusDAO>();
 
 	@Override
-	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals)
+    {
 		String username = (String) getAvailablePrincipal(principals);
 	    String domain   = ((DomainPrincipalCollection) principals).getDomainID();
 	    
@@ -73,19 +75,22 @@ public class ShiroProxyRealm extends AuthorizingRealm {
 
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) 
-			throws AuthenticationException {
+        throws AuthenticationException
+    {
 
 		String domainID = null;
 		String applicationID = null;
 		String userID = null;
 		
-		if (proxyURL != null && token instanceof DomainUsernamePasswordToken) {
+		if (proxyURL != null && token instanceof DomainUsernamePasswordToken)
+		{
 			domainID = ((DomainUsernamePasswordToken)token).getDomainID();
 			applicationID = ((DomainUsernamePasswordToken)token).getApplicationID();
 			userID = ((DomainUsernamePasswordToken)token).getUserID();
 			
 			
-			try {
+			try
+            {
 				DomainAuthenticationInfo ret = null;
 				String domainUser = SharedUtil.toCanonicalID(':', domainID, token.getPrincipal());
 				LoginStatusDAO lsDAO = loginMap.get(domainUser);
@@ -101,7 +106,9 @@ public class ShiroProxyRealm extends AuthorizingRealm {
 				//log.info("Credential info found for " + domainUser);
 				return ret;
 				
-			} catch (Exception e) {
+			}
+			catch (Exception e)
+            {
 				e.printStackTrace();
 				throw new AuthenticationException( e.getMessage());
 			}
@@ -118,19 +125,23 @@ public class ShiroProxyRealm extends AuthorizingRealm {
 //		return ret;
 	}
 
-	public void setPermissionsLookupEnabled(boolean permissionsLookupEnabled) {
+	public void setPermissionsLookupEnabled(boolean permissionsLookupEnabled)
+    {
         this.permissionsLookupEnabled = permissionsLookupEnabled;
     }
 
-	public boolean isPermissionsLookupEnabled() {
+	public boolean isPermissionsLookupEnabled()
+    {
 		return permissionsLookupEnabled;
 	}
 
-	public String getProxyURL() {
+	public String getProxyURL()
+    {
 		return proxyURL;
 	}
 
-	public void setProxyURL(String proxyURL) {
+	public void setProxyURL(String proxyURL)
+    {
 		this.proxyURL = proxyURL;
 	}
 

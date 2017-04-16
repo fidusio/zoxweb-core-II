@@ -19,7 +19,8 @@ import org.zoxweb.shared.util.SharedStringUtil;
 
 @SuppressWarnings("serial")
 public class NotNullOrEmpty 
-	implements ValueFilter<String,String> {
+	implements ValueFilter<String,String>
+{
 
 	/**
 	 * This variable declares that only one instance of this class can be 
@@ -31,28 +32,34 @@ public class NotNullOrEmpty
 	 * The default constructor is declared private to prevent
 	 * outside instantiation of this class.
 	 */
-	private NotNullOrEmpty() {
+	private NotNullOrEmpty()
+    {
 		
 	}
 
 	@Override
-	public String toCanonicalID() {
-		return "NullOrEmptyFilter";
+	public String toCanonicalID()
+    {
+		return NotNullOrEmpty.class.getName();
 	}
 
 	@Override
 	public String validate(String in) 
-			throws NullPointerException, IllegalArgumentException {
-
-		if (!SharedStringUtil.isEmpty(in)) {
+        throws NullPointerException, IllegalArgumentException
+    {
+		if (!SharedStringUtil.isEmpty(in))
+		{
 			return in;
-		} else {
+		}
+		else
+        {
 			throw new IllegalArgumentException("Empty or null value: " + in);
 		}
 	}
 
 	@Override
-	public boolean isValid(String in) {
+	public boolean isValid(String in)
+    {
 		return !SharedStringUtil.isEmpty(in);
 	}
 

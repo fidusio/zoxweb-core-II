@@ -19,15 +19,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
+ *
  */
 @SuppressWarnings("serial")
 public class NVGetNameValueMap
-extends NVBase<Map<GetName, GetNameValue<String>>>
-implements ArrayValues<GetNameValue<String>>
+    extends NVBase<Map<GetName, GetNameValue<String>>>
+    implements ArrayValues<GetNameValue<String>>
 {
-
 	
 	public NVGetNameValueMap()
 	{
@@ -38,10 +36,8 @@ implements ArrayValues<GetNameValue<String>>
 	{
 		super(name, map);
 	}
-	
-	
-	
-	
+
+
 	public GetNameValue<String> get(GetName getName)
 	{
 		if (getName != null && getName.getName() != null)
@@ -51,14 +47,13 @@ implements ArrayValues<GetNameValue<String>>
 		
 		return null;
 	}
-	
-	
+
 	/**
 	 * @see org.zoxweb.shared.util.ArrayValues#get(java.lang.String)
 	 */
 	@Override
-	public GetNameValue<String> get(String name) {
-		// TODO Auto-generated method stub
+	public GetNameValue<String> get(String name)
+    {
 		return value.get(new GetNameKey(name, true));
 	}
 
@@ -68,7 +63,6 @@ implements ArrayValues<GetNameValue<String>>
 	@Override
 	public int size()
 	{
-		// TODO Auto-generated method stub
 		return value.size();
 	}
 
@@ -79,7 +73,6 @@ implements ArrayValues<GetNameValue<String>>
 	@Override
 	public GetNameValue<String>[] values()
 	{
-		// TODO Auto-generated method stub
 		return value.values().toArray(new GetNameValue[0]);
 	}
 
@@ -89,16 +82,13 @@ implements ArrayValues<GetNameValue<String>>
 	@Override
 	public synchronized GetNameValue<String> add(GetNameValue<String> v)
 	{
-		// TODO Auto-generated method stub
 		return value.put(new GetNameKey(v, true), v);
 	}
 
-	
 	public synchronized GetNameValue<String> remove(String name)
 	{
 		return value.remove(new GetNameKey(name, true));
 	}
-	
 	
 	/**
 	 * @see org.zoxweb.shared.util.ArrayValues#remove(java.lang.Object)
@@ -106,7 +96,6 @@ implements ArrayValues<GetNameValue<String>>
 	@Override
 	public synchronized GetNameValue<String> remove(GetNameValue<String> v)
 	{
-		// TODO Auto-generated method stub
 		return value.remove(new GetNameKey(v, true));
 	}
 
@@ -132,14 +121,13 @@ implements ArrayValues<GetNameValue<String>>
 			clear();
 		}
 		
-		if ( vals != null)
+		if (vals != null)
 		{
 			for (GetNameValue<String> gnv : vals)
 			{
 				add(gnv);
 			}
 		}
-		
 	}
 
 	/**
@@ -148,7 +136,6 @@ implements ArrayValues<GetNameValue<String>>
 	@Override
 	public List<GetNameValue<String>> search(String... criteria)
 	{
-		// TODO Auto-generated method stub
 		return SharedUtil.search(values(), criteria[0]);
 	}
 
@@ -156,8 +143,8 @@ implements ArrayValues<GetNameValue<String>>
 	 * @see org.zoxweb.shared.util.ArrayValues#isFixed()
 	 */
 	@Override
-	public boolean isFixed() {
-		// TODO Auto-generated method stub
+	public boolean isFixed()
+    {
 		return false;
 	}
 
@@ -167,8 +154,7 @@ implements ArrayValues<GetNameValue<String>>
 	@Override
 	public void setFixed(boolean isFixed)
 	{
-		// TODO Auto-generated method stub
-		
+
 	}
 
 }

@@ -27,8 +27,8 @@ import org.zoxweb.shared.util.SharedUtil;
  */
 @SuppressWarnings("serial")
 public class FilenameFilter
-		implements ValueFilter<String, String> {
-	
+    implements ValueFilter<String, String>
+{
 	/**
 	 * This variable declares that only one instance of this class can be 
 	 * created.
@@ -39,7 +39,8 @@ public class FilenameFilter
 	 * The default constructor is declared private to prevent
 	 * outside instantiation of this class.
 	 */
-	private FilenameFilter() {
+	private FilenameFilter()
+    {
 		
 	}
 	
@@ -50,28 +51,33 @@ public class FilenameFilter
 	 * @exception NullPointerException if fileName is null or white space
 	 * @exception IllegalArgumentException if the fileName is invalid
 	 */
-	public String validate(String fileName) throws NullPointerException, IllegalArgumentException {
+	public String validate(String fileName) throws NullPointerException, IllegalArgumentException
+    {
 		fileName = SharedStringUtil.trimOrNull( fileName);
 		SharedUtil.checkIfNulls("Null filename ", fileName);
 		int lastIndex = -1;
 		
-		for (Const.FilenameSep fns : Const.FilenameSep.values()) {
+		for (Const.FilenameSep fns : Const.FilenameSep.values())
+		{
 			int index = fileName.lastIndexOf(fns.sep);
 			
-			if (index > lastIndex) {
+			if (index > lastIndex)
+			{
 				lastIndex = index;
 			}
 		}
 		
 		
-		if (lastIndex == -1) {
+		if (lastIndex == -1)
+		{
 			return fileName;
 		}
 		
 		fileName = fileName.substring(lastIndex+1);
 		fileName = SharedStringUtil.trimOrNull(fileName);
 		
-		if (fileName == null) {
+		if (fileName == null)
+		{
 			throw new IllegalArgumentException ("Invalid filename " + fileName);
 		}
 		
@@ -83,10 +89,14 @@ public class FilenameFilter
      * @param fileName
      * @return
      */
-	public boolean isValid(String fileName) {
-		try {
+	public boolean isValid(String fileName)
+    {
+		try
+        {
 			validate(fileName);
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+        {
 			return false;
 		}
 		
@@ -97,7 +107,8 @@ public class FilenameFilter
 	 * Returns a string representation of this class.
 	 */
 	@Override
-	public String toCanonicalID() {
+	public String toCanonicalID()
+    {
 		return "static:ValueFilter:FilenameFilter";
 	}
 	

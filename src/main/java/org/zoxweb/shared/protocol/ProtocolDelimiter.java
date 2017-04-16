@@ -21,8 +21,8 @@ import org.zoxweb.shared.util.GetNameValue;
  * Punctuation marks.
  */
 public enum ProtocolDelimiter
-		implements GetNameValue<String> {
-
+    implements GetNameValue<String>
+{
 	COLON(":"),
 	COLON_PATH_ABEMPTY("://"),
 	CRLF("\r\n"),
@@ -38,7 +38,8 @@ public enum ProtocolDelimiter
 	private final String value;
 	private final byte[] bytes;
 
-	ProtocolDelimiter(String val) {
+	ProtocolDelimiter(String val)
+    {
 		value = val;
 		bytes = value.getBytes();
 	}
@@ -47,7 +48,7 @@ public enum ProtocolDelimiter
      * Returns the name.
      * @return
      */
-	public final String getName() 
+	public final String getName()
 	{
 		return name();
 	}
@@ -56,7 +57,8 @@ public enum ProtocolDelimiter
      * Returns the value.
      * @return
      */
-	public final String getValue() {
+	public final String getValue()
+    {
 		return value;
 	}
 
@@ -64,11 +66,14 @@ public enum ProtocolDelimiter
      * Returns the bytes.
      * @return
      */
-	public final byte[] getBytes() {
+	public final byte[] getBytes()
+    {
 		return bytes;
 	}
 
-    public String toString() {
+	@Override
+    public String toString()
+    {
         return value;
     }
 		

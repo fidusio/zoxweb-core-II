@@ -20,7 +20,8 @@ package org.zoxweb.shared.util;
  * @author mzebib
  */
 public interface CRUDNVEntity
-        extends CRUDEvent {
+    extends CRUDEvent
+{
 
 	/**
 	 * Returns NVEntity.

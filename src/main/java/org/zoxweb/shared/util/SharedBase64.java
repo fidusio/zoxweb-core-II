@@ -19,7 +19,8 @@ package org.zoxweb.shared.util;
  * Contains utility methods to converts to/from base64 byte array.
  * @author mnael
  */
-public class SharedBase64 {
+public class SharedBase64
+{
 
 	/**
 	 * This byte array contains the base64 values. This array is used to
@@ -37,7 +38,7 @@ public class SharedBase64 {
 	 * This byte array contains the byte values based on base64 values.
 	 * This array is used to covert from base64.
 	 */
-	public final static byte REVERSE_BASE_64[] = 
+	public final static byte[] REVERSE_BASE_64 =
 		{
 			-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 
 			 
@@ -60,7 +61,8 @@ public class SharedBase64 {
 	/**
 	 * The constructor is declared private to prevent instantiation.
 	 */
-	private SharedBase64() {
+	private SharedBase64()
+    {
 
 	}
 
@@ -69,7 +71,8 @@ public class SharedBase64 {
 	 * @param data
 	 * @return decoded byte array
 	 */
-	public static byte[] decode(byte[] data) {
+	public static byte[] decode(byte[] data)
+    {
 		return decode( data, 0, data.length);
 	}
 
@@ -80,9 +83,11 @@ public class SharedBase64 {
 	 * @param len
 	 * @return decoded byte array
 	 */
-	public static byte[] decode(byte[] data, int index, int len) {
+	public static byte[] decode(byte[] data, int index, int len)
+    {
 
-    	if (data == null || data.length == 0) {
+    	if (data == null || data.length == 0)
+    	{
     		return new byte[0];
 		}
 	    
@@ -93,11 +98,14 @@ public class SharedBase64 {
 	    //data.getChars(0, len, chars, 0);
 
 	    int olen = 3 * (len / 4);
-	    if (data[len - 2] == '=') {
+
+	    if (data[len - 2] == '=')
+	    {
 	    	--olen;
 	    }
 
-	    if (data[len - 1] == '=') {
+	    if (data[len - 1] == '=')
+	    {
 	    	--olen;
 	    }
 
@@ -106,7 +114,8 @@ public class SharedBase64 {
 	    int iidx = 0;
 	    int oidx = 0;
 	    
-	    while (iidx < len) {
+	    while (iidx < len)
+        {
 	    	int c0 = REVERSE_BASE_64[data[index + iidx++] & 0xff];
 	    	int c1 = REVERSE_BASE_64[data[index + iidx++] & 0xff];
 	    	int c2 = REVERSE_BASE_64[data[index + iidx++] & 0xff];
@@ -115,13 +124,15 @@ public class SharedBase64 {
 
 	    	bytes[oidx++] = (byte) (c24 >> 16);
 
-	    	if (oidx == olen) {
+	    	if (oidx == olen)
+	    	{
 	    		break;
 	    	}
 
 	    	bytes[oidx++] = (byte) (c24 >> 8);
 
-	    	if (oidx == olen) {
+	    	if (oidx == olen)
+	    	{
 	    		break;
 	    	}
 
@@ -136,7 +147,8 @@ public class SharedBase64 {
      * @param data
      * @return base64 encoded array
      */
-    public static byte[] encode(byte[] data) {
+    public static byte[] encode(byte[] data)
+    {
     	return encode(data, 0, data.length);
     }
 
@@ -147,12 +159,15 @@ public class SharedBase64 {
 	 * @param len
 	 * @return base64 encoded array
 	 */
-	public static byte[] encode(byte[] data, int index, int len) {
-    	if (data == null || data.length == 0) {
+	public static byte[] encode(byte[] data, int index, int len)
+    {
+    	if (data == null || data.length == 0)
+    	{
 			return new byte[0];
 		}
 
-    	if (index < 0 || len > data.length - index ) {
+    	if (index < 0 || len > data.length - index )
+    	{
 			throw new IllegalArgumentException("Invalid parameter " + index + "," + len);
 		}
 
@@ -165,7 +180,8 @@ public class SharedBase64 {
 	    int oidx = 0;
 	    int charsLeft = len;
 	    
-	    while (charsLeft > 0) {
+	    while (charsLeft > 0)
+        {
 	    	int b0 = data[iidx++] & 0xff;
 	    	int b1 = (charsLeft > 1) ? data[iidx++] & 0xff : 0;
 	    	int b2 = (charsLeft > 2) ? data[iidx++] & 0xff : 0;

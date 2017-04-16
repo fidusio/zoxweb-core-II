@@ -33,16 +33,9 @@ import org.zoxweb.shared.util.Const.TimeUnitType;
 import org.zoxweb.shared.util.NVPair;
 import org.zoxweb.shared.util.GetNameValue;
 
-
-
-
 public class HTTPMultiPartUtil 
 {
-	
-	
-	
-	
-	
+
 	public static final GetNameValue<String> MULTI_PART_HEADER_CONTENT_TYPE = new NVPair(HTTPHeaderName.CONTENT_TYPE.getName(), "multipart/form-data; boundary=");
 	
 	
@@ -56,6 +49,7 @@ public class HTTPMultiPartUtil
 		{
 			tut = TimeUnitType.NANOS;
 		}
+
 		switch(tut)
 		{
 		case MILLIS:
@@ -65,8 +59,7 @@ public class HTTPMultiPartUtil
 			return Long.toString(System.nanoTime(), 16);
 		}
 	}
-	
-	
+
 	/**
 	 * Format: BOUNDARY_EDGE + boundary
 	 * @param boundary
@@ -113,9 +106,9 @@ public class HTTPMultiPartUtil
 	
 	private static void appendNameValue(StringBuilder sb, GetNameValue<String> gnv)
 	{
-		if ( gnv!= null)
+		if (gnv!= null)
 		{
-			if( gnv.getName() != null && gnv.getValue() != null)
+			if (gnv.getName() != null && gnv.getValue() != null)
 			{
 				sb.append( gnv.getName());
 				sb.append( ProtocolDelimiter.EQUAL);
@@ -123,24 +116,21 @@ public class HTTPMultiPartUtil
 				sb.append( gnv.getValue());
 				sb.append( ProtocolDelimiter.DOUBLE_QUOTE);
 			}
-			else if ( gnv.getName() == null && gnv.getValue() != null)
+			else if (gnv.getName() == null && gnv.getValue() != null)
 			{
-				sb.append( gnv.getValue());
+				sb.append(gnv.getValue());
 			}
 		}
 	}
 	
 	public static String formatMultiPartParameter(HTTPMultiPartParameter hmpp)
 	{
-		
-		
 		Map<String, ArrayList<GetNameValue<String>>>  headers = hmpp.getHeaders();
 		StringBuilder sb = new StringBuilder();
-		if ( headers != null)
+		if (headers != null)
 		{
 			ArrayList<GetNameValue<String>> contentDisposition = headers.get(HTTPHeaderName.CONTENT_DISPOSITION.getName());
-			
-			
+
 			sb.append(HTTPHeaderName.CONTENT_DISPOSITION.getName()+ProtocolDelimiter.COLON+ProtocolDelimiter.SPACE+
 					   HTTPHeaderValue.FORM_DATA+ProtocolDelimiter.SEMICOLON+ProtocolDelimiter.SPACE+ HTTPHeaderValue.NAME+ProtocolDelimiter.EQUAL +
 					   "\"" + hmpp.getName() + "\"" );
@@ -156,9 +146,9 @@ public class HTTPMultiPartUtil
 				sb.append( ProtocolDelimiter.DOUBLE_QUOTE);
 			}
 			
-			if ( contentDisposition != null)
+			if (contentDisposition != null)
 			{
-				for( GetNameValue<String> gnv: contentDisposition)
+				for (GetNameValue<String> gnv: contentDisposition)
 				{
 					//if ( !"name".equalsIgnoreCase( gnv.getName()))
 					{
@@ -177,7 +167,8 @@ public class HTTPMultiPartUtil
 			}
 			
 			Set<Map.Entry<String, ArrayList<GetNameValue<String>>>> allHeaders = headers.entrySet();
-			for ( Map.Entry<String, ArrayList<GetNameValue<String>>> me : allHeaders)
+
+			for (Map.Entry<String, ArrayList<GetNameValue<String>>> me : allHeaders)
 			{
 				if (me.getValue() != contentDisposition)
 				{
@@ -185,18 +176,20 @@ public class HTTPMultiPartUtil
 					sb.append( ProtocolDelimiter.COLON);
 					sb.append( ProtocolDelimiter.SPACE);
 					ArrayList<GetNameValue<String>> headersParameters = me.getValue();
-					if ( headersParameters!= null)
+
+					if (headersParameters!= null)
 					{
-						for ( int i = 0; i < headersParameters.size(); i++)
+						for (int i = 0; i < headersParameters.size(); i++)
 						{
 							if (i>0)
 							{
 								sb.append( ProtocolDelimiter.SEMICOLON);
 								sb.append( ProtocolDelimiter.SPACE);
-								
 							}
+
 							appendNameValue(sb, headersParameters.get(i));
 						}
+
 						sb.append( ProtocolDelimiter.CRLF);
 					}
 					else
@@ -206,20 +199,15 @@ public class HTTPMultiPartUtil
 					
 				}
 			}
-			
 					   // we need to add all the extra fields and headers  here
-					   
-					   
-					   
+
 			sb.append( ProtocolDelimiter.CRLF + 
 					   hmpp.getValue() +ProtocolDelimiter.CRLF);
 		}
+
 		return sb.toString();
 	}
-	
-	
-	
-	
+
 	public static String formatMutliPartNameValue(String name, String value)
 	{
 		return HTTPHeaderName.CONTENT_DISPOSITION.getName() + ProtocolDelimiter.COLON+ProtocolDelimiter.SPACE +
@@ -227,6 +215,7 @@ public class HTTPMultiPartUtil
 			   HTTPHeaderValue.NAME + ProtocolDelimiter.EQUAL + "\"" + name + "\"" +
 			   ProtocolDelimiter.CRLFCRLF + value +ProtocolDelimiter.CRLF;
 	}
+
 	/**
 	 * Format:
 	 * BOUNDARY_EDGE + boundary+ \r\n
@@ -274,22 +263,21 @@ public class HTTPMultiPartUtil
 	
 	public static void writeMultiPartContent(OutputStream os, String boundary, ArrayValues<GetNameValue<String>> params)
 			throws IOException
+	{
+		for (GetNameValue<String> gnv : params.values())
 		{
-			for ( GetNameValue<String> gnv : params.values())
-			{
-				os.write(formatStartBoundary( boundary).getBytes());
-				writeMultiPartData(os, gnv);
-			}
-			
-			os.write(formatEndBoundary( boundary).getBytes());
+			os.write(formatStartBoundary( boundary).getBytes());
+			writeMultiPartData(os, gnv);
 		}
+
+		os.write(formatEndBoundary( boundary).getBytes());
+	}
 	
-	
-	
+
 	public static void writeMultiPartData(OutputStream os, GetNameValue<String> gnv)
 			throws IOException
 	{
-		if ( gnv instanceof HTTPMultiPartParameter)
+		if (gnv instanceof HTTPMultiPartParameter)
 		{
 			writeMultiPartParameter(os, (HTTPMultiPartParameter) gnv );
 			return;
@@ -304,7 +292,8 @@ public class HTTPMultiPartUtil
 	{
 		Map<String, ArrayList<GetNameValue<String>>>  headers = hmpp.getHeaders();
 		StringBuilder sb = new StringBuilder();
-		if ( headers != null)
+
+		if (headers != null)
 		{
 			ArrayList<GetNameValue<String>> contentDisposition = headers.get(HTTPHeaderName.CONTENT_DISPOSITION.getName());
 			
@@ -324,20 +313,19 @@ public class HTTPMultiPartUtil
 				sb.append( ProtocolDelimiter.DOUBLE_QUOTE);
 			}
 			
-			if ( contentDisposition != null)
+			if (contentDisposition != null)
 			{
-				for( GetNameValue<String> gnv: contentDisposition)
+				for (GetNameValue<String> gnv: contentDisposition)
 				{
 					//if ( !"name".equalsIgnoreCase( gnv.getName()))
 					{
 						sb.append( ProtocolDelimiter.SEMICOLON);
 						sb.append( ProtocolDelimiter.SPACE);
 						appendNameValue(sb, gnv);
-						
 					}
 				}
+
 				sb.append( ProtocolDelimiter.CRLF);
-				
 			}
 			else
 			{
@@ -345,7 +333,8 @@ public class HTTPMultiPartUtil
 			}
 			
 			Set<Map.Entry<String, ArrayList<GetNameValue<String>>>> allHeaders = headers.entrySet();
-			for ( Map.Entry<String, ArrayList<GetNameValue<String>>> me : allHeaders)
+
+			for (Map.Entry<String, ArrayList<GetNameValue<String>>> me : allHeaders)
 			{
 				if (me.getValue() != contentDisposition)
 				{
@@ -353,11 +342,12 @@ public class HTTPMultiPartUtil
 					sb.append( ProtocolDelimiter.COLON);
 					sb.append( ProtocolDelimiter.SPACE);
 					ArrayList<GetNameValue<String>> headersParameters = me.getValue();
-					if ( headersParameters!= null)
+
+					if (headersParameters!= null)
 					{
-						for ( int i = 0; i < headersParameters.size(); i++)
+						for (int i = 0; i < headersParameters.size(); i++)
 						{
-							if (i>0)
+							if (i > 0)
 							{
 								sb.append( ProtocolDelimiter.SEMICOLON);
 								sb.append( ProtocolDelimiter.SPACE);
@@ -365,39 +355,38 @@ public class HTTPMultiPartUtil
 							}
 							appendNameValue(sb, headersParameters.get(i));
 						}
+
 						sb.append( ProtocolDelimiter.CRLF);
 					}
 					else
 					{
 						sb.append( ProtocolDelimiter.CRLF);	
 					}
-					
 				}
 			}
-			
 					   // we need to add all the extra fields and headers  here
 					   
-			os.write( sb.toString().getBytes());
+			os.write(sb.toString().getBytes());
 					   
-			os.write( ProtocolDelimiter.CRLF.getBytes());
+			os.write(ProtocolDelimiter.CRLF.getBytes());
 			
 			//hmpp.getValue()
-			if ( hmpp.getInputStreamValue() != null)
+			if (hmpp.getInputStreamValue() != null)
 			{
-				
 				InputStream is = hmpp.getInputStreamValue();
 				byte buffer[] = new byte[512];
 				int read;
+
 				try
 				{
-					while( (read = is.read( buffer)) != -1)
+					while((read = is.read( buffer)) != -1)
 					{
 						os.write( buffer, 0, read);
 					}
 				}
 				finally
 				{
-					if ( hmpp.isAutoClose())
+					if (hmpp.isAutoClose())
 					{
 						try
 						{
@@ -409,15 +398,12 @@ public class HTTPMultiPartUtil
 						}
 					}
 				}
-				
-				
-				
 			}
 			else if (hmpp.getContentValue() != null)
 			{
 				os.write(hmpp.getContentValue());
 			}
-			else if ( hmpp.getValue() != null)
+			else if (hmpp.getValue() != null)
 			{
 				os.write(hmpp.getValue().getBytes());
 			}
@@ -433,16 +419,19 @@ public class HTTPMultiPartUtil
 		if (hcc.isMultiPartEncoding() && (hcc.getMethod() == HTTPMethod.POST || hcc.getMethod() == HTTPMethod.PUT))
 		{
 			GetNameValue<String> ct = null;
-			if ( hcc.getHeaderParameters() != null)
+			if (hcc.getHeaderParameters() != null)
+			{
 				ct = hcc.getHeaderParameters().get(MULTI_PART_HEADER_CONTENT_TYPE.getName());
+			}
 			
-			if ( ct == null)
+			if (ct == null)
 			{
 				// set the boundary
 				hcc.setBoundary(generateBoundary(TimeUnitType.NANOS));
 				// add the boundary parameter to the request header
 				hcc.getHeaderParameters().add(new NVPair(MULTI_PART_HEADER_CONTENT_TYPE.getName(), MULTI_PART_HEADER_CONTENT_TYPE.getValue() + hcc.getBoundary()));
 			}
+
 			return true;
 		}
 		

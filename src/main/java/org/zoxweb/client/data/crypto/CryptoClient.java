@@ -16,40 +16,44 @@
 package org.zoxweb.client.data.crypto;
 
 import org.zoxweb.shared.crypto.CryptoConst;
-import org.zoxweb.shared.crypto.CryptoInterface;
+import org.zoxweb.shared.crypto.CryptoHash;
 import org.zoxweb.shared.security.AccessSecurityException;
 import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
 
 /**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
+ *
  */
 public class CryptoClient
-		implements CryptoInterface {
+	implements CryptoHash
+{
 
-	final public static CryptoInterface SINGLETON = new CryptoClient();
-	
-	protected CryptoClient() {
-		
+	public static final CryptoHash SINGLETON = new CryptoClient();
+
+	protected CryptoClient()
+	{
+
 	}
 
 	@Override
 	public byte[] hash(String mdAlgo, byte[]... tokens)
-			throws NullPointerException, AccessSecurityException {
-
+        throws NullPointerException, AccessSecurityException
+	{
 		CryptoConst.MDType mdType = CryptoConst.MDType.lookup(mdAlgo);
 		SharedUtil.checkIfNulls("MD type not found", mdType);
 		StringBuilder sb = new StringBuilder();
-		switch(mdType)
+
+		switch (mdType)
 		{
 		case MD5:
-			for (byte[] array : tokens) {
+			for (byte[] array : tokens)
+			{
 				sb.append(SharedStringUtil.toString(array));
 			}
 			return SharedStringUtil.hexToBytes(hashMD5(sb.toString()));
 		case SHA_256:
-			for (byte[] array : tokens) {
+			for (byte[] array : tokens)
+			{
 				sb.append(SharedStringUtil.toString(array));
 			}
 			return SharedStringUtil.hexToBytes(hashSHA256(sb.toString()));
@@ -57,30 +61,30 @@ public class CryptoClient
 			default:
 				throw new AccessSecurityException("Digest not supported " + mdType);
 		}
-		
-		
-	
 	}
 
 	/**
-	 * @see org.zoxweb.shared.crypto.CryptoInterface#hash(java.lang.String, java.lang.String[])
+	 * @see CryptoHash#hash(java.lang.String, java.lang.String[])
 	 */
 	@Override
 	public byte[] hash(String mdAlgo, String... tokens)
-			throws AccessSecurityException
+        throws AccessSecurityException
 	{
 		CryptoConst.MDType mdType = CryptoConst.MDType.lookup(mdAlgo);
 		SharedUtil.checkIfNulls("MD type not found", mdType);
 		StringBuilder sb = new StringBuilder();
+
 		switch(mdType)
 		{
 		case MD5:
-			for (String str : tokens) {
+			for (String str : tokens)
+			{
 				sb.append(str);
 			}
 			return SharedStringUtil.hexToBytes(hashMD5(sb.toString()));
 		case SHA_256:
-			for (String str : tokens) {
+			for (String str : tokens)
+			{
 				sb.append(str);
 			}
 			return SharedStringUtil.hexToBytes(hashSHA256(sb.toString()));

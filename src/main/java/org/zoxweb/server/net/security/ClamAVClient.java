@@ -30,7 +30,6 @@ import org.zoxweb.shared.util.Const.TypeInBytes;
 public class ClamAVClient
 {
 
-	
 	public static class ClamAVScanResult
 		extends FilterInputStream
 		implements StreamStats
@@ -43,8 +42,7 @@ public class ClamAVClient
 			result.setName(scanName);
 			this.ci = ci;
 		}
-		
-		
+
 		public ScanResultDAO getScanResult()
 		{
 			return result;
@@ -55,35 +53,36 @@ public class ClamAVClient
 		{
 			return ci;
 		}
-		
 
 		
-		
-		
 		public int read(byte[] buf)
-				throws IOException
+            throws IOException
 		{
 			return read(buf, 0, buf.length);
 		}
 		
 		public int read(byte[] buf, int offset, int len)
-				throws IOException
+            throws IOException
 		{
 			int read = in.read(buf, offset, len);
 			
 			try
 			{
 				if (read > 0)
-					partialScan(this, buf, offset, read);
+                {
+                    partialScan(this, buf, offset, read);
+                }
 			}
 			catch(Exception e)
 			{
 				e.printStackTrace();
 			}
+
 			return read;
 		}
 		
-		public void close() throws IOException
+		public void close()
+            throws IOException
 		{
 			try
 			{
@@ -96,6 +95,7 @@ public class ClamAVClient
 			IOUtil.close(in);
 			IOUtil.close(ci);
 		}
+
 		public String toString()
 		{
 			return (result.getName() != null ? result.getName() +"," : "") + "Data length:" + result.getLength() + ",Scan duration:" + result.getScanDuration() + " millis" +",Is Clean:" + result.getStatus() + ".\n"

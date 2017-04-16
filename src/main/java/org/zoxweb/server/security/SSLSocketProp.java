@@ -21,10 +21,11 @@ import java.net.URLConnection;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLSocketFactory;
 
-public interface SSLSocketProp {
+public interface SSLSocketProp
+{
 	
 	/**
-	 * Return the SSLFactory
+	 * Returns the SSLFactory
 	 * 
 	 * @return SSLSocketFactory
 	 */
@@ -32,7 +33,7 @@ public interface SSLSocketProp {
 	
 	
 	/**
-	 * Return the HostnameVerifier
+	 * Returns the HostnameVerifier
 	 * 
 	 * @return HostnameVerifier
 	 */
@@ -40,7 +41,7 @@ public interface SSLSocketProp {
 	
 	
 	/**
-	 * Update the URLConnection if it is a secure connection with getSSLFactory
+	 * Updates the URLConnection if it is a secure connection with getSSLFactory
 	 *  
 	 * @param con
 	 */

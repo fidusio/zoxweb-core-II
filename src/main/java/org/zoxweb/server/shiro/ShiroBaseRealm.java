@@ -36,8 +36,9 @@ import org.zoxweb.shared.data.shiro.ShiroRulesManager;
 import org.zoxweb.shared.util.Const;
 
 public abstract class ShiroBaseRealm
-		extends AuthorizingRealm
-		implements ShiroRulesManager {
+    extends AuthorizingRealm
+    implements ShiroRulesManager
+{
 
 	private static final transient Logger log = Logger.getLogger(Const.LOGGER_NAME);
 
@@ -45,28 +46,31 @@ public abstract class ShiroBaseRealm
 	
 
 	@Override
-	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-		
+	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals)
+    {
        //null usernames are invalid
-       if (principals == null) {
+       if (principals == null)
+       {
            throw new AuthorizationException("PrincipalCollection method argument cannot be null.");
        }
        
        log.info("PrincipalCollection class:" + principals.getClass());
-     
 
-       if (principals instanceof DomainPrincipalCollection) {
+       if (principals instanceof DomainPrincipalCollection)
+       {
 	        String userID = (String) getAvailablePrincipal(principals);
 	        String domainID   = ((DomainPrincipalCollection) principals).getDomainID();
 	        Set<String> roleNames = getUserRoles(domainID, userID);
 	        Set<String> permissions = null;
 	         
-	        if (isPermissionsLookupEnabled()) {
+	        if (isPermissionsLookupEnabled())
+	        {
 	        	permissions = getUserPermissions(domainID, userID, roleNames);
 	        }
 
 	        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo(roleNames);
 	        info.setStringPermissions(permissions);
+
 	        return info;
        }
 
@@ -78,9 +82,11 @@ public abstract class ShiroBaseRealm
 	 */
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token)
-			throws AuthenticationException {
+        throws AuthenticationException
+    {
 		
-		if (token instanceof DomainUsernamePasswordToken) {
+		if (token instanceof DomainUsernamePasswordToken)
+		{
 			log.info( "Domain based authentication");
 			DomainUsernamePasswordToken upToken = (DomainUsernamePasswordToken) token;
 	        String userName = upToken.getUsername();
@@ -88,13 +94,15 @@ public abstract class ShiroBaseRealm
 	        String userID = upToken.getUserID();
 	        log.info( domainID +":"+userName);
 	        // Null username is invalid
-	        if (userName == null) {
+	        if (userName == null)
+	        {
 	            throw new AccountException("Null usernames are not allowed by this realm.");
 	        }
 
 	        PasswordDAO password = getUserPassword(domainID, userName);
 
-	         if (password == null) {
+	         if (password == null)
+	         {
 	        	throw new UnknownAccountException("No account found for user [" + userID + "]");
 	        }
 
@@ -112,7 +120,8 @@ public abstract class ShiroBaseRealm
 		return permissionsLookupEnabled;
 	}
 
-	public void setPermissionsLookupEnabled(boolean permissionsLookupEnabled) {
+	public void setPermissionsLookupEnabled(boolean permissionsLookupEnabled)
+    {
 		this.permissionsLookupEnabled = permissionsLookupEnabled;
 	}
 

@@ -16,9 +16,8 @@
 package org.zoxweb.shared.accounting;
 
 /**
- * This enum contains the two transaction types: credit and debit.
+ * Contains the transaction types: credit and debit.
  * @author mzebib
- *
  */
 public enum TransactionType
 {

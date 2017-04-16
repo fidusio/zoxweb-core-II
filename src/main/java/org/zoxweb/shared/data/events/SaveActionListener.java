@@ -16,13 +16,16 @@
 package org.zoxweb.shared.data.events;
 
 /**
- * @author mzebib
- *
+ * The save action listener interface.
+ * @param <V>
  */
 public interface SaveActionListener<V>
 	extends ActionBaseListener<V>
 {
-	
+    /**
+     * Executes save action for specified input.
+     * @param v
+     */
 	public void actionSave(V v);
 
 }

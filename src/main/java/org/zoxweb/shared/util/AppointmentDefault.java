@@ -19,37 +19,44 @@ import java.io.Serializable;
 
 @SuppressWarnings("serial")
 public class AppointmentDefault
-		implements Appointment, Serializable {
+    implements Appointment, Serializable
+{
 	
 	private long delay;
 	private long expiration;
 
-	public AppointmentDefault() {
+	public AppointmentDefault()
+    {
 		this(0);
 	}
 	
-	public AppointmentDefault(long delayInMillis) {
+	public AppointmentDefault(long delayInMillis)
+    {
 		setDelayInMillis(delayInMillis);
 	}
 
 	@Override
-	public long getDelayInMillis() {
+	public long getDelayInMillis()
+    {
 		return delay;
 	}
 
 	@Override
-	public synchronized void setDelayInMillis(long delayInMillis) {
+	public synchronized void setDelayInMillis(long delayInMillis)
+    {
 		delay = delayInMillis;
 		expiration = System.currentTimeMillis() + delay;
 	}
 
 	@Override
-	public synchronized long getExpirationInMillis() {
+	public synchronized long getExpirationInMillis()
+    {
 		return expiration;
 	}
 
 	@Override
-	public boolean cancel() {
+	public boolean cancel()
+    {
 		return false;
 	}
 

@@ -20,7 +20,8 @@ package org.zoxweb.shared.util;
  * @author mzebib
  */
 public interface CRUDNVBase
-	extends CRUDEvent {
+	extends CRUDEvent
+{
 
 	/**
 	 * Returns the NVBase.

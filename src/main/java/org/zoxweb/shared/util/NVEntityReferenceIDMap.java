@@ -32,9 +32,8 @@ public class NVEntityReferenceIDMap
 	
 	public NVEntityReferenceIDMap()
 	{
+
 	}
-	
-	
 	
 	public NVEntityReferenceIDMap(String name)
 	{
@@ -53,11 +52,12 @@ public class NVEntityReferenceIDMap
 	
 	public synchronized NVEntity get(String refID)
 	{
-		
 		NVEntity ret =  value.get(new ReferenceIDKey(refID));
-		if ( ret == null)
+
+		if (ret == null)
 		{
 			List<NVEntity> list = search(refID);
+
 			if (list != null && list.size()==1)
 			{
 				ret = list.get(0);
@@ -93,19 +93,14 @@ public class NVEntityReferenceIDMap
 		return value.values().toArray(new NVEntity[0]);
 	}
 
-
-
 	/**
 	 * @see org.zoxweb.shared.util.ArrayValues#clear()
 	 */
 	@Override
 	public void clear() 
 	{
-		// TODO Auto-generated method stub
 		value.clear();
 	}
-
-
 
 	/**
 	 * @see org.zoxweb.shared.util.ArrayValues#add(java.lang.Object[], boolean)
@@ -117,7 +112,8 @@ public class NVEntityReferenceIDMap
 		{
 			clear();
 		}
-		if ( vals != null)
+
+		if (vals != null)
 		{
 			for (NVEntity nve: vals)
 			{
@@ -125,37 +121,29 @@ public class NVEntityReferenceIDMap
 			}
 		}
 	}
-	
-	
-	
+
 	@Override
-	public List<NVEntity> search(String... criteria) {
-		// TODO Auto-generated method stub
+	public List<NVEntity> search(String... criteria)
+    {
 		return SharedUtil.search(values(), criteria);
 	}
-
-
 
 	/**
 	 * @see org.zoxweb.shared.util.ArrayValues#isFixed()
 	 */
 	@Override
-	public boolean isFixed() {
-		// TODO Auto-generated method stub
+	public boolean isFixed()
+    {
 		return false;
 	}
-
-
 
 	/**
 	 * @see org.zoxweb.shared.util.ArrayValues#setFixed(boolean)
 	 */
 	@Override
-	public void setFixed(boolean isFixed) {
-		// TODO Auto-generated method stub
-		
+	public void setFixed(boolean isFixed)
+    {
+
 	}
 
-	
-	
 }

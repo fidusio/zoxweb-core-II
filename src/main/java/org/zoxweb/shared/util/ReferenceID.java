@@ -41,4 +41,5 @@ public interface ReferenceID<T>
 	 * @param id
 	 */
 	 void setReferenceID(T id);
+
 }

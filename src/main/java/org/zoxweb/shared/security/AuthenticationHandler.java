@@ -17,10 +17,11 @@ package org.zoxweb.shared.security;
 
 /**
  * 
- * 
  */
 public interface AuthenticationHandler<I, O>
-extends IsSecure
+    extends IsSecure
 {
-	public void authenticate(I input, O output) throws AccessException; 
+
+	public void authenticate(I input, O output) throws AccessException;
+
 }

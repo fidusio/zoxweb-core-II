@@ -32,10 +32,9 @@ import org.zoxweb.shared.util.SharedUtil;
 /**
  * NIO Socket 
  * @author mnael
- *
  */
 public class NIOSocket
-implements Runnable, DaemonController, Closeable
+    implements Runnable, DaemonController, Closeable
 {
 	private static final transient Logger logger = Logger.getLogger(NIOSocket.class.getName());
 	private static boolean debug = false;

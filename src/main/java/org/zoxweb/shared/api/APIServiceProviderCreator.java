@@ -34,7 +34,7 @@ public interface APIServiceProviderCreator
 	 * Returns the exception handler.
 	 * @return APIExceptionHandler
 	 */
-	public APIExceptionHandler getExeptionHandler();
+	public APIExceptionHandler getExceptionHandler();
 	
 	/**
 	 * Creates the API based on the configuration parameters.

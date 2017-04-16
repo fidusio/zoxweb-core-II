@@ -16,13 +16,16 @@
 package org.zoxweb.shared.data.events;
 
 /**
- * @author mzebib
- *
+ * The preview action listener interface.
  */
 public interface PreviewActionListener<V>
 	extends ActionBaseListener<V>
 {
 
+    /**
+     * Executes preview action for specified input.
+     * @param v
+     */
 	public void actionPreview(V v);
 	
 }

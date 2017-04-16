@@ -32,22 +32,29 @@ import org.zoxweb.shared.util.Const;
 
 @SuppressWarnings("serial")
 public class ShiroSessionStatusServlet
-		extends ShiroBaseServlet {
+    extends ShiroBaseServlet
+{
 	
 	private static final transient Logger log = Logger.getLogger(Const.LOGGER_NAME);
-	
+
+	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
-		
+        throws ServletException, IOException
+    {
 		Subject subject = SecurityUtils.getSubject();
 
-		if (subject == null || !subject.isAuthenticated()) {
+		if (subject == null || !subject.isAuthenticated())
+		{
 			log.info("security check required and user not authenticated");
 
-			if (subject != null && subject.getSession() != null) {
-				try {
+			if (subject != null && subject.getSession() != null)
+			{
+				try
+                {
 					subject.getSession().stop();
-				} catch(InvalidSessionException e) {
+				}
+				catch(InvalidSessionException e)
+                {
 					log.info("Error " + e);
 				}
 			}
@@ -65,7 +72,8 @@ public class ShiroSessionStatusServlet
 	 * @see org.zoxweb.server.shiro.servlet.ShiroBaseServlet#isSecurityCheckRequired(org.zoxweb.shared.http.HTTPMethod, javax.servlet.http.HttpServletRequest)
 	 */
 	@Override
-	protected boolean isSecurityCheckRequired(HTTPMethod httpMethod, HttpServletRequest req) {
+	protected boolean isSecurityCheckRequired(HTTPMethod httpMethod, HttpServletRequest req)
+    {
 		return false;
 	}
 

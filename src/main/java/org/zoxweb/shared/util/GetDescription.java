@@ -18,10 +18,9 @@ package org.zoxweb.shared.util;
 /**
  * The get description interface.
  * @author mnael
- *
  */
-public interface GetDescription {
-
+public interface GetDescription
+{
 	/**
 	 * Returns the property description.
 	 * @return description

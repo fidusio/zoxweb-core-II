@@ -18,10 +18,10 @@ package org.zoxweb.shared.util;
 /**
  * The set mandatory interface.
  * @author mnael
- *
  */
 public interface SetMandatory
-		extends IsMandatory {
+    extends IsMandatory
+{
 
 	/**
 	 * Set mandatory property.

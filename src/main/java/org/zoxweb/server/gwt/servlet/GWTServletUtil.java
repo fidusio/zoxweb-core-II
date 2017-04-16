@@ -17,20 +17,28 @@ package org.zoxweb.server.gwt.servlet;
 
 import org.zoxweb.server.shiro.servlet.ShiroBaseGWTRPC;
 
-
 /**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
+ * GWT servlet utility class.
  */
 public class GWTServletUtil 
 {
+	/**
+	 * The constructor is declared private to prevent instantiation.
+	 */
 	private GWTServletUtil()
 	{
 		
 	}
-	
+
+	/**
+	 * Looks up attribute value based on given name.
+	 * @param gwtServlet
+	 * @param attributeName
+	 * @return
+	 */
 	public static Object lookupAttributeValue(ShiroBaseGWTRPC gwtServlet, String attributeName)
 	{
 		return gwtServlet.getServletRequest().getSession().getAttribute(attributeName);
 	}
+
 }

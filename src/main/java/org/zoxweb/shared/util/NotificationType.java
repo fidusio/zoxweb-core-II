@@ -18,7 +18,6 @@ package org.zoxweb.shared.util;
 /**
  * This enum contains notification types.
  * @author mzebib
- *
  */
 public enum NotificationType
 {

@@ -36,18 +36,21 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 @SuppressWarnings("serial")
 public abstract class ShiroBaseGWTRPC
-	extends RemoteServiceServlet {
+	extends RemoteServiceServlet
+{
 	
 	private static final transient Logger log = Logger.getLogger(Const.LOGGER_NAME);
 
 	private final Object localDelegate;
 
-	public ShiroBaseGWTRPC() {
+	public ShiroBaseGWTRPC()
+    {
 		super();
 		localDelegate = this;
 	}
 	
-	public ShiroBaseGWTRPC( Object delegate) {
+	public ShiroBaseGWTRPC( Object delegate)
+    {
 		super( delegate);
 		localDelegate = delegate;
 	}
@@ -93,51 +96,63 @@ public abstract class ShiroBaseGWTRPC
 			// check the resource access
 		}
 	}
-	
+
+	@Override
 	public String processCall(String payload) throws SerializationException {
 	    // First, check for possible XSRF situation
 	    checkPermutationStrongName();
 	   
-	    try {
-	      RPCRequest rpcRequest = RPC.decodeRequest(payload, localDelegate.getClass(), this);
-	      onAfterRequestDeserialized(rpcRequest);
+	    try
+        {
+            RPCRequest rpcRequest = RPC.decodeRequest(payload, localDelegate.getClass(), this);
+            onAfterRequestDeserialized(rpcRequest);
 	      
 	      
-	      // invoke the security check here at this level
-	      
-	      try {
-	    	  checkSecurity( localDelegate, rpcRequest.getMethod(), rpcRequest.getParameters());
-	      } catch( AccessException e) {
-	    	  return RPC.encodeResponseForFailure( rpcRequest.getMethod(),
-	    			  							   e,
-	    			  							   rpcRequest.getSerializationPolicy(),
-	    			  							   rpcRequest.getFlags());
-	      }
+            // invoke the security check here at this level
 
-	    	  return RPC.invokeAndEncodeResponse( localDelegate,
+            try
+            {
+                checkSecurity( localDelegate, rpcRequest.getMethod(), rpcRequest.getParameters());
+            }
+                catch( AccessException e)
+            {
+                return RPC.encodeResponseForFailure( rpcRequest.getMethod(),
+                                               e,
+                                               rpcRequest.getSerializationPolicy(),
+                                               rpcRequest.getFlags());
+            }
+
+            return RPC.invokeAndEncodeResponse(localDelegate,
 	    			  							  rpcRequest.getMethod(),
 	    			  							  rpcRequest.getParameters(),
 	    			  							  rpcRequest.getSerializationPolicy(),
 	    			  							  rpcRequest.getFlags());
-	      
-	      
-	    } catch (IncompatibleRemoteServiceException ex) {
-	      log(
+
+        }
+        catch (IncompatibleRemoteServiceException ex)
+        {
+            log(
 	          "An IncompatibleRemoteServiceException was thrown while processing this call.",
 	          ex);
-	      return RPC.encodeResponseForFailure(null, ex);
-	    } catch (RpcTokenException tokenException) {
-	      log("An RpcTokenException was thrown while processing this call.",
-	          tokenException);
-	      return RPC.encodeResponseForFailure(null, tokenException);
-	    }
-	  }
 
-	public HttpServletRequest getServletRequest() {
+            return RPC.encodeResponseForFailure(null, ex);
+	    }
+	    catch (RpcTokenException tokenException)
+        {
+            log("An RpcTokenException was thrown while processing this call.",
+	          tokenException);
+
+            return RPC.encodeResponseForFailure(null, tokenException);
+	    }
+    }
+
+	public HttpServletRequest getServletRequest()
+    {
 		return getThreadLocalRequest();
 	}
 	
-	public HttpServletResponse getServletResponse() {
+	public HttpServletResponse getServletResponse()
+    {
 		return getThreadLocalResponse();
 	}
 

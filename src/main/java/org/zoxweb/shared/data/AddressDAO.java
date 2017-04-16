@@ -37,7 +37,7 @@ import javax.persistence.Table;
 public class  AddressDAO
 	extends SetNameDescriptionDAO {
 
-	public enum Params
+	public enum Param
 		implements GetNVConfig
 	{
 		STREET(NVConfigManager.createNVConfig("street", "Street address", "Street", true, true, String.class)),
@@ -48,16 +48,16 @@ public class  AddressDAO
 		
 		;	
 
-		private final NVConfig cType;
-		
-		Params(NVConfig c)
+		private final NVConfig nvc;
+
+        Param(NVConfig nvc)
 		{
-			cType = c;
+			this.nvc = nvc;
 		}
 		
 		public NVConfig getNVConfig() 
 		{
-			return cType;
+			return nvc;
 		}
 	}
 	
@@ -70,7 +70,7 @@ public class  AddressDAO
 																					false, 
 																					false, 
 																					AddressDAO.class, 
-																					SharedUtil.extractNVConfigs(Params.values()), 
+																					SharedUtil.extractNVConfigs(Param.values()),
 																					null, 
 																					false, 
 																					SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO
@@ -89,7 +89,7 @@ public class  AddressDAO
 	 */
 	@Column (name = "street")
 	public String getStreet() {
-		return lookupValue(Params.STREET);
+		return lookupValue(Param.STREET);
 	}
 	
 	/**
@@ -97,7 +97,7 @@ public class  AddressDAO
 	 * @param street
 	 */
 	public void setStreet(String street) {
-		setValue(Params.STREET, street);
+		setValue(Param.STREET, street);
 	}
 	
 	/**
@@ -106,7 +106,7 @@ public class  AddressDAO
 	 */
 	@Column (name = "city")
 	public String getCity() {
-		return lookupValue(Params.CITY);
+		return lookupValue(Param.CITY);
 	}
 	
 	/**
@@ -114,7 +114,7 @@ public class  AddressDAO
 	 * @param city
 	 */
 	public void setCity(String city) {
-		setValue(Params.CITY, city);
+		setValue(Param.CITY, city);
 	}
 	
 	/**
@@ -123,7 +123,7 @@ public class  AddressDAO
 	 */
 	@Column (name = "state_province")
 	public String getStateOrProvince() {
-		return lookupValue(Params.STATE_PROVINCE);
+		return lookupValue(Param.STATE_PROVINCE);
 	}
 	
 	/**
@@ -131,7 +131,7 @@ public class  AddressDAO
 	 * @param state
 	 */
 	public void setStateOrProvince(String state) {
-		setValue(Params.STATE_PROVINCE, state);
+		setValue(Param.STATE_PROVINCE, state);
 	}
 	
 	/**
@@ -140,7 +140,7 @@ public class  AddressDAO
 	 */
 	@Column (name = "country")
 	public String getCountry() {
-		return lookupValue(Params.COUNTRY);
+		return lookupValue(Param.COUNTRY);
 	}
 	
 	/**
@@ -148,7 +148,7 @@ public class  AddressDAO
 	 * @param country
 	 */
 	public void setCountry(String country) {
-		setValue(Params.COUNTRY, country);
+		setValue(Param.COUNTRY, country);
 	}
 	
 	/**
@@ -157,7 +157,7 @@ public class  AddressDAO
 	 */
 	@Column (name = "zip_postal_code")
 	public String getZIPOrPostalCode() {
-		return lookupValue(Params.ZIP_POSTAL_CODE);
+		return lookupValue(Param.ZIP_POSTAL_CODE);
 	}
 	
 	/**
@@ -165,7 +165,7 @@ public class  AddressDAO
 	 * @param code
 	 */
 	public void setZIPOrPostalCode(String code) {
-		setValue(Params.ZIP_POSTAL_CODE, code);
+		setValue(Param.ZIP_POSTAL_CODE, code);
 	}
 	
 }

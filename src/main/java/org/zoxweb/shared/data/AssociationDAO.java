@@ -41,17 +41,19 @@ public class AssociationDAO
 		MAPPED(NVConfigManager.createNVConfigEntity("mapped", "The mapped to reference", "MappedTo", false, true, NVEntity.class, ArrayType.NOT_ARRAY)),
 		MAP_TYPE(NVConfigManager.createNVConfig("map_type", "Mapping type", "MapType", false, true, false, String.class, Const.ASSOCIATION_TYPE)),
 		;
-	
-		private final NVConfig cType;
-		Params( NVConfig c)
-		{
-			cType = c;
-		}
-		
-		public NVConfig getNVConfig() 
-		{
-			return cType;
-		}
+
+
+        private final NVConfig nvc;
+
+        Params(NVConfig nvc)
+        {
+            this.nvc = nvc;
+        }
+
+        public NVConfig getNVConfig()
+        {
+            return nvc;
+        }
 	}
 	
 	/**

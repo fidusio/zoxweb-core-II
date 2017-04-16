@@ -24,6 +24,7 @@ import java.security.MessageDigest;
 public interface MultiDigestInterface
 	extends StreamStats
 {
+
 	/**
      * Associates the specified message digest with this stream.
      *

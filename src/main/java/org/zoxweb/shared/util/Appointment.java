@@ -22,7 +22,8 @@ import org.zoxweb.shared.util.Const.RelationalOperator;
 /**
  * The appointment interface.
  */
-public interface Appointment {
+public interface Appointment
+{
 	
 	public static final Comparator<Appointment> EQUAL_COMPARATOR = new AppointmentComparator();
 	public static final Comparator<Appointment> EQUAL_LESS_COMPARATOR = new AppointmentComparator(RelationalOperator.LT);

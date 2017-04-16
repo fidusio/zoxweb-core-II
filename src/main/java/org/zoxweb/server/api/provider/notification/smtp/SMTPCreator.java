@@ -23,20 +23,17 @@ import org.zoxweb.shared.api.APITokenManager;
 /**
  * The Simple Mail Transfer Protocol (SMTP) creator class is used to set up the 
  * SMTP service provider.
- * @author mzebib
- *
  */
 public class SMTPCreator 
 	implements APIServiceProviderCreator
 {
+
 	public final static String API_NAME = "SMTP";
 //	public static final DynamicEnumMap AUTHENTICATION = new DynamicEnumMap("Authentication", new NVPair("NONE", "None"), new NVPair("SSL","SSL"), new NVPair("TLS", "TLS"));
 //	public static final DynamicEnumMap MESSAGE_FORMAT = new DynamicEnumMap("MessageFormat", new NVPair("TEXT", "Text"), new NVPair("HTML", "Html"));
 	
 	/**
-	 * This enum contains SMTP provider variables.
-	 * @author mzebib
-	 *
+	 * Contains SMTP provider variables.
 	 */
 	public enum Param 
 		implements GetNameValue<String>, GetValueFilter<String, String>
@@ -77,11 +74,10 @@ public class SMTPCreator
 		{
 			return vf;
 		}
-		
 	}
 	
 	/**
-	 * This method creates an empty configuration information parameters.
+	 * Creates an empty configuration information parameters.
 	 * @return APIConfigInfo
 	 */
 	@SuppressWarnings("unchecked")
@@ -106,23 +102,23 @@ public class SMTPCreator
 	}
 
 	/**
-	 * This method returns the exception handler.
+	 * Returns the exception handler.
 	 * @return APIExceptionHandler
 	 */
 	@Override
-	public APIExceptionHandler getExeptionHandler() 
+	public APIExceptionHandler getExceptionHandler()
 	{
 		return SMTPExceptionHandler.SINGLETON;
 	}
 
 	/**
-	 * This method creates API based on configuration information parameters.
+	 * Creates API based on configuration information parameters.
 	 * @param apiConfig
 	 * @return APIServiceProvider
 	 */
 	@Override
 	public APIServiceProvider<Void> createAPI(APIDataStore<?> dataStore, APIConfigInfo apiConfig)
-			throws APIException 
+        throws APIException
 	{
 		APIServiceProvider<Void> serviceProvider = new SMTPProvider();
 		serviceProvider.setAPIConfigInfo(apiConfig);
@@ -142,4 +138,5 @@ public class SMTPCreator
 	{
 		return null;
 	}
+
 }

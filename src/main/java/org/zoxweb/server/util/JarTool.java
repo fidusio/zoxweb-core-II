@@ -39,32 +39,41 @@ public class JarTool {
 		
 	}
 	
-	public static URL findClassJarURL( Class<?> entryPointClass) throws IOException {
+	public static URL findClassJarURL( Class<?> entryPointClass)
+        throws IOException
+    {
 		return entryPointClass.getProtectionDomain().getCodeSource().getLocation();
 	}
 
-	public static Map<String, URL> findFilesInJarAndExpandAsTempFiles(String jarFilename, boolean deleteOnExit, String ...searchCriteria) throws IOException {
+	public static Map<String, URL> findFilesInJarAndExpandAsTempFiles(String jarFilename, boolean deleteOnExit, String... searchCriteria)
+        throws IOException
+    {
 		HashMap<String, URL>  jarURLs = new HashMap<String, URL>();
 		MatchPatternFilter mpf = MatchPatternFilter.createMatchFilter(searchCriteria);
 		File jarFile = new File(jarFilename);
 		JarFile jf  = null;
 
-		try {
+		try
+        {
 			jf = new JarFile( jarFile);
 			Enumeration < JarEntry> eje = jf.entries();
 			jarURLs.put( jarFilename, jarFile.toURI().toURL());
 			FileOutputStream fos = null;
 			
-			while(eje.hasMoreElements()) {
+			while(eje.hasMoreElements())
+            {
 				JarEntry je = eje.nextElement();
 			
 				// look up for embedded jar files
 				
-				if (mpf.match(je.getName())) {
+				if (mpf.match(je.getName()))
+				{
 					//System.out.println("jar found:" + je.getName());
-					try {
+					try
+                    {
 						String fileExt = SharedStringUtil.valueAfterRightToken(je.getName(), ".");
-						if (fileExt.equals(je.getName())) {
+						if (fileExt.equals(je.getName()))
+						{
 							fileExt = "";
 						}
 
@@ -72,24 +81,30 @@ public class JarTool {
 						// replace / with _
 						File tempFile = File.createTempFile(je.getName().substring(0, length), fileExt);
 
-						if (deleteOnExit) {
+						if (deleteOnExit)
+						{
 							tempFile.deleteOnExit();
 						}
 						
 						fos = new FileOutputStream(tempFile);
 						
 						IOUtil.relayStreams(jf.getInputStream( je), fos, true);
-						
-						
+
 						jarURLs.put(je.getName(), tempFile.toURI().toURL());
-					} catch( Exception e) {
+					}
+					catch( Exception e)
+                    {
 						e.printStackTrace();
-					} finally {
+					}
+					finally
+                    {
 						IOUtil.close(fos);
 					}
 				}
 			}
-		} finally {
+		}
+		finally
+        {
 			IOUtil.close(jf);
 		}
 		
@@ -107,9 +122,11 @@ public class JarTool {
      * @throws IllegalArgumentException If source file (param path) does not exist
      * @throws IllegalArgumentException If the path is not absolute or if the filename is shorter than three characters (restriction).
      */
-    public static void loadLibraryFromJar(String path) throws IOException {
- 
-        if (!path.startsWith("/")) {
+    public static void loadLibraryFromJar(String path)
+        throws IOException
+    {
+        if (!path.startsWith("/"))
+        {
             throw new IllegalArgumentException("The path to be absolute (start with '/').");
         }
  
@@ -120,14 +137,17 @@ public class JarTool {
         // Split filename to prexif and suffix (extension)
         String prefix = "";
         String suffix = null;
-        if (filename != null) {
+
+        if (filename != null)
+        {
             parts = filename.split("\\.", 2);
             prefix = parts[0];
             suffix = (parts.length > 1) ? "."+parts[parts.length - 1] : null; // Thanks, davs! :-)
         }
  
         // Check if the filename is okay
-        if (filename == null || prefix.length() < 3) {
+        if (filename == null || prefix.length() < 3)
+        {
             throw new IllegalArgumentException("The filename has to be at least 3 characters long.");
         }
  
@@ -135,7 +155,8 @@ public class JarTool {
         File temp = File.createTempFile(prefix, suffix);
         temp.deleteOnExit();
  
-        if (!temp.exists()) {
+        if (!temp.exists())
+        {
             throw new FileNotFoundException("File " + temp.getAbsolutePath() + " does not exist.");
         }
  
@@ -145,17 +166,22 @@ public class JarTool {
  
         // Open and check input stream
         InputStream is = JarTool.class.getResourceAsStream(path);
-        if (is == null) {
+        if (is == null)
+        {
             throw new FileNotFoundException("File " + path + " was not found inside JAR.");
         }
  
         // Open output stream and copy data between source file in JAR and the temporary file
         OutputStream os = new FileOutputStream(temp);
-        try {
-            while ((readBytes = is.read(buffer)) != -1) {
+        try
+        {
+            while ((readBytes = is.read(buffer)) != -1)
+            {
                 os.write(buffer, 0, readBytes);
             }
-        } finally {
+        }
+        finally
+        {
             // If read/write fails, close streams safely before throwing an exception
             os.close();
             is.close();
@@ -165,12 +191,16 @@ public class JarTool {
         System.load(temp.getAbsolutePath());
     }
 
-	public static ClassLoader createClassLoader( HashMap<String, URL> urls, ClassLoader parent) {
+	public static ClassLoader createClassLoader( HashMap<String, URL> urls, ClassLoader parent)
+    {
 		URL[] all = urls.entrySet().toArray( new URL[0]);
 
-		if (parent == null) {
+		if (parent == null)
+		{
 			return new URLClassLoader( all);
-		} else {
+		}
+		else
+        {
 			return new URLClassLoader( all, parent);
 		}
 	}

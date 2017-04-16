@@ -20,14 +20,13 @@ import java.util.List;
 /**
  * This class specifies NVBase as a list of enum type.
  * @author mzebib
- *
  */
 @SuppressWarnings("serial")
 public class NVEnumList 
 	extends NVBase<List<Enum<?>>> 
 {
 	/**
-	 * Default constructor used for Java Bean Compiler.
+	 * The default constructor (Java Bean compliant).
 	 */
 	public NVEnumList()
 	{

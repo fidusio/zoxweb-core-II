@@ -27,8 +27,6 @@ import org.zoxweb.shared.util.SharedUtil;
 import org.zoxweb.shared.util.NVConfigEntity.ArrayType;
 
 /**
- * 
- * @author mzebib
  *
  */
 @SuppressWarnings("serial")
@@ -36,7 +34,7 @@ public class TicketContainerDAO
 	extends NVEntityContainerDAO
 {
 
-	public enum Params
+	public enum Param
 		implements GetNVConfig
 	{
 		STATUS(NVConfigManager.createNVConfig("status", "The status of the ticket.", "Status", false, true, ResolutionStatus.class)),
@@ -45,16 +43,16 @@ public class TicketContainerDAO
 
 		;
 		
-		private final NVConfig cType;
-		
-		Params(NVConfig c)
+		private final NVConfig nvc;
+
+        Param(NVConfig nvc)
 		{
-			cType = c;
+            this.nvc = nvc;
 		}
 		
 		public NVConfig getNVConfig() 
 		{
-			return cType;
+			return nvc;
 		}
 	}
 	
@@ -68,7 +66,7 @@ public class TicketContainerDAO
 																							false, 
 																							false, 
 																							TicketContainerDAO.class, 
-																							SharedUtil.extractNVConfigs(Params.values()), 
+																							SharedUtil.extractNVConfigs(Param.values()),
 																							null, 
 																							false, 
 																							NVEntityContainerDAO.NVC_NVENTITY_CONTAINER_DAO
@@ -90,12 +88,14 @@ public class TicketContainerDAO
 	{
 		super(nvce);
 	}
-	
+
+	@Override
 	public String getName()
 	{
 		return getIssuerInfo().getName();
 	}
-	
+
+	@Override
 	public void setName(String name)
 	{
 		getIssuerInfo().setName(name);
@@ -103,17 +103,17 @@ public class TicketContainerDAO
 	
 	public ResolutionStatus getStatus()
 	{
-		return lookupValue(Params.STATUS);
+		return lookupValue(Param.STATUS);
 	}
 	
 	public void setStatus(ResolutionStatus status)
 	{
-		setValue(Params.STATUS, status);
+		setValue(Param.STATUS, status);
 	}
 
 	public TicketIssuerDAO getIssuerInfo() 
 	{
-		return lookupValue(Params.ISSUER);
+		return lookupValue(Param.ISSUER);
 	}
 	
 	public void setIssuerInfo(TicketIssuerDAO issuer) 
@@ -123,13 +123,13 @@ public class TicketContainerDAO
 			issuer.setCanonicalID(getCanonicalID());
 		}
 		
-		setValue(Params.ISSUER, issuer);
+		setValue(Param.ISSUER, issuer);
 	}
 
 	
 	public BillingItemsContainerDAO getBillingItemsContainerDAO() 
 	{
-		return lookupValue(Params.BILLING_ITEMS_CONTAINER);
+		return lookupValue(Param.BILLING_ITEMS_CONTAINER);
 	}
 
 	public void setBillingItemsContainerDAO(BillingItemsContainerDAO container) 
@@ -139,7 +139,7 @@ public class TicketContainerDAO
 			container.setCanonicalID(getCanonicalID());
 		}
 		
-		setValue(Params.BILLING_ITEMS_CONTAINER, container);
+		setValue(Param.BILLING_ITEMS_CONTAINER, container);
 	}
 	
 	/**
@@ -162,7 +162,6 @@ public class TicketContainerDAO
 	
 	/**
 	 * Removes TicketResolutionDAO from container.
-	 * 
 	 * @param ticketResolutionToRemove
 	 * @return TicketResolutionDAO
 	 */

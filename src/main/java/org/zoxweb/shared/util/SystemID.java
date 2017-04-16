@@ -17,10 +17,9 @@ package org.zoxweb.shared.util;
 
 /**
  * The system ID interface.
- * @author mzebib
  */
-public interface SystemID<T> {
-
+public interface SystemID<T>
+{
 	/**
 	 * Returns the system ID.
 	 * @return typed system id

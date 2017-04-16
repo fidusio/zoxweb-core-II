@@ -16,13 +16,17 @@
 package org.zoxweb.shared.data.events;
 
 /**
- * @author mzebib
- *
+ * The clear action listener interface.
+ * @param <V>
  */
 public interface ClearActionListener<V>
 	extends ActionBaseListener<V>
 {
 
+    /**
+     * Executes clear action for specified input.
+     * @param v
+     */
 	public void actionClear(V v);
 	
 }

@@ -16,15 +16,15 @@
 package org.zoxweb.shared.security;
 
 /**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
+ *
  */
 public interface SetSecure 
-extends IsSecure
+    extends IsSecure
 {
 	/**
 	 * Set the security context.
 	 * @param secStatus
 	 */
 	void setSecure(boolean secStatus);
+
 }

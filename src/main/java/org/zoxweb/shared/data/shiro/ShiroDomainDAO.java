@@ -55,7 +55,8 @@ public abstract class ShiroDomainDAO
 	{
 		setValue(DataParam.NAME, SharedStringUtil.trimOrEmpty(SharedStringUtil.toLowerCase( name)));
 	}
-	
+
+	@Override
 	public boolean equals(Object o)
 	{
 		if ( this == o)
@@ -74,7 +75,8 @@ public abstract class ShiroDomainDAO
 		}
 		return false;
 	}
-	
+
+	@Override
 	public String toString()
 	{
 		return toCanonicalID();

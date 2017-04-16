@@ -20,10 +20,10 @@ import java.io.Serializable;
 /**
  * The get name value pair configuration definition interface.
  * @author mzebib
- *
  */
 public interface GetNVConfig
-		extends Serializable {
+    extends Serializable
+{
 
 	/**
 	 * Returns the NVConfig.

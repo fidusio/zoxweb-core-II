@@ -10,26 +10,35 @@ import java.util.Date;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
-
+/**
+ * Logger utility class.
+ */
 public final class LoggerUtil 
 {
 	
 	public static final SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSZ");
 	//public static final String DEFAULT_FORMAT = "%1$tY-%1$tm-%1$td %1$tH:%1$tM:%1$tS %4$-6s : %2$s %5$s%6$s%n";
 	public static final String DEFAULT_FORMAT = "%1$s %4$-6s : %2$s\n%5$s%6$s%n";
-	private LoggerUtil(){};
+
+	private LoggerUtil()
+    {
+
+    }
 	
-	public static Logger loggerToFile(String loggerName, String filename) throws SecurityException, IOException
+	public static Logger loggerToFile(String loggerName, String filename)
+        throws SecurityException, IOException
 	{
 		if (loggerName != null && filename != null)
 		{
 			return loggerToFile(Logger.getLogger(loggerName), filename);
 		}
+
 		return null;
 	}
 	
 	
-	public static Logger loggerToFile(Logger logger, String filename) throws SecurityException, IOException
+	public static Logger loggerToFile(Logger logger, String filename)
+        throws SecurityException, IOException
 	{
 		if (logger != null && filename != null)
 		{
@@ -44,16 +53,18 @@ public final class LoggerUtil
 	        fh.setFormatter(formatter);  
 	        logger.info("file logging started");
 		}
+
         return logger;
 	}
-	
-	
-	public static PrintWriter createPrintWriter(String filename) throws IOException
+
+	public static PrintWriter createPrintWriter(String filename)
+        throws IOException
 	{
 		return createPrintWriter(new File(filename));
 	}
 	
-	public static PrintWriter createPrintWriter(File f) throws IOException
+	public static PrintWriter createPrintWriter(File f)
+        throws IOException
 	{
 		FileWriter fw = new FileWriter(f, true);
 		return new PrintWriter(new BufferedWriter(fw), true);

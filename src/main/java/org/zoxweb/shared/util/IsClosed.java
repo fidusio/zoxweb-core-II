@@ -1,7 +1,11 @@
 package org.zoxweb.shared.util;
 
+/**
+ *
+ */
 public interface IsClosed
-	extends AutoCloseable {
+	extends AutoCloseable
+{
 
 	/**
 	 * Checks if closed.

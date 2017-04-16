@@ -26,31 +26,33 @@ import org.zoxweb.shared.util.SharedUtil;
  */
 @SuppressWarnings("serial")
 public class PhoneNumberFilterOLD
-	implements ValueFilter<String, PhoneDAO> {
+	implements ValueFilter<String, PhoneDAO>
+{
 	
 	private static final  String PATTERN = "[+]*[1][0-9-()]*[ext x 0-9]+";
 	private static final int MAX_LENGTH = 11;
 	
-	public PhoneNumberFilterOLD() {
+	public PhoneNumberFilterOLD()
+    {
 		
 	}
 	
 	@Override
-	public String toCanonicalID() {
+	public String toCanonicalID()
+    {
 		return null;
 	}
-	
-	
+
 	/**
-	 * This method validates the given phone number.
+	 * Validates the given phone number.
 	 * @param num
 	 * @return phone dao
 	 * @throws NullPointerException
 	 * @throws IllegalArgumentException
 	 */
 	public PhoneDAO validate(String num)
-			throws  NullPointerException, IllegalArgumentException {
-
+        throws NullPointerException, IllegalArgumentException
+    {
 		num = SharedStringUtil.trimOrNull(num);
 		SharedUtil.checkIfNulls("Phone number empty or null", num);
 		
@@ -58,51 +60,65 @@ public class PhoneNumberFilterOLD
 		String[] code = number.split("[+]");
 		String[] numberArray = null;
 
-		if (code.length == 2) {
+		if (code.length == 2)
+		{
 			numberArray = code[1].split("[ext x]+"); 
-		} else {
+		}
+		else
+        {
 			numberArray = code[0].split("[ext x]+");
 		}
 		
 		PhoneDAO phone = new PhoneDAO();
 		
-		if (number.matches(PATTERN)) {
+		if (number.matches(PATTERN))
+		{
 			if (number.length() > MAX_LENGTH && (numberArray[0].startsWith("+") || numberArray[0].startsWith("1"))) {
 				phone.setCountryCode(numberArray[0].substring(0, 1));
 				phone.setAreaCode(numberArray[0].substring(1, 4));
 				phone.setNumber(numberArray[0].substring(4, 11));
 				
-				if (numberArray.length > 1) {
+				if (numberArray.length > 1)
+				{
 					phone.setExtension(numberArray[1]);
 				}
 				
 				return phone;
-			} else {
+			}
+			else
+            {
 				phone.setAreaCode(numberArray[0].substring(0, 3));
 				phone.setNumber(numberArray[0].substring(3, 10));
 				
-				if (numberArray.length > 1) {
+				if (numberArray.length > 1)
+				{
 					phone.setExtension(numberArray[1]);
 				}
 				
 				return phone;
 			}		
 				
-		} else {
+		}
+		else
+		    {
 			throw new IllegalArgumentException("Invalid Phone Number " + number);
 		}
 		
 	}
 		
 	/**
-	 * This method checks if the phone number is valid.
+	 * Checks if the phone number is valid.
 	 * @param num
 	 * @return true if valid
 	 */
-	public boolean isValid(String num) {
-		try {
+	public boolean isValid(String num)
+    {
+		try
+        {
 			validate(num);
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+        {
 			return false;
 		}
 		

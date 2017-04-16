@@ -33,8 +33,6 @@ import org.zoxweb.shared.util.NVConfigEntity.ArrayType;
 /**
  * The TicketIssuerDAO class creates a ticket issue object based on ticket issuer's name, contact information, and incident details including
  * location, summary, and detailed description.
- * @author mzebib
- *
  */
 @SuppressWarnings("serial")
 public class TicketIssuerDAO
@@ -42,8 +40,8 @@ public class TicketIssuerDAO
 	implements EmailID
 {
 
-	public enum Params
-		implements GetNVConfig
+	public enum Param
+       implements GetNVConfig
 	{
 		FIRST_NAME(NVConfigManager.createNVConfig("first_name", "The issuer's first name.", "First Name", false, true, String.class)),
 		LAST_NAME(NVConfigManager.createNVConfig("last_name", "The issuer's last name.", "Last Name", false, true, String.class)),
@@ -64,8 +62,8 @@ public class TicketIssuerDAO
 		;
 		
 		private final NVConfig cType;
-		
-		Params(NVConfig c)
+
+        Param(NVConfig c)
 		{
 			cType = c;
 		}
@@ -86,7 +84,7 @@ public class TicketIssuerDAO
 																						false, 
 																						false, 
 																						TicketIssuerDAO.class, 
-																						SharedUtil.extractNVConfigs(Params.values()), 
+																						SharedUtil.extractNVConfigs(Param.values()),
 																						null, 
 																						false, 
 																						CanonicalIDDAO.NVC_CANONICAL_ID_DAO
@@ -110,217 +108,221 @@ public class TicketIssuerDAO
 	}
 
 	/**
-	 * Gets first name.
+	 * Returns the first name.
 	 * @return first name 
 	 */
 	public String getFirstName() 
 	{
-		return lookupValue(Params.FIRST_NAME);
+		return lookupValue(Param.FIRST_NAME);
 	}
 	
 	/**
-	 * Sets first name.
+	 * Sets the first name.
 	 * @param firstName
 	 */
 	public void setFirstName(String firstName) 
 	{
-		setValue(Params.FIRST_NAME, firstName);
+		setValue(Param.FIRST_NAME, firstName);
 	}
 	
 	/**
-	 * Gets last name.
+	 * Returns the last name.
 	 * @return last name
 	 */
 	public String getLastName() 
 	{
-		return lookupValue(Params.LAST_NAME);
+		return lookupValue(Param.LAST_NAME);
 	}
 	
 	/**
-	 * Sets last name.
+	 * Sets the last name.
 	 * @param lastName
 	 */
 	public void setLastName(String lastName) 
 	{
-		setValue(Params.LAST_NAME, lastName);
+		setValue(Param.LAST_NAME, lastName);
 	}
 	
 	/**
-	 * Gets email address.
+	 * Returns the email address.
 	 * @return email id
 	 */
 	public String getEmailID() 
 	{
-		return lookupValue(Params.EMAIL);
+		return lookupValue(Param.EMAIL);
 	}
 	
 	/**
-	 * Sets email address.
+	 * Sets the email address.
 	 * @param email
 	 */
 	public void setEmailID(String email) 
 	{
-		setValue(Params.EMAIL, email);
+		setValue(Param.EMAIL, email);
 	}
 	
 	/**
-	 * Gets phone number.
+	 * Returns the phone number.
 	 * @return phone number
 	 */
 	public PhoneDAO getPhoneNumber() 
 	{
-		return lookupValue(Params.PHONE_NUMBER);
+		return lookupValue(Param.PHONE_NUMBER);
 	}
 	
 	/**
-	 * Sets phone number.
+	 * Sets the phone number.
 	 * @param phone
 	 */
 	public void setPhoneNumber(PhoneDAO phone) 
 	{
-		setValue(Params.PHONE_NUMBER, phone);
+		setValue(Param.PHONE_NUMBER, phone);
 	}
 	
 	/**
-	 * Gets issuer's position at associated company.
+	 * Returns the issuer's position at associated company.
 	 * @return position
 	 */
 	public String getPosition() 
 	{
-		return lookupValue(Params.POSITION);
+		return lookupValue(Param.POSITION);
 	}
 	
 	/**
-	 * Sets issuer's position at associated company.
+	 * Sets the issuer's position at associated company.
 	 * @param position
 	 */
 	public void setPosition(String position) 
 	{
-		setValue(Params.POSITION, position);
+		setValue(Param.POSITION, position);
 	}
 	
 	/**
-	 * Gets company.
+	 * Returns the company.
 	 * @return company
 	 */
 	public String getCompany() 
 	{
-		return lookupValue(Params.COMPANY);
+		return lookupValue(Param.COMPANY);
 	}
 	
 	/**
-	 * Sets company.
+	 * Sets the company.
 	 * @param company
 	 */
 	public void setCompany(String company) 
 	{
-		setValue(Params.COMPANY, company);
+		setValue(Param.COMPANY, company);
 	}
 	
 	/**
-	 * Gets incident location.
+	 * Returns the incident location.
 	 * @return incident location.
 	 */ 
 	public String getIncidentLocation() 
 	{
-		return lookupValue(Params.INCIDENT_LOCATION);
+		return lookupValue(Param.INCIDENT_LOCATION);
 	}
 	
 	/**
-	 * Sets incident location.
+	 * Sets the incident location.
 	 * @param location
 	 */
 	public void setIncidentLocation(String location) 
 	{
-		setValue(Params.INCIDENT_LOCATION, location);
+		setValue(Param.INCIDENT_LOCATION, location);
 	}
 	
 	/**
-	 * Gets incident address.
+	 * Returns the incident address.
 	 * @return  incident address.
 	 */
 	public AddressDAO getIncidentAddress() 
 	{
-		return lookupValue(Params.INCIDENT_ADDRESS);
+		return lookupValue(Param.INCIDENT_ADDRESS);
 	}
 	
 	/**
-	 * Sets incident address.
+	 * Sets the incident address.
 	 * @param address
 	 */
 	public void setIncidentAddress(AddressDAO address) 
 	{
-		setValue(Params.INCIDENT_ADDRESS, address);
+		setValue(Param.INCIDENT_ADDRESS, address);
 	}
 	
 	/**
-	 * Gets due date.
+	 * Returns the due date.
 	 * @return due date.
 	 */
 	public long getDueDate() 
 	{
-		return lookupValue(Params.DUE_DATE);
+		return lookupValue(Param.DUE_DATE);
 	}
 	
 	/**
-	 * Sets due date.
+	 * Sets the due date.
 	 * @param date
 	 */
 	public void setDueDate(long date) 
 	{
-		setValue(Params.DUE_DATE, date);
+		setValue(Param.DUE_DATE, date);
 	}
 	
 	/**
-	 * Gets assignee.
+	 * Returns the assignee.
 	 * @return assignee.
 	 */
 	public String getAssignee() 
 	{
-		return lookupValue(Params.ASSIGNEE);
+		return lookupValue(Param.ASSIGNEE);
 	}
 	
 	/**
-	 * Sets assignee.
+	 * Sets the assignee.
 	 * @param assignee
 	 */
 	public void setAssignee(String assignee) 
 	{
-		setValue(Params.ASSIGNEE, assignee);
+		setValue(Param.ASSIGNEE, assignee);
 	}
 	
 	/**
-	 * Gets summary of issue.
+	 * Returns the summary of issue.
 	 */
+    @Override
 	public String getName() 
 	{
-		return lookupValue(Params.NAME);
+		return lookupValue(Param.NAME);
 	}
 	
 	/**
 	 * Sets summary of issue.
 	 * @param name
 	 */
+	@Override
 	public void setName(String name) 
 	{
-		setValue(Params.NAME, name);
+		setValue(Param.NAME, name);
 	}
 	
 	/**
-	 * Gets description of issue.
+	 * Returns the description of issue.
 	 */
+    @Override
 	public String getDescription() 
 	{
-		return lookupValue(Params.DESCRIPTION);
+		return lookupValue(Param.DESCRIPTION);
 	}
 	
 	/**
-	 * Sets description of issue.
+	 * Sets the description of issue.
 	 * @param description
 	 */
+    @Override
 	public void setDescription(String description) 
 	{
-		setValue(Params.DESCRIPTION, description);
+		setValue(Param.DESCRIPTION, description);
 	}
 	
 }

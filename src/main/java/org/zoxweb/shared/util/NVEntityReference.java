@@ -18,7 +18,6 @@ package org.zoxweb.shared.util;
 /**
  * This class declares NVBase as NVEntity type.
  * @author mzebib
- *
  */
 @SuppressWarnings("serial")
 public class NVEntityReference 
@@ -28,7 +27,7 @@ public class NVEntityReference
 	private NVConfigEntity nvce = null;
 	
 	/**
-	 * Default constructor used for Java Bean Compiler.
+	 * The default constructor (Java Bean compliant).
 	 */
 	public NVEntityReference()
 	{

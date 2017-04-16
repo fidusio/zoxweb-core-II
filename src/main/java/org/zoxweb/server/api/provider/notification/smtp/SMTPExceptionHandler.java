@@ -8,23 +8,16 @@ import org.zoxweb.shared.api.APIException.Category;
 import org.zoxweb.shared.api.APIException.Code;
 
 /**
- * 
- * @author mzebib
  *
  */
 public class SMTPExceptionHandler
 	implements APIExceptionHandler
 {
 
-	/**
-	 * 
-	 * @author mzebib
-	 *
-	 */
-	public enum SMTPError 
+	public enum SMTPError
 		implements GetNameValue<Integer>
 	{
-		CONNECTION_FAILED("connection_failed", 101, Category.CONNECTION, Code.CONNECTION_FAILED),
+		CONNECTION_FAILED("connection_failed", 101, Category.CONNECTION, Code.CONNECTION_FAILED)
 		
 		;
 		
@@ -62,7 +55,6 @@ public class SMTPExceptionHandler
 		{
 			return code;
 		}
-			
 	}
 	
 	
@@ -77,26 +69,30 @@ public class SMTPExceptionHandler
 	 */
 	private SMTPExceptionHandler()
 	{
-		
+
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param e
+	 * @throws APIException
 	 */
 	@Override
 	public void throwException(Exception e)
-			throws APIException
+        throws APIException
 	{
 		APIException apiException = mapException(e);	
 		
 		if (apiException != null)
+		{
 			throw apiException;
+		}
 	}
 
 	/**
-	 * 
+	 *
 	 * @param e
+	 * @return
 	 */
 	@Override
 	public APIException mapException(Exception e) 

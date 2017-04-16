@@ -18,87 +18,85 @@ package org.zoxweb.shared.util;
 import java.io.Serializable;
 
 /**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
+ *
  */
 @SuppressWarnings("serial")
 public class ReferenceIDKey
-implements Serializable, ReferenceID<String>
+    implements Serializable, ReferenceID<String>
 {
 	private ReferenceID<String> refID;
 	
 	public ReferenceIDKey()
 	{
+
 	}
 	
 	public ReferenceIDKey(ReferenceID<String> refID)
 	{
-		SharedUtil.checkIfNulls("RefID null", refID);
-		if ( refID.getReferenceID() == null)
+		SharedUtil.checkIfNulls("Reference ID is null.", refID);
+
+		if (refID.getReferenceID() == null)
 		{
-			throw new NullPointerException("ReferenceID value null");
+			throw new NullPointerException("Reference ID value null.");
 		}
+
 		this.refID = refID;
 	}
 	
-	
 	public ReferenceIDKey(String refID)
 	{
-		SharedUtil.checkIfNulls("RefID null", refID);
+        SharedUtil.checkIfNulls("Reference ID is null.", refID);
 		this.refID = new ReferenceIDPortable<String>(refID);
 	}
-	
-	
-	
+
 	@SuppressWarnings("unchecked")
-	public boolean equals(Object o)
+    @Override
+	public boolean equals(Object obj)
 	{
-		if (o != null && refID!= null)
+		if (obj != null && refID!= null)
 		{
-			if (o == this || o.equals(refID))
+			if (obj == this || obj.equals(refID))
 			{
 				return true;
 			}
-			else if (o instanceof String)
+			else if (obj instanceof String)
 			{
-				return o.equals(refID.getReferenceID());
+				return obj.equals(refID.getReferenceID());
 			}
-			else if (o instanceof ReferenceID)
+			else if (obj instanceof ReferenceID)
 			{
-				return refID.getReferenceID().equals(((ReferenceID<String>)o).getReferenceID());
+				return refID.getReferenceID().equals(((ReferenceID<String>) obj).getReferenceID());
 			}
 			
 		}
 		return false;
 	}
-	
-	
+
+    @Override
 	public int hashCode()
 	{
 		return refID.getReferenceID().hashCode();
 	}
 
-	/**
-	 * @see org.zoxweb.shared.util.ReferenceID#getReferenceID()
-	 */
+    /**
+     * @see org.zoxweb.shared.util.ReferenceID#getReferenceID()
+     * @return
+     */
 	@Override
-	public String getReferenceID() {
-		// TODO Auto-generated method stub
+	public String getReferenceID()
+    {
 		return refID.getReferenceID();
 	}
 
-	/**
-	 * @see org.zoxweb.shared.util.ReferenceID#setReferenceID(java.lang.Object)
-	 */
+    /**
+     * @see org.zoxweb.shared.util.ReferenceID#setReferenceID(java.lang.Object)
+     * @param id
+     */
 	@Override
-	public void setReferenceID(String id) {
-		// TODO Auto-generated method stub
+	public void setReferenceID(String id)
+    {
 		refID.setReferenceID(id);
 	}
-	
-	
-	
-	
-	
+
 	
 }

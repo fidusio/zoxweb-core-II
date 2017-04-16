@@ -1,21 +1,16 @@
 package org.zoxweb.server.http.servlet;
 
-
-
 import java.util.logging.Logger;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-
-
 import org.zoxweb.server.util.ApplicationConfigManager;
 import org.zoxweb.shared.data.ApplicationConfigDAO;
 
-
-
-
-public class HTTPInitShutdownDefault implements ServletContextListener{
+public class HTTPInitShutdownDefault
+	implements ServletContextListener
+{
 
 	private static final transient Logger log = Logger.getLogger("");
 	

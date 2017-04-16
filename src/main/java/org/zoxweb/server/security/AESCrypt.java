@@ -66,7 +66,8 @@ import org.zoxweb.shared.util.SharedUtil;
  * @author Vócali Sistemas Inteligentes
  */
 
-public class AESCrypt {
+public class AESCrypt
+{
 	private static final String JCE_EXCEPTION_MESSAGE = "Please make sure "
 		+ "\"Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files\" "
 		+ "(http://java.sun.com/javase/downloads/index.jsp) is installed on your JRE.";

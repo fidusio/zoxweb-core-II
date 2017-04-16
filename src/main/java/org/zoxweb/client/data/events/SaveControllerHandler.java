@@ -20,7 +20,8 @@ import org.zoxweb.shared.data.events.ActionBaseListener;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 public interface SaveControllerHandler<V, T>
-	extends ActionBaseListener<V> {
+	extends ActionBaseListener<V>
+{
 
 	public void actionSave(V v, AsyncCallback<T> callback);
 

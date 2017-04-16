@@ -36,26 +36,25 @@ public class UserInfoDAO
 	extends UserInfoBaseDAO
 {
 	
-	public enum Params
+	public enum Param
 		implements GetNVConfig
 	{
 		LIST_OF_ALIASES(NVConfigManager.createNVConfig("list_of_aliases", "List of aliases", "ListOfAliases", false, true, String[].class)),
 		LIST_OF_CREDIT_CARDS(NVConfigManager.createNVConfigEntity("list_of_credit_cards", "List of credit cards", "ListOfCreditCards", false, true, CreditCardDAO.NVC_CREDIT_CARD_DAO, ArrayType.LIST)),
 		
 		;
-		
-		private final NVConfig cType;
-		
-		Params(NVConfig c)
-		{
-			cType = c;
-		}
-		
-		public NVConfig getNVConfig() 
-		{
-			return cType;
-		}
-		
+
+        private final NVConfig nvc;
+
+        Param(NVConfig nvc)
+        {
+            this.nvc = nvc;
+        }
+
+        public NVConfig getNVConfig()
+        {
+            return nvc;
+        }
 	}
 	
 	public static final NVConfigEntity NVC_USER_INFO_DAO = new NVConfigEntityLocal(
@@ -67,7 +66,7 @@ public class UserInfoDAO
 																						false, 
 																						false, 
 																						UserInfoDAO.class, 
-																						SharedUtil.extractNVConfigs(Params.values()), 
+																						SharedUtil.extractNVConfigs(Param.values()),
 																						null, 
 																						false, 
 																						UserInfoBaseDAO.NVC_USER_INFO_BASE_DAO
@@ -83,12 +82,12 @@ public class UserInfoDAO
 	}
 	
 	/**
-	 * Gets the list of aliases.
+	 * Returns the list of aliases.
 	 * @return list of aliases
 	 */
 	public List<NVPair> getListOfAliases() 
 	{
-		return lookupValue(Params.LIST_OF_ALIASES);
+		return lookupValue(Param.LIST_OF_ALIASES);
 	}
 	
 	/**
@@ -97,16 +96,16 @@ public class UserInfoDAO
 	 */
 	public void setListOfAliases(List<NVPair> list)
 	{
-		setValue(Params.LIST_OF_ALIASES, list);
+		setValue(Param.LIST_OF_ALIASES, list);
 	}
 	
 	/**
-	 * Gets the list of credit cards.
+	 * Returns the list of credit cards.
 	 * @return list of credit cards
 	 */
 	public List<CreditCardDAO> getListOfCreditCards() 
 	{
-		return lookupValue(Params.LIST_OF_CREDIT_CARDS);
+		return lookupValue(Param.LIST_OF_CREDIT_CARDS);
 	}
 	
 	/**
@@ -115,7 +114,7 @@ public class UserInfoDAO
 	 */
 	public void setListOfCreditCards(List<CreditCardDAO> list)
 	{
-		setValue(Params.LIST_OF_CREDIT_CARDS, list);
+		setValue(Param.LIST_OF_CREDIT_CARDS, list);
 	}
 	
 }

@@ -27,50 +27,60 @@ import com.google.gwt.event.shared.HasHandlers;
  * 
  */
 public class ApplicationClientDAO
-		implements CallBackHandlerListener, HasHandlers, GetName {
+	implements CallBackHandlerListener, HasHandlers, GetName
+{
 
 	public static final ApplicationClientDAO DEFAULT = new ApplicationClientDAO("zoxweb-core", null);
 	
 	protected HandlerManager handlerManager = null;
 	protected String name;
 	
-	
-	protected ApplicationClientDAO(String name, HandlerManager handlerManager) {
+	protected ApplicationClientDAO(String name, HandlerManager handlerManager)
+	{
 		this.name = name;
 		
-		if (handlerManager != null) {
+		if (handlerManager != null)
+		{
 			this.handlerManager = handlerManager;
-		} else {
+		}
+		else
+		{
 			this.handlerManager = new HandlerManager(this);
 		}
 	}
 
 	@Override
-	public String getName() {
+	public String getName()
+	{
 		return name;
 	}
 
 	@Override
-	public void fireEvent(GwtEvent<?> event) {
+	public void fireEvent(GwtEvent<?> event)
+	{
 		handlerManager.fireEvent(event);
 	}
 	
-	public HandlerManager getHandlerManager() {
+	public HandlerManager getHandlerManager()
+	{
 		return handlerManager;
 	}
 
 	@Override
-	public void callBackInitiated() {
+	public void callBackInitiated()
+	{
 		// to be compliant
 	}
 
 	@Override
-	public void callBackEnded() {
+	public void callBackEnded()
+	{
 		
 	}
 
 	@Override
-	public boolean callBackEndedWithException(Throwable caught) {
+	public boolean callBackEndedWithException(Throwable caught)
+	{
 		return false;
 	}
 

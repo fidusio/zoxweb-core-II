@@ -4,17 +4,11 @@ import org.zoxweb.shared.filters.ValueFilter;
 import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
 
-/**
- * 
- * @author mzebib
- *
- */
 @SuppressWarnings("serial")
 public class SMTPMessageIDFilter 
-	implements ValueFilter< String[], String> 
+	implements ValueFilter< String[], String>
 {
 
-	
 	/**
 	 * This variable declares that only one instance of this class can be 
 	 * created.
@@ -33,12 +27,13 @@ public class SMTPMessageIDFilter
 	
 	//Pending Issue: Support more than recipient email!
 	public String validate(String[] v) 
-			throws NullPointerException, IllegalArgumentException 
+        throws NullPointerException, IllegalArgumentException
 	{
-		SharedUtil.checkIfNulls("Null parameter", (Object)v);
-		if (v.length == 0 )
+		SharedUtil.checkIfNulls("Null parameter", (Object) v);
+
+		if (v.length == 0)
 		{
-			throw new IllegalArgumentException("Message id emtpy");
+			throw new IllegalArgumentException("Message id empty");
 		}
 		
 		String ret = SharedStringUtil.valueAfterLeftToken(v[0], "<");
@@ -47,13 +42,18 @@ public class SMTPMessageIDFilter
 		return ret;
 	}
 
-	public boolean isValid( String[] v) 
+	/**
+	 * Checks if given input is valid.
+	 * @param v
+	 * @return
+	 */
+	public boolean isValid(String[] v)
 	{
 		try
 		{
 			validate( v);
 		}
-		catch ( Exception e)
+		catch (Exception e)
 		{
 			return false;
 		}
@@ -61,18 +61,14 @@ public class SMTPMessageIDFilter
 		return true;
 	}
 
-
-
-
+	/**
+	 * Returns canonical ID.
+	 * @return
+	 */
 	@Override
 	public String toCanonicalID() 
 	{
 		return SMTPMessageIDFilter.class.getName();
 	}
-
-
-
-
-	
 
 }

@@ -20,28 +20,26 @@ import java.io.InputStream;
 import org.zoxweb.shared.data.FileInfoDAO;
 
 /**
- * 
- * @author mzebib
  *
  */
 public class FileInfoStreamSource
 {
-	private FileInfoDAO fid;
+	private FileInfoDAO fileInfoDAO;
 	private InputStream srcInputStream;
 	
 	/**
 	 * 
-	 * @param fid
+	 * @param fileInfoDAO
 	 * @param is
 	 */
-	public FileInfoStreamSource(FileInfoDAO fid, InputStream is)
+	public FileInfoStreamSource(FileInfoDAO fileInfoDAO, InputStream is)
 	{
-		this.fid = fid;
+		this.fileInfoDAO = fileInfoDAO;
 		srcInputStream = is;
 	}
 	
 	/**
-	 * 
+	 * Returns the input stream.
 	 * @return input stream
 	 */
 	public InputStream getSourceInputStream()
@@ -50,14 +48,13 @@ public class FileInfoStreamSource
 	}
 	
 	/**
-	 * 
-	 * @return file info dao
+	 * Returns FileInfoDAO object.
+	 * @return FileInfoDAO
 	 */
 	public FileInfoDAO getFileInfoDAO()
 	{
-		return fid;
+		return fileInfoDAO;
 	}
-	
-	
+
 	
 }

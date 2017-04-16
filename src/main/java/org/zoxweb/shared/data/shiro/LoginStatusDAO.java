@@ -15,7 +15,6 @@
  */
 package org.zoxweb.shared.data.shiro;
 
-
 import java.util.List;
 
 import org.zoxweb.shared.data.DomainInfoDAO;
@@ -34,7 +33,8 @@ public class LoginStatusDAO
 	extends DomainInfoDAO
 	implements DomainID<String>
 {
-	public enum Params
+
+	public enum Param
 		implements GetNVConfig
 	{
 		
@@ -49,16 +49,17 @@ public class LoginStatusDAO
 		NVC_EXTRA_INFO(NVConfigManager.createNVConfig("extra_info", "login extra information","ExtraInfo", true, false, String[].class)),
 		
 		;
-		private final NVConfig cType;
-		
-		Params(NVConfig c)
+
+		private final NVConfig nvc;
+
+        Param(NVConfig nvc)
 		{
-			cType = c;
+			this.nvc = nvc;
 		}
 		
 		public NVConfig getNVConfig() 
 		{
-			return cType;
+			return nvc;
 		}
 	}
 	
@@ -67,7 +68,7 @@ public class LoginStatusDAO
 	
 	
 	
-	private static final NVConfigEntity NVC_LOGIN_STATUS_DAO = new NVConfigEntityLocal("login_status_dao", "The login status dao", "LoginStatusDAO", true, false, false, false, LoginStatusDAO.class, SharedUtil.extractNVConfigs(Params.values()), null, false, DomainInfoDAO.NVC_DOMAIN_INFO_DAO);
+	private static final NVConfigEntity NVC_LOGIN_STATUS_DAO = new NVConfigEntityLocal("login_status_dao", "The login status dao", "LoginStatusDAO", true, false, false, false, LoginStatusDAO.class, SharedUtil.extractNVConfigs(Param.values()), null, false, DomainInfoDAO.NVC_DOMAIN_INFO_DAO);
 	
 	
 	
@@ -89,97 +90,91 @@ public class LoginStatusDAO
 	}
 
 	
-
-	
 	public String getPrincipal()
 	{
-		return lookupValue(Params.NVC_PRINCIPAL);
+		return lookupValue(Param.NVC_PRINCIPAL);
 	}
 	
 	public void setPrincipal(String principal)
 	{
-		setValue(Params.NVC_PRINCIPAL, principal);
+		setValue(Param.NVC_PRINCIPAL, principal);
 	}
-	
 	
 
 	public String getRealm()
 	{
-		return lookupValue(Params.NVC_REALM);
+		return lookupValue(Param.NVC_REALM);
 	}
 	
 	public void setRealm(String realm)
 	{
-		setValue(Params.NVC_REALM, realm);
+		setValue(Param.NVC_REALM, realm);
 	}
 	
 	
 	public long getSessionTimeoutInMillis()
 	{
-		return lookupValue(Params.NVC_SESSION_TIMEOUT_MILLIS);
+		return lookupValue(Param.NVC_SESSION_TIMEOUT_MILLIS);
 	}
 	
 	public void setSessionTimeoutInMillis(long timeout)
 	{
-		setValue(Params.NVC_SESSION_TIMEOUT_MILLIS, timeout);
+		setValue(Param.NVC_SESSION_TIMEOUT_MILLIS, timeout);
 	}
 	
 	
 	public boolean isLoggedIn()
 	{
-		return lookupValue(Params.NVC_LOGIN_STATUS);
+		return lookupValue(Param.NVC_LOGIN_STATUS);
 	}
 	
 	public void setLoggedIn(boolean status)
 	{
-		setValue(Params.NVC_LOGIN_STATUS, status);
+		setValue(Param.NVC_LOGIN_STATUS, status);
 	}
 	
 	
 	public List<NVPair> getUserRoles()
 	{
-		return lookupValue(Params.NVC_ROLE_LIST);
+		return lookupValue(Param.NVC_ROLE_LIST);
 	}
 	
 	public void setUserRoles( List<NVPair> roles)
 	{
-		setValue(Params.NVC_ROLE_LIST, roles);
+		setValue(Param.NVC_ROLE_LIST, roles);
 	}
 	
 	
 	public List<NVPair> getUserPermissions()
 	{
-		return lookupValue(Params.NVC_PERMISSION_LIST);
+		return lookupValue(Param.NVC_PERMISSION_LIST);
 	}
 
 	public void setUserPermissions(List<NVPair> permissions)
 	{
-		setValue(Params.NVC_PERMISSION_LIST, permissions);
+		setValue(Param.NVC_PERMISSION_LIST, permissions);
 	}
 	
 	
 	public List<NVPair> getExtaInformations()
 	{
-		return lookupValue(Params.NVC_EXTRA_INFO);
+		return lookupValue(Param.NVC_EXTRA_INFO);
 	}
 
 	public void setExtraInformations(List<NVPair> extraInfo)
 	{
-		setValue(Params.NVC_EXTRA_INFO, extraInfo);
+		setValue(Param.NVC_EXTRA_INFO, extraInfo);
 	}
 	
+
 	public String getApplicationID()
 	{
-		return lookupValue(Params.NVC_APPLICATION_ID);
+		return lookupValue(Param.NVC_APPLICATION_ID);
 	}
 	
 	public void setApplicationID(String appID)
 	{
-		setValue(Params.NVC_APPLICATION_ID, appID);
+		setValue(Param.NVC_APPLICATION_ID, appID);
 	}
 
-	/* (non-Javadoc)
-	 * @see org.zoxweb.shared.util.SetDescription#setDescription(java.lang.String)
-	 */
-	
 }

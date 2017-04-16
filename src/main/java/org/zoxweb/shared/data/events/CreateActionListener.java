@@ -16,13 +16,16 @@
 package org.zoxweb.shared.data.events;
 
 /**
- * @author mzebib
- *
+ * The create action listener interface.
+ * @param <V>
  */
 public interface CreateActionListener<V>
 	extends ActionBaseListener<V>
 {
-	
+    /**
+     * Executes create action for specified input.
+     * @param v
+     */
 	public void actionCreate(V v);
 
 }

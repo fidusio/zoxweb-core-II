@@ -21,7 +21,8 @@ package org.zoxweb.shared.util;
  *
  */
 public interface SetNVConfig
-		extends GetNVConfig {
+    extends GetNVConfig
+{
 
 	/**
 	 * Set the NVConfig.

@@ -26,7 +26,8 @@ import java.util.List;
  */
 @SuppressWarnings("serial")
 public class ExceptionCollection 
-	extends RuntimeException {
+	extends RuntimeException
+{
 
 	private List<Exception> list = new ArrayList<Exception>();
 	private String message;
@@ -34,7 +35,8 @@ public class ExceptionCollection
 	/**
 	 * The default constructor.
 	 */
-	public ExceptionCollection() {
+	public ExceptionCollection()
+    {
 
 	}
 	
@@ -43,7 +45,8 @@ public class ExceptionCollection
 	 * message set based on reason input.
 	 * @param reason
 	 */
-	public ExceptionCollection(String reason) {
+	public ExceptionCollection(String reason)
+    {
 		super();
 		setMessage(reason);
 	}
@@ -52,7 +55,8 @@ public class ExceptionCollection
 	 * Returns the exception list.
 	 * @return list of exceptions
 	 */
-	public List<Exception> getExceptionList() {
+	public List<Exception> getExceptionList()
+    {
 		return list;
 	}
 	
@@ -60,7 +64,8 @@ public class ExceptionCollection
 	 * Sets the exception list.
 	 * @param list
 	 */
-	public void setExceptionList(List<Exception> list) {
+	public void setExceptionList(List<Exception> list)
+    {
 		this.list = list;
 	}
 	
@@ -68,7 +73,8 @@ public class ExceptionCollection
 	 * Returns the message;
 	 * @return the message
 	 */
-	public String getMessage() {
+	public String getMessage()
+    {
 		return message;
 	}
 	
@@ -76,7 +82,8 @@ public class ExceptionCollection
 	 * Sets the message.
 	 * @param message
 	 */
-	public void setMessage(String message) {
+	public void setMessage(String message)
+    {
 		this.message = message;
 	}
 
@@ -84,7 +91,8 @@ public class ExceptionCollection
 	 * Adds an existing exception collection to the current exception collection.
 	 * @param ec
 	 */
-	public void add(ExceptionCollection ec) {
+	public void add(ExceptionCollection ec)
+    {
 		list.addAll(ec.getExceptionList());
 	}
 

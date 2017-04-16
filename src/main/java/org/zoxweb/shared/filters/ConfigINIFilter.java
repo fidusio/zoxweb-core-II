@@ -7,7 +7,8 @@ import org.zoxweb.shared.util.SharedStringUtil;
 
 @SuppressWarnings("serial")
 public class ConfigINIFilter
-        implements ValueFilter<String, List<String>> {
+    implements ValueFilter<String, List<String>>
+{
 
 	public static final ConfigINIFilter SINGLETON = new ConfigINIFilter( true);
 	
@@ -21,47 +22,58 @@ public class ConfigINIFilter
 	/**
 	 * The default constructor.
 	 */
-	public ConfigINIFilter() {
+	public ConfigINIFilter()
+    {
 		
 	}
 
-	public ConfigINIFilter(boolean trimEnabled) {
+	public ConfigINIFilter(boolean trimEnabled)
+    {
 		setLineTrimmingEnabled(trimEnabled);
 	}
 
 	@Override
-	public String toCanonicalID() {
+	public String toCanonicalID()
+    {
 		return getClass().getName();
 	}
 
 	@Override
-	public List<String> validate(String in) throws NullPointerException,
-			IllegalArgumentException {
+	public List<String> validate(String in)
+        throws NullPointerException, IllegalArgumentException
+    {
 	
 		String lines[] = in.split("\r\n|\n");
 		ArrayList<String> goodLines = new ArrayList<String>();
 
-		for (String line : lines) {
+		for (String line : lines)
+		{
 			int commentIndex = -1;
 			
-			for (String c : COMMENTS) {
+			for (String c : COMMENTS)
+			{
 				int temp = line.indexOf(c);
 				if (temp != -1 && (commentIndex == -1 || commentIndex > temp)) {
 					commentIndex = temp;
 				}	
 			}
 
-			if (commentIndex  > 0) {
+			if (commentIndex  > 0)
+			{
 				line = line.substring(0, commentIndex);
-			} else if (commentIndex == 0) {
+			}
+			else if (commentIndex == 0)
+			{
 				line ="";
 			}
 			
-			if (trimEnabled) {
+			if (trimEnabled)
+			{
 				line = line.trim();
 			}
 			
-			if (!SharedStringUtil.isEmpty(line)) {
+			if (!SharedStringUtil.isEmpty(line))
+			{
 				goodLines.add(line);
 			}
 		}
@@ -70,15 +82,18 @@ public class ConfigINIFilter
 	}
 
 	@Override
-	public boolean isValid(String in) {
+	public boolean isValid(String in)
+    {
 		return !SharedStringUtil.isEmpty( in);
 	}
 
-	public boolean isLineTrimmingEnabled() {
+	public boolean isLineTrimmingEnabled()
+    {
 		return trimEnabled;
 	}
 
-	public void setLineTrimmingEnabled(boolean trimEnabled) {
+	public void setLineTrimmingEnabled(boolean trimEnabled)
+    {
 		this.trimEnabled = trimEnabled;
 	}
 

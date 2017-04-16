@@ -21,7 +21,8 @@ import java.util.List;
  * The array values interface.
  * @param <T>
  */
-public interface ArrayValues<T> {
+public interface ArrayValues<T>
+{
 
 	T get(String str);
 

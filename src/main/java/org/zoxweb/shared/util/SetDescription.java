@@ -20,7 +20,8 @@ package org.zoxweb.shared.util;
  * @author mnael
  */
 public interface SetDescription
-		extends GetDescription {
+    extends GetDescription
+{
 
 	/**
 	 * Set description property.

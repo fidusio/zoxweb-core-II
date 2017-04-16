@@ -20,8 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
+ *
  */
 @SuppressWarnings("serial")
 public class NVEntityGetNameMap
@@ -34,8 +33,6 @@ public class NVEntityGetNameMap
 	{
 		//super((String)null, new HashMap<GetName, NVEntity>());
 	}
-	
-	
 	
 	public NVEntityGetNameMap(String name)
 	{

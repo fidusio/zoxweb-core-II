@@ -24,10 +24,10 @@ import java.util.Properties;
 import java.util.logging.Logger;
 import javax.sql.DataSource;
 
-
-public class JDBCDataSource implements DataSource 
+public class JDBCDataSource
+	implements DataSource
 {
-	
+
 	private String url = null;
 	private String user = null;
 	private String password = null;	
@@ -37,9 +37,9 @@ public class JDBCDataSource implements DataSource
 
 	public JDBCDataSource()
 	{
+
 	}
-	
-	
+
 	public JDBCDataSource( String driverName,
 						   Properties driverProperties, 
 						   String url, 
@@ -53,37 +53,29 @@ public class JDBCDataSource implements DataSource
 		this.properties = driverProperties;
 	}
 	
-	
-	
-	
-	
-	
 
 	@Override
 	public Connection getConnection() throws SQLException 
 	{
 		return getConnection(user, password);
 	}
-	
-	
-
 
 	@Override
 	public Connection getConnection(String username, String password)
-			throws SQLException 
+        throws SQLException
 	{
 		Properties prop = properties;
-		if ( username!= null || password != null)
+		if (username!= null || password != null)
 		{
 			prop = (Properties) properties.clone();
 		}
 		
-		if ( username != null)
+		if (username != null)
 		{
 			prop.setProperty("user" , username);
 		}
 		
-		if ( password != null)
+		if (password != null)
 		{
 			prop.setProperty("password", password);
 		}
@@ -92,100 +84,105 @@ public class JDBCDataSource implements DataSource
 	}
 
 	@Override
-	public PrintWriter getLogWriter() throws SQLException {
-		// TODO Auto-generated method stub
+	public PrintWriter getLogWriter()
+        throws SQLException
+	{
 		return null;
 	}
 
 	@Override
-	public void setLogWriter(PrintWriter out) throws SQLException {
-		// TODO Auto-generated method stub
-		
+	public void setLogWriter(PrintWriter out)
+        throws SQLException
+	{
+
 	}
 
 	@Override
-	public void setLoginTimeout(int seconds) throws SQLException {
-		// TODO Auto-generated method stub
-		
+	public void setLoginTimeout(int seconds)
+        throws SQLException
+	{
+
 	}
 
 	@Override
-	public int getLoginTimeout() throws SQLException {
-		// TODO Auto-generated method stub
+	public int getLoginTimeout()
+        throws SQLException
+	{
 		return 0;
 	}
 
 	@Override
-	public Logger getParentLogger() throws SQLFeatureNotSupportedException {
-		// TODO Auto-generated method stub
+	public Logger getParentLogger()
+        throws SQLFeatureNotSupportedException
+	{
 		return null;
 	}
 
 	@Override
-	public <T> T unwrap(Class<T> iface) throws SQLException {
-		// TODO Auto-generated method stub
+	public <T> T unwrap(Class<T> iface) throws SQLException
+	{
 		return null;
 	}
 
 	@Override
-	public boolean isWrapperFor(Class<?> iface) throws SQLException {
-		// TODO Auto-generated method stub
+	public boolean isWrapperFor(Class<?> iface)
+        throws SQLException
+	{
 		return false;
 	}
 
-
-	public String getURL() {
+	public String getURL()
+	{
 		return url;
 	}
 
-
-	public void setURL(String url) {
+	public void setURL(String url)
+	{
 		this.url = url;
 	}
 
+	public String getDriverName()
 
-	public String getDriverName() 
 	{
 		return driverName;
 	}
 
-
-	public void setDriverName(String driverName) throws ClassNotFoundException 
+	public void setDriverName(String driverName)
+        throws ClassNotFoundException
 	{
 		this.driverName = driverName;
 		Class.forName( driverName);
 	}
 
-
-	public String getUser() {
+	public String getUser()
+	{
 		return user;
 	}
 
 
-	public void setUser(String user) {
+	public void setUser(String user)
+	{
 		this.user = user;
 	}
 
-
-	public String getPassword() {
+	public String getPassword()
+	{
 		return password;
 	}
 
-
-	public void setPassword(String password) {
+	public void setPassword(String password)
+	{
 		this.password = password;
 	}
 
-
-	public Properties getProperties() {
+	public Properties getProperties()
+	{
 		return properties;
 	}
 
-
-	public void setProperties(Properties properties) {
+	public void setProperties(Properties properties)
+	{
 		this.properties = properties;
 	}
-
-
 
 }

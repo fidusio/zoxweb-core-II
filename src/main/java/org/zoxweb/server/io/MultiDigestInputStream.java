@@ -25,10 +25,9 @@ import java.security.MessageDigest;
  * 
  */
 public class MultiDigestInputStream 
-extends FilterInputStream
-implements MultiDigestInterface
+    extends FilterInputStream
+    implements MultiDigestInterface
 {
-	
 
     /* NOTE: This should be made a generic UpdaterInputStream */
 
@@ -41,8 +40,6 @@ implements MultiDigestInterface
 //    protected MessageDigest[] digests;
 //    
 //    private AtomicLong totalBytes = new AtomicLong();
-    
-    
     
     private MultiDigest md = new MultiDigest();
 
@@ -96,10 +93,12 @@ implements MultiDigestInterface
     public int read() throws IOException 
     {
         int ch = in.read();
+
         if (ch != -1) 
         {
         	md.update((byte)ch);
         }
+
         return ch;
     }
 
@@ -132,7 +131,7 @@ implements MultiDigestInterface
      *
      */
     public int read(byte[] b, int off, int len) 
-    		throws IOException
+        throws IOException
     {
         int result = in.read(b, off, len);
         if (result != -1) 

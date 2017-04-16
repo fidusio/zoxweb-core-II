@@ -20,26 +20,24 @@ public class ScanResultDAO
 	extends CanonicalIDDAO
 {
 	public enum Params
-	implements GetNVConfig
+	    implements GetNVConfig
 	{
-		
-		
 		LENGTH(NVConfigManager.createNVConfig("length", "The length of the data", "Length", false, true, Long.class)),
 		STATUS(NVConfigManager.createNVConfig("status", "OK result no infection.", "status", false, true, ScanStatus.class)),
 		SCAN_DURATION(NVConfigManager.createNVConfig("scan_duration", "The scan duration in millis", "ScanDuration", false, true, Long.class)),
 		RESULT(NVConfigManager.createNVConfig("result", "The result of the scan", "Result", false, true, String.class)),
 		;
 		
-		private final NVConfig cType;
+		private final NVConfig nvc;
 		
-		Params(NVConfig c)
+		Params(NVConfig nvc)
 		{
-			cType = c;
+            this.nvc = nvc;
 		}
 		
 		public NVConfig getNVConfig() 
 		{
-			return cType;
+			return nvc;
 		}
 	}
 	

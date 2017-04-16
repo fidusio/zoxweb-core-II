@@ -25,7 +25,7 @@ public class NVLong
 	extends NVBase<Long> 
 {
 	/**
-	 * Default constructor used for Java Bean Compiler.
+	 * The default constructor (Java Bean compliant).
 	 */
 	public NVLong()
 	{

@@ -15,8 +15,8 @@
  */
 package org.zoxweb.server.http;
 
-
 import java.util.List;
+
 import org.zoxweb.server.io.FileInfoStreamSource;
 import org.zoxweb.shared.http.HTTPAuthentication;
 import org.zoxweb.shared.http.HTTPAuthorizationType;
@@ -25,8 +25,7 @@ import org.zoxweb.shared.util.GetNameValue;
 import org.zoxweb.shared.util.SharedUtil;
 
 /**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
+ *
  */
 public class HTTPRequestAttributes 
 {
@@ -59,13 +58,17 @@ public class HTTPRequestAttributes
 		this.streamList = streamList;
 		this.content = content;
 		this.contentType = contentType;
+
 		if (headers != null)
+		{
 			httpAuthentication = HTTPAuthorizationType.parse((GetNameValue<String>) SharedUtil.lookup(headers, HTTPHeaderName.AUTHORIZATION));
+		}
 		else
+		{
 			httpAuthentication = null;
+		}
 	}
-	
-	
+
 	/**
 	 * Get the incoming request headers
 	 * 

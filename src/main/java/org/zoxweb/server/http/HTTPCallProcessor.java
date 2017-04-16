@@ -25,8 +25,7 @@ import org.zoxweb.shared.http.HTTPMessageConfig;
 import org.zoxweb.shared.http.HTTPResponseData;
 
 /**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
+ *
  */
 public class HTTPCallProcessor 
 {
@@ -34,20 +33,21 @@ public class HTTPCallProcessor
 	private static void error(String str)
 	{
 		if (str != null)
+		{
 			System.out.println("Error message:" + str);
+		}
 		
 		System.out.println("Usage:" + HTTPCallProcessor.class.getCanonicalName() + " [http config json file ...]");
 		System.exit(-1);
 	}
 	
-	public static void main(String ...args)
+	public static void main(String... args)
 	{
 		if (args.length == 0)
 		{
 			error("Invalid parameter length " + args.length);
 		}
-		
-		
+
 		for (int i = 0 ; i < args.length; i++)
 		{
 			try
@@ -61,7 +61,7 @@ public class HTTPCallProcessor
 						HTTPResponseData rd = new HTTPCall(hcc, SSLCheckDisabler.SINGLETON).sendRequest();
 						System.out.println("Result:" + rd.getStatus());
 					}
-					catch(Exception e)
+					catch (Exception e)
 					{
 						e.printStackTrace();
 					}
@@ -69,7 +69,7 @@ public class HTTPCallProcessor
 				
 	
 			}
-			catch(Exception e)
+			catch (Exception e)
 			{
 				e.printStackTrace();
 				error(null);

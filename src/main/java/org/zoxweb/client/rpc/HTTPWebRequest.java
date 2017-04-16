@@ -29,54 +29,76 @@ import com.google.gwt.http.client.RequestException;
 import com.google.gwt.http.client.URL;
 
 /**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
+ *
  */
 public class HTTPWebRequest {
 
 	private  HTTPMessageConfigInterface hcc;
 	
-	public HTTPWebRequest(HTTPMessageConfigInterface hcc) {
+	public HTTPWebRequest(HTTPMessageConfigInterface hcc)
+	{
 		SharedUtil.checkIfNulls("Null HTTPCallConfigInterface", hcc);
 		this.hcc = hcc;
 	}
-	
-	public void send(RequestCallback callBack) throws NullPointerException, IllegalArgumentException, RequestException {
+
+	/**
+	 *
+	 * @param callBack
+	 * @throws NullPointerException
+	 * @throws IllegalArgumentException
+	 * @throws RequestException
+	 */
+	public void send(RequestCallback callBack)
+        throws NullPointerException, IllegalArgumentException, RequestException
+	{
 		ZWRequestBuilder builder = new ZWRequestBuilder(hcc.getMethod(), URL.encode(formatFullURL(hcc)));
-		for (GetNameValue<String> gnvHeader : hcc.getHeaderParameters().values()) {
+
+		for (GetNameValue<String> gnvHeader : hcc.getHeaderParameters().values())
+		{
 			builder.setHeader(gnvHeader.getName(), gnvHeader.getValue());
 		}
 
 		builder.setTimeoutMillis(hcc.getReadTimeout());
 		String data = null;
 
-		if (hcc.getContent() != null && hcc.getContent().length > 0) {
+		if (hcc.getContent() != null && hcc.getContent().length > 0)
+		{
 			data = SharedStringUtil.toString(hcc.getContent());
 		}
 		
 		GetNameValue<String> authorizationHeader = HTTPAuthorizationType.BASIC.toHTTPHeader(hcc.getUser(), hcc.getPassword());
-		if(authorizationHeader == null && hcc.getAuthentitcation() != null) {
+
+		if (authorizationHeader == null && hcc.getAuthentitcation() != null)
+		{
 			authorizationHeader = hcc.getAuthentitcation().toHTTPHeader();
 		}
-		
-		
-		
-		if (authorizationHeader != null) {
+
+		if (authorizationHeader != null)
+		{
 			builder.setHeader(authorizationHeader.getName(), authorizationHeader.getValue());
 		}
 		
 		builder.sendRequest(data, callBack);	
 	}
 
-	public static String formatFullURL(final HTTPMessageConfigInterface hcc) {
-		if (hcc.getURL() == null) {
+	/**
+	 *
+	 * @param hcc
+	 * @return
+	 */
+	public static String formatFullURL(final HTTPMessageConfigInterface hcc)
+	{
+		if (hcc.getURL() == null)
+		{
 			hcc.setURL(GWT.getModuleBaseURL());
 		}
 		
 		String fullURL = SharedStringUtil.concat(hcc.getURL(), hcc.getURI(), "/");
 		
 		String parameters = SharedStringUtil.format(hcc.getParameters(), "=", false, "&");
-		if (!SharedStringUtil.isEmpty(parameters)) {
+
+		if (!SharedStringUtil.isEmpty(parameters))
+		{
 			fullURL += "?" + parameters;
 		}
 		

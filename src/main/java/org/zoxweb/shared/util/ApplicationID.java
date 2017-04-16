@@ -20,7 +20,8 @@ package org.zoxweb.shared.util;
  * particular domain ID.
  * @author mzebib
  */
-public interface ApplicationID<T> {
+public interface ApplicationID<T>
+{
 
 	/**
 	 * Returns the application ID.

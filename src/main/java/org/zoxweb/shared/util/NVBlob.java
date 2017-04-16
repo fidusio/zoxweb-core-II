@@ -22,7 +22,8 @@ package org.zoxweb.shared.util;
  */
 @SuppressWarnings("serial")
 public class NVBlob
-		extends NVBase<byte[]> {
+    extends NVBase<byte[]>
+{
 	
 	/**
 	 * The default constructor.
@@ -37,7 +38,8 @@ public class NVBlob
 	 * @param name
 	 * @param value
 	 */
-	public NVBlob(String name, byte[] value) {
+	public NVBlob(String name, byte[] value)
+    {
 		super(name, value);
 	}
 

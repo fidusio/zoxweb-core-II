@@ -16,16 +16,12 @@
  */
 package org.zoxweb.server.http.proxy;
 
-
-
 import java.io.IOException;
 import java.net.InetSocketAddress;
 
 import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
 import java.util.logging.Logger;
-
-
 
 import org.zoxweb.server.http.HTTPUtil;
 import org.zoxweb.server.io.ByteBufferUtil;
@@ -38,17 +34,13 @@ import org.zoxweb.server.net.InetFilterRulesManager;
 import org.zoxweb.server.net.NIOChannelCleaner;
 import org.zoxweb.server.net.NIOSocket;
 import org.zoxweb.server.net.NetUtil;
-
 import org.zoxweb.server.net.ProtocolSessionFactoryBase;
 import org.zoxweb.server.net.ProtocolSessionProcessor;
-
 import org.zoxweb.server.task.TaskUtil;
 import org.zoxweb.shared.http.HTTPMessageConfig;
 import org.zoxweb.shared.http.HTTPMessageConfigInterface;
 import org.zoxweb.shared.http.HTTPHeaderName;
 import org.zoxweb.shared.http.HTTPMethod;
-
-
 import org.zoxweb.shared.http.HTTPStatusCode;
 import org.zoxweb.shared.net.InetSocketAddressDAO;
 import org.zoxweb.shared.protocol.ProtocolDelimiter;
@@ -57,19 +49,14 @@ import org.zoxweb.shared.util.Const.SourceOrigin;
 import org.zoxweb.shared.util.NVPair;
 import org.zoxweb.shared.util.SharedStringUtil;
 
-
-
-
 public class NIOProxyProtocol 
-extends ProtocolSessionProcessor
+	extends ProtocolSessionProcessor
 {
+
 	private static boolean debug = false;
 	private static final transient Logger log = Logger.getLogger(NIOProxyProtocol.class.getName());
 	public static final String NAME = "ZWNIOProxy";
-	
-	
-	
-	
+
 	private static class RequestInfo
 	{
 		HTTPMessageConfigInterface hmci = null;
@@ -96,8 +83,7 @@ extends ProtocolSessionProcessor
 				
 			}
 		}
-		
-		
+
 		public void writeHeader(SocketChannel remoteChannel, UByteArrayOutputStream requestRawBuffer)
 			throws IOException
 		{
@@ -145,8 +131,8 @@ extends ProtocolSessionProcessor
 	{
 
 		@Override
-		public NIOProxyProtocol newInstance() {
-			// TODO Auto-generated method stub
+		public NIOProxyProtocol newInstance()
+		{
 			NIOProxyProtocol ret = new NIOProxyProtocol();
 			ret.setOutgoingInetFilterRulesManager(getOutgoingInetFilterRulesManager());
 			
@@ -155,15 +141,7 @@ extends ProtocolSessionProcessor
 		
 	}
 	
-	
-	
-
-	
-	
-	
-	
 	private UByteArrayOutputStream requestBuffer = new UByteArrayOutputStream();
-	
 	private HTTPMessageConfigInterface requestMCCI = null;
 	private InetSocketAddressDAO lastRemoteAddress = null;
 	private SocketChannel remoteChannel = null;
@@ -172,15 +150,11 @@ extends ProtocolSessionProcessor
 	private SelectionKey  clientChannelSK = null;
 	private ChannelRelayTunnel channelRelay = null;
 	private RequestInfo requestInfo = null;
-	
-	
+
 	//private int changeConnection = 0;
 	//protected Set<SelectionKey> remoteSet = null;//new HashSet<SelectionKey>();
 	private boolean ssl = false;
-	
-	
-	
-	
+
 	private NIOProxyProtocol()
 	{
 		bBuffer =  ByteBufferUtil.allocateByteBuffer(BufferType.HEAP, getReadBufferSize());
@@ -190,22 +164,18 @@ extends ProtocolSessionProcessor
 	@Override
 	public String getName()
 	{
-		// TODO Auto-generated method stub
 		return NAME;
 	}
 
 	@Override
 	public String getDescription() 
 	{
-		// TODO Auto-generated method stub
 		return "Experimental http proxy";
 	}
 
 	@Override
 	public void close() throws IOException
 	{
-		
-		// TODO Auto-generated method stub
 		IOUtil.close(clientChannel);
 		//if (ssl)
 		{
@@ -220,7 +190,6 @@ extends ProtocolSessionProcessor
 		}
 		postOp();
 	}
-	
 
 	@Override
 	protected void processRead(SelectionKey key) 
@@ -249,20 +218,15 @@ extends ProtocolSessionProcessor
     				}
     				else
     				{
-
     					ByteBufferUtil.write(requestBuffer, bBuffer);
     					//log.info(new String(requestBuffer.getInternalBuffer(), 0, requestBuffer.size()));
     					tryToConnectRemote(requestBuffer, read);
-
-    					
     				}	
     			}
 
     		}
     		while(read > 0);
-					
-				
-    	
+
     		if (read == -1)
     		{
     			if(debug)

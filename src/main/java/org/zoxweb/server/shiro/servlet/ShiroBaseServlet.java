@@ -37,12 +37,14 @@ import org.zoxweb.shared.util.SharedUtil;
 
 @SuppressWarnings("serial")
 public abstract class ShiroBaseServlet
-		extends HttpServlet {
+    extends HttpServlet
+{
 
     public static final APIError DEFAULT_API_ERROR = new APIError(new AccessException("Access denied.", null, true));
     private static final transient Logger log = Logger.getLogger(ShiroBaseServlet.class.getName());
 
-    public ShiroBaseServlet() {
+    public ShiroBaseServlet()
+    {
         super();
     }
 
@@ -57,20 +59,23 @@ public abstract class ShiroBaseServlet
      * @throws IOException
      */
     protected void doPatch(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException,
-            IOException {
-
+        throws ServletException, IOException
+    {
         String protocol = req.getProtocol();
         String msg = "PATCH method not implemented.";
 
-        if (protocol.endsWith("1.1")) {
+        if (protocol.endsWith("1.1"))
+        {
             resp.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED, msg);
-        } else {
+        }
+        else
+        {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, msg);
         }
     }
 
-    protected boolean isAutoLogoutEnabled() {
+    protected boolean isAutoLogoutEnabled()
+    {
         return false;
     }
 
@@ -85,11 +90,14 @@ public abstract class ShiroBaseServlet
      * @throws IOException
      */
     protected boolean passSecurityCheckPoint(HttpServletRequest req, HttpServletResponse res)
-            throws ServletException, IOException {
-        if (isSecurityCheckRequired((HTTPMethod) SharedUtil.lookupEnum(HTTPMethod.values(), req.getMethod()), req)) {
+        throws ServletException, IOException
+    {
+        if (isSecurityCheckRequired((HTTPMethod) SharedUtil.lookupEnum(HTTPMethod.values(), req.getMethod()), req))
+        {
             Subject subject = SecurityUtils.getSubject();
 
-            if (subject == null || !subject.isAuthenticated()) {
+            if (subject == null || !subject.isAuthenticated())
+            {
                 log.info("security check required and user not authenticated");
                 HTTPServletUtil.sendJSON(req, res, HTTPStatusCode.UNAUTHORIZED, DEFAULT_API_ERROR);
                 return false;
@@ -99,36 +107,44 @@ public abstract class ShiroBaseServlet
         return true;
     }
 
-    protected void postService(HttpServletRequest req, HttpServletResponse res) {
-        if (isAutoLogoutEnabled()) {
+    protected void postService(HttpServletRequest req, HttpServletResponse res)
+    {
+        if (isAutoLogoutEnabled())
+        {
             Subject subject = SecurityUtils.getSubject();
 
-            if (subject != null) {
+            if (subject != null)
+            {
                 subject.logout();
                 log.info("AutoLogout invoked");
             }
         }
     }
 
+    @Override
     public void service(HttpServletRequest req, HttpServletResponse res)
-            throws ServletException, IOException {
-
+        throws ServletException, IOException
+    {
         long delta = System.nanoTime();
 
-        try {
-            if (passSecurityCheckPoint(req, res)) {
-                switch (req.getMethod().toUpperCase()) {
+        try
+        {
+            if (passSecurityCheckPoint(req, res))
+            {
+                switch (req.getMethod().toUpperCase())
+                {
                     case "PATCH":
                         doPatch(req, res);
                         break;
                     default:
                         super.service(req, res);
-
                 }
 
                 postService(req, res);
             }
-        } finally {
+        }
+        finally
+        {
             delta = System.nanoTime() - delta;
             log.info(getServletName() + ":" + req.getMethod() + ":PT:" + Const.TimeInMillis.nanosToString(delta));
         }

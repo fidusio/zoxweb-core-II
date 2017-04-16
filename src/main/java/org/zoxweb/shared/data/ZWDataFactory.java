@@ -124,7 +124,7 @@ public class ZWDataFactory
 			@Override
 			public APIBatchResult<NVEntity> newInstance()
 			{
-				return new APIBatchResult<NVEntity>();
+				return new APIBatchResult<>();
 			}
 
 			@Override
@@ -860,7 +860,7 @@ public class ZWDataFactory
 	 * Creates an instance of this class.
 	 */
 	public static final ZWDataFactory SINGLETON = new ZWDataFactory();
-	private Set<NVEntityFactory> factoriesSet = new HashSet<NVEntityFactory>();
+	private Set<NVEntityFactory> factoriesSet = new HashSet<>();
 	
 	/**
 	 * The default constructor is declared private to prevent outside instantiation of this class.

@@ -48,8 +48,8 @@ import java.security.cert.X509Certificate;
  * Note: using this class in production is no recommended since it will not validate the end point of the connection
  */
 public class SSLCheckDisabler
-		implements SSLSocketProp {
-
+    implements SSLSocketProp
+{
 	private SSLSocketFactory disabledSSLFactory = null;
 	
 	private HostnameVerifier allHostsValid = null;
@@ -107,12 +107,16 @@ public class SSLCheckDisabler
 				new X509TrustManager() {
 					public java.security.cert.X509Certificate[] getAcceptedIssuers()
 					{
-					return null;
+					    return null;
 					}
-					public void checkClientTrusted(X509Certificate[] certs, String authType) {
+
+					public void checkClientTrusted(X509Certificate[] certs, String authType)
+                    {
 
 					}
-					public void checkServerTrusted(X509Certificate[] certs, String authType) {
+
+					public void checkServerTrusted(X509Certificate[] certs, String authType)
+                    {
 
 					}
 			}

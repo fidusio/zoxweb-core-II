@@ -17,8 +17,8 @@ package org.zoxweb.shared.data.shiro;
 
 import org.zoxweb.shared.util.CanonicalID;
 
-
-public interface ShiroDAO extends CanonicalID {
+public interface ShiroDAO
+        extends CanonicalID {
 
 	public final static char CAN_ID_SEP = '-';
 	

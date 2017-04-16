@@ -17,9 +17,9 @@ package org.zoxweb.shared.util;
 
 /**
  * The remote ID interface.
- * @author mzebib
  */
-public interface RemoteID<T> {
+public interface RemoteID<T>
+{
 
 	/**
 	 * Get remote ID.
@@ -32,4 +32,5 @@ public interface RemoteID<T> {
 	 * @param id
 	 */
 	public void setRemoteID(T id);
+
 }

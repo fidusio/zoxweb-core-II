@@ -15,7 +15,6 @@
  */
 package org.zoxweb.shared.util;
 
-
 import java.util.List;
 
 /**
@@ -71,52 +70,64 @@ public class NVPairList
 		this.isFixed = isFixed;
 	}
 
-	/**
-	 * @see org.zoxweb.shared.util.ArrayValues#values()
-	 */
+    /**
+     * @see org.zoxweb.shared.util.ArrayValues#values()
+     * @return
+     */
 	@Override
 	public NVPair[] values() 
 	{
-		// TODO Auto-generated method stub
 		return value.toArray(new NVPair[0]);
 	}
 
-	/**
-	 * @see org.zoxweb.shared.util.ArrayValues#size()
-	 */
+    /**
+     * @see org.zoxweb.shared.util.ArrayValues#size()
+     * @return
+     */
 	@Override
 	public int size() 
 	{
-		// TODO Auto-generated method stub
 		return value.size();
 	}
 
-	/**
-	 * @see org.zoxweb.shared.util.ArrayValues#add(java.lang.Object)
-	 */
+    /**
+     * @see org.zoxweb.shared.util.ArrayValues#add(java.lang.Object)
+     * @param v
+     * @return
+     */
 	@Override
 	public NVPair add(NVPair v) 
 	{
-		// TODO Auto-generated method stub
 		return value.add(v) ? v : null;
 	}
 
-	/**
-	 * @see org.zoxweb.shared.util.ArrayValues#remove(java.lang.Object)
-	 */
+    /**
+     * @see org.zoxweb.shared.util.ArrayValues#remove(java.lang.Object)
+     * @param v
+     * @return
+     */
 	@Override
 	public synchronized NVPair remove(NVPair v)
 	{
-		// TODO Auto-generated method stub
 		return value.remove(v) ? v : null;
 	}
-	
+
+    /**
+     *
+     * @param str
+     * @return
+     */
 	@Override
 	public synchronized NVPair remove(String str)
 	{
 		return remove(get(str));
 	}
 
+    /**
+     *
+     * @param getName
+     * @return
+     */
 	public NVPair get(GetName getName)
 	{
 		if (getName != null && getName.getName() != null)
@@ -126,41 +137,41 @@ public class NVPairList
 		
 		return null;
 	}
-	
-	/**
-	 * @see org.zoxweb.shared.util.ArrayValues#get(java.lang.String)
-	 */
+
+    /**
+     * @see org.zoxweb.shared.util.ArrayValues#get(java.lang.String)
+     * @param str
+     * @return
+     */
 	@Override
 	public NVPair get(String str)
 	{
-		// TODO Auto-generated method stub
 		return SharedUtil.lookup(value, str);
 	}
-	
-	
-	/**
-	 * @see org.zoxweb.shared.util.ArrayValues#clear()
-	 */
+
+    /**
+     * @see org.zoxweb.shared.util.ArrayValues#clear()
+     */
 	@Override
 	public void clear() 
 	{
-		// TODO Auto-generated method stub
 		value.clear();
 	}
 
-	/**
-	 * @see org.zoxweb.shared.util.ArrayValues#add(java.lang.Object[], boolean)
-	 */
+    /**
+     * @see org.zoxweb.shared.util.ArrayValues#add(java.lang.Object[], boolean)
+     * @param vals
+     * @param clear
+     */
 	@Override
 	public synchronized void add(NVPair[] vals, boolean clear) 
 	{
-		// TODO Auto-generated method stub
 		if (clear)
 		{
 			clear();
 		}
 		
-		if ( vals != null)
+		if (vals != null)
 		{
 			for (NVPair nvp : vals)
 			{
@@ -169,12 +180,15 @@ public class NVPairList
 		}
 	}
 
-	/**
-	 * @see org.zoxweb.shared.util.ArrayValues#search(java.lang.String[])
-	 */
+    /**
+     * @see org.zoxweb.shared.util.ArrayValues#search(java.lang.String[])
+     * @param criteria
+     * @return
+     */
 	@Override
 	public List<NVPair> search(String... criteria) 
 	{
 		return SharedUtil.lookup(value, criteria[0]);	
 	}
+
 }

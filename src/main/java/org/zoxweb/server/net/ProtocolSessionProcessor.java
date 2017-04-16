@@ -29,8 +29,6 @@ public abstract class ProtocolSessionProcessor
 		
 	}
 	
-	
-	
 	public int getReadBufferSize()
 	{
 		return defaultReadBufferSize;

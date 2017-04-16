@@ -21,7 +21,7 @@ package org.zoxweb.shared.security;
  */
 @SuppressWarnings("serial")
 public class AccessSecurityException
-extends AccessException
+    extends AccessException
 {
 	public AccessSecurityException()
 	{

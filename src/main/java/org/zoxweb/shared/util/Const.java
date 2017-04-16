@@ -21,12 +21,13 @@ import org.zoxweb.shared.db.QueryMarker;
  * Contains constants and enums.
  * @author mzebib
  */
-public class Const {
+public class Const
+{
 
 	public static final String LOGGER_NAME = "zoxweb-core";
-	
 
-	public enum JavaClassVersion {
+	public enum JavaClassVersion
+    {
 		//VER_1_0("1.0", 45, 3),
 		VER_1_1("1.1", 45, 3),
 		VER_1_2("1.2", 46, 0),
@@ -36,26 +37,33 @@ public class Const {
 		VER_1_6("1.6", 50, 0),
 		VER_1_7("1.7", 51, 0),
 		VER_1_8("1.8", 52, 0),
-		VER_UNKOWN("UNKOWN", 0, 0),
+		VER_UNKOWN("UNKOWN", 0, 0)
 		
 		;
+
 		private final String version;
 		private final int major;
 		private final int minor;
 
-		JavaClassVersion(String version, int major, int minor) {
+		JavaClassVersion(String version, int major, int minor)
+        {
 			this.version = version;
 			this.major = major;
 			this.minor = minor;
 		}
 		
 
-		public String toString() {
+		public String toString()
+        {
 			return version + "," + major + "." + minor;
 		}
-		public static JavaClassVersion lookup(int major, int minor) {
-			for (JavaClassVersion ver : values()) {
-				if (ver.major == major && ver.minor == minor) {
+
+		public static JavaClassVersion lookup(int major, int minor)
+        {
+			for (JavaClassVersion ver : values())
+			{
+				if (ver.major == major && ver.minor == minor)
+				{
 					return ver;
 				}
 			}
@@ -63,10 +71,14 @@ public class Const {
 			return VER_UNKOWN;
 		}
 		
-		public static JavaClassVersion lookup(String version) {
-			if(!SharedStringUtil.isEmpty(version)) {
-				for (JavaClassVersion ver : values()) {
-					if (ver.version.equalsIgnoreCase(version)) {
+		public static JavaClassVersion lookup(String version)
+        {
+			if (!SharedStringUtil.isEmpty(version))
+			{
+				for (JavaClassVersion ver : values())
+				{
+					if (ver.version.equalsIgnoreCase(version))
+					{
 						return ver;
 					}
 				}
@@ -77,7 +89,8 @@ public class Const {
 	}
 	
 	public enum Bool
-			implements GetName, GetValue<Boolean> {
+        implements GetName, GetValue<Boolean>
+    {
 
 		TRUE("true", true),
 		FALSE("false", false),
@@ -92,30 +105,35 @@ public class Const {
 		private final boolean value;
 		private final String name;
 		
-		Bool(String name, boolean value) {
+		Bool(String name, boolean value)
+        {
 			this.name = name;
 			this.value = value;
 		}
 
 		@Override
-		public Boolean getValue() {
+		public Boolean getValue()
+        {
 			return value;
 		}
 
 		@Override
-		public String getName() {
+		public String getName()
+        {
 			return name;
 		}
 		
-		public static Bool parse(String str) {
+		public static Bool parse(String str)
+        {
 			return (Bool) SharedUtil.lookupEnum(Bool.values(), str);
 		}
 		
-		
-		public static boolean lookupValue(String str) {
+		public static boolean lookupValue(String str)
+        {
 			Bool ret = parse(str);
 
-			if (ret == null) {
+			if (ret == null)
+			{
 				throw new IllegalArgumentException("Invalid Bool token " + str);
 			}
 			
@@ -123,13 +141,15 @@ public class Const {
 		}
 	}
 	
-	public enum SourceOrigin {
+	public enum SourceOrigin
+    {
 		LOCAL,
 		REMOTE,
 		UNKNOWN,
 	}
 
-	public enum Status {
+	public enum Status
+    {
 		ACTIVE,
 		EXPIRED,
 		INACTIVE,
@@ -138,7 +158,8 @@ public class Const {
 		SUSPENDED,
 	}
 
-	public enum ResourceType {
+	public enum ResourceType
+    {
 		FILE,
 		FOLDER,
 		FORM,
@@ -147,7 +168,8 @@ public class Const {
 	}
 
 	public enum Unit
-		implements GetName {
+		implements GetName
+    {
 
 		EM("em"),
 		PIXEL("px"),
@@ -157,21 +179,27 @@ public class Const {
 
 		private String name;
 		
-		Unit(String name) {
+		Unit(String name)
+        {
 			this.name = name;
 		}
 		
 		@Override
-		public String getName() {
+		public String getName()
+        {
 			return name;
 		}
 
-		public static Unit parseUnit(String str) {
-			if (!SharedStringUtil.isEmpty(str)) {
+		public static Unit parseUnit(String str)
+        {
+			if (!SharedStringUtil.isEmpty(str))
+			{
 				str = str.toLowerCase();
 				
-				for (Unit unit : Unit.values()) {
-					if (str.endsWith(unit.getName())) {
+				for (Unit unit : Unit.values())
+				{
+					if (str.endsWith(unit.getName()))
+					{
 						return unit;
 					}
 				}
@@ -182,28 +210,34 @@ public class Const {
 	}
 	
 	public enum DeviceType
-		implements GetName {
+		implements GetName
+    {
 
 		ANDROID("Android"),
 		IPAD("iPad"),
-		IPHONE("iPhone"),
+		IPHONE("iPhone")
 	
 		;
 		
 		private final String name;
 		
-		DeviceType(String name) {
+		DeviceType(String name)
+        {
 			this.name = name;
 		}
 	
 		@Override
-		public String getName() {
+		public String getName()
+        {
 			return name;
 		}
 		
-		public static DeviceType lookup(String toMatch) {
-			for (DeviceType md : DeviceType.values()) {
-				if (SharedStringUtil.contains(toMatch, md.getName(), true)) {
+		public static DeviceType lookup(String toMatch)
+        {
+			for (DeviceType md : DeviceType.values())
+			{
+				if (SharedStringUtil.contains(toMatch, md.getName(), true))
+				{
 					return md;
 				}
 			}
@@ -211,7 +245,8 @@ public class Const {
 			return null;
 		}
 
-		public static boolean isMobileDevice(String toMatch) {
+		public static boolean isMobileDevice(String toMatch)
+        {
 			return (lookup(toMatch) != null);
 		}
 	}
@@ -226,7 +261,8 @@ public class Const {
 	 * @author mnael
 	 */
 	public enum SizeInBytes
-            implements GetName {
+        implements GetName
+    {
 
 		// Byte
 		B("B", 1),
@@ -244,7 +280,7 @@ public class Const {
 		T("TB", G.LENGTH*1024),
 		
 		// Peta bytes
-		P("PB", T.LENGTH*1024),
+		P("PB", T.LENGTH*1024)
 		
 		;
 		
@@ -256,7 +292,8 @@ public class Const {
 		
 		private String name;
 		
-		SizeInBytes(String name, long value) {
+		SizeInBytes(String name, long value)
+        {
 			this.name = name;
 			LENGTH = value;
 		}
@@ -266,18 +303,23 @@ public class Const {
 		 * @param str
 		 * @return the converted string value to long 
 		 */
-		public static long parse(String str) {
+		public static long parse(String str)
+        {
 			str = str.toUpperCase();
 			long multiplier = 1;
 			SizeInBytes values[] = SizeInBytes.values();
 			
-			for (int i = values.length - 1 ; i >= 0; i--) {
+			for (int i = values.length - 1 ; i >= 0; i--)
+			{
 				SizeInBytes bs = values[i];
-				if (str.endsWith(bs.getName())) {
+				if (str.endsWith(bs.getName()))
+				{
 					multiplier = bs.LENGTH;
 					str = str.substring(0, str.length() - bs.getName().length());
 					break;
-				} else if (str.endsWith(bs.name())) {
+				}
+				else if (str.endsWith(bs.name()))
+				{
 					multiplier = bs.LENGTH;
 					str = str.substring(0, str.length() - bs.name().length());
 					break;
@@ -287,17 +329,20 @@ public class Const {
 			return Long.parseLong(str)* multiplier;
 		}
 
-		public long sizeInBits(int size) {
+		public long sizeInBits(int size)
+        {
 			return LENGTH*size*Byte.SIZE;
 		}
 		
 		
-		public long sizeInBytes(long size) {
+		public long sizeInBytes(long size)
+        {
 			return LENGTH*size;
 		}
 
 		@Override
-		public String getName() {
+		public String getName()
+        {
 			return name;
 		}
 	}
@@ -307,12 +352,14 @@ public class Const {
 	 * @author mzebib
 	 *
 	 */
-	public enum TimeUnitType {
+	public enum TimeUnitType
+    {
 		NANOS,
 		MILLIS,
 	}
 	
-	public enum FilenameSep {
+	public enum FilenameSep
+    {
 		SLASH('/'),
 		BACKSLASH('\\'),
 		COLON(':'),
@@ -322,11 +369,13 @@ public class Const {
 		
 		public final char sep;
 		
-		FilenameSep( char s) {
+		FilenameSep( char s)
+        {
 			this.sep=s;
 		}
 		
-		public String toString() {
+		public String toString()
+        {
 			return "" + sep;
 		}
 	}
@@ -335,8 +384,8 @@ public class Const {
 	 * This enum represents units of time in milliseconds.
 	 * @author mzebib
 	 */
-	public enum TimeInMillis {
-
+	public enum TimeInMillis
+    {
 		// One millisecond
 		MILLI(1, "millis"),
 		
@@ -360,7 +409,8 @@ public class Const {
 		public final long MILLIS;
 		private final String tokens[];
 		
-		TimeInMillis(long duration, String... tokens) {
+		TimeInMillis(long duration, String... tokens)
+        {
 			this.MILLIS = duration;
 			this.tokens = tokens;
 		}
@@ -373,33 +423,40 @@ public class Const {
 		 * @throws IllegalArgumentException 
 		 */
 		public static long toMillis(String time) 
-			throws NullPointerException, IllegalArgumentException {
+			throws NullPointerException, IllegalArgumentException
+        {
 
 			time  = SharedStringUtil.toLowerCase(time).trim();
 			TimeInMillis timeMatch = null;
 			String tokenMatch = null;
 			
-			for (TimeInMillis tim : TimeInMillis.values()) {
-				for (String tok : tim.tokens) {
-					if (time.endsWith(tok)) {
+			for (TimeInMillis tim : TimeInMillis.values())
+			{
+				for (String tok : tim.tokens)
+				{
+					if (time.endsWith(tok))
+					{
 						tokenMatch = tok;
 						timeMatch = tim;
 						break;
 					}
 					
-					if (timeMatch != null) {
+					if (timeMatch != null)
+					{
 						break;
 					}
 				}
 			}
 			
-			if (timeMatch == null) {
+			if (timeMatch == null)
+			{
 				throw new IllegalArgumentException("Invalid time token " + time);
 			}
 			
 			String valueMatch[] = time.split(tokenMatch);
 			
-			if (valueMatch.length != 1) {
+			if (valueMatch.length != 1)
+			{
 				throw new IllegalArgumentException("Invalid time token " + time);
 			}
 			
@@ -417,7 +474,8 @@ public class Const {
 		 * @throws IllegalArgumentException 
 		 */
 		public static long toNanos(String time)
-				throws NullPointerException, IllegalArgumentException {
+            throws NullPointerException, IllegalArgumentException
+        {
 			return toMillis(time) * 1000000;
 		}
 		
@@ -440,13 +498,15 @@ public class Const {
 		 * @throws IllegalArgumentException 
 		 */
 		public static long toMicros(String time)
-				throws NullPointerException, IllegalArgumentException {
+            throws NullPointerException, IllegalArgumentException
+        {
 			return toMillis(time) * 1000;
 		}
 	}
 	
 	public enum TimeZoneOffset
-            implements GetName {
+        implements GetName
+    {
 
 		UTC_LESS_1200("UTC-12:00", '-', 12, 0),
 		UTC_LESS_1100("UTC-11:00", '-', 11, 0),
@@ -496,7 +556,8 @@ public class Const {
 		private int hours;
 		private int minutes;
 		
-		TimeZoneOffset(String name, char sign, int hours, int minutes) {
+		TimeZoneOffset(String name, char sign, int hours, int minutes)
+        {
 			this.name = name;
 			this.sign = sign;
 			this.hours = hours;
@@ -504,27 +565,33 @@ public class Const {
 		}
 	
 		@Override
-		public String getName() {
+		public String getName()
+        {
 			return name;
 		}
 		
-		public char getSign() {
+		public char getSign()
+        {
 			return sign;
 		}
 		
-		public int getHours() {
+		public int getHours()
+        {
 			return hours;
 		}
 		
-		public int getMinutes() {
+		public int getMinutes()
+        {
 			return minutes;
 		}
 		
-		public int getOffsetInMinutes(TimeZoneOffset timeZone) {
+		public int getOffsetInMinutes(TimeZoneOffset timeZone)
+        {
 			return timeZone.getHours()*60 + timeZone.getMinutes();
 		}
 		
-		public int getOffsetInMillis(TimeZoneOffset timeZone) {
+		public int getOffsetInMillis(TimeZoneOffset timeZone)
+        {
 			return getOffsetInMinutes(timeZone)*1000;
 		}
 
@@ -534,8 +601,8 @@ public class Const {
 	 * Represents data type in bytes.
 	 * @author mzebib
 	 */
-	public enum TypeInBytes {
-
+	public enum TypeInBytes
+    {
 		BYTE(1),
 		SHORT(2),
 		INT(4),
@@ -544,45 +611,53 @@ public class Const {
 		;
 		
 		/**
-		 * This returns the byte size of the data type.
+		 * Returns the byte size of the data type.
 		 */
 		public final int size;
 		
-		TypeInBytes(int s) {
+		TypeInBytes(int s)
+        {
 			size = s;
 		}
 
-		public static byte[] bytesToBytes(byte b) {
+		public static byte[] bytesToBytes(byte b)
+        {
 			byte ret[] = new byte[1];
 			ret[0] = b;
 			return ret;
  		}
 
-		public static byte[] shortToBytes(short val) {
+		public static byte[] shortToBytes(short val)
+        {
 			byte ret[] = new byte[SHORT.size];
 			
-			for (int i = 0; i < ret.length; i++) {
+			for (int i = 0; i < ret.length; i++)
+			{
 				ret[i] = (byte) (val >> (8*(ret.length-1-i)));
 			}
 			
 			return ret;
 		}
 		
-		public static byte[] intToBytes(int val) {
+		public static byte[] intToBytes(int val)
+        {
 			byte ret[] = new byte[INT.size];
 			
-			for (int i = 0; i < ret.length; i++) {
+			for (int i = 0; i < ret.length; i++)
+			{
 				ret[i] = (byte) (val >> (8*(ret.length-1-i)));
 			}
 			
 			return ret;
 		}
 		
-		public static byte[] longToBytes(long val) {
+		public static byte[] longToBytes(long val)
+        {
 
 			byte ret[] = new byte[LONG.size];
 			
-			for (int i = 0; i < ret.length; i++) {
+			for (int i = 0; i < ret.length; i++)
+			{
 				ret[i] = (byte) (val >> (8*(ret.length-1-i)));
 			}
 			
@@ -595,7 +670,8 @@ public class Const {
 	 * @author mzebib
 	 */
 	public enum DocumentType
-            implements GetName {
+        implements GetName
+    {
 		FILE("File"),
 		FOLDER("Folder"),
 		FORM("Form")
@@ -605,19 +681,22 @@ public class Const {
 		
 		private String name;
 		
-		DocumentType(String name) {
+		DocumentType(String name)
+        {
 			this.name = name;
 		}
 		
 		@Override
-		public String getName() {
+		public String getName()
+        {
 			return name;
 		}
 
 	}
 
 	public enum DayOfWeek
-		implements GetNameValue<Integer> {
+		implements GetNameValue<Integer>
+    {
 
 		SUNDAY("Sunday", 0),
 		MONDAY("Monday", 1),
@@ -625,37 +704,39 @@ public class Const {
 		WEDNESDAY("Wednesday", 3),
 		THURSDAY("Thursday", 4),
 		FRIDAY("Friday", 5),
-		SATURDAY("Saturday", 6),
+		SATURDAY("Saturday", 6)
 		
 		;
 		
 		private Integer value;
 		private String name;
 		
-		DayOfWeek(String name, Integer value) {
+		DayOfWeek(String name, Integer value)
+        {
 			this.name = name;
 			this.value = value;
 		}
 		
 		@Override
-		public String getName() {
+		public String getName()
+        {
 			return name;
 		}		
 		
 		@Override
-		public Integer getValue() {
+		public Integer getValue()
+        {
 			return value;
 		}
-
 	}
 
 	/**
 	 * Months of Gregorian calendar.
-	 * @author mzebib
-	 *
+     *
 	 */
 	public enum Month
-		implements GetName {
+		implements GetName
+    {
 
 		JANUARY("01-Jan"),
 		FEBRUARY("02-Feb"),
@@ -674,12 +755,14 @@ public class Const {
 
 		private String name;
 		
-		Month(String name) {
+		Month(String name)
+        {
 			this.name = name;
 		}
 
 		@Override
-		public String getName() {
+		public String getName()
+        {
 			return name;
 		}
 	}
@@ -687,11 +770,10 @@ public class Const {
 	/**
 	 * This enum represents days in a month and includes the maximum number 
 	 * of possible days in a month.
-	 * @author mzebib
-	 *
 	 */
 	public enum DaysInMonth
-		implements GetValue<Integer> {
+		implements GetValue<Integer>
+    {
 
 		ONE(1),
 		TWO(2),
@@ -729,19 +811,22 @@ public class Const {
 		
 		private Integer value;
 		
-		DaysInMonth(Integer value) {
+		DaysInMonth(Integer value)
+        {
 			this.value = value;
 		}
 		
 		@Override
-		public Integer getValue() {
+		public Integer getValue()
+        {
 			return value;
 		}
 
 	}
 
 	public enum DayPeriod
-            implements GetName {
+        implements GetName
+    {
 
 		AM("AM"),
 		PM("PM")
@@ -750,19 +835,21 @@ public class Const {
 
 		private String name;
 		
-		DayPeriod(String name) {
+		DayPeriod(String name)
+        {
 			this.name = name;
 		}
 		
 		@Override
-		public String getName() {
+		public String getName()
+        {
 			return name;
 		}
 	
 	}
-	
 
-	public enum Bidi {
+	public enum Bidi
+    {
 		LTR,
 		RTL
 
@@ -773,7 +860,8 @@ public class Const {
      * Logical operators
      */
 	public enum LogicalOperator 
-		implements GetValue<String>, QueryMarker {
+		implements GetValue<String>, QueryMarker
+    {
 
 		AND("AND"),
 		OR("OR"),
@@ -782,25 +870,30 @@ public class Const {
 
 		private String value;
 		
-		LogicalOperator(String value) {
+		LogicalOperator(String value)
+        {
 			this.value = value;
 		}
 		
 		@Override
-		public String getValue() {
+		public String getValue()
+        {
 			return value;
 		}
 		
-		public String toString() {
+		public String toString()
+        {
 			return getValue();
 		}
+
 	}
 
     /**
      * Relational operators
      */
 	public enum RelationalOperator
-            implements GetValue<String> {
+            implements GetValue<String>
+    {
 
 		EQUAL("="),
 		NOT_EQUAL("!="),
@@ -813,12 +906,14 @@ public class Const {
 
 		String value;
 		
-		RelationalOperator(String value) {
+		RelationalOperator(String value)
+        {
 			this.value = value;
 		}
 		
 		@Override
-		public String getValue() {
+		public String getValue()
+        {
 			return value;
 		}
 	}
@@ -827,7 +922,8 @@ public class Const {
 	 * Utility Date pattern that can be used on the client and server side.
 	 */
 	public enum DateTimePattern
-            implements GetValue<String> {
+        implements GetValue<String>
+    {
 		
 		GMT_ZZZ("+00:00"),
 		YEAR_MONTH_TZ("yyyy-MM ZZZ"),
@@ -839,12 +935,14 @@ public class Const {
 
 		private String value;
 		
-		DateTimePattern(String value) {
+		DateTimePattern(String value)
+        {
 			this.value = value;
 		}
 		
 		@Override
-		public String getValue() {
+		public String getValue()
+        {
 			return value;
 		}
 	}
@@ -852,10 +950,9 @@ public class Const {
 	/**
 	 * This enum contains NVPair display property
 	 * as either default (depends on context), name, or value.
-	 * @author mzebib
-	 *
 	 */
-	public enum NVDisplayProp {
+	public enum NVDisplayProp
+    {
 		DEFAULT,
 		NAME,
 		NAME_VALUE,
@@ -865,18 +962,16 @@ public class Const {
     /**
      * Scan statuses
      */
-	public enum ScanStatus {
+	public enum ScanStatus
+    {
 		OK, // ok no infection
 		INFECTED, // infected
 		FAILED, // failed not known
 
 	}
 	
-	
 	/**
 	 * Return types
-	 * @author mnael
-	 *
 	 */
 	public enum ReturnType
 	{
@@ -892,7 +987,6 @@ public class Const {
 		MAP,
 		DYNAMIC_ENUM_MAP,
 		DYNAMIC_ENUM_MAP_LIST
-		
 	}
 	
 	/**
@@ -953,16 +1047,24 @@ public class Const {
 	 * @return wrapped class type
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T> Class<T> wrap(Class<T> c) {
-		if (c.isPrimitive()) {
-			for (Class<?>[] temp : PRIMITIVES_TO_WRAPPERS) {
-				if (temp[0] == c) {
+	public static <T> Class<T> wrap(Class<T> c)
+    {
+		if (c.isPrimitive())
+		{
+			for (Class<?>[] temp : PRIMITIVES_TO_WRAPPERS)
+			{
+				if (temp[0] == c)
+				{
 					return (Class<T>) temp[1];
 				}
 			}
-		} else if (c.isArray()) {
-			for (Class<?>[] temp : PRIMITIVES_ARRAY_TO_WRAPPERS) {
-				if (temp[0] == c) {
+		}
+		else if (c.isArray())
+		{
+			for (Class<?>[] temp : PRIMITIVES_ARRAY_TO_WRAPPERS)
+			{
+				if (temp[0] == c)
+				{
 					return (Class<T>) temp[1];
 				}
 			}

@@ -22,7 +22,7 @@ package org.zoxweb.shared.security;
  */
 @SuppressWarnings("serial")
 public class AccessException
-		extends RuntimeException
+    extends RuntimeException
 {
 	private String urlRedirect = null;
 	private boolean reload = false;
@@ -36,8 +36,7 @@ public class AccessException
 	{
 		super(message);
 	}
-	
-	
+
 	public AccessException(String message, String urlRedirect)
 	{
 		this(message, urlRedirect, false);
@@ -50,8 +49,7 @@ public class AccessException
 		this.urlRedirect = urlRedirect;
 		this.reload = reload;
 	}
-	
-	
+
 	/**
 	 * Get the url redirect
 	 * @return the url redirect

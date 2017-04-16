@@ -15,8 +15,6 @@
  */
 package org.zoxweb.server.http.servlet;
 
-
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -58,12 +56,12 @@ public class HTTPServletUtil
 	public static final int ZIP_LIMIT = 512;
 	
 	private static final transient Logger log = Logger.getLogger(HTTPServletUtil.class.getName());
+
 	private HTTPServletUtil()
 	{
 		
 	}
-	
-	
+
 	
 	public static List<GetNameValue<String>> extractRequestHeaders(HttpServletRequest req)
 	{

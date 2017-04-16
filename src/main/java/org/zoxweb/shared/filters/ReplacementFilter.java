@@ -19,21 +19,24 @@ import org.zoxweb.shared.util.SharedUtil;
 
 @SuppressWarnings("serial")
 public class ReplacementFilter
-		implements ValueFilter<String, String> {
+    implements ValueFilter<String, String>
+{
 
 	private String replace, replacement;
 
-	public ReplacementFilter(String toReplace, String replacement) {
+	public ReplacementFilter(String toReplace, String replacement)
+    {
 		SharedUtil.checkIfNulls("params can't be null", toReplace, replacement);
 		this.replace = toReplace;
 		this.replacement = replacement;
 	}
 
 	@Override
-	public String validate(String v) throws NullPointerException,
-			IllegalArgumentException {
-
-		if (v != null) {
+	public String validate(String v)
+        throws NullPointerException, IllegalArgumentException
+    {
+		if (v != null)
+		{
 			v = v.replace(replace, replacement);
 		}
 
@@ -41,13 +44,15 @@ public class ReplacementFilter
 	}
 
 	@Override
-	public boolean isValid(String v) {
+	public boolean isValid(String v)
+    {
 		return true;
 	}
 
 
 	@Override
-	public String toCanonicalID() {
+	public String toCanonicalID()
+    {
 		return "static:ValueFilter:ReplacementFilter";
 	}
 

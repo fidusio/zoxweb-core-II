@@ -14,8 +14,8 @@ import org.zoxweb.shared.util.SimpleQueue;
  * again.
  */
 public class BoundedSimpleQueue<O>
-		extends SimpleQueue<O> {
-
+    extends SimpleQueue<O>
+{
 	private int highMark;
 	private int lowMark;
 	private boolean boundMode = false;
@@ -31,8 +31,8 @@ public class BoundedSimpleQueue<O>
 	 *                if the lowMark >= highMark or lowMark < 0 or highMark < 0.
 	 */
 	public BoundedSimpleQueue(int lowMark, int highMark)
-			throws IllegalArgumentException {
-
+        throws IllegalArgumentException
+    {
 		if (highMark <= lowMark || highMark < 0 || lowMark < 0) {
 			throw new IllegalArgumentException("Invalid queue parameters "
 					+ " highMark " + highMark + " lowMark " + lowMark);
@@ -46,9 +46,11 @@ public class BoundedSimpleQueue<O>
 	 * This method will dequeue and Object, if the queue is empty it will return
 	 * null.
 	 */
-	public synchronized O dequeue() {
+	public synchronized O dequeue()
+    {
 		O ret = super.dequeue();
-		if (boundMode && size() <= lowMark) {
+		if (boundMode && size() <= lowMark)
+		{
 			boundMode = false;
 			notifyAll();
 		}
@@ -63,9 +65,12 @@ public class BoundedSimpleQueue<O>
 	 * @param toQueue
 	 *            the object.
 	 */
-	public synchronized void queue(O toQueue) {
-		if (boundMode && toQueue != null) {
-			try {
+	public synchronized void queue(O toQueue)
+    {
+		if (boundMode && toQueue != null)
+		{
+			try
+            {
 				while (boundMode)
 					wait(300);
 			} 
@@ -74,8 +79,11 @@ public class BoundedSimpleQueue<O>
 				e.printStackTrace();
 			}
 		}
+
 		super.queue(toQueue);
-		if (size() == highMark) {
+
+		if (size() == highMark)
+		{
 			boundMode = true;
 		}
 
@@ -85,7 +93,9 @@ public class BoundedSimpleQueue<O>
 	 * This method will return a string containing the size, highMark, 
 	 * lowMark, and boundMode results.
 	 */
-	public String toString() {
+	@Override
+	public String toString()
+    {
 		return "Bounded queue size " + size() + " HighMark " + highMark
 				+ " LowMark " + lowMark + " bound mode " + boundMode;
 	}
@@ -93,14 +103,16 @@ public class BoundedSimpleQueue<O>
 	/**
 	 * @return the high mark of the queue.
 	 */
-	public int getHighMark() {
+	public int getHighMark()
+    {
 		return highMark;
 	}
 
 	/**
 	 * @return the low mark of the queue.
 	 */
-	public int getLowMark() {
+	public int getLowMark()
+    {
 		return lowMark;
 	}
 	

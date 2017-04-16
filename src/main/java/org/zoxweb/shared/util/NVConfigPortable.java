@@ -24,7 +24,6 @@ import org.zoxweb.shared.filters.ValueFilter;
  * initializes and returns the attributes of NVConfig which 
  * serves as a parent class for NVConfigEntityLocal class.
  * @author mzebib
- *
  */
 @SuppressWarnings("serial")
 public class NVConfigPortable
@@ -57,7 +56,7 @@ public class NVConfigPortable
 	
 	
 	/**
-	 * This method checks if the property is unique.
+	 * Checks if the property is unique.
 	 * @return true if unique
 	 */
 	public boolean isUnique() 
@@ -66,7 +65,7 @@ public class NVConfigPortable
 	}
 
 	/**
-	 * This method sets whether the property is unique.
+	 * Sets whether the property is unique.
 	 * @param unique
 	 */
 	public void setUnique(boolean unique) 
@@ -75,7 +74,7 @@ public class NVConfigPortable
 	}
 
 	/**
-	 * This is the default constructor used for Java Bean Compiler.
+	 * The default constructor (Java Bean compliant).
 	 */
 	public NVConfigPortable()
 	{
@@ -121,7 +120,7 @@ public class NVConfigPortable
 	
 	
 	/**
-	 * This method returns the name.
+	 * Returns the name.
 	 * @return name
 	 */
 	public String getName() 
@@ -130,7 +129,7 @@ public class NVConfigPortable
 	}
 
 	/**
-	 * This method sets the name.
+	 * Sets the name.
 	 * @param name
 	 */
 	public void setName(String name) 
@@ -139,7 +138,7 @@ public class NVConfigPortable
 	}
 
 	/**
-	 * This method returns the description.
+	 * Returns the description.
 	 * @return description
 	 */
 	public String getDescription()
@@ -148,7 +147,7 @@ public class NVConfigPortable
 	}
 
 	/**
-	 * This method sets the description.
+	 * Sets the description.
 	 * @param str
 	 */
 	public void setDescription(String str)
@@ -157,7 +156,7 @@ public class NVConfigPortable
 	}
 	
 	/**
-	 * This method checks if attribute is mandatory.
+	 * Checks if attribute is mandatory.
 	 * @return true if mandatory
 	 */
 	public boolean isMandatory()
@@ -166,7 +165,7 @@ public class NVConfigPortable
 	}
 
 	/**
-	 * This method sets mandatory condition of attribute.
+	 * Sets mandatory condition of attribute.
 	 * @param mandatory
 	 */
 	public void setMandatory(boolean mandatory)
@@ -175,7 +174,7 @@ public class NVConfigPortable
 	}
 	
 	/**
-	 * This method checks if attribute is editable.
+	 * Checks if attribute is editable.
 	 * @return true if user editable
 	 */
 	public boolean isEditable()
@@ -184,7 +183,7 @@ public class NVConfigPortable
 	}
 	
 	/**
-	 * This method sets editable condition of attribute.
+	 * Sets editable condition of attribute.
 	 * @param val
 	 */
 	public void setEditable(boolean val) 
@@ -193,7 +192,7 @@ public class NVConfigPortable
 	}
 	
 	/**
-	 * This method returns the meta type.
+	 * Returns the meta type.
 	 * @return class type 
 	 */
 	public Class<?> getMetaType() 
@@ -202,7 +201,7 @@ public class NVConfigPortable
 	}
 	
 	/**
-	 * This method sets the meta type.
+	 * Sets the meta type.
 	 * @param metaType
 	 */
 	public void setMetaType(Class<?> metaType) 
@@ -211,19 +210,21 @@ public class NVConfigPortable
 	}
 	
 	/**
-	 * This method returns the display name.
+	 * Returns the display name.
 	 * @return display name
 	 */
 	public String getDisplayName() 
 	{
-		if ( displayName == null)
-			return getName();
+		if (displayName == null)
+        {
+            return getName();
+        }
 		
 		return displayName;
 	}
 	
 	/**
-	 * This method sets the display name.
+	 * Sets the display name.
 	 * @param displayName
 	 */
 	public void setDisplayName(String displayName) 
@@ -232,24 +233,26 @@ public class NVConfigPortable
 	}
 
 	/**
-	 * This method returns the value filter.
+	 * Returns the value filter.
 	 * @return value filter
 	 */
 	public synchronized  ValueFilter<?, ?> getValueFilter() 
 	{
-		if ( valueFilter != null && valueFilter instanceof DynamicEnumMap )
+		if (valueFilter != null && valueFilter instanceof DynamicEnumMap)
 		{
 			ValueFilter<String, String> dem = DynamicEnumMapManager.SINGLETON.lookup(valueFilter.toCanonicalID());
+
 			if ( dem != null)
 			{
 				return dem;
 			}
 		}
+
 		return valueFilter;
 	}
 
 	/**
-	 * This method sets the value filter.
+	 * Sets the value filter.
 	 * @param vf
 	 */
 	public synchronized void setValueFilter(@SuppressWarnings("rawtypes") ValueFilter vf) 
@@ -258,7 +261,7 @@ public class NVConfigPortable
 	}
 
 	/**
-	 * This method checks if property is an array.
+	 * Checks if property is an array.
 	 * @return true if array
 	 */
 	@Override
@@ -268,7 +271,7 @@ public class NVConfigPortable
 	}
 
 	/**
-	 * The method sets if property is an array.
+	 * Sets if property is an array.
 	 * @param array
 	 */
 	@Override
@@ -278,7 +281,7 @@ public class NVConfigPortable
 	}
 
 	/**
-	 * This method returns the base meta type.
+	 * Returns the base meta type.
 	 * @return the base class if type is array
 	 */
 	@Override
@@ -288,7 +291,7 @@ public class NVConfigPortable
 	}
 
 	/**
-	 * This method checks if property is an enum.
+	 * Checks if property is an enum.
 	 * @return true if enum 
 	 */
 	@Override
@@ -303,7 +306,7 @@ public class NVConfigPortable
 	}
 
 	/**
-	 * This method sets if property is hidden.
+	 * Sets if property is hidden.
 	 * @param hidden
 	 */
 	@Override
@@ -313,7 +316,7 @@ public class NVConfigPortable
 	}
 
 	/**
-	 * This method checks if the property is hidden.
+	 * Checks if the property is hidden.
 	 * @return true if hidden
 	 */
 	@Override
@@ -322,30 +325,24 @@ public class NVConfigPortable
 		return hidden;
 	}
 
-	/**
-	 * @see org.zoxweb.shared.util.NVConfig#isTypeReferenceID()
-	 */
+    /**
+     * @see org.zoxweb.shared.util.NVConfig#isTypeReferenceID()
+     * @return
+     */
 	@Override
 	public boolean isTypeReferenceID()
 	{
-		// TODO Auto-generated method stub
 		return referenceIDType;
 	}
 
-	/**
-	 * @see org.zoxweb.shared.util.NVConfig#setTypeReferenceID(boolean)
-	 */
+    /**
+     * @see org.zoxweb.shared.util.NVConfig#setTypeReferenceID(boolean)
+     * @param type
+     */
 	@Override
 	public void setTypeReferenceID(boolean type)
 	{
-		// TODO Auto-generated method stub
 		referenceIDType = type;
 	}
-	
-	
-	
 
-	
-	
-	
 }

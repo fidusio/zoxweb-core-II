@@ -16,13 +16,17 @@
 package org.zoxweb.shared.data.events;
 
 /**
- * @author mzebib
- *
+ * The update action listener interface.
+ * @param <V>
  */
 public interface UpdateActionListener<V>
 	extends ActionBaseListener<V>
 {
-	
+
+    /**
+     * Executes update action for specified input.
+     * @param v
+     */
 	public void actionUpdate(V v);
 	
 }

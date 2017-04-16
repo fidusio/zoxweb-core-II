@@ -23,7 +23,6 @@ import org.zoxweb.shared.util.Const.Bidi;
 import org.zoxweb.shared.util.NVConfigEntity.ArrayType;
 
 /**
- * @author mzebib
  *
  */
 @SuppressWarnings("serial")

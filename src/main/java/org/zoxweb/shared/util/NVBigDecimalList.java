@@ -21,16 +21,17 @@ import java.util.List;
 /**
  * This class declares NVBase as a list of BigDecimal type.
  * @author mzebib
- *
  */
 @SuppressWarnings("serial")
 public class NVBigDecimalList
-		extends NVBase<List<BigDecimal>> {
+    extends NVBase<List<BigDecimal>>
+{
 
 	/**
 	 * The default constructor.
 	 */
-	public NVBigDecimalList() {
+	public NVBigDecimalList()
+    {
 		super();
 	}
 	
@@ -39,7 +40,8 @@ public class NVBigDecimalList
 	 * @param name
 	 * @param value
 	 */
-	public NVBigDecimalList(String name, List<BigDecimal> value) {
+	public NVBigDecimalList(String name, List<BigDecimal> value)
+    {
 		super(name, value);
 	}
 

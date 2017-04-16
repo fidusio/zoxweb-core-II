@@ -13,15 +13,15 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 public class NoCacheFilter 
-implements Filter
+	implements Filter
 {
-	
+
 	private static final transient Logger log = Logger.getLogger("");
 
 	public void destroy()
 	{
+
 	}
 
 	public void init(FilterConfig config) throws ServletException
@@ -30,14 +30,13 @@ implements Filter
 	}
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
-			throws IOException,
-				   ServletException
+        throws IOException, ServletException
 	{
-
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		String requestURI = httpRequest.getRequestURI();
 
-		if (requestURI.contains(".nocache.")) {
+		if (requestURI.contains(".nocache."))
+		{
 			Date now = new Date();
 			HttpServletResponse httpResponse = (HttpServletResponse) response;
 			httpResponse.setDateHeader("Date", now.getTime());
@@ -49,5 +48,6 @@ implements Filter
 		}
 
 		filterChain.doFilter(request, response);
- }
+	}
+
 }

@@ -22,7 +22,8 @@ package org.zoxweb.shared.util;
  * @param <V>
  */
 public interface SetValue<V>
-        extends GetValue<V> {
+    extends GetValue<V>
+{
 
 	/**
 	 * Sets the value.

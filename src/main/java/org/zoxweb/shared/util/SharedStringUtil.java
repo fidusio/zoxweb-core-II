@@ -21,26 +21,28 @@ import java.util.List;
 
 /**
  * This class is used for string utilities shared between the client and the server.
- * @author mzebib
- *
  */
-public final class SharedStringUtil {
-	
+public final class SharedStringUtil
+{
+
+    public static final String UTF_8  = "UTF-8";
+    public static final String UTF_16 = "UTF_16";
+
 	/**
 	 * The constructor is declared private to prevent instantiation.
 	 */
-	private SharedStringUtil() {
+	private SharedStringUtil()
+    {
 		
 	}
 
-	public static final String UTF_8  = "UTF-8";
-	public static final String UTF_16 = "UTF_16";
-
-	public static boolean isIncrementOk(String args[], int index) {
+	public static boolean isIncrementOk(String args[], int index)
+    {
 		return isIncrementOk(args, index, 1);
 	}
 	
-	public static boolean isIncrementOk(String args[], int index, int increment) {
+	public static boolean isIncrementOk(String args[], int index, int increment)
+    {
 		return index + increment <= args.length;
 	}
 	
@@ -49,13 +51,12 @@ public final class SharedStringUtil {
 	 * declares and initializes variables token of type CharSequence and integers index, 
 	 * count, and referenceIndex. CharSequence is a readable sequence of char values. 
 	 * The class contains a method called toString which returns a canonical string.
-	 * 
-	 * @author mzebib
 	 *
 	 */
 	public static class MatchToken
 	{
-		MatchToken(CharSequence t) {
+		MatchToken(CharSequence t)
+        {
 			token = t;
 			index = -1;
 			count = 0;
@@ -67,15 +68,18 @@ public final class SharedStringUtil {
 		int count;
 		int referenceIndex;
 		
-		public String toString() {
+		public String toString()
+        {
 			return SharedUtil.toCanonicalID(':', token, referenceIndex, index, count);
 		}
 		
-		public int getIndex() {
+		public int getIndex()
+        {
 			return index;
 		}
 		
-		public int getCount() {
+		public int getCount()
+        {
 			return count;
 		}
 	}
@@ -87,27 +91,33 @@ public final class SharedStringUtil {
 	 * @param tokens
 	 * @return
 	 */
-	private static MatchToken nextMatch(CharSequence token, int fromIndex, MatchToken ...tokens) {
+	private static MatchToken nextMatch(CharSequence token, int fromIndex, MatchToken... tokens)
+    {
 		MatchToken ret = null;
 		
-		for (int i = fromIndex; i < token.length(); i++) {
-			for (MatchToken mt : tokens) {
+		for (int i = fromIndex; i < token.length(); i++)
+		{
+			for (MatchToken mt : tokens)
+			{
 				boolean match = false;
 				
 				int j =0;
 				
-				for ( ; j < mt.token.length() && (i+j) < token.length(); j++) {
-					
-					if (token.charAt( i+j) != mt.token.charAt(j)) {
+				for ( ; j < mt.token.length() && (i+j) < token.length(); j++)
+				{
+					if (token.charAt( i+j) != mt.token.charAt(j))
+					{
 						break;
 					}
 				}
 				
-				if (j == mt.token.length()) {
+				if (j == mt.token.length())
+				{
 					 match = true;
 				}
 				
-				if (match) {
+				if (match)
+				{
 					mt.index = i;
 					mt.count++;
 					ret = mt;
@@ -115,7 +125,8 @@ public final class SharedStringUtil {
 				}
 			}
 			
-			if (ret != null) {
+			if (ret != null)
+			{
 				break;
 			}
 		}
@@ -124,8 +135,10 @@ public final class SharedStringUtil {
 	}
 	
 	
-	public static int indexOf(String str, String strLookingFor, int startIndex, boolean ignoreCase) {
-		if (ignoreCase) {
+	public static int indexOf(String str, String strLookingFor, int startIndex, boolean ignoreCase)
+    {
+		if (ignoreCase)
+		{
 			str = toLowerCase(str);
 			strLookingFor = toLowerCase(strLookingFor);
 		}
@@ -133,12 +146,15 @@ public final class SharedStringUtil {
 		return str.indexOf(strLookingFor, startIndex);
 	}
 	
-	public static boolean contains(String str, String lookingFor) {
+	public static boolean contains(String str, String lookingFor)
+    {
 		return contains(str, lookingFor, true);
 	}
 	
-	public static boolean contains(String str, String lookingFor, boolean ignoreCase) {
-		if (str != null && lookingFor != null) {
+	public static boolean contains(String str, String lookingFor, boolean ignoreCase)
+    {
+		if (str != null && lookingFor != null)
+		{
 			return indexOf(str, lookingFor, 0, ignoreCase) > -1;
 		}
 
@@ -146,7 +162,8 @@ public final class SharedStringUtil {
 	}
 	
 	
-	public static boolean contains(String str, GetName lookingFor, boolean ignoreCase) {
+	public static boolean contains(String str, GetName lookingFor, boolean ignoreCase)
+    {
 		if (str != null && lookingFor != null && lookingFor.getName() != null) {
 			return indexOf(str, lookingFor.getName(), 0, ignoreCase) > -1;
 		}
@@ -154,21 +171,27 @@ public final class SharedStringUtil {
 		return false;
 	}
 	
-	public static boolean contains(String str, GetValue<String> lookingFor, boolean ignoreCase) {
-		if (str != null && lookingFor != null && lookingFor.getValue() != null) {
+	public static boolean contains(String str, GetValue<String> lookingFor, boolean ignoreCase)
+    {
+		if (str != null && lookingFor != null && lookingFor.getValue() != null)
+		{
 			return indexOf(str, lookingFor.getValue(), 0, ignoreCase) > -1;
 		}
 			
 		return false;
 	}
 
-	public static boolean equals(String str1, String str2, boolean ignoreCase) {
-		if (str1 == str2) {
+	public static boolean equals(String str1, String str2, boolean ignoreCase)
+    {
+		if (str1 == str2)
+		{
 			return true;
 		}
 		
-		if (str1 != null && str2 != null) {
-			if (ignoreCase) {
+		if (str1 != null && str2 != null)
+		{
+			if (ignoreCase)
+			{
 				str1 = toLowerCase(str1);
 				str2 = toLowerCase(str2);
 			}
@@ -185,12 +208,16 @@ public final class SharedStringUtil {
 	 * @param tokens
 	 * @return
 	 */
-	private static MatchToken[] reverseTokens(boolean reverse, MatchToken...tokens) {
-		if (reverse) {
-			if (tokens.length > 1) {
+	private static MatchToken[] reverseTokens(boolean reverse, MatchToken...tokens)
+    {
+		if (reverse)
+		{
+			if (tokens.length > 1)
+			{
 				MatchToken[] ret = new MatchToken[tokens.length];
 				
-				for (int i=0; i< ret.length;i++) {
+				for (int i=0; i< ret.length;i++)
+				{
 					ret[i] = tokens[tokens.length -1 -i];
 				}
 				
@@ -212,7 +239,8 @@ public final class SharedStringUtil {
 	 * @throws NullPointerException if any of the parameters is null
 	 */
 	public static List<CharSequence> parseGroup(CharSequence token, CharSequence sd, CharSequence ed, boolean includeDelimiters)
-		throws NullPointerException {
+		throws NullPointerException
+    {
 
 		ArrayList<CharSequence> ret = new ArrayList<CharSequence>();
 		MatchToken startToken = new MatchToken( sd);
@@ -229,19 +257,24 @@ public final class SharedStringUtil {
 			tokenList = reverseTokens(sameToken, tokenList);
 			currentMatch = nextMatch(token, currentMatch.index +currentMatch.token.length(), tokenList);
 
-			if (currentMatch != null && startToken.count == endToken.count) {
+			if (currentMatch != null && startToken.count == endToken.count)
+			{
 				endToken.referenceIndex = endToken.index+endToken.token.length();
 				
-				if (includeDelimiters) {
+				if (includeDelimiters)
+				{
 					ret.add( token.subSequence(startToken.referenceIndex, endToken.referenceIndex));
-				} else {
+				}
+				else
+                {
 					ret.add(token.subSequence(startToken.referenceIndex + sd.length(), endToken.referenceIndex -ed.length()));
 				}
 				
 				tokenList = reverseTokens(sameToken, tokenList);
 				currentMatch = nextMatch(token, currentMatch.index +currentMatch.token.length(), tokenList);
 				
-				if (currentMatch != null) {
+				if (currentMatch != null)
+				{
 					currentMatch.referenceIndex = currentMatch.index;
 				}
 			}
@@ -258,10 +291,12 @@ public final class SharedStringUtil {
 	 */
 	public static String trimOrNull(String str)
 	{	
-		if (str != null) {
+		if (str != null)
+		{
 			str = str.trim();
 			
-			if (str.length() > 0) {
+			if (str.length() > 0)
+			{
 				return str;
 			}	
 		}
@@ -274,10 +309,14 @@ public final class SharedStringUtil {
 	 * @param str
 	 * @return empty string if str is null, if not it will trim str from starting and ending whitespaces.
 	 */
-	public static String trimOrEmpty(String str) {
-		if (str != null) {
+	public static String trimOrEmpty(String str)
+    {
+		if (str != null)
+		{
 			str = str.trim();
-		} else {
+		}
+		else
+        {
 			str = "";
 		}
 		
@@ -291,11 +330,14 @@ public final class SharedStringUtil {
 	 * @param token
 	 * @return a substring to the right of the specified index if both val and token are not null, 
 	 */
-	public static String valueAfterRightToken(String val, String token) {
-		if (val != null && token != null) {
+	public static String valueAfterRightToken(String val, String token)
+    {
+		if (val != null && token != null)
+		{
 			int lastIndex = val.lastIndexOf(token);
 			
-			if (lastIndex != -1) {
+			if (lastIndex != -1)
+			{
 				return val.substring(lastIndex+token.length());
 			}
 		}
@@ -310,11 +352,14 @@ public final class SharedStringUtil {
 	 * @param token
 	 * @return a substring starting at the beginning of the string and ending to the left of the specified index
 	 */
-	public static String valueBeforeRightToken(String val, String token) {
-		if (val != null && token != null) {
+	public static String valueBeforeRightToken(String val, String token)
+    {
+		if (val != null && token != null)
+		{
 			int lastIndex = val.lastIndexOf(token);
 			
-			if (lastIndex != -1) {
+			if (lastIndex != -1)
+			{
 				return val.substring(0, lastIndex);
 			}
 		}
@@ -330,11 +375,14 @@ public final class SharedStringUtil {
 	 * @param ignoreCase
 	 * @return the value between the prefix and postfix string.
 	 */
-	public static StringToken valueBetween(String str, String prefix, String postfix, boolean ignoreCase) {
-		if (str != null) {
+	public static StringToken valueBetween(String str, String prefix, String postfix, boolean ignoreCase)
+    {
+		if (str != null)
+		{
 			String val = str;
 			
-			if (ignoreCase) {
+			if (ignoreCase)
+			{
 				val = str.toLowerCase();
 				prefix = prefix.toLowerCase();
 				postfix = postfix.toLowerCase();
@@ -342,13 +390,15 @@ public final class SharedStringUtil {
 			
 			int preIndex = val.indexOf(prefix);
 			
-			if (preIndex == -1) {
+			if (preIndex == -1)
+			{
 				return null;
 			}
 			
 			int postIndex = val.indexOf( postfix, preIndex+prefix.length());
 			
-			if (postIndex == -1) {
+			if (postIndex == -1)
+			{
 				return null;
 			}
 			
@@ -366,11 +416,14 @@ public final class SharedStringUtil {
 	 * @param token
 	 * @return a substring to the right of the specified index if both val and token are not null,
 	 */
-	public static String valueAfterLeftToken(String val, String token) {
-		if (val != null && token != null) {
+	public static String valueAfterLeftToken(String val, String token)
+    {
+		if (val != null && token != null)
+		{
 			int lastIndex = val.indexOf(token);
 			
-			if (lastIndex != -1) {
+			if (lastIndex != -1)
+			{
 				return val.substring(lastIndex+token.length());
 			}	
 		}
@@ -385,11 +438,14 @@ public final class SharedStringUtil {
 	 * @param token
 	 * @return  a substring starting at the beginning of the string and ending to the left of the specified index
 	 */
-	public static String valueBeforeLeftToken(String val, String token) {
-		if (val != null && token != null) {
+	public static String valueBeforeLeftToken(String val, String token)
+    {
+		if (val != null && token != null)
+		{
 			int lastIndex = val.indexOf(token);
 			
-			if (lastIndex != -1) {
+			if (lastIndex != -1)
+			{
 				return val.substring(0, lastIndex);
 			}
 		}
@@ -402,8 +458,10 @@ public final class SharedStringUtil {
 	 * @param str
 	 * @return if str is not null then return uppercase version, otherwise return null.
 	 */
-	public static String toUpperCase(String str) {
-		if (str != null) {
+	public static String toUpperCase(String str)
+    {
+		if (str != null)
+		{
 			return str.toUpperCase();
 		}
 		
@@ -418,13 +476,16 @@ public final class SharedStringUtil {
 	 * @throws IllegalArgumentException
 	 */
 	public static byte[] getBytes(String str)
-		throws NullPointerException, IllegalArgumentException {
-		
+		throws NullPointerException, IllegalArgumentException
+    {
 		SharedUtil.checkIfNulls("Null String", str);
 
-		try {
+		try
+        {
 			return str.getBytes(UTF_8);
-		} catch (UnsupportedEncodingException e) {
+		}
+		catch (UnsupportedEncodingException e)
+        {
 			e.printStackTrace();
 			throw new IllegalArgumentException(e.getMessage());
 		}
@@ -437,14 +498,16 @@ public final class SharedStringUtil {
 	 * @throws NullPointerException
 	 * @throws IllegalArgumentException
 	 */
-	public static byte[][] getBytesArray(String ...strs)
-		throws NullPointerException, IllegalArgumentException {
+	public static byte[][] getBytesArray(String... strs)
+		throws NullPointerException, IllegalArgumentException
+    {
 
 		SharedUtil.checkIfNulls("Null String", (Object[])strs);
 		
 		byte[][] ret = new byte[strs.length][];
 		
-		for (int i=0; i < strs.length; i++) {
+		for (int i=0; i < strs.length; i++)
+		{
 			ret[i] = getBytes(strs[i]);
 		}
 				
@@ -459,13 +522,17 @@ public final class SharedStringUtil {
 	 * @throws IllegalArgumentException
 	 */
 	public static String toString(byte array[])
-			throws NullPointerException, IllegalArgumentException {
+        throws NullPointerException, IllegalArgumentException
+    {
 
 		SharedUtil.checkIfNulls("Null String", array);
 
-		try {
+		try
+        {
 			return new String(array, UTF_8);
-		} catch (UnsupportedEncodingException e) {
+		}
+		catch (UnsupportedEncodingException e)
+        {
 			e.printStackTrace();
 			throw new IllegalArgumentException(e.getMessage());
 		}
@@ -476,8 +543,10 @@ public final class SharedStringUtil {
 	 * @param str
 	 * @return if str is not null then return lowercase version, otherwise return null.
 	 */
-	public static String toLowerCase(String str) {
-		if (str != null) {
+	public static String toLowerCase(String str)
+    {
+		if (str != null)
+		{
 			return str.toLowerCase();
 		}
 		
@@ -490,15 +559,19 @@ public final class SharedStringUtil {
 	 * @param minLength
 	 * @return true if str match the min length criteria
 	 */
-	public static boolean isMimimumLengthMet(String str, int minLength)
+	public static boolean isMinimumLengthMet(String str, int minLength)
 	{
 		str = trimOrNull (str);
 		
-		if (str == null) {
-			if (minLength == 0) {
-				return true;
-			} else {
-				return false;
+		if (str == null)
+		{
+			if (minLength == 0)
+			{
+			    return true;
+			}
+			else
+            {
+			    return false;
 			}
 		}
 		
@@ -511,9 +584,12 @@ public final class SharedStringUtil {
 	 * @param filter
 	 * @return the given string based on given filters and returns the filtered string.
 	 */
-	public static String filterString(String str, CharSequence... filter) {
-		if (str != null) {
-			for(CharSequence cs : filter) {
+	public static String filterString(String str, CharSequence... filter)
+    {
+		if (str != null)
+		{
+			for (CharSequence cs : filter)
+			{
 				str = str.replace(cs, "");
 			}
 		}
@@ -528,8 +604,10 @@ public final class SharedStringUtil {
 	 * @param filter
 	 * @return parsed strings
 	 */
-	public static String[] parseString(String str, String regex, CharSequence... filter) {
-		if (filter != null) {
+	public static String[] parseString(String str, String regex, CharSequence... filter)
+    {
+		if (filter != null)
+		{
 			str = filterString (str, filter);
 		}
 		
@@ -542,10 +620,12 @@ public final class SharedStringUtil {
 	 * @param sep
 	 * @return {name, value}
 	 */
-	public static String[] parseNameValue(String str, String sep) {
+	public static String[] parseNameValue(String str, String sep)
+    {
 		int index = str.indexOf( sep);
 		
-		if (index != -1) {
+		if (index != -1)
+		{
 			return new String[] {str.substring(0, index), str.substring(index+sep.length(), str.length())};
 		}
 		
@@ -557,8 +637,10 @@ public final class SharedStringUtil {
 	 * @param str to be checked
 	 * @return true if str is empty
 	 */
-	public static boolean isEmpty( String str) {
-		if (str != null && str.trim().length() != 0) {
+	public static boolean isEmpty( String str)
+    {
+		if (str != null && str.trim().length() != 0)
+		{
 			return false;
 		}
 		
@@ -572,18 +654,23 @@ public final class SharedStringUtil {
 	 * @param sep
 	 * @return s1 + sep + s2                
 	 */
-	public static String concat(String s1, String s2, String sep) {
+	public static String concat(String s1, String s2, String sep)
+    {
 		s1 = trimOrEmpty( s1);
 		s2 = trimOrEmpty( s2);
 		sep = trimOrEmpty( sep);
 		
-		if ((s1.endsWith(sep) && !s2.startsWith(sep)) || (!s1.endsWith(sep) && s2.startsWith(sep))) {
+		if ((s1.endsWith(sep) && !s2.startsWith(sep)) || (!s1.endsWith(sep) && s2.startsWith(sep)))
+		{
 			return s1 + s2;
-		} else if (s1.endsWith(sep) && s2.startsWith(sep)) {
+		}
+		else if (s1.endsWith(sep) && s2.startsWith(sep))
+		{
 			return s1 + s2.substring(sep.length());
 		}
 		
-		if (s2.isEmpty()) {
+		if (s2.isEmpty())
+		{
 			return s1;
 		}
 		
@@ -595,7 +682,8 @@ public final class SharedStringUtil {
 	 * @param list
 	 * @return n1=v1&n2=v2...
 	 */
-	public static <V> String format(ArrayValues<GetNameValue<V>> list) {
+	public static <V> String format(ArrayValues<GetNameValue<V>> list)
+    {
 		return format(list,"=", false, "&"); 
 	}
 	
@@ -607,16 +695,18 @@ public final class SharedStringUtil {
 	 * @param nvPairSep the separator between the nvpairs
 	 * @return the formated string
 	 */
-	public static  <V> String format(ArrayValues<GetNameValue<V>> list, String nameValueSep, boolean quotedValue, String nvPairSep) {
+	public static  <V> String format(ArrayValues<GetNameValue<V>> list, String nameValueSep, boolean quotedValue, String nvPairSep)
+    {
 		StringBuilder sb = new StringBuilder();
-
-		GetNameValue<V> all[] = list.values();
+		GetNameValue<V>[] all = list.values();
 		
-		for (int i = 0; i < all.length; i++) {
+		for (int i = 0; i < all.length; i++)
+		{
 			GetNameValue<V> nvp = all[i];
 			sb.append(format( nvp, nameValueSep, quotedValue));
 
-			if (i + 1 < all.length) {
+			if (i + 1 < all.length)
+			{
 				sb.append(nvPairSep);
 			}
 		}
@@ -631,7 +721,8 @@ public final class SharedStringUtil {
 	 * @param quotedValue
 	 * @return formatted string 
 	 */
-	public static <V> String format(GetNameValue<V> pair, String nameValueSep, boolean quotedValue) {
+	public static <V> String format(GetNameValue<V> pair, String nameValueSep, boolean quotedValue)
+    {
 		return format(pair.getName(), pair.getValue(), nameValueSep,  quotedValue);
 	}
 	
@@ -643,22 +734,27 @@ public final class SharedStringUtil {
 	 * @param quotedValue
 	 * @return formatted string 
 	 */
-	public static <V> String format(String name, V value, String nameValueSep, boolean quotedValue) {
+	public static <V> String format(String name, V value, String nameValueSep, boolean quotedValue)
+    {
 		StringBuilder sb = new StringBuilder();
 		
-		if (name != null) {
+		if (name != null)
+		{
 			sb.append(name);
 			sb.append(nameValueSep);
 		}
 		
-		if (value != null) {
-			if (quotedValue) {
+		if (value != null)
+		{
+			if (quotedValue)
+			{
 				sb.append('\"');
 			}
 			
 			sb.append(value);
 			
-			if (quotedValue) {
+			if (quotedValue)
+			{
 				sb.append('\"');
 			}
 		}
@@ -666,15 +762,18 @@ public final class SharedStringUtil {
 		return sb.toString();
 	}
 	
-	public static String formatStringValues(String sep, String ...values) {
+	public static String formatStringValues(String sep, String... values)
+    {
 		SharedUtil.checkIfNulls("Null Parameter", sep, values);
 		StringBuilder ret = new StringBuilder();
 
 		for (String value : values) {
 			value = trimOrNull(value);
 
-			if (value != null) {
-				if (ret.length() > 0) {
+			if (value != null)
+			{
+				if (ret.length() > 0)
+				{
 					ret.append(sep);
 				}
 
@@ -685,14 +784,18 @@ public final class SharedStringUtil {
 		return ret.toString();
 	}
 	
-	public static String formatStringValues(String sep, GetName ...gns) {
+	public static String formatStringValues(String sep, GetName... gns)
+    {
 		SharedUtil.checkIfNulls("Null Parameter", sep, gns);
 		StringBuilder ret = new StringBuilder();
 
-		for (GetName gn : gns) {
+		for (GetName gn : gns)
+		{
 			String value = trimOrNull(gn.getName());
-			if (value != null) {
-				if (ret.length() > 0) {
+			if (value != null)
+			{
+				if (ret.length() > 0)
+				{
 					ret.append(sep);
 				}
 
@@ -703,16 +806,19 @@ public final class SharedStringUtil {
 		return ret.toString();
 	}
 
-	public static String formatStringValues(String sep, GetValue<?>... values) {
-
+	public static String formatStringValues(String sep, GetValue<?>... values)
+    {
 		SharedUtil.checkIfNulls("Null Parameter", sep, values);	
 		StringBuilder ret = new StringBuilder();
 
-		for(GetValue<?> gnv : values) {
+		for (GetValue<?> gnv : values)
+		{
 			String value = trimOrNull(gnv.getValue() != null ? "" + gnv.getValue() : null);
 
-			if (value != null) {
-				if (ret.length() > 0) {
+			if (value != null)
+			{
+				if (ret.length() > 0)
+				{
 					ret.append(sep);
 				}
 
@@ -723,7 +829,8 @@ public final class SharedStringUtil {
 		return ret.toString();
 	}
 	
-	public static <V> String format(String name, V value) {
+	public static <V> String format(String name, V value)
+    {
 		return format(name, value, "=", false);
 	}
 
@@ -735,23 +842,27 @@ public final class SharedStringUtil {
 	 * @throws NullPointerException
 	 */
 	public static byte[] hexToBytes(String str)
-			throws IllegalArgumentException, NullPointerException {
+        throws IllegalArgumentException, NullPointerException
+    {
 
 		str = str.toUpperCase().trim();
 
-		if (str.startsWith( "0X")) {
+		if (str.startsWith( "0X"))
+		{
 			str  = SharedStringUtil.valueAfterLeftToken(str, "0X");
 		}
 
 		int len = str.length();
 
-		if (len % 2 != 0 ) {
+		if (len % 2 != 0 )
+		{
 			throw new IllegalArgumentException("Not a valid hex format " + str);
 		}
 		
 		byte byteRet [] = new byte[len/2];
 
-		for (int i = 0; i < len; i+=2) {
+		for (int i = 0; i < len; i+=2)
+		{
 			// take the first byte shift to the left a nible
 			// then or it with right char value
 			byteRet[i/2] = (byte) ((hexToInt(str.charAt(i))<<4) | hexToInt(str.charAt(i+1))) ;	
@@ -768,13 +879,14 @@ public final class SharedStringUtil {
 	 * @throws IllegalArgumentException if c is different than 0,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f
 	 */
 	public static int hexToInt(char c)
-			throws IllegalArgumentException 
+        throws IllegalArgumentException
 	{
-
 		c = Character.toUpperCase(c);
 		
-		for (int j = 0; j < Const.HEX_TOKENS.length; j++) {
-			if (c == Const.HEX_TOKENS[j]) {
+		for (int j = 0; j < Const.HEX_TOKENS.length; j++)
+		{
+			if (c == Const.HEX_TOKENS[j])
+			{
 				return j;
 			}
 		}
@@ -790,12 +902,15 @@ public final class SharedStringUtil {
 	 * @param value
 	 * @return text embedded with value 
 	 */
-	public static String embedText(String text, String textMarker, String value) {
+	public static String embedText(String text, String textMarker, String value)
+    {
 
 		SharedUtil.checkIfNulls("Invalid text",text);
 		
-		if (textMarker != null) {
-			if (value == null) {
+		if (textMarker != null)
+		{
+			if (value == null)
+			{
 				value = "";
 			}
 			
@@ -817,25 +932,31 @@ public final class SharedStringUtil {
 	 * @return text embedded with value 
 	 */
 	@SuppressWarnings("unchecked")
-	public static String embedText(String text, Enum<?> textMarker, String value) {
+	public static String embedText(String text, Enum<?> textMarker, String value)
+    {
 		SharedUtil.checkIfNulls("Invalid text",text);
 		
-		if (textMarker != null) {
-			if (value == null) {
+		if (textMarker != null)
+		{
+			if (value == null)
+			{
 				value = "";
 			}
 			
 			String  textMarkerToken = null;
 			
-			if (textMarker instanceof GetValue) {
+			if (textMarker instanceof GetValue)
+			{
 				textMarkerToken = ((GetValue<String>)textMarker).getValue();
 			}
 
-			if (textMarkerToken == null && textMarker instanceof GetName) {
+			if (textMarkerToken == null && textMarker instanceof GetName)
+			{
 				textMarkerToken = ((GetName)textMarker).getName();
 			}
 
-			if (textMarkerToken == null) {
+			if (textMarkerToken == null)
+			{
 				textMarkerToken = textMarker.name();
 			}
 			
@@ -854,7 +975,8 @@ public final class SharedStringUtil {
 	 * @param delimiter
 	 * @return the string after the last occurrence of delimiter if no match is found return token as is.
 	 */
-	public static String getTokenAfterDelimiter(String token, char delimiter) {
+	public static String getTokenAfterDelimiter(String token, char delimiter)
+    {
 		int index = token.lastIndexOf(delimiter);
 		
 		if (index == -1) {
@@ -870,7 +992,8 @@ public final class SharedStringUtil {
 	 * @param token
 	 * @return true if token occurs at least once in text.
 	 */
-	public static boolean hasToken(String text, String token) {
+	public static boolean hasToken(String text, String token)
+    {
 		return !(text.indexOf(token) == -1);
 	}
 
@@ -883,12 +1006,16 @@ public final class SharedStringUtil {
 	 * @param postToken
 	 * @return string of hex that represent the buffer content
 	 */
-	public static String bytesToHex(String preToken, byte buffer[], int offset, int len, String postToken) {
+	public static String bytesToHex(String preToken, byte buffer[], int offset, int len, String postToken)
+    {
 		StringBuilder sb = null;
 		
-		if (buffer != null) {
-			for (int i = offset; i < offset + len; i++) {
-				if (postToken != null && sb != null) {
+		if (buffer != null)
+		{
+			for (int i = offset; i < offset + len; i++)
+			{
+				if (postToken != null && sb != null)
+				{
 					sb.append(postToken);
 				}
 				
@@ -905,7 +1032,8 @@ public final class SharedStringUtil {
 	 * @param postToken
 	 * @return string of hex that represent the buffer content
 	 */
-	public static String bytesToHex(byte buffer[], String postToken) {
+	public static String bytesToHex(byte buffer[], String postToken)
+    {
 		return bytesToHex(null, buffer, 0, buffer.length, postToken);
 	}
 	
@@ -916,7 +1044,8 @@ public final class SharedStringUtil {
 	 * @param postToken
 	 * @return string of hex that represent the buffer content
 	 */
-	public static String bytesToHex(String preToken, byte buffer[], String postToken) {
+	public static String bytesToHex(String preToken, byte buffer[], String postToken)
+    {
 		return bytesToHex(preToken, buffer, 0, buffer.length, postToken);
 	}
 	
@@ -926,7 +1055,8 @@ public final class SharedStringUtil {
 	 * @param buffer
 	 * @return string of hex that represent the buffer content
 	 */
-	public static String bytesToHex(String preToken, byte buffer[]) {
+	public static String bytesToHex(String preToken, byte buffer[])
+    {
 		return bytesToHex(preToken, buffer, 0, buffer.length, null);
 	}
 
@@ -937,7 +1067,8 @@ public final class SharedStringUtil {
 	 * @param len
 	 * @return string of hex that represent the buffer content
 	 */
-	public static String bytesToHex(byte buffer[], int offset, int len) {
+	public static String bytesToHex(byte buffer[], int offset, int len)
+    {
 		return bytesToHex(null, buffer, offset, len, null);
 	}
 	
@@ -948,12 +1079,15 @@ public final class SharedStringUtil {
 	 * @param b byte to convert
 	 * @return stringbuilder of hex that represent the buffer content
 	 */
-	public static StringBuilder byteToHex(StringBuilder sb, String preToken, byte b) {
-		if  (sb == null) {
+	public static StringBuilder byteToHex(StringBuilder sb, String preToken, byte b)
+    {
+		if  (sb == null)
+		{
 			sb = new StringBuilder();
 		}
 		
-		if (preToken != null) {
+		if (preToken != null)
+		{
 			sb.append(preToken);
 		}
 		
@@ -968,7 +1102,8 @@ public final class SharedStringUtil {
 	 * @param buffer
 	 * @return string of hex that represent the buffer content
 	 */
-	public static String bytesToHex(byte buffer[]) {
+	public static String bytesToHex(byte buffer[])
+    {
 		return bytesToHex(null, buffer, 0, buffer.length, null);
 	}
 
@@ -978,7 +1113,8 @@ public final class SharedStringUtil {
 	 * @param str
 	 * @return string of hex that represent the buffer content
 	 */
-	public static String stringToHex(String preToken, String str) {
+	public static String stringToHex(String preToken, String str)
+    {
 		return bytesToHex(preToken, getBytes(str));
 	}
 
@@ -988,12 +1124,15 @@ public final class SharedStringUtil {
 	 * @param length
 	 * @return Truncates a string based on the specified length.
 	 */
-	public static String truncate(String str, int length) {
-		if (str == null) {
+	public static String truncate(String str, int length)
+    {
+		if (str == null)
+		{
 			return null;
 		}
 		
-		if (str.length() > length) {
+		if (str.length() > length)
+		{
 			return str.substring(0, length);
 		}
 		
@@ -1008,16 +1147,22 @@ public final class SharedStringUtil {
 	 * @param sepLength
 	 * @return compresses the given string given the maximum length, separator, and separator length.
 	 */
-	public static String toShortHand(char sep, String str, int maxLength, int sepLength) {
-		if (str != null) {
-			if (str.length() < maxLength) {
+	public static String toShortHand(char sep, String str, int maxLength, int sepLength)
+    {
+		if (str != null)
+		{
+			if (str.length() < maxLength)
+			{
 				return str;
-			} else {
+			}
+			else
+			    {
 				int midpoint = maxLength/2 - sepLength/2;
 				StringBuilder sb = new StringBuilder();
 				sb.append(str.substring(0, midpoint));
 				
-				for (int i = 0; i < sepLength; i++) {
+				for (int i = 0; i < sepLength; i++)
+				{
 					sb.append(sep);
 				}
 				
@@ -1030,20 +1175,23 @@ public final class SharedStringUtil {
 		return null;
 	}
 	
-	public static MatchToken matchToken(String str, String token, boolean ignoreCase) {
+	public static MatchToken matchToken(String str, String token, boolean ignoreCase)
+    {
 		MatchToken ret = null;
 		
 		int firstIndex = indexOf(str, token, 0, ignoreCase);
 		int counter = 0;
 				
-		if (firstIndex != -1) {
+		if (firstIndex != -1)
+		{
 			ret = new MatchToken(token);
 			ret.index = firstIndex;
 			ret.referenceIndex = firstIndex;
 		
 			int currentIndex = firstIndex;
 
-			while (currentIndex != -1) {
+			while (currentIndex != -1)
+            {
 				counter++;
 				ret.referenceIndex = currentIndex;
 				currentIndex = indexOf(str, token, currentIndex + token.length(), ignoreCase);

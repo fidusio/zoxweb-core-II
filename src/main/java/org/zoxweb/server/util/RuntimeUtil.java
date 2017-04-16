@@ -24,9 +24,11 @@ import org.zoxweb.shared.data.VMInfoDAO;
 import org.zoxweb.shared.util.Const.JavaClassVersion;
 import org.zoxweb.shared.data.RuntimeResultDAO.ResultAttribute;
 
-public class RuntimeUtil {
+public class RuntimeUtil
+{
 
-	private RuntimeUtil() {
+	private RuntimeUtil()
+    {
 
 	}
 
@@ -41,13 +43,14 @@ public class RuntimeUtil {
 	 * @throws InterruptedException 
 	 */
 	public static String getRuntimeResponse(Process p, ResultAttribute ra ) 
-			throws IOException, InterruptedException {
+        throws IOException, InterruptedException
+    {
 
-		if (p == null) {
+		if (p == null)
+		{
             return "";
         }
-		
-		
+
 		InputStream is = null;
 
 		switch(ra)
@@ -66,7 +69,6 @@ public class RuntimeUtil {
 		p.waitFor();
 		
 		return IOUtil.inputStreamToString(is, false);
-		
 	}
 
 	/**
@@ -79,7 +81,8 @@ public class RuntimeUtil {
 	 * @throws IOException 
 	 */
 	public static RuntimeResultDAO runAndFinish(String command)
-			throws InterruptedException, IOException {
+        throws InterruptedException, IOException
+    {
 		return runAndFinish(command, ResultAttribute.OUTPUT);
 	}
 
@@ -94,8 +97,8 @@ public class RuntimeUtil {
 	 * @throws IOException 
 	 */
 	public static RuntimeResultDAO runAndFinish(String command, ResultAttribute ra)
-			throws InterruptedException, IOException {
-
+        throws InterruptedException, IOException
+    {
 		Process p = Runtime.getRuntime().exec(command);
 		String ret = getRuntimeResponse(p, ra);
 	
@@ -112,7 +115,8 @@ public class RuntimeUtil {
 	 * @throws IOException
 	 */
 	public static RuntimeResultDAO runAndFinish(String command, String filename)
-			throws InterruptedException, IOException {
+        throws InterruptedException, IOException
+    {
 		return runAndFinish( command, new File(filename));
 	}
 
@@ -126,15 +130,16 @@ public class RuntimeUtil {
 	 * @throws IOException
 	 */
 	public static RuntimeResultDAO runAndFinish(String command, File f)
-			throws InterruptedException, IOException {
-
+        throws InterruptedException, IOException
+    {
 		f.createNewFile();
 		f.setExecutable(true);
 		IOUtil.writeToFile(f, command.getBytes());
 		return runAndFinish(f.getCanonicalPath());
 	}
 	
-    public static VMInfoDAO vmSnapshot() {
+    public static VMInfoDAO vmSnapshot()
+    {
 		Runtime rt = Runtime.getRuntime();
 		VMInfoDAO ret = new VMInfoDAO();
 		
@@ -148,51 +153,69 @@ public class RuntimeUtil {
 	}
 
 	public static JavaClassVersion checkClassVersion(String filename)
-		        throws IOException {
+        throws IOException
+    {
 		FileInputStream fis = null;
-        try {
+
+		try
+        {
         	File file = new File(filename);
-        	if (!file.exists()) {
+        	if (!file.exists())
+        	{
         		file = new File(filename + ".class");
         	}
 
-        	if (!file.exists()) {
+        	if (!file.exists())
+        	{
         		throw new FileNotFoundException("File:" + filename);
         	}
 
         	fis = new FileInputStream(file);
 
         	return checkClassVersion(fis);
-        } finally {
+        }
+        finally
+        {
         	IOUtil.close(fis);
         }
     }
 
 	public static JavaClassVersion checkClassVersion(InputStream fis)
-	        throws IOException {
+        throws IOException
+    {
 	    DataInputStream in = null;
-	    try {
+
+	    try
+        {
 	        in = new DataInputStream(fis);
 	        int magic = in.readInt();
 
-	        if(magic != 0xcafebabe) {
-	          throw new IOException("invalid class!");
+	        if (magic != 0xcafebabe)
+	        {
+	          throw new IOException("Invalid class!");
 	        }
 
 	        int minor = in.readUnsignedShort();
 	        int major = in.readUnsignedShort();
 	        return JavaClassVersion.lookup(major, minor);
-	    } finally {
+	    }
+	    finally
+        {
 	    	IOUtil.close(fis);
 	    	IOUtil.close(in);
 	    }
 	}
 
-	public static void main(String[] args) {
-        for (int i = 0; i < args.length; i++) {
-            try {
+	public static void main(String[] args)
+    {
+        for (int i = 0; i < args.length; i++)
+        {
+            try
+            {
                 System.out.println(args[i] + ":" + checkClassVersion(args[i]));
-            } catch(Exception e) {
+            }
+            catch(Exception e)
+            {
                 e.printStackTrace();
             }
         }

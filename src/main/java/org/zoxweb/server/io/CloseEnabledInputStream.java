@@ -20,44 +20,49 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
+ *
  */
 public class CloseEnabledInputStream extends FilterInputStream
 {
 
 	protected boolean autoCloseable;
-	
-	
+
 	public CloseEnabledInputStream(InputStream in)
 	{
 		this(in, true);
 	}
-	
-	
+
 	/**
-	 * [Optional - Please state the purpose of this constructor; especially if multiple constructors exist.].
-	 * 
+	 *
 	 * @param in
+	 * @param autoClose
 	 */
 	public CloseEnabledInputStream(InputStream in, boolean autoClose)
 	{
 		super(in);
 		this.autoCloseable = autoClose;
-		// TODO Auto-generated constructor stub
 	}
 
-	
+	/**
+	 *
+	 * @return
+	 */
 	public boolean isCloseEnabled()
 	{
 		return autoCloseable;
 	}
-	
-	
+
+	/**
+	 *
+	 * @throws IOException
+	 */
 	public void close()
 		throws IOException
 	{
 		if (isCloseEnabled())
+		{
 			super.close();
+		}
 	}
+
 }

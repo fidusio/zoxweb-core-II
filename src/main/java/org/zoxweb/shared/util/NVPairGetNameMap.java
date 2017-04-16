@@ -15,31 +15,30 @@
  */
 package org.zoxweb.shared.util;
 
-
-
 import java.util.List;
 import java.util.Map;
 
 /**
- * 
- * 
+ *
  */
 @SuppressWarnings("serial")
 public class NVPairGetNameMap
-extends NVBase<Map<GetName, NVPair>>
-implements ArrayValues<NVPair>
+    extends NVBase<Map<GetName, NVPair>>
+    implements ArrayValues<NVPair>
 {
+
 	private boolean isFixed = false;
+
 	public NVPairGetNameMap()
 	{
+
 	}
 	
 	public NVPairGetNameMap(String name, Map<GetName, NVPair> map)
 	{
 		super(name, map);
 	}
-	
-	
+
 	public NVPair get(GetName getName)
 	{
 		if (getName != null && getName.getName() != null)
@@ -86,7 +85,6 @@ implements ArrayValues<NVPair>
 	@Override
 	public void clear() 
 	{
-		// TODO Auto-generated method stub
 		value.clear();
 	}
 
@@ -96,13 +94,12 @@ implements ArrayValues<NVPair>
 	@Override
 	public void add(NVPair[] vals, boolean clear) 
 	{
-		// TODO Auto-generated method stub
 		if (clear)
 		{
-			clear();
+		    clear();
 		}
 		
-		if ( vals != null)
+		if (vals != null)
 		{
 			for (NVPair nvp : vals)
 			{
@@ -121,8 +118,8 @@ implements ArrayValues<NVPair>
 	 * @see org.zoxweb.shared.util.ArrayValues#isFixed()
 	 */
 	@Override
-	public boolean isFixed() {
-		// TODO Auto-generated method stub
+	public boolean isFixed()
+    {
 		return isFixed;
 	}
 
@@ -130,8 +127,8 @@ implements ArrayValues<NVPair>
 	 * @see org.zoxweb.shared.util.ArrayValues#setFixed(boolean)
 	 */
 	@Override
-	public void setFixed(boolean isFixed) {
-		// TODO Auto-generated method stub
+	public void setFixed(boolean isFixed)
+    {
 		this.isFixed = isFixed;
 	}
 	

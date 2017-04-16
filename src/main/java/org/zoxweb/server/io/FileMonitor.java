@@ -1,6 +1,5 @@
 package org.zoxweb.server.io;
 
-
 import java.io.Closeable;
 import java.io.DataInput;
 import java.io.DataInputStream;
@@ -19,25 +18,23 @@ import org.zoxweb.shared.data.events.EventListenerManager;
 import org.zoxweb.shared.data.events.StringTokenEvent;
 import org.zoxweb.shared.util.Const.TimeInMillis;
 
-
-
+/**
+ *
+ */
 public class FileMonitor extends RunnableTask
-implements DaemonController
+	implements DaemonController
 {
 	@SuppressWarnings("unused")
 	private static final transient Logger log = Logger.getLogger(FileMonitor.class.getName());
-	
-	
+
 	private File file;
 	private DataInput bufferedReader;
-	
 	private long creationTime;
 	private boolean autoRun;
 	private boolean device;
 	private EventListenerManager<?, StringTokenEvent> elm;
 	
-	
-	
+
 	public FileMonitor(String logToMonitor, EventListenerManager<?, StringTokenEvent> elm, boolean autoRun)
 			throws NullPointerException, IllegalArgumentException, IOException
 	{
@@ -60,56 +57,58 @@ implements DaemonController
 		{
 			throw new IllegalArgumentException(file.getName() + " is not a file");
 		}
+
 		bufferedReader = openFile(file);
 		
 		this.elm = elm;
 		this.autoRun = autoRun;
-		
-
 		
 		if (autoRun)
 		{
 			new Thread(this).start();
 		}
 	}
-	
-	
+
 	private DataInput openFile(File file) throws IOException
 	{
 		if (bufferedReader instanceof Closeable)
+		{
 			IOUtil.close((Closeable)bufferedReader);
+		}
+
 		if (device)
 		{
 			creationTime = System.currentTimeMillis();
 		}
 		else
+		{
 			creationTime = IOUtil.fileCreationTime(file);
+		}
+
 		if (device)
+		{
 			return new DataInputStream( new FileInputStream(file));
+		}
 		else 
+		{
 			return  new RandomAccessFile(file, "r");
-
-			
+		}
 	}
-	
-	
-	
-
 
 	@Override
 	public void run() 
 	{
-		
-		
 		try
 		{
 			if (!device)
+			{
 				bufferedReader = IOUtil.endOfFile((RandomAccessFile)bufferedReader);
+			}
+
 			do
 			{
 				try
 				{
-					
 					String line = bufferedReader.readLine();
 					
 					if (line != null)
@@ -127,7 +126,6 @@ implements DaemonController
 					}
 					else 
 					{
-						
 						try
 						{
 							
@@ -159,7 +157,7 @@ implements DaemonController
 				{
 					e.printStackTrace();
 				}
-			}while(autoRun);
+			} while(autoRun);
 			
 		}
 		catch(Exception e)
@@ -169,13 +167,14 @@ implements DaemonController
 	}
 	
 	@SuppressWarnings("resource")
-	public static void main(String ...args)
+	public static void main(String... args)
 	{
 		try
 		{
 			int index = 0;
 			String file = args[index++];
 			boolean device = false;
+
 			if (index < args.length)
 			{
 				device = "dev".equalsIgnoreCase(args[index++]);
@@ -194,15 +193,13 @@ implements DaemonController
 	@Override
 	public void close() 
 	{
-		// TODO Auto-generated method stub
 		autoRun = false;
 	}
-
 
 	@Override
 	public boolean isClosed() 
 	{
-		// TODO Auto-generated method stub
 		return !autoRun;
 	}
+
 }

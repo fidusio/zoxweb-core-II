@@ -1,17 +1,14 @@
 package org.zoxweb.server.io;
 
-
 import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
 import java.io.RandomAccessFile;
 
 import java.net.URL;
@@ -21,9 +18,6 @@ import java.nio.file.Path;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.concurrent.TimeUnit;
-
-
-
 import org.zoxweb.shared.util.SharedStringUtil;
 
 public class IOUtil 
@@ -51,15 +45,13 @@ public class IOUtil
 	}
 	
 	
-	public static RandomAccessFile endOfFile(RandomAccessFile br) throws IOException
+	public static RandomAccessFile endOfFile(RandomAccessFile br)
+        throws IOException
 	{
 		br.seek(br.length());
 		return br;
 	}
-	
-	
-	
-	
+
 	/**
 	 * 
 	 * @param c
@@ -81,8 +73,7 @@ public class IOUtil
 		
 		return null;
 	}
-	
-	
+
 	/**
 	 * This method will read all the response part of the url connection
 	 * @param url to be read
@@ -99,32 +90,49 @@ public class IOUtil
 		con.setUseCaches(false);
 		con.connect();
 		return inputStreamToByteArray(con.getInputStream(), true); 
-	}	
-	
-	
-	
-	
+	}
+
+    /**
+     *
+     * @param is
+     * @param charsetEncoding
+     * @param close
+     * @return
+     * @throws IOException
+     */
 	public static String inputStreamToString(InputStream is, String charsetEncoding, boolean close)
-			throws IOException 
+        throws IOException
 	{
 		UByteArrayOutputStream baos = (UByteArrayOutputStream) inputStreamToByteArray(is, close);
 		return new String( baos.getInternalBuffer(), 0 , baos.size(),charsetEncoding );
 	}
-	
-	
-	
+
+    /**
+     *
+     * @param filename
+     * @return
+     * @throws IOException
+     */
 	public static String inputStreamToString(String filename) 
-			throws IOException
+		throws IOException
 	{
 		return inputStreamToString(new FileInputStream(filename), true);
 	}
-	
+
+    /**
+     *
+     * @param is
+     * @param close
+     * @return
+     * @throws IOException
+     */
 	public static String inputStreamToString(InputStream is, boolean close) 
-			throws IOException
+        throws IOException
 	{
 		byte buffer[] = new byte[4096];
 		StringBuilder sb = new StringBuilder();
 		int read;
+
 		while ((read = is.read(buffer, 0, buffer.length)) > 0)
 		{
 			sb.append(new String(buffer, 0, read, SharedStringUtil.UTF_8));
@@ -145,11 +153,11 @@ public class IOUtil
 	 * @return byte array
 	 * @throws IOException
 	 */
-	public static UByteArrayOutputStream inputStreamToByteArray(InputStream is, 
-																boolean close) 
-		throws IOException
+	public static UByteArrayOutputStream inputStreamToByteArray(InputStream is, boolean close)
+        throws IOException
 	{
 		UByteArrayOutputStream baos = new UByteArrayOutputStream();
+
 		try
 		{
 			int read;
@@ -169,8 +177,15 @@ public class IOUtil
 		
 		return baos;
 	}
-	
-	public static void writeToFile(File f, byte buffer[]) throws IOException
+
+    /**
+     *
+     * @param f
+     * @param buffer
+     * @throws IOException
+     */
+	public static void writeToFile(File f, byte buffer[])
+        throws IOException
 	{
 		FileOutputStream fos = null;
 		
@@ -186,24 +201,20 @@ public class IOUtil
 				
 	}
 	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Return the file creation in millis
 	 * @param file
 	 * @return file creation time in millis
 	 * @throws IOException
 	 */
-	public static long fileCreationTime(File file) throws IOException
+	public static long fileCreationTime(File file)
+        throws IOException
 	{
-		if(!file.exists())
+		if (!file.exists())
 		{
 			throw new FileNotFoundException();
 		}
+
 		return fileCreationTime(file.toPath());	
 	}
 	
@@ -213,43 +224,58 @@ public class IOUtil
 	 * @return file creation time in millis
 	 * @throws IOException
 	 */
-	public static long fileCreationTime(Path path) throws IOException
+	public static long fileCreationTime(Path path)
+        throws IOException
 	{
 		BasicFileAttributes attributes =  Files.readAttributes(path, BasicFileAttributes.class);
 		return attributes.creationTime().to(TimeUnit.MILLISECONDS);
 	}
-	
-	
+
+    /**
+     *
+     * @param dirName
+     * @return
+     */
 	public static File createDirectory(String dirName)
 	{
 		File dir = new File( dirName);
-		if ( !dir.exists())
+
+		if (!dir.exists())
 		{
 			dir.mkdirs();
-			
 		}
-		
-		
+
 		return dir;
 	}
-	
-	
-	public static long relayStreams(InputStream is, 
-									OutputStream os, 
-									boolean closeBoth)
-	throws IOException
+
+    /**
+     *
+     * @param is
+     * @param os
+     * @param closeBoth
+     * @return
+     * @throws IOException
+     */
+	public static long relayStreams(InputStream is, OutputStream os, boolean closeBoth)
+	    throws IOException
 	{
 		return relayStreams(is, os, closeBoth, closeBoth);
 	}
-	
-	
-	public static long relayStreams(InputStream is, 
-									OutputStream os, 
-									boolean closeIS,
-									boolean closeOS) 
-	throws IOException
+
+    /**
+     *
+     * @param is
+     * @param os
+     * @param closeIS
+     * @param closeOS
+     * @return
+     * @throws IOException
+     */
+	public static long relayStreams(InputStream is, OutputStream os, boolean closeIS, boolean closeOS)
+	    throws IOException
 	{
 		long totalCopied = 0;
+
 		try
 		{	
 			int read;
@@ -272,20 +298,17 @@ public class IOUtil
 				close( os);
 			}
 		}
-		
-		
+
 		return totalCopied;
-		
-		
 	}
-	
 	
 	/**
 	 * This utility method will check if the output stream != null then invoke flush 
 	 * @param os output stream 
 	 * @throws IOException if os.flush() throw an exception
 	 */
-	public static void flush(OutputStream os) throws IOException
+	public static void flush(OutputStream os)
+		throws IOException
 	{
 		if (os != null)
 		{

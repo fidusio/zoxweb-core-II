@@ -17,6 +17,8 @@ package org.zoxweb.shared.data.shiro;
 
 public class  SessionInfoDAO 
 {
+
 	public static final String DOMAIN_ID = "DOMAIN_ID";
 	public static final String LOGOUT_URL = "LOGOUT_URL";
+
 }

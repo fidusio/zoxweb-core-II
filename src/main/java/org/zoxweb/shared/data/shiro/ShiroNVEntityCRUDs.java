@@ -16,29 +16,28 @@ import org.zoxweb.shared.util.SharedUtil;
 public class ShiroNVEntityCRUDs
 	extends SetNameDAO
 {
-	
-	
-	public enum Params
-	implements GetNVConfig
+
+	public enum Param
+	    implements GetNVConfig
 	{
 		CRUDS(NVConfigManager.createNVConfig("cruds", "The supported permissions", "CRUDS", false, false, CRUD[].class)),
 		;
 		
-		private final NVConfig cType;
-		
-		Params(NVConfig c)
+		private final NVConfig nvc;
+
+        Param(NVConfig nvc)
 		{
-			cType = c;
+			this.nvc = nvc;
 		}
 		
 		public NVConfig getNVConfig() 
 		{
-			return cType;
+			return nvc;
 		}
 	}
 
 	
-	public static final NVConfigEntity NVC_SHIRO_NVENTITY_CRUDS = new NVConfigEntityLocal("shiro_nventity_cruds", null , null, true, false, false, false, ShiroNVEntityCRUDs.class, SharedUtil.extractNVConfigs(Params.values()), null, false, SetNameDAO.NVC_NAME_DAO);
+	public static final NVConfigEntity NVC_SHIRO_NVENTITY_CRUDS = new NVConfigEntityLocal("shiro_nventity_cruds", null , null, true, false, false, false, ShiroNVEntityCRUDs.class, SharedUtil.extractNVConfigs(Param.values()), null, false, SetNameDAO.NVC_NAME_DAO);
 	
 	
 	public ShiroNVEntityCRUDs()
@@ -46,22 +45,16 @@ public class ShiroNVEntityCRUDs
 		super(NVC_SHIRO_NVENTITY_CRUDS);
 	}
 	
-	
-	
 	protected ShiroNVEntityCRUDs(NVConfigEntity nvce) 
 	{
 		super(nvce);
-		// TODO Auto-generated constructor stub
-	}
-	
-	
-	public final List<CRUD> getCRUDs()
-	{
-		return lookupValue(Params.CRUDS);
 	}
 
-	
-	
+	public final List<CRUD> getCRUDs()
+	{
+		return lookupValue(Param.CRUDS);
+	}
+
 	public boolean isPermitted(CRUD crud)
 	{
 		if (getCRUDs() != null)

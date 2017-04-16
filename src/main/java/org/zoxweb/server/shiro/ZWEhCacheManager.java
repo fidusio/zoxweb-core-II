@@ -27,36 +27,45 @@ import org.apache.shiro.cache.ehcache.EhCacheManager;
  *
  */
 public class ZWEhCacheManager
-		extends EhCacheManager {
+    extends EhCacheManager
+{
 	
-	private static final transient Logger log = Logger.getLogger(ZWEhCacheManager.class.getName());
+	private static final Logger log = Logger.getLogger(ZWEhCacheManager.class.getName());
 	
-	private static final HashSet<EhCacheManager> CACHE_SET = new HashSet<EhCacheManager>();
+	private static final HashSet<EhCacheManager> CACHE_SET = new HashSet<>();
 	
-	public ZWEhCacheManager() {
+	public ZWEhCacheManager()
+    {
 		super();
 
-		synchronized(CACHE_SET) {
+		synchronized(CACHE_SET)
+        {
 			CACHE_SET.add(this);
 		}
 		
 		log.info("Created set size: " + CACHE_SET.size());
 	}
 	
-	public static void destroyAll() {
-		synchronized(CACHE_SET) {
+	public static void destroyAll()
+    {
+		synchronized(CACHE_SET)
+        {
 			log.info("Started destroy all " + CACHE_SET.size() + " to be destryed.");
 		
 			CACHE_SET.iterator();
 			
 			Iterator<EhCacheManager> it = CACHE_SET.iterator();
 
-			while (it.hasNext()) {
-				try {
+			while (it.hasNext())
+            {
+				try
+                {
 					EhCacheManager ecm = it.next();
 					ecm.destroy();
 					log.info("Destroyed:" + ecm);
-				} catch(Exception e) {
+				}
+				catch(Exception e)
+                {
 					e.printStackTrace();
 				}
 			}
@@ -65,5 +74,5 @@ public class ZWEhCacheManager
 			log.info("Finished destroy all left size: " + CACHE_SET.size());
 		}
 	}
-	
+
 }

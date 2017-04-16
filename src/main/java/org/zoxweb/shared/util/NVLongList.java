@@ -19,14 +19,13 @@ import java.util.List;
 
 /**
  * This class declares NVBase as a list of long type.
- * 
  */
 @SuppressWarnings("serial")
 public class NVLongList 
-	extends NVBase<List<Long>> 
+    extends NVBase<List<Long>>
 {
 	/**
-	 * Default constructor used for Java Bean Compiler.
+	 * The default constructor (Java Bean compliant).
 	 */
 	public NVLongList()
 	{
@@ -42,4 +41,5 @@ public class NVLongList
 	{
 		super(name, value);
 	}
+
 }

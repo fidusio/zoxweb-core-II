@@ -16,12 +16,16 @@
 package org.zoxweb.shared.data.events;
 
 /**
- * @author mzebib
- *
+ * The value selection listener interface.
+ * @param <V>
  */
 public interface ValueSelectionListener<V>
 {
 
+    /**
+     *
+     * @param value
+     */
 	public void selectedValue(V value);
 	
 }

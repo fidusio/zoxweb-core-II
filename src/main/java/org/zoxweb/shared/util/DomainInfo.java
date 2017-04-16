@@ -16,7 +16,8 @@
 package org.zoxweb.shared.util;
 
 public interface DomainInfo
-		extends ReferenceID<String>, SetName, SetDescription, DomainID<String>, CanonicalID {
+    extends ReferenceID<String>, SetName, SetDescription, DomainID<String>, CanonicalID
+{
 
 	boolean addNVConfigEntity(NVConfigEntity nvce);
 	

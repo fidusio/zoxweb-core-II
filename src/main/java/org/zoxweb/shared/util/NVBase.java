@@ -28,21 +28,20 @@ import java.io.Serializable;
  */
 @SuppressWarnings("serial")
 public class NVBase<V>
-		implements Serializable,
-		           SetNameValue<V>,
-		           ReferenceID<String> {
+    implements Serializable, SetNameValue<V>, ReferenceID<String>
+{
 
 	protected String referenceId;
 	protected String name;
 	protected V value;
 
-
 	/**
 	 * This constructor maps GetNameValue to NVBase object.
 	 * @param nv
 	 */
-	public NVBase(GetNameValue<V> nv) {
-		this( nv.getName(), nv.getValue());
+	public NVBase(GetNameValue<V> nv)
+    {
+		this(nv.getName(), nv.getValue());
 	}
 	
 	/**
@@ -51,7 +50,8 @@ public class NVBase<V>
 	 * @param gn
 	 * @param v
 	 */
-	public NVBase(GetName gn, V v) {
+	public NVBase(GetName gn, V v)
+    {
 		this(gn.getName(), v);
 	}
 	
@@ -61,7 +61,8 @@ public class NVBase<V>
 	 * @param name
 	 * @param value
 	 */
-	public NVBase(String name, V value) {
+	public NVBase(String name, V value)
+    {
 		// Note value must be set first
 		setValue(value);
 		// name set next NOT FIRST
@@ -71,28 +72,32 @@ public class NVBase<V>
 	/**
 	 * The default constructor.
 	 */
-	public NVBase() {
+	public NVBase()
+    {
 
 	}
 
 	/**
 	 * Returns the reference ID.
 	 */
-	public String getReferenceID() {
+	public String getReferenceID()
+    {
 		return referenceId;
 	}
 
 	/**
 	 * Returns the name.
 	 */
-	public String getName() {
+	public String getName()
+    {
 		return name;
 	}
 
 	/**
 	 * Returns the value.
 	 */
-	public V getValue() {
+	public V getValue()
+    {
 		return value;
 	}
 
@@ -100,7 +105,8 @@ public class NVBase<V>
 	 * Sets the reference ID.
 	 * @param referenceId
 	 */
-	public void setReferenceID(String referenceId) {
+	public void setReferenceID(String referenceId)
+    {
 		this.referenceId = referenceId;
 	}
 
@@ -108,7 +114,8 @@ public class NVBase<V>
 	 * Sets the name.
 	 * @param name
 	 */
-	public void setName(String name) {
+	public void setName(String name)
+    {
 		this.name = name;
 	}
 
@@ -116,14 +123,16 @@ public class NVBase<V>
 	 * Sets the value.
 	 * @param value
 	 */
-	public void setValue(V value) {
+	public void setValue(V value)
+    {
 		this.value = value;
 	}
 	
 	/**
 	 * Returns a string containing reference ID, name and value.
 	 */
-	public String toString() {
+	public String toString()
+    {
 		return "{" + (referenceId != null ? referenceId + "," : "") + name + ":" + value + "}";
 	}
 	

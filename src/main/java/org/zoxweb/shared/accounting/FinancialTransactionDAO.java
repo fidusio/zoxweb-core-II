@@ -31,7 +31,6 @@ import org.zoxweb.shared.util.NVConfigEntity.ArrayType;
  * This class defines the transaction data access object used to create
  * transactions.
  * @author mzebib
- *
  */
 @SuppressWarnings("serial")
 public class FinancialTransactionDAO 
@@ -126,7 +125,7 @@ public class FinancialTransactionDAO
 	}
 	
 	/**
-	 * Gets the external reference.
+	 * Returns the external reference.
 	 * @return external reference
 	 */
 	public String getExternalReference() 
@@ -144,7 +143,7 @@ public class FinancialTransactionDAO
 	}	
 	
 	/**
-	 * Gets the referenced NVEntity.
+	 * Returns the referenced NVEntity.
 	 * @return nventity
 	 */
 	public NVEntity getReferencedNVE() 
@@ -162,7 +161,7 @@ public class FinancialTransactionDAO
 	}
 	
 	/**
-	 * Gets the transaction amount.
+	 * Returns the transaction amount.
 	 * @return money value 
 	 */
 	public MoneyValueDAO getAmount() 
@@ -180,7 +179,7 @@ public class FinancialTransactionDAO
 	}
 	
 	/**
-	 * Gets the transaction type.
+	 * Returns the transaction type.
 	 * @return transaction type
 	 */
 	public TransactionType getType() 
@@ -198,7 +197,7 @@ public class FinancialTransactionDAO
 	}
 	
 	/**
-	 * Gets the transaction descriptor.
+	 * Returns the transaction descriptor.
 	 * @return transaction descriptor
 	 */
 	public String getDescriptor() 

@@ -22,10 +22,11 @@ import java.io.Closeable;
  * @author mzebib
  */
 public interface DaemonController
-		extends Closeable {
+    extends Closeable
+{
 
 	/**
-	 * This method checks if the controller is terminated.
+	 * Checks if the controller is terminated.
 	 * @return true if closed
 	 */
 	boolean isClosed();

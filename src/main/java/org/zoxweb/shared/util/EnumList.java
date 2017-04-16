@@ -20,11 +20,11 @@ import java.io.Serializable;
 /**
  * This class defines the enum class name and list.
  * @author mzebib
- *
  */
 @SuppressWarnings("serial")
 public class EnumList
-		implements Serializable {
+    implements Serializable
+{
 
 	private String enumClassName;
 	private Enum<?>[] enumList;
@@ -32,16 +32,18 @@ public class EnumList
 	/**
 	 * The default constructor.
 	 */
-	public EnumList() {
-		
+	public EnumList()
+    {
+
 	}
 	
 	/**
-	 * This constructor initializes EnumList objectbased on name and list.
+	 * This constructor initializes EnumList object based on name and list.
 	 * @param name
 	 * @param list
 	 */
-	public EnumList(String name, Enum<?>[] list) {
+	public EnumList(String name, Enum<?>[] list)
+    {
 		setEnumClassName(name);
 		setEnumList(list);
 	}
@@ -50,7 +52,8 @@ public class EnumList
 	 * Returns the enum class name.
 	 * @return enaum class name
 	 */
-	public final String getEnumClassName() {
+	public final String getEnumClassName()
+    {
 		return enumClassName;
 	}
 	
@@ -58,7 +61,8 @@ public class EnumList
 	 * Sets the enum class name.
 	 * @param enumClassName
 	 */
-	public void setEnumClassName(String enumClassName) {
+	public void setEnumClassName(String enumClassName)
+    {
 		this.enumClassName = enumClassName;
 	}
 	
@@ -66,7 +70,8 @@ public class EnumList
 	 * Returns an enum list.
 	 * @return all enums
 	 */
-	public final Enum<?>[] getEnumList() {
+	public final Enum<?>[] getEnumList()
+    {
 		return enumList;
 	}
 	
@@ -74,7 +79,8 @@ public class EnumList
 	 * Sets an enum list.
 	 * @param enumList 
 	 */
-	public void setEnumList(Enum<?>[] enumList) {
+	public void setEnumList(Enum<?>[] enumList)
+    {
 		this.enumList = enumList;
 	}
 	

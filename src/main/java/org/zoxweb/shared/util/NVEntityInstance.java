@@ -16,7 +16,6 @@
 package org.zoxweb.shared.util;
 
 /**
- * @author mzebib
  *
  */
 public interface NVEntityInstance 

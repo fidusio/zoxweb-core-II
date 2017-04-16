@@ -685,7 +685,7 @@ public class SharedDataUtil
 				}
 				else 
 				{
-					NVEntity value = (NVEntity) nveToCopy.lookupValue(nvc);
+					NVEntity value = nveToCopy.lookupValue(nvc);
 
 					if (value != null) {
 						ret.setValue(nvc, copyNVEntity(factory, value, deep, omitRefID, omitUserID));

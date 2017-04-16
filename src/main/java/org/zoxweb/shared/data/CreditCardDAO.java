@@ -57,18 +57,19 @@ public class CreditCardDAO
 		SECURITY_CODE(NVConfigManager.createNVConfig("security_code", "Card security code", "SecurityCode", true, true, String.class)),
 		
 		;
-		
-		private final NVConfig cType;
-		
-		Params( NVConfig c)
-		{
-			cType = c;
-		}
-		
-		public NVConfig getNVConfig() 
-		{
-			return cType;
-		}
+
+
+        private final NVConfig nvc;
+
+        Params(NVConfig nvc)
+        {
+            this.nvc = nvc;
+        }
+
+        public NVConfig getNVConfig()
+        {
+            return nvc;
+        }
 	}
 	
 	public static final NVConfigEntity NVC_CREDIT_CARD_DAO = new NVConfigEntityLocal(

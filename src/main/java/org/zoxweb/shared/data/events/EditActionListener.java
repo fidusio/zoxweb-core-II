@@ -16,13 +16,17 @@
 package org.zoxweb.shared.data.events;
 
 /**
- * @author mzebib
- *
+ * The edit action listener interface.
+ * @param <V>
  */
 public interface EditActionListener<V>
 	extends ActionBaseListener<V>
 {
 
+    /**
+     * Executes edit action for specified input.
+     * @param v
+     */
 	public void actionEdit(V v);
 	
 }

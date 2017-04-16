@@ -33,29 +33,19 @@ import org.zoxweb.shared.api.APINotificationMessage;
 import org.zoxweb.shared.api.APITransactionInfo;
 import org.zoxweb.shared.filters.MessageContentFilter;
 
-
-
-
-
 /**
- * The Simple Mail Transfer Protocol (SMTP) provider class is used an email from
- * the server.
- * @author mzebib
- *
+ * The Simple Mail Transfer Protocol (SMTP) provider class is used an email from the server.
  */
 @SuppressWarnings("serial")
 public class SMTPProvider
-extends APIServiceProviderBase<Void>
+    extends APIServiceProviderBase<Void>
 	implements APINotification<Void>
 {
-	
-	
+
 	private static final transient Logger log = Logger.getLogger("SMTPProvider");
 	
 	/**
 	 * This enum contains SMTP message parameters.
-	 * @author mzebib
-	 *
 	 */
 	public enum SMTPMessageParam 
 		implements GetValue<String>
@@ -67,7 +57,7 @@ extends APIServiceProviderBase<Void>
 		TEXT("text"),
 		HTML("html"),
 		TEXT_HTML("text/html; charset=UTF-8"),
-		MESSAGE_ID("Message-ID"),
+		MESSAGE_ID("Message-ID")
 		
 		;
 
@@ -87,16 +77,13 @@ extends APIServiceProviderBase<Void>
 	}
 	
 	
-	class SMTPSenderTask 
-	extends RunnableTask
+	class SMTPSenderTask
+		extends RunnableTask
 	{
 
-		
-		
 		@Override
 		public void  run() 
 		{
-			// TODO Auto-generated method stub
 			//sendAPIMessageInternal((APIMessage) event.getTaskExecutorParameters()[0]);
 			TaskEvent event = attachedEvent();
 			int index = 0;
@@ -108,9 +95,9 @@ extends APIServiceProviderBase<Void>
 			final String PASSWORD  = SharedUtil.lookupValue(getAPIConfigInfo().getConfigParameters().get(SMTPCreator.Param.PASSWORD.getName()));
 			
 			
-			
-			 Session session = smtpProvider.createSession(smtpProvider.createProperties(true, true, SharedUtil.lookupValue(getAPIConfigInfo().getConfigParameters().get(SMTPCreator.Param.HOST.getName())), SharedUtil.lookupValue(getAPIConfigInfo().getConfigParameters().get(SMTPCreator.Param.PORT.getName()))),
-					                         			   USER_NAME, PASSWORD);
+			Session session = smtpProvider.createSession(
+					smtpProvider.createProperties(true, true, SharedUtil.lookupValue(getAPIConfigInfo().getConfigParameters().get(SMTPCreator.Param.HOST.getName())), SharedUtil.lookupValue(getAPIConfigInfo().getConfigParameters().get(SMTPCreator.Param.PORT.getName()))),
+					USER_NAME, PASSWORD);
 
 		      try 
 		      {
@@ -183,17 +170,13 @@ extends APIServiceProviderBase<Void>
 		        	 //System.out.println("WE have HTML message\n" + bodyContent);
 		        	 msg.setContent(bodyContent, SMTPMessageParam.TEXT_HTML.getValue());
 		         }
-		         
-		         else
-		         { 
-		        	 
+				 else
+		         {
 		        	 //System.out.println("WE have TEXT message\b" + bodyContent);
 		        	 //msg.setHeader("Content-Type", "text/plain; charset=UTF-8");
 		        	 msg.setText(bodyContent, SharedStringUtil.UTF_8);
 		         }
-		         
-		         
-		         
+
 		         // Send Message
 		         Transport.send(msg);
 		         
@@ -215,25 +198,15 @@ extends APIServiceProviderBase<Void>
 	private APIExceptionHandler exceptionHandler;
 	//private Properties properties;
 	//private Session session;
-	
-	/**
-	 * 
-	 */
-	
 
-	/**
-	 * 
-	 */
+
 	@Override
 	public Void connect() 
 			throws APIException
 	{
 		return null;
 	}
-	
-	/**
-	 * 
-	 */
+
 	@Override
 	public void close() 
 			throws APIException 
@@ -241,86 +214,57 @@ extends APIServiceProviderBase<Void>
 		
 	}
 
-	/**
-	 * 
-	 */
 	@Override
 	public boolean isProviderActive()
 	{
 		return false;
 	}
 
-	/**
-	 * 
-	 */
 	@Override
 	public APIExceptionHandler getAPIExceptionHandler() 
 	{
 		return exceptionHandler;
 	}
 
-	/**
-	 * 
-	 */
 	@Override
 	public void setAPIExceptionHandler(APIExceptionHandler exceptionHandler) 
 	{
 		this.exceptionHandler = exceptionHandler;
 	}
-	
-	/**
-	 * 
-	 */
+
 	@Override
 	public void setDescription(String str) 
 	{
 		description = str;
 	}
 
-	/**
-	 * 
-	 */
 	@Override
 	public String getDescription() 
 	{
 		return description;
 	}
-	
-	/**
-	 * 
-	 */
+
 	@Override
 	public void setName(String name) 
 	{
 		this.name = name;
 	}
-	
-	/**
-	 * 
-	 */
+
 	@Override
 	public String getName() 
 	{
 		return name;
 	}
-	
-	/**
-	 * 
-	 */
+
 	@Override
 	public String toCanonicalID() 
 	{
-		
 		return null;
 	}
 
-	/**
-	 * 
-	 * @param message
-	 */
 	@Override
 	public APITransactionInfo sendAPIMessage(APIMessage message, APINotificationDelivery apind)
-			throws NullPointerException, IllegalArgumentException, APIException 
+        throws NullPointerException, IllegalArgumentException, APIException
 	{
 		//		check the message if not null
 		//		message must be of type email
@@ -349,13 +293,11 @@ extends APIServiceProviderBase<Void>
 		{
 			throw new IllegalArgumentException("Message is not an email type.");
 		}
-		
-		
+
 		TaskExecutor td = new SMTPSenderTask();
 		TaskEvent    te = new TaskEvent(this, td, this, message);
-		
-		
-		
+
+
 		switch(apind)
 		{
 		case NOW:
@@ -367,14 +309,11 @@ extends APIServiceProviderBase<Void>
 			TaskUtil.getDefaultTaskScheduler().queue(new AppointmentDefault(), te);
 		default:
 			break;
-		
-		
 		}
+
 		return null;
 	}
-		
-	
-	
+
 //	private APITransactionInfo sendAPIMessageInternal(APIMessage message)
 //						throws NullPointerException, IllegalArgumentException, APIException
 //	{
@@ -504,7 +443,6 @@ extends APIServiceProviderBase<Void>
 	      return properties;
 	}
 
-	
 	/**
 	 * 
 	 * @param properties
@@ -515,40 +453,34 @@ extends APIServiceProviderBase<Void>
 	{
 	   Session session = Session.getInstance(properties, 
 			   new javax.mail.Authenticator() 
-	   			{
+	   			{@Override
 			       protected PasswordAuthentication getPasswordAuthentication()
 			       {
 			          return new PasswordAuthentication(userName, password);
 			       }
 	   			});
 	   
-	   
 	   return session;
 	}
-	
-	
-	
-	/**
-	 * 
-	 * @param transaction
-	 */
+
 	@Override
 	public APITransactionInfo updateTransactionInfo(APITransactionInfo transaction) 
-			throws NullPointerException, IllegalArgumentException, APIException 
+        throws NullPointerException, IllegalArgumentException, APIException
 	{
 
 		return null;
 	}
 
 	@Override
-	public Void newConnection() throws APIException {
-		// TODO Auto-generated method stub
+	public Void newConnection()
+        throws APIException
+	{
 		return null;
 	}
 
 	@Override
-	public <T> T lookupProperty(GetName propertyName) {
-		// TODO Auto-generated method stub
+	public <T> T lookupProperty(GetName propertyName)
+	{
 		return null;
 	}
 

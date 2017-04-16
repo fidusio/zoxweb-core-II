@@ -17,28 +17,36 @@ package org.zoxweb.server.shiro;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
+
 import org.zoxweb.server.task.RunnableTask;
 import org.zoxweb.server.task.TaskEvent;
 
 public abstract class SubjectRunnableTask
-		extends RunnableTask {
-
+    extends RunnableTask
+{
 	protected final Subject subject;
 	
-	protected SubjectRunnableTask() {
+	protected SubjectRunnableTask()
+    {
 		this(SecurityUtils.getSubject());
 	}
 	
-	protected SubjectRunnableTask(Subject subject) {
+	protected SubjectRunnableTask(Subject subject)
+    {
 		this.subject = subject;
 	}
 
-	public void executeTask(TaskEvent event) {
+	@Override
+	public void executeTask(TaskEvent event)
+    {
 		this.te = event;
 
-		if (subject != null) {
+		if (subject != null)
+		{
 			subject.execute(this);
-		} else {
+		}
+		else
+        {
 			run();
 		}
 	}

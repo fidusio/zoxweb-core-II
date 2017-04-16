@@ -19,28 +19,33 @@ import org.zoxweb.shared.util.SharedUtil;
 
 @SuppressWarnings("serial")
 public class PartialFilter
-		implements ValueFilter<String, String> {
+    implements ValueFilter<String, String>
+{
 	
 	private ValueFilter<String, String> vf;
 	
-	public PartialFilter(ValueFilter<String, String> vf) {
+	public PartialFilter(ValueFilter<String, String> vf)
+    {
 		SharedUtil.checkIfNulls("Empty value.", vf);
 		this.vf = vf;
 	}	
 
 	@Override
-	public String toCanonicalID() {
+	public String toCanonicalID()
+    {
 		return vf.toCanonicalID();
 	}
 
 	@Override
 	public String validate(String in) 
-			throws NullPointerException, IllegalArgumentException {
+        throws NullPointerException, IllegalArgumentException
+    {
 		return vf.validate(in);
 	}
 
 	@Override
-	public boolean isValid(String in) {
+	public boolean isValid(String in)
+    {
 		return true;
 	}
 	

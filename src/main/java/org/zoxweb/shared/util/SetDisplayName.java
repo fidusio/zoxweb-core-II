@@ -20,7 +20,8 @@ package org.zoxweb.shared.util;
  * @author mnael
  */
 public interface SetDisplayName
-		extends GetDisplayName {
+    extends GetDisplayName
+{
 
 	/**
 	 * Set display name property.

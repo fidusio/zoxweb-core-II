@@ -16,12 +16,11 @@
 package org.zoxweb.shared.util;
 
 /**
- * The set unique property interface.
- * @author mzebib
- *
+ * The set unique property interface.*
  */
 public interface SetUnique
-		extends IsUnique {
+    extends IsUnique
+{
 
 	/**
 	 * Sets unique property.

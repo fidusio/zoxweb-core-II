@@ -22,43 +22,56 @@ import org.zoxweb.shared.util.Const;
 import org.zoxweb.shared.util.SharedUtil;
 import org.zoxweb.shared.util.SimpleQueue;
 
-public class LockQueue {
+public class LockQueue
+{
 
 	private SimpleQueue<Lock> queue = new SimpleQueue<Lock>();
 
-	public LockQueue() {
+	public LockQueue()
+    {
 		
 	}
 	
-	public LockQueue(int size) {
-		for (int i=0; i < size; i++) {
+	public LockQueue(int size)
+    {
+		for (int i=0; i < size; i++)
+		{
 			queue.queue(new ReentrantLock());
 		}
 	}
 
-	public Lock nextLock() {
+	public Lock nextLock()
+    {
 		Lock ret = null;
 		
-		while ((ret = queue.dequeue()) == null) {
-			synchronized(this) {
-				try {
+		while ((ret = queue.dequeue()) == null)
+        {
+			synchronized(this)
+            {
+				try
+                {
 					wait(Const.TimeInMillis.MILLI.MILLIS*500);
-				} catch (InterruptedException e) {
+				}
+				catch (InterruptedException e)
+                {
 					e.printStackTrace();
 				}
 			}
 		}
 
 		ret.lock();
+
 		return ret;
 	}
 	
-	public void addLock(Lock lock) {
+	public void addLock(Lock lock)
+    {
 		SharedUtil.checkIfNulls("Can't add null lock", lock);
 		lock.unlock();
 		queue.queue(lock);
 
-		synchronized(this) {
+		synchronized(this)
+        {
 			notifyAll();
 		}
 	}

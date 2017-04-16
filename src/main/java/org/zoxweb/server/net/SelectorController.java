@@ -19,8 +19,7 @@ import org.zoxweb.shared.util.SharedUtil;
  */
 public class SelectorController 
 {
-	
-	
+
 	//private static final transient Logger log = Logger.getLogger(SelectorController.class.getName());
 	
 	private final Selector selector;

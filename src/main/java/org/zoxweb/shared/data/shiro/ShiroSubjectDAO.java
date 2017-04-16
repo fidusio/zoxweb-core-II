@@ -35,7 +35,6 @@ public class ShiroSubjectDAO
 	public ShiroSubjectDAO()
 	{
 		super(NVC_SHIRO_SUBJECT_DAO);
-
 	}
 	
 	public ShiroSubjectDAO(String domainID, String authenticationRelam, String userName, String passwd)
@@ -45,7 +44,6 @@ public class ShiroSubjectDAO
 		setName( userName);
 		setAuthenticationRealm(authenticationRelam);
 		setPassword( passwd);
-		
 	}
 	
 	public String getAuthenticationRealm()

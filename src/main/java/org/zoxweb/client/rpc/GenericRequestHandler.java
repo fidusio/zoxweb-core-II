@@ -40,10 +40,10 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 /**
  * @author mnael
  * @param <T> The type of request
- *
  */
 public class GenericRequestHandler<T>
-	implements RequestCallback {
+	implements RequestCallback
+{
 	
 	public static NVEntityFactory DEFAULT_FACTORY = ZWDataFactory.SINGLETON;
 	
@@ -53,38 +53,49 @@ public class GenericRequestHandler<T>
 	private NVEntityInstance nveInstance;
 	private ReturnType returnType = ReturnType.NVENTITY;
 	
-	public GenericRequestHandler(HTTPMessageConfigInterface hcc, NVEntityInstance nvei, ReturnType retType, boolean autoSend, AsyncCallback<T> callBack) {
+	public GenericRequestHandler(HTTPMessageConfigInterface hcc, NVEntityInstance nvei, ReturnType retType, boolean autoSend, AsyncCallback<T> callBack)
+	{
 		asyncCallBack = callBack;
 		httpCallConfig = hcc;
 		nveInstance = nvei;
 		this.returnType = retType != null ? retType : ReturnType.VOID;
 
-		if (autoSend) {
+		if (autoSend)
+		{
 			sendRequest(httpCallConfig);
 		}
 	}
 	
-	public GenericRequestHandler(HTTPMessageConfigInterface hcc, NVEntityInstance nvei, ReturnType retType, AsyncCallback<T> callBack) {
+	public GenericRequestHandler(HTTPMessageConfigInterface hcc, NVEntityInstance nvei, ReturnType retType, AsyncCallback<T> callBack)
+	{
 		this(hcc, nvei, retType,  true, callBack);		
 	}
 	
-	public GenericRequestHandler(HTTPMessageConfigInterface hcc, ReturnType retType, AsyncCallback<T> callBack) {
+	public GenericRequestHandler(HTTPMessageConfigInterface hcc, ReturnType retType, AsyncCallback<T> callBack)
+	{
 		this(hcc, null, retType, true, callBack);
 	}
 	
-	public void sendRequest(HTTPMessageConfigInterface hci) {
+	public void sendRequest(HTTPMessageConfigInterface hci)
+	{
 		if (hci == null) {
 			hci = httpCallConfig;
 		}
 
 		HTTPWebRequest webRequest = new HTTPWebRequest(hci);
 
-		try {
+		try
+		{
 			webRequest.send(this);
-		} catch (RequestException e) {
-			if (asyncCallBack != null) {
+		}
+		catch (RequestException e)
+		{
+			if (asyncCallBack != null)
+			{
 				asyncCallBack.onFailure(e);
-			} else {
+			}
+			else
+				{
 				e.printStackTrace();
 			}
 		}
@@ -94,13 +105,14 @@ public class GenericRequestHandler<T>
 	@Override
 	public void onResponseReceived(Request request, Response response)
 	{
-		
-		if (response.getStatusCode() == HTTPStatusCode.OK.CODE) {
-			// we must process
-			try {
+		if (response.getStatusCode() == HTTPStatusCode.OK.CODE)
+		{
+			try
+			{
 				Object value = null;
 				
-				if (!SharedStringUtil.isEmpty(getResponseContent(response))) {
+				if (!SharedStringUtil.isEmpty(getResponseContent(response)))
+				{
 					switch(returnType)
 					{
 					case BOOLEAN:
@@ -146,47 +158,63 @@ public class GenericRequestHandler<T>
 				
 				//NVEntity nve = JSONClientUtil.fromJSON(nveInstance != null ? nveInstance.newInstance() : null, getResponseContent(response), getNVEFactory());
 				
-				if (asyncCallBack != null) {
+				if (asyncCallBack != null)
+				{
 					asyncCallBack.onSuccess((T) value);
 				}
 
 				return;
-			} catch (Exception e) {
+			}
+			catch (Exception e)
+			{
 				e.printStackTrace();
 				
-				if (asyncCallBack != null) {
+				if (asyncCallBack != null)
+				{
 					asyncCallBack.onFailure(e);
 				}
 			}
-		} else {
+		}
+		else
+		{
 			// we must have an error
 			
-			try {
+			try
+			{
 				Throwable throwable = null;
 				
-				if (!SharedStringUtil.isEmpty(getResponseContent(response))) {
+				if (!SharedStringUtil.isEmpty(getResponseContent(response)))
+				{
 					APIError apiError = JSONClientUtil.fromJSON(null, getResponseContent(response), getNVEFactory());
 					throwable = apiError.toException();	
-				} else {
+				}
+				else
+				{
 					//	This could indicate no content.
 					throwable = new APIException("No content");
 				}
 
-				if (asyncCallBack != null) {
+				if (asyncCallBack != null)
+				{
 					asyncCallBack.onFailure(throwable);
 				}
-			} catch (Exception e) {
+			}
+			catch (Exception e)
+			{
 				e.printStackTrace();
 			}
 		}
 	}
 	
-	public static String getResponseContent(Response response) {
+	public static String getResponseContent(Response response)
+	{
 
-		if (response != null) {
+		if (response != null)
+		{
 			String ret = response.getText();
 
-			if (SharedStringUtil.contains(response.getHeader(HTTPHeaderName.CONTENT_ENCODING.getName()), HTTPHeaderValue.CONTENT_ENCODING_LZ, true)) {
+			if (SharedStringUtil.contains(response.getHeader(HTTPHeaderName.CONTENT_ENCODING.getName()), HTTPHeaderValue.CONTENT_ENCODING_LZ, true))
+			{
 				byte data[] = SharedBase64.decode(SharedStringUtil.getBytes(ret));
 				byte unzipped[] = QuickLZ.decompress(data);
 				ret = SharedStringUtil.toString(unzipped);
@@ -199,8 +227,10 @@ public class GenericRequestHandler<T>
 	}
 
 	@Override
-	public void onError(Request request, Throwable exception) {
-		if (asyncCallBack != null) {
+	public void onError(Request request, Throwable exception)
+	{
+		if (asyncCallBack != null)
+		{
 			asyncCallBack.onFailure(exception);
 		}
 	}
@@ -208,46 +238,53 @@ public class GenericRequestHandler<T>
 	/**
 	 * @return the nveFactory
 	 */
-	public NVEntityFactory getNVEFactory() {
+	public NVEntityFactory getNVEFactory()
+	{
 		return nveFactory != null ? nveFactory : DEFAULT_FACTORY;
 	}
 	
-	public void setNVEFactory(NVEntityFactory factory) {
+	public void setNVEFactory(NVEntityFactory factory)
+	{
 		nveFactory = factory;
 	}
 
 	/**
 	 * @return the httpCallConfig
 	 */
-	public HTTPMessageConfigInterface getHTTPCallConfig() {
+	public HTTPMessageConfigInterface getHTTPCallConfig()
+	{
 		return httpCallConfig;
 	}
 
 	/**
 	 * @param httpCallConfig the httpCallConfig to set
 	 */
-	public void setHTTPCallConfig(HTTPMessageConfigInterface httpCallConfig) {
+	public void setHTTPCallConfig(HTTPMessageConfigInterface httpCallConfig)
+	{
 		this.httpCallConfig = httpCallConfig;
 	}
 
 	/**
 	 * @return the asyncCallBack
 	 */
-	public AsyncCallback<T> getAsyncCallBack() {
+	public AsyncCallback<T> getAsyncCallBack()
+	{
 		return asyncCallBack;
 	}
 
 	/**
 	 * @return the nveInstance
 	 */
-	public NVEntityInstance getNVEInstance() {
+	public NVEntityInstance getNVEInstance()
+	{
 		return nveInstance;
 	}
 
 	/**
 	 * @param nveInstance the nveInstance to set
 	 */
-	public void setNVEInstance(NVEntityInstance nveInstance) {
+	public void setNVEInstance(NVEntityInstance nveInstance)
+	{
 		this.nveInstance = nveInstance;
 	}
 

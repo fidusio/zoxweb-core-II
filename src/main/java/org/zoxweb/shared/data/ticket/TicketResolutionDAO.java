@@ -26,8 +26,7 @@ import org.zoxweb.shared.util.NVConfigManager;
 import org.zoxweb.shared.util.SharedUtil;
 
 /**
- * 
- * @author mzebib
+ *
  *
  */
 @SuppressWarnings("serial")
@@ -35,7 +34,7 @@ public class TicketResolutionDAO
 	extends CanonicalIDDAO
 {
 	
-	public enum Params
+	public enum Param
 		implements GetNVConfig
 	{
 		
@@ -45,16 +44,16 @@ public class TicketResolutionDAO
 		
 		;
 		
-		private final NVConfig cType;
-		
-		Params(NVConfig c)
+		private final NVConfig nvc;
+
+        Param(NVConfig nvc)
 		{
-			cType = c;
+			this.nvc = nvc;
 		}
 		
 		public NVConfig getNVConfig()
 		{
-			return cType;
+			return nvc;
 		}
 	}
 
@@ -67,7 +66,7 @@ public class TicketResolutionDAO
 																							false, 
 																							false, 
 																							TicketResolutionDAO.class, 
-																							SharedUtil.extractNVConfigs(Params.values()), 
+																							SharedUtil.extractNVConfigs(Param.values()),
 																							null, 
 																							false, 
 																							CanonicalIDDAO.NVC_CANONICAL_ID_DAO
@@ -91,12 +90,12 @@ public class TicketResolutionDAO
 	}
 	
 	/**
-	 * Gets ticket resolution status.
+	 * Returns ticket resolution status.
 	 * @return status
 	 */
 	public String getStatus()
 	{
-		return lookupValue(Params.STATUS);
+		return lookupValue(Param.STATUS);
 	}
 	
 	/**
@@ -105,16 +104,16 @@ public class TicketResolutionDAO
 	 */
 	public void setStatus(String status)
 	{
-		setValue(Params.STATUS, status);
+		setValue(Param.STATUS, status);
 	}
 	
 	/**
-	 * Gets time spent on ticket resolution.
+	 * Returns time spent on ticket resolution.
 	 * @return time spent
 	 */
 	public BigDecimal getTimeSpent()
 	{
-		return lookupValue(Params.TIME_SPENT);
+		return lookupValue(Param.TIME_SPENT);
 	}
 	
 	/**
@@ -123,24 +122,26 @@ public class TicketResolutionDAO
 	 */
 	public void setTimeSpent(BigDecimal time)
 	{
-		setValue(Params.TIME_SPENT, time);
+		setValue(Param.TIME_SPENT, time);
 	}
 	
 	/**
-	 * Gets resolution description.
+	 * Returns resolution description.
 	 */
+	@Override
 	public String getDescription()
 	{
-		return lookupValue(Params.DESCRIPTION);
+		return lookupValue(Param.DESCRIPTION);
 	}
 	
 	/**
 	 * Sets resolution description.
 	 * @param description
 	 */
+	@Override
 	public void setDescription(String description)
 	{
-		setValue(Params.DESCRIPTION, description);
+		setValue(Param.DESCRIPTION, description);
 	}
 
 }

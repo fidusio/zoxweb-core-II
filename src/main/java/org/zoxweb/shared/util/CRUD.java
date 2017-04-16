@@ -16,7 +16,6 @@
 package org.zoxweb.shared.util;
 
 /**
- *
  * CRUD operations: create, read, update and delete. Used for event notification,
  * database action, or in any context where it is applicable.
  * @author mzebib
