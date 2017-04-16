@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 ZoxWeb.com LLC.
+ * Copyright (c) 2012-2017 ZoxWeb.com LLC.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -43,13 +43,13 @@ public class StringToken
 	 */
 	public StringToken(String token, int sourcePreIndex, int sourcePostIndex)
     {
-		setToken( token);
-		setSourcePreIndex( sourcePreIndex);
-		setSourcePostIndex( sourcePostIndex);
+		setToken(token);
+		setSourcePreIndex(sourcePreIndex);
+		setSourcePostIndex(sourcePostIndex);
 	}
 	
 	/**
-	 * Returns token.
+	 * Returns the token.
 	 * @return token
 	 */
 	public String getToken()
@@ -58,7 +58,7 @@ public class StringToken
 	}
 	
 	/**
-	 * Sets token.
+	 * Sets the token.
 	 * @param token
 	 */
 	public void setToken(String token)
@@ -67,7 +67,7 @@ public class StringToken
 	}
 	
 	/**
-	 * Returns sourcePostIndex.
+	 * Returns the source post index.
 	 * @return index
 	 */ 
 	public int getSourcePostIndex()
@@ -76,7 +76,7 @@ public class StringToken
 	}
 	
 	/**
-	 * Sets sourcePostIndex.
+	 * Sets the source post index.
 	 * @param sourcePostIndex
 	 */
 	public void setSourcePostIndex(int sourcePostIndex)
@@ -85,7 +85,7 @@ public class StringToken
 	}
 	
 	/**
-	 * Returns the sourcePreIndex.
+	 * Returns the source pre index.
 	 * @return index
 	 */
 	public int getSourcePreIndex()
@@ -94,7 +94,7 @@ public class StringToken
 	}
 	
 	/**
-	 * Sets the sourcePreIndex.
+	 * Sets the source pre index.
 	 * @param sourcePreIndex
 	 */
 	public void setSourcePreIndex(int sourcePreIndex)

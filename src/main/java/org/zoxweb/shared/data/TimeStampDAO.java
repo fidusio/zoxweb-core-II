@@ -23,7 +23,7 @@ import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVConfigEntityLocal;
 import org.zoxweb.shared.util.NVConfigManager;
 import org.zoxweb.shared.util.SharedUtil;
-import org.zoxweb.shared.util.TimeStampInterface;
+import org.zoxweb.shared.util.TimeStamp;
 
 /**
  *
@@ -31,7 +31,7 @@ import org.zoxweb.shared.util.TimeStampInterface;
 @SuppressWarnings("serial")
 public abstract class TimeStampDAO
 	extends SetNameDescriptionDAO
-	implements TimeStampInterface
+	implements TimeStamp
 {
 	
 	public enum Param

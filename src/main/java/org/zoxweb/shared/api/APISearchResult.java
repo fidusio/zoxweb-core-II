@@ -18,11 +18,11 @@ package org.zoxweb.shared.api;
 import java.util.List;
 
 import org.zoxweb.shared.util.NVConfigEntity;
-import org.zoxweb.shared.util.TimeStampInterface;
+import org.zoxweb.shared.util.TimeStamp;
 
 @SuppressWarnings("serial")
 public class APISearchResult<T>
-	implements TimeStampInterface
+	implements TimeStamp
 {
 	private NVConfigEntity nvce;
 	private String reportID;

@@ -22,7 +22,7 @@ import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVEntity;
 import org.zoxweb.shared.util.SetCanonicalID;
 import org.zoxweb.shared.util.SharedUtil;
-import org.zoxweb.shared.util.TimeStampInterface;
+import org.zoxweb.shared.util.TimeStamp;
 
 public class MetaUtil
 {
@@ -89,9 +89,9 @@ public class MetaUtil
     {
 		if (nve != null)
 		{
-			if (nve instanceof TimeStampInterface)
+			if (nve instanceof TimeStamp)
 			{
-				TimeStampInterface tsd = (TimeStampInterface) nve;
+				TimeStamp tsd = (TimeStamp) nve;
 
 				if (tsd.getCreationTime() == 0)
 				{
@@ -110,9 +110,9 @@ public class MetaUtil
     {
 		if (nve != null)
 		{
-			if (nve instanceof TimeStampInterface)
+			if (nve instanceof TimeStamp)
 			{
-				TimeStampInterface tsd = (TimeStampInterface) nve;
+				TimeStamp tsd = (TimeStamp) nve;
 				tsd.setLastTimeRead(System.currentTimeMillis());
 			}
 		}		
@@ -122,9 +122,9 @@ public class MetaUtil
     {
 		if (nve != null)
 		{
-			if (nve instanceof TimeStampInterface)
+			if (nve instanceof TimeStamp)
 			{
-				TimeStampInterface tsd = (TimeStampInterface) nve;
+				TimeStamp tsd = (TimeStamp) nve;
 				tsd.setLastTimeUpdated(System.currentTimeMillis());
 			}
 		}		

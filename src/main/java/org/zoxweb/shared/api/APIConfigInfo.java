@@ -20,7 +20,7 @@ import java.util.List;
 import org.zoxweb.shared.util.AccountID;
 import org.zoxweb.shared.util.ArrayValues;
 import org.zoxweb.shared.util.CanonicalID;
-import org.zoxweb.shared.util.TimeStampInterface;
+import org.zoxweb.shared.util.TimeStamp;
 import org.zoxweb.shared.util.UserID;
 import org.zoxweb.shared.util.NVPair;
 import org.zoxweb.shared.util.ReferenceID;
@@ -38,7 +38,7 @@ public interface APIConfigInfo
 			UserID<String>, 
 			SetName, 
 			SetDescription,
-			TimeStampInterface,
+        TimeStamp,
 			CanonicalID
 {
 	

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2015 ZoxWeb.com LLC.
+ * Copyright (c) 2012-2017 ZoxWeb.com LLC.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -23,12 +23,12 @@ public interface SimpleQueueInterface<O>
 {
 
 	/**
-	 * Contract to clear the queue content.
+	 * Clears the queue content.
 	 */
 	public void clear();
 
 	/**
-     *
+     * Returns the size of the queue.
 	 * @return the size of the queue.
 	 */
 	public int size();
@@ -58,14 +58,12 @@ public interface SimpleQueueInterface<O>
 	 * @return the total number of object queued
 	 */
 	public long totalQueued();
-	
-	
+
 	/**
      *
 	 * @return the total number of object dequeued
 	 */
 	public long totalDequeued();
-	
 	
 	/**
 	 * Return true if the queue contains o.

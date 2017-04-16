@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-Sep 11, 2015 ZoxWeb.com LLC.
+ * Copyright (c) 2012-2017 ZoxWeb.com LLC.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -17,6 +17,10 @@ package org.zoxweb.shared.util;
 
 import org.zoxweb.shared.util.Const.Unit;
 
+/**
+ * Default implementation of UnitValue interface.
+ * @param <V>
+ */
 public class UnitValueDefault<V>
     implements UnitValue<V>
 {
@@ -24,28 +28,61 @@ public class UnitValueDefault<V>
 	private V value;
 	private Unit unit;
 
-	@Override
-	public void setValue(V value)
+	public UnitValueDefault()
     {
-		this.value = value;
-	}
 
+    }
+
+    public UnitValueDefault(V value, Unit unit)
+    {
+	    setValue(value);
+	    setUnit(unit);
+    }
+
+    /**
+     * Returns the value.
+     * @return
+     */
 	@Override
 	public V getValue()
     {
 		return value;
 	}
 
+    /**
+     * Sets the value.
+     * @param value
+     */
+    @Override
+    public void setValue(V value)
+    {
+        this.value = value;
+    }
+
+    /**
+     * Returns the unit.
+     * @return
+     */
 	@Override
 	public Unit getUnit()
     {
 		return unit;
 	}
 
+    /**
+     * Sets the unit.
+     * @param unit
+     */
 	@Override
 	public void setUnit(Unit unit)
     {
 		this.unit = unit;
 	}
+
+	@Override
+    public String toString()
+    {
+	    return getValue() + " " + getUnit();
+    }
 
 }
