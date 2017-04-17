@@ -1,12 +1,12 @@
 /*
- * Copyright 2012 ZoxWeb.com LLC.
- * 
+ * Copyright (c) 2012-2017 ZoxWeb.com LLC.
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -31,7 +31,7 @@ public class PasswordDAO
     implements CryptoDAO
 {
 	
-	private enum Params
+	private enum Param
         implements GetNVConfig
     {
 		HASH_INTERATION(NVConfigManager.createNVConfig("hash_iteration", "Hash interration", "HashIteration", false, true, Integer.class)),
@@ -42,7 +42,7 @@ public class PasswordDAO
 
 		private final NVConfig nvc;
 
-		Params(NVConfig nvc)
+        Param(NVConfig nvc)
         {
 			this.nvc = nvc;
 		}
@@ -54,7 +54,7 @@ public class PasswordDAO
 		}	
 	}
 
-	public final static NVConfigEntity NVCE_PASSWORD_DAO = new NVConfigEntityLocal("password_dao", null, "PasswordDAO", false, true, false, false, PasswordDAO.class, SharedUtil.extractNVConfigs(Params.values()), null, false, TimeStampDAO.NVC_TIME_STAMP_DAO);
+	public final static NVConfigEntity NVCE_PASSWORD_DAO = new NVConfigEntityLocal("password_dao", null, "PasswordDAO", false, true, false, false, PasswordDAO.class, SharedUtil.extractNVConfigs(Param.values()), null, false, TimeStampDAO.NVC_TIME_STAMP_DAO);
 
     /**
      * The default constructor.
@@ -87,37 +87,37 @@ public class PasswordDAO
 
 	public synchronized int getHashIteration()
     {
-		return lookupValue( Params.HASH_INTERATION);
+		return lookupValue(Param.HASH_INTERATION);
 	}
 
 	public synchronized void setHashIteration(int salt_iteration)
     {
 		if (salt_iteration < 0)
 		{
-			throw new IllegalArgumentException("Invalid interation value:" + salt_iteration);
+			throw new IllegalArgumentException("Invalid iteration value:" + salt_iteration);
 		}
 
-		setValue( Params.HASH_INTERATION, salt_iteration);
+		setValue(Param.HASH_INTERATION, salt_iteration);
 	}
 
 	public synchronized byte[] getSalt()
     {
-		return lookupValue(Params.SALT);
+		return lookupValue(Param.SALT);
 	}
 
 	public synchronized void setSalt(byte[] salt)
     {
-		setValue( Params.SALT, salt);
+		setValue( Param.SALT, salt);
 	}
 
 	public synchronized byte[] getPassword()
     {
-		return lookupValue(Params.PASSWORD);
+		return lookupValue(Param.PASSWORD);
 	}
 
 	public synchronized void setPassword(byte[] password)
     {
-		setValue(Params.PASSWORD, password);
+		setValue(Param.PASSWORD, password);
 	}
 
 	@Override

@@ -1,12 +1,12 @@
 /*
- * Copyright (c) 2012-2016 ZoxWeb.com LLC.
- * 
+ * Copyright (c) 2012-2017 ZoxWeb.com LLC.
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -14,9 +14,6 @@
  * the License.
  */
 package org.zoxweb.shared.data;
-
-
-
 
 import org.zoxweb.shared.data.DataConst.DataParam;
 import org.zoxweb.shared.util.NVConfig;
@@ -27,7 +24,6 @@ import org.zoxweb.shared.util.SetCanonicalID;
 import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
 
-
 /**
  * This class is used to define parameters used by devices 
  * which transmit messages. All message classes will extend
@@ -36,8 +32,9 @@ import org.zoxweb.shared.util.SharedUtil;
  *
  */
 @SuppressWarnings("serial")
-public class DataDAO extends TimeStampDAO
-implements SetCanonicalID
+public class DataDAO
+    extends TimeStampDAO
+    implements SetCanonicalID
 {
 	
 	//private static final NVConfig NVC_TIME_STAMP =  NVConfigManager.createNVConfig("time_stamp", "This is the time stamp for when the message was generated.","TimeStamp",true, false, Long.class);

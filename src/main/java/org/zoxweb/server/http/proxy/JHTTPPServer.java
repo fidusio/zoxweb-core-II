@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 ZoxWeb.com LLC.
+ * Copyright (c) 2012-2017 ZoxWeb.com LLC.
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -27,7 +27,6 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.net.InetAddress;
 import java.net.BindException;
-//import java.io.*;
 import java.util.Vector;
 import java.util.Properties;
 import java.util.logging.Logger;
@@ -41,13 +40,10 @@ import org.zoxweb.server.io.IOUtil;
 import org.zoxweb.server.net.InetFilterRulesManager;
 import org.zoxweb.server.util.ApplicationConfigManager;
 
-
-
-
 public class JHTTPPServer 
-implements Runnable,
-		   DaemonController 
+    implements Runnable, DaemonController
 {
+
 	private static final transient Logger log = Logger.getLogger(Const.LOGGER_NAME);
 	// private static final String CRLF="\r\n";
 	private final String VERSION = "2.0";

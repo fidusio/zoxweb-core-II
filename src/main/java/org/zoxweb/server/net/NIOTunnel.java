@@ -1,14 +1,25 @@
+/*
+ * Copyright (c) 2012-2017 ZoxWeb.com LLC.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
 package org.zoxweb.server.net;
-
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-
 import java.nio.ByteBuffer;
-
 import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
-
 import java.util.logging.Logger;
 
 import javax.net.ssl.SSLContext;
@@ -28,18 +39,16 @@ import org.zoxweb.server.task.TaskUtil;
 import org.zoxweb.shared.net.InetSocketAddressDAO;
 import org.zoxweb.shared.util.Const.SourceOrigin;
 
-
-
-
-public class NIOTunnel 
-extends ProtocolSessionProcessor
+public class NIOTunnel
+    extends ProtocolSessionProcessor
 {
+    private static final transient Logger log = Logger.getLogger(NIOTunnel.class.getName());
+
 	private static boolean debug = false;
-	private static final transient Logger log = Logger.getLogger(NIOTunnel.class.getName());
 	
 	
 	public static class NIOTunnelFactory
-	extends  ProtocolSessionFactoryBase<NIOTunnel>
+	    extends ProtocolSessionFactoryBase<NIOTunnel>
 	{
 		
 		private InetSocketAddressDAO remoteAddress;
@@ -74,23 +83,18 @@ extends ProtocolSessionProcessor
 		@Override
 		public NIOTunnel newInstance() 
 		{
-			// TODO Auto-generated method stub
 			return new NIOTunnel(remoteAddress);
 		}
 
 //		@Override
 //		public boolean isBlocking() {
-//			// TODO Auto-generated method stub
 //			return false;
 //		}
 //
 //		@Override
 //		public SSLUtil getSSLUtil() {
-//			// TODO Auto-generated method stub
 //			return sslUtil;
 //		}
-
-	
 		
 	}
 	
@@ -103,6 +107,7 @@ extends ProtocolSessionProcessor
 	private ChannelRelayTunnel relay = null;
 	
 	final private InetSocketAddressDAO remoteAddress;
+
 	public NIOTunnel(InetSocketAddressDAO remoteAddress)
 	{
 		this.remoteAddress = remoteAddress;
@@ -112,36 +117,28 @@ extends ProtocolSessionProcessor
 	@Override
 	public String getName()
 	{
-		// TODO Auto-generated method stub
 		return "NIOTunnel";
 	}
 
 	@Override
 	public String getDescription() 
 	{
-		// TODO Auto-generated method stub
 		return "NIO Tunnel";
 	}
 
 	@Override
 	public void close() throws IOException
-	{
-		
-		// TODO Auto-generated method stub
+    {
 		getSelectorController().cancelSelectionKey(clientChannelSK);
 		IOUtil.close(remoteChannel);
 		IOUtil.close(clientChannel);
 		postOp();
 		log.info("close ended");
 	}
-	
-
 
 	@Override
 	protected void processRead(SelectionKey key) 
 	{
-		
-		
 		try
     	{
 			SSLSessionData sslSessionData = ((ProtocolSessionProcessor)key.attachment()).getInputSSLSessionData();
@@ -155,13 +152,10 @@ extends ProtocolSessionProcessor
 				relay.setOutputSSLSessionData(sslSessionData);
 				getSelectorController().register(NIOChannelCleaner.DEFAULT, remoteChannel, SelectionKey.OP_READ, relay, false);
 			}
-			
-			
+
 			int read = 0 ;
     		do
-    		{
-    		
-    			
+            {
     			if (sslSessionData != null)
     			{
     				// ssl mode
@@ -203,45 +197,12 @@ extends ProtocolSessionProcessor
 		}
 
 	}
-
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-
-
-	
-		
-	
-	
-	
-		
-	
-	
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	@SuppressWarnings("resource")
-	public static void main(String ...args)
-	{
+    public static void main(String... args)
+    {
 		try
 		{
-			
 			int index = 0;
 			int port = Integer.parseInt(args[index++]);
 			InetSocketAddressDAO remoteAddress = new InetSocketAddressDAO(args[index++]);
@@ -258,8 +219,4 @@ extends ProtocolSessionProcessor
 		}
 	}
 
-	
-	
-	
-	
 }

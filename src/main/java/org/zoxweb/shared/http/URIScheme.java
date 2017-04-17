@@ -1,9 +1,24 @@
+/*
+ * Copyright (c) 2012-2017 ZoxWeb.com LLC.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
 package org.zoxweb.shared.http;
 
 import org.zoxweb.shared.util.GetNameValue;
 
 public enum URIScheme
-implements GetNameValue<Integer>
+    implements GetNameValue<Integer>
 {
 	
 	// WARNING: it is crucial to define https before http otherwise the match will never detect https
@@ -14,9 +29,8 @@ implements GetNameValue<Integer>
 	MAIL_TO("mailto", -1),
 	DATA("data", -1),
 	
-	
-	
 	;
+
 	private String name;
 	private int defaultPort;
 	
@@ -25,13 +39,7 @@ implements GetNameValue<Integer>
 		this.name= name;
 		this.defaultPort = port;
 	}
-	@Override
-	public String getName() {
-		// TODO Auto-generated method stub
-		return name;
-	}
-	
-	
+
 	public static URIScheme match(String uri)
 	{
 		if (uri != null)
@@ -49,9 +57,16 @@ implements GetNameValue<Integer>
 		
 		return null;
 	}
+
+    @Override
+    public String getName()
+    {
+        return name;
+    }
+
 	@Override
-	public Integer getValue() {
-		// TODO Auto-generated method stub
+	public Integer getValue()
+    {
 		return defaultPort;
 	}
 }

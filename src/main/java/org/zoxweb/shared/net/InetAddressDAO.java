@@ -1,12 +1,12 @@
 /*
- * Copyright 2012 ZoxWeb.com LLC.
- * 
+ * Copyright (c) 2012-2017 ZoxWeb.com LLC.
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -25,7 +25,7 @@ import org.zoxweb.shared.util.SharedUtil;
 
 @SuppressWarnings("serial")
 public class InetAddressDAO
-		extends SetNameDAO {
+    extends SetNameDAO {
 	
 	private static final NVConfig INET_ADDRESS = NVConfigManager.createNVConfig("inet_address", "The ip address","InetAddress",true, false, String.class);
 	private static final NVConfig IP_VERSION = NVConfigManager.createNVConfig("ip_version", "The ip version V4 or V6","IPVersion", true, false, IPVersion.class);

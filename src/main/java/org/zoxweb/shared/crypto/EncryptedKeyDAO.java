@@ -1,12 +1,12 @@
 /*
- * Copyright (c) 2012-2014 ZoxWeb.com LLC.
- * 
+ * Copyright (c) 2012-2017 ZoxWeb.com LLC.
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -29,7 +29,7 @@ public class EncryptedKeyDAO
     extends EncryptedDAO
 {
 
-	protected enum Params
+	protected enum Param
         implements GetNVConfig
     {
 		KEY_LOCK_TYPE(NVConfigManager.createNVConfig("key_lock_type", "Key lock type", "KeyLockType", true, true, KeyLockType.class)),
@@ -39,7 +39,7 @@ public class EncryptedKeyDAO
 
 		private final NVConfig nvc;
 
-		Params( NVConfig nvc)
+        Param(NVConfig nvc)
         {
 			this.nvc = nvc;
 		}
@@ -51,7 +51,7 @@ public class EncryptedKeyDAO
 		}
 	} 
 
-	public final static NVConfigEntity NVCE_ENCRYPTED_KEY_DAO = new NVConfigEntityLocal("encrypted_key_dao", null, "EncryptedKeyDAO", false, true, false, false, EncryptedKeyDAO.class, SharedUtil.extractNVConfigs(Params.values()), null, false, EncryptedDAO.NVCE_ENCRYPTED_DAO);
+	public final static NVConfigEntity NVCE_ENCRYPTED_KEY_DAO = new NVConfigEntityLocal("encrypted_key_dao", null, "EncryptedKeyDAO", false, true, false, false, EncryptedKeyDAO.class, SharedUtil.extractNVConfigs(Param.values()), null, false, EncryptedDAO.NVCE_ENCRYPTED_DAO);
 	
 	
 	public EncryptedKeyDAO()
@@ -66,12 +66,12 @@ public class EncryptedKeyDAO
 
 	public KeyLockType getKeyLockType()
     {
-		return lookupValue(Params.KEY_LOCK_TYPE);
+		return lookupValue(Param.KEY_LOCK_TYPE);
 	}
 	
 	public void setKeyLockType(KeyLockType klt)
     {
-		setValue(Params.KEY_LOCK_TYPE, klt);
+		setValue(Param.KEY_LOCK_TYPE, klt);
 	}
 	
 //	public NVEntity getObjectReference()
@@ -93,12 +93,12 @@ public class EncryptedKeyDAO
 
 	public String getObjectReferenceClassName()
     {
-		return lookupValue(Params.OBJECT_REFERENCE_CLASS_NAME);
+		return lookupValue(Param.OBJECT_REFERENCE_CLASS_NAME);
 	}
 	
 	public void setObjectReferenceClassName(String classMame)
     {
-		setValue(Params.OBJECT_REFERENCE_CLASS_NAME, classMame);
+		setValue(Param.OBJECT_REFERENCE_CLASS_NAME, classMame);
 	}
 	
 //	@Override

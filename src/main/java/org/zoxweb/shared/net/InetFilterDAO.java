@@ -1,12 +1,12 @@
 /*
- * Copyright 2012 ZoxWeb.com LLC.
- * 
+ * Copyright (c) 2012-2017 ZoxWeb.com LLC.
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -14,7 +14,6 @@
  * the License.
  */
 package org.zoxweb.shared.net;
-
 
 import org.zoxweb.shared.data.SetNameDescriptionDAO;
 
@@ -25,8 +24,6 @@ import org.zoxweb.shared.util.NVConfigEntityLocal;
 import org.zoxweb.shared.util.NVConfigManager;
 import org.zoxweb.shared.util.SharedUtil;
 
-
-
 /**
  * The ip filter object is used to mask and filter ip sets
  * 
@@ -34,10 +31,12 @@ import org.zoxweb.shared.util.SharedUtil;
  */
 @SuppressWarnings("serial")
 public class InetFilterDAO
-		extends SetNameDescriptionDAO {
+    extends SetNameDescriptionDAO
+{
 	
 	public enum Params
-			implements GetNVConfig {
+        implements GetNVConfig
+    {
 		IP(NVConfigManager.createNVConfig("ip_address", "IP Address", "IP", false, true, String.class)),
 		//FILTER(NVConfigManager.createNVConfig("filter", "Filter", "Filter", false, true, String.class)),
 		NET_MASK(NVConfigManager.createNVConfig("network_mask", "Network Mask", "NetMask", false, true, String.class)),

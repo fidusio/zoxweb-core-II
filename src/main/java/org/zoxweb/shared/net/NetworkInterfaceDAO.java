@@ -1,12 +1,12 @@
 /*
- * Copyright 2012 ZoxWeb.com LLC.
- * 
+ * Copyright (c) 2012-2017 ZoxWeb.com LLC.
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -28,7 +28,8 @@ import org.zoxweb.shared.util.NVConfigEntity.ArrayType;
 
 @SuppressWarnings("serial")
 public class NetworkInterfaceDAO
-		extends SetNameDAO {
+    extends SetNameDAO
+{
 
 	public static final String MAC_ADDRESS_SEPS []= {
 		"-", ":", "."
@@ -54,35 +55,43 @@ public class NetworkInterfaceDAO
             SetNameDAO.NVC_NAME_DAO
     );
 
-	public NetworkInterfaceDAO() {
+	public NetworkInterfaceDAO()
+    {
 		super( NVC_NETWORK_INTERFACE_DAO);
 	}
 
-	public List<InetAddressDAO> getInetAddresses() {
+	public List<InetAddressDAO> getInetAddresses()
+    {
 		return lookupValue(INET_ADDRESSES);
 	}
 
-	public void setInetAddresses(List<InetAddressDAO> inetAddresses) {
+	public void setInetAddresses(List<InetAddressDAO> inetAddresses)
+    {
 		setValue( INET_ADDRESSES,inetAddresses );
 	}
 	
-	public String getMACAddress() {
+	public String getMACAddress()
+    {
 		return lookupValue( MAC_ADDRESS);
 	}
 	
-	public synchronized void setMACAddress(String macAddress) {
+	public synchronized void setMACAddress(String macAddress)
+    {
 		setValue(MAC_ADDRESS, macAddress);
 	}
 	
-	public String getDisplayName() {
+	public String getDisplayName()
+    {
 		return lookupValue( DISPLAY_NAME);
 	}
 	
-	public void setDisplayName(String displayName) {
+	public void setDisplayName(String displayName)
+    {
 		setValue( DISPLAY_NAME, displayName);
 	}
 
-	public static byte[] macAddressToBytes(String macAddress) {
+	public static byte[] macAddressToBytes(String macAddress)
+    {
 		return SharedStringUtil.hexToBytes(SharedStringUtil.filterString(macAddress, MAC_ADDRESS_SEPS));
 	}
 

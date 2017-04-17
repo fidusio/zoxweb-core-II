@@ -1,12 +1,12 @@
 /*
- * Copyright 2012 ZoxWeb.com LLC.
- * 
+ * Copyright (c) 2012-2017 ZoxWeb.com LLC.
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -46,7 +46,7 @@ public class EncryptedDAO
 	//private byte[] hmac;// base64
 	
 	
-	protected enum Params
+	protected enum Param
         implements GetNVConfig
     {
 		SUBJECT_PORPERTIES(NVConfigManager.createNVConfig("subject_properties", "Subject properties", "SubjectPropeties", false, true, true, false, String[].class, null)),
@@ -63,7 +63,7 @@ public class EncryptedDAO
 
 		private final NVConfig nvc;
 
-		Params(NVConfig nvc)
+        Param(NVConfig nvc)
         {
 			this.nvc = nvc;
 		}
@@ -75,7 +75,7 @@ public class EncryptedDAO
 		}	
 	}
 
-	public final static NVConfigEntity NVCE_ENCRYPTED_DAO = new NVConfigEntityLocal("encrypted_dao", null, "EncryptedDAO", false, true, false, false, EncryptedDAO.class, SharedUtil.extractNVConfigs(Params.values()), null, false, TimeStampDAO.NVC_TIME_STAMP_DAO);
+	public final static NVConfigEntity NVCE_ENCRYPTED_DAO = new NVConfigEntityLocal("encrypted_dao", null, "EncryptedDAO", false, true, false, false, EncryptedDAO.class, SharedUtil.extractNVConfigs(Param.values()), null, false, TimeStampDAO.NVC_TIME_STAMP_DAO);
 
 	public EncryptedDAO()
     {
@@ -94,7 +94,7 @@ public class EncryptedDAO
 	@SuppressWarnings("unchecked")
 	public ArrayValues<NVPair> getSubjectProperties()
 	{
-		return (ArrayValues<NVPair>) lookup(Params.SUBJECT_PORPERTIES);
+		return (ArrayValues<NVPair>) lookup(Param.SUBJECT_PORPERTIES);
 	}
 	
 	public void setSubjectProperties(ArrayValues<NVPair> subject)
@@ -112,7 +112,7 @@ public class EncryptedDAO
 	@SuppressWarnings("unchecked")
 	public ArrayValues<NVPair>getAlgoProperties()
     {
-		return (ArrayValues<NVPair>) lookup(Params.ALGO_PROPERTIES);
+		return (ArrayValues<NVPair>) lookup(Param.ALGO_PROPERTIES);
 	}
 
 	public void setAlgoProperties(ArrayValues<NVPair> algo_parameters)
@@ -129,62 +129,62 @@ public class EncryptedDAO
 
 	public byte[] getIV()
     {
-		return lookupValue(Params.IV);
+		return lookupValue(Param.IV);
 	}
 
 	public void setIV(byte[] iv)
     {
-		setValue(Params.IV, iv);
+		setValue(Param.IV, iv);
 	}
 
 	public byte[] getEncryptedData()
     {
-		return lookupValue(Params.ENCRYPTED_DATA);
+		return lookupValue(Param.ENCRYPTED_DATA);
 	}
 
 	public void setEncryptedData(byte[] encrypted_data)
     {
-		setValue(Params.ENCRYPTED_DATA, encrypted_data);
+		setValue(Param.ENCRYPTED_DATA, encrypted_data);
 	}
 
 	public String getExpirationTime()
     {
-		return lookupValue(Params.EXPIRATION_TIME);
+		return lookupValue(Param.EXPIRATION_TIME);
 	}
 
 	public void setExpirationTime(String expiration_time)
     {
-		setValue(Params.EXPIRATION_TIME, expiration_time);
+		setValue(Param.EXPIRATION_TIME, expiration_time);
 	}
 
 	public String getHint()
     {
-		return lookupValue(Params.HINT);
+		return lookupValue(Param.HINT);
 	}
 
 	public void setHint(String hint)
     {
-		setValue(Params.HINT, hint);
+		setValue(Param.HINT, hint);
 	}
 
 	public String getHMACAlgoName()
     {
-		return lookupValue(Params.HMAC_ALOG_NAME);
+		return lookupValue(Param.HMAC_ALOG_NAME);
 	}
 
 	public void setHMACAlgoName(String hmac_algo_name)
     {
-		setValue(Params.HMAC_ALOG_NAME, hmac_algo_name);
+		setValue(Param.HMAC_ALOG_NAME, hmac_algo_name);
 	}
 
 	public byte[] getHMAC()
     {
-		return lookupValue(Params.HMAC);
+		return lookupValue(Param.HMAC);
 	}
 
 	public void setHMAC(byte[] hmac)
     {
-		setValue(Params.HMAC, hmac);
+		setValue(Param.HMAC, hmac);
 	}
 
 	@Override
@@ -219,7 +219,7 @@ public class EncryptedDAO
 
 	public long getDataLength()
     {
-		return lookupValue(Params.DATA_LENGTH);
+		return lookupValue(Param.DATA_LENGTH);
 	}
 
 	public void setDataLength(long data_length)
@@ -229,7 +229,7 @@ public class EncryptedDAO
 			throw new IllegalArgumentException("Illegal data length " + data_length);
 		}
 
-		setValue(Params.DATA_LENGTH, data_length);
+		setValue(Param.DATA_LENGTH, data_length);
 	}
 
 	public static EncryptedDAO fromCanonicalID(String encryptedDAOCanonicalFormat)
@@ -260,7 +260,7 @@ public class EncryptedDAO
 
             break;
         default:
-            throw new IllegalArgumentException("Invalid enrypted dao format");
+            throw new IllegalArgumentException("Invalid encrypted dao format");
         }
 
         return ret;

@@ -1,12 +1,12 @@
 /*
- * Copyright (c) 2012-2015 ZoxWeb.com LLC.
- * 
+ * Copyright (c) 2012-2017 ZoxWeb.com LLC.
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -14,7 +14,6 @@
  * the License.
  */
 package org.zoxweb.shared.api;
-
 
 import java.util.List;
 
@@ -30,8 +29,7 @@ import org.zoxweb.shared.util.NVPair;
 import org.zoxweb.shared.util.SharedUtil;
 
 /**
- * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
- * 
+ *
  */
 @SuppressWarnings("serial")
 public class APICredentialsDAO

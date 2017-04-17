@@ -1,12 +1,12 @@
 /*
- * Copyright 2012 ZoxWeb.com LLC.
- * 
+ * Copyright (c) 2012-2017 ZoxWeb.com LLC.
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -15,18 +15,20 @@
  */
 package org.zoxweb.shared.net;
 
-
 import org.zoxweb.shared.util.SharedUtil;
 
-public class InetProp {
+public class InetProp
+{
 
-	public enum IPVersion {
+	public enum IPVersion
+    {
 		V4,
 		V6
 	}
 	
 	
-	public enum InetProto {
+	public enum InetProto
+    {
 		NONE,
 		STATIC,
 		DHCP;
@@ -43,7 +45,8 @@ public class InetProp {
 	 * AUXILIARY this is an AUXILIARY interface for the WAN OR LAN
 	 * NONE not applicable
 	 */
-	public enum NICategory {
+	public enum NICategory
+    {
 		MAIN,
 		AUXILIARY,
 		NONE
@@ -55,7 +58,8 @@ public class InetProp {
 	 * WAN external interface  
 	 * BRIDGE interface
 	 */
-	public enum NIType {
+	public enum NIType
+    {
 		LAN,
 		WAN,
 		BRIDGE
@@ -66,7 +70,8 @@ public class InetProp {
 	 * @author mnael
 	 *
 	 */
-	public enum NIStatus {
+	public enum NIStatus
+    {
 		OK, // the connection is ok
 		REMOTE_PING_FAILED, // remote internet ping failed
 		ROUTER_PING_FAILED,// router ping failed 
@@ -75,22 +80,24 @@ public class InetProp {
 	}
 	
 	
-	public enum BondingMode {
+	public enum BondingMode
+    {
 		NONE,
 		AGGREGATE,
 		FAILOVER
 		
 		;
 		
-		public static BondingMode lookup(String val) {
+		public static BondingMode lookup(String val)
+        {
 			BondingMode ret = (BondingMode) SharedUtil.lookupEnum( values(), val);
 
-			if (ret != null) {
+			if (ret != null)
+			{
 				ret = NONE;
 			}
 			
 			return ret;
-			
 		}
 	}
 

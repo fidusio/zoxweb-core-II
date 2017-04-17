@@ -1,12 +1,12 @@
 /*
- * Copyright 2012 ZoxWeb.com LLC.
- * 
+ * Copyright (c) 2012-2017 ZoxWeb.com LLC.
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
  * the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
@@ -17,10 +17,6 @@ package org.zoxweb.server.http.servlet;
 
 import java.io.IOException;
 
-
-
-
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -30,14 +26,10 @@ import org.zoxweb.shared.data.FileInfoDAO;
 import org.zoxweb.shared.security.AccessException;
 import org.zoxweb.shared.security.AuthenticationHandler;
 
-
 public interface HTTPDownloadHandler
-extends AuthenticationHandler<HttpServletRequest, HttpServletResponse>
+    extends AuthenticationHandler<HttpServletRequest, HttpServletResponse>
 {
-	
 
-	
-	
 	/**
 	 * Locate the file info source
 	 * @param request http request
@@ -47,12 +39,7 @@ extends AuthenticationHandler<HttpServletRequest, HttpServletResponse>
 	 * @throws IOException IO error
 	 */
 	FileInfoStreamSource lookupFileInfoSource(HttpServletRequest request, HTTPRequestAttributes attributes)
-					  throws AccessException, IOException;
-	
-	
-	
-	
-	
+        throws AccessException, IOException;
 	
 	/**
 	 * Update the file info dao
@@ -61,6 +48,6 @@ extends AuthenticationHandler<HttpServletRequest, HttpServletResponse>
 	 * @throws IOException IO error
 	 */
 	 void updatedFileInfoDAO(FileInfoDAO fileInfo) 
-			 throws AccessException, IOException;
+         throws AccessException, IOException;
 	
 }
