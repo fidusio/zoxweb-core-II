@@ -25,7 +25,8 @@ public class RangeValueDAO
     extends SetNameDescriptionDAO
 {
 
-    public enum LimitType {
+    public enum LimitType
+    {
         NUMBER,
         OPEN_VALUE,
 
@@ -75,33 +76,41 @@ public class RangeValueDAO
         super(NVC_RANGE_VALUE_DAO);
     }
 
-    public LimitType getLimitType() {
+    public LimitType getLimitType()
+    {
         return lookupValue(Param.TYPE);
     }
 
-    public void setLimitType(LimitType type) {
+    public void setLimitType(LimitType type)
+    {
         setValue(Param.TYPE, type);
     }
 
-    public int getValue() {
+    public int getValue()
+    {
         return lookupValue(Param.VALUE);
     }
 
-    public void setValue(int value) {
+    public void setValue(int value)
+    {
         setValue(Param.VALUE, value);
     }
 
-    public boolean isExclusive() {
+    public boolean isExclusive()
+    {
         return lookupValue(Param.EXCLUSIVE);
     }
 
-    public void setExclusive(boolean exclusive) {
+    public void setExclusive(boolean exclusive)
+    {
         setValue(Param.EXCLUSIVE, exclusive);
     }
 
     @Override
-    public String toString() {
-        if (getValue() > 0) {
+    public String toString()
+    {
+        if (getValue() > 0)
+        {
             return "" + getValue();
         }
 

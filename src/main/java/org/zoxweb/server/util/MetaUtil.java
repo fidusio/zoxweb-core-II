@@ -18,11 +18,8 @@ package org.zoxweb.server.util;
 import java.util.HashMap;
 import java.util.UUID;
 
-import org.zoxweb.shared.util.NVConfigEntity;
-import org.zoxweb.shared.util.NVEntity;
-import org.zoxweb.shared.util.SetCanonicalID;
-import org.zoxweb.shared.util.SharedUtil;
-import org.zoxweb.shared.util.TimeStamp;
+import org.zoxweb.shared.util.*;
+import org.zoxweb.shared.util.TimeStampInterface;
 
 public class MetaUtil
 {
@@ -89,9 +86,9 @@ public class MetaUtil
     {
 		if (nve != null)
 		{
-			if (nve instanceof TimeStamp)
+			if (nve instanceof TimeStampInterface)
 			{
-				TimeStamp tsd = (TimeStamp) nve;
+				TimeStampInterface tsd = (TimeStampInterface) nve;
 
 				if (tsd.getCreationTime() == 0)
 				{
@@ -110,9 +107,9 @@ public class MetaUtil
     {
 		if (nve != null)
 		{
-			if (nve instanceof TimeStamp)
+			if (nve instanceof TimeStampInterface)
 			{
-				TimeStamp tsd = (TimeStamp) nve;
+				TimeStampInterface tsd = (TimeStampInterface) nve;
 				tsd.setLastTimeRead(System.currentTimeMillis());
 			}
 		}		
@@ -122,9 +119,9 @@ public class MetaUtil
     {
 		if (nve != null)
 		{
-			if (nve instanceof TimeStamp)
+			if (nve instanceof TimeStampInterface)
 			{
-				TimeStamp tsd = (TimeStamp) nve;
+				TimeStampInterface tsd = (TimeStampInterface) nve;
 				tsd.setLastTimeUpdated(System.currentTimeMillis());
 			}
 		}		

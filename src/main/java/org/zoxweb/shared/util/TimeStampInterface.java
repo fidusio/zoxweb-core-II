@@ -20,7 +20,7 @@ import java.io.Serializable;
 /**
  * The timestamp interface.
  */
-public interface TimeStamp
+public interface TimeStampInterface
     extends Serializable
 {
 

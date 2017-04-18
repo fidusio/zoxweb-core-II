@@ -2229,7 +2229,7 @@ public class SharedUtil
 		return lookup(list, name) != null;
 	}
 
-	public static <V extends TimeStamp> V touch(V ts, CRUD... ops)
+	public static <V extends TimeStampInterface> V touch(V ts, CRUD... ops)
     {
 		SharedUtil.checkIfNulls("Document info is null.", ts);
 

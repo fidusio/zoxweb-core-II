@@ -37,7 +37,7 @@ public class DataDAO
     implements SetCanonicalID
 {
 	
-	//private static final NVConfig NVC_TIME_STAMP =  NVConfigManager.createNVConfig("time_stamp", "This is the time stamp for when the message was generated.","TimeStamp",true, false, Long.class);
+	//private static final NVConfig NVC_TIME_STAMP =  NVConfigManager.createNVConfig("time_stamp", "This is the time stamp for when the message was generated.","TimeStampInterface",true, false, Long.class);
 	private static final NVConfig NVC_DATA =  NVConfigManager.createNVConfig("data", "This is the raw message in byte array format.","Data",true, false, byte[].class);
 	private static final NVConfig NVC_SOURCE_ID =  NVConfigManager.createNVConfig("source_id", "This is the source ID to identify the device within the system.","SourceID",true, false, String.class);
 	//private static final NVConfig NVC_SYSTEM_ID =  NVConfigManager.createNVConfig("system_id", "This is the system ID is the container of the source ID.","SystemID",true, false, String.class);

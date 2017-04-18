@@ -17,13 +17,8 @@ package org.zoxweb.shared.data;
 
 import java.util.Date;
 
-import org.zoxweb.shared.util.GetNVConfig;
-import org.zoxweb.shared.util.NVConfig;
-import org.zoxweb.shared.util.NVConfigEntity;
-import org.zoxweb.shared.util.NVConfigEntityLocal;
-import org.zoxweb.shared.util.NVConfigManager;
-import org.zoxweb.shared.util.SharedUtil;
-import org.zoxweb.shared.util.TimeStamp;
+import org.zoxweb.shared.util.*;
+import org.zoxweb.shared.util.TimeStampInterface;
 
 /**
  *
@@ -31,7 +26,7 @@ import org.zoxweb.shared.util.TimeStamp;
 @SuppressWarnings("serial")
 public abstract class TimeStampDAO
 	extends SetNameDescriptionDAO
-	implements TimeStamp
+	implements TimeStampInterface
 {
 	
 	public enum Param

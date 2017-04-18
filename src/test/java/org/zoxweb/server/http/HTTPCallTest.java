@@ -1,7 +1,20 @@
+/*
+ * Copyright (c) 2012-2017 ZoxWeb.com LLC.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
 package org.zoxweb.server.http;
 
-import org.zoxweb.server.http.HTTPCall;
-import org.zoxweb.server.http.HTTPUtil;
 import org.zoxweb.server.security.SSLCheckDisabler;
 import org.zoxweb.server.util.GSONUtil;
 import org.zoxweb.shared.http.HTTPMessageConfigInterface;
@@ -12,10 +25,10 @@ import org.zoxweb.shared.http.HTTPResponseData;
 import org.zoxweb.shared.net.InetSocketAddressDAO;
 import org.zoxweb.shared.util.NVPair;
 
-public class HTTPCallTest {
-
-	public static void main( String[] args) {
-
+public class HTTPCallTest
+{
+	public static void main(String[] args)
+    {
 		HTTPMessageConfigInterface hcc = new HTTPMessageConfig();
 		//hcc.setURL("http://10.0.1.15");
 		//hcc.setURI("amds/amds/amdsconfigservice");
@@ -44,9 +57,12 @@ public class HTTPCallTest {
 		
 		
 		
-		try {
+		try
+        {
 			HTTPUtil.addHTTPPatch();
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+        {
 			e.printStackTrace();
 		}
 
@@ -54,12 +70,15 @@ public class HTTPCallTest {
         long ts = System.currentTimeMillis();
 		long delta = 0;
 
-		try {
+		try
+        {
             HTTPResponseData rd = call.sendRequest();
 			delta = System.currentTimeMillis() - ts;
 			
 			System.out.println(rd);
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+        {
 			delta = System.currentTimeMillis() - ts;
 			e.printStackTrace();
 		}
@@ -67,7 +86,8 @@ public class HTTPCallTest {
 		System.out.println("send request took:" + (delta));
 		//hcc.setContent("Jello".getBytes());
 		
-		try {
+		try
+        {
 			String json = GSONUtil.toJSON((HTTPMessageConfig)hcc, true, true, true);
 			System.out.println(json);
 			
@@ -75,7 +95,9 @@ public class HTTPCallTest {
 			System.out.println(hccFromJson);
 			String json2 = GSONUtil.toJSON(hccFromJson, true, true, true);
 			System.out.println("json equals:"+json.equals(json2));
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+        {
 			e.printStackTrace();
 		}
 		

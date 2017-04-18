@@ -40,7 +40,7 @@ public class VMInfoDAO
 		TOTAL_MEMORY(NVConfigManager.createNVConfig("total_memory", "Total memory", "TotalMemory", true, true, Long.class)),
 		USED_MEMORY(NVConfigManager.createNVConfig("used_memory", "Used memory", "UsedMemory", true, true, Long.class)),
 		MAX_MEMORY(NVConfigManager.createNVConfig("max_memory", "Maximum memory", "MaxMemory", true, true, Long.class)),
-		TIME_STAMP(NVConfigManager.createNVConfig("time_stamp", "Time stamp", "TimeStamp", true, true, Date.class))
+		TIME_STAMP(NVConfigManager.createNVConfig("time_stamp", "Time stamp", "TimeStampInterface", true, true, Date.class))
 		
 		;
 

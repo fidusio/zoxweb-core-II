@@ -16,7 +16,7 @@
 package org.zoxweb.client.data.crypto;
 
 import org.zoxweb.shared.crypto.CryptoConst;
-import org.zoxweb.shared.crypto.CryptoHash;
+import org.zoxweb.shared.crypto.CryptoInterface;
 import org.zoxweb.shared.security.AccessSecurityException;
 import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
@@ -25,10 +25,10 @@ import org.zoxweb.shared.util.SharedUtil;
  *
  */
 public class CryptoClient
-	implements CryptoHash
+	implements CryptoInterface
 {
 
-	public static final CryptoHash SINGLETON = new CryptoClient();
+	public static final CryptoInterface SINGLETON = new CryptoClient();
 
 	protected CryptoClient()
 	{
@@ -64,7 +64,7 @@ public class CryptoClient
 	}
 
 	/**
-	 * @see CryptoHash#hash(java.lang.String, java.lang.String[])
+	 * @see CryptoInterface#hash(java.lang.String, java.lang.String[])
 	 */
 	@Override
 	public byte[] hash(String mdAlgo, String... tokens)

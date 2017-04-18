@@ -17,7 +17,7 @@ package org.zoxweb.shared.crypto;
 
 import org.zoxweb.shared.security.AccessSecurityException;
 
-public interface CryptoHash
+public interface CryptoInterface
 {
 
 	public byte[] hash(String mdAlgo, byte[]... tokens)

@@ -37,7 +37,7 @@ public class MoneyValueDAO
 {
 
 	/**
-	 * Sets the default currency to U.S. dollar (USD).
+	 * Default currency set to U.S. dollar (USD).
 	 */
 	public static Currency DEFAULT_CURRENCY = Currency.USD;
 	
@@ -139,33 +139,6 @@ public class MoneyValueDAO
 	}
 	
 	/**
-	 * Returns a string representation of the value and currency.
-	 * Examples: 
-	 * Value = 100.00 and currency = USD ($), returns $100.00,
-	 * Value = -100.00 and currency = USD ($), returns -$100.00
-	 */
-	@Override
-	public String toString()
-	{
-		String ret = null;
-		
-		if (getValue() != null && getCurrency() != null)
-		{
-			
-			if (getValue().signum() < 0)
-			{
-				ret = "-" + getCurrency().getValue() + getValue().abs();
-			}
-			else
-			{
-				ret = getCurrency().getValue() + getValue();
-			}
-		}
-		
-		return ret;
-	}
-	
-	/**
 	 * Returns the currency.
 	 * @return currency
 	 */
@@ -191,7 +164,10 @@ public class MoneyValueDAO
 	{
 		BigDecimal ret = lookupValue(Params.VALUE);
 		if (ret != null)
-		 ret = ret.setScale(2);
+		{
+		    ret = ret.setScale(2);
+        }
+
 		return ret;
 	}
 	
@@ -212,5 +188,31 @@ public class MoneyValueDAO
 	{
 		return toString();
 	}
-	
+
+    /**
+     * Returns a string representation of the value and currency.
+     * Examples:
+     * Value = 100.00 and currency = USD ($), returns $100.00,
+     * Value = -100.00 and currency = USD ($), returns -$100.00
+     */
+    @Override
+    public String toString()
+    {
+        String ret = null;
+
+        if (getValue() != null && getCurrency() != null)
+        {
+
+            if (getValue().signum() < 0)
+            {
+                ret = "-" + getCurrency().getValue() + getValue().abs();
+            }
+            else
+            {
+                ret = getCurrency().getValue() + getValue();
+            }
+        }
+
+        return ret;
+    }
 }
