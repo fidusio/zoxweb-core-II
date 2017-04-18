@@ -31,6 +31,6 @@ public final class DateTimeUtil
 		
 	}
 	
-	public final static TimeZone GMT_TZ= TimeZone.createTimeZone(0);
+	public static final  TimeZone GMT_TZ= TimeZone.createTimeZone(0);
 
 }

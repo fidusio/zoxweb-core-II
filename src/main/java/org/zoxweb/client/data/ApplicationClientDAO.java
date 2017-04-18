@@ -75,7 +75,7 @@ public class ApplicationClientDAO
 	@Override
 	public void callBackEnded()
 	{
-		
+		// no impl
 	}
 
 	@Override

@@ -52,6 +52,7 @@ public class BillingItemDAO
 			cType = c;
 		}
 		
+		@Override
 		public NVConfig getNVConfig() 
 		{
 			return cType;
