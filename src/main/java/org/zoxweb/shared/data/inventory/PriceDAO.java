@@ -41,7 +41,7 @@ public class PriceDAO
         {
             this.nvc = nvc;
         }
-
+        @Override
         public NVConfig getNVConfig()
         {
             return nvc;

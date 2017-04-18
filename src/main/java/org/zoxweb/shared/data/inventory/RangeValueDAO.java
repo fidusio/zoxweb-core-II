@@ -49,7 +49,7 @@ public class RangeValueDAO
         {
             this.nvc = nvc;
         }
-
+        @Override
         public NVConfig getNVConfig()
         {
             return nvc;
@@ -110,12 +110,7 @@ public class RangeValueDAO
     @Override
     public String toString()
     {
-        if (getValue() > 0)
-        {
-            return "" + getValue();
-        }
-
-        return "";
+        return Integer.toString(getValue());
     }
 
 }
