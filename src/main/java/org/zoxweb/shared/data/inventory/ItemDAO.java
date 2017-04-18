@@ -19,6 +19,7 @@ import org.zoxweb.shared.accounting.MoneyValueDAO;
 import org.zoxweb.shared.data.SetNameDescriptionDAO;
 import org.zoxweb.shared.util.*;
 
+@SuppressWarnings("serial")
 public class ItemDAO
     extends SetNameDescriptionDAO
 {

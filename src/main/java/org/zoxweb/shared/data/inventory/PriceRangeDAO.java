@@ -23,6 +23,7 @@ import java.util.List;
 /**
  *
  */
+@SuppressWarnings("serial")
 public class PriceRangeDAO
     extends SetNameDescriptionDAO
 {

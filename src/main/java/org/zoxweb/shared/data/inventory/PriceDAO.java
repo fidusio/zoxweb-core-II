@@ -22,6 +22,7 @@ import org.zoxweb.shared.util.*;
 /**
  * Created on 4/16/17
  */
+@SuppressWarnings("serial")
 public class PriceDAO
     extends SetNameDescriptionDAO
 {

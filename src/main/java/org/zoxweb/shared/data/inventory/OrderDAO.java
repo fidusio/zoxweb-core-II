@@ -18,6 +18,7 @@ package org.zoxweb.shared.data.inventory;
 import org.zoxweb.shared.data.SetNameDescriptionDAO;
 import org.zoxweb.shared.util.*;
 
+@SuppressWarnings("serial")
 public class OrderDAO
     extends SetNameDescriptionDAO
 {
