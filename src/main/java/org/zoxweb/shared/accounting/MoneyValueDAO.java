@@ -147,6 +147,30 @@ public class MoneyValueDAO
 		return lookupValue(Params.CURRENCY);
 	}
 	
+	
+	public boolean equals(Object obj)
+	{
+		if (obj != null)
+		{
+			
+			if (obj instanceof MoneyValueDAO)
+			{
+				MoneyValueDAO mvd = (MoneyValueDAO) obj;
+				if (mvd.getCurrency() == getCurrency() && mvd.getValue().equals(getValue()))
+				{
+					return true;
+				}
+				
+			}
+			else if (obj instanceof BigDecimal)
+			{
+				return getValue().equals(obj);
+			}
+			
+		}
+		
+		return false;
+	}
 	/**
 	 * Sets the currency.
 	 * @param currency
