@@ -17,7 +17,7 @@ package org.zoxweb.shared.util;
 
 import java.util.Arrays;
 
-import org.apache.commons.codec.binary.Base64;
+//import org.apache.commons.codec.binary.Base64;
 
 public class Base64Test {
 
@@ -59,8 +59,8 @@ public class Base64Test {
 			ts = System.nanoTime() - ts;
 
 			long ts1 = System.nanoTime();
-			byte apache64Encoded[] = Base64.encodeBase64(toEncode);//.encodeBase64(toEncode);
-			byte apache64Decodded[] = Base64.decodeBase64(apache64Encoded);
+			byte apache64Encoded[] = SharedBase64.encode(toEncode);//Base64.encodeBase64(toEncode);//.encodeBase64(toEncode);
+			byte apache64Decodded[] = SharedBase64.decode(sharedEncodedeBase64);//Base64.decodeBase64(apache64Encoded);
 			ts1 = System.nanoTime() - ts1;
 
 			long ts2 = System.nanoTime();
