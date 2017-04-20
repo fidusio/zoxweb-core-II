@@ -201,28 +201,34 @@
         	<artifactId>commons-codec</artifactId>
         	<version>${common-codec.version}</version>
 		</dependency>
+		<!--  
         <dependency>
             <groupId>com.rabbitmq</groupId>
             <artifactId>amqp-client</artifactId>
             <version>${rabbitmq-client.version}</version>
         </dependency>
+        -->
         <!-- https://mvnrepository.com/artifact/javax/javaee-api -->
+        <!--  
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
             <version>${javaee-api.version}</version>
         </dependency>
+        -->
         <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>${hibernate.version}</version>
         </dependency>
+        <!-- 
         <dependency>
             <groupId>org.apache.derby</groupId>
             <artifactId>derbyclient</artifactId>
             <version>${apache.derby.version}</version>
         </dependency>
+        -->
         <dependency>
             <groupId>org.apache.derby</groupId>
             <artifactId>derby</artifactId>
