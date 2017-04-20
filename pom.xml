@@ -56,6 +56,8 @@
         <rabbitmq-client.version>4.1.0</rabbitmq-client.version>
 		<ehcache.version>2.10.3</ehcache.version>
 		<maven-plugin.version>3.6.1</maven-plugin.version>
+		<maven-plugin-source.version>3.0.1</maven-plugin-source.version>
+		<maven-javadoc.version>2.10.4</maven-javadoc.version>
         <javaee-api.version>7.0</javaee-api.version>
         <persistence.version>1.0</persistence.version>
         <hibernate.version>5.2.9.Final</hibernate.version>
@@ -90,6 +92,7 @@
                 <plugin>
 			      <groupId>org.apache.maven.plugins</groupId>
 			      <artifactId>maven-source-plugin</artifactId>
+			       <version>${maven-plugin-source.version}</version>
 			      <executions>
 			        <execution>
 			          <id>attach-sources</id>
@@ -103,6 +106,7 @@
 		        <plugin>
 			      <groupId>org.apache.maven.plugins</groupId>
 			      <artifactId>maven-javadoc-plugin</artifactId>
+			      <version>${maven-javadoc.version}</version>
 			      <configuration>
 			      	 <failOnError>false</failOnError>
 			      </configuration>
