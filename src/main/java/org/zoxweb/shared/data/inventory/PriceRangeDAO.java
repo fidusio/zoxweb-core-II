@@ -31,7 +31,7 @@ public class PriceRangeDAO
     public enum Param
         implements GetNVConfig
     {
-        PRICES_LIST(NVConfigManager.createNVConfigEntity("prices_list", "List of prices", "Prices", false, true, PriceDAO.NVC_PRICE_DAO, NVConfigEntity.ArrayType.LIST)),
+        PRICE_LIST(NVConfigManager.createNVConfigEntity("price_list", "List of prices", "Prices", false, true, PriceDAO.NVC_PRICE_DAO, NVConfigEntity.ArrayType.LIST)),
 
         ;
 
@@ -64,22 +64,27 @@ public class PriceRangeDAO
     );
 
 
-    /**
-     * This is the default constructor.
-     */
     public PriceRangeDAO()
     {
         super(NVC_PRICE_RANGE_DAO);
     }
 
-    public List<PriceDAO> getPricesList()
+    /**
+     * Returns list of prices.
+     * @return
+     */
+    public List<PriceDAO> getPriceList()
     {
-        return lookupValue(Param.PRICES_LIST);
+        return lookupValue(Param.PRICE_LIST);
     }
 
-    public void setPricesList(List<PriceDAO> list)
+    /**
+     * Sets list of prices.
+     * @param list
+     */
+    public void setPriceList(List<PriceDAO> list)
     {
-        setValue(Param.PRICES_LIST, list);
+        setValue(Param.PRICE_LIST, list);
     }
 
 }

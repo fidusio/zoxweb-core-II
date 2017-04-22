@@ -13,21 +13,17 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.zoxweb.shared.inventory;
+package org.zoxweb.shared.data.inventory;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-import org.zoxweb.shared.data.inventory.RangeDAO;
-import org.zoxweb.shared.data.inventory.RangeValueDAO;
-
-/**
- * Created on 4/16/17
- */
-public class RangeDAOTest {
+public class RangeDAOTest
+{
 
     @Test
-    public void testRangeDAO() {
+    public void testRangeDAO()
+    {
         RangeDAO rangeDAO = new RangeDAO();
 
         RangeValueDAO startRangeValueDAO = new RangeValueDAO();

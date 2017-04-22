@@ -67,37 +67,69 @@ public class ItemDAO
         super(NVC_ITEM_DAO);
     }
 
+    /**
+     * Returns the display name.
+     * @return
+     */
     public String getDisplayName() {
         return lookupValue(Param.DISPLAY_NAME);
     }
 
+    /**
+     * Sets the display name.
+     * @param displayName
+     */
     public void setDisplayName(String displayName)
     {
         setValue(Param.DISPLAY_NAME, displayName);
     }
 
+    /**
+     * Returns the price range.
+     * @return
+     */
     public PriceRangeDAO getPriceRange() {
         return lookupValue(Param.PRICE_RANGE);
     }
 
+    /**
+     * Sets the price range.
+     * @param priceRange
+     */
     public void setPriceRange(PriceRangeDAO priceRange)
     {
         setValue(Param.PRICE_RANGE, priceRange);
     }
 
+    /**
+     * Returns the available quantity.
+     * @return
+     */
     public int getAvailableQuantity() {
         return lookupValue(Param.AVAILABLE_QUANTITY);
     }
 
+    /**
+     * Sets the available quantity.
+     * @param availableQuantity
+     */
     public void setAvailableQuantity(int availableQuantity)
     {
         setValue(Param.AVAILABLE_QUANTITY, availableQuantity);
     }
 
+    /**
+     * Returns the unit price.
+     * @return
+     */
     public MoneyValueDAO getUnitPrice() {
         return lookupValue(Param.UNIT_PRICE);
     }
 
+    /**
+     * Sets the unit price.
+     * @param unitPrice
+     */
     public void setUnitPrice(MoneyValueDAO unitPrice)
     {
         setValue(Param.UNIT_PRICE, unitPrice);

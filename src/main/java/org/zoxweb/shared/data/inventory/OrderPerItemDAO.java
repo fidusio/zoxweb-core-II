@@ -62,27 +62,42 @@ public class OrderPerItemDAO
             SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO
     );
 
-
     public OrderPerItemDAO()
     {
         super(NVC_ORDER_PER_ITEM_DAO);
     }
 
+    /**
+     * Returns the item.
+     * @return
+     */
     public ItemDAO getItem()
     {
         return lookupValue(Param.ITEM);
     }
 
+    /**
+     * Sets the item.
+     * @param item
+     */
     public void setItem(ItemDAO item)
     {
         setValue(Param.ITEM, item);
     }
 
+    /**
+     * Returns the quantity.
+     * @return
+     */
     public int getQuantity()
     {
         return lookupValue(Param.QUANTITY);
     }
 
+    /**
+     * Sets the quantity.
+     * @param quantity
+     */
     public void setQuantity(int quantity)
     {
         setValue(Param.QUANTITY, quantity);
