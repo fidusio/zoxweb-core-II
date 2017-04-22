@@ -71,21 +71,37 @@ public class RangeDAO
         setEnd(end);
     }
 
+    /**
+     * Returns the range start value.
+     * @return
+     */
     public RangeValueDAO getStart()
     {
         return lookupValue(Param.START);
     }
 
+    /**
+     * Sets the range start value.
+     * @param start
+     */
     public void setStart(RangeValueDAO start)
     {
         setValue(Param.START, start);
     }
 
+    /**
+     * Returns the range end value.
+     * @return
+     */
     public RangeValueDAO getEnd()
     {
         return lookupValue(Param.END);
     }
 
+    /**
+     * Sets the range end value.
+     * @param end
+     */
     public void setEnd(RangeValueDAO end)
     {
         setValue(Param.END, end);

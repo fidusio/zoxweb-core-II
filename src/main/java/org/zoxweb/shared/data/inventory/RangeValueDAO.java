@@ -77,31 +77,61 @@ public class RangeValueDAO
         super(NVC_RANGE_VALUE_DAO);
     }
 
+    public RangeValueDAO(int value)
+    {
+        this();
+        setValue(value);
+    }
+
+    /**
+     * Returns the limit type.
+     * @return
+     */
     public LimitType getLimitType()
     {
         return lookupValue(Param.TYPE);
     }
 
+    /**
+     * Sets the limit type.
+     * @param type
+     */
     public void setLimitType(LimitType type)
     {
         setValue(Param.TYPE, type);
     }
 
+    /**
+     * Returns the value.
+     * @return
+     */
     public int getValue()
     {
         return lookupValue(Param.VALUE);
     }
 
+    /**
+     * Sets the value.
+     * @param value
+     */
     public void setValue(int value)
     {
         setValue(Param.VALUE, value);
     }
 
+    /**
+     * Checks if value is exclusive.
+     * @return
+     */
     public boolean isExclusive()
     {
         return lookupValue(Param.EXCLUSIVE);
     }
 
+    /**
+     * Sets value as exclusive.
+     * @param exclusive
+     */
     public void setExclusive(boolean exclusive)
     {
         setValue(Param.EXCLUSIVE, exclusive);

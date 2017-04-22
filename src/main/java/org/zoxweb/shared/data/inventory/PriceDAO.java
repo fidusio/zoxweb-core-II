@@ -20,7 +20,7 @@ import org.zoxweb.shared.data.SetNameDescriptionDAO;
 import org.zoxweb.shared.util.*;
 
 /**
- * Created on 4/16/17
+ *
  */
 @SuppressWarnings("serial")
 public class PriceDAO
@@ -76,25 +76,45 @@ public class PriceDAO
         setPrice(price);
     }
 
+    /**
+     * Returns the range.
+     * @return
+     */
     public RangeDAO getRange()
     {
         return lookupValue(Param.RANGE);
     }
 
+    /**
+     * Sets the range.
+     * @param range
+     */
     public void setRange(RangeDAO range)
     {
         setValue(Param.RANGE, range);
     }
 
+    /**
+     * Returns the price
+     * @return
+     */
     public MoneyValueDAO getPrice()
     {
         return lookupValue(Param.PRICE);
     }
 
+    /**
+     * Sets the price.
+     * @param price
+     */
     public void setPrice(MoneyValueDAO price)
     {
         setValue(Param.PRICE, price);
     }
 
+    @Override
+    public String toString() {
+        return getRange() + " : " + getPrice();
+    }
 
 }
