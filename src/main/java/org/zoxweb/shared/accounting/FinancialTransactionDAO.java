@@ -39,7 +39,7 @@ public class FinancialTransactionDAO
 	/**
 	 * Sets the default transaction type to credit.
 	 */
-	public static TransactionType DEFAULT_TT = TransactionType.CREDIT;
+	public static final TransactionType DEFAULT_TT = TransactionType.CREDIT;
 	
 	public enum Params
 		implements GetNVConfig
@@ -59,7 +59,7 @@ public class FinancialTransactionDAO
 		{
 			cType = c;
 		}
-		
+		@Override
 		public NVConfig getNVConfig() 
 		{
 			return cType;

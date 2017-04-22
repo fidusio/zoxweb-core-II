@@ -14,7 +14,7 @@
  * the License.
  */
 package org.zoxweb;
-
+/*
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.AMQP.BasicProperties;
@@ -25,9 +25,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.zoxweb.shared.util.Const.Bool;
-
+*/
 public class RabbitMQSend {
-
+/*
 	private  static String EXCHANGE = "";
 
 	public static void main(String[] args) {
@@ -97,5 +97,5 @@ public class RabbitMQSend {
 		
 //		System.out.println("Total sent " + repeat + " it took " + ts millis);
 	}
-
+*/
 }

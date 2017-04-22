@@ -39,7 +39,7 @@ public class ItemDAO
         {
             this.nvc = nvc;
         }
-
+        @Override
         public NVConfig getNVConfig()
         {
             return nvc;

@@ -39,7 +39,7 @@ public class MoneyValueDAO
 	/**
 	 * Default currency set to U.S. dollar (USD).
 	 */
-	public static Currency DEFAULT_CURRENCY = Currency.USD;
+	public static final Currency DEFAULT_CURRENCY = Currency.USD;
 	
 	public enum Params
 		implements GetNVConfig
@@ -56,6 +56,7 @@ public class MoneyValueDAO
 			cType = c;
 		}
 		
+		@Override
 		public NVConfig getNVConfig()
 		{
 			return cType;
@@ -126,7 +127,7 @@ public class MoneyValueDAO
 	 */
 	public MoneyValueDAO(float amount)
 	{
-		this(new BigDecimal(amount), DEFAULT_CURRENCY);
+		this(BigDecimal.valueOf(amount), DEFAULT_CURRENCY);
 	}
 	
 	/**
@@ -147,6 +148,30 @@ public class MoneyValueDAO
 		return lookupValue(Params.CURRENCY);
 	}
 	
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (obj != null)
+		{
+			
+			if (obj instanceof MoneyValueDAO)
+			{
+				MoneyValueDAO mvd = (MoneyValueDAO) obj;
+				if (mvd.getCurrency() == getCurrency() && mvd.getValue().equals(getValue()))
+				{
+					return true;
+				}
+				
+			}
+			else if (obj instanceof BigDecimal)
+			{
+				return getValue().equals(obj);
+			}
+			
+		}
+		
+		return false;
+	}
 	/**
 	 * Sets the currency.
 	 * @param currency

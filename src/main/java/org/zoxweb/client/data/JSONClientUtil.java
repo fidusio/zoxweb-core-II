@@ -132,7 +132,7 @@ public class JSONClientUtil
 		
 		for (int i = 0; i < values.size(); i++)
 		{
-			ret.add( fromJSON(null, (JSONObject) values.get(i), nveFactory));
+			ret.add(fromJSON(null, (JSONObject) values.get(i), nveFactory));
 		}
 		
 		return ret;
@@ -628,7 +628,7 @@ public class JSONClientUtil
 						}
 						else
 						{
-							byte base64[] = SharedBase64.encode( ((NVBlob)nvb).getValue());
+							byte[] base64 = SharedBase64.encode( ((NVBlob)nvb).getValue());
 							jsonObject.put(nvc.getName(), new JSONString(new String(base64)));
 							
 						}

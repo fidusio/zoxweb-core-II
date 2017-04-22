@@ -56,7 +56,7 @@ public class TransactionDAOTest {
 	
 	@Test
 	public void testGetTransactionAmount() {
-		assertEquals("Amount verification: ", new BigDecimal("100.00"), transaction.getAmount());
+		assertEquals("Amount verification: ", transaction.getAmount(), new BigDecimal("100.00"));
 	}
 	
 	@Test(expected = NullPointerException.class)

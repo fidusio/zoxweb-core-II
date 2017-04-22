@@ -36,7 +36,7 @@ public class RangeDAO
         {
             this.nvc = nvc;
         }
-
+        @Override
         public NVConfig getNVConfig()
         {
             return nvc;

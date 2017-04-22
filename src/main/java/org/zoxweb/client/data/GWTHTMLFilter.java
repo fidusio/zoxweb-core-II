@@ -20,22 +20,27 @@ import com.google.gwt.regexp.shared.RegExp;
 public class GWTHTMLFilter
 {
 	
-	public final static String tagStart =
+	public static final String TAG_START =
 		"^\\<\\w+((\\s+\\w+(\\s*\\=\\s*(?:\".*?\"|'.*?'|[^'\"\\>\\s]+))?)+\\s*|\\s*)\\>";
-	public final static String tagEnd =
+	public static final String TAG_END =
 	    "\\</\\w+\\>$";
-	public final static String tagSelfClosing =
+	public static final String TAG_SELG_CLOSING =
 	    "\\<\\w+((\\s+\\w+(\\s*\\=\\s*(?:\".*?\"|'.*?'|[^'\"\\>\\s]+))?)+\\s*|\\s*)/\\>";
-	public final static String htmlEntity =
+	public static final String HTML_ENTITY =
 	    "&[a-zA-Z][a-zA-Z0-9]+;";
 	    
+	
+	private GWTHTMLFilter()
+	{
+		
+	}
     /**
      * The HTML format pattern.
      */
-    public final static RegExp htmlPattern = 
+	public static final RegExp HTML_PATTERN = 
     		RegExp.compile
 		(
-			"(" + tagStart + ".*" + tagEnd + ")|(" + tagSelfClosing + ")|(" + htmlEntity +")"
+			"(" + TAG_START + ".*" + TAG_END + ")|(" + TAG_SELG_CLOSING + ")|(" + HTML_ENTITY +")"
 		);
 
 
@@ -50,7 +55,7 @@ public class GWTHTMLFilter
         
         if (str != null)
         {
-            ret = htmlPattern.test(str);
+            ret = HTML_PATTERN.test(str);
         }
         
         return ret;
