@@ -28,6 +28,7 @@ import org.zoxweb.shared.util.NVPair;
 
 public class HibernateDataStoreTest {
 
+	// local datatore
     private static HibernateDataStore dataStore;
     private static final String RESOURCE_FILE = "hibernate.cfg.xml";
 
