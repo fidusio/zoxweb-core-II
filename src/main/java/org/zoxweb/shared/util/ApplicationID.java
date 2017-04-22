@@ -17,7 +17,7 @@ package org.zoxweb.shared.util;
 
 /**
  * The application ID interface is used to set an ID for each application running under a 
- * particular domain ID.
+ * particular domain ID or application. 
  * @author mzebib
  */
 public interface ApplicationID<T>
