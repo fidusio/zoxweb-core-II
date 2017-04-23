@@ -13,10 +13,11 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.zoxweb.shared.data.inventory;
+package org.zoxweb.shared.data.order;
 
 import org.zoxweb.shared.data.*;
 import org.zoxweb.shared.util.*;
+
 @SuppressWarnings("serial")
 public class RangeDAO
     extends SetNameDescriptionDAO
@@ -25,8 +26,8 @@ public class RangeDAO
     public enum Param
         implements GetNVConfig
     {
-        START(NVConfigManager.createNVConfigEntity("start", "Start range", "Start Range", true, true, RangeValueDAO.class, NVConfigEntity.ArrayType.NOT_ARRAY)),
-        END(NVConfigManager.createNVConfigEntity("end", "End range", "End Range", true, true, RangeValueDAO.class, NVConfigEntity.ArrayType.NOT_ARRAY)),
+        START(NVConfigManager.createNVConfigEntity("start", "Start range", "Start Range", true, true, LimitValueDAO.class, NVConfigEntity.ArrayType.NOT_ARRAY)),
+        END(NVConfigManager.createNVConfigEntity("end", "End range", "End Range", true, true, LimitValueDAO.class, NVConfigEntity.ArrayType.NOT_ARRAY)),
 
         ;
 
@@ -36,6 +37,7 @@ public class RangeDAO
         {
             this.nvc = nvc;
         }
+        
         @Override
         public NVConfig getNVConfig()
         {
@@ -64,7 +66,7 @@ public class RangeDAO
         super(NVC_RANGE_DAO);
     }
 
-    public RangeDAO(RangeValueDAO start, RangeValueDAO end)
+    public RangeDAO(LimitValueDAO start, LimitValueDAO end)
     {
         this();
         setStart(start);
@@ -75,7 +77,7 @@ public class RangeDAO
      * Returns the range start value.
      * @return
      */
-    public RangeValueDAO getStart()
+    public LimitValueDAO getStart()
     {
         return lookupValue(Param.START);
     }
@@ -84,7 +86,7 @@ public class RangeDAO
      * Sets the range start value.
      * @param start
      */
-    public void setStart(RangeValueDAO start)
+    public void setStart(LimitValueDAO start)
     {
         setValue(Param.START, start);
     }
@@ -93,7 +95,7 @@ public class RangeDAO
      * Returns the range end value.
      * @return
      */
-    public RangeValueDAO getEnd()
+    public LimitValueDAO getEnd()
     {
         return lookupValue(Param.END);
     }
@@ -102,7 +104,7 @@ public class RangeDAO
      * Sets the range end value.
      * @param end
      */
-    public void setEnd(RangeValueDAO end)
+    public void setEnd(LimitValueDAO end)
     {
         setValue(Param.END, end);
     }

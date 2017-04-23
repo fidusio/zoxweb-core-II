@@ -13,8 +13,9 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.zoxweb.shared.data.inventory;
+package org.zoxweb.shared.data.order;
 
+import org.zoxweb.shared.accounting.MoneyValueDAO;
 import org.zoxweb.shared.data.SetNameDescriptionDAO;
 import org.zoxweb.shared.util.*;
 
@@ -41,6 +42,7 @@ public class PriceRangeDAO
         {
             this.nvc = nvc;
         }
+        
         @Override
         public NVConfig getNVConfig()
         {
@@ -86,5 +88,23 @@ public class PriceRangeDAO
     {
         setValue(Param.PRICE_LIST, list);
     }
+    
+	public MoneyValueDAO caclculatePrice(int quantity) 
+	{
+		MoneyValueDAO ret = null;
+		
+		if (getPriceList() != null) 
+		{
+			for (PriceDAO priceDAO : getPriceList()) 
+			{
+				if (priceDAO.isWithinRange(quantity)) {
+					ret = priceDAO.getPrice();
+					break;
+				}
+			}
+		}
+		
+		return ret;
+	}
 
 }

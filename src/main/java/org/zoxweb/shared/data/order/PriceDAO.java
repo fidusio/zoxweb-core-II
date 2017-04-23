@@ -13,10 +13,11 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.zoxweb.shared.data.inventory;
+package org.zoxweb.shared.data.order;
 
 import org.zoxweb.shared.accounting.MoneyValueDAO;
 import org.zoxweb.shared.data.SetNameDescriptionDAO;
+import org.zoxweb.shared.data.order.LimitValueDAO.LimitType;
 import org.zoxweb.shared.util.*;
 
 /**
@@ -41,6 +42,7 @@ public class PriceDAO
         {
             this.nvc = nvc;
         }
+        
         @Override
         public NVConfig getNVConfig()
         {
@@ -111,7 +113,55 @@ public class PriceDAO
     {
         setValue(Param.PRICE, price);
     }
-
+    
+	public boolean isWithinRange(int quantity) 
+	{
+		if (getRange() != null) 
+		{
+			LimitValueDAO rangeStart = getRange().getStart();
+			LimitValueDAO rangeEnd = getRange().getEnd();
+			
+			boolean higherThanStart = false;
+			boolean lowerThanEnd = false;
+			
+			if (rangeStart.getLimitType() != null && rangeStart.getLimitType() == LimitType.OPEN_VALUE)
+			{
+				higherThanStart = true;
+			} 
+			else 
+			{
+				if (rangeStart.isExclusive()) 
+				{
+					higherThanStart = quantity > rangeStart.getValue();
+				} else {
+					higherThanStart = quantity >= rangeStart.getValue();
+				}
+			}
+		
+			if (rangeEnd.getLimitType() != null && rangeEnd.getLimitType() == LimitType.OPEN_VALUE) 
+			{
+				lowerThanEnd = true;
+			} 
+			else 
+			{
+				if (rangeEnd.isExclusive())
+				{
+					lowerThanEnd = quantity < rangeEnd.getValue();
+				} else {
+					lowerThanEnd = quantity <= rangeEnd.getValue();
+				}
+			}
+			
+			
+			if (higherThanStart && lowerThanEnd) 
+			{
+				return true;
+			}
+		}
+		
+		return false;
+	}
+    
     @Override
     public String toString() {
         return getRange() + " : " + getPrice();

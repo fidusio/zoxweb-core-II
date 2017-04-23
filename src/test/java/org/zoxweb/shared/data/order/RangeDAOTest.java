@@ -13,10 +13,12 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.zoxweb.shared.data.inventory;
+package org.zoxweb.shared.data.order;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.zoxweb.shared.data.order.LimitValueDAO;
+import org.zoxweb.shared.data.order.RangeDAO;
 
 public class RangeDAOTest
 {
@@ -26,11 +28,11 @@ public class RangeDAOTest
     {
         RangeDAO rangeDAO = new RangeDAO();
 
-        RangeValueDAO startRangeValueDAO = new RangeValueDAO();
+        LimitValueDAO startRangeValueDAO = new LimitValueDAO();
         startRangeValueDAO.setValue(1);
         Assert.assertEquals(1, startRangeValueDAO.getValue());
 
-        RangeValueDAO endRangeValueDAO = new RangeValueDAO();
+        LimitValueDAO endRangeValueDAO = new LimitValueDAO();
         endRangeValueDAO.setValue(100);
         Assert.assertEquals(100, endRangeValueDAO.getValue());
 

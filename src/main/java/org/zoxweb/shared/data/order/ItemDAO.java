@@ -13,9 +13,8 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.zoxweb.shared.data.inventory;
+package org.zoxweb.shared.data.order;
 
-import org.zoxweb.shared.accounting.MoneyValueDAO;
 import org.zoxweb.shared.data.SetNameDescriptionDAO;
 import org.zoxweb.shared.util.*;
 
@@ -23,13 +22,13 @@ import org.zoxweb.shared.util.*;
 public class ItemDAO
     extends SetNameDescriptionDAO
 {
+	
     public enum Param
         implements GetNVConfig
     {
         DISPLAY_NAME(NVConfigManager.createNVConfig("display_name", "Item display name", "Display Name", true, true, String.class)),
         PRICE_RANGE(NVConfigManager.createNVConfigEntity("price_range", "Price range", "Price Range", true, true, PriceRangeDAO.class, NVConfigEntity.ArrayType.NOT_ARRAY)),
         AVAILABLE_QUANTITY(NVConfigManager.createNVConfig("available_quantity", "Available quantity", "Available Quantity", true, true, int.class)),
-        UNIT_PRICE(NVConfigManager.createNVConfigEntity("unit_price", "Unit price", "Unit Price", true, true, MoneyValueDAO.class, NVConfigEntity.ArrayType.NOT_ARRAY)),
 
         ;
 
@@ -39,6 +38,7 @@ public class ItemDAO
         {
             this.nvc = nvc;
         }
+        
         @Override
         public NVConfig getNVConfig()
         {
@@ -116,23 +116,6 @@ public class ItemDAO
     public void setAvailableQuantity(int availableQuantity)
     {
         setValue(Param.AVAILABLE_QUANTITY, availableQuantity);
-    }
-
-    /**
-     * Returns the unit price.
-     * @return
-     */
-    public MoneyValueDAO getUnitPrice() {
-        return lookupValue(Param.UNIT_PRICE);
-    }
-
-    /**
-     * Sets the unit price.
-     * @param unitPrice
-     */
-    public void setUnitPrice(MoneyValueDAO unitPrice)
-    {
-        setValue(Param.UNIT_PRICE, unitPrice);
     }
 
 }

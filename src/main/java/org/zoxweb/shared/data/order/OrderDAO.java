@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.zoxweb.shared.data.inventory;
+package org.zoxweb.shared.data.order;
 
 import org.zoxweb.shared.accounting.MoneyValueDAO;
 import org.zoxweb.shared.data.SetNameDescriptionDAO;
@@ -26,25 +26,12 @@ public class OrderDAO
     extends SetNameDescriptionDAO
 {
 
-    public enum OrderStatus {
-        PENDING,
-        IN_PROGRESS,
-        COMPLETED,
-        DELIVERED
-    }
-
     public enum Param
         implements GetNVConfig
     {
-
-        ORDER_LIST(NVConfigManager.createNVConfigEntity("order_list", "List of orders per item", "Order List", false, true, OrderPerItemDAO.NVC_ORDER_PER_ITEM_DAO, NVConfigEntity.ArrayType.LIST)),
+    	ORDER_LIST(NVConfigManager.createNVConfigEntity("order_list", "List of orders per item", "Order List", false, true, ItemQuantityDAO.NVC_ITEM_QUANTITY_DAO, NVConfigEntity.ArrayType.LIST)),
         TOTAL(NVConfigManager.createNVConfigEntity("total", "Total", "Total", true, true, MoneyValueDAO.class, NVConfigEntity.ArrayType.NOT_ARRAY)),
-        STATUS(NVConfigManager.createNVConfig("order_status", "Order status", "Order Status", true, false, OrderStatus.class)),
-
-
-        // Customer
-        // Scheduled time
-
+        
         ;
 
         private final NVConfig nvc;
@@ -53,6 +40,7 @@ public class OrderDAO
         {
             this.nvc = nvc;
         }
+        
         @Override
         public NVConfig getNVConfig()
         {
@@ -85,7 +73,7 @@ public class OrderDAO
      * Returns the order list.
      * @return
      */
-    public List<OrderPerItemDAO> getOrderList()
+    public List<ItemQuantityDAO> getOrderList()
     {
         return lookupValue(Param.ORDER_LIST);
     }
@@ -94,7 +82,7 @@ public class OrderDAO
      * Sets the order list.
      * @param list
      */
-    public void setOrderList(List<OrderPerItemDAO> list)
+    public void setOrderList(List<ItemQuantityDAO> list)
     {
         setValue(Param.ORDER_LIST, list);
     }
@@ -116,23 +104,6 @@ public class OrderDAO
     public void setTotal(MoneyValueDAO total)
     {
         setValue(Param.TOTAL, total);
-    }
-
-    /**
-     * Returns the order status.
-     * @return
-     */
-    public OrderStatus getStatus() {
-        return lookupValue(Param.STATUS);
-    }
-
-    /**
-     * Sets the order status.
-     * @param status
-     */
-    public void setStatus(OrderStatus status)
-    {
-        setValue(Param.STATUS, status);
     }
 
 }

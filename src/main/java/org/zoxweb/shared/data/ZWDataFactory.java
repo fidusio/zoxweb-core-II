@@ -29,13 +29,14 @@ import org.zoxweb.shared.api.APIConfigInfoDAO;
 import org.zoxweb.shared.api.APICredentialsDAO;
 import org.zoxweb.shared.api.APIError;
 import org.zoxweb.shared.util.NVEntityInstance;
-import org.zoxweb.shared.data.inventory.ItemDAO;
-import org.zoxweb.shared.data.inventory.OrderDAO;
-import org.zoxweb.shared.data.inventory.OrderPerItemDAO;
-import org.zoxweb.shared.data.inventory.PriceDAO;
-import org.zoxweb.shared.data.inventory.PriceRangeDAO;
-import org.zoxweb.shared.data.inventory.RangeDAO;
-import org.zoxweb.shared.data.inventory.RangeValueDAO;
+import org.zoxweb.shared.data.order.CustomerOrderDAO;
+import org.zoxweb.shared.data.order.ItemDAO;
+import org.zoxweb.shared.data.order.ItemQuantityDAO;
+import org.zoxweb.shared.data.order.LimitValueDAO;
+import org.zoxweb.shared.data.order.OrderDAO;
+import org.zoxweb.shared.data.order.PriceDAO;
+import org.zoxweb.shared.data.order.PriceRangeDAO;
+import org.zoxweb.shared.data.order.RangeDAO;
 import org.zoxweb.shared.data.shiro.ShiroNVEntityCRUDs;
 import org.zoxweb.shared.data.shiro.ShiroPermissionDAO;
 import org.zoxweb.shared.data.shiro.ShiroRoleDAO;
@@ -870,43 +871,30 @@ public class ZWDataFactory
 				return TicketResolutionDAO.NVC_TICKET_RESOLUTION_DAO;
 			}
 		},
-		ITEM_DAO(ItemDAO.class.getName())
+		
+		
+		CUSTOMER_ORDER_DAO(CustomerOrderDAO.class.getName())
 		{
 			@SuppressWarnings("unchecked")
 			@Override
-			public TicketResolutionDAO newInstance()
+			public CustomerOrderDAO newInstance()
 			{
-				return new TicketResolutionDAO();
+				return new CustomerOrderDAO();
 			}
 
 			@Override
 			public NVConfigEntity getNVConfigEntity() 
 			{
-				return ItemDAO.NVC_ITEM_DAO;
-			}
-		},
-		ORDER_PER_ITEM_DAO(OrderPerItemDAO.class.getName())
-		{
-			@SuppressWarnings("unchecked")
-			@Override
-			public TicketResolutionDAO newInstance()
-			{
-				return new TicketResolutionDAO();
-			}
-
-			@Override
-			public NVConfigEntity getNVConfigEntity() 
-			{
-				return OrderPerItemDAO.NVC_ORDER_PER_ITEM_DAO;
+				return CustomerOrderDAO.NVC_CUSTOMER_ORDER_DAO;
 			}
 		},
 		ORDER_DAO(OrderDAO.class.getName())
 		{
 			@SuppressWarnings("unchecked")
 			@Override
-			public TicketResolutionDAO newInstance()
+			public OrderDAO newInstance()
 			{
-				return new TicketResolutionDAO();
+				return new OrderDAO();
 			}
 
 			@Override
@@ -915,13 +903,43 @@ public class ZWDataFactory
 				return OrderDAO.NVC_ORDER_DAO;
 			}
 		},
+		ITEM_QUANTITY_DAO(ItemQuantityDAO.class.getName())
+		{
+			@SuppressWarnings("unchecked")
+			@Override
+			public ItemQuantityDAO newInstance()
+			{
+				return new ItemQuantityDAO();
+			}
+
+			@Override
+			public NVConfigEntity getNVConfigEntity() 
+			{
+				return ItemQuantityDAO.NVC_ITEM_QUANTITY_DAO;
+			}
+		},
+		ITEM_DAO(ItemDAO.class.getName())
+		{
+			@SuppressWarnings("unchecked")
+			@Override
+			public ItemDAO newInstance()
+			{
+				return new ItemDAO();
+			}
+
+			@Override
+			public NVConfigEntity getNVConfigEntity() 
+			{
+				return ItemDAO.NVC_ITEM_DAO;
+			}
+		},
 		PRICE_DAO(PriceDAO.class.getName())
 		{
 			@SuppressWarnings("unchecked")
 			@Override
-			public TicketResolutionDAO newInstance()
+			public PriceDAO newInstance()
 			{
-				return new TicketResolutionDAO();
+				return new PriceDAO();
 			}
 
 			@Override
@@ -934,9 +952,9 @@ public class ZWDataFactory
 		{
 			@SuppressWarnings("unchecked")
 			@Override
-			public TicketResolutionDAO newInstance()
+			public PriceRangeDAO newInstance()
 			{
-				return new TicketResolutionDAO();
+				return new PriceRangeDAO();
 			}
 
 			@Override
@@ -949,9 +967,9 @@ public class ZWDataFactory
 		{
 			@SuppressWarnings("unchecked")
 			@Override
-			public TicketResolutionDAO newInstance()
+			public RangeDAO newInstance()
 			{
-				return new TicketResolutionDAO();
+				return new RangeDAO();
 			}
 
 			@Override
@@ -960,22 +978,22 @@ public class ZWDataFactory
 				return RangeDAO.NVC_RANGE_DAO;
 			}
 		},
-		RANGE_VALUE_DAO(RangeValueDAO.class.getName())
+		LIMIT_VALUE_DAO(LimitValueDAO.class.getName())
 		{
 			@SuppressWarnings("unchecked")
 			@Override
-			public TicketResolutionDAO newInstance()
+			public LimitValueDAO newInstance()
 			{
-				return new TicketResolutionDAO();
+				return new LimitValueDAO();
 			}
 
 			@Override
 			public NVConfigEntity getNVConfigEntity() 
 			{
-				return RangeValueDAO.NVC_RANGE_VALUE_DAO;
+				return LimitValueDAO.NVC_LIMIT_VALUE_DAO;
 			}
 		},
-
+		
 		
 		
 		

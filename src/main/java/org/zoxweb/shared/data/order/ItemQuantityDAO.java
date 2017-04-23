@@ -13,8 +13,11 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.zoxweb.shared.data.inventory;
+package org.zoxweb.shared.data.order;
 
+import java.math.BigDecimal;
+
+import org.zoxweb.shared.accounting.MoneyValueDAO;
 import org.zoxweb.shared.data.SetNameDescriptionDAO;
 import org.zoxweb.shared.util.*;
 
@@ -22,16 +25,16 @@ import org.zoxweb.shared.util.*;
  * Created on 4/16/17
  */
 @SuppressWarnings("serial")
-public class OrderPerItemDAO
+public class ItemQuantityDAO
     extends SetNameDescriptionDAO
 {
-
+	
     public enum Param
         implements GetNVConfig
     {
         ITEM(NVConfigManager.createNVConfigEntity("item", "Item", "Item", true, true, ItemDAO.class, NVConfigEntity.ArrayType.NOT_ARRAY)),
         QUANTITY(NVConfigManager.createNVConfig("quantity", "Quantity", "Quantity", true, true, int.class)),
-
+        
         ;
 
         private final NVConfig nvc;
@@ -40,6 +43,7 @@ public class OrderPerItemDAO
         {
             this.nvc = nvc;
         }
+        
         @Override
         public NVConfig getNVConfig()
         {
@@ -47,24 +51,24 @@ public class OrderPerItemDAO
         }
     }
 
-    public static final NVConfigEntity NVC_ORDER_PER_ITEM_DAO = new NVConfigEntityLocal(
-            "order_per_item_dao",
+    public static final NVConfigEntity NVC_ITEM_QUANTITY_DAO = new NVConfigEntityLocal(
+            "item_quantity_dao",
             null,
-            OrderPerItemDAO.class.getSimpleName(),
+            ItemQuantityDAO.class.getSimpleName(),
             true,
             false,
             false,
             false,
-            OrderPerItemDAO.class,
+            ItemQuantityDAO.class,
             SharedUtil.extractNVConfigs(Param.values()),
             null,
             false,
             SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO
     );
 
-    public OrderPerItemDAO()
+    public ItemQuantityDAO()
     {
-        super(NVC_ORDER_PER_ITEM_DAO);
+        super(NVC_ITEM_QUANTITY_DAO);
     }
 
     /**
@@ -101,6 +105,25 @@ public class OrderPerItemDAO
     public void setQuantity(int quantity)
     {
         setValue(Param.QUANTITY, quantity);
+    }
+    
+    public MoneyValueDAO computeTotal() 
+    {
+    	MoneyValueDAO total = null;
+    	
+    	if (getItem() != null && getItem().getPriceRange() != null) 
+    	{
+    		MoneyValueDAO itemPrice = getItem().getPriceRange().caclculatePrice(getQuantity());
+    
+    		if (itemPrice != null) 
+    		{
+    			total = new MoneyValueDAO();
+    			total.setCurrency(itemPrice.getCurrency());
+    			total.setValue(itemPrice.getValue().multiply(new BigDecimal(getQuantity())));
+    		}
+    	}
+    	
+    	return total;
     }
 
 }

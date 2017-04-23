@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.zoxweb.shared.data.inventory;
+package org.zoxweb.shared.data.order;
 
 import org.zoxweb.shared.data.SetNameDescriptionDAO;
 import org.zoxweb.shared.util.*;
@@ -22,7 +22,7 @@ import org.zoxweb.shared.util.*;
  * Created on 4/16/17
  */
 @SuppressWarnings("serial")
-public class RangeValueDAO
+public class LimitValueDAO
     extends SetNameDescriptionDAO
 {
 
@@ -49,6 +49,7 @@ public class RangeValueDAO
         {
             this.nvc = nvc;
         }
+        
         @Override
         public NVConfig getNVConfig()
         {
@@ -56,31 +57,43 @@ public class RangeValueDAO
         }
     }
 
-    public static final NVConfigEntity NVC_RANGE_VALUE_DAO = new NVConfigEntityLocal(
-            "range_value_dao",
+    public static final NVConfigEntity NVC_LIMIT_VALUE_DAO = new NVConfigEntityLocal(
+            "limit_value_dao",
             null,
-            RangeValueDAO.class.getSimpleName(),
+            LimitValueDAO.class.getSimpleName(),
             true,
             false,
             false,
             false,
-            RangeValueDAO.class,
-            SharedUtil.extractNVConfigs(RangeValueDAO.Param.values()),
+            LimitValueDAO.class,
+            SharedUtil.extractNVConfigs(LimitValueDAO.Param.values()),
             null,
             false,
             SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO
     );
 
 
-    public RangeValueDAO()
+    public LimitValueDAO()
     {
-        super(NVC_RANGE_VALUE_DAO);
+        super(NVC_LIMIT_VALUE_DAO);
     }
 
-    public RangeValueDAO(int value)
+    public LimitValueDAO(int value)
     {
         this();
         setValue(value);
+    }
+    
+    public LimitValueDAO(int value, boolean exclusive)
+    {
+        this();
+        setValue(value);
+        setExclusive(exclusive);
+    }
+    
+    public LimitValueDAO(LimitType limitType) {
+        this();
+        setLimitType(limitType);
     }
 
     /**
