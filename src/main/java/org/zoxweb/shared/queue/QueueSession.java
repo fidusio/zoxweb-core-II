@@ -25,18 +25,21 @@ public interface QueueSession
 	 * Adds consumer listener.
 	 * @param ql
 	 */
-	public void addConsumerListener(QueueListener<QueueEvent> ql);
+	public void addConsumerListener(String tag, QueueListener<QueueEvent> ql);
 
 	/**
 	 * Removes consumer listener.
 	 * @param ql
 	 */
 	public void removeConsumerListener(QueueListener<QueueEvent> ql);
+	public void removeConsumerListener(String tag);
 
 	/**
 	 * Dispatches producer event.
 	 * @param qe
 	 */
 	public void dispatchProducerEvent(QueueEvent qe);
+	
+	public QueueListener<QueueEvent> [] getAll();
 
 }

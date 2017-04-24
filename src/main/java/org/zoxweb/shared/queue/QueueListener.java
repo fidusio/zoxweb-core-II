@@ -17,12 +17,15 @@ package org.zoxweb.shared.queue;
 
 import java.util.EventListener;
 
+import org.zoxweb.shared.util.GetName;
+
 /**
  *
  * @param <E>
  */
 public interface QueueListener<E extends QueueEvent>
-    extends EventListener
+    extends EventListener,
+    		GetName
 {
     /**
      * Process given event.
