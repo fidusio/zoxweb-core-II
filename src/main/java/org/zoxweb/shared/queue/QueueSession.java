@@ -15,31 +15,34 @@
  */
 package org.zoxweb.shared.queue;
 
+import org.zoxweb.shared.util.ConfigProperties;
+
 /**
  * The queue session interface.
  */
 public interface QueueSession
-    extends AutoCloseable
+    extends AutoCloseable, ConfigProperties
 {
+	
 	/**
 	 * Adds consumer listener.
 	 * @param ql
 	 */
-	public void addConsumerListener(String tag, QueueListener<QueueEvent> ql);
+	void addConsumerListener(String tag, QueueListener<QueueEvent> ql);
 
 	/**
 	 * Removes consumer listener.
 	 * @param ql
 	 */
-	public void removeConsumerListener(QueueListener<QueueEvent> ql);
-	public void removeConsumerListener(String tag);
+	void removeConsumerListener(QueueListener<QueueEvent> ql);
+	void removeConsumerListener(String tag);
 
 	/**
 	 * Dispatches producer event.
 	 * @param qe
 	 */
-	public void dispatchProducerEvent(QueueEvent qe);
+	void dispatchProducerEvent(QueueEvent qe);
 	
-	public QueueListener<QueueEvent> [] getAll();
+	QueueListener<QueueEvent> [] getAll();
 
 }
