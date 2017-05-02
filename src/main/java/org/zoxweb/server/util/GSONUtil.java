@@ -17,8 +17,11 @@ package org.zoxweb.server.util;
 
 import java.io.IOException;
 import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Modifier;
 import java.math.BigDecimal;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -144,6 +147,23 @@ final public class GSONUtil
 		writer.close();
 		
 		return sw.toString();
+	}
+	
+	public static byte[] toObjectHash(String mdAlgo, Object obj) throws NoSuchAlgorithmException, UnsupportedEncodingException
+	{
+		return toJSONHash(mdAlgo, create(false).toJson(obj));
+	}
+	
+	public static byte[] toNVEntityHash(String mdAlgo, NVEntity nve) throws NoSuchAlgorithmException, IOException
+	{
+		return toJSONHash(mdAlgo, toJSON(nve, false, false, true));
+	}
+	
+	
+	public static byte[] toJSONHash(String mdAlgo, String json) throws NoSuchAlgorithmException
+	{
+		MessageDigest md = MessageDigest.getInstance(mdAlgo);
+		return md.digest(SharedStringUtil.getBytes(json));
 	}
 	
 	public static QueryRequest fromQueryRequest(String json)
