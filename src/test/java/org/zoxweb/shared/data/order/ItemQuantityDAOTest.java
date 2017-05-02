@@ -66,8 +66,10 @@ public class ItemQuantityDAOTest
         itemQuantityDAO.setItem(itemDAO);
         itemQuantityDAO.setQuantity(50);
         MoneyValueDAO total = itemQuantityDAO.computeTotal();
+        
         assertNotNull(total);
         assertNotNull(total.getValue());
+        System.out.println(total.getValue());
         assertEquals("$500.00", total.toString());
         
         itemQuantityDAO = new ItemQuantityDAO();
