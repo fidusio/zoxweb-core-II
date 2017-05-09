@@ -24,15 +24,15 @@ import org.zoxweb.shared.util.NVConfigEntityLocal;
 import org.zoxweb.shared.util.SetName;
 import org.zoxweb.shared.util.SharedUtil;
 
-import javax.persistence.Column;
-import javax.persistence.MappedSuperclass;
+//import javax.persistence.Column;
+//import javax.persistence.MappedSuperclass;
 
 /**
  * This class defines set name data access object.
  * @author mzebib
  *
  */
-@MappedSuperclass
+//@MappedSuperclass
 @SuppressWarnings("serial")
 public abstract class SetNameDAO
 	extends ReferenceIDDAO
@@ -63,7 +63,7 @@ public abstract class SetNameDAO
 	 * Returns the name.
 	 * @return name
 	 */
-	@Column(name = "name")
+	//@Column(name = "name")
 	@Override
 	public String getName()
     {

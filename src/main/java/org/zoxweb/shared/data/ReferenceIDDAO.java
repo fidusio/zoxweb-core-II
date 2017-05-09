@@ -15,9 +15,9 @@
  */
 package org.zoxweb.shared.data;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+//import javax.persistence.Column;
+//import javax.persistence.Id;
+//import javax.persistence.MappedSuperclass;
 
 import org.zoxweb.shared.util.MetaToken;
 import org.zoxweb.shared.util.NVConfig;
@@ -31,7 +31,7 @@ import org.zoxweb.shared.util.SharedUtil;
  *
  *
  */
-@MappedSuperclass
+//@MappedSuperclass
 @SuppressWarnings("serial")
 public abstract class ReferenceIDDAO 
 	extends NVEntity 
@@ -52,8 +52,8 @@ public abstract class ReferenceIDDAO
 	 * Returns the reference ID.
 	 * @return reference id
 	 */
-	@Id
-	@Column(name = "reference_id")
+	//@Id
+	//@Column(name = "reference_id")
 	@Override
 	public String getReferenceID()
     {
@@ -74,7 +74,7 @@ public abstract class ReferenceIDDAO
 	 * Returns the account ID.
 	 * @return account id
 	 */
-	@Column(name = "account_id")
+	//@Column(name = "account_id")
 	@Override
 	public String getAccountID()
 	{
@@ -95,7 +95,7 @@ public abstract class ReferenceIDDAO
 	 * Returns the user ID.
 	 * @return user id
 	 */
-	@Column(name = "user_id")
+	//@Column(name = "user_id")
 	@Override
 	public String getUserID()
 	{
@@ -116,7 +116,7 @@ public abstract class ReferenceIDDAO
 	 * Returns the global ID.
 	 * @return global id
 	 */
-	@Column(name = "global_id")
+	//@Column(name = "global_id")
 	@Override
 	public String getGlobalID() {
 		return lookupValue(NVC_GLOBAL_ID);

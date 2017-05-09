@@ -21,15 +21,15 @@ import org.zoxweb.shared.util.NVConfigEntityLocal;
 import org.zoxweb.shared.util.SetDescription;
 import org.zoxweb.shared.util.SharedUtil;
 
-import javax.persistence.Column;
-import javax.persistence.MappedSuperclass;
+//import javax.persistence.Column;
+//import javax.persistence.MappedSuperclass;
 
 /**
  * This class defines set name description data access object
  * which extends SetNameDAO.
  * @author mnael
  */
-@MappedSuperclass
+//@MappedSuperclass
 @SuppressWarnings("serial")
 public abstract class SetNameDescriptionDAO
     extends SetNameDAO
@@ -60,7 +60,7 @@ public abstract class SetNameDescriptionDAO
 	 * Returns the description.
 	 * @return description
 	 */
-	@Column(name = "description")
+	//@Column(name = "description")
 	@Override
 	public String getDescription()
     {

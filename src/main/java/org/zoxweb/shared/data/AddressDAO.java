@@ -22,17 +22,17 @@ import org.zoxweb.shared.util.NVConfigEntityLocal;
 import org.zoxweb.shared.util.NVConfigManager;
 import org.zoxweb.shared.util.SharedUtil;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+//import javax.persistence.Column;
+//import javax.persistence.Entity;
+//import javax.persistence.Table;
 
 /**
  * The AddressDAO class defines the address data access object used to create an address object.
  * @author mzebib
  *
  */
-@Entity
-@Table(name = "address")
+//@Entity
+//@Table(name = "address")
 @SuppressWarnings("serial")
 public class  AddressDAO
 	extends SetNameDescriptionDAO {
@@ -87,7 +87,7 @@ public class  AddressDAO
 	 * Returns the street.
 	 * @return the street
 	 */
-	@Column (name = "street")
+	//@Column (name = "street")
 	public String getStreet() {
 		return lookupValue(Param.STREET);
 	}
@@ -104,7 +104,7 @@ public class  AddressDAO
 	 * Returns the city.
 	 * @return the city
 	 */
-	@Column (name = "city")
+	//@Column (name = "city")
 	public String getCity() {
 		return lookupValue(Param.CITY);
 	}
@@ -121,7 +121,7 @@ public class  AddressDAO
 	 * Returns the state or province.
 	 * @return the province
 	 */
-	@Column (name = "state_province")
+	//@Column (name = "state_province")
 	public String getStateOrProvince() {
 		return lookupValue(Param.STATE_PROVINCE);
 	}
@@ -138,7 +138,7 @@ public class  AddressDAO
 	 * Returns the country.
 	 * @return the country
 	 */
-	@Column (name = "country")
+	//@Column (name = "country")
 	public String getCountry() {
 		return lookupValue(Param.COUNTRY);
 	}
@@ -155,7 +155,7 @@ public class  AddressDAO
 	 * Returns the ZIP or postal code.
 	 * @return the zip or postal code depending on the country
 	 */
-	@Column (name = "zip_postal_code")
+	//@Column (name = "zip_postal_code")
 	public String getZIPOrPostalCode() {
 		return lookupValue(Param.ZIP_POSTAL_CODE);
 	}
