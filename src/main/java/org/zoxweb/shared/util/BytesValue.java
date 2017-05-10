@@ -43,6 +43,45 @@ public interface BytesValue<V>
      * @return
      */
 	V toValue(byte[] bytes, int offset, int length);
+
+
+
+
+	public static final BytesValue<Short> SHORT = new  BytesValue<Short>()
+	{
+		public byte[] toBytes(Short in)
+		{
+			int val = in.intValue();
+			byte buffer[] = new byte[Short.SIZE/Byte.SIZE];
+
+			for (int i = buffer.length; i > 0; i--)
+			{
+				buffer[i-1] = (byte)val;
+				val = val >> 8;
+			}
+
+			return buffer;
+		}
+
+		public Short toValue(byte buffer[], int offset, int length)
+		{
+			int value = 0;
+
+			for (int i = offset; i < length; i++)
+			{
+				value = (value << 8) + (buffer[i] & 0xff);
+			}
+
+			return (short)value;
+		}
+
+		@Override
+		public Short toValue(byte[] bytes)
+		{
+			return toValue(bytes, 0, bytes.length);
+		}
+	};
+
 	
 	public static final BytesValue<Integer> INT = new  BytesValue<Integer>()
 	{
