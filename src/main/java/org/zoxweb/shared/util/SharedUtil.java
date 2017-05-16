@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -1315,7 +1316,7 @@ public class SharedUtil
 			{
 				if (config.isUnique())
 				{
-					return (new NVPairGetNameMap (config.getName(), new HashMap<GetName, NVPair>()));
+					return (new NVPairGetNameMap (config.getName(), new LinkedHashMap<GetName, NVPair>()));
 				}
 				
 				return (new NVPairList (config.getName(), new ArrayList<NVPair>()));

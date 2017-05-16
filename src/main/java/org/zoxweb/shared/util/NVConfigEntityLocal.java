@@ -17,7 +17,9 @@ package org.zoxweb.shared.util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+//import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * NVConfigEntityLocal is an implementation of the NVConfigEntity interface 
@@ -61,7 +63,7 @@ public class NVConfigEntityLocal
 	private transient NVConfigEntity byReference = null;
 	private transient List<NVConfig> attrList = null;
 	private transient List<NVConfig> displayList = null;
-	private transient HashMap<String, NVConfig> fastMap = null;
+	private transient Map<String, NVConfig> fastMap = null;
 	private transient boolean attributesValidationRequired;
 	private transient ArrayType arrayType = null;
 	//private transient boolean fullyInitialized = false;
