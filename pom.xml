@@ -71,7 +71,9 @@
     -->
     <build>
     	    <directory>target</directory>
+    	    <!--  
     		<outputDirectory>war/WEB-INF/classes</outputDirectory>
+    		-->
     		<resources>
                 	<resource>
                 	 <directory>src/main/java/</directory>
@@ -148,7 +150,7 @@
     		<artifactId>javax.websocket-api</artifactId>
     		<version>${websocket.version}</version>
 	    </dependency>
-    
+    	<!--  
         <dependency>
             <groupId>com.google.gwt</groupId>
             <artifactId>gwt-servlet</artifactId>
@@ -167,6 +169,15 @@
             <version>${gwt.version}</version>
             <scope>provided</scope>
         </dependency>
+        -->
+        
+        
+        <dependency>
+	    	<groupId>javax.servlet</groupId>
+	    	<artifactId>javax.servlet-api</artifactId>
+	    	<version>3.0.1</version>
+		</dependency>
+        
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-core</artifactId>
