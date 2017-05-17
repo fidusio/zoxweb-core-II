@@ -92,7 +92,8 @@ public class SharedBase64
 		}
 	    
 	    //int len = data.length;
-	    assert (len % 4) == 0;
+	    if(len % 4 != 0)
+	    	throw new IllegalArgumentException("Invalid len not divisible by 4");
 
 	    //char[] chars = new char[len];
 	    //data.getChars(0, len, chars, 0);
