@@ -142,6 +142,27 @@ public class SharedBase64
 
 	    return bytes;
 	}
+	
+	
+	/**
+	 * Decode a string read it getByte("utf-8:)
+	 * @param str to be decoded
+	 * @return decoded byte array
+	 */
+	public static byte[] decode(String str)
+	{
+		return decode(SharedStringUtil.getBytes(str));
+	}
+	
+	/**
+	 * Encode a string to base64 
+	 * @param str to be encoded
+	 * @return encoded byte array
+	 */
+	public static byte[] encode(String str)
+	{
+		return encode(SharedStringUtil.getBytes(str));
+	}
 
     /**
      * Encodes a byte array to base64 array.

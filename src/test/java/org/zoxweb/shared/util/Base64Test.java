@@ -99,8 +99,22 @@ public class Base64Test {
 		System.out.println("Partial test:" + new String(SharedBase64.encode(partial.getBytes(), 4, 6)) + "," + new String(SharedBase64.encode(partial.getBytes(), 1, 1)));
 		byte fullname[] = SharedBase64.encode(partial.getBytes());
 		System.out.println("Marwan " + new String(fullname));
+		
+		
 
 		System.out.println("Equals:" + SharedUtil.slowEquals("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/".getBytes(), SharedBase64.BASE_64));
+		
+		try
+		{
+			byte[] b64 = SharedBase64.encode("1234567890");
+			String str = SharedStringUtil.toString(b64);
+			System.out.println(str);
+			b64 = SharedBase64.decode(str+"^");
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 }
