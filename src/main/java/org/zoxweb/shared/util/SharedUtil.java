@@ -90,6 +90,9 @@ public class SharedUtil
 		return toCanonicalID(false, sep, objArray);
 	}
 	
+	
+	
+	
 	public static String toCanonicalID(boolean ignoreNulls, char sep, Object... objArray)
     {
 		StringBuilder sb = new StringBuilder();
