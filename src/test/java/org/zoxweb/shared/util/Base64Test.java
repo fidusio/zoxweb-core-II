@@ -48,31 +48,37 @@ public class Base64Test {
 
 
 		System.out.println("Length of Array: " + testArray.length);
-
+		long ts2, ts;
 		for (int i = 0; i < testArray.length; i++) {
 			System.out.println(i + 1 + "." + "Original Value: " + testArray[i]);
 
 			byte toEncode[] = testArray[i].getBytes();
-			long ts = System.nanoTime();
+			ts = System.nanoTime();
 			byte[] sharedEncodedeBase64 = SharedBase64.encode(toEncode);
 			byte[] sharedDecodedBase64 = SharedBase64.decode(sharedEncodedeBase64);
 			ts = System.nanoTime() - ts;
 
-			long ts1 = System.nanoTime();
-			byte apache64Encoded[] = SharedBase64.encode(toEncode);//Base64.encodeBase64(toEncode);//.encodeBase64(toEncode);
-			byte apache64Decodded[] = SharedBase64.decode(sharedEncodedeBase64);//Base64.decodeBase64(apache64Encoded);
-			ts1 = System.nanoTime() - ts1;
+			ts = System.nanoTime();
+			sharedEncodedeBase64 = SharedBase64.encode(toEncode);
+			sharedDecodedBase64 = SharedBase64.decode(sharedEncodedeBase64);
+			ts = System.nanoTime() - ts;
 
-			long ts2 = System.nanoTime();
+
+			ts2 = System.nanoTime();
 			byte java64Encoded[] = java.util.Base64.getEncoder().encode(toEncode);//.encodeBase64(toEncode);
 			byte java64Decodded[] = java.util.Base64.getDecoder().decode(java64Encoded);
 			ts2 = System.nanoTime() - ts2;
 
-			System.out.println(i + 1 + "." + "Encode Base64: " + new String(sharedEncodedeBase64) + ":\t\t" + (Arrays.equals(sharedEncodedeBase64, apache64Encoded)
-					&& Arrays.equals(sharedEncodedeBase64, java64Encoded)));
-			System.out.println(i + 1 + "." + "Decoded Base64: " + new String(sharedDecodedBase64) + ":\t\t" + (Arrays.equals(sharedDecodedBase64, apache64Decodded)
-					&& Arrays.equals(sharedDecodedBase64, java64Decodded)));
-			System.out.println("zoxweb:" + ts + " apache:" + ts1 + " java:" + ts2 + " delta:" + (ts1 - ts) + " factor:" + ((float) ts1 / (float) ts) + "," + ((float) ts2 / (float) ts));
+			ts2 = System.nanoTime();
+			java64Encoded = java.util.Base64.getEncoder().encode(toEncode);//.encodeBase64(toEncode);
+			java64Decodded = java.util.Base64.getDecoder().decode(java64Encoded);
+			ts2 = System.nanoTime() - ts2;
+
+			System.out.println(i + 1 + "." + "Encode Base64: " + new String(sharedEncodedeBase64) + ":\t\t" +
+					Arrays.equals(sharedEncodedeBase64, java64Encoded));
+			System.out.println(i + 1 + "." + "Decoded Base64: " + new String(sharedDecodedBase64) + ":\t\t" +
+					 Arrays.equals(sharedDecodedBase64, java64Decodded));
+			System.out.println("zoxweb:" + ts + " java:" + ts2 + " delta:" + (ts2 - ts) + " factor:" + ((float) ts2 / (float) ts));
 			System.out.println(ts + " nanos: " + testArray[i].equals(new String(sharedDecodedBase64)));
 		}
 
@@ -93,8 +99,22 @@ public class Base64Test {
 		System.out.println("Partial test:" + new String(SharedBase64.encode(partial.getBytes(), 4, 6)) + "," + new String(SharedBase64.encode(partial.getBytes(), 1, 1)));
 		byte fullname[] = SharedBase64.encode(partial.getBytes());
 		System.out.println("Marwan " + new String(fullname));
+		
+		
 
 		System.out.println("Equals:" + SharedUtil.slowEquals("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/".getBytes(), SharedBase64.BASE_64));
+		
+		try
+		{
+			byte[] b64 = SharedBase64.encode("1234567890");
+			String str = SharedStringUtil.toString(b64);
+			System.out.println(str);
+			b64 = SharedBase64.decode(str+"^");
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 }

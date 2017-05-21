@@ -15,7 +15,8 @@
  */
 package org.zoxweb.shared.util;
 
-import java.util.HashMap;
+
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,7 +37,7 @@ public class NVEntityGetNameMap
 	
 	public NVEntityGetNameMap(String name)
 	{
-		super(name, new HashMap<GetName, NVEntity>());
+		super(name, new LinkedHashMap<GetName, NVEntity>());
 	}
 	
 	public NVEntity get(GetName getName)

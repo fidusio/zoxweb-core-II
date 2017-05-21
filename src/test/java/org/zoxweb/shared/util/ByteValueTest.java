@@ -1,8 +1,8 @@
-package org.zoxweb.shared;
+package org.zoxweb.shared.util;
 
 import org.zoxweb.shared.util.BytesValue;
 
-import java.lang.reflect.Array;
+
 import java.nio.ByteBuffer;
 import java.util.Arrays;
 
@@ -22,7 +22,11 @@ public class ByteValueTest
         bb.clear();
         bb.putInt(4000000);
         System.out.println(result.length + " " + Arrays.toString(result) + " " + BytesValue.INT.toValue(result) + " " + Arrays.toString(bb.array()));
-
+        
+        
+        
+        result = BytesValue.LONG.toBytes(null, 0, Long.decode("10000000000"), Long.decode("100000000001"));
+        System.out.println(result.length + " " + Arrays.toString(result) + " " + BytesValue.LONG.toValue(result));
 
 
     }

@@ -100,7 +100,7 @@ public class CryptoUtil
 	
 	public static final int SALT_LENGTH = 32;
 	
-	public static byte[] generateRandomBytes( SecureRandom sr, int size)
+	public static byte[] generateRandomBytes(SecureRandom sr, int size)
         throws NullPointerException, IllegalArgumentException, NoSuchAlgorithmException
     {
 		if (size < 1)
@@ -128,7 +128,7 @@ public class CryptoUtil
 		case SECURE_RANDOM_VM_STRONG:
 			 // very bad and blocking on linux
 			 // not recommended yet
-			 //return SecureRandom.getInstanceStrong();
+			 return SecureRandom.getInstanceStrong();
 		case SECURE_RANDOM_VM_DEFAULT:
 			 return new SecureRandom();
 		default:
@@ -470,23 +470,17 @@ public class CryptoUtil
 										 String keyPass)
 		throws KeyStoreException, NoSuchAlgorithmException, CertificateException, IOException, UnrecoverableKeyException
 	{
-		try
-        {
-			KeyStore keystore = loadKeyStore(keyStoreIS, keyStoreType,  keystorePass.toCharArray()); 
+		KeyStore keystore = loadKeyStore(keyStoreIS, keyStoreType,  keystorePass.toCharArray()); 
 
-			if (!keystore.containsAlias(alias))
-			{
-				throw new IllegalArgumentException("Alias for key not found");
-			}
-		
-			Key key = keystore.getKey(alias, keyPass.toCharArray());
-		
-			return key;
+		if (!keystore.containsAlias(alias))
+		{
+			throw new IllegalArgumentException("Alias for key not found");
 		}
-		finally
-        {
-			
-		}
+	
+		Key key = keystore.getKey(alias, keyPass.toCharArray());
+	
+		return key;
+		
 	}
 
 	public static SSLContext initSSLContext(final String keyStoreFilename, String keyStoreType, final char[] keyStorePassword, 
@@ -530,7 +524,7 @@ public class CryptoUtil
 			tmf.init(ts != null ? ts : ks);
 		}
 		else
-		    {
+		{
 			kmf.init(ks, keyStorePassword);
 			tmf.init(ts != null ? ts : ks);
 		}

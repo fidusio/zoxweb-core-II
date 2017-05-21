@@ -16,7 +16,8 @@
 package org.zoxweb.shared.http;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.zoxweb.shared.data.SetNameDescriptionDAO;
@@ -138,7 +139,7 @@ public class HTTPMessageConfig
 		// updating PARAMETERS and HEADER_PARAMETERS to NVGetNameValueMap
 		// reason to support multi-parts parameters
 		attributes.put(Params.PARAMETERS.getNVConfig().getName(), new NVGetNameValueList(Params.PARAMETERS.getNVConfig().getName(), new ArrayList<GetNameValue<String>>()));
-		attributes.put(Params.HEADER_PARAMETERS.getNVConfig().getName(), new NVGetNameValueMap(Params.HEADER_PARAMETERS.getNVConfig().getName(), new HashMap<GetName, GetNameValue<String>>()));
+		attributes.put(Params.HEADER_PARAMETERS.getNVConfig().getName(), new NVGetNameValueMap(Params.HEADER_PARAMETERS.getNVConfig().getName(), new LinkedHashMap<GetName, GetNameValue<String>>()));
 	}
 	
 
