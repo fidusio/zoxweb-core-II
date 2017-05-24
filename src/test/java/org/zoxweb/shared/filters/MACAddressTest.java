@@ -17,7 +17,7 @@ public class MACAddressTest
 			{
 				System.out.println("Original Address:" + mac);
 				byte[] address = MACAddressFilter.SINGLETON.validate(mac);
-				System.out.println("Formatted Address:" + MACAddressFilter.toString(address, ":"));
+				System.out.println("Formatted Address:" + MACAddressFilter.toString(address, "-"));
 			}
 			catch(Exception e)
 			{
