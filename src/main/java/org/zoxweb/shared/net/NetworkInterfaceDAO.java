@@ -22,7 +22,6 @@ import org.zoxweb.shared.util.NVConfig;
 import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVConfigEntityLocal;
 import org.zoxweb.shared.util.NVConfigManager;
-import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
 import org.zoxweb.shared.util.NVConfigEntity.ArrayType;
 
@@ -31,9 +30,6 @@ public class NetworkInterfaceDAO
     extends SetNameDAO
 {
 
-	public static final String MAC_ADDRESS_SEPS []= {
-		"-", ":", "."
-	};
 	
 	
 	private static final NVConfig DISPLAY_NAME = NVConfigManager.createNVConfig("display_name", "The network interface display name","DisplayName",true, false, String.class);
@@ -72,7 +68,7 @@ public class NetworkInterfaceDAO
 	
 	public String getMACAddress()
     {
-		return lookupValue( MAC_ADDRESS);
+		return lookupValue(MAC_ADDRESS);
 	}
 	
 	public synchronized void setMACAddress(String macAddress)
@@ -90,9 +86,6 @@ public class NetworkInterfaceDAO
 		setValue( DISPLAY_NAME, displayName);
 	}
 
-	public static byte[] macAddressToBytes(String macAddress)
-    {
-		return SharedStringUtil.hexToBytes(SharedStringUtil.filterString(macAddress, MAC_ADDRESS_SEPS));
-	}
+	
 
 }

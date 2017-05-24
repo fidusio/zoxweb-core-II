@@ -1019,7 +1019,7 @@ public final class SharedStringUtil
 					sb.append(postToken);
 				}
 				
-				sb= byteToHex(sb, preToken, buffer[i]);
+				sb = byteToHex(sb, preToken, buffer[i]);
 			}
 		}
 		

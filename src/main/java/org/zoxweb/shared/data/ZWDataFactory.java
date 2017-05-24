@@ -44,6 +44,7 @@ import org.zoxweb.shared.data.shiro.ShiroRoleGroupDAO;
 import org.zoxweb.shared.data.ticket.TicketContainerDAO;
 import org.zoxweb.shared.data.ticket.TicketIssuerDAO;
 import org.zoxweb.shared.data.ticket.TicketResolutionDAO;
+import org.zoxweb.shared.net.IPRangeDAO;
 import org.zoxweb.shared.net.InetAddressDAO;
 import org.zoxweb.shared.net.InetFilterDAO;
 import org.zoxweb.shared.net.InetSocketAddressDAO;
@@ -409,6 +410,21 @@ public class ZWDataFactory
 				return InetSocketAddressDAO.NVC_REFERENCE_ID_DAO;
 			}
 		},
+		IP_RANGE_DAO(IPRangeDAO.class.getName())
+		{
+			@SuppressWarnings("unchecked")
+			@Override
+			public IPRangeDAO newInstance()
+			{
+				return new IPRangeDAO();
+			}
+
+			@Override
+			public NVConfigEntity getNVConfigEntity()
+			{
+				return IPRangeDAO.IP_RANGE_DAO;
+			}
+		},	
 		
 		LOGIN_TOKEN_DAO(LoginTokenDAO.class.getName())
 		{
