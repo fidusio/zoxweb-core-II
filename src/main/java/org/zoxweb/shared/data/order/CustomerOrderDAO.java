@@ -15,18 +15,10 @@ public class CustomerOrderDAO
 	extends TimeStampDAO 
 {
 
-	public enum OrderStatus
-	{
-		PENDING,
-		IN_PROGRESS,
-		COMPLETED,
-		DELIVERED
-	}
-	
     public enum Param
     	implements GetNVConfig
 	{
-	
+        ORDER_ID(NVConfigManager.createNVConfig("order_id", "Order ID", "OrderID", true, false, String.class)),
         ORDER(NVConfigManager.createNVConfigEntity("order", "order", "Order", true, true, OrderDAO.class, NVConfigEntity.ArrayType.NOT_ARRAY)),
 	    ORDER_STATUS(NVConfigManager.createNVConfig("order_status", "Order status", "OrderStatus", true, false, OrderStatus.class)),
 		SCHEDULED_DELIVERY(NVConfigManager.createNVConfig("scheduled_delivery", "Scheduled delivery.", "ScheduledDelivery", true, true, Date.class)),
@@ -66,8 +58,25 @@ public class CustomerOrderDAO
     {
         super(NVC_CUSTOMER_ORDER_DAO);
     }
-    
- 
+
+    /**
+     * Returns the order ID.
+     * @return
+     */
+    public String getOrderID()
+    {
+        return lookupValue(Param.ORDER_ID);
+    }
+
+    /**
+     * Sets the order ID.
+     * @param orderID
+     */
+    public void setOrderID(String orderID)
+    {
+        setValue(Param.ORDER_ID, orderID);
+    }
+
     /**
      * Returns the order.
      * @return
@@ -121,7 +130,6 @@ public class CustomerOrderDAO
 	{
 		setValue(Param.SCHEDULED_DELIVERY, scheduledDelivery);
 	}
-    
-    
+
 	
 }
