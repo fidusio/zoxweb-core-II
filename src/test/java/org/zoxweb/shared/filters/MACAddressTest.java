@@ -7,7 +7,7 @@ public class MACAddressTest
 	public static void main(String ...args)
 	{
 		String[] macs = {
-			"AA:fd:34:24:34:32","AA-fd-34-24-34-32", "AAfd34243432","AA.fd.34.24.34.32", "AA:fd:34:24:34", null, "","AA:fd:34:24:3k"
+			"AA:fd:34:24:34:32","AA-fd-34-24-34-32", "AAfd34243432","01.23.45.67.89.ab", "AA:fd:34:24:34", null, "","AA:fd:34:24:3k"
 		};
 		
 		

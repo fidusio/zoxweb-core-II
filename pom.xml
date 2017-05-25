@@ -58,11 +58,14 @@
 		<ehcache.version>2.10.3</ehcache.version>
 		<maven-plugin.version>3.6.1</maven-plugin.version>
 		<maven-plugin-source.version>3.0.1</maven-plugin-source.version>
+		<maven-jar-plugin.version>3.0.2</maven-jar-plugin.version>
 		<maven-javadoc.version>2.10.4</maven-javadoc.version>
         <javaee-api.version>7.0</javaee-api.version>
+        <javax-servlet.version>3.0.1</javax-servlet.version>
         <persistence.version>1.0</persistence.version>
         <hibernate.version>5.2.9.Final</hibernate.version>
         <apache.derby.version>10.13.1.1</apache.derby.version>
+        
     </properties>
 
     <!-- default
@@ -78,6 +81,9 @@
                 	<resource>
                 	 <directory>src/main/java/</directory>
                 	</resource>
+                	<resource>
+                	 <directory>src/test/java/</directory>
+                	</resource>
              </resources>
         <plugins>
             <plugin>
@@ -91,6 +97,8 @@
                 </configuration>
                 
             </plugin>
+            
+            
             
                 <plugin>
 			      <groupId>org.apache.maven.plugins</groupId>
@@ -106,6 +114,19 @@
 			      </executions>
 			    </plugin>
 			    
+			    <plugin>
+				    <groupId>org.apache.maven.plugins</groupId>
+				    <artifactId>maven-jar-plugin</artifactId>
+				    <version>${maven-jar-plugin.version}</version>
+				    <executions>
+				        <execution>
+				            <goals>
+				                <goal>test-jar</goal>
+				            </goals>
+				        </execution>
+				    </executions>
+				</plugin>
+			    
 		        <plugin>
 			      <groupId>org.apache.maven.plugins</groupId>
 			      <artifactId>maven-javadoc-plugin</artifactId>
@@ -119,6 +140,7 @@
 			          <id>attach-javadocs</id>
 			          <goals>
 			            <goal>jar</goal>
+			            
 			          </goals>
 			         
 			        </execution>
@@ -149,6 +171,7 @@
     		<groupId>javax.websocket</groupId>
     		<artifactId>javax.websocket-api</artifactId>
     		<version>${websocket.version}</version>
+    		<scope>provided</scope>
 	    </dependency>
     	<!--  
         <dependency>
@@ -175,7 +198,8 @@
         <dependency>
 	    	<groupId>javax.servlet</groupId>
 	    	<artifactId>javax.servlet-api</artifactId>
-	    	<version>3.0.1</version>
+	    	<version>${javax-servlet.version}</version>
+	    	<scope>provided</scope>
 		</dependency>
         
         <dependency>
