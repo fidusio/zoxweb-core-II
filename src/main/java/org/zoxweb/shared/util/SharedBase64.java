@@ -115,6 +115,8 @@ public class SharedBase64
 	    int iidx = 0;
 	    int oidx = 0;
 	    
+	    //int c0,c1,c2,c3,c24;
+	    
 	    while (iidx < len)
         {
 	    	int c0 = REVERSE_BASE_64[data[index + iidx++] & 0xff];
@@ -201,6 +203,7 @@ public class SharedBase64
 	    int iidx = index;
 	    int oidx = 0;
 	    int charsLeft = len;
+	    //int b0,b1,b2,b24,c0,c1,c2,c3;
 	    
 	    while (charsLeft > 0)
         {
