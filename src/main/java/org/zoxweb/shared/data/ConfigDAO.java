@@ -108,7 +108,7 @@ public class ConfigDAO
 	@Override
 	public String toCanonicalID() 
 	{
-		return null;
+		return getCanonicalID();
 	}
 	
 	/**
@@ -136,6 +136,11 @@ public class ConfigDAO
 	public String getBeanClassName()
 	{
 		return lookupValue(Param.BEAN_CLASS_NAME);
+	}
+	
+	public void setBeanClassName(Class<?> clazz)
+	{
+		setBeanClassName(clazz.getName());
 	}
 
 	/**

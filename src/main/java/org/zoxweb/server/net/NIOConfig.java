@@ -16,6 +16,7 @@
 package org.zoxweb.server.net;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.InetSocketAddress;
 import java.nio.channels.ServerSocketChannel;
 import java.util.logging.Logger;
@@ -55,6 +56,12 @@ public class NIOConfig
 	public NIOConfig(String configDAOFile) throws InstantiationException, IllegalAccessException, ClassNotFoundException, IOException
 	{
 		this((ConfigDAO)GSONUtil.fromJSON(IOUtil.inputStreamToString(configDAOFile)));
+	}
+	
+	
+	public NIOConfig(InputStream configDAOFile) throws InstantiationException, IllegalAccessException, ClassNotFoundException, IOException
+	{
+		this((ConfigDAO)GSONUtil.fromJSON(IOUtil.inputStreamToString(configDAOFile, true)));
 	}
 	
 	public NIOConfig(ConfigDAO configDAO)
