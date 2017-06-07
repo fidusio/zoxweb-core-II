@@ -191,7 +191,7 @@ public interface BytesValue<V>
 				retBuffer = new byte[size*ins.length];
 				retStartIndex = 0;
 			}
-			System.out.println(retBuffer.length + " " + ins.length);
+			//System.out.println(retBuffer.length + " " + ins.length);
 
 			
 			for (int j=0; j < ins.length; j++)
