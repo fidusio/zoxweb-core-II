@@ -209,8 +209,8 @@ public class SharedBase64
         {
 	    	int c0 = bt.DECODE_SET[data[index + iidx++] & 0xff];
 	    	int c1 = bt.DECODE_SET[data[index + iidx++] & 0xff];
-	    	int c2 = bt.DECODE_SET[data[index + iidx++] & 0xff];
-	    	int c3 = bt.DECODE_SET[data[index + iidx++] & 0xff];
+	    	int c2 = (index + iidx < len) ? bt.DECODE_SET[data[index + iidx++] & 0xff] : 0;
+	    	int c3 = (index + iidx < len) ? bt.DECODE_SET[data[index + iidx++] & 0xff] : 0;
 	    	int c24 = (c0 << 18) | (c1 << 12) | (c2 << 6) | c3;
 
 	    	
@@ -249,6 +249,11 @@ public class SharedBase64
 	{
 		return decode(bt, SharedStringUtil.getBytes(str));
 	}
+
+	public static String decodeAsString(Base64Type bt, String str)
+	{
+		return SharedStringUtil.toString(decode(bt, SharedStringUtil.getBytes(str)));
+	}
 	
 	/**
 	 * Encode a string to base64 
@@ -263,6 +268,11 @@ public class SharedBase64
 	public static byte[] encode(Base64Type bt, String str)
 	{
 		return encode(bt, SharedStringUtil.getBytes(str));
+	}
+
+	public static String encodeAsString(Base64Type bt, String str)
+	{
+		return SharedStringUtil.toString(encode(bt, SharedStringUtil.getBytes(str)));
 	}
 
     /**
