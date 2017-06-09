@@ -15,7 +15,6 @@
  */
 package org.zoxweb.shared.util;
 
-import java.util.Arrays;
 
 /**
  * Contains utility methods to converts to/from base64 byte array.
@@ -296,6 +295,11 @@ public class SharedBase64
 	    //int len = data.length;
 
 	    int olen = 4 * ((len + 2) / 3);
+	    if (bt == Base64Type.URL)
+	    {
+	    	int n = len % 3;
+	    	olen = 4 * (len / 3) + (n == 0 ? 0 : n + 1);
+	    }
 	    
 	    byte[] bytes = new byte[olen];
 
@@ -319,25 +323,19 @@ public class SharedBase64
 
 	    	bytes[oidx++] = bt.ENCODE_SET[c0];
 	    	bytes[oidx++] = bt.ENCODE_SET[c1];
-	    	bytes[oidx++] = (byte)((charsLeft > 1) ? bt.ENCODE_SET[c2] : '=');
-	    	bytes[oidx++] = (byte)((charsLeft > 2) ? bt.ENCODE_SET[c3] : '=');
+	    	if (bt == Base64Type.REGULAR || oidx + 1 < bytes.length)
+	    	{
+		    	bytes[oidx++] = (byte)((charsLeft > 1) ? bt.ENCODE_SET[c2] : '=');
+	    	}
+	    	if (bt == Base64Type.REGULAR || oidx + 1 < bytes.length)
+	    	{
+		    	bytes[oidx++] = (byte)((charsLeft > 2) ? bt.ENCODE_SET[c3] : '=');
+	    	}
 
 	    	charsLeft -= 3;
 	    }
 	    
-	    if (bt == Base64Type.URL && charsLeft < 0)
-	    {
-	    	int sub = 0;
-	    	if (bytes[bytes.length -1] == '=')
-	    	{
-	    		sub++;
-	    	}
-	    	if (bytes[bytes.length -2] == '=')
-	    	{
-	    		sub++;
-	    	}
-	    	return Arrays.copyOf(bytes,  bytes.length - sub);
-	    }
+
 
 	    return bytes;
     }
