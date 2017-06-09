@@ -130,7 +130,7 @@ public class Base64Test {
 		System.out.println(str + " " + str1 + " " + str1.equals(str));
 		
 		byte[] b  = SharedBase64.decode(Base64Type.URL, str);
-		byte[] b1 = Base64.getUrlDecoder().decode(str1);
+		byte[] b1 = Base64.getUrlDecoder().decode(str);
 		System.out.println(Arrays.equals(uuidBytes, b) + " " + Arrays.equals(uuidBytes, b1));
 		str = SharedStringUtil.toString(SharedBase64.encode(Base64Type.URL, b));
 		System.out.println(str);

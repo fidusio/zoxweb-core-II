@@ -15,6 +15,8 @@
  */
 package org.zoxweb.shared.util;
 
+import java.util.Arrays;
+
 /**
  * Contains utility methods to converts to/from base64 byte array.
  * @author mnael
@@ -150,8 +152,20 @@ public class SharedBase64
     	}
 	    
 	    //int len = data.length;
-	    if(len % 4 != 0)
+	    if(Base64Type.REGULAR == bt && len % 4 != 0)
 	    	throw new IllegalArgumentException("Invalid len not divisible by 4");
+	    else if(Base64Type.URL == bt && len % 4 != 0)
+	    {
+	    	int temp = len + (len %4);
+	    	byte tempArray[] = new byte[temp];
+	    	System.arraycopy(data, index, tempArray, index, len);
+	    	for(int i = len; i < temp; i++)
+	    	{
+	    		tempArray[i] = '=';
+	    	}
+	    	data = tempArray;
+	    	len = temp;
+	    }
 
 	    //char[] chars = new char[len];
 	    //data.getChars(0, len, chars, 0);
@@ -183,6 +197,7 @@ public class SharedBase64
 	    	int c3 = bt.DECODE_SET[data[index + iidx++] & 0xff];
 	    	int c24 = (c0 << 18) | (c1 << 12) | (c2 << 6) | c3;
 
+	    	
 	    	bytes[oidx++] = (byte) (c24 >> 16);
 
 	    	if (oidx == olen)
@@ -281,12 +296,14 @@ public class SharedBase64
 	    //int len = data.length;
 
 	    int olen = 4 * ((len + 2) / 3);
+	    
 	    byte[] bytes = new byte[olen];
 
 	    int iidx = index;
 	    int oidx = 0;
 	    int charsLeft = len;
 	    //int b0,b1,b2,b24,c0,c1,c2,c3;
+	    
 	    
 	    while (charsLeft > 0)
         {
@@ -306,6 +323,20 @@ public class SharedBase64
 	    	bytes[oidx++] = (byte)((charsLeft > 2) ? bt.ENCODE_SET[c3] : '=');
 
 	    	charsLeft -= 3;
+	    }
+	    
+	    if (bt == Base64Type.URL && charsLeft < 0)
+	    {
+	    	int sub = 0;
+	    	if (bytes[bytes.length -1] == '=')
+	    	{
+	    		sub++;
+	    	}
+	    	if (bytes[bytes.length -2] == '=')
+	    	{
+	    		sub++;
+	    	}
+	    	return Arrays.copyOf(bytes,  bytes.length - sub);
 	    }
 
 	    return bytes;
