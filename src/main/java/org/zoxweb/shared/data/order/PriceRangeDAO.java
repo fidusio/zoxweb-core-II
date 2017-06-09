@@ -89,7 +89,7 @@ public class PriceRangeDAO
         setValue(Param.PRICE_LIST, list);
     }
     
-	public MoneyValueDAO caclculatePrice(int quantity) 
+	public MoneyValueDAO calculatePrice(int quantity)
 	{
 		MoneyValueDAO ret = null;
 		

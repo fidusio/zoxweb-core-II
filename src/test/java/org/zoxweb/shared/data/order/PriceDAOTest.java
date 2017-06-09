@@ -111,32 +111,32 @@ public class PriceDAOTest
         priceRangeDAO.getPriceList().add(priceDAO5);
         assertEquals(5, priceRangeDAO.getPriceList().size());
         
-        MoneyValueDAO price = priceRangeDAO.caclculatePrice(1);
+        MoneyValueDAO price = priceRangeDAO.calculatePrice(1);
         assertNotNull(price);
         assertEquals("$10.00", price.toString());
-        price = priceRangeDAO.caclculatePrice(50);
+        price = priceRangeDAO.calculatePrice(50);
         assertNotNull(price);
         assertEquals("$10.00", price.toString());
-        price = priceRangeDAO.caclculatePrice(75);
+        price = priceRangeDAO.calculatePrice(75);
         assertNotNull(price);
         assertEquals("$8.00", price.toString());
-        price = priceRangeDAO.caclculatePrice(100);
+        price = priceRangeDAO.calculatePrice(100);
         assertNotNull(price);
         assertEquals("$8.00", price.toString());
-        price = priceRangeDAO.caclculatePrice(150);
+        price = priceRangeDAO.calculatePrice(150);
         assertNotNull(price);
         assertEquals("$6.00", price.toString());
-        price = priceRangeDAO.caclculatePrice(175);
+        price = priceRangeDAO.calculatePrice(175);
         assertNotNull(price);
         assertEquals("$4.00", price.toString());
-        price = priceRangeDAO.caclculatePrice(200);
+        price = priceRangeDAO.calculatePrice(200);
         assertNotNull(price);
         assertEquals("$4.00", price.toString());
-        price = priceRangeDAO.caclculatePrice(400);
+        price = priceRangeDAO.calculatePrice(400);
         assertNotNull(price);
         assertEquals("$2.00", price.toString());
         
-        price = priceRangeDAO.caclculatePrice(0);
+        price = priceRangeDAO.calculatePrice(0);
         assertNull(price);
     }
 

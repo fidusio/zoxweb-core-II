@@ -113,7 +113,7 @@ public class ItemQuantityDAO
     	
     	if (getItem() != null && getItem().getPriceRange() != null) 
     	{
-    		MoneyValueDAO itemPrice = getItem().getPriceRange().caclculatePrice(getQuantity());
+    		MoneyValueDAO itemPrice = getItem().getPriceRange().calculatePrice(getQuantity());
     
     		if (itemPrice != null) 
     		{
