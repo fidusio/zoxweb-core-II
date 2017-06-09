@@ -16,6 +16,10 @@
 package org.zoxweb.shared.util;
 
 import java.util.Arrays;
+import java.util.Base64;
+import java.util.UUID;
+
+import org.zoxweb.shared.util.SharedBase64.Base64Type;
 
 //import org.apache.commons.codec.binary.Base64;
 
@@ -116,6 +120,20 @@ public class Base64Test {
 		{
 			e.printStackTrace();
 		}
+		
+		
+		UUID uuid = UUID.randomUUID();
+		
+		byte[] uuidBytes = BytesValue.LONG.toBytes(null, 0, uuid.getMostSignificantBits(), uuid.getMostSignificantBits());
+		String str = SharedStringUtil.toString(SharedBase64.encode(Base64Type.URL, uuidBytes));
+		String str1 = Base64.getUrlEncoder().encodeToString(uuidBytes); 
+		System.out.println(str + " " + str1 + " " + str1.equals(str));
+		
+		byte[] b  = SharedBase64.decode(Base64Type.URL, str);
+		byte[] b1 = Base64.getUrlDecoder().decode(str1);
+		System.out.println(Arrays.equals(uuidBytes, b) + " " + Arrays.equals(uuidBytes, b1));
+		str = SharedStringUtil.toString(SharedBase64.encode(Base64Type.URL, b));
+		System.out.println(str);
 	}
 
 }

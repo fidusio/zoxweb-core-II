@@ -21,6 +21,7 @@ package org.zoxweb.shared.util;
  */
 public class SharedBase64
 {
+	
 
 	/**
 	 * This byte array contains the base64 values. This array is used to
@@ -34,10 +35,37 @@ public class SharedBase64
 		'0','1','2','3','4','5','6','7','8','9','+','/'
 	};
 	
+	public final static byte URL_BASE_64[] =
+		{
+			//"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+			'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
+			'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
+			'0','1','2','3','4','5','6','7','8','9','-','_'
+		};
+	
 	/**
 	 * This byte array contains the byte values based on base64 values.
 	 * This array is used to covert from base64.
 	 */
+	public final static byte[] URL_REVERSE_BASE_64 =
+		{
+			-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 
+			 
+			//                                                  -           0   1   2   3   4   5   6   7   8  9
+			-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 62, -1, -1, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, -1, -1, -1, 0, -1, -1, 
+			
+			//  A  B  C  D  E  F  G  H  I  J  K   L   M   N   O   P   Q   R   S   T   U   V   W   X   Y   Z                   _
+			-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, -1, -1, -1, -1, 63, 
+
+			//   a   b   c   d   e   f   g   h   i  j    k   l   m   n   o   p   q   r   s   t   u   v   w   x   y   z 
+			-1, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, -1, -1, -1, -1, -1,
+			// the rest 
+			-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+			-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+			-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+			-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+		};
+	
 	public final static byte[] REVERSE_BASE_64 =
 		{
 			-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 
@@ -58,6 +86,22 @@ public class SharedBase64
 		};
 	
 	
+	
+	public enum Base64Type
+	{
+		REGULAR(BASE_64, REVERSE_BASE_64),
+		URL(URL_BASE_64, URL_REVERSE_BASE_64);
+		
+		
+		Base64Type(byte[] encode, byte[] decode)
+		{
+			ENCODE_SET = encode;
+			DECODE_SET = decode;
+		}
+		
+		public final byte[] ENCODE_SET;
+		public final byte[] DECODE_SET;
+	}
 	/**
 	 * The constructor is declared private to prevent instantiation.
 	 */
@@ -73,8 +117,18 @@ public class SharedBase64
 	 */
 	public static byte[] decode(byte[] data)
     {
-		return decode( data, 0, data.length);
+		return decode(Base64Type.REGULAR, data, 0, data.length);
 	}
+	
+	public static byte[] decode(Base64Type bt, byte[] data)
+    {
+		return decode(bt, data, 0, data.length);
+	}
+	
+	public static byte[] decode(byte[] data, int index, int len)
+    {
+		return decode(Base64Type.REGULAR, data, index, len);
+    }
 
 	/**
 	 * Decodes a base64 array to a byte array.
@@ -83,13 +137,17 @@ public class SharedBase64
 	 * @param len
 	 * @return decoded byte array
 	 */
-	public static byte[] decode(byte[] data, int index, int len)
+	public static byte[] decode(Base64Type bt, byte[] data, int index, int len)
     {
 
     	if (data == null || data.length == 0)
     	{
     		return new byte[0];
 		}
+    	if (bt == null)
+    	{
+    		bt = Base64Type.REGULAR;
+    	}
 	    
 	    //int len = data.length;
 	    if(len % 4 != 0)
@@ -119,10 +177,10 @@ public class SharedBase64
 	    
 	    while (iidx < len)
         {
-	    	int c0 = REVERSE_BASE_64[data[index + iidx++] & 0xff];
-	    	int c1 = REVERSE_BASE_64[data[index + iidx++] & 0xff];
-	    	int c2 = REVERSE_BASE_64[data[index + iidx++] & 0xff];
-	    	int c3 = REVERSE_BASE_64[data[index + iidx++] & 0xff];
+	    	int c0 = bt.DECODE_SET[data[index + iidx++] & 0xff];
+	    	int c1 = bt.DECODE_SET[data[index + iidx++] & 0xff];
+	    	int c2 = bt.DECODE_SET[data[index + iidx++] & 0xff];
+	    	int c3 = bt.DECODE_SET[data[index + iidx++] & 0xff];
 	    	int c24 = (c0 << 18) | (c1 << 12) | (c2 << 6) | c3;
 
 	    	bytes[oidx++] = (byte) (c24 >> 16);
@@ -156,6 +214,11 @@ public class SharedBase64
 		return decode(SharedStringUtil.getBytes(str));
 	}
 	
+	public static byte[] decode(Base64Type bt, String str)
+	{
+		return decode(bt, SharedStringUtil.getBytes(str));
+	}
+	
 	/**
 	 * Encode a string to base64 
 	 * @param str to be encoded
@@ -165,6 +228,11 @@ public class SharedBase64
 	{
 		return encode(SharedStringUtil.getBytes(str));
 	}
+	
+	public static byte[] encode(Base64Type bt, String str)
+	{
+		return encode(bt, SharedStringUtil.getBytes(str));
+	}
 
     /**
      * Encodes a byte array to base64 array.
@@ -173,17 +241,28 @@ public class SharedBase64
      */
     public static byte[] encode(byte[] data)
     {
-    	return encode(data, 0, data.length);
+    	return encode(Base64Type.REGULAR, data, 0, data.length);
     }
-
+    
+    public static byte[] encode(Base64Type bt, byte[] data)
+    {
+    	return encode(bt, data, 0, data.length);
+    }
+    
+    public static byte[] encode(byte[] data, int index, int len)
+    {
+    	return encode(Base64Type.REGULAR, data, index, len);
+    }
+    
 	/**
 	 * Encodes a byte array to base64 array.
+	 * @param bt type
 	 * @param data
 	 * @param index
 	 * @param len
 	 * @return base64 encoded array
 	 */
-	public static byte[] encode(byte[] data, int index, int len)
+	public static byte[] encode(Base64Type bt, byte[] data, int index, int len)
     {
     	if (data == null || data.length == 0)
     	{
@@ -194,6 +273,10 @@ public class SharedBase64
     	{
 			throw new IllegalArgumentException("Invalid parameter " + index + "," + len);
 		}
+    	if (bt == null)
+    	{
+    		bt = Base64Type.REGULAR;
+    	}
 
 	    //int len = data.length;
 
@@ -217,10 +300,10 @@ public class SharedBase64
 	    	int c2 = (b24 >> 6) & 0x3f;
 	    	int c3 = b24 & 0x3f;
 
-	    	bytes[oidx++] = BASE_64[c0];
-	    	bytes[oidx++] = BASE_64[c1];
-	    	bytes[oidx++] = (byte)((charsLeft > 1) ? BASE_64[c2] : '=');
-	    	bytes[oidx++] = (byte)((charsLeft > 2) ? BASE_64[c3] : '=');
+	    	bytes[oidx++] = bt.ENCODE_SET[c0];
+	    	bytes[oidx++] = bt.ENCODE_SET[c1];
+	    	bytes[oidx++] = (byte)((charsLeft > 1) ? bt.ENCODE_SET[c2] : '=');
+	    	bytes[oidx++] = (byte)((charsLeft > 2) ? bt.ENCODE_SET[c3] : '=');
 
 	    	charsLeft -= 3;
 	    }
