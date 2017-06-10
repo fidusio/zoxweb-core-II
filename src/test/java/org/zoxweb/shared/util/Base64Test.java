@@ -17,6 +17,8 @@ package org.zoxweb.shared.util;
 
 import java.util.Arrays;
 import java.util.Base64;
+import java.util.Base64.Decoder;
+import java.util.Base64.Encoder;
 import java.util.UUID;
 
 import org.zoxweb.shared.util.SharedBase64.Base64Type;
@@ -54,29 +56,31 @@ public class Base64Test {
 		System.out.println("Length of Array: " + testArray.length);
 		long tsJ, tsZW;
 		byte[] sharedEncodedeBase64, sharedDecodedBase64,java64Encoded,java64Decodded;
+		Encoder javaEncoder = java.util.Base64.getEncoder();
+		Decoder javaDecoder = java.util.Base64.getDecoder();
 		for (int i = 0; i < testArray.length; i++) {
 			System.out.println(i + 1 + "." + "Original Value: " + testArray[i]);
 
 			byte toEncode[] = testArray[i].getBytes();
 			tsZW = System.nanoTime();
-			sharedEncodedeBase64 = SharedBase64.encode(toEncode);
-			sharedDecodedBase64 = SharedBase64.decode(sharedEncodedeBase64);
+			sharedEncodedeBase64 = SharedBase64.encode(Base64Type.DEFAULT, toEncode, 0, toEncode.length);
+			sharedDecodedBase64 = SharedBase64.decode(Base64Type.DEFAULT, sharedEncodedeBase64, 0, sharedEncodedeBase64.length);
 			tsZW = System.nanoTime() - tsZW;
 
 			tsZW = System.nanoTime();
-			sharedEncodedeBase64 = SharedBase64.encode(toEncode);
-			sharedDecodedBase64 = SharedBase64.decode(sharedEncodedeBase64);
+			sharedEncodedeBase64 = SharedBase64.encode(Base64Type.DEFAULT, toEncode, 0, toEncode.length);
+			sharedDecodedBase64 = SharedBase64.decode(Base64Type.DEFAULT, sharedEncodedeBase64, 0, sharedEncodedeBase64.length);
 			tsZW = System.nanoTime() - tsZW;
 
 
 			tsJ = System.nanoTime();
-			java64Encoded = java.util.Base64.getEncoder().encode(toEncode);//.encodeBase64(toEncode);
-			java64Decodded = java.util.Base64.getDecoder().decode(java64Encoded);
+			java64Encoded = javaEncoder.encode(toEncode);//.encodeBase64(toEncode);
+			java64Decodded = javaDecoder.decode(java64Encoded);
 			tsJ = System.nanoTime() - tsJ;
 
 			tsJ = System.nanoTime();
-			java64Encoded = java.util.Base64.getEncoder().encode(toEncode);//.encodeBase64(toEncode);
-			java64Decodded = java.util.Base64.getDecoder().decode(java64Encoded);
+			java64Encoded = javaEncoder.encode(toEncode);//.encodeBase64(toEncode);
+			java64Decodded = javaDecoder.decode(java64Encoded);
 			tsJ = System.nanoTime() - tsJ;
 
 			System.out.println(i + 1 + "." + "Encode Base64: " + new String(sharedEncodedeBase64) + ":\t\t" +

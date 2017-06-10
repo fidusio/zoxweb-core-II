@@ -60,6 +60,8 @@ import org.zoxweb.shared.crypto.PasswordDAO;
 import org.zoxweb.shared.filters.BytesValueFilter;
 import org.zoxweb.shared.security.AccessException;
 import org.zoxweb.shared.util.Const;
+import org.zoxweb.shared.util.SharedBase64;
+import org.zoxweb.shared.util.SharedBase64.Base64Type;
 import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
 
@@ -134,6 +136,22 @@ public class CryptoUtil
 		default:
 			return SecureRandom.getInstance(SECURE_RANDOM_ALGO.getName());
 		}
+	}
+	
+	
+	
+	public static String base64URLHmacSHA256(String secret, String data) throws NoSuchAlgorithmException, InvalidKeyException
+	{
+		byte[] hmac = hmacSHA256(SharedStringUtil.getBytes(secret), SharedStringUtil.getBytes(data));
+		return SharedStringUtil.toString(SharedBase64.encode(Base64Type.URL, hmac, 0, hmac.length));
+	}
+	
+	public static byte[] hmacSHA256(byte[] secret, byte[] data) throws NoSuchAlgorithmException, InvalidKeyException
+	{
+		 Mac sha256HMAC = Mac.getInstance(HMAC_SHA_256);
+	     SecretKeySpec secret_key = new SecretKeySpec(secret, HMAC_SHA_256);
+	     sha256HMAC.init(secret_key);
+	     return sha256HMAC.doFinal(data);
 	}
 	
 	public static SecureRandom defaultSecureRandom()

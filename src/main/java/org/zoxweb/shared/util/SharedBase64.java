@@ -90,7 +90,7 @@ public class SharedBase64
 	
 	public enum Base64Type
 	{
-		REGULAR(BASE_64, REVERSE_BASE_64),
+		DEFAULT(BASE_64, REVERSE_BASE_64),
 		URL(URL_BASE_64, URL_REVERSE_BASE_64);
 		
 		
@@ -118,7 +118,7 @@ public class SharedBase64
 	 */
 	public static byte[] decode(byte[] data)
     {
-		return decode(Base64Type.REGULAR, data, 0, data.length);
+		return decode(Base64Type.DEFAULT, data, 0, data.length);
 	}
 	
 	public static byte[] decode(Base64Type bt, byte[] data)
@@ -128,7 +128,7 @@ public class SharedBase64
 	
 	public static byte[] decode(byte[] data, int index, int len)
     {
-		return decode(Base64Type.REGULAR, data, index, len);
+		return decode(Base64Type.DEFAULT, data, index, len);
     }
 
 	/**
@@ -147,10 +147,10 @@ public class SharedBase64
 		}
     	if (bt == null)
     	{
-    		bt = Base64Type.REGULAR;
+    		bt = Base64Type.DEFAULT;
     	}
     	
-	    if(Base64Type.REGULAR == bt && len % 4 != 0)
+	    if(Base64Type.DEFAULT == bt && len % 4 != 0)
 	    	throw new IllegalArgumentException("Invalid length not divisible by 4");
 	   
 	    	
@@ -252,7 +252,7 @@ public class SharedBase64
      */
     public static byte[] encode(byte[] data)
     {
-    	return encode(Base64Type.REGULAR, data, 0, data.length);
+    	return encode(Base64Type.DEFAULT, data, 0, data.length);
     }
     
     public static byte[] encode(Base64Type bt, byte[] data)
@@ -262,7 +262,7 @@ public class SharedBase64
     
     public static byte[] encode(byte[] data, int index, int len)
     {
-    	return encode(Base64Type.REGULAR, data, index, len);
+    	return encode(Base64Type.DEFAULT, data, index, len);
     }
     
 	/**
@@ -286,16 +286,20 @@ public class SharedBase64
 		}
     	if (bt == null)
     	{
-    		bt = Base64Type.REGULAR;
+    		bt = Base64Type.DEFAULT;
     	}
 
 	    //int len = data.length;
 
-	    int olen = 4 * ((len + 2) / 3);
+	    int olen = 0;
 	    if (bt == Base64Type.URL)
 	    {
 	    	int n = len % 3;
 	    	olen = 4 * (len / 3) + (n == 0 ? 0 : n + 1);
+	    }
+	    else
+	    {
+	    	 olen = 4 * ((len + 2) / 3);
 	    }
 	    
 	    byte[] bytes = new byte[olen];
@@ -320,14 +324,19 @@ public class SharedBase64
 
 	    	bytes[oidx++] = bt.ENCODE_SET[c0];
 	    	bytes[oidx++] = bt.ENCODE_SET[c1];
-	    	if (bt == Base64Type.REGULAR || oidx + 1 < bytes.length)
+	    	if (/*bt == Base64Type.DEFAULT ||*/ oidx < bytes.length)
 	    	{
 		    	bytes[oidx++] = (byte)((charsLeft > 1) ? bt.ENCODE_SET[c2] : '=');
 	    	}
-	    	if (bt == Base64Type.REGULAR || oidx + 1 < bytes.length)
+	    	else
+	    		break;
+	    	
+	    	if (/*bt == Base64Type.DEFAULT ||*/ oidx < bytes.length)
 	    	{
 		    	bytes[oidx++] = (byte)((charsLeft > 2) ? bt.ENCODE_SET[c3] : '=');
 	    	}
+	    	else
+	    		break;
 
 	    	charsLeft -= 3;
 	    }
