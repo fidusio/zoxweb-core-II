@@ -150,54 +150,24 @@ public class SharedBase64
     		bt = Base64Type.REGULAR;
     	}
     	
-
-	    int olen = 3 * (len / 4);
-	    
-	    //int len = data.length;
 	    if(Base64Type.REGULAR == bt && len % 4 != 0)
-	    	throw new IllegalArgumentException("Invalid len not divisible by 4");
-	    else if(Base64Type.URL == bt && len % 4 != 0)
-	    {
-//	    	int temp = len + (len %4);
-//	    	byte tempArray[] = new byte[temp];
-//	    	System.arraycopy(data, index, tempArray, index, len);
-//	    	for(int i = len; i < temp; i++)
-//	    	{
-//	    		tempArray[i] = '=';
-//	    	}
-//	    	data = tempArray;
-//	    	len = temp;
-	    	
-	    	
-	    	int paddings = 0;
-	    	if (data[len - 1] == '=') {
-                paddings++;
-                if (data[len - 2] == '=')
-                    paddings++;
-            }
-        
-	        if (paddings == 0 && (len & 0x3) !=  0)
-	            paddings = 4 - (len & 0x3);
-	        olen = 3 * ((len + 3) / 4) - paddings;
-	    	
-	    	
-	    }
-
-	    //char[] chars = new char[len];
-	    //data.getChars(0, len, chars, 0);
-
+	    	throw new IllegalArgumentException("Invalid length not divisible by 4");
 	   
+	    	
+	    	
+    	int paddings = 0;
+    	if (data[len - 1] == '=') 
+    	{
+            paddings++;
+            if (data[len - 2] == '=')
+                paddings++;
+        }
+    
+        if (paddings == 0 && (len % 0x04) !=  0)
+            paddings = 4 - (len % 0x04);
 
-	    if (data[len - 2] == '=')
-	    {
-	    	--olen;
-	    }
-
-	    if (data[len - 1] == '=')
-	    {
-	    	--olen;
-	    }
-
+        
+        int olen = 3 * ((len + 3) / 4) - paddings;
 	    byte[] bytes = new byte[olen];
 
 	    int iidx = 0;
