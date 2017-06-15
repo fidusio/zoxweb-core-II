@@ -24,7 +24,11 @@ import org.zoxweb.shared.util.NVConfigEntityLocal;
 import org.zoxweb.shared.util.NVConfigManager;
 import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
-
+/**
+ * PasswordDAO
+ * @author mnael
+ *
+ */
 @SuppressWarnings("serial")
 public class PasswordDAO
     extends TimeStampDAO
