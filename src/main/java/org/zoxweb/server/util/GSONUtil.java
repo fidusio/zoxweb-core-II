@@ -24,8 +24,9 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
+//import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import java.util.Map;
@@ -606,7 +607,7 @@ final public class GSONUtil
 	public static Map<String, ?> fromJSONMap(String json) 
         throws InstantiationException, IllegalAccessException, ClassNotFoundException
     {
-		Map<String, Object> ret = new HashMap<String, Object>();
+		Map<String, Object> ret = new LinkedHashMap<String, Object>();
 		
 		JsonElement je = new JsonParser().parse(json);
 		

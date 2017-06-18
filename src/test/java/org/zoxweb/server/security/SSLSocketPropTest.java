@@ -25,8 +25,9 @@ public class SSLSocketPropTest {
 
 	public static void main(String[] args) {
 		
-		try {
-			URL url = new URL("https://76.91.24.155:8443/index.jsp");
+		try 
+		{
+			URL url = new URL("https://management.rubuspi.com:7443/manage");
 			URLConnection con = url.openConnection();
 			SSLCheckDisabler.SINGLETON.updateURLConnection((HttpURLConnection) con);
 			Reader reader = new InputStreamReader(con.getInputStream());
