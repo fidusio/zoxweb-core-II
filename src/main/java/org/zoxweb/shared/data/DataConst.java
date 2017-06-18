@@ -59,6 +59,7 @@ public class DataConst
 	{
 		CANONICAL_ID(NVConfigManager.createNVConfig("canonical_id", "Canonical ID", "CanonicalID", true, false, String.class)),
 		DESCRIPTION(NVConfigManager.createNVConfig("description", null, "Description", false, true, String.class)),
+		DOMAIN_ID(NVConfigManager.createNVConfig("domain_id", "Domain ID", "DomainID", true, false, String.class)),
 		NAME(NVConfigManager.createNVConfig("name", null,"Name", false, true, String.class)),
 		;
 		
