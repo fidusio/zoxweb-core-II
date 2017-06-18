@@ -98,7 +98,7 @@ public class DeviceDAO
 	 * Sets the document properties.
 	 * @param properties
 	 */
-	public void setProperties(ArrayValues<GetNameValue<String>> properties)
+	public synchronized void setProperties(ArrayValues<GetNameValue<String>> properties)
 	{
 		getProperties().add(properties.values(), true);	
 	}
