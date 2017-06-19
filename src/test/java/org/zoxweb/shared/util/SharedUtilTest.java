@@ -94,7 +94,7 @@ public class SharedUtilTest {
 		System.out.println(nvTest3.getValue());
 		System.out.println(nvTest3.toString());
 		
-		NVPairGetNameMap nvpgnm = new NVPairGetNameMap("test", new HashMap<GetName, NVPair>());
+		NVPairGetNameMap nvpgnm = new NVPairGetNameMap("test", new HashMap<GetName, GetNameValue<String>>());
 		
 		nvpgnm.add( new NVPair("marwan", "nael"));
 		System.out.println(nvpgnm.get("MarwAna"));

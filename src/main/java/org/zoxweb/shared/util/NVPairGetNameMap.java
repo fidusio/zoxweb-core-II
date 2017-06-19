@@ -23,8 +23,8 @@ import java.util.Map;
  */
 @SuppressWarnings("serial")
 public class NVPairGetNameMap
-    extends NVBase<Map<GetName, NVPair>>
-    implements ArrayValues<NVPair>
+    extends NVBase<Map<GetName, GetNameValue<String>>>
+    implements ArrayValues<GetNameValue<String>>
 {
 
 	private boolean isFixed = false;
@@ -34,12 +34,12 @@ public class NVPairGetNameMap
 
 	}
 	
-	public NVPairGetNameMap(String name, Map<GetName, NVPair> map)
+	public NVPairGetNameMap(String name, Map<GetName, GetNameValue<String>> map)
 	{
 		super(name, map);
 	}
 
-	public NVPair get(GetName getName)
+	public GetNameValue<String> get(GetName getName)
 	{
 		if (getName != null && getName.getName() != null)
 		{
@@ -49,22 +49,22 @@ public class NVPairGetNameMap
 		return null;
 	}
 	
-	public synchronized NVPair get(String name)
+	public synchronized GetNameValue<String> get(String name)
 	{
 		return value.get(new GetNameKey(name, true));
 	}
 	
-	public synchronized NVPair remove(String name)
+	public synchronized GetNameValue<String> remove(String name)
 	{
 		return value.remove(new GetNameKey(name, true));
 	}
 	
-	public synchronized NVPair add(NVPair nve)
+	public synchronized GetNameValue<String> add(GetNameValue<String> nve)
 	{
 		return value.put(new GetNameKey(nve, true), nve);
 	}
 	
-	public synchronized NVPair remove(NVPair nve)
+	public synchronized GetNameValue<String> remove(GetNameValue<String> nve)
 	{
 		return value.remove(new GetNameKey(nve, true));
 	}
@@ -92,7 +92,7 @@ public class NVPairGetNameMap
 	 * @see org.zoxweb.shared.util.ArrayValues#add(java.lang.Object[], boolean)
 	 */
 	@Override
-	public void add(NVPair[] vals, boolean clear) 
+	public void add(GetNameValue<String>[] vals, boolean clear) 
 	{
 		if (clear)
 		{
@@ -101,7 +101,7 @@ public class NVPairGetNameMap
 		
 		if (vals != null)
 		{
-			for (NVPair nvp : vals)
+			for (GetNameValue<String> nvp : vals)
 			{
 				add(nvp);
 			}
@@ -109,7 +109,7 @@ public class NVPairGetNameMap
 	}
 	
 	
-	public List<NVPair> search(String... criteria) 
+	public List<GetNameValue<String>> search(String... criteria) 
 	{
 		return SharedUtil.search(values(), criteria[0]);	
 	}
@@ -131,5 +131,7 @@ public class NVPairGetNameMap
     {
 		this.isFixed = isFixed;
 	}
+
+	
 	
 }

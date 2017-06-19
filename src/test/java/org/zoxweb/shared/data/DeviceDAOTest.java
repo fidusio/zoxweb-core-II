@@ -20,6 +20,8 @@ public class DeviceDAOTest {
 		device.setSubjectID("dev.xlogistx.io");
 		device.setDeviceID(UUID.randomUUID().toString());
 		device.getProperties().add(new NVPair("name", "value"));
+		device.getProperties().add(new NVPair("name", "value2"));
+		device.getProperties().add(new NVPair("AAA", "triple"));
 		String json = GSONUtil.toJSON(device, true);
 		System.out.println(json);
 		Class<?> propC = device.getProperties().getClass();

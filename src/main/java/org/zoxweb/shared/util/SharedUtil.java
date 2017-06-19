@@ -1319,7 +1319,7 @@ public class SharedUtil
 			{
 				if (config.isUnique())
 				{
-					return (new NVPairGetNameMap (config.getName(), new LinkedHashMap<GetName, NVPair>()));
+					return (new NVPairGetNameMap (config.getName(), new LinkedHashMap<GetName, GetNameValue<String>>()));
 				}
 				
 				return (new NVPairList (config.getName(), new ArrayList<NVPair>()));
