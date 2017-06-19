@@ -274,6 +274,21 @@ public class ZWDataFactory
 			{
 				return DetailedCreditCardDAO.NVC_DETAILED_CREDIT_CARD_DAO;
 			}
+		},
+		DEVICE_DAO(DeviceDAO.class.getName())
+		{
+			@SuppressWarnings("unchecked")
+			@Override
+			public DeviceDAO newInstance()
+			{
+				return new DeviceDAO();
+			}
+			
+			@Override
+			public NVConfigEntity getNVConfigEntity() 
+			{
+				return DeviceDAO.NVC_DEVICE_DAO;
+			}
 		},		
 		DOCUMENT_OPERATION_DAO(DocumentOperationDAO.class.getName())
 		{
