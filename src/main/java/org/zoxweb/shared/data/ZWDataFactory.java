@@ -29,14 +29,6 @@ import org.zoxweb.shared.api.APIConfigInfoDAO;
 import org.zoxweb.shared.api.APICredentialsDAO;
 import org.zoxweb.shared.api.APIError;
 import org.zoxweb.shared.util.NVEntityInstance;
-import org.zoxweb.shared.data.order.CustomerOrderDAO;
-import org.zoxweb.shared.data.order.ItemDAO;
-import org.zoxweb.shared.data.order.ItemQuantityDAO;
-import org.zoxweb.shared.data.order.LimitValueDAO;
-import org.zoxweb.shared.data.order.OrderDAO;
-import org.zoxweb.shared.data.order.PriceDAO;
-import org.zoxweb.shared.data.order.PriceRangeDAO;
-import org.zoxweb.shared.data.order.RangeDAO;
 import org.zoxweb.shared.data.shiro.ShiroNVEntityCRUDs;
 import org.zoxweb.shared.data.shiro.ShiroPermissionDAO;
 import org.zoxweb.shared.data.shiro.ShiroRoleDAO;
@@ -902,131 +894,7 @@ public class ZWDataFactory
 				return TicketResolutionDAO.NVC_TICKET_RESOLUTION_DAO;
 			}
 		},
-		
-		
-		CUSTOMER_ORDER_DAO(CustomerOrderDAO.class.getName())
-		{
-			@SuppressWarnings("unchecked")
-			@Override
-			public CustomerOrderDAO newInstance()
-			{
-				return new CustomerOrderDAO();
-			}
 
-			@Override
-			public NVConfigEntity getNVConfigEntity() 
-			{
-				return CustomerOrderDAO.NVC_CUSTOMER_ORDER_DAO;
-			}
-		},
-		ORDER_DAO(OrderDAO.class.getName())
-		{
-			@SuppressWarnings("unchecked")
-			@Override
-			public OrderDAO newInstance()
-			{
-				return new OrderDAO();
-			}
-
-			@Override
-			public NVConfigEntity getNVConfigEntity() 
-			{
-				return OrderDAO.NVC_ORDER_DAO;
-			}
-		},
-		ITEM_QUANTITY_DAO(ItemQuantityDAO.class.getName())
-		{
-			@SuppressWarnings("unchecked")
-			@Override
-			public ItemQuantityDAO newInstance()
-			{
-				return new ItemQuantityDAO();
-			}
-
-			@Override
-			public NVConfigEntity getNVConfigEntity() 
-			{
-				return ItemQuantityDAO.NVC_ITEM_QUANTITY_DAO;
-			}
-		},
-		ITEM_DAO(ItemDAO.class.getName())
-		{
-			@SuppressWarnings("unchecked")
-			@Override
-			public ItemDAO newInstance()
-			{
-				return new ItemDAO();
-			}
-
-			@Override
-			public NVConfigEntity getNVConfigEntity() 
-			{
-				return ItemDAO.NVC_ITEM_DAO;
-			}
-		},
-		PRICE_DAO(PriceDAO.class.getName())
-		{
-			@SuppressWarnings("unchecked")
-			@Override
-			public PriceDAO newInstance()
-			{
-				return new PriceDAO();
-			}
-
-			@Override
-			public NVConfigEntity getNVConfigEntity() 
-			{
-				return PriceDAO.NVC_PRICE_DAO;
-			}
-		},
-		PRICE_RANGE_DAO(PriceRangeDAO.class.getName())
-		{
-			@SuppressWarnings("unchecked")
-			@Override
-			public PriceRangeDAO newInstance()
-			{
-				return new PriceRangeDAO();
-			}
-
-			@Override
-			public NVConfigEntity getNVConfigEntity() 
-			{
-				return PriceRangeDAO.NVC_PRICE_RANGE_DAO;
-			}
-		},
-		RANGE_DAO(RangeDAO.class.getName())
-		{
-			@SuppressWarnings("unchecked")
-			@Override
-			public RangeDAO newInstance()
-			{
-				return new RangeDAO();
-			}
-
-			@Override
-			public NVConfigEntity getNVConfigEntity() 
-			{
-				return RangeDAO.NVC_RANGE_DAO;
-			}
-		},
-		LIMIT_VALUE_DAO(LimitValueDAO.class.getName())
-		{
-			@SuppressWarnings("unchecked")
-			@Override
-			public LimitValueDAO newInstance()
-			{
-				return new LimitValueDAO();
-			}
-
-			@Override
-			public NVConfigEntity getNVConfigEntity() 
-			{
-				return LimitValueDAO.NVC_LIMIT_VALUE_DAO;
-			}
-		},
-		
-		
-		
 		
 		;
 
