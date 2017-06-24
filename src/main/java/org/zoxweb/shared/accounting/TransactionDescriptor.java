@@ -25,6 +25,7 @@ public enum TransactionDescriptor
 	SUBSCRIPTION,
 	CREDIT,
 	REFUNDS,
+    ORDER_PAYMENT,
 	
 	;
 }

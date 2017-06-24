@@ -44,11 +44,11 @@ public class FinancialTransactionDAO
 	public enum Params
 		implements GetNVConfig
 	{
-		CREATION_TS(NVConfigManager.createNVConfig("creation_ts", "Time in millis when the file was created","CreationTS", true, false, false, false, Date.class, null)),
+		CREATION_TS(NVConfigManager.createNVConfig("creation_ts", "Time in millis when the transaction was created","CreationTS", true, false, false, false, Date.class, null)),
 		EXTERNAL_REFERENCE(NVConfigManager.createNVConfig("external_reference", "External reference", "ExternalReference", false, true, String.class)),
 		REFERENCED_NVE(NVConfigManager.createNVConfigEntity("referenced_nve", "Referenced NVEntity", "ReferencedNVEntity", false, false, NVEntity.class, ArrayType.NOT_ARRAY)),
 		TRANSACTION_AMOUNT(NVConfigManager.createNVConfigEntity("transaction_amount", "Transaction amount", "TransactionAmount", true, true, MoneyValueDAO.NVC_MONEY_VALUE_DAO)),		
-		TRANSACTION_TYPE(NVConfigManager.createNVConfig("transaction_type", "Type of transaction etiher credit or debit", "TransactionType", false, true, TransactionType.class)),
+		TRANSACTION_TYPE(NVConfigManager.createNVConfig("transaction_type", "Type of transaction either credit or debit", "TransactionType", false, true, TransactionType.class)),
 		TRANSACTION_DESCRIPTOR(NVConfigManager.createNVConfig("transaction_descriptor", "Description of transaction", "TransactionDescriptor", false, true, String.class)),
 		
 		;
