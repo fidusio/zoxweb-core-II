@@ -74,7 +74,7 @@ public class NVPairGetNameMap
 		return value.size();
 	}
 	
-	public NVPair[] values()
+	public GetNameValue<String>[] values()
 	{
 		return  value.values().toArray(new NVPair[0]);
 	}

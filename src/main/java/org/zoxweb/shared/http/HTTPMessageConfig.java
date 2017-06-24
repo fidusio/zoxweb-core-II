@@ -32,7 +32,7 @@ import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVConfigEntityLocal;
 import org.zoxweb.shared.util.NVConfigManager;
 import org.zoxweb.shared.util.NVGetNameValueList;
-import org.zoxweb.shared.util.NVGetNameValueMap;
+import org.zoxweb.shared.util.NVPairGetNameMap;
 import org.zoxweb.shared.util.SetNameValue;
 import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
@@ -139,7 +139,7 @@ public class HTTPMessageConfig
 		// updating PARAMETERS and HEADER_PARAMETERS to NVGetNameValueMap
 		// reason to support multi-parts parameters
 		attributes.put(Params.PARAMETERS.getNVConfig().getName(), new NVGetNameValueList(Params.PARAMETERS.getNVConfig().getName(), new ArrayList<GetNameValue<String>>()));
-		attributes.put(Params.HEADER_PARAMETERS.getNVConfig().getName(), new NVGetNameValueMap(Params.HEADER_PARAMETERS.getNVConfig().getName(), new LinkedHashMap<GetName, GetNameValue<String>>()));
+		attributes.put(Params.HEADER_PARAMETERS.getNVConfig().getName(), new NVPairGetNameMap(Params.HEADER_PARAMETERS.getNVConfig().getName(), new LinkedHashMap<GetName, GetNameValue<String>>()));
 	}
 	
 
