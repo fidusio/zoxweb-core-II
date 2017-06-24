@@ -86,6 +86,7 @@ public class MoneyValueDAO
 	public MoneyValueDAO()
 	{
 		super(NVC_MONEY_VALUE_DAO);
+		setCurrency(DEFAULT_CURRENCY);
 	}
 	
 	/**
@@ -97,8 +98,14 @@ public class MoneyValueDAO
 	{
 		this();
 		setValue(amount);
-		setCurrency(currency);
+		if (currency != null) {
+            setCurrency(currency);
+        }
 	}
+
+    public MoneyValueDAO(BigDecimal amount) {
+        this(amount, null);
+    }
 	
 	/**
 	 * This constructor instantiates MoneyValueDAO given the amount (String).
@@ -107,7 +114,7 @@ public class MoneyValueDAO
 	 */
 	public MoneyValueDAO(String amount)
 	{
-		this(new BigDecimal(amount), DEFAULT_CURRENCY);
+		this(new BigDecimal(amount), null);
 	}
 	
 	/**
@@ -117,7 +124,7 @@ public class MoneyValueDAO
 	 */
 	public MoneyValueDAO(long amount)
 	{
-		this(new BigDecimal(amount), DEFAULT_CURRENCY);
+		this(new BigDecimal(amount), null);
 	}
 	
 	/**
@@ -127,7 +134,7 @@ public class MoneyValueDAO
 	 */
 	public MoneyValueDAO(float amount)
 	{
-		this(BigDecimal.valueOf(amount), DEFAULT_CURRENCY);
+		this(BigDecimal.valueOf(amount), null);
 	}
 	
 	/**
