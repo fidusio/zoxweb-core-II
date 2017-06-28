@@ -1,7 +1,5 @@
-package org.zoxweb.server.shiro;
+package org.zoxweb.shared.api;
 
-import org.apache.shiro.subject.Subject;
-import org.zoxweb.shared.api.APIDataStore;
 import org.zoxweb.shared.security.AccessException;
 import org.zoxweb.shared.util.CRUD;
 import org.zoxweb.shared.util.Const.LogicalOperator;
@@ -10,7 +8,7 @@ import org.zoxweb.shared.util.NVConfig;
 import org.zoxweb.shared.util.NVEntity;
 import org.zoxweb.shared.util.NVPair;
 
-public interface SecurityManagerAPI 
+public interface APISecurityManager<S> 
 {
 	
 	Object encryptValue(APIDataStore<?> dataStore, NVEntity container, NVConfig nvc, NVBase<?> nvb, byte msKey[])
@@ -34,7 +32,7 @@ public interface SecurityManagerAPI
 	 
 	 String getCurrentUserID();
 	 
-	 Subject getDaemonSubject();
+	 S getDaemonSubject();
 	 
 	 boolean isNVEntityAccessible(NVEntity nve, CRUD ...permissions);
 	 

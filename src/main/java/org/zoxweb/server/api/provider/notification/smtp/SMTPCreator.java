@@ -30,6 +30,7 @@ import org.zoxweb.shared.api.APIConfigInfoDAO;
 import org.zoxweb.shared.api.APIDataStore;
 import org.zoxweb.shared.api.APIException;
 import org.zoxweb.shared.api.APIExceptionHandler;
+import org.zoxweb.shared.api.APISecurityManager;
 import org.zoxweb.shared.api.APIServiceProvider;
 import org.zoxweb.shared.api.APIServiceProviderCreator;
 import org.zoxweb.shared.api.APIServiceType;
@@ -153,5 +154,17 @@ public class SMTPCreator
 	{
 		return null;
 	}
+
+//	@Override
+//	public APISecurityManager<?> getAPISecurityManager() {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+//
+//	@Override
+//	public void setAPISecurityManager(APISecurityManager<?> apiSecurityManager) {
+//		// TODO Auto-generated method stub
+//		
+//	}
 
 }

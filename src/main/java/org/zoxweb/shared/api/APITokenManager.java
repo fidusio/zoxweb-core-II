@@ -41,4 +41,7 @@ public interface APITokenManager {
 	
 	public String generateOAuthURL(APIDataStore<?> dataStore, String code)
 			throws NullPointerException, IllegalArgumentException, AccessException;
+	
+	
+	 
 }
