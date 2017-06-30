@@ -28,6 +28,8 @@ public enum URIScheme
 	FILE("file", -1),
 	MAIL_TO("mailto", -1),
 	DATA("data", -1),
+	WSS("wss", 443),
+	WS("ws", 80),
 	
 	;
 

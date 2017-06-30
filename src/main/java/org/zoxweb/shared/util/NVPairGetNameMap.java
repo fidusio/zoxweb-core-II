@@ -15,6 +15,7 @@
  */
 package org.zoxweb.shared.util;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,6 +35,18 @@ public class NVPairGetNameMap
 
 	}
 	
+	
+	
+	
+	
+	public NVPairGetNameMap(String name, List<GetNameValue<String>> list)
+	{
+		super(name, new LinkedHashMap<GetName, GetNameValue<String>>());
+		for (GetNameValue<String> gnv : list)
+		{
+			add(gnv);
+		}
+	}
 	public NVPairGetNameMap(String name, Map<GetName, GetNameValue<String>> map)
 	{
 		super(name, map);
