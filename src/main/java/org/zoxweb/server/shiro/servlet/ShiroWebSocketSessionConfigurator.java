@@ -27,7 +27,8 @@ public class ShiroWebSocketSessionConfigurator
     @Override
     public void modifyHandshake(ServerEndpointConfig config, HandshakeRequest request, HandshakeResponse response)
     {
-        config.getUserProperties().put(HTTP_SESSION, request.getHttpSession());
+    	if (request.getHttpSession() != null)
+    		config.getUserProperties().put(HTTP_SESSION, request.getHttpSession());
     }
 
 }
