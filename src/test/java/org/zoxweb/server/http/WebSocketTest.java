@@ -1,19 +1,18 @@
 package org.zoxweb.server.http;
 
-import java.net.CookieManager;
+
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
 
 import javax.websocket.ClientEndpoint;
-import javax.websocket.ClientEndpointConfig;
+
 import javax.websocket.ContainerProvider;
 import javax.websocket.OnMessage;
 import javax.websocket.Session;
 import javax.websocket.WebSocketContainer;
-import javax.websocket.ClientEndpointConfig.Configurator;
+
+import org.zoxweb.server.io.IOUtil;
+
 
 @ClientEndpoint(configurator = WSConfigurator.class)
 public class WebSocketTest  {
@@ -23,9 +22,8 @@ public class WebSocketTest  {
     
     
     @OnMessage
-    public void onMessage(String message) {
-
-//the new USD rate arrives from the websocket server side.
+    public void onMessage(String message) 
+    {
 
        System.out.println("Received msg: "+message);        
 
@@ -63,6 +61,7 @@ public class WebSocketTest  {
 		   //Tyrus is plugged via ServiceLoader API. See notes above
 		
 		   container = ContainerProvider.getWebSocketContainer();
+		   
 		  
 		  
 		   
@@ -89,22 +88,9 @@ public class WebSocketTest  {
 		
 		  }
 		
-		  finally{
-		
-		   if(session!=null){
-		
-		    try {
-		
-		 session.close();
-		
-		    } catch (Exception e) {     
-		
-		     e.printStackTrace();
-		
-		    }
-		
-		   }         
-		
+		  finally
+		  {
+			  IOUtil.close(session);
 		  } 
 	
 	 }
