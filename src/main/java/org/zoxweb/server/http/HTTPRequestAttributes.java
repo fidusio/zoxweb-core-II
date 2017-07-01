@@ -21,7 +21,10 @@ import org.zoxweb.server.io.FileInfoStreamSource;
 import org.zoxweb.shared.http.HTTPAuthentication;
 import org.zoxweb.shared.http.HTTPAuthorizationType;
 import org.zoxweb.shared.http.HTTPHeaderName;
+import org.zoxweb.shared.util.ArrayValues;
 import org.zoxweb.shared.util.GetNameValue;
+import org.zoxweb.shared.util.NVGetNameValueList;
+import org.zoxweb.shared.util.NVPairGetNameMap;
 import org.zoxweb.shared.util.SharedUtil;
 
 /**
@@ -29,8 +32,10 @@ import org.zoxweb.shared.util.SharedUtil;
  */
 public class HTTPRequestAttributes 
 {
-	private final List<GetNameValue<String>> headers;
-	private final List<GetNameValue<String>> parameters;
+	//private final List<GetNameValue<String>> headers;
+	private final NVPairGetNameMap headers;
+	private final NVGetNameValueList parameters;
+	//private final List<GetNameValue<String>> parameters;
 	
 	/**
 	 * The caller must close the streams
@@ -53,8 +58,8 @@ public class HTTPRequestAttributes
 	{
 		this.pathInfo = pathInfo;
 		this.isMultiPart = isMultiPart;
-		this.headers = headers;
-		this.parameters = parameters;
+		this.headers = new NVPairGetNameMap("headers", headers);
+		this.parameters = new NVGetNameValueList ("parameters", parameters);
 		this.streamList = streamList;
 		this.content = content;
 		this.contentType = contentType;
@@ -74,7 +79,7 @@ public class HTTPRequestAttributes
 	 * 
 	 * @return the headers
 	 */
-	public final List<GetNameValue<String>> getHeaders()
+	public final ArrayValues<GetNameValue<String>> getHeaders()
 	{
 		return headers;
 	}
@@ -84,7 +89,7 @@ public class HTTPRequestAttributes
 	 * 
 	 * @return parameters
 	 */
-	public final List<GetNameValue<String>> getParameters()
+	public final ArrayValues<GetNameValue<String>> getParameters()
 	{
 		return parameters;
 	}

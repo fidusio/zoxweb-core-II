@@ -52,7 +52,7 @@ import org.zoxweb.shared.filters.FilenameFilter;
 import org.zoxweb.shared.http.HTTPStatusCode;
 import org.zoxweb.shared.security.AccessException;
 import org.zoxweb.shared.util.GetNameValue;
-import org.zoxweb.shared.util.SharedUtil;
+
 
 /**
  * 
@@ -85,7 +85,7 @@ public class HTTPDownloadServlet
 	public FileInfoStreamSource lookupFileInfoSource(HttpServletRequest request, HTTPRequestAttributes attributes)
 			throws AccessException, IOException
 	{
-		GetNameValue<String> gnv = SharedUtil.lookupNV(attributes.getParameters(), "filename");
+		GetNameValue<String> gnv = attributes.getParameters().get("filename");
 		
 		
 		if ( gnv != null)
