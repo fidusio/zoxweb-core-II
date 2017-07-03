@@ -27,9 +27,11 @@ public class LockQueue
 
 	private SimpleQueue<Lock> queue = new SimpleQueue<Lock>();
 
+	/**
+	 * Create an empty lock queue
+	 */
 	public LockQueue()
     {
-		
 	}
 	
 	/**
