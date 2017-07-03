@@ -45,6 +45,7 @@ import org.zoxweb.shared.http.HTTPMessageConfig;
 import org.zoxweb.shared.http.HTTPMessageConfigInterface;
 import org.zoxweb.shared.http.HTTPHeaderName;
 import org.zoxweb.shared.http.HTTPMimeType;
+import org.zoxweb.shared.http.HTTPParameterFormatter;
 import org.zoxweb.shared.http.HTTPRequestLine;
 import org.zoxweb.shared.http.HTTPMethod;
 import org.zoxweb.shared.http.HTTPResponseData;
@@ -280,7 +281,14 @@ public class HTTPUtil
 	}
 	
 	
-	public static String formatParameters(List<GetNameValue<String>> params, String charset, boolean urlEncode) throws UnsupportedEncodingException
+	@SuppressWarnings("unchecked")
+	public static String formatParameters(List<GetNameValue<String>> params, String charset, boolean urlEncode, HTTPParameterFormatter hpf) throws UnsupportedEncodingException
+	{
+		return formatParameters((GetNameValue<String>[])params.toArray(new GetNameValue<?>[params.size()]), charset, urlEncode, hpf);
+	}
+	
+	
+	public static String formatParameters(GetNameValue<String>[] params, String charset, boolean urlEncode, HTTPParameterFormatter hpf) throws UnsupportedEncodingException
 	{
 		if (SharedStringUtil.isEmpty(charset))
 		{
@@ -295,56 +303,26 @@ public class HTTPUtil
 			{
 				if (sb.length() > 0)
 				{
-					sb.append('&');
-				}
-
-				if (nvp != null && nvp.getName() != null)
-				{
-					sb.append(urlEncode ? URLEncoder.encode(nvp.getName(), charset) : nvp.getName());
-					sb.append('=');
-
-					if (nvp.getValue() != null)
-					{
-						sb.append(urlEncode ? URLEncoder.encode(nvp.getValue(), charset) : nvp.getValue());
-					}
-				}
-			}
-		}
-		return sb.toString();
-	}
-	
-	public static String formatParameters(ArrayValues<GetNameValue<String>> params, String charset, boolean urlEncode) throws UnsupportedEncodingException
-	{
-		if (SharedStringUtil.isEmpty(charset))
-		{
-			charset = SharedStringUtil.UTF_8;
-		}
-		
-		StringBuilder sb = new StringBuilder();
-
-		if (params != null)
-		{
-			for (GetNameValue<String> nvp : params.values())
-			{
-				if (sb.length() > 0)
-				{
-					sb.append('&');
+					sb.append(hpf.getValue());
 				}
 				
 				if (nvp != null && nvp.getName() != null)
 				{
-					sb.append(urlEncode ? URLEncoder.encode(nvp.getName(), charset) : nvp.getName());
-					sb.append('=');
+					if (hpf == HTTPParameterFormatter.URL_ENCODED)
+					{
+						sb.append(urlEncode ? URLEncoder.encode(nvp.getName(), charset) : nvp.getName());
+						sb.append(hpf.getNameValueSep());
+					}
 
 					if (nvp.getValue() != null)
 					{
 						String valueCharset = charset;
 
-						if (params instanceof GetCharset)
+						if (nvp instanceof GetCharset)
 						{
-							if (((GetCharset)params).getCharset() != null)
+							if (((GetCharset)nvp).getCharset() != null)
 							{
-								valueCharset = ((GetCharset)params).getCharset();
+								valueCharset = ((GetCharset)nvp).getCharset();
 							}
 						}
 
@@ -357,6 +335,12 @@ public class HTTPUtil
 		}
 
 		return sb.toString();
+	}
+	
+	
+	public static String formatParameters(ArrayValues<GetNameValue<String>> params, String charset, boolean urlEncode, HTTPParameterFormatter hpf) throws UnsupportedEncodingException
+	{	
+		return formatParameters(params.values(), charset, urlEncode, hpf);
 	}
 	
 	
@@ -626,7 +610,7 @@ public class HTTPUtil
 	public static String formatFullURL(HTTPMessageConfig hcc)
 			throws UnsupportedEncodingException
 	{
-		String encodedContentParams = HTTPUtil.formatParameters(hcc.getParameters(), null, false);
+		String encodedContentParams = HTTPUtil.formatParameters(hcc.getParameters(), null, hcc.isURLEncodingEnabled(), hcc.getHTTPParameterFormatter());
 		String urlURI = SharedStringUtil.concat(hcc.getURL(), hcc.getURI(), "/");
 
 		if (encodedContentParams.length() > 0)

@@ -82,7 +82,9 @@ public class HTTPMessageConfig
 		AUTHENTICATION(NVConfigManager.createNVConfigEntity("authentication", "The http authentication", "Authentication", false, true, HTTPAuthentication.class, ArrayType.NOT_ARRAY)),
 		PARAMETERS(NVConfigManager.createNVConfig("parameters", "parameters", "Parameters", false, true, false, String[].class, null)),
 		PROXY_ADDRESS(NVConfigManager.createNVConfigEntity("proxy_address", "The proxy address if not null","ProxyAddress",true, false, InetSocketAddressDAO.class, ArrayType.NOT_ARRAY)),
-		ENABLE_ENCODING(NVConfigManager.createNVConfig("enable_encoding", "The NVP will be url encodled", "EnableEncoding", false, true, Boolean.class)),
+		ENABLE_ENCODING(NVConfigManager.createNVConfig("enable_encoding", "The NVP will be url encoded", "EnableEncoding", false, true, Boolean.class)),
+		HTTP_PARAMETER_FORMATTER(NVConfigManager.createNVConfig("http_parameter_formatter", "The NVP parameter formatter", "HTTPParameterFormatter", false, true, HTTPParameterFormatter.class)),
+		
 		CONTENT(NVConfigManager.createNVConfig("content", "The payload content", "Content", false, true, byte[].class)),
 		//CONTENT_LENGTH(NVConfigManager.createNVConfig("content_length", "The payload content length", "ContentLength", false, true, Integer.class)),
 		;
@@ -121,12 +123,6 @@ public class HTTPMessageConfig
 	public HTTPMessageConfig()
 	{
 		this(NVC_HTTP_MESSAGE_CONFIG);
-//		setRedirectEnabled(true);
-//		setURLEncodingEnabled(true);
-//		// updating PARAMETERS and HEADER_PARAMETERS to NVGetNameValueMap
-//		// reason to support multi-parts parameters
-//		attributes.put(Params.PARAMETERS.getNVConfig().getName(), new NVGetNameValueMap(Params.PARAMETERS.getNVConfig().getName(), new HashMap<GetName, GetNameValue<String>>()));
-//		attributes.put(Params.HEADER_PARAMETERS.getNVConfig().getName(), new NVGetNameValueMap(Params.HEADER_PARAMETERS.getNVConfig().getName(), new HashMap<GetName, GetNameValue<String>>()));
 	}
 	
 	
@@ -136,6 +132,7 @@ public class HTTPMessageConfig
 		super(nvce);
 		setRedirectEnabled(true);
 		setURLEncodingEnabled(true);
+		setHTTPParameterFormatter(HTTPParameterFormatter.URL_ENCODED);
 		// updating PARAMETERS and HEADER_PARAMETERS to NVGetNameValueMap
 		// reason to support multi-parts parameters
 		attributes.put(Params.PARAMETERS.getNVConfig().getName(), new NVGetNameValueList(Params.PARAMETERS.getNVConfig().getName(), new ArrayList<GetNameValue<String>>()));
@@ -555,23 +552,22 @@ public class HTTPMessageConfig
 
 
 	/**
-	 * @see org.zoxweb.shared.http.HTTPMessageConfigInterface#isURLEncodingEnabled()
+	 * 
 	 */
 	@Override
-	public boolean isURLEncodingEnabled() {
+	public HTTPParameterFormatter getHTTPParameterFormatter() {
 		
-		return lookupValue(Params.ENABLE_ENCODING);
+		return lookupValue(Params.HTTP_PARAMETER_FORMATTER);
 	}
 
 
 
 	/**
-	 * @see org.zoxweb.shared.http.HTTPMessageConfigInterface#setURLEncodingEnabled(boolean)
+	 * 
 	 */
-	@Override
-	public void setURLEncodingEnabled(boolean value) {
+	public void setHTTPParameterFormatter(HTTPParameterFormatter value) {
 		
-		setValue(Params.ENABLE_ENCODING, value);
+		setValue(Params.HTTP_PARAMETER_FORMATTER, value);
 	}
 
 
@@ -752,6 +748,22 @@ public class HTTPMessageConfig
 	public void setReason(String reason) {
 		
 		setValue(Params.REASON, reason);
+	}
+
+
+
+	@Override
+	public boolean isURLEncodingEnabled() {
+		// TODO Auto-generated method stub
+		return  lookupValue(Params.ENABLE_ENCODING);
+	}
+
+
+
+	@Override
+	public void setURLEncodingEnabled(boolean value) {
+		// TODO Auto-generated method stub
+		setValue(Params.ENABLE_ENCODING, value);
 	}
 	
 }

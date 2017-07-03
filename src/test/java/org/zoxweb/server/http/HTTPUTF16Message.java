@@ -62,7 +62,7 @@ public class HTTPUTF16Message
 			params.add(new NVPair("customer_id",customer_id));
 			params.add(new NVPair("recipient","13109899969"));
 			
-			hmci.setURLEncodingEnabled(true);
+		
 			
 			//System.out.println(Charset.availableCharsets());
 			

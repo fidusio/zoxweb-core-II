@@ -113,6 +113,18 @@ extends ReferenceID<String>, SetName, SetDescription
 	/**
 	 * @return true if url encoding is enabled
 	 */
+	public HTTPParameterFormatter getHTTPParameterFormatter();
+	
+	/**
+	 * enable url encoding
+	 * @param value
+	 */
+	public void setHTTPParameterFormatter(HTTPParameterFormatter value);
+	
+	
+	/**
+	 * @return true if url encoding is enabled
+	 */
 	public boolean isURLEncodingEnabled();
 	
 	/**
@@ -120,6 +132,9 @@ extends ReferenceID<String>, SetName, SetDescription
 	 * @param value
 	 */
 	public void setURLEncodingEnabled(boolean value);
+	
+	
+	
 	/**
 	 * Set the request payload or content
 	 * @param payload

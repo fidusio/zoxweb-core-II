@@ -128,7 +128,7 @@ public class HTTPCall
 		int status;
 		Map<String, List<String>> respHeaders = null;
 		// format the payload first
-		String encodedContentParams = HTTPUtil.formatParameters(hcc.getParameters(), hcc.getCharset(), hcc.isURLEncodingEnabled());
+		String encodedContentParams = HTTPUtil.formatParameters(hcc.getParameters(), hcc.getCharset(), hcc.isURLEncodingEnabled(), hcc.getHTTPParameterFormatter());
 		String urlURI = fullURL();
 		boolean embedPostPutParamsInURI = false;
 		GetNameValue<String> contentType = hcc.getParameters().get(HTTPHeaderName.CONTENT_TYPE.getName());
