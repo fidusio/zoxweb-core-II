@@ -32,15 +32,27 @@ public class LockQueue
 		
 	}
 	
+	/**
+	 * Create a lock queue specific  size
+	 * @param size of the initial queue.
+	 * @exception IllegalArgumentException if the queue size < 0 
+	 */
 	public LockQueue(int size)
     {
+		if (size < 0)
+			throw new IllegalArgumentException("Invalid queue size " + size);
+		
 		for (int i=0; i < size; i++)
 		{
 			queue.queue(new ReentrantLock());
 		}
 	}
 
-	public Lock nextLock()
+	/**
+	 * This method return the next available lock, will block the lock queue is empty
+	 * @return the next available lock
+	 */
+	public Lock dequeueLock()
     {
 		Lock ret = null;
 		
@@ -64,7 +76,11 @@ public class LockQueue
 		return ret;
 	}
 	
-	public void addLock(Lock lock)
+	/**
+	 * Add a lock to the queue
+	 * @param lock to be added
+	 */
+	public void queueLock(Lock lock)
     {
 		SharedUtil.checkIfNulls("Can't add null lock", lock);
 		lock.unlock();
@@ -74,6 +90,15 @@ public class LockQueue
         {
 			notifyAll();
 		}
+	}
+	
+	/**
+	 * Return the number of available locks
+	 * @return available locks
+	 */
+	public int availableLocks()
+	{
+		return queue.size();
 	}
 
 }

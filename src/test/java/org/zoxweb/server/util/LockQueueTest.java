@@ -67,7 +67,7 @@ public class LockQueueTest {
 					}
 				}
 				
-				locks.add(lq.nextLock());
+				locks.add(lq.dequeueLock());
 
 				synchronized(this) {
 					notify();
@@ -78,7 +78,7 @@ public class LockQueueTest {
 
 			for (Lock lock : locks) {
 				try {
-					lq.addLock(lock);
+					lq.queueLock(lock);
 					System.out.println("removing " +Thread.currentThread() + " " + lock);
 				} catch(Exception e) {
 					e.printStackTrace();
