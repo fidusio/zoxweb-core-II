@@ -35,7 +35,7 @@ implements GetNameValue<Character>, ValueFilter<GetNameValue<String>, String>
 			return null;
 		}
 	},
-	URI_REST_ENCODDED((char)0, '/')
+	URI_REST_ENCODED((char)0, '/')
 	{
 
 		@Override

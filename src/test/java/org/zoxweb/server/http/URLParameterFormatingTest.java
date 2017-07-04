@@ -38,7 +38,7 @@ public class URLParameterFormatingTest
 	
 		StringBuilder sb = new StringBuilder("batata/");
 	
-		System.out.println(HTTPParameterFormatter.URI_REST_ENCODDED.format(sb, hcc.getParameters().values()));
+		System.out.println(HTTPParameterFormatter.URI_REST_ENCODED.format(sb, hcc.getParameters().values()));
 		
 	}
 	
