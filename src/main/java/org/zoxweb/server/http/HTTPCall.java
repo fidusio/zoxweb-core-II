@@ -160,7 +160,7 @@ public class HTTPCall
 						urlURI += "?" + encodedContentParams;
 					else if (hcc.getHTTPParameterFormatter() == HTTPParameterFormatter.URI_REST_ENCODED)
 					{
-						urlURI += SharedStringUtil.concat(urlURI, encodedContentParams, "" + HTTPParameterFormatter.URI_REST_ENCODED.getValue());
+						urlURI = SharedStringUtil.concat(urlURI, encodedContentParams, "" + HTTPParameterFormatter.URI_REST_ENCODED.getValue());
 					}
 				}
 				break;
