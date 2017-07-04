@@ -6,6 +6,7 @@ import org.zoxweb.shared.util.*;
 /**
  * Created on 7/3/17
  */
+@SuppressWarnings("serial")
 public class HTTPDefaultResponseDAO
     extends SetNameDescriptionDAO
 {
