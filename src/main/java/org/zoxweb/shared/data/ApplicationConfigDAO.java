@@ -64,6 +64,7 @@ public class ApplicationConfigDAO
 		VAR_DIR("VAR_DIR", "var"),
 		SERVER_INFO("SERVER_INFO", ""),
 		SYSTEM_ID("SYSTEM_ID", ""),
+
 		
 		;
 		

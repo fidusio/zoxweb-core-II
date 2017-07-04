@@ -37,7 +37,6 @@ public class ApplicationVersionDAO
 	public enum Param
 		implements GetNVConfig
 	{
-		//FIRST_NAME( NVConfigManager.createNVConfig("first_name", "First name", "FirstName", true, true, String.class)),
 		MAJOR(NVConfigManager.createNVConfig("major", "The major number of the version", "Minor", false, true, int.class)),
 		MINOR(NVConfigManager.createNVConfig("minor", "The minor number of the version", "Major", true, true, int.class)),
 		NANO(NVConfigManager.createNVConfig("nano", "The nano number of the version", "Nano", true, true, int.class))

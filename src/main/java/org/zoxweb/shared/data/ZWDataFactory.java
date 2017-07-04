@@ -28,6 +28,7 @@ import org.zoxweb.shared.api.APIBatchResult;
 import org.zoxweb.shared.api.APIConfigInfoDAO;
 import org.zoxweb.shared.api.APICredentialsDAO;
 import org.zoxweb.shared.api.APIError;
+import org.zoxweb.shared.http.HTTPDefaultResponseDAO;
 import org.zoxweb.shared.util.NVEntityInstance;
 import org.zoxweb.shared.data.shiro.ShiroNVEntityCRUDs;
 import org.zoxweb.shared.data.shiro.ShiroPermissionDAO;
@@ -894,6 +895,38 @@ public class ZWDataFactory
 				return TicketResolutionDAO.NVC_TICKET_RESOLUTION_DAO;
 			}
 		},
+
+
+        APP_ID_DAO(AppIDDAO.class.getName())
+        {
+            @SuppressWarnings("unchecked")
+            @Override
+            public AppIDDAO newInstance()
+            {
+                return new AppIDDAO();
+            }
+
+            @Override
+            public NVConfigEntity getNVConfigEntity()
+            {
+                return AppIDDAO.NVC_APP_ID_DAO;
+            }
+        },
+        HTTP_DEFAULT_RESPONSE_DAO(HTTPDefaultResponseDAO.class.getName())
+        {
+            @SuppressWarnings("unchecked")
+            @Override
+            public HTTPDefaultResponseDAO newInstance()
+            {
+                return new HTTPDefaultResponseDAO();
+            }
+
+            @Override
+            public NVConfigEntity getNVConfigEntity()
+            {
+                return HTTPDefaultResponseDAO.NVC_HTTP_DEFAULT_RESPONSE_DAO;
+            }
+        },
 
 		
 		;
