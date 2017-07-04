@@ -12,9 +12,27 @@ public class AppIDDAO
     implements DomainID<String>
 {
 
-    public static final NVConfig NVC_APP_ID = NVConfigManager.createNVConfig("app_id", "App ID","AddID", true, false, String.class);
+    public enum Param
+        implements GetNVConfig
+    {
+        APP_ID(NVConfigManager.createNVConfig("app_id", "App ID","AddID", true, false, String.class)),
+        DOMAIN_ID(NVConfigManager.createNVConfig("domain_id", "The domain ID", "Domain ID", true, true, false, String.class, FilterType.DOMAIN))
 
-    public static final NVConfig NVC_DOMAIN_ID =  NVConfigManager.createNVConfig("domain_id", "The domain url identifier", "Domain ID", true, true, false, String.class, FilterType.DOMAIN);
+        ;
+
+
+        private final NVConfig nvc;
+
+        Param(NVConfig nvc)
+        {
+            this.nvc = nvc;
+        }
+
+        public NVConfig getNVConfig()
+        {
+            return nvc;
+        }
+    }
 
     public static final NVConfigEntity NVC_APP_ID_DAO = new NVConfigEntityLocal(
             "app_id_dao",
@@ -23,7 +41,7 @@ public class AppIDDAO
             true, false,
             false, false,
             AppIDDAO.class,
-            SharedUtil.toNVConfigList(NVC_APP_ID, NVC_DOMAIN_ID),
+            SharedUtil.extractNVConfigs(Param.values()),
             null,
             false,
             SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO
@@ -47,25 +65,25 @@ public class AppIDDAO
 
     public String getAppID()
     {
-        return lookupValue(NVC_APP_ID);
+        return lookupValue(Param.APP_ID);
     }
 
     public void setAppID(String appID)
     {
-        setValue(NVC_APP_ID, appID);
+        setValue(Param.APP_ID, appID);
     }
 
 
     @Override
     public String getDomainID()
     {
-        return lookupValue(NVC_DOMAIN_ID);
+        return lookupValue(Param.DOMAIN_ID);
     }
 
     @Override
     public void setDomainID(String domainID)
     {
-        setValue(NVC_DOMAIN_ID, domainID);
+        setValue(Param.DOMAIN_ID, domainID);
     }
 
 }
