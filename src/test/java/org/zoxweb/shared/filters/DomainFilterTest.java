@@ -15,32 +15,45 @@
  */
 package org.zoxweb.shared.filters;
 
+import org.junit.Test;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 public class DomainFilterTest {
 
-    public static void main(String[] args) {
-    	String[] values = 
-	    			{
-		    			"https://www.zoxweb.com/welcome",
-	    				"http://www.zoxweb.com/main?&t=20&f=52",
-		    			"http://www.zoxweb.com.fr",
-		    			"http://www.admin.zoxweb.com",
-		    			"www.admin.zoxweb.com",
-		    			"admin.zoxweb.com",
-		    			"www.zoxweb.com",
-		    			"zoxweb.com",
-		    			"zoxweb",
-		    			"website.fr",
-		    			"www.jeb65465451515415845848548548441040000000000001011111111111111111111111111111111111111111.com"
-	    			};
-    	
-    	for (String val : values) {
-    		try {
-    			System.out.println("INPUT: " + val + "\nDOMAIN NAME: " + FilterType.DOMAIN.validate(val));
-    		} catch (Exception e) {
-    			System.out.println("INVALID INPUT: " + val);
-    		}
-    		
-    		System.out.println(" ");
-    	}
+    @Test
+    public void testValidDomains() {
+        String[] values =
+                {
+                    "https://www.zoxweb.com/welcome",
+                    "http://www.zoxweb.com/main?&t=20&f=52",
+                    "http://www.admin.zoxweb.com",
+                    "www.admin.zoxweb.com",
+                    "admin.zoxweb.com",
+                    "www.zoxweb.com",
+                    "zoxweb.com",
+                    "google.io",
+                };
+
+        for (String val : values) {
+            assertTrue(FilterType.DOMAIN.isValid(val));
+        }
     }
+
+    @Test
+    public void testInvalidDomains() {
+        String[] values =
+                {
+                    "http://www.zoxweb.com.fr",
+                    "zoxweb",
+                    "website.fr",
+                    "www.jeb65465451515415845848548548441040000000000001011111111111111111111111111111111111111111.com"
+                };
+
+         for (String val : values) {
+            assertFalse(FilterType.DOMAIN.isValid(val));
+         }
+    }
+
 }

@@ -1295,6 +1295,8 @@ public class DataConst
 		MIL(".mil"),
 		CA(".ca"),
 		US(".us"),
+        IO(".io"),
+
 	
 		;
 		

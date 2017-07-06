@@ -32,28 +32,28 @@ public enum FilterType
 {
 
 	/**
-	 * The binary (usually byte array) value.
+	 * Binary (byte array) filter
 	 */
 	BINARY
 	{
-		/**
-		 * Validate the object
-		 * @param in value to be validated
-		 * @return validated acceptable value
-		 * @throws NullPointerException if in is null
-		 * @throws IllegalArgumentException if in is invalid
-		 */
+        /**
+         * Validates the given value.
+         * @param in value to be validated
+         * @return validated acceptable value
+         * @throws NullPointerException if in is null
+         * @throws IllegalArgumentException if in is invalid
+         */
 		public String validate(String in) 
             throws NullPointerException, IllegalArgumentException
         {
 			return in;
 		}
-		
-		/**
-		 * Check if the value is valid
-		 * @param in value to be checked
-		 * @return true if valid false if not
-		 */
+
+        /**
+         * Checks if the given value is valid.
+         * @param in value to be checked
+         * @return true if valid false if not
+         */
 		public boolean isValid(String in)
         {
 			return true;
@@ -61,56 +61,56 @@ public enum FilterType
 		
 	},
 	/**
-	 * The BigDecimal value.
+	 * BigDecimal filter
 	 */
 	BIG_DECIMAL
     {
-		/**
-		 * Validate the object
-		 * @param in value to be validated
-		 * @return validated acceptable value
-		 * @throws NullPointerException if in is null
-		 * @throws IllegalArgumentException if in is invalid
-		 */
+        /**
+         * Validates the given value.
+         * @param in value to be validated
+         * @return validated acceptable value
+         * @throws NullPointerException if in is null
+         * @throws IllegalArgumentException if in is invalid
+         */
 		public String validate(String in) 
             throws NullPointerException, IllegalArgumentException
         {
 			return "" + BigDecimalFilter.SINGLETON.validate(in);
 		}
-		
-		/**
-		 * Check if the value is valid
-		 * @param in value to be checked
-		 * @return true if valid false if not
-		 */
+
+        /**
+         * Checks if the given value is valid.
+         * @param in value to be checked
+         * @return true if valid false if not
+         */
 		public boolean isValid(String in)
         {
 			return BigDecimalFilter.SINGLETON.isValid(in);
 		}
 	},
 	/**
-	 * This is a boolean value.
+	 * Boolean filter
 	 */
 	BOOLEAN
     {
-		/**
-		 * Validate the object
-		 * @param in value to be validated
-		 * @return validated acceptable value
-		 * @throws NullPointerException if in is null
-		 * @throws IllegalArgumentException if in is invalid
-		 */
+        /**
+         * Validates the given value.
+         * @param in value to be validated
+         * @return validated acceptable value
+         * @throws NullPointerException if in is null
+         * @throws IllegalArgumentException if in is invalid
+         */
 		public String validate(String in) 
             throws NullPointerException, IllegalArgumentException
         {
-			return "" + Boolean.valueOf( in);
+			return "" + Boolean.valueOf(in);
 		}
 
-		/**
-		 * Check if the value is valid
-		 * @param in value to be checked
-		 * @return true if valid false if not
-		 */
+        /**
+         * Checks if the given value is valid.
+         * @param in value to be checked
+         * @return true if valid false if not
+         */
 		public boolean isValid(String in)
         {
 			return true;
@@ -123,58 +123,66 @@ public enum FilterType
 	},
 	DOMAIN
     {
-		//private static final String DOMAIN_NAME_PATTERN = "^((?!-)[A-Za-z0-9-]{1,63}(?<!-)\\.)+[A-Za-z]{2,6}$";
-		private static final String DOMAIN_NAME_PATTERN = "^([a-zA-Z0-9]([a-zA-Z0-9\\-]{0,65}[a-zA-Z0-9])?\\.)+[a-zA-Z]{2,6}$";
-		
-		public String validate(String inParam)
+		//private static final String REGEX = "^((?!-)[A-Za-z0-9-]{1,63}(?<!-)\\.)+[A-Za-z]{2,6}$";
+		private static final String REGEX = "^([a-zA-Z0-9]([a-zA-Z0-9\\-]{0,65}[a-zA-Z0-9])?\\.)+[a-zA-Z]{2,6}$";
+
+        /**
+         * Validates the given value.
+         * @param in value to be validated
+         * @return validated acceptable value
+         * @throws NullPointerException if in is null
+         * @throws IllegalArgumentException if in is invalid
+         */
+		public String validate(String in)
             throws  NullPointerException, IllegalArgumentException
         {
-			String in = SharedStringUtil.trimOrNull(inParam);
-			SharedUtil.checkIfNulls("Null or empty input.", in);
-			in = in.toLowerCase();
+			String str = SharedStringUtil.trimOrNull(in);
+			SharedUtil.checkIfNulls("Null or empty input.", str);
+            str = str.toLowerCase();
 			
-	    	if (FilterType.URL.isValid(in))
+	    	if (FilterType.URL.isValid(str))
 	    	{
-	    		in = FilterType.URL.validate(in);
+                str = FilterType.URL.validate(str);
 	    		
-		    	int index = in.indexOf("://");
+		    	int index = str.indexOf("://");
 
 		    	if (index != -1)
 		    	{
 		    		// keep everything after the "://"
-		    		in = in.substring(index + 3);
+                    str = str.substring(index + 3);
 		    	}
 
-		    	index = in.indexOf('/');
+		    	index = str.indexOf('/');
 
 		    	if (index != -1)
 		    	{
 		    	    // keep everything before the '/'
-		    		in = in.substring(0, index);
+                    str = str.substring(0, index);
 		    	}
-	    	} else if (FilterType.EMAIL.isValid(in))
+	    	}
+	    	else if (FilterType.EMAIL.isValid(str))
 	    	{
-	    		in = FilterType.EMAIL.validate(in);
-	    		in = SharedStringUtil.valueAfterRightToken(in, "@");
+                str = FilterType.EMAIL.validate(str);
+                str = SharedStringUtil.valueAfterRightToken(str, "@");
 	    	}
 	    	
-	    	if (!in.matches(DOMAIN_NAME_PATTERN))
+	    	if (!str.matches(REGEX))
 	    	{
-	    		throw new IllegalArgumentException("Invalid input: " + inParam);
+                throw new IllegalArgumentException("Invalid input: " + in);
 	    	}
 
 	    	// check for and remove a preceding 'www'
 	    	// followed by any sequence of characters (non-greedy)
 	    	// followed by a '.'
 	    	// from the beginning of the string
-	    	in = in.replaceFirst("^www.*?\\.", "");
+            str = str.replaceFirst("^www.*?\\.", "");
 	    	
-	    	if (!DataConst.DomainExtension.isValidExtension(in))
+	    	if (!DataConst.DomainExtension.isValidExtension(str))
 	    	{
-	    		throw new IllegalArgumentException("Invalid input: " + inParam);
+	    		throw new IllegalArgumentException("Invalid input: " + in);
 	    	}
 	    	
-	    	String[] results = in.split("\\.");
+	    	String[] results = str.split("\\.");
 
 	    	if (results.length >= 2)
 	    	{
@@ -182,20 +190,25 @@ public enum FilterType
 	    		sb.append(results[results.length - 2]);
 	    		sb.append(".");
 	    		sb.append(results[results.length - 1]);
-	    		
-	    		in = sb.toString();
+
+                str = sb.toString();
 	    	}
 	    	
-	    	if (in != null)
+	    	if (str != null)
 	    	{
-	    		return in;
+	    		return str;
 	    	}
 	    	else
-	    	    {
-	    		throw new IllegalArgumentException("Invalid input: " + inParam);
+            {
+	    		throw new IllegalArgumentException("Invalid input: " + in);
 	    	}
 		}
-			
+
+        /**
+         * Checks if the given value is valid.
+         * @param in value to be checked
+         * @return true if valid false if not
+         */
 		public  boolean isValid(String in)
         {
 			try
@@ -209,74 +222,84 @@ public enum FilterType
 			
 			return true;
 		}
-		
 	},
 
 	/**
-	 * The a domain/account ID.
+	 * Domain/Account ID filter
 	 */
 	DOMAIN_ACCOUNT_ID
     {
-		public static final  String PATTERN = "[www.]?[-a-zA-Z0-9][-a-zA-Z0-9+&@#%?=~_|!:,.;]*[-a-zA-Z0-9+&@#%=~_|]";
+		public static final String REGEX = "[www.]?[-a-zA-Z0-9][-a-zA-Z0-9+&@#%?=~_|!:,.;]*[-a-zA-Z0-9+&@#%=~_|]";
 		public static final int MAX_LENGTH = 4096;
-		
-		public String validate(String str)
+
+        /**
+         * Validates the given value.
+         * @param in value to be validated
+         * @return validated acceptable value
+         * @throws NullPointerException if in is null
+         * @throws IllegalArgumentException if in is invalid
+         */
+		public String validate(String in)
 			throws  NullPointerException, IllegalArgumentException
         {
-			str = SharedStringUtil.trimOrNull(str);
-			SharedUtil.checkIfNulls("URL address null or empty", str);
+            in = SharedStringUtil.trimOrNull(in);
+			SharedUtil.checkIfNulls("URL address null or empty", in);
 			
-			if (str.matches(PATTERN))
+			if (in.matches(REGEX))
 			{
-				if (str.length() > MAX_LENGTH)
+				if (in.length() > MAX_LENGTH)
 				{
-                    throw new IllegalArgumentException("URL length > max length " + str.length() + ":" + str );
+                    throw new IllegalArgumentException("URL length > max length " + in.length() + ":" + in);
                 }
 				
-				return str.toLowerCase();
+				return in.toLowerCase();
 			}
 			else
-			    {
-				throw new IllegalArgumentException("Invalid URL syntax " + str);
+            {
+				throw new IllegalArgumentException("Invalid URL syntax " + in);
 			}
 		}
-		
-		public  boolean isValid(String str)
+
+        /**
+         * Checks if the given value is valid.
+         * @param in value to be checked
+         * @return true if valid false if not
+         */
+		public  boolean isValid(String in)
         {
-			str = SharedStringUtil.trimOrNull(str);
+            in = SharedStringUtil.trimOrNull(in);
 			
-			if (str != null)
+			if (in != null)
 			{
-				return str.matches(PATTERN) && !(str.length() > MAX_LENGTH);
+				return in.matches(REGEX) && !(in.length() > MAX_LENGTH);
 			}
 			
 			return false;
 		}
-
 	},
 	/**
-	 * This is a double value.
+	 * Double filter
 	 */
 	DOUBLE
     {
-		/**
-		 * Validate the object
-		 * @param in value to be validated
-		 * @return validated acceptable value
-		 * @throws NullPointerException if in is null
-		 * @throws IllegalArgumentException if in is invalid
-		 */
+        /**
+         * Validates the given value.
+         * @param in value to be validated
+         * @return validated acceptable value
+         * @throws NullPointerException if in is null
+         * @throws IllegalArgumentException if in is invalid
+         */
 		public String validate(String in) 
             throws NullPointerException, IllegalArgumentException
         {
 			return "" + Double.valueOf(in);
 		}
-		
-		/**
-		 * Check if the value is valid
-		 * @param in value to be checked
-		 * @return true if valid false if not
-		 */
+
+        /**
+         * Checks if the given value is valid.
+         * @param in value to be checked
+         * @return true if valid false if not
+         */
 		public boolean isValid(String in)
         {
 			try
@@ -294,41 +317,53 @@ public enum FilterType
 	},
 	
 	/**
-	 * This is an email value.
+	 * Email filter
 	 */
 	EMAIL
     {
-		public static final String REGEXP ="^[_a-zA-Z0-9-]+(\\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*\\.(([0-9]{1,3})|([a-zA-Z]{2,3})|(aero|coop|info|museum|name))$";
+		public static final String REGEX ="^[_a-zA-Z0-9-]+(\\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*\\.(([0-9]{1,3})|([a-zA-Z]{2,3})|(aero|coop|info|museum|name))$";
 		public static final int MAX_LENGTH = 254;
-		
-		public String validate(String str)
+
+        /**
+         * Validates the given value.
+         * @param in value to be validated
+         * @return validated acceptable value
+         * @throws NullPointerException if in is null
+         * @throws IllegalArgumentException if in is invalid
+         */
+		public String validate(String in)
 			throws NullPointerException, IllegalArgumentException
         {
-			str = SharedStringUtil.trimOrNull(str);
-			SharedUtil.checkIfNulls("Email address null or empty", str);
+            in = SharedStringUtil.trimOrNull(in);
+			SharedUtil.checkIfNulls("Email address null or empty", in);
 			
-			if (str.matches(REGEXP))
+			if (in.matches(REGEX))
 			{
-				if (str.length() > MAX_LENGTH)
+				if (in.length() > MAX_LENGTH)
 				{
-                    throw new IllegalArgumentException("Email length > max length " + str.length() + ":" + str );
+                    throw new IllegalArgumentException("Email length > max length " + in.length() + ":" + in );
                 }
 				
-				return str.toLowerCase();
+				return in.toLowerCase();
 			}
 			else
             {
 			    throw new IllegalArgumentException("Invalid email");
 			}
 		}
-		
-		public boolean isValid(String str)
+
+        /**
+         * Checks if the given value is valid.
+         * @param in value to be checked
+         * @return true if valid false if not
+         */
+		public boolean isValid(String in)
         {
-			str = SharedStringUtil.trimOrNull(str);
+            in = SharedStringUtil.trimOrNull(in);
 			
-			if (str != null)
+			if (in != null)
 			{
-				return str.matches(REGEXP) && !(str.length() > MAX_LENGTH);
+				return in.matches(REGEX) && !(in.length() > MAX_LENGTH);
 			}
 			
 			return false;
@@ -336,46 +371,57 @@ public enum FilterType
 	},
 	
 	/**
-	 * This is a URL value.
+	 * URL filter
 	 */
 	URL
     {
-		public static final  String PATTERN = "^(https?|ftp|file)://[-a-zA-Z0-9][-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
+		public static final String REGEX = "^(https?|ftp|file)://[-a-zA-Z0-9][-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
 				//"^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
 		//"(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?"
 		//"^(?:(?:https?|ftp)://)(?:\\S+(?::\\S*)?@)?(?:(?!10(?:\\.\\d{1,3}){3})(?!127(?:\\.\\d{1,3}){3})(?!169\\.254(?:\\.\\d{1,3}){2})(?!192\\.168(?:\\.\\d{1,3}){2})(?!172\\.(?:1[6-9]|2\\d|3[0-1])(?:\\.\\d{1,3}){2})(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}(?:\\.(?:[1-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))|(?:(?:[a-z\\x{00a1}-\\x{ffff}0-9]+-?)*[a-z\\x{00a1}-\\x{ffff}0-9]+)(?:\\.(?:[a-z\\x{00a1}-\\x{ffff}0-9]+-?)*[a-z\\x{00a1}-\\x{ffff}0-9]+)*(?:\\.(?:[a-z\\x{00a1}-\\x{ffff}]{2,})))(?::\\d{2,5})?(?:/[^\\s]*)?$_iuS";
 				                         //"_^(?:(?:https?|ftp)://)(?:\\S+(?::\\S*)?@)?(?:(?!10(?:\\.\\d{1,3}){3})(?!127(?:\\.\\d{1,3}){3})(?!169\\.254(?:\\.\\d{1,3}){2})(?!192\\.168(?:\\.\\d{1,3}){2})(?!172\\.(?:1[6-9]|2\\d|3[0-1])(?:\\.\\d{1,3}){2})(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}(?:\\.(?:[1-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))|(?:(?:[a-z\\x{00a1}-\\x{ffff}0-9]+-?)*[a-z\\x{00a1}-\\x{ffff}0-9]+)(?:\\.(?:[a-z\\x{00a1}-\\x{ffff}0-9]+-?)*[a-z\\x{00a1}-\\x{ffff}0-9]+)*(?:\\.(?:[a-z\\x{00a1}-\\x{ffff}]{2,})))(?::\\d{2,5})?(?:/[^\\s]*)?$_iuS";
 		public static final int MAX_LENGTH = 4096;
-		
-		public String validate(String str)
+
+        /**
+         * Validates the given value.
+         * @param in value to be validated
+         * @return validated acceptable value
+         * @throws NullPointerException if in is null
+         * @throws IllegalArgumentException if in is invalid
+         */
+		public String validate(String in)
 			throws  NullPointerException, IllegalArgumentException
         {
-			str = SharedStringUtil.trimOrNull(str);
-			SharedUtil.checkIfNulls("URL address null or empty", str);
+            in = SharedStringUtil.trimOrNull(in);
+			SharedUtil.checkIfNulls("URL address null or empty", in);
 			
-			if (str.matches(PATTERN))
+			if (in.matches(REGEX))
 			{
-				if (str.length() > MAX_LENGTH)
+				if (in.length() > MAX_LENGTH)
 				{
-                    throw new IllegalArgumentException("URL length > max length " + str.length() + ":" + str );
+                    throw new IllegalArgumentException("URL length > max length " + in.length() + ":" + in);
                 }
 				
-				return str.toLowerCase();
+				return in.toLowerCase();
 			}
 			else
             {
-				throw new IllegalArgumentException("Invalid URL: " + str);
-				
+				throw new IllegalArgumentException("Invalid URL: " + in);
 			}
 		}
-		
-		public  boolean isValid(String str)
+
+        /**
+         * Checks if the given value is valid.
+         * @param in value to be checked
+         * @return true if valid false if not
+         */
+		public  boolean isValid(String in)
         {
-			str = SharedStringUtil.trimOrNull(str);
+            in = SharedStringUtil.trimOrNull(in);
 			
-			if (str != null)
+			if (in != null)
 			{
-				return str.matches(PATTERN) && !(str.length() > MAX_LENGTH);
+				return in.matches(REGEX) && !(in.length() > MAX_LENGTH);
 			}
 			
 			return false;
@@ -383,44 +429,43 @@ public enum FilterType
 	},
 	
 	/**
-	 * This field is encrypted but value clear to the user.
+	 * Encrypt filter
 	 */
 	ENCRYPT,
 	
 	/**
-	 * This field is encrypted but hidden from the user.
+	 * Encrypt mask filter
 	 */
 	ENCRYPT_MASK,
 	
 	/**
-	 * This is a file.
+	 * File filter
 	 */
 	FILE,
 	
 	/**
-	 * This is a float value.
+	 * Float filter
 	 */
 	FLOAT
     {
-		/**
-		 * Validate the object
-		 * @param in value to be validated
-		 * @return validated acceptable value
-		 * @throws NullPointerException if in is null
-		 * @throws IllegalArgumentException if in is invalid
-		 */
+        /**
+         * Validates the given value.
+         * @param in value to be validated
+         * @return validated acceptable value
+         * @throws NullPointerException if in is null
+         * @throws IllegalArgumentException if in is invalid
+         */
 		public String validate(String in) 
             throws NullPointerException, IllegalArgumentException
         {
 			return "" + Float.valueOf(in);
 		}
-		
-		
-		/**
-		 * Check if the value is valid
-		 * @param in value to be checked
-		 * @return true if valid false if not
-		 */
+
+        /**
+         * Checks if the given value is valid.
+         * @param in value to be checked
+         * @return true if valid false if not
+         */
 		public boolean isValid(String in)
         {
 			try
@@ -436,7 +481,7 @@ public enum FilterType
 		}
 	},
 	/**
-	 * This is a hashed field.
+	 * Hashed filter
 	 */
 	HASHED,
 	
@@ -454,17 +499,17 @@ public enum FilterType
 		}	
 	},
 	/**
-	 * This is an integer field.
+	 * Integer filter
 	 */
 	INTEGER
     {
-		/**
-		 * Validate the object
-		 * @param in value to be validated
-		 * @return validated acceptable value
-		 * @throws NullPointerException if in is null
-		 * @throws IllegalArgumentException if in is invalid
-		 */
+        /**
+         * Validates the given value.
+         * @param in value to be validated
+         * @return validated acceptable value
+         * @throws NullPointerException if in is null
+         * @throws IllegalArgumentException if in is invalid
+         */
 		public String validate(String in) 
             throws NullPointerException, IllegalArgumentException
         {
@@ -473,7 +518,7 @@ public enum FilterType
 		
 		
 		/**
-		 * Check if the value is valid
+		 * Checks if the given value is valid.
 		 * @param in value to be checked
 		 * @return true if valid false if not
 		 */
@@ -492,27 +537,27 @@ public enum FilterType
 		}
 	},
 	/**
-	 * This is a long value.
+	 * Long filter
 	 */
 	LONG
     {
-		/**
-		 * Validate the object
-		 * @param in value to be validated
-		 * @return validated acceptable value
-		 * @throws NullPointerException if in is null
-		 * @throws IllegalArgumentException if in is invalid
-		 */
+        /**
+         * Validates the given value.
+         * @param in value to be validated
+         * @return validated acceptable value
+         * @throws NullPointerException if in is null
+         * @throws IllegalArgumentException if in is invalid
+         */
 		public String validate(String in) 
 				throws NullPointerException, IllegalArgumentException {
 			return "" + Long.valueOf(in);
 		}
 
-		/**
-		 * Check if the value is valid
-		 * @param in value to be checked
-		 * @return true if valid false if not
-		 */
+        /**
+         * Checks if the given value is valid.
+         * @param in value to be checked
+         * @return true if valid false if not
+         */
 		public boolean isValid(String in)
         {
 			try
@@ -528,51 +573,62 @@ public enum FilterType
 		}
 	},
 	/**
-	 * This is the password field.
+	 * Password filter
 	 */
 	PASSWORD
     {
 		//public static final String REGEXP ="((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
-		public static final String REGEXP ="((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,64})";
+		public static final String REGEX ="((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,64})";
 		public static final int MIN_LENGTH = 8;
-		
-		public String validate(String str)
+
+        /**
+         * Validates the given value.
+         * @param in value to be validated
+         * @return validated acceptable value
+         * @throws NullPointerException if in is null
+         * @throws IllegalArgumentException if in is invalid
+         */
+		public String validate(String in)
 			throws  NullPointerException, IllegalArgumentException
         {
-			str = SharedStringUtil.trimOrNull(str);
-			SharedUtil.checkIfNulls("Password null or empty", str);
+            in = SharedStringUtil.trimOrNull(in);
+			SharedUtil.checkIfNulls("Password null or empty", in);
 			
-			if (str.matches(REGEXP))
+			if (in.matches(REGEX))
 			{
-				if (str.length() < MIN_LENGTH)
+				if (in.length() < MIN_LENGTH)
                 {
-                    throw new IllegalArgumentException("Password length < min length " + str.length() + ":" + str );
+                    throw new IllegalArgumentException("Password length < min length " + in.length() + ":" + in);
                 }
 				
-				return str;
+				return in;
 			}
 			else
             {
-                throw new IllegalArgumentException("Invalid password: " + str);
+                throw new IllegalArgumentException("Invalid password: " + in);
 			}
 		}
-		
-		public boolean isValid(String str)
+
+        /**
+         * Checks if the given value is valid.
+         * @param in value to be checked
+         * @return true if valid false if not
+         */
+		public boolean isValid(String in)
         {
-			str = SharedStringUtil.trimOrNull(str);
+            in = SharedStringUtil.trimOrNull(in);
 			
-			if (str != null)
+			if (in != null)
 			{
-				return str.matches(REGEXP) && !(str.length() < MIN_LENGTH);
+				return in.matches(REGEX) && !(in.length() < MIN_LENGTH);
 			}
 			
 			return false;
 		}
 	};
 
-	
 	/**
-	 * Validate the object
+	 * Validates the given value.
 	 * @param in value to be validated
 	 * @return validated acceptable value
 	 * @throws NullPointerException if in is null
@@ -583,10 +639,9 @@ public enum FilterType
     {
 		return in;
 	}
-	
-	
+
 	/**
-	 * Check if the value is valid
+	 * Checks if the given value is valid.
 	 * @param in value to be checked
 	 * @return true if valid false if not
 	 */
@@ -602,7 +657,7 @@ public enum FilterType
 	}
 	
 	/**
-	 * This method maps the given class to the applicable primitive type. Otherwise, returns null.
+	 * Maps the given class to the applicable primitive type if found, otherwise returns null.
 	 * @param clazz
 	 * @return filter type
 	 */
@@ -644,11 +699,10 @@ public enum FilterType
 		}
 		
 		return null;
-		
 	}
 	
 	/**
-	 * This method maps the given NVConfig to the applicable primitive type. Otherwise, returns null. 
+	 * Maps the given NVConfig to the applicable primitive type. Otherwise, returns null.
 	 * @param nvc
 	 * @return filter type
 	 */
@@ -658,7 +712,7 @@ public enum FilterType
 	}
 	
 	/**
-	 * This method converts the string value to given NVConfig type.
+	 * Converts the string value to given NVConfig type.
 	 * @param nvc
 	 * @param value
 	 * @return object value 
@@ -669,7 +723,7 @@ public enum FilterType
 	}
 	
 	/**
-	 * This method converts the string value to given class type.
+	 * Converts the string value to given class type.
 	 * @param clazz
 	 * @param value
 	 * @return object value
