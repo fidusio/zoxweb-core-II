@@ -115,6 +115,10 @@ implements GetNameValue<Character>, ValueFilter<GetNameValue<String>, String>
 	
 	public String format(StringBuilder sb, GetNameValue<String>[] nvps)
 	{
+		if (sb == null)
+		{
+			sb = new StringBuilder();
+		}
 		for (GetNameValue<String> nvp :nvps)
 		{ 
 			sb = format(sb, nvp);
