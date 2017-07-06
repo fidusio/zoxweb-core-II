@@ -113,6 +113,12 @@ implements GetNameValue<Character>, ValueFilter<GetNameValue<String>, String>
 		return sb;
 	}
 	
+	/**
+	 * Format the parameters 
+	 * @param sb if null a local value will be created 
+	 * @param nvps parameters to be formated
+	 * @return the formatted parameters as string
+	 */
 	public String format(StringBuilder sb, GetNameValue<String>[] nvps)
 	{
 		if (sb == null)
