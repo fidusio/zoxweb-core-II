@@ -32,12 +32,13 @@ public class DomainFilterTest {
                     "www.admin.zoxweb.com",
                     "admin.zoxweb.com",
                     "www.zoxweb.com",
-                    "zoxweb.com",
+                    "zoxweb.com.lb",
                     "google.io",
                 };
 
         for (String val : values) {
             assertTrue(FilterType.DOMAIN.isValid(val));
+            System.out.println(FilterType.DOMAIN.validate(val));
         }
     }
 

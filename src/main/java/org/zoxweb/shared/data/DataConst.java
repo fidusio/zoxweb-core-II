@@ -1296,6 +1296,7 @@ public class DataConst
 		CA(".ca"),
 		US(".us"),
         IO(".io"),
+        LB(".lb"),
 
 	
 		;

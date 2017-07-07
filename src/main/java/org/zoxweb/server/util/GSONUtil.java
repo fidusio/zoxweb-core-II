@@ -53,6 +53,7 @@ import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVEntity;
 import org.zoxweb.shared.util.NVPair;
 import org.zoxweb.shared.util.SharedBase64;
+import org.zoxweb.shared.util.SharedBase64.Base64Type;
 import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
 import org.zoxweb.shared.util.Const.LogicalOperator;
@@ -322,7 +323,7 @@ final public class GSONUtil
 				if (byte[].class.equals(nvc.getMetaType()))
 				{
 					byte[] value = nve.lookupValue(nvc);				
-					writer.value(value != null ?  new String(SharedBase64.encode(value)) : null);
+					writer.value(value != null ?  new String(SharedBase64.encode(Base64Type.DEFAULT, value)) : null);
 				}
 				else
                 {
@@ -878,7 +879,7 @@ final public class GSONUtil
 						
 						if (byteArray64 != null)
 						{
-							nve.setValue(nvc, SharedBase64.decode(byteArray64.getBytes()));
+							nve.setValue(nvc, SharedBase64.decode(Base64Type.DEFAULT, byteArray64.getBytes()));
 						}
 					}
 					else if (Integer[].class.equals(metaType))

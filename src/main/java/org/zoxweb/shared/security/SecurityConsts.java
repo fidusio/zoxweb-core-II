@@ -121,5 +121,10 @@ public final class SecurityConsts
 		}
 
 	}
+	
+	public enum JWTAlgorithm
+	{
+		HS256,
+	}
 
 }
