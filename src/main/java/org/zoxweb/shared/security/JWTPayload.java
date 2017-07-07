@@ -49,7 +49,7 @@ implements DomainID<String>, SubjectID<String>
 																					false, 
 																					false, 
 																					false, 
-																					AccessCodeDAO.class, 
+																					JWTPayload.class, 
 																					SharedUtil.extractNVConfigs(Param.values()), 
 																					null, 
 																					false, 

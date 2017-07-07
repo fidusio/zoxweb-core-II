@@ -113,7 +113,7 @@ final public class GSONUtil
 	public static String toJSON(NVEntity nve, boolean indent, boolean printNull, boolean printClassType) 
 	        throws IOException
 	{
-		return toJSON(nve, indent, true, true, null);
+		return toJSON(nve, indent, printNull, printClassType, null);
 	}
 	
 	public static String toJSON(NVEntity nve, boolean indent, boolean printNull, boolean printClassType, Base64Type b64Type) 
@@ -614,10 +614,10 @@ final public class GSONUtil
 	public static <V extends NVEntity> V fromJSON(String json) 
         throws InstantiationException, IllegalAccessException, ClassNotFoundException
     {
-		return fromJSON(json, null);
+		return fromJSON(json, null, null);
 	}
 	
-	public static Map<String, ?> fromJSONMap(String json) 
+	public static Map<String, ?> fromJSONMap(String json, Base64Type b64Type) 
         throws InstantiationException, IllegalAccessException, ClassNotFoundException
     {
 		Map<String, Object> ret = new LinkedHashMap<String, Object>();
@@ -644,7 +644,7 @@ final public class GSONUtil
 						{
 							if (jsonArray.get(i).isJsonObject())
 							{
-								NVEntity nve = fromJSON(jsonArray.get(i).getAsJsonObject(), null);
+								NVEntity nve = fromJSON(jsonArray.get(i).getAsJsonObject(), null, b64Type);
 								list.add(nve);
 							}
 							else if (jsonArray.get(i).isJsonPrimitive())
@@ -666,7 +666,7 @@ final public class GSONUtil
 					}
 					else if (element.getValue().isJsonObject())
 					{
-						NVEntity nve = fromJSON(element.getValue().getAsJsonObject(), null);
+						NVEntity nve = fromJSON(element.getValue().getAsJsonObject(), null, b64Type);
 						ret.put(element.getKey(), nve);
 					}
 					else if (element.getValue().isJsonPrimitive())
@@ -765,22 +765,29 @@ final public class GSONUtil
 		return sw.toString();
 	}
 	
-	@SuppressWarnings("unchecked")
+	
 	public static <V extends NVEntity> V fromJSON(String json, Class<? extends NVEntity> clazz) 
+	        throws InstantiationException, IllegalAccessException, ClassNotFoundException
+	{
+		return fromJSON(json, clazz, null);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static <V extends NVEntity> V fromJSON(String json, Class<? extends NVEntity> clazz, Base64Type b64Type) 
         throws InstantiationException, IllegalAccessException, ClassNotFoundException
     {
 		JsonElement je = new JsonParser().parse(json);
 		
 		if (je instanceof JsonObject)
 		{
-			return (V) fromJSON((JsonObject)je, clazz);
+			return (V) fromJSON((JsonObject)je, clazz, b64Type);
 		}
 		
 		return null;
 	}
 	
 	@SuppressWarnings("unchecked")
-	private static NVEntity fromJSON(JsonObject jo, Class<? extends NVEntity> clazz)
+	private static NVEntity fromJSON(JsonObject jo, Class<? extends NVEntity> clazz, Base64Type b64Type)
         throws InstantiationException, IllegalAccessException, ClassNotFoundException
     {
 
@@ -842,7 +849,7 @@ final public class GSONUtil
 							JsonObject jobj = jsonArray.get(i).getAsJsonObject();
 //							try
 							{
-								tempArray.add(fromJSON(jobj, (Class<? extends NVEntity>) nvc.getMetaTypeBase()));
+								tempArray.add(fromJSON(jobj, (Class<? extends NVEntity>) nvc.getMetaTypeBase(), b64Type));
 							}
 //							catch (InstantiationException ie)
 //							{
@@ -891,7 +898,7 @@ final public class GSONUtil
 						
 						if (byteArray64 != null)
 						{
-							nve.setValue(nvc, SharedBase64.decode(Base64Type.DEFAULT, byteArray64.getBytes()));
+							nve.setValue(nvc, SharedBase64.decode(b64Type, byteArray64.getBytes()));
 						}
 					}
 					else if (Integer[].class.equals(metaType))
@@ -965,7 +972,7 @@ final public class GSONUtil
 					{
 						if (!(je instanceof JsonNull))
 						{
-							((NVBase<NVEntity>) nvb).setValue(fromJSON(je.getAsJsonObject(), (Class<? extends NVEntity>) nvc.getMetaType()));
+							((NVBase<NVEntity>) nvb).setValue(fromJSON(je.getAsJsonObject(), (Class<? extends NVEntity>) nvc.getMetaType(), b64Type));
 						}
 					}
 					else if (nvc.isEnum())
@@ -1144,7 +1151,7 @@ final public class GSONUtil
 		return sw.toString();
 	}
 	
-	public static List<NVEntity> fromJSONValues(String json) 
+	public static List<NVEntity> fromJSONValues(String json, Base64Type b64Type) 
         throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException
     {
 		JsonElement je = new JsonParser().parse(json);
@@ -1157,7 +1164,7 @@ final public class GSONUtil
 			
 			for (int i = 0; i < ja.size(); i++)
 			{
-				ret.add(fromJSON((JsonObject)ja.get(i), null));
+				ret.add(fromJSON((JsonObject)ja.get(i), null, b64Type));
 			}
 			
 			return ret;
@@ -1168,7 +1175,7 @@ final public class GSONUtil
 
 	@SafeVarargs
 	@SuppressWarnings("unchecked")
-	public static <V extends NVEntity> List<V> fromJSONs(String json, Class<? extends NVEntity>... classes)
+	public static <V extends NVEntity> List<V> fromJSONs(String json, Base64Type b64Type, Class<? extends NVEntity>... classes)
     {
 		List<V> ret = new ArrayList<V>();
 		
@@ -1180,7 +1187,7 @@ final public class GSONUtil
 			{
 				try
                 {
-					NVEntity nve = fromJSON((String) token, c);
+					NVEntity nve = fromJSON((String) token, c, b64Type);
 					ret.add((V) nve);
 				}
 				catch (Exception e)

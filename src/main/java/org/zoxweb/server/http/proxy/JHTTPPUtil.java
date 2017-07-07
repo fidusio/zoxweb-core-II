@@ -35,6 +35,7 @@ import org.zoxweb.shared.data.ApplicationConfigDAO;
 
 import org.zoxweb.shared.util.Const;
 import org.zoxweb.shared.util.SharedStringUtil;
+import org.zoxweb.shared.util.SharedBase64.Base64Type;
 
 /**
  *
@@ -117,7 +118,7 @@ public class JHTTPPUtil
 				log.info("proxy rules filename:"+fileName + " exists");
 				
 				String json = IOUtil.inputStreamToString( new FileInputStream( file), true);
-				List<InetFilterRule> filters = GSONUtil.fromJSONs(json, InetFilterRule.class);
+				List<InetFilterRule> filters = GSONUtil.fromJSONs(json, Base64Type.DEFAULT, InetFilterRule.class);
 				ifrm =  new InetFilterRulesManager();
 				ifrm.setAll(filters);
 				
@@ -170,7 +171,7 @@ public class JHTTPPUtil
 					try
 					{
 						String json = IOUtil.inputStreamToString(new FileInputStream( file), true);
-						List<InetFilterRule> filters = GSONUtil.fromJSONs(json, InetFilterRule.class);
+						List<InetFilterRule> filters = GSONUtil.fromJSONs(json, Base64Type.DEFAULT, InetFilterRule.class);
 						ifrm.setAll(filters);
 					}
 					catch(Exception e)
@@ -252,7 +253,7 @@ public class JHTTPPUtil
 					try
 					{
 						String json = IOUtil.inputStreamToString(new FileInputStream( file), true);
-						List<InetFilterRule> filters = GSONUtil.fromJSONs(json, InetFilterRule.class);
+						List<InetFilterRule> filters = GSONUtil.fromJSONs(json, Base64Type.DEFAULT, InetFilterRule.class);
 						ifrm.setAll(filters);
 					}
 					catch(Exception e)

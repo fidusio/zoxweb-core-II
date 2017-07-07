@@ -22,6 +22,7 @@ import org.zoxweb.server.net.InetFilterRulesManager.InetFilterRule;
 import org.zoxweb.server.util.GSONUtil;
 import org.zoxweb.shared.net.InetFilterDAO;
 import org.zoxweb.shared.security.SecurityStatus;
+import org.zoxweb.shared.util.SharedBase64.Base64Type;
 
 public class IPFilterTest {
 
@@ -94,7 +95,7 @@ public class IPFilterTest {
 			String json = GSONUtil.toJSONs(ipfm.getAll(), true, false, null);
 			//System.out.println(ipfm.getAll().get(0));
 			System.out.println(json);
-			List<InetFilterRule> test = GSONUtil.fromJSONs(json, InetFilterRule.class);
+			List<InetFilterRule> test = GSONUtil.fromJSONs(json, Base64Type.DEFAULT, InetFilterRule.class);
 			System.out.println(test);
 			
 			ipfm = new InetFilterRulesManager();

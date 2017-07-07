@@ -52,7 +52,7 @@ public class HTTPCallProcessor
 		{
 			try
 			{
-				List<HTTPMessageConfig> list = GSONUtil.fromJSONs(IOUtil.inputStreamToString(new FileInputStream(args[i]), true), HTTPMessageConfig.class);
+				List<HTTPMessageConfig> list = GSONUtil.fromJSONs(IOUtil.inputStreamToString(new FileInputStream(args[i]), true), null, HTTPMessageConfig.class);
 				for (HTTPMessageConfig hcc : list)
 				{
 					System.out.println("Calling:" + hcc.getURL() + "/" + hcc.getURI());

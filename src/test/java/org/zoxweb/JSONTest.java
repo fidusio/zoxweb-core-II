@@ -27,6 +27,7 @@ import org.zoxweb.shared.net.InetAddressDAO;
 import org.zoxweb.shared.net.NetworkInterfaceDAO;
 import org.zoxweb.shared.util.Const;
 import org.zoxweb.shared.util.NVEntity;
+import org.zoxweb.shared.util.SharedBase64.Base64Type;
 
 import com.google.gson.Gson;
 
@@ -94,7 +95,7 @@ public class JSONTest {
 			
 			String jsonValues = GSONUtil.toJSONValues(sysDAO.getNetworkInterfaces().values(), true, false, null);
 			System.out.println(jsonValues);
-			List<NVEntity> values = GSONUtil.fromJSONValues(jsonValues);
+			List<NVEntity> values = GSONUtil.fromJSONValues(jsonValues, Base64Type.DEFAULT);
 			System.out.println(values);
 		} catch (Exception e) {
 			e.printStackTrace();

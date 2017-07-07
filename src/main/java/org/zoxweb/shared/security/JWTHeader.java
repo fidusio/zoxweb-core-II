@@ -41,7 +41,7 @@ extends SetNameDescriptionDAO
 																					false, 
 																					false, 
 																					false, 
-																					AccessCodeDAO.class, 
+																					JWTHeader.class, 
 																					SharedUtil.extractNVConfigs(Param.values()), 
 																					null, 
 																					false, 

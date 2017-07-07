@@ -10,7 +10,7 @@ import org.zoxweb.shared.util.NVConfigManager;
 import org.zoxweb.shared.util.SharedUtil;
 
 @SuppressWarnings("serial")
-public class JWT
+public class JsonWebToken
 extends SetNameDescriptionDAO
 {
 	
@@ -35,27 +35,25 @@ extends SetNameDescriptionDAO
 		}
 	}
 	
-	public static final NVConfigEntity NVC_JWT = new NVConfigEntityLocal(
-																					"jwt", 
-																					null , 
-																					"JWT", 
-																					true, 
-																					false, 
-																					false, 
-																					false, 
-																					AccessCodeDAO.class, 
-																					SharedUtil.extractNVConfigs(Param.values()), 
-																					null, 
-																					false, 
-																					SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO
-																				);
+	public static final NVConfigEntity NVC_JWT = new NVConfigEntityLocal("jwt", 
+																		null , 
+																		"JWT", 
+																		true, 
+																		false, 
+																		false, 
+																		false, 
+																		JsonWebToken.class, 
+																		SharedUtil.extractNVConfigs(Param.values()), 
+																		null, 
+																		false, 
+																		SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO);
 	
 	
 	
 	
 	
 	
-	public JWT()
+	public JsonWebToken()
 	{
 		super(NVC_JWT);
 	}

@@ -21,7 +21,7 @@ public class ConfigDAOTest
 			System.out.println(json);
 			
 			
-			List<ConfigDAO> results = GSONUtil.fromJSONs(json,ConfigDAO.class);
+			List<ConfigDAO> results = GSONUtil.fromJSONs(json,null, ConfigDAO.class);
 			System.out.println(results);
 			
 		}
