@@ -316,13 +316,13 @@ public class HTTPServletUtil
 	public static int sendJSON(HttpServletRequest req, HttpServletResponse resp, HTTPStatusCode code, List<? extends NVEntity> nves)
 			throws IOException
 	{
-		return sendJSON(req, resp, code, nves != null ? GSONUtil.toJSONValues(nves.toArray(new NVEntity[0]), false, false) : null);	
+		return sendJSON(req, resp, code, nves != null ? GSONUtil.toJSONValues(nves.toArray(new NVEntity[0]), false, false, null) : null);	
 	}
 	
 	public static int sendJSON(HttpServletRequest req, HttpServletResponse resp, HTTPStatusCode code, NVEntity nves[])
 			throws IOException
 	{
-		return sendJSON(req, resp, code, nves != null ? GSONUtil.toJSONValues(nves, false, false) : null);
+		return sendJSON(req, resp, code, nves != null ? GSONUtil.toJSONValues(nves, false, false, null) : null);
 	}
 	
 	public static int sendJSON(HttpServletRequest req, HttpServletResponse resp, HTTPStatusCode code, String json)

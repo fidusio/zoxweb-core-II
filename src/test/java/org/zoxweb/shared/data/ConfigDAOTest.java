@@ -15,9 +15,9 @@ public class ConfigDAOTest
 			cd.setName("SimpleTest-1");
 			cd.setBeanClassName(ZWEhCacheManager.class);
 			
-			String json = GSONUtil.toJSON(cd, true, false, true);
+			String json = GSONUtil.toJSON(cd, true, false, true, null);
 			cd.setName("SimpleTest-2");
-			json += GSONUtil.toJSON(cd, true, false, true);
+			json += GSONUtil.toJSON(cd, true, false, true, null);
 			System.out.println(json);
 			
 			

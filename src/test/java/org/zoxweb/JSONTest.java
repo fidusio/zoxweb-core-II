@@ -89,10 +89,10 @@ public class JSONTest {
 			address.setZIPOrPostalCode("90025");
 			address.setCountry("USA");
 			
-			System.out.println(GSONUtil.toJSON(address, true, false, false));
-			System.out.println(GSONUtil.toJSONWrapper("address", address, true, false, false));
+			System.out.println(GSONUtil.toJSON(address, true, false, false, null));
+			System.out.println(GSONUtil.toJSONWrapper("address", address, true, false, false, null));
 			
-			String jsonValues = GSONUtil.toJSONValues(sysDAO.getNetworkInterfaces().values(), true, false);
+			String jsonValues = GSONUtil.toJSONValues(sysDAO.getNetworkInterfaces().values(), true, false, null);
 			System.out.println(jsonValues);
 			List<NVEntity> values = GSONUtil.fromJSONValues(jsonValues);
 			System.out.println(values);

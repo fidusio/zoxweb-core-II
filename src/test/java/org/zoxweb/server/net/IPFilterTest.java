@@ -91,7 +91,7 @@ public class IPFilterTest {
 			System.out.println("new test");
 			checkTest( ipfm, ipArray);
 			
-			String json = GSONUtil.toJSONs(ipfm.getAll(), true, false);
+			String json = GSONUtil.toJSONs(ipfm.getAll(), true, false, null);
 			//System.out.println(ipfm.getAll().get(0));
 			System.out.println(json);
 			List<InetFilterRule> test = GSONUtil.fromJSONs(json, InetFilterRule.class);

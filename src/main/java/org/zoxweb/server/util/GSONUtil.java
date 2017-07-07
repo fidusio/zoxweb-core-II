@@ -109,7 +109,14 @@ final public class GSONUtil
 		return toJSON(nve, indent, true, true);
 	}
 	
+	
 	public static String toJSON(NVEntity nve, boolean indent, boolean printNull, boolean printClassType) 
+	        throws IOException
+	{
+		return toJSON(nve, indent, true, true, null);
+	}
+	
+	public static String toJSON(NVEntity nve, boolean indent, boolean printNull, boolean printClassType, Base64Type b64Type) 
         throws IOException
     {
 		StringWriter sw = new StringWriter();
@@ -122,14 +129,19 @@ final public class GSONUtil
 			writer.setIndent("  ");
 		}
 		
-		toJSON(writer, nve.getClass(), nve, printNull, printClassType);
+		toJSON(writer, nve.getClass(), nve, printNull, printClassType, b64Type);
 		
 		writer.close();
 		
 		return sw.toString();
 	}
 	
-	public static String toJSONWrapper(String wrapName, NVEntity nve, boolean indent, boolean printNull, boolean printClassType) 
+	public static String toJSONWrapper(String wrapName, 
+									   NVEntity nve, 
+									   boolean indent, 
+									   boolean printNull, 
+									   boolean printClassType,
+									   Base64Type b64Type) 
         throws IOException
     {
 		StringWriter sw = new StringWriter();
@@ -144,7 +156,7 @@ final public class GSONUtil
 		
 		writer.beginObject();
 		writer.name(wrapName);
-		toJSON(writer, nve.getClass(), nve, printNull, printClassType);
+		toJSON(writer, nve.getClass(), nve, printNull, printClassType, b64Type);
 		writer.endObject();
 		writer.close();
 		
@@ -156,9 +168,9 @@ final public class GSONUtil
 		return toJSONHash(mdAlgo, create(false).toJson(obj));
 	}
 	
-	public static byte[] toNVEntityHash(String mdAlgo, NVEntity nve) throws NoSuchAlgorithmException, IOException
+	public static byte[] toNVEntityHash(String mdAlgo, NVEntity nve, Base64Type b64Type) throws NoSuchAlgorithmException, IOException
 	{
-		return toJSONHash(mdAlgo, toJSON(nve, false, false, true));
+		return toJSONHash(mdAlgo, toJSON(nve, false, false, true, b64Type));
 	}
 	
 	
@@ -281,7 +293,7 @@ final public class GSONUtil
 	}
 	
 	@SuppressWarnings("unchecked")
-	private static JsonWriter toJSON(JsonWriter writer, Class<? extends NVEntity> clazz, NVEntity nve, boolean printNull, boolean printClassType) 
+	private static JsonWriter toJSON(JsonWriter writer, Class<? extends NVEntity> clazz, NVEntity nve, boolean printNull, boolean printClassType, Base64Type b64Type) 
         throws IOException
     {
 
@@ -323,7 +335,7 @@ final public class GSONUtil
 				if (byte[].class.equals(nvc.getMetaType()))
 				{
 					byte[] value = nve.lookupValue(nvc);				
-					writer.value(value != null ?  new String(SharedBase64.encode(Base64Type.DEFAULT, value)) : null);
+					writer.value(value != null ?  new String(SharedBase64.encode(b64Type, value)) : null);
 				}
 				else
                 {
@@ -416,7 +428,7 @@ final public class GSONUtil
 						
 						for (NVEntity value : tempArray.values())
 						{
-							toJSON( writer, (Class<? extends NVEntity>) nvc.getMetaTypeBase(), value, printNull, printClassType);
+							toJSON( writer, (Class<? extends NVEntity>) nvc.getMetaTypeBase(), value, printNull, printClassType, b64Type);
 						}						
 						
 //						if (!nvc.isUnique())
@@ -530,7 +542,7 @@ final public class GSONUtil
 					if (tempNVE != null)
 					{
 						writer.name(nvc.getName());
-						toJSON( writer,  (Class<? extends NVEntity>) ((NVConfigEntity) nvc).getMetaType(), (NVEntity)nve.lookupValue(nvc), printNull, printClassType);
+						toJSON( writer,  (Class<? extends NVEntity>) ((NVConfigEntity) nvc).getMetaType(), (NVEntity)nve.lookupValue(nvc), printNull, printClassType, b64Type);
 					}
 					else if (printNull)
 					{
@@ -682,7 +694,7 @@ final public class GSONUtil
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static String toJSONMap(Map<String, ?> map) 
+	public static String toJSONMap(Map<String, ?> map, Base64Type b64Type) 
         throws IOException
     {
 		StringWriter sw = new StringWriter();
@@ -713,7 +725,7 @@ final public class GSONUtil
 						{
 							if (val instanceof NVEntity)
 							{
-								toJSON(writer, (Class<? extends NVEntity>) val.getClass(), (NVEntity) val, false, true);
+								toJSON(writer, (Class<? extends NVEntity>) val.getClass(), (NVEntity) val, false, true, b64Type);
 							}
 							else if (val instanceof String)
 							{
@@ -729,7 +741,7 @@ final public class GSONUtil
 					}
 					else if (value instanceof NVEntity)
 					{
-						toJSON(writer, (Class<? extends NVEntity>) value.getClass(), (NVEntity) value, false, true);
+						toJSON(writer, (Class<? extends NVEntity>) value.getClass(), (NVEntity) value, false, true, b64Type);
 					}
 					else if (value instanceof String)
 					{
@@ -1084,7 +1096,7 @@ final public class GSONUtil
 		return nvp;
 	}
 	
-	public static String toJSONs(List<? extends NVEntity> list, boolean indent, boolean printNull)
+	public static String toJSONs(List<? extends NVEntity> list, boolean indent, boolean printNull, Base64Type b64Type)
         throws IOException
     {
 		StringBuilder sb = new StringBuilder();
@@ -1096,13 +1108,13 @@ final public class GSONUtil
 				sb.append('\n');
 			}
 			
-			sb.append(toJSON(nve, indent, printNull, true));
+			sb.append(toJSON(nve, indent, printNull, true, b64Type));
 		}
 		
 		return sb.toString();
 	}
 	
-	public static String toJSONValues(NVEntity[] list, boolean indent, boolean printNull) 
+	public static String toJSONValues(NVEntity[] list, boolean indent, boolean printNull, Base64Type b64Type) 
         throws IOException
     {
 		StringWriter sw = new StringWriter();
@@ -1122,7 +1134,7 @@ final public class GSONUtil
 		for (NVEntity nve : list)
 		{
 			if (nve != null)
-			toJSON(writer, nve.getClass(), nve, printNull, true);
+			toJSON(writer, nve.getClass(), nve, printNull, true, b64Type);
 		}
 		
 		writer.endArray();

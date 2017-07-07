@@ -24,7 +24,7 @@ implements DomainID<String>, SubjectID<String>
 		DOMAIN_ID(NVConfigManager.createNVConfig("domain_id", "Domain identifier", "DomainID", true, true, false, String.class, FilterType.DOMAIN)),
 		APP_ID(NVConfigManager.createNVConfig("app_id", "ApplicationID", "AppID", true, true, false, String.class, null)),
 		SUBJECT_ID(NVConfigManager.createNVConfig("subject_id", "Subject Identifier", "SubjectID", false, true, false, String.class, null)),
-		NONCE(NVConfigManager.createNVConfig("nonce", "ApplicationID", "AppID", false, true, false, long.class, null)),
+		NONCE(NVConfigManager.createNVConfig("nonce", "ApplicationID", "Nonce", false, true, false, long.class, null)),
 		RANDOM(NVConfigManager.createNVConfig("random", "Random Data", "Rendom", false, true, false, byte[].class, null)),
 		;
 		
