@@ -1,6 +1,8 @@
 package org.zoxweb.server.security;
 
 import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -18,10 +20,11 @@ public class JWTTest {
 	public void init()
 	{
 		JWTHeader header = new JWTHeader();
-		JWTPayload payload = new JWTPayload();
+		
 		
 		header.setJWTAlgorithm(JWTAlgorithm.HS256);
 		header.setType("JWT");
+		JWTPayload payload = new JWTPayload();
 		payload.setDomainID("xlogistx.io");
 		payload.setAppID("xlogistx");
 		payload.setRandom(new byte[] {0,1,2,3});
@@ -33,7 +36,7 @@ public class JWTTest {
 	}
 	
 	@Test
-	public void toGSON() throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException
+	public void toGSON() throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException, InvalidKeyException, NoSuchAlgorithmException
 	{
 		String json = GSONUtil.toJSON(jwt, true, false, false, Base64Type.URL);
 		System.out.println(json);
@@ -42,6 +45,15 @@ public class JWTTest {
 		System.out.println(json);
 		
 		System.out.println(localJwt.getPayload());
+		
+		JWTPayload payload = new JWTPayload();
+		payload.setSub("1234567890");
+		payload.setName("John Doe");
+		payload.setAdmin(true);
+		localJwt.setPayload(payload);
+		json = GSONUtil.toJSON(localJwt, true, false, false, Base64Type.URL);
+		System.out.println(json);
+		System.out.println(CryptoUtil.encodeJWT("secret", localJwt));
 	}
 	
 	@Test (expected = IllegalArgumentException.class)

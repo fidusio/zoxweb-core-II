@@ -26,6 +26,9 @@ implements DomainID<String>, SubjectID<String>
 		SUBJECT_ID(NVConfigManager.createNVConfig("subject_id", "Subject Identifier", "SubjectID", false, true, false, String.class, null)),
 		NONCE(NVConfigManager.createNVConfig("nonce", "ApplicationID", "Nonce", false, true, false, long.class, null)),
 		RANDOM(NVConfigManager.createNVConfig("random", "Random Data", "Rendom", false, true, false, byte[].class, null)),
+		SUB(NVConfigManager.createNVConfig("sub", "ApplicationID", "AppID", true, true, false, String.class, null)),
+		NAME(NVConfigManager.createNVConfig("name", "ApplicationID", "AppID", true, true, false, String.class, null)),
+		ADMIN(NVConfigManager.createNVConfig("admin", "ApplicationID", "AppID", true, true, boolean.class)),
 		;
 		
 		private final NVConfig nvc;
@@ -120,6 +123,34 @@ implements DomainID<String>, SubjectID<String>
 	{
 		// TODO Auto-generated method stub
 		return lookupValue(Param.NONCE);
+	}
+
+
+	public void setSub(String sub) 
+	{
+		// TODO Auto-generated method stub
+		setValue(Param.SUB, sub);
+	}
+	
+	
+	public boolean isAdmin() 
+	{
+		// TODO Auto-generated method stub
+		return lookupValue(Param.ADMIN);
+	}
+	
+	
+	public void setAdmin(boolean isAdmin) 
+	{
+		// TODO Auto-generated method stub
+		setValue(Param.ADMIN, isAdmin);
+	}
+	
+	
+	public String getSub() 
+	{
+		// TODO Auto-generated method stub
+		return lookupValue(Param.SUB);
 	}
 
 

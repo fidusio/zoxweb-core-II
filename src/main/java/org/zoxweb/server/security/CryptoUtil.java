@@ -51,7 +51,7 @@ import javax.net.ssl.TrustManagerFactory;
 
 import org.zoxweb.server.io.IOUtil;
 import org.zoxweb.server.io.UByteArrayOutputStream;
-
+import org.zoxweb.server.util.GSONUtil;
 import org.zoxweb.shared.crypto.CryptoConst.MDType;
 import org.zoxweb.shared.crypto.CryptoConst.SecureRandomType;
 import org.zoxweb.shared.crypto.EncryptedDAO;
@@ -59,6 +59,7 @@ import org.zoxweb.shared.crypto.EncryptedKeyDAO;
 import org.zoxweb.shared.crypto.PasswordDAO;
 import org.zoxweb.shared.filters.BytesValueFilter;
 import org.zoxweb.shared.security.AccessException;
+import org.zoxweb.shared.security.JsonWebToken;
 import org.zoxweb.shared.util.Const;
 import org.zoxweb.shared.util.SharedBase64;
 import org.zoxweb.shared.util.SharedBase64.Base64Type;
@@ -710,6 +711,29 @@ public class CryptoUtil
 		return bytes;
 	}
 	
+	public static String encodeJWT(String key, JsonWebToken jwt) throws NoSuchAlgorithmException, InvalidKeyException, IOException
+	{
+		return encodeJWT(SharedStringUtil.getBytes(key), jwt);
+	}
+	
+	public static String encodeJWT(byte key[], JsonWebToken jwt) throws NoSuchAlgorithmException, InvalidKeyException, IOException
+	{
+		SharedUtil.checkIfNulls("Null Parameters", key, jwt);
+		Mac sha256_HMAC = Mac.getInstance(HMAC_SHA_256);
+		SecretKeySpec secret_key = new SecretKeySpec(key, HMAC_SHA_256);
+	    sha256_HMAC.init(secret_key);
+		StringBuilder sb = new StringBuilder();
+		byte[] b64Header = SharedBase64.encode(Base64Type.URL, GSONUtil.toJSON(jwt.getHeader(), false, false, false));
+		byte[] b64Payload = SharedBase64.encode(Base64Type.URL, GSONUtil.toJSON(jwt.getPayload(), false, false, false));
+		sb.append(SharedStringUtil.toString(b64Header));
+		sb.append(".");
+		sb.append(SharedStringUtil.toString(b64Payload));
+		byte[] b64Hash = SharedBase64.encode(Base64Type.URL, sha256_HMAC.doFinal(SharedStringUtil.getBytes(sb.toString())));
+		sb.append(".");
+		sb.append(SharedStringUtil.toString(b64Hash));
+		
+		return sb.toString();
+	}
 	
 	public static SecretKey generateKey(int keySizeInBits, String algo) throws NoSuchAlgorithmException
 	{
