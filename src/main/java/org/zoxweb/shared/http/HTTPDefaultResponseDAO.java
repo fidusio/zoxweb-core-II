@@ -55,7 +55,7 @@ public class HTTPDefaultResponseDAO
         super(NVC_HTTP_DEFAULT_RESPONSE_DAO);
     }
 
-    public int getStatusCode()
+    public HTTPStatusCode getStatusCode()
     {
         return lookupValue(Param.STATUS_CODE);
     }
