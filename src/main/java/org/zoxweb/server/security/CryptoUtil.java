@@ -33,6 +33,7 @@ import java.security.SecureRandom;
 import java.security.SignatureException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
+import java.util.Arrays;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -59,7 +60,10 @@ import org.zoxweb.shared.crypto.EncryptedKeyDAO;
 import org.zoxweb.shared.crypto.PasswordDAO;
 import org.zoxweb.shared.filters.BytesValueFilter;
 import org.zoxweb.shared.security.AccessException;
+import org.zoxweb.shared.security.JWTHeader;
+import org.zoxweb.shared.security.JWTPayload;
 import org.zoxweb.shared.security.JsonWebToken;
+import org.zoxweb.shared.security.JsonWebToken.JWTToken;
 import org.zoxweb.shared.util.Const;
 import org.zoxweb.shared.util.SharedBase64;
 import org.zoxweb.shared.util.SharedBase64.Base64Type;
@@ -731,10 +735,41 @@ public class CryptoUtil
 		byte[] b64Hash = SharedBase64.encode(Base64Type.URL, sha256_HMAC.doFinal(SharedStringUtil.getBytes(sb.toString())));
 		sb.append(".");
 		sb.append(SharedStringUtil.toString(b64Hash));
-		
+
 		return sb.toString();
 	}
-	
+
+
+
+	public static JsonWebToken decodeJWT(byte key[], String token) throws NoSuchAlgorithmException, InvalidKeyException, IOException, SecurityException, IllegalAccessException, ClassNotFoundException, InstantiationException {
+		SharedUtil.checkIfNulls("Null Parameters", key, token);
+		String tokens[] = token.trim().split(".");
+		if (tokens.length != JWTToken.values().length) {
+			throw new SecurityException("Invalid token");
+		}
+
+
+		Mac sha256HMAC = Mac.getInstance(HMAC_SHA_256);
+		SecretKeySpec secret_key = new SecretKeySpec(key, HMAC_SHA_256);
+		sha256HMAC.init(secret_key);
+		sha256HMAC.update(SharedStringUtil.getBytes(tokens[JWTToken.HEADER.ordinal()]));
+
+		sha256HMAC.update((byte) '.');
+		byte[] b64Hash = sha256HMAC.doFinal(SharedStringUtil.getBytes(tokens[JWTToken.PAYLOAD.ordinal()]));
+
+		if (!Arrays.equals(b64Hash, SharedBase64.decode(tokens[JWTToken.HEADER.ordinal()]))) {
+			throw new SecurityException("Invalid token");
+		}
+
+
+		JWTHeader jwtHeader = GSONUtil.fromJSON(tokens[JWTToken.HEADER.ordinal()], JWTHeader.class);
+		JWTPayload jwtPayload = GSONUtil.fromJSON(tokens[JWTToken.PAYLOAD.ordinal()], JWTPayload.class);
+
+		return new JsonWebToken(jwtHeader, jwtPayload);
+	}
+
+
+
 	public static SecretKey generateKey(int keySizeInBits, String algo) throws NoSuchAlgorithmException
 	{
 		KeyGenerator kg = KeyGenerator.getInstance(algo);

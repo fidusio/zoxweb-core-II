@@ -53,7 +53,10 @@ public class JWTTest {
 		localJwt.setPayload(payload);
 		json = GSONUtil.toJSON(localJwt, true, false, false, Base64Type.URL);
 		System.out.println(json);
-		System.out.println(CryptoUtil.encodeJWT("secret", localJwt));
+		String test = CryptoUtil.encodeJWT("secret", localJwt);
+		System.out.println(test);
+
+		System.out.println(CryptoUtil.decodeJWT("secret".getBytes(), test));
 	}
 	
 	@Test (expected = IllegalArgumentException.class)

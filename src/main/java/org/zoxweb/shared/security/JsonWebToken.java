@@ -13,7 +13,16 @@ import org.zoxweb.shared.util.SharedUtil;
 public class JsonWebToken
 extends SetNameDescriptionDAO
 {
-	
+
+	public enum JWTToken
+	{
+		HEADER,
+		PAYLOAD,
+		HASH
+	}
+
+
+
 	public enum Param
 	implements GetNVConfig
 	{
@@ -56,6 +65,14 @@ extends SetNameDescriptionDAO
 	public JsonWebToken()
 	{
 		super(NVC_JWT);
+	}
+
+	public JsonWebToken(JWTHeader header, JWTPayload payload)
+	{
+		this();
+		setHeader(header);
+		setPayload(payload);
+
 	}
 	public JWTHeader getHeader() {
 		return lookupValue(Param.JWT_HEADER);
