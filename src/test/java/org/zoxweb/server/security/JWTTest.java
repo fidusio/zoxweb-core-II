@@ -56,7 +56,7 @@ public class JWTTest {
 		String test = CryptoUtil.encodeJWT("secret", localJwt);
 		System.out.println(test);
 
-		System.out.println(CryptoUtil.decodeJWT("secret".getBytes(), test));
+		System.out.println(CryptoUtil.decodeJWT("secret", test));
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
