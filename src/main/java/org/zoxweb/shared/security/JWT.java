@@ -10,7 +10,7 @@ import org.zoxweb.shared.util.NVConfigManager;
 import org.zoxweb.shared.util.SharedUtil;
 
 @SuppressWarnings("serial")
-public class JsonWebToken
+public class JWT
 extends SetNameDescriptionDAO
 {
 
@@ -51,7 +51,7 @@ extends SetNameDescriptionDAO
 																		false, 
 																		false, 
 																		false, 
-																		JsonWebToken.class, 
+																		JWT.class, 
 																		SharedUtil.extractNVConfigs(Param.values()), 
 																		null, 
 																		false, 
@@ -62,12 +62,12 @@ extends SetNameDescriptionDAO
 	
 	
 	
-	public JsonWebToken()
+	public JWT()
 	{
 		super(NVC_JWT);
 	}
 
-	public JsonWebToken(JWTHeader header, JWTPayload payload)
+	public JWT(JWTHeader header, JWTPayload payload)
 	{
 		this();
 		setHeader(header);

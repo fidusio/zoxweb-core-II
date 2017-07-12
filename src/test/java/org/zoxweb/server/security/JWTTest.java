@@ -7,7 +7,7 @@ import java.security.NoSuchAlgorithmException;
 import org.junit.Before;
 import org.junit.Test;
 import org.zoxweb.server.util.GSONUtil;
-import org.zoxweb.shared.security.JsonWebToken;
+import org.zoxweb.shared.security.JWT;
 import org.zoxweb.shared.security.JWTHeader;
 import org.zoxweb.shared.security.JWTPayload;
 import org.zoxweb.shared.security.SecurityConsts.JWTAlgorithm;
@@ -15,7 +15,7 @@ import org.zoxweb.shared.util.SharedBase64.Base64Type;
 
 public class JWTTest {
 
-	private JsonWebToken jwt = null;
+	private JWT jwt = null;
 	@Before
 	public void init()
 	{
@@ -29,7 +29,7 @@ public class JWTTest {
 		payload.setAppID("xlogistx");
 		payload.setRandom(new byte[] {0,1,2,3});
 		payload.setSubjectID("support@xlogistx.io");
-		jwt = new JsonWebToken();
+		jwt = new JWT();
 		jwt.setHeader(header);
 		jwt.setPayload(payload);
 		
@@ -40,14 +40,14 @@ public class JWTTest {
 	{
 		String json = GSONUtil.toJSON(jwt, true, false, false, Base64Type.URL);
 		System.out.println(json);
-		JsonWebToken localJwt = GSONUtil.fromJSON(json, JsonWebToken.class, Base64Type.URL);
+		JWT localJwt = GSONUtil.fromJSON(json, JWT.class, Base64Type.URL);
 		json = GSONUtil.toJSON(localJwt, true, false, false, Base64Type.URL);
 		System.out.println(json);
 		
 		System.out.println(localJwt.getPayload());
 		
 		JWTPayload payload = new JWTPayload();
-		payload.setSub("1234567890");
+		payload.setSubjectID("1234567890");
 		payload.setName("John Doe");
 		payload.setAdmin(true);
 		localJwt.setPayload(payload);

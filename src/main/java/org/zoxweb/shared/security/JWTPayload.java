@@ -23,12 +23,19 @@ implements DomainID<String>, SubjectID<String>
 	{
 		DOMAIN_ID(NVConfigManager.createNVConfig("domain_id", "Domain identifier", "DomainID", true, true, false, String.class, FilterType.DOMAIN)),
 		APP_ID(NVConfigManager.createNVConfig("app_id", "ApplicationID", "AppID", true, true, false, String.class, null)),
-		SUBJECT_ID(NVConfigManager.createNVConfig("subject_id", "Subject Identifier", "SubjectID", false, true, false, String.class, null)),
 		NONCE(NVConfigManager.createNVConfig("nonce", "ApplicationID", "Nonce", false, true, false, long.class, null)),
 		RANDOM(NVConfigManager.createNVConfig("random", "Random Data", "Rendom", false, true, false, byte[].class, null)),
-		SUB(NVConfigManager.createNVConfig("sub", "ApplicationID", "AppID", true, true, false, String.class, null)),
-		NAME(NVConfigManager.createNVConfig("name", "ApplicationID", "AppID", true, true, false, String.class, null)),
+		ISS(NVConfigManager.createNVConfig("iss", "Issuer intentifier", "Issuer", true, true, false, String.class, null)),
+		SUB(NVConfigManager.createNVConfig("sub", "Subject Identifier", "SubjectID", true, true, false, String.class, null)),
+		AUD(NVConfigManager.createNVConfig("aud", "Audience", "Audience", true, true, false, String.class, null)),	
+		EXP(NVConfigManager.createNVConfig("exp", "Expiration time", "Expiration", true, true, false, long.class, null)),
+		NBF(NVConfigManager.createNVConfig("nbf", "Not Before", "NBF", true, true, false, long.class, null)),
+		IAT(NVConfigManager.createNVConfig("iat", "Issued At", "IAT", true, true, false, long.class, null)),
+		JTI(NVConfigManager.createNVConfig("jti", "JWT ID", "JWTID", true, true, false, String.class, null)),
+		NAME(NVConfigManager.createNVConfig("name", "name", "Name", true, true, false, String.class, null)),
 		ADMIN(NVConfigManager.createNVConfig("admin", "ApplicationID", "AppID", true, true, boolean.class)),
+		
+		
 		;
 		
 		private final NVConfig nvc;
@@ -69,21 +76,7 @@ implements DomainID<String>, SubjectID<String>
 
 
 
-	@Override
-	public String getSubjectID() 
-	{
-		// TODO Auto-generated method stub
-		return lookupValue(Param.SUBJECT_ID);
-	}
-
-
-
-	@Override
-	public void setSubjectID(String subjectID) 
-	{
-		// TODO Auto-generated method stub
-		setValue(Param.SUBJECT_ID, subjectID);
-	}
+	
 
 
 
@@ -125,8 +118,13 @@ implements DomainID<String>, SubjectID<String>
 		return lookupValue(Param.NONCE);
 	}
 
+	public String getSubjectID() 
+	{
+		// TODO Auto-generated method stub
+		return lookupValue(Param.SUB);
+	}
 
-	public void setSub(String sub) 
+	public void setSubjectID(String sub) 
 	{
 		// TODO Auto-generated method stub
 		setValue(Param.SUB, sub);
@@ -147,11 +145,7 @@ implements DomainID<String>, SubjectID<String>
 	}
 	
 	
-	public String getSub() 
-	{
-		// TODO Auto-generated method stub
-		return lookupValue(Param.SUB);
-	}
+	
 
 
 	public void setNonce(String nonce) 
@@ -174,7 +168,69 @@ implements DomainID<String>, SubjectID<String>
 		setValue(Param.RANDOM, random);
 	}
 	
+
+	public String getAudience() 
+	{
+		// TODO Auto-generated method stub
+		return lookupValue(Param.AUD);
+	}
+
+	public void setAudience(String aud) 
+	{
+		// TODO Auto-generated method stub
+		setValue(Param.AUD, aud);
+	}
 	
+	public long getExpirationTime() 
+	{
+		// TODO Auto-generated method stub
+		return lookupValue(Param.EXP);
+	}
+
+	public void setExpirationTime(long exp) 
+	{
+		// TODO Auto-generated method stub
+		setValue(Param.EXP, exp);
+	}
+	
+	
+	public long getNotBefore() 
+	{
+		// TODO Auto-generated method stub
+		return lookupValue(Param.NBF);
+	}
+
+	public void setNotBefore(long nbf) 
+	{
+		// TODO Auto-generated method stub
+		setValue(Param.NBF, nbf);
+	}
+	
+	
+	public long getIssuedAt() 
+	{
+		// TODO Auto-generated method stub
+		return lookupValue(Param.IAT);
+	}
+
+	public void setIssuedAt(long iat) 
+	{
+		// TODO Auto-generated method stub
+		setValue(Param.IAT, iat);
+	}
+
+	
+	public String getJWTID() 
+	{
+		// TODO Auto-generated method stub
+		return lookupValue(Param.JTI);
+	}
+
+	public void setJWTID(String jti) 
+	{
+		// TODO Auto-generated method stub
+		setValue(Param.JTI, jti);
+	}
 }
 
 

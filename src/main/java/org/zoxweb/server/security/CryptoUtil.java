@@ -62,8 +62,8 @@ import org.zoxweb.shared.filters.BytesValueFilter;
 import org.zoxweb.shared.security.AccessException;
 import org.zoxweb.shared.security.JWTHeader;
 import org.zoxweb.shared.security.JWTPayload;
-import org.zoxweb.shared.security.JsonWebToken;
-import org.zoxweb.shared.security.JsonWebToken.JWTToken;
+import org.zoxweb.shared.security.JWT;
+import org.zoxweb.shared.security.JWT.JWTToken;
 import org.zoxweb.shared.util.Const;
 import org.zoxweb.shared.util.SharedBase64;
 import org.zoxweb.shared.util.SharedBase64.Base64Type;
@@ -715,12 +715,12 @@ public class CryptoUtil
 		return bytes;
 	}
 	
-	public static String encodeJWT(String key, JsonWebToken jwt) throws NoSuchAlgorithmException, InvalidKeyException, IOException
+	public static String encodeJWT(String key, JWT jwt) throws NoSuchAlgorithmException, InvalidKeyException, IOException
 	{
 		return encodeJWT(SharedStringUtil.getBytes(key), jwt);
 	}
 	
-	public static String encodeJWT(byte key[], JsonWebToken jwt)
+	public static String encodeJWT(byte key[], JWT jwt)
 			throws NoSuchAlgorithmException,
 				   InvalidKeyException,
 				   IOException,
@@ -743,7 +743,7 @@ public class CryptoUtil
 		return sb.toString();
 	}
 
-	public static JsonWebToken decodeJWT(String key, String token)
+	public static JWT decodeJWT(String key, String token)
 			throws NoSuchAlgorithmException, 
 				   InvalidKeyException, 
 				   IOException, 
@@ -754,7 +754,7 @@ public class CryptoUtil
 	}
 
 
-	public static JsonWebToken decodeJWT(byte key[], String token)
+	public static JWT decodeJWT(byte key[], String token)
 			throws NoSuchAlgorithmException, 
 				   InvalidKeyException, 
 				   IOException, 
@@ -794,7 +794,7 @@ public class CryptoUtil
 		{
 			throw new SecurityException("Invalid JWT");
 		}
-		return new JsonWebToken(jwtHeader, jwtPayload);
+		return new JWT(jwtHeader, jwtPayload);
 	}
 
 

@@ -17,7 +17,7 @@ extends SetNameDescriptionDAO
 	implements GetNVConfig
 	{
 		ALG(NVConfigManager.createNVConfig("alg", "Algorithm", "Alg", true, true, JWTAlgorithm.class)),
-		TYP(NVConfigManager.createNVConfig("typ", "Type", "Typ",false, false, String.class)),
+		TYP(NVConfigManager.createNVConfig("typ", "Content type", "ContentType",false, false, String.class)),
 		;
 		
 		private final NVConfig nvc;
