@@ -25,5 +25,9 @@ public interface CryptoInterface
 	
 	public byte[] hash(String mdAlgo, String... tokens)
 			throws AccessSecurityException;
+	
+	
+	public byte[] hmacSHA256(byte[] key, byte[] data)
+			throws AccessSecurityException;
 
 }
