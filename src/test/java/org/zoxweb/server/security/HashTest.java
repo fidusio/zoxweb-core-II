@@ -16,6 +16,8 @@
 package org.zoxweb.server.security;
 
 import org.zoxweb.server.security.HashUtil;
+import org.zoxweb.shared.util.SharedBase64;
+import org.zoxweb.shared.util.SharedBase64.Base64Type;
 import org.zoxweb.shared.util.SharedStringUtil;
 
 public class HashTest {
@@ -38,8 +40,11 @@ public class HashTest {
 				}
 			}
 
+			System.out.println(new String(SharedBase64.encode(Base64Type.URL, CryptoUtil.hmacSHA256("secret".getBytes(), "secret".getBytes()))));
+			System.out.println(new String(SharedStringUtil.bytesToHex(CryptoUtil.hmacSHA256("secret".getBytes(), "secret".getBytes()))));
 			byte hash[] = HashUtil.hashSequence(alorigthm, seqs);
 			System.out.println(SharedStringUtil.bytesToHex(hash).toLowerCase());
+			
 			
 		} catch(Exception e) {
 			e.printStackTrace();
