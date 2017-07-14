@@ -17,7 +17,6 @@ public class DeviceDAOTest {
 	{
 		DeviceDAO device = new DeviceDAO();
 		device.setName("Computer");
-		device.setSubjectID("dev.xlogistx.io");
 		device.setDeviceID(UUID.randomUUID().toString());
 		device.getProperties().add(new NVPair("name", "value"));
 		device.getProperties().add(new NVPair("name", "value2"));
