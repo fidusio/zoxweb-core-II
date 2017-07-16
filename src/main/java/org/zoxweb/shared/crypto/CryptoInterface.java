@@ -16,18 +16,26 @@
 package org.zoxweb.shared.crypto;
 
 import org.zoxweb.shared.security.AccessSecurityException;
+import org.zoxweb.shared.security.JWT;
 
 public interface CryptoInterface
 {
 
 	public byte[] hash(String mdAlgo, byte[]... tokens)
-			throws AccessSecurityException;
+		throws AccessSecurityException;
 	
 	public byte[] hash(String mdAlgo, String... tokens)
-			throws AccessSecurityException;
+		throws AccessSecurityException;
 	
 	
 	public byte[] hmacSHA256(byte[] key, byte[] data)
-			throws AccessSecurityException;
+		throws AccessSecurityException;
+	
+	
+	public byte[] toJWTToken(byte[] key, JWT jwt)
+		throws AccessSecurityException;
+	
+	public JWT toJWT(byte key[], String b64URLToken)
+		throws AccessSecurityException;
 
 }
