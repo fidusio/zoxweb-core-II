@@ -32,10 +32,10 @@ public interface CryptoInterface
 		throws AccessSecurityException;
 	
 	
-	public byte[] toJWTToken(byte[] key, JWT jwt)
+	public String encodeJWT(byte[] key, JWT jwt)
 		throws AccessSecurityException;
 	
-	public JWT toJWT(byte key[], String b64URLToken)
+	public JWT decodeJWT(byte key[], String b64URLToken)
 		throws AccessSecurityException;
 
 }
