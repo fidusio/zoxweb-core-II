@@ -20,8 +20,10 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+
 import org.zoxweb.shared.data.SetNameDescriptionDAO;
 import org.zoxweb.shared.net.InetSocketAddressDAO;
+import org.zoxweb.shared.security.JWT;
 import org.zoxweb.shared.util.ArrayValues;
 import org.zoxweb.shared.util.GetNVConfig;
 import org.zoxweb.shared.util.GetName;
@@ -79,6 +81,8 @@ public class HTTPMessageConfig
 		REASON(NVConfigManager.createNVConfig("reason", "The server reaso", "Reason", false, true, String.class)),
 		USER(NVConfigManager.createNVConfig("user", "The user name", "User", false, true, String.class)),
 		PASSWORD(NVConfigManager.createNVConfig("password", "The user name password", "Password", false, true, String.class)),
+		JWT(NVConfigManager.createNVConfigEntity("jwt", "jwt token", "JWT", false, true, JWT.class, ArrayType.NOT_ARRAY)),
+		KEY(NVConfigManager.createNVConfig("key", "Encryption/Decryption key", "Key", false, true, byte[].class)),
 		AUTHENTICATION(NVConfigManager.createNVConfigEntity("authentication", "The http authentication", "Authentication", false, true, HTTPAuthentication.class, ArrayType.NOT_ARRAY)),
 		PARAMETERS(NVConfigManager.createNVConfig("parameters", "parameters", "Parameters", false, true, false, String[].class, null)),
 		PROXY_ADDRESS(NVConfigManager.createNVConfigEntity("proxy_address", "The proxy address if not null","ProxyAddress",true, false, InetSocketAddressDAO.class, ArrayType.NOT_ARRAY)),
@@ -528,6 +532,25 @@ public class HTTPMessageConfig
 		
 	}
 
+	@Override
+	public void setKey(byte[] key) {
+		setValue(Params.KEY, key);
+	}
+
+	@Override
+	public byte[] getKey() {
+		return lookupValue(Params.KEY);
+	}
+
+	@Override
+	public JWT getJWT() {
+		return lookupValue(Params.JWT);
+	}
+
+	@Override
+	public void setJWT(JWT jwt) {
+		setValue(Params.JWT, jwt);
+	}
 
 
 	/**
@@ -593,14 +616,6 @@ public class HTTPMessageConfig
 		
 		getHeaderParameters().add(HTTPHeaderName.toHTTPHeader(HTTPHeaderName.CONTENT_TYPE, contentType));
 	}
-	
-//	public void setContentType(HTTPMimeType contentType)
-//	{
-//		
-//		 getHeaderParameters().add(HTTPMimeType.toContentType(contentType));
-//	}
-
-
 
 	/**
 	 * @see org.zoxweb.shared.http.HTTPMessageConfigInterface#setContentType(org.zoxweb.shared.util.GetValue)

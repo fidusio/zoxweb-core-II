@@ -18,6 +18,7 @@ package org.zoxweb.shared.http;
 import java.util.List;
 
 import org.zoxweb.shared.net.InetSocketAddressDAO;
+import org.zoxweb.shared.security.JWT;
 import org.zoxweb.shared.util.ArrayValues;
 import org.zoxweb.shared.util.GetNameValue;
 import org.zoxweb.shared.util.GetValue;
@@ -245,6 +246,30 @@ extends ReferenceID<String>, SetName, SetDescription
 	 * @param password
 	 */
 	public void setPassword(String password);
+
+	/**
+	 * Set the key for JWT
+	 * @param key for JWT
+	 */
+	public void setKey(byte[] key);
+
+	/**
+	 * Get the key
+	 * @return the key for JWT
+	 */
+	public byte[] getKey();
+
+	/**
+	 * Get the JWT object
+	 * @return
+	 */
+	public JWT getJWT();
+
+	/**
+	 * Set JWT object
+	 * @param jwt
+	 */
+	public void setJWT(JWT jwt);
 	
 	/**
 	 * 

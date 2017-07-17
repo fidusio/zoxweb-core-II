@@ -233,6 +233,10 @@ public class HTTPCall
 			{
 				authorizationHeader = hcc.getAuthentitcation().toHTTPHeader();
 			}
+			if (authorizationHeader == null && hcc.getJWT() != null)
+			{
+
+			}
 			
 			if (authorizationHeader != null)
 			{
