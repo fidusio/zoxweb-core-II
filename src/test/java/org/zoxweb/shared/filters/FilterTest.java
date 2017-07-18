@@ -16,13 +16,14 @@
 package org.zoxweb.shared.filters;
 
 import org.junit.Test;
+
 import org.zoxweb.shared.util.SharedStringUtil;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class FilterTest {
-    
+
     @Test
     public void testEmailFilter() {
         System.out.println("EMAIL FILTER");
@@ -164,7 +165,7 @@ public class FilterTest {
 
     @Test
     public void testDomainIDFilter() {
-        System.out.println("DOMAIN ACCOUNT ID FILTER");
+        System.out.println("DOMAIN ID FILTER");
 
         String[] validAccountIDs = {"www.yahoo.com", "yahoo.com", "1258058", "999", "20485"};
 
