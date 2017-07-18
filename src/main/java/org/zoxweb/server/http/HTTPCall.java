@@ -28,9 +28,11 @@ import java.util.Map;
 
 import org.zoxweb.server.io.CloseEnabledInputStream;
 import org.zoxweb.server.io.IOUtil;
+
 import org.zoxweb.server.security.SSLSocketProp;
 
 import org.zoxweb.shared.filters.ReplacementFilter;
+
 import org.zoxweb.shared.http.HTTPAuthorizationType;
 import org.zoxweb.shared.http.HTTPMessageConfigInterface;
 import org.zoxweb.shared.http.HTTPParameterFormatter;
@@ -233,10 +235,7 @@ public class HTTPCall
 			{
 				authorizationHeader = hcc.getAuthentitcation().toHTTPHeader();
 			}
-			if (authorizationHeader == null && hcc.getJWT() != null)
-			{
-
-			}
+			
 			
 			if (authorizationHeader != null)
 			{

@@ -16,9 +16,9 @@
 package org.zoxweb.shared.crypto;
 
 import org.zoxweb.shared.security.AccessSecurityException;
-import org.zoxweb.shared.security.JWT;
 
 public interface CryptoInterface
+	extends JWTEncoder, JWTDecoder
 {
 
 	public byte[] hash(String mdAlgo, byte[]... tokens)
@@ -30,12 +30,6 @@ public interface CryptoInterface
 	
 	public byte[] hmacSHA256(byte[] key, byte[] data)
 		throws AccessSecurityException;
-	
-	
-	public String encodeJWT(byte[] key, JWT jwt)
-		throws AccessSecurityException;
-	
-	public JWT decodeJWT(byte key[], String b64URLToken)
-		throws AccessSecurityException;
+
 
 }

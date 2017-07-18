@@ -37,6 +37,7 @@ extends HTTPAuthentication
 	public static final NVConfigEntity NVC_HTTP_AUTHENTICATION_BEARER = new NVConfigEntityLocal("http_authentication_bearer", null , null, true, false, false, false, HTTPAuthenticationBearer.class, SharedUtil.toNVConfigList(NVC_TOKEN), null, false, HTTPAuthenticationBearer.NVC_HTTP_AUTHENTICATION);
 	
 	
+	
 	//private String token;
 	public HTTPAuthenticationBearer()
 	{
@@ -72,4 +73,5 @@ extends HTTPAuthentication
 	{
 		return getType().toHTTPHeader(getToken());
 	}
+	
 }
