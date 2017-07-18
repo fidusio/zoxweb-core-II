@@ -15,18 +15,230 @@
  */
 package org.zoxweb.shared.filters;
 
-import org.zoxweb.shared.filters.FilterType;
-import org.zoxweb.shared.filters.CanonicalFilenameFilter;
+import org.junit.Test;
 import org.zoxweb.shared.util.SharedStringUtil;
 
-public class FilterTest {
-	
-	public static void main(String[] args) {
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-		String test = "mnael@zoxweb.com";
+public class FilterTest {
+    
+    @Test
+    public void testEmailFilter() {
+        System.out.println("EMAIL FILTER");
+
+        String[] validEmails = {"johnsmith@example.com ", "JohnSmith@example.com"};
+
+        System.out.println("Valid Emails:");
+
+        for (String email : validEmails) {
+            System.out.println(email);
+            assertTrue(FilterType.EMAIL.isValid(email));
+        }
+
+        String[] invalidEmails = {"johnsmith@example", "johnsmith", null};
+
+        System.out.println("\nInvalid Emails:");
+
+        for (String email : invalidEmails) {
+            System.out.println(email);
+            assertFalse(FilterType.EMAIL.isValid(email));
+        }
+    }
+
+    @Test
+    public void testIntegerFilter() {
+        System.out.println("INTEGER FILTER");
+
+        String[] validIntegers = {"100", "5", "44005"};
+
+        System.out.println("Valid Integers:");
+
+        for (String value : validIntegers) {
+            System.out.println(value);
+            assertTrue(FilterType.INTEGER.isValid(value));
+        }
+
+        String[] invalidIntegers = {"1.0", "400.50"};
+
+        System.out.println("\nInvalid Integers:");
+
+        for (String value : invalidIntegers) {
+            System.out.println(value);
+            assertFalse(FilterType.INTEGER.isValid(value));
+        }
+    }
+
+    @Test
+    public void testLongFilter() {
+        System.out.println("LONG FILTER");
+
+        String[] validLongs = {"12589461", "-100"};
+
+        System.out.println("Valid Longs:");
+
+        for (String value : validLongs) {
+            System.out.println(value);
+            assertTrue(FilterType.LONG.isValid(value));
+        }
+
+        String[] invalidLongs= {"1.0", "1,200,000", null, "23.587"};
+
+        System.out.println("\nInvalid Longs:");
+
+        for (String value : invalidLongs) {
+            System.out.println(value);
+            assertFalse(FilterType.LONG.isValid(value));
+        }
+    }
+
+    @Test
+    public void testDoubleFilter() {
+        System.out.println("DOUBLE FILTER");
+
+        String[] validDoubles = {"9.99", "4.0"};
+
+        System.out.println("Valid Doubles:");
+
+        for (String value : validDoubles) {
+            System.out.println(value);
+            assertTrue(FilterType.DOUBLE.isValid(value));
+        }
+
+        String[] invalidDoubles = {"44..44"};
+
+        System.out.println("\nInvalid Doubles:");
+
+        for (String value : invalidDoubles) {
+            System.out.println(value);
+            assertFalse(FilterType.DOUBLE.isValid(value));
+        }
+    }
+
+    @Test
+    public void testPasswordFilter() {
+        System.out.println("PASSWORD FILTER");
+
+        String[] validPasswords = {"Password14", "p1ssw2rdS", "Password1", "Password2014",
+				"Password14Password14Password14Password14", "Password14Password14Password14Password14Password14", "Password14$"};
+
+        System.out.println("Valid Passwords:");
+
+        for (String password : validPasswords) {
+            System.out.println(password);
+            assertTrue(FilterType.PASSWORD.isValid(password));
+        }
+
+        String[] invalidPasswords = {"p1ssw2rd", "password", "password14", "Password"};
+
+        System.out.println("\nInvalid Passwords:");
+
+        for (String password : invalidPasswords) {
+            System.out.println(password);
+            assertFalse(FilterType.PASSWORD.isValid(password));
+        }
+    }
+
+    @Test
+    public void testHiddenFilter() {
+        System.out.println("HIDDEN FILTER");
+
+        String[] validHiddenTexts = {null, ""};
+
+        System.out.println("Valid Hidden Types:");
+
+        for (String str : validHiddenTexts) {
+            System.out.println(str);
+            assertTrue(FilterType.HIDDEN.isValid(str));
+        }
+
+        String[] invalidHiddenTexts = {"https://www.yahoo.com "};
+
+        System.out.println("Invalid Hidden Types:");
+
+        for (String str : invalidHiddenTexts) {
+            System.out.println(str);
+            assertFalse(FilterType.HIDDEN.isValid(str));
+        }
+    }
+
+    @Test
+    public void testDomainIDFilter() {
+        System.out.println("DOMAIN ACCOUNT ID FILTER");
+
+        String[] validAccountIDs = {"www.yahoo.com", "yahoo.com", "1258058", "999", "20485"};
+
+		System.out.println("Valid Account IDs:");
+
+		for (String accountID : validAccountIDs) {
+            System.out.println(accountID);
+            assertTrue(FilterType.DOMAIN_ACCOUNT_ID.isValid(accountID));
+        }
+
+        String[] invalidAccountIDs = {"https://www.yahoo.com ", "http://.www.yahoo.com/", "www.yahoo.com/",
+                "yahoo.com/", "https://10.0.1.1/marwan?param=1&p1=2"};
+
+        System.out.println("Invalid Account IDs:");
+
+        for (String accountID : invalidAccountIDs) {
+            System.out.println(accountID);
+            assertFalse(FilterType.DOMAIN_ACCOUNT_ID.isValid(accountID));
+        }
+    }
+
+    @Test
+    public void testURLFilter() {
+
+        System.out.println("URL FILTER");
+
+        String[] validURLs = {"https://www.google.com ", "https://10.0.1.1/hello_world?param=1&p1=2"};
+
+        System.out.println("Valid URLs:");
+
+        for (String url : validURLs) {
+            System.out.println(url);
+            assertTrue(FilterType.URL.isValid(url));
+        }
+
+        String[] invalidURLs = {"http://.www.google.com/", "www.google.com/", "google.com/", "google"};
+
+        System.out.println("Invalid URLs:");
+
+        for (String url : invalidURLs) {
+            System.out.println(url);
+            assertFalse(FilterType.URL.isValid(url));
+        }
+    }
+
+    @Test
+    public void testCanonicalFilenameFilter() {
+        System.out.println("CANONICAL FILENAME FILTER");
+
+        String[] validFilenames = {"/", "/Users/johnsmith/Desktop"};
+
+        System.out.println("Valid Canonical File Names:");
+
+        for (String filename : validFilenames) {
+            System.out.println("File Name: " + filename + " Filtered: \"" + CanonicalFilenameFilter.SINGLETON.validate(filename) + "\"");
+            assertTrue(CanonicalFilenameFilter.SINGLETON.isValid(filename));
+        }
+
+        String[] invalidFilenames = {null, "/////", "\\file\\hello//world/123;", "/////ta", "start///////", ""};
+
+        System.out.println("Invalid Canonical File Names:");
+
+        for (String filename : invalidFilenames) {
+            System.out.println("File Name: " + filename + " Filtered: \"" + CanonicalFilenameFilter.SINGLETON.validate(filename) + "\"");
+            assertFalse(CanonicalFilenameFilter.SINGLETON.isValid(filename));
+		}
+    }
+
+    @Test
+    public void testFilters() {
+        String test = "testuser@example.com";
 
 		for (FilterType ft : FilterType.values()) {
-			System.out.println( ft.toCanonicalID() + " " + ft.isValid( test));
+			System.out.println(ft.toCanonicalID() + " " + ft.isValid(test));
 		}
 
 		String macs[] = {
@@ -34,130 +246,13 @@ public class FilterTest {
 			"01-23-45-67-89-0A",
 			"AA.BB.CC.DD.EE.FF"
 		};
-		
+
 		for (String mac: macs) {
 			String str = SharedStringUtil.filterString(mac, new String[]{"-", ":", "."});
 			System.out.println( str);
-			byte[] addr = SharedStringUtil.hexToBytes(str);
-			System.out.println( SharedStringUtil.bytesToHex(addr));
+			byte[] address = SharedStringUtil.hexToBytes(str);
+			System.out.println( SharedStringUtil.bytesToHex(address));
 		}
+    }
 
-		String[] emails = {"johnsmith@zoxweb.com ", "JohnSmith@zoxweb.com", "johnsmith@zoxeb", "johnsmith", null,};
-		
-		System.out.println("Testing Email Type: ");
-
-		for (int i=0; i < emails.length; i++) {
-			
-			try {
-			    System.out.print(emails[i] + ":");
-				System.out.println("\""+FilterType.EMAIL.validate(emails[i]) + "\" Valid");
-			} catch(Exception e) {
-				System.out.println(":Invalid ");
-			}
-		}
-
-		String[] longs = {"1,200,000", null, "12589461", "0", "-1", "23.587"};
-		
-		System.out.println("Testing Long Type: ");
-
-		for (int i=0; i < longs.length; i++) {
-			try {
-				System.out.print(longs[i] + ":");
-				System.out.println("\""+FilterType.LONG.validate(longs[i]) + "\" Valid");
-			} catch(Exception e) {
-                System.out.println(":Invalid ");
-            }
-		}
-
-		String[] urls = {"https://www.yahoo.com ", " 	Mzebib@zoxweb.com", "mzebib@zoxeb", "mzebib", "https://10.0.1.1/marwaa?param=1&p1=2","http://.www.foo.bar./"};
-		
-		System.out.println("Testing URL Type: ");
-
-		for (int i=0; i < urls.length; i++) {
-			try {
-				System.out.println("\""+FilterType.URL.validate(urls[i]) + "\" Valid");
-			} catch (Exception e) {
-				System.out.println(urls[i] + " Invalid");
-			}
-		}
-		
-		String[] passwords = {"Password14", "p1ssw2rd", "p1ssw2rdS", "password", "password14", "Pass14", "Password1", "Password2014", 
-				"Password14Password14Password14Password14", "Password14Password14Password14Password14Password14", "Password14$"};
-		
-		System.out.println("Testing Passwords: ");
-		for (int i=0; i < passwords.length; i++) {
-			
-			try {
-				System.out.println("\""+FilterType.PASSWORD.validate(passwords[i]) + "\" Valid");
-			} catch (Exception e) {
-				System.out.println(passwords[i] + " Invalid");
-			}
-		}
-		
-		String[] accountIDs = {"https://www.yahoo.com ", "www.yahoo.com", "yahoo.com", "1258058", "http://.www.yahoo.com/", "www.yahoo.com/", "yahoo.com/", "999", "20485", "https://10.0.1.1/marwan?param=1&p1=2"};
-		
-		System.out.println("Testing Account ID Type: ");
-		for (int i = 0; i < accountIDs.length; i++) {
-			try {
-				System.out.println("Domain: \"" + FilterType.DOMAIN_ACCOUNT_ID.validate(accountIDs[i]) + "\" Valid");
-			} catch (Exception e) {
-				System.out.println("Domain: " + accountIDs[i] + " Invalid");
-			}
-		}
-
-		String[] hiddenTexts = {null, "https://www.yahoo.com ", ""};
-		
-		System.out.println("Testing Hidden Type: ");
-		
-		for (int i = 0; i < hiddenTexts.length; i++) {
-            try {
-				System.out.println("\"" + FilterType.HIDDEN.validate(hiddenTexts[i]) + "\" Valid");
-				System.out.println("Valid: " + FilterType.HIDDEN.isValid(hiddenTexts[i]));
-			} catch (Exception e) {
-				System.out.println(hiddenTexts[i] + " Invalid");
-				System.out.println("Valid: " + FilterType.HIDDEN.isValid(hiddenTexts[i]));
-			}
-		}
-
-		String[] integers = {"100", "5", "44005", "400.50"};
-		
-		System.out.println("Testing Integer Type: ");
-		
-		for (int i = 0; i < hiddenTexts.length; i++) {
-			
-			try {
-				System.out.println("Valid: " + FilterType.INTEGER.validate(integers[i]));
-			} catch (Exception e) {
-				System.out.println(integers[i] + " Invalid");
-			}
-		}
-
-		String[] doubles = {"9.99", "4.0", "44..44"};
-		
-		System.out.println("Testing Double Type: ");
-		
-		for (int i = 0; i < hiddenTexts.length; i++) {
-			
-			try {
-				System.out.println("Valid: " + FilterType.DOUBLE.validate(doubles[i]));
-			} catch (Exception e) {
-				System.out.println(doubles[i] + " Invalid");
-			}
-		}
-		
-		String filenames[] = {
-				null,
-				"/////",
-				"\\file\\toto//titi/ta;tzi:darta",
-				"/////ta",
-				"/",
-				"start///////",
-				"",
-			};
-
-		for (String filename : filenames) {
-			System.out.println(filename + " filtered \"" + CanonicalFilenameFilter.SINGLETON.validate(filename)+"\"");
-		}
-
-	}
 }
