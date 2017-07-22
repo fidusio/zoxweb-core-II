@@ -9,7 +9,7 @@ import org.zoxweb.shared.util.*;
 @SuppressWarnings("serial")
 public class AppIDDAO
     extends SetNameDescriptionDAO
-    implements DomainID<String>
+    implements AppID<String>
 {
 
     public enum Param
@@ -55,24 +55,12 @@ public class AppIDDAO
         super(NVC_APP_ID_DAO);
     }
 
-    public AppIDDAO(String appID, String domainID)
+    public AppIDDAO(String domainID, String appID)
     {
         this();
-        setAppID(appID);
         setDomainID(domainID);
+        setAppID(appID);
     }
-
-
-    public String getAppID()
-    {
-        return lookupValue(Param.APP_ID);
-    }
-
-    public void setAppID(String appID)
-    {
-        setValue(Param.APP_ID, appID);
-    }
-
 
     @Override
     public String getDomainID()
@@ -85,5 +73,56 @@ public class AppIDDAO
     {
         setValue(Param.DOMAIN_ID, domainID);
     }
+
+
+    @Override
+    public String getAppID()
+    {
+        return lookupValue(Param.APP_ID);
+    }
+
+    @Override
+    public void setAppID(String appID)
+    {
+        setValue(Param.APP_ID, appID);
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+
+        if (obj != null && obj instanceof AppIDDAO) {
+            AppIDDAO appIDDAO = (AppIDDAO) obj;
+
+            if (SharedStringUtil.equals(getDomainID(), appIDDAO.getDomainID(), true)
+                    && SharedStringUtil.equals(getAppID(), appIDDAO.getAppID(), true)) {
+                return true;
+            }
+        }
+
+
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        if (getDomainID() != null && getAppID() != null) {
+            return 31 * getDomainID().hashCode() + getAppID().hashCode();
+        }
+
+        if (getDomainID() != null) {
+            return getDomainID().hashCode();
+        }
+
+        if (getAppID() != null) {
+            return getAppID().hashCode();
+        }
+
+        return super.hashCode();
+    }
+
 
 }
