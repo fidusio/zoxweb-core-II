@@ -7,10 +7,12 @@ import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVConfigEntityLocal;
 import org.zoxweb.shared.util.NVConfigManager;
 import org.zoxweb.shared.util.SharedUtil;
+import org.zoxweb.shared.filters.FilterType;
 
 /**
  * Created on 7/22/17
  */
+@SuppressWarnings("serial")
 public class ImageDAO
     extends TimeStampDAO
 {
@@ -45,7 +47,7 @@ public class ImageDAO
         WIDTH(NVConfigManager.createNVConfig("width", "Image width in pixels", "Width", false, false, long.class)),
         SIZE(NVConfigManager.createNVConfig("size", "Image size in bytes", "Size", true, false, long.class)),
         FORMAT(NVConfigManager.createNVConfig("format", "Image format type", "Format", true, false, ImageFormat.class)),
-        RESOURCE_LOCATOR(NVConfigManager.createNVConfig("resource_locator", "Resource locator", "ResourceLocator", true, false, String.class)),
+        RESOURCE_LOCATOR(NVConfigManager.createNVConfig("resource_locator", "Resource locator", "ResourceLocator", true, false, false, String.class, FilterType.URL)),
 
         ;
 
