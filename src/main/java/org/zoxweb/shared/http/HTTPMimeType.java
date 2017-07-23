@@ -33,10 +33,10 @@ public enum HTTPMimeType
 	TEXT_CSV("text/csv"),
 	TEXT_HTML("text/html"),
 	TEXT_PLAIN("text/plain"),
+
 	
 	;
 
-	
 	private final String value;
 	
 	
@@ -44,13 +44,13 @@ public enum HTTPMimeType
 	{
 		this.value = value;
 	}
+
 	/**
 	 * @see org.zoxweb.shared.util.GetValue#getValue()
 	 */
 	@Override
 	public String getValue() 
 	{
-		// TODO Auto-generated method stub
 		return value;
 	}
 	

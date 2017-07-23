@@ -1,7 +1,14 @@
 package org.zoxweb.shared.data;
 
 import org.zoxweb.shared.filters.FilterType;
-import org.zoxweb.shared.util.*;
+import org.zoxweb.shared.util.AppID;
+import org.zoxweb.shared.util.GetNVConfig;
+import org.zoxweb.shared.util.NVConfig;
+import org.zoxweb.shared.util.NVConfigEntity;
+import org.zoxweb.shared.util.NVConfigEntityLocal;
+import org.zoxweb.shared.util.NVConfigManager;
+import org.zoxweb.shared.util.SharedStringUtil;
+import org.zoxweb.shared.util.SharedUtil;
 
 /**
  * Created on 7/3/17
@@ -16,10 +23,9 @@ public class AppIDDAO
         implements GetNVConfig
     {
         APP_ID(NVConfigManager.createNVConfig("app_id", "App ID","AddID", true, false, String.class)),
-        DOMAIN_ID(NVConfigManager.createNVConfig("domain_id", "The domain ID", "Domain ID", true, true, false, String.class, FilterType.DOMAIN))
+        DOMAIN_ID(NVConfigManager.createNVConfig("domain_id", "Domain ID", "Domain ID", true, true, false, String.class, FilterType.DOMAIN))
 
         ;
-
 
         private final NVConfig nvc;
 

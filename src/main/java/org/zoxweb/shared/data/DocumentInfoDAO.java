@@ -27,11 +27,6 @@ import org.zoxweb.shared.util.NVConfigManager;
 import org.zoxweb.shared.util.NVPair;
 import org.zoxweb.shared.util.SharedUtil;
 
-/**
- * 
- * @author mzebib
- *
- */
 @SuppressWarnings("serial")
 abstract public class DocumentInfoDAO
 	extends TimeStampDAO

@@ -26,9 +26,6 @@ import org.zoxweb.shared.util.NVConfigManager;
 import org.zoxweb.shared.util.SharedUtil;
 import org.zoxweb.shared.api.APIFileInfoMap;
 
-/**
- *
- */
 @SuppressWarnings("serial")
 public class FileInfoDAO
 	extends DocumentInfoDAO
