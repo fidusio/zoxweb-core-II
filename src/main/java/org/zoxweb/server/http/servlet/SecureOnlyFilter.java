@@ -1,6 +1,7 @@
 package org.zoxweb.server.http.servlet;
 
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.logging.Logger;
 
 import javax.servlet.Filter;
@@ -22,6 +23,7 @@ implements Filter
 	public void destroy()
 	{
 		// TODO Auto-generated method stub
+		log.info("Destroyed");
 		
 	}
 
@@ -40,16 +42,32 @@ implements Filter
 			String uri = req.getRequestURI();
 			URIScheme uriScheme = URIScheme.match(req.getScheme());
 			String getDomain = req.getServerName();
-			String getPort = Integer.toString(req.getServerPort());
-			 
-			if (uriScheme == URIScheme.HTTP || uriScheme == URIScheme.WS) {
+			//String getPort = Integer.toString(req.getServerPort());
+			
+			URIScheme redirectScheme = null;
+			switch(uriScheme)
+			{
+			
+			case HTTP:
+				redirectScheme = URIScheme.HTTPS;
+				break;
+			case WS:
+				redirectScheme = URIScheme.WSS;
+				break;
+			
+			default:
+				break;
+			
+			}
+			
+			
+			if (redirectScheme != null) {
 			 
 				// Set response content type
 				res.setContentType("text/html");
 				 
 				// New location to be redirected
-				String httpsPath = URIScheme.HTTPS + "://" + getDomain + ":" + getPort
-				+ uri;
+				String httpsPath = redirectScheme + "://" + getDomain + uri;
 				 
 				String site = new String(httpsPath);
 				res.setStatus(HttpServletResponse.SC_MOVED_TEMPORARILY);
@@ -70,6 +88,22 @@ implements Filter
 	public void init(FilterConfig filterConfig) throws ServletException 
 	{
 		// TODO Auto-generated method stub
+		log.info(filterConfig.getFilterName());
+		
+		
+		StringBuilder sb = new StringBuilder();
+		Enumeration<String> e = filterConfig.getInitParameterNames();
+		while(e.hasMoreElements())
+		{
+			if(sb.length() > 0)
+			{
+				sb.append(", ");
+			}
+			
+			sb.append(e.nextElement());
+			
+		}
+		log.info(sb.toString());
 		
 	}
 
