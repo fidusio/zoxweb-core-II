@@ -65,7 +65,14 @@ public enum URIScheme
     {
         return name;
     }
-
+    
+    public String toString()
+    {
+    	return getName();
+    }
+    /**
+     * @return the default port -1 not defined
+     */
 	@Override
 	public Integer getValue()
     {
