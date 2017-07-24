@@ -30,6 +30,8 @@ public class ApplicationConfigTest {
 			System.out.println("Config file:" + ApplicationConfigManager.SINGLETON.locateFile(acd, "ApplicationConf.json"));
 			System.out.println("Cache dir:" + ApplicationConfigManager.SINGLETON.locateFile(acd, "cache_dir"));
 			System.out.println("Config file:" + ApplicationConfigManager.SINGLETON.readConfigurationContent(null, "mongod_conf"));
+			
+			System.out.println("is_secure:" + acd.isSecureEnabled());
 		} catch( Exception e) {
 			e.printStackTrace();
 		}

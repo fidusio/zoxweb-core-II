@@ -36,6 +36,8 @@ public class ApplicationConfigDAO
 	public final static String DEFAULT_APPLICATION_CONF_FILENAME = "ApplicationConf.json";
 	public final static String DEFAULT_APPLICATION_ENV_VAR = "APPLICATION_CONF_VAR";
 	
+	private boolean is_secure = false;
+	
 	/**
 	 * The application property container
 	 */
@@ -54,6 +56,7 @@ public class ApplicationConfigDAO
 		APPLICATION_URL("APPLICATION_URL", ""),
 		APPLICATION_VERSION_RESOURCE("APPLICATION_VERSION_RESOURCE", ""),
 		FORWARD_URL("FORWARD_URL", ""),
+		SECURE_URL("SECURE_URL", ""),
 		
 		CONF_DIR("CONF_DIR", "conf"),
 		CACHE_DIR("CACHE_DIR", "data/cache"),
@@ -64,6 +67,7 @@ public class ApplicationConfigDAO
 		VAR_DIR("VAR_DIR", "var"),
 		SERVER_INFO("SERVER_INFO", ""),
 		SYSTEM_ID("SYSTEM_ID", ""),
+		
 
 		
 		;
@@ -178,4 +182,14 @@ public class ApplicationConfigDAO
 		return "" + properties;
 	}
 	
+	
+	public boolean isSecureEnabled()
+	{
+		return is_secure;
+	}
+	
+	public void setSecureEnabled(boolean bool)
+	{
+		is_secure = bool;
+	}
 }

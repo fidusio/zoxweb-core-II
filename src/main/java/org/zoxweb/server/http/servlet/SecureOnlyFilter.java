@@ -13,6 +13,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.zoxweb.server.util.ApplicationConfigManager;
+import org.zoxweb.shared.data.ApplicationConfigDAO.ApplicationDefaultParam;
 import org.zoxweb.shared.http.URIScheme;
 
 public class SecureOnlyFilter 
@@ -37,7 +39,7 @@ implements Filter
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
 		
-		if (!req.isSecure())
+		if (ApplicationConfigManager.SINGLETON.loadDefault().isSecureEnabled() && !req.isSecure())
 		{
 			String uri = req.getRequestURI();
 			URIScheme uriScheme = URIScheme.match(req.getScheme());
@@ -68,7 +70,10 @@ implements Filter
 				 
 				// New location to be redirected
 				String httpsPath = redirectScheme + "://" + getDomain + uri;
-				 
+				if (ApplicationConfigManager.SINGLETON.loadDefault().lookupValue(ApplicationDefaultParam.SECURE_URL) != null)
+				{
+					httpsPath = ApplicationConfigManager.SINGLETON.loadDefault().lookupValue(ApplicationDefaultParam.SECURE_URL);
+				}
 				String site = new String(httpsPath);
 				res.setStatus(HttpServletResponse.SC_MOVED_TEMPORARILY);
 				res.setHeader("Location", site);
