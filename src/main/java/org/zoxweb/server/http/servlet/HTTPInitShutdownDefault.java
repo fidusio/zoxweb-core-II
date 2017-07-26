@@ -15,6 +15,8 @@
  */
 package org.zoxweb.server.http.servlet;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletContextEvent;
@@ -44,7 +46,8 @@ public class HTTPInitShutdownDefault
 			String filename = ApplicationConfigManager.SINGLETON.loadDefault().lookupValue(ApplicationDefaultParam.NIO_CONFIG);
 			if (filename != null)
 			{
-				ConfigDAO configDAO =GSONUtil.fromJSON(IOUtil.inputStreamToString(filename));
+				File file = ApplicationConfigManager.SINGLETON.locateFile(ApplicationConfigManager.SINGLETON.loadDefault(), filename);
+				ConfigDAO configDAO = GSONUtil.fromJSON(IOUtil.inputStreamToString(new FileInputStream(file), true));
 				nioConfig = new NIOConfig(configDAO);
 				nioConfig.create();
 			}
