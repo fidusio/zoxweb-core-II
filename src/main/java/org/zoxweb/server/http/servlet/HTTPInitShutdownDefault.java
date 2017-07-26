@@ -76,7 +76,7 @@ public class HTTPInitShutdownDefault
 		// TODO Auto-generated method stub
 		IOUtil.close(nioConfig);
 		TaskUtil.getDefaultTaskScheduler().close();
-		TaskUtil.getDefaultTaskScheduler().close();
+		TaskUtil.getDefaultTaskProcessor().close();
 		log.info("destroy done");
 	}
 }

@@ -43,7 +43,9 @@ implements Filter
 		{
 			String uri = req.getRequestURI();
 			URIScheme uriScheme = URIScheme.match(req.getScheme());
-			String getDomain = req.getServerName();
+			String hostname = ApplicationConfigManager.SINGLETON.loadDefault().lookupValue("application_host");
+			if (hostname == null)
+				hostname = req.getServerName();
 			//String getPort = Integer.toString(req.getServerPort());
 			
 			URIScheme redirectScheme = null;
@@ -69,7 +71,7 @@ implements Filter
 				res.setContentType("text/html");
 				 
 				// New location to be redirected
-				String httpsPath = redirectScheme + "://" + getDomain + uri;
+				String httpsPath = redirectScheme + "://" + hostname + uri;
 				if (ApplicationConfigManager.SINGLETON.loadDefault().lookupValue(ApplicationDefaultParam.SECURE_URL) != null)
 				{
 					httpsPath = ApplicationConfigManager.SINGLETON.loadDefault().lookupValue(ApplicationDefaultParam.SECURE_URL);
