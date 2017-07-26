@@ -20,21 +20,34 @@ import java.util.logging.Logger;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import org.zoxweb.server.io.IOUtil;
+import org.zoxweb.server.net.NIOConfig;
+import org.zoxweb.server.task.TaskUtil;
 import org.zoxweb.server.util.ApplicationConfigManager;
+import org.zoxweb.server.util.GSONUtil;
 import org.zoxweb.shared.data.ApplicationConfigDAO;
+import org.zoxweb.shared.data.ConfigDAO;
+import org.zoxweb.shared.data.ApplicationConfigDAO.ApplicationDefaultParam;
 
 public class HTTPInitShutdownDefault
 	implements ServletContextListener
 {
 
 	private static final transient Logger log = Logger.getLogger("");
-	
+	NIOConfig nioConfig = null;
 	public void contextInitialized(ServletContextEvent event) 
 	{
 		try
 		{
-			log.info( "" + ApplicationConfigManager.SINGLETON.loadDefault().getProperties());
+			log.info("" + ApplicationConfigManager.SINGLETON.loadDefault().getProperties());
 			
+			String filename = ApplicationConfigManager.SINGLETON.loadDefault().lookupValue(ApplicationDefaultParam.NIO_CONFIG);
+			if (filename != null)
+			{
+				ConfigDAO configDAO =GSONUtil.fromJSON(IOUtil.inputStreamToString(filename));
+				nioConfig = new NIOConfig(configDAO);
+				nioConfig.create();
+			}
 		}
 		catch( Throwable t)
 		{
@@ -43,7 +56,7 @@ public class HTTPInitShutdownDefault
 			
 			try
 			{
-				ApplicationConfigManager.SINGLETON.save( new ApplicationConfigDAO());
+				ApplicationConfigManager.SINGLETON.save(new ApplicationConfigDAO());
 			}
 			catch(Exception e)
 			{
@@ -51,7 +64,7 @@ public class HTTPInitShutdownDefault
 				//e.printStackTrace();
 			}
 		}
-		log.info( "init done");
+		log.info("init done");
 		
 	}
 	
@@ -59,6 +72,11 @@ public class HTTPInitShutdownDefault
 	
 	public void contextDestroyed(ServletContextEvent event) 
 	{
+		log.info("destroy started");
 		// TODO Auto-generated method stub
+		IOUtil.close(nioConfig);
+		TaskUtil.getDefaultTaskScheduler().close();
+		TaskUtil.getDefaultTaskScheduler().close();
+		log.info("destroy done");
 	}
 }

@@ -15,10 +15,13 @@
  */
 package org.zoxweb.server.net;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetSocketAddress;
 import java.nio.channels.ServerSocketChannel;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import javax.net.ssl.SSLContext;
@@ -45,11 +48,13 @@ import org.zoxweb.shared.util.SharedUtil;
  * @author mnael
  *
  */
-public class NIOConfig 
+public class NIOConfig
+implements Closeable
 {
 	
 	private ConfigDAO configDAO;
 	private static final transient Logger log = Logger.getLogger(NIOConfig.class.getName());
+	private List<Closeable> services = new ArrayList<Closeable>();
 
 	
 	
@@ -74,6 +79,7 @@ public class NIOConfig
 	public NIOSocket create() throws IOException
 	{
 		NIOSocket ret = new NIOSocket(TaskUtil.getDefaultTaskProcessor());
+		services.add(ret);
 		
 		for (NVEntity nve : configDAO.getContent().values())
 		{
@@ -91,9 +97,9 @@ public class NIOConfig
 					{
 						log.info("Creating secure network tunnel:" + config.getProperties().get("port") + "," + ((NIOTunnelFactory)psf).getRemoteAddress() );
 						// secure temporary fix since the NIO Secure Socket still not fully operational
-						new SecureNetworkTunnel(psf.getIncomingSSLSessionDataFactory().getSSLContext().getServerSocketFactory(), 
+						services.add(new SecureNetworkTunnel(psf.getIncomingSSLSessionDataFactory().getSSLContext().getServerSocketFactory(), 
 											    Integer.parseInt(SharedUtil.lookupValue(config.getProperties().get("port"))), 
-											    ((NIOTunnelFactory)psf).getRemoteAddress());
+											    ((NIOTunnelFactory)psf).getRemoteAddress()));
 					}
 					else
 					{
@@ -242,12 +248,13 @@ public class NIOConfig
 	
 	
 	
+	@SuppressWarnings("resource")
 	public static void main(String ...args)
 	{
 		try
 		{
 			System.out.println("loading file " + args[0]);
-			 ConfigDAO configDAO =GSONUtil.fromJSON(IOUtil.inputStreamToString(args[0]));
+			ConfigDAO configDAO =GSONUtil.fromJSON(IOUtil.inputStreamToString(args[0]));
 			NIOConfig nioConfig = new NIOConfig(configDAO);
 			nioConfig.create();
 		}
@@ -255,5 +262,18 @@ public class NIOConfig
 		{
 			e.printStackTrace();
 		}
+	}
+
+
+	@Override
+	public void close() throws IOException 
+	{
+		// TODO Auto-generated method stub
+		for (Closeable c : services)
+		{
+			IOUtil.close(c);
+		}
+		
+		
 	}
 }

@@ -57,6 +57,7 @@ public class ApplicationConfigDAO
 		APPLICATION_VERSION_RESOURCE("APPLICATION_VERSION_RESOURCE", ""),
 		FORWARD_URL("FORWARD_URL", ""),
 		SECURE_URL("SECURE_URL", ""),
+		NIO_CONFIG("NIO_CONFIG", ""),
 		
 		CONF_DIR("CONF_DIR", "conf"),
 		CACHE_DIR("CACHE_DIR", "data/cache"),
