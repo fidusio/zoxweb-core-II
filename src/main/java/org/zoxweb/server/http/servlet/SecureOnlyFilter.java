@@ -15,7 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.zoxweb.server.util.ApplicationConfigManager;
 import org.zoxweb.shared.data.ApplicationConfigDAO.ApplicationDefaultParam;
+import org.zoxweb.shared.http.HTTPHeaderName;
 import org.zoxweb.shared.http.URIScheme;
+import org.zoxweb.shared.util.SharedStringUtil;
 
 public class SecureOnlyFilter 
 implements Filter
@@ -70,6 +72,7 @@ implements Filter
 				String originalURL = uriScheme + "://" + req.getServerName() + uri;
 				// Set response content type
 				res.setContentType("text/html");
+				res.setCharacterEncoding(SharedStringUtil.UTF_8);
 				 
 				// New location to be redirected
 				String httpsPath = redirectScheme + "://" + hostname + uri;
@@ -77,9 +80,8 @@ implements Filter
 				{
 					httpsPath = ApplicationConfigManager.SINGLETON.loadDefault().lookupValue(ApplicationDefaultParam.SECURE_URL);
 				}
-				String site = new String(httpsPath);
 				res.setStatus(HttpServletResponse.SC_MOVED_TEMPORARILY);
-				res.setHeader("Location", site);
+				res.setHeader(HTTPHeaderName.LOCATION.getName(), httpsPath);
 				log.info("Redirect:" + originalURL + "->" + httpsPath);
 				return;
 			

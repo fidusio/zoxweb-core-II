@@ -26,7 +26,7 @@ public final class SharedStringUtil
 {
 
     public static final String UTF_8  = "UTF-8";
-    public static final String UTF_16 = "UTF_16";
+    public static final String UTF_16 = "UTF-16";
 
 	/**
 	 * The constructor is declared private to prevent instantiation.
