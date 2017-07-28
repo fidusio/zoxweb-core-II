@@ -65,8 +65,9 @@ implements Filter
 			}
 			
 			
-			if (redirectScheme != null) {
-			 
+			if (redirectScheme != null)
+			{
+				String originalURL = uriScheme + "://" + req.getServerName() + uri;
 				// Set response content type
 				res.setContentType("text/html");
 				 
@@ -79,7 +80,7 @@ implements Filter
 				String site = new String(httpsPath);
 				res.setStatus(HttpServletResponse.SC_MOVED_TEMPORARILY);
 				res.setHeader("Location", site);
-				log.info("Redirect:" + httpsPath);
+				log.info("Redirect:" + originalURL + "->" + httpsPath);
 				return;
 			
 			
