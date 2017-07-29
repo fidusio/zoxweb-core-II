@@ -242,7 +242,7 @@ public class IPBlockerListener
 			TaskSchedulerProcessor tsp = new TaskSchedulerProcessor();
 			
 			
-			IPBlockerListener ipbl = new IPBlockerListener( args[index++],  args[index++],  args[index++],  args[index++], 
+			IPBlockerListener ipbl = new IPBlockerListener(args[index++],  args[index++],  args[index++],  args[index++], 
 										  Long.parseLong(args[index++]), Float.parseFloat(args[index++]), tsp);
 			tlm.addEventListener(ipbl);
 
