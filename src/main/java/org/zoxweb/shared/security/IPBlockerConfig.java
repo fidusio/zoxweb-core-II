@@ -61,40 +61,101 @@ extends SetNameDescriptionDAO
 		// TODO Auto-generated constructor stub
 	}
 	
-	
+	/**
+	 * Get the authentication file name that should be monitored
+	 * @return
+	 */
 	public String getAuthfile()
 	{
 		return lookupValue(Param.AUTH_FILE);
 	}
 	
+	public void setAuthFile(String filename)
+	{
+		setValue(Param.AUTH_FILE, filename);
+	}
+	
+	/**
+	 * The authentication token marker to detect bad login
+	 * @return
+	 */
 	public String getAuthToken()
 	{
 		return lookupValue(Param.AUTH_TOKEN);
 	}
 	
+	public void setAuthToken(String authToken)
+	{
+		setValue(Param.AUTH_TOKEN, authToken);
+	}
+	
+	/**
+	 * The authentication token value that should be extracted from the auth_token
+	 * @return
+	 */
 	public String getAuthValue()
 	{
 		return lookupValue(Param.AUTH_VALUE);
 	}
 	
+	public void setAuthValue(String authValue)
+	{
+		setValue(Param.AUTH_VALUE, authValue);
+	}
+	/**
+	 * The command that need to be executed to block the attacker ip
+	 * @return
+	 */
 	public String getCommand()
 	{
 		return lookupValue(Param.COMMAND);
 	}
 	
+	public void setCommand(String command)
+	{
+		setValue(Param.COMMAND, command);
+	}
+	
+	/**
+	 * The token that needs to be injected
+	 * @return
+	 */
 	public String getCommandToken()
 	{
 		return lookupValue(Param.COMMAND_TOKEN);
 	}
 	
+	public void setCommandToken(String commandToken)
+	{
+		setValue(Param.COMMAND_TOKEN, commandToken);
+	}
+	
+	/**
+	 * How many minutes to wait before reset
+	 * @return
+	 */
 	public long getMinutes()
 	{
 		return lookupValue(Param.MINUTES);
 	}
 	
+	public void setMinutes(long minutes)
+	{
+		setValue(Param.MINUTES, minutes);
+	}
+	/**
+	 * Attack rate to be confirmed as bad IP
+	 * @return
+	 */
 	public float getRate()
 	{
 		return lookupValue(Param.RATE);
+	}
+	
+	
+	public void setRate(float rate)
+	{
+		setValue(Param.RATE, rate);
 	}
 	
 	

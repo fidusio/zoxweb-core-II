@@ -47,7 +47,7 @@ public interface ValueFilter<I extends Object, O extends Object>
 	 * @param in value to be checked
 	 * @return true if valid false if not
 	 */
-	public boolean isValid( I in);
+	public boolean isValid(I in);
 	
 
 }
