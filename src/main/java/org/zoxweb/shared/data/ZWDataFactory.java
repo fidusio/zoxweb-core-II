@@ -43,6 +43,7 @@ import org.zoxweb.shared.net.InetFilterDAO;
 import org.zoxweb.shared.net.InetSocketAddressDAO;
 import org.zoxweb.shared.net.NetworkInterfaceDAO;
 import org.zoxweb.shared.security.AccessCodeDAO;
+import org.zoxweb.shared.security.IPBlockerConfig;
 import org.zoxweb.shared.security.JWTHeader;
 import org.zoxweb.shared.security.JWTPayload;
 import org.zoxweb.shared.security.LoginTokenDAO;
@@ -420,6 +421,23 @@ public class ZWDataFactory
 				return InetSocketAddressDAO.NVC_REFERENCE_ID_DAO;
 			}
 		},
+		
+		IP_BLOCKER_CONFIG(IPBlockerConfig.class.getName())
+		{
+			@SuppressWarnings("unchecked")
+			@Override
+			public IPBlockerConfig newInstance()
+			{
+				return new IPBlockerConfig();
+			}
+
+			@Override
+			public NVConfigEntity getNVConfigEntity()
+			{
+				return IPBlockerConfig.NVC_IP_BLOCKER;
+			}
+		},	
+		
 		IP_RANGE_DAO(IPRangeDAO.class.getName())
 		{
 			@SuppressWarnings("unchecked")

@@ -9,6 +9,7 @@ import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVConfigEntityLocal;
 import org.zoxweb.shared.util.NVConfigManager;
 import org.zoxweb.shared.util.SharedUtil;
+import org.zoxweb.shared.filters.LongRangeFilter;
 
 @SuppressWarnings("serial")
 public class IPBlockerConfig
@@ -22,7 +23,7 @@ extends SetNameDescriptionDAO
 		AUTH_VALUE(NVConfigManager.createNVConfig("auth_value", "Authentication value", "AuthenticationValue", true, true, String.class)),
 		COMMAND(NVConfigManager.createNVConfig("command", "Command to be excuted", "Command", true, true, String.class)),
 		COMMAND_TOKEN(NVConfigManager.createNVConfig("command_token", "Command token to be replaced", "CommandToken", true, true, String.class)),
-		MINUTES(NVConfigManager.createNVConfig("minutes", "Minutes for waiting", "Minutes", true, true, long.class)),
+		MINUTES(NVConfigManager.createNVConfig("minutes", "Minutes for waiting", "Minutes", true, true, false, long.class, new LongRangeFilter(1, true, 10, true))),
 		RATE(NVConfigManager.createNVConfig("rate", "Rate", "Rate", true, true, float.class)),
 		;
 		
