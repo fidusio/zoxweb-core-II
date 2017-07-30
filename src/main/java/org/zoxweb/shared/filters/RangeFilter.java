@@ -23,6 +23,17 @@ implements ValueFilter<V, V>
 		return upperLimit;
 	}
 	
+	public boolean isLowerLimitInclusive()
+	{
+		return lowerLimitInclusive;
+	}
+	
+	
+	public boolean isUpperLimitInclusive()
+	{
+		return upperLimitInclusive;
+	}
+	
 	
 	protected RangeFilter(V lowerLimit, boolean lowerLimitInclusive, V upperLimit, boolean upperLimitInclusive)
 	{
