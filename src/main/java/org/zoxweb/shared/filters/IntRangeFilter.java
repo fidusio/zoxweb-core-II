@@ -52,7 +52,7 @@ public class IntRangeFilter extends RangeFilter<Integer>
 	@Override
 	public String toCanonicalID() {
 		// TODO Auto-generated method stub
-		return null;
+		return IntRangeFilter.class.getName();
 	}
 
 

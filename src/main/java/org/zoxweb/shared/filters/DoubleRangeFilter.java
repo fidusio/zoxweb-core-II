@@ -1,17 +1,17 @@
 package org.zoxweb.shared.filters;
 
 @SuppressWarnings("serial")
-public class LongRangeFilter extends RangeFilter<Long> 
+public class DoubleRangeFilter extends RangeFilter<Double> 
 {
 
-	public LongRangeFilter(long lowerLimit, boolean lowerLimitInclusive, long upperLimit, boolean upperLimitInclusive) 
+	public DoubleRangeFilter(double lowerLimit, boolean lowerLimitInclusive, double upperLimit, boolean upperLimitInclusive) 
 	{
 		super(lowerLimit, lowerLimitInclusive, upperLimit, upperLimitInclusive);
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public Long validate(Long in) throws NullPointerException, IllegalArgumentException {
+	public Double validate(Double in) throws NullPointerException, IllegalArgumentException {
 		// TODO Auto-generated method stub
 		if (!isValid(in))
 		{
@@ -22,7 +22,7 @@ public class LongRangeFilter extends RangeFilter<Long>
 	}
 
 	@Override
-	public boolean isValid(Long in) 
+	public boolean isValid(Double in) 
 	{
 		
 		boolean stat = false;
@@ -52,7 +52,7 @@ public class LongRangeFilter extends RangeFilter<Long>
 	@Override
 	public String toCanonicalID() {
 		// TODO Auto-generated method stub
-		return LongRangeFilter.class.getName();
+		return DoubleRangeFilter.class.getName();
 	}
 
 

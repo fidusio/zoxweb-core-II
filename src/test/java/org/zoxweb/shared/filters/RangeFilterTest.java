@@ -6,7 +6,7 @@ public class RangeFilterTest {
 	
 	IntRangeFilter intOneToHundred = new IntRangeFilter(1, true, 100, false);
 	@Test
-	public void testIsValid()
+	public void testIntFilterIsValid()
 	{
 		
 		int values [] = 
