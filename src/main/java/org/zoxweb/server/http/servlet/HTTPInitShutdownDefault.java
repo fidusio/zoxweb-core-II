@@ -24,11 +24,13 @@ import javax.servlet.ServletContextListener;
 
 import org.zoxweb.server.io.IOUtil;
 import org.zoxweb.server.net.NIOConfig;
+import org.zoxweb.server.net.security.IPBlockerListener;
 import org.zoxweb.server.task.TaskUtil;
 import org.zoxweb.server.util.ApplicationConfigManager;
 import org.zoxweb.server.util.GSONUtil;
 import org.zoxweb.shared.data.ApplicationConfigDAO;
 import org.zoxweb.shared.data.ConfigDAO;
+import org.zoxweb.shared.security.IPBlockerConfig;
 import org.zoxweb.shared.data.ApplicationConfigDAO.ApplicationDefaultParam;
 
 public class HTTPInitShutdownDefault
@@ -46,10 +48,38 @@ public class HTTPInitShutdownDefault
 			String filename = ApplicationConfigManager.SINGLETON.loadDefault().lookupValue(ApplicationDefaultParam.NIO_CONFIG);
 			if (filename != null)
 			{
-				File file = ApplicationConfigManager.SINGLETON.locateFile(ApplicationConfigManager.SINGLETON.loadDefault(), filename);
-				ConfigDAO configDAO = GSONUtil.fromJSON(IOUtil.inputStreamToString(new FileInputStream(file), true));
-				nioConfig = new NIOConfig(configDAO);
-				nioConfig.create();
+				try
+				{
+					File file = ApplicationConfigManager.SINGLETON.locateFile(ApplicationConfigManager.SINGLETON.loadDefault(), filename);
+					ConfigDAO configDAO = GSONUtil.fromJSON(IOUtil.inputStreamToString(new FileInputStream(file), true));
+					log.info("" + configDAO);
+					nioConfig = new NIOConfig(configDAO);
+					nioConfig.createApp();
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}
+			}
+			
+			
+			
+			filename = ApplicationConfigManager.SINGLETON.loadDefault().lookupValue("ip_blocker_config");
+			if (filename != null)
+			{
+				try
+				{
+					File file = ApplicationConfigManager.SINGLETON.locateFile(ApplicationConfigManager.SINGLETON.loadDefault(), filename);
+					IPBlockerConfig appConfig = GSONUtil.fromJSON(IOUtil.inputStreamToString(new FileInputStream(file), true), IPBlockerConfig.class);
+					IPBlockerListener.Creator c = new IPBlockerListener.Creator();
+					//log.info("\n" + GSONUtil.toJSON(appConfig, true, false, false));
+					c.setAppConfig(appConfig);
+					c.createApp();
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}
 			}
 		}
 		catch( Throwable t)

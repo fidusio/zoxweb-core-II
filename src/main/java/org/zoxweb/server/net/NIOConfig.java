@@ -38,6 +38,7 @@ import org.zoxweb.server.task.TaskUtil;
 import org.zoxweb.server.util.GSONUtil;
 import org.zoxweb.shared.data.ConfigDAO;
 import org.zoxweb.shared.net.InetSocketAddressDAO;
+import org.zoxweb.shared.util.AppCreator;
 import org.zoxweb.shared.util.ArrayValues;
 import org.zoxweb.shared.util.GetNameValue;
 import org.zoxweb.shared.util.NVEntity;
@@ -49,7 +50,8 @@ import org.zoxweb.shared.util.SharedUtil;
  *
  */
 public class NIOConfig
-implements Closeable
+implements Closeable,
+		   AppCreator<NIOSocket, ConfigDAO>
 {
 	
 	private ConfigDAO configDAO;
@@ -71,12 +73,13 @@ implements Closeable
 	
 	public NIOConfig(ConfigDAO configDAO)
 	{
-		this.configDAO = parse(configDAO);
+		setAppConfig(configDAO);
+		//this.configDAO = parse(configDAO);
 	}
 	
 	
 	
-	public NIOSocket create() throws IOException
+	public NIOSocket createApp() throws IOException
 	{
 		NIOSocket ret = new NIOSocket(TaskUtil.getDefaultTaskProcessor());
 		services.add(ret);
@@ -254,9 +257,9 @@ implements Closeable
 		try
 		{
 			System.out.println("loading file " + args[0]);
-			ConfigDAO configDAO =GSONUtil.fromJSON(IOUtil.inputStreamToString(args[0]));
+			ConfigDAO configDAO = GSONUtil.fromJSON(IOUtil.inputStreamToString(args[0]));
 			NIOConfig nioConfig = new NIOConfig(configDAO);
-			nioConfig.create();
+			nioConfig.createApp();
 		}
 		catch(Exception e)
 		{
@@ -276,4 +279,25 @@ implements Closeable
 		
 		
 	}
+
+
+	@Override
+	public void setAppConfig(ConfigDAO appConfig) 
+	{
+		// TODO Auto-generated method stub
+		this.configDAO = parse(appConfig);
+	}
+
+
+	@Override
+	public ConfigDAO getAppConfig() {
+		// TODO Auto-generated method stub
+		return configDAO;
+	}
+
+
+	
+
+
+	
 }

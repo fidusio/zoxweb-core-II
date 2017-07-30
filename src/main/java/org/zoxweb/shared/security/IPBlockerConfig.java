@@ -1,8 +1,7 @@
 package org.zoxweb.shared.security;
 
 import org.zoxweb.shared.data.SetNameDescriptionDAO;
-
-
+import org.zoxweb.shared.util.AppConfig;
 import org.zoxweb.shared.util.GetNVConfig;
 import org.zoxweb.shared.util.NVConfig;
 import org.zoxweb.shared.util.NVConfigEntity;
@@ -10,10 +9,12 @@ import org.zoxweb.shared.util.NVConfigEntityLocal;
 import org.zoxweb.shared.util.NVConfigManager;
 import org.zoxweb.shared.util.SharedUtil;
 import org.zoxweb.shared.filters.LongRangeFilter;
+import org.zoxweb.shared.filters.FloatRangeFilter;
 
 @SuppressWarnings("serial")
 public class IPBlockerConfig
 extends SetNameDescriptionDAO
+implements AppConfig
 {
 	public enum Param
 	implements GetNVConfig
@@ -23,8 +24,8 @@ extends SetNameDescriptionDAO
 		AUTH_VALUE(NVConfigManager.createNVConfig("auth_value", "Authentication value", "AuthenticationValue", true, true, String.class)),
 		COMMAND(NVConfigManager.createNVConfig("command", "Command to be excuted", "Command", true, true, String.class)),
 		COMMAND_TOKEN(NVConfigManager.createNVConfig("command_token", "Command token to be replaced", "CommandToken", true, true, String.class)),
-		MINUTES(NVConfigManager.createNVConfig("minutes", "Minutes for waiting", "Minutes", true, true, false, long.class, new LongRangeFilter(1, true, 10, true))),
-		RATE(NVConfigManager.createNVConfig("rate", "Rate", "Rate", true, true, float.class)),
+		TIGGER_COUNT(NVConfigManager.createNVConfig("trigger_count", "Trigger count", "TriggerCount", true, true, false, long.class, new LongRangeFilter(1, true, 10, true))),
+		RATE(NVConfigManager.createNVConfig("rate", "Rate", "Rate", true, true, false, float.class, new FloatRangeFilter(1, true, 100, true))),
 		;
 		
 		private final NVConfig nvc;
@@ -41,18 +42,18 @@ extends SetNameDescriptionDAO
 	}
 	
 	public static final NVConfigEntity NVC_IP_BLOCKER = new NVConfigEntityLocal(
-																					"ip_blocker_config", 
-																					null , 
-																					"IPBlockerConfig", 
-																					true, 
-																					false, 
-																					false, 
-																					false, 
-																					JWTHeader.class, 
-																					SharedUtil.extractNVConfigs(Param.values()), 
-																					null, 
-																					false, 
-																					SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO
+																				"ip_blocker_config", 
+																				null , 
+																				"IPBlockerConfig", 
+																				true, 
+																				false, 
+																				false, 
+																				false, 
+																				IPBlockerConfig.class, 
+																				SharedUtil.extractNVConfigs(Param.values()), 
+																				null, 
+																				false, 
+																				SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO
 																				);
 	
 	
@@ -66,7 +67,7 @@ extends SetNameDescriptionDAO
 	 * Get the authentication file name that should be monitored
 	 * @return
 	 */
-	public String getAuthfile()
+	public String getAuthFile()
 	{
 		return lookupValue(Param.AUTH_FILE);
 	}
@@ -135,14 +136,14 @@ extends SetNameDescriptionDAO
 	 * How many minutes to wait before reset
 	 * @return
 	 */
-	public long getMinutes()
+	public long getTriggerCount()
 	{
-		return lookupValue(Param.MINUTES);
+		return lookupValue(Param.TIGGER_COUNT);
 	}
 	
-	public void setMinutes(long minutes)
+	public void setTriggerCount(long count)
 	{
-		setValue(Param.MINUTES, minutes);
+		setValue(Param.TIGGER_COUNT, count);
 	}
 	/**
 	 * Attack rate to be confirmed as bad IP

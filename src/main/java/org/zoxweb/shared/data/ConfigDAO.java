@@ -15,6 +15,7 @@
  */
 package org.zoxweb.shared.data;
 
+import org.zoxweb.shared.util.AppConfig;
 import org.zoxweb.shared.util.ArrayValues;
 import org.zoxweb.shared.util.GetNVConfig;
 import org.zoxweb.shared.util.GetNameValue;
@@ -35,7 +36,7 @@ import org.zoxweb.shared.util.NVConfigEntity.ArrayType;
 @SuppressWarnings("serial")
 public class ConfigDAO 
 	extends SetNameDescriptionDAO
-	implements SetCanonicalID
+	implements SetCanonicalID, AppConfig
 {
 	/**
 	 * This enum contains data content variables which include:

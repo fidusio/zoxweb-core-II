@@ -15,6 +15,7 @@
  */
 package org.zoxweb.server.net.security;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,8 +30,9 @@ import org.zoxweb.server.util.RuntimeUtil;
 import org.zoxweb.shared.data.events.StringTokenEvent;
 import org.zoxweb.shared.data.events.StringTokenListener;
 import org.zoxweb.shared.data.events.TokenListenerManager;
+import org.zoxweb.shared.security.IPBlockerConfig;
 import org.zoxweb.shared.util.Const.TimeInMillis;
-
+import org.zoxweb.shared.util.AppCreator;
 import org.zoxweb.shared.util.AppointmentDefault;
 import org.zoxweb.shared.util.NVPair;
 import org.zoxweb.shared.util.SharedStringUtil;
@@ -57,6 +59,40 @@ public class IPBlockerListener
 		
 	}
 	
+	
+	
+	public static class Creator
+		implements AppCreator<IPBlockerListener, IPBlockerConfig>
+	{
+		private IPBlockerConfig ipBlockerConfig = null;
+		
+		@Override
+		public void setAppConfig(IPBlockerConfig appConfig) {
+			// TODO Auto-generated method stub
+			ipBlockerConfig = appConfig;
+		}
+
+		@Override
+		public IPBlockerConfig getAppConfig() {
+			// TODO Auto-generated method stub
+			return ipBlockerConfig;
+		}
+
+		@Override
+		public IPBlockerListener createApp() throws NullPointerException, IllegalArgumentException, IOException {
+			// TODO Auto-generated method stub
+			TokenListenerManager tlm = new TokenListenerManager();
+			
+			IPBlockerListener ipbl = new IPBlockerListener(ipBlockerConfig.getAuthToken(),  ipBlockerConfig.getAuthValue(),  
+					ipBlockerConfig.getCommand(),  ipBlockerConfig.getCommandToken(), 
+										  ipBlockerConfig.getTriggerCount(), ipBlockerConfig.getRate(), TaskUtil.getDefaultTaskScheduler());
+			tlm.addEventListener(ipbl);
+
+			TaskUtil.getDefaultTaskScheduler().queue(new FileMonitor(ipBlockerConfig.getAuthFile(), tlm, true), new AppointmentDefault(TimeInMillis.MINUTE.MILLIS), ipbl);
+			return ipbl;
+		}
+		
+	}
 	
 	private static final transient Logger log = Logger.getLogger(IPBlockerListener.class.getName());
 	
@@ -235,18 +271,29 @@ public class IPBlockerListener
 		try
 		{
 			int index = 0;
-			String file = args[index++];
-			TokenListenerManager tlm = new TokenListenerManager();
+		
 			
 			
-			TaskSchedulerProcessor tsp = new TaskSchedulerProcessor();
+			IPBlockerConfig ipbc = new IPBlockerConfig();
+			ipbc.setAuthFile(args[index++]);
+			ipbc.setAuthToken(args[index++]);
+			ipbc.setAuthValue(args[index++]);
+			ipbc.setCommand(args[index++]);
+			ipbc.setCommandToken(args[index++]);
+			ipbc.setTriggerCount(Long.parseLong(args[index++]));
+			ipbc.setRate(Float.parseFloat(args[index++]));
+			Creator c = new Creator();
+			c.setAppConfig(ipbc);
+			c.createApp();
 			
 			
-			IPBlockerListener ipbl = new IPBlockerListener(args[index++],  args[index++],  args[index++],  args[index++], 
-										  Long.parseLong(args[index++]), Float.parseFloat(args[index++]), tsp);
-			tlm.addEventListener(ipbl);
-
-			tsp.queue(new FileMonitor(file, tlm, true), new AppointmentDefault(TimeInMillis.MINUTE.MILLIS), ipbl);
+//			TokenListenerManager tlm = new TokenListenerManager();
+//			
+//			IPBlockerListener ipbl = new IPBlockerListener(args[index++],  args[index++],  args[index++],  args[index++], 
+//										  Long.parseLong(args[index++]), Float.parseFloat(args[index++]), TaskUtil.getDefaultTaskScheduler());
+//			tlm.addEventListener(ipbl);
+//
+//			TaskUtil.getDefaultTaskScheduler().queue(new FileMonitor(file, tlm, true), new AppointmentDefault(TimeInMillis.MINUTE.MILLIS), ipbl);
 			
 			
 			

@@ -24,7 +24,7 @@ public class IPBlockerConfigTest {
 		ipbc.setAuthValue("rhost");
 		ipbc.setCommand("/sbin/iptables -I INPUT 4 -s $$host$$ -p tcp -m tcp --dport 22 -j DROP");
 		ipbc.setCommandToken("$$host$$");
-		ipbc.setMinutes(10);
+		ipbc.setTriggerCount(10);
 		ipbc.setRate((float) 12);
 	}
 	
@@ -40,6 +40,6 @@ public class IPBlockerConfigTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testInvalidMinutes()
 	{
-		ipbc.setMinutes(0);
+		ipbc.setTriggerCount(0);
 	}
 }
