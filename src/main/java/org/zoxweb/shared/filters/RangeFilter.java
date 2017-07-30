@@ -18,6 +18,14 @@ implements ValueFilter<V, V>
 		return lowerLimit;
 	}
 	
+	
+	
+	
+	public String toCanonicalID()
+	{
+		return this.getClass().getSimpleName();
+	}
+	
 	public V getUpperLimit()
 	{
 		return upperLimit;
@@ -45,6 +53,11 @@ implements ValueFilter<V, V>
 	
 	
 	
+	
+	public String toString()
+	{
+		return toCanonicalID()+ ":" + (lowerLimitInclusive ? "[" : "]") + lowerLimit + ", " + upperLimit +  (upperLimitInclusive ? "]" : "[");
+	}
 	
 
 	

@@ -49,11 +49,7 @@ public class DoubleRangeFilter extends RangeFilter<Double>
 		return false;
 	}
 
-	@Override
-	public String toCanonicalID() {
-		// TODO Auto-generated method stub
-		return DoubleRangeFilter.class.getName();
-	}
+
 
 
 }

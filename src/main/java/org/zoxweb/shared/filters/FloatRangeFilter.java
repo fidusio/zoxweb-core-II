@@ -49,11 +49,6 @@ public class FloatRangeFilter extends RangeFilter<Float>
 		return false;
 	}
 
-	@Override
-	public String toCanonicalID() {
-		// TODO Auto-generated method stub
-		return FloatRangeFilter.class.getName();
-	}
-
+	
 
 }

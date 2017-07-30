@@ -49,11 +49,7 @@ public class IntRangeFilter extends RangeFilter<Integer>
 		return false;
 	}
 
-	@Override
-	public String toCanonicalID() {
-		// TODO Auto-generated method stub
-		return IntRangeFilter.class.getName();
-	}
+	
 
 
 }

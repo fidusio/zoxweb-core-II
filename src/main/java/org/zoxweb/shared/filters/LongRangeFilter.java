@@ -49,11 +49,6 @@ public class LongRangeFilter extends RangeFilter<Long>
 		return false;
 	}
 
-	@Override
-	public String toCanonicalID() {
-		// TODO Auto-generated method stub
-		return LongRangeFilter.class.getName();
-	}
 
 
 }
