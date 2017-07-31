@@ -46,12 +46,12 @@ public class IPBlockerListener
 		@Override
 		public String toString() {
 			return "RemoteIPInfo [remoteHost=" + remoteHost + ", detectionStartTime=" + detectionStartTime
-					+ ", lastTimeDeteted=" + lastTimeDeteted + ", attackCount=" + attackCount + ", blocked=" + blocked
-					+ ", attackRate=" + attackRate + "]";
+					+ ", lastTimeDetected=" + lastTimeDetected + ", attackCount=" + attackCount + ", blocked=" + blocked
+					+ ", attackRate=" + attackRate + " per min]";
 		}
 		String remoteHost = null;
 		long detectionStartTime = 0;
-		long lastTimeDeteted = 0;
+		long lastTimeDetected = 0;
 		long attackCount = 0;
 		boolean blocked = false;
 		float attackRate = 0;
@@ -170,7 +170,7 @@ public class IPBlockerListener
 			if (!SharedStringUtil.isEmpty(value))
 			{
 				value = value.toLowerCase();
-				log.info(timeStamp + " we have a match:" + value );
+				//log.info(timeStamp + " we have a match:" + value );
 				RemoteIPInfo ripi = ripiMap.get(value);
 				if (ripi == null)
 				{
@@ -179,12 +179,15 @@ public class IPBlockerListener
 					ripi.detectionStartTime = timeStamp;
 					ripiMap.put(value, ripi);
 				}
-				ripi.lastTimeDeteted = timeStamp;
+				ripi.lastTimeDetected = timeStamp;
 				ripi.attackCount++;
-				ripi.attackRate = ((ripi.lastTimeDeteted - ripi.detectionStartTime) / ripi.attackCount) * 0.001F;
 				
 				
-				if (ripi.attackCount > minCount && ripi.attackRate < rate)
+				ripi.attackRate = ripi.lastTimeDetected > ripi.detectionStartTime ? ((ripi.attackCount*TimeInMillis.MINUTE.MILLIS) / ((ripi.lastTimeDetected - ripi.detectionStartTime))) : 0;
+				
+				log.info(ripi + " minCount: " + minCount + " rate: " + rate);
+				
+				if (ripi.attackCount > minCount && ripi.attackRate >= rate)
 				{
 					log.info("we must block:" + ripi);
 					String command = SharedStringUtil.embedText(executionCommand, commandToken, value);
@@ -203,6 +206,7 @@ public class IPBlockerListener
 						e.printStackTrace();
 					} 
 				}
+				
 				
 			}
 		}
