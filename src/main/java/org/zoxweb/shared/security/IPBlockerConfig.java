@@ -8,7 +8,9 @@ import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVConfigEntityLocal;
 import org.zoxweb.shared.util.NVConfigManager;
 import org.zoxweb.shared.util.SharedUtil;
+import org.zoxweb.shared.util.Const.TimeInMillis;
 import org.zoxweb.shared.filters.FloatRangeFilter;
+import org.zoxweb.shared.filters.LongRangeFilter;
 
 @SuppressWarnings("serial")
 public class IPBlockerConfig
@@ -24,6 +26,7 @@ implements AppConfig
 		COMMAND(NVConfigManager.createNVConfig("command", "Command to be excuted", "Command", true, true, String.class)),
 		COMMAND_TOKEN(NVConfigManager.createNVConfig("command_token", "Command token to be replaced", "CommandToken", true, true, String.class)),
 		TIGGER_COUNT(NVConfigManager.createNVConfig("trigger_count", "Trigger count", "TriggerCount", true, true, long.class)),
+		RESET_TIME(NVConfigManager.createNVConfig("reset_time", "Reset time in min", "TriggerCount", true, true, false, long.class, new LongRangeFilter(1, true, 10, true))),
 		RATE(NVConfigManager.createNVConfig("rate", "Rate", "Rate", true, true, false, float.class, new FloatRangeFilter(1, true, 100, true))),
 		;
 		
@@ -132,7 +135,7 @@ implements AppConfig
 	}
 	
 	/**
-	 * How many minutes to wait before reset
+	 * How many failure to wait before trigger
 	 * @return
 	 */
 	public long getTriggerCount()
@@ -144,6 +147,33 @@ implements AppConfig
 	{
 		setValue(Param.TIGGER_COUNT, count);
 	}
+	
+	
+	/**
+	 * How many failure to wait before trigger
+	 * @return
+	 */
+	public long getResetTime()
+	{
+		return lookupValue(Param.RESET_TIME);
+	}
+	
+	public void setResetTime(long time)
+	{
+		setValue(Param.RESET_TIME, time);
+	}
+	
+	public long getResetTimeInMillis()
+	{
+		long ret = getResetTime() * TimeInMillis.MINUTE.MILLIS;
+		if (ret == 0)
+		{
+			ret = 10 * TimeInMillis.MINUTE.MILLIS;
+		}
+		
+		return ret;
+	}
+	
 	/**
 	 * Attack rate to be confirmed as bad IP
 	 * @return
