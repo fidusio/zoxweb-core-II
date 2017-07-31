@@ -37,9 +37,5 @@ public class IPBlockerConfigTest {
 		System.out.println(GSONUtil.toJSON(ipbc, true, false, false));
 	}
 	
-	@Test(expected = IllegalArgumentException.class)
-	public void testInvalidMinutes()
-	{
-		ipbc.setTriggerCount(0);
-	}
+	
 }
