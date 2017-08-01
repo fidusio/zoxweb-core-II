@@ -202,10 +202,13 @@ public class NIOSocket
 							    		try
 							    		{ 	
 							    			Logger log = psf.getLogger();
+							    			InetSocketAddress isa = (InetSocketAddress) ((ServerSocketChannel)key.channel()).getLocalAddress();
+							    			
+							    			
 							    			
 							    			// in try block with catch exception since logger can point to file log
 							    			if (log != null)
-							    				log.info("access denied:" + sc.getRemoteAddress());
+							    				log.info( "@ port:" + isa.getPort() + " access denied for:" + sc.getRemoteAddress());
 							    		}
 							    		catch(Exception e)
 							    		{
