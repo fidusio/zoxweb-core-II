@@ -977,6 +977,21 @@ public class ZWDataFactory
                 return JWTPayload.NVC_JWT_PAYLOAD;
             }
         },
+        IMAGE_DAO(ImageDAO.class.getName())
+        {
+            @SuppressWarnings("unchecked")
+            @Override
+            public ImageDAO newInstance()
+            {
+                return new ImageDAO();
+            }
+
+            @Override
+            public NVConfigEntity getNVConfigEntity()
+            {
+                return ImageDAO.NVC_IMAGE_DAO;
+            }
+        },
 
 		
 		;
