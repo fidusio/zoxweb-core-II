@@ -15,7 +15,9 @@ import org.zoxweb.shared.util.SharedBase64.Base64Type;
 
 public class JWTTest {
 
-	private JWT jwt = null;
+	private JWT jwtHS256 = null;
+	private JWT jwtNONE = null;
+	
 	@Before
 	public void init()
 	{
@@ -29,17 +31,31 @@ public class JWTTest {
 		payload.setAppID("xlogistx");
 		payload.setRandom(new byte[] {0,1,2,3});
 		payload.setSubjectID("support@xlogistx.io");
-		jwt = new JWT();
-		jwt.setHeader(header);
-		jwt.setPayload(payload);
+		jwtHS256 = new JWT();
+		jwtHS256.setHeader(header);
+		jwtHS256.setPayload(payload);
+		
+		
+		header = new JWTHeader();
+		header.setJWTAlgorithm(JWTAlgorithm.none);
+		payload = new JWTPayload();
+		payload.setDomainID("xlogistx.io");
+		payload.setAppID("xlogistx");
+		payload.setRandom(new byte[] {0,1,2,3});
+		payload.setSubjectID("none@xlogistx.io");
+		jwtNONE = new JWT();
+		jwtNONE.setHeader(header);
+		jwtNONE.setPayload(payload);
 		
 	}
 	
 	@Test
 	public void toGSON() throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException, InvalidKeyException, NoSuchAlgorithmException
 	{
-		String json = GSONUtil.toJSON(jwt, true, false, false, Base64Type.URL);
+		String json = GSONUtil.toJSON(jwtHS256, true, false, false, Base64Type.URL);
 		System.out.println(json);
+		
+		
 		JWT localJwt = GSONUtil.fromJSON(json, JWT.class, Base64Type.URL);
 		json = GSONUtil.toJSON(localJwt, true, false, false, Base64Type.URL);
 		System.out.println(json);
@@ -60,6 +76,34 @@ public class JWTTest {
 		System.out.println(test);
 
 		System.out.println(CryptoUtil.decodeJWT("secret", test));
+	}
+	
+	
+	@Test
+	public void testJWTNone() throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException, InvalidKeyException, NoSuchAlgorithmException
+	{
+		String jsonNone = GSONUtil.toJSON(jwtNONE, true, false, false, Base64Type.URL);
+		System.out.println(jsonNone);
+		JWT localJwt = GSONUtil.fromJSON(jsonNone, JWT.class, Base64Type.URL);
+		jsonNone = GSONUtil.toJSON(localJwt, true, false, false, Base64Type.URL);
+		System.out.println(jsonNone);
+		
+		System.out.println(localJwt.getPayload());
+		
+		String test = CryptoUtil.encodeJWT("secret", localJwt);
+		System.out.println(test);
+		
+//		JWTPayload payload = new JWTPayload();
+//		payload.setSubjectID("1234567890");
+//		payload.setName("John Doe");
+//		payload.setAdmin(true);
+//		localJwt.setPayload(payload);
+		jsonNone = GSONUtil.toJSON(localJwt, false, false, false, Base64Type.URL);
+		System.out.println(jsonNone);
+		test = CryptoUtil.encodeJWT("secret", localJwt);
+		System.out.println(test);
+
+		System.out.println(CryptoUtil.decodeJWT((String)null, test));
 	}
 	
 	@Test (expected = IllegalArgumentException.class)

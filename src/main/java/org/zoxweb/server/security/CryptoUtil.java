@@ -717,7 +717,7 @@ public class CryptoUtil
 	
 	public static String encodeJWT(String key, JWT jwt) throws NoSuchAlgorithmException, InvalidKeyException, IOException
 	{
-		return encodeJWT(SharedStringUtil.getBytes(key), jwt);
+		return encodeJWT(key != null ? SharedStringUtil.getBytes(key) : null, jwt);
 	}
 	
 	public static String encodeJWT(byte key[], JWT jwt)
@@ -726,19 +726,37 @@ public class CryptoUtil
 				   IOException,
 				   SecurityException
 	{
-		SharedUtil.checkIfNulls("Null Parameters", key, jwt);
-		Mac sha256_HMAC = Mac.getInstance(HMAC_SHA_256);
-		SecretKeySpec secret_key = new SecretKeySpec(key, HMAC_SHA_256);
-	    sha256_HMAC.init(secret_key);
+		SharedUtil.checkIfNulls("Null jwt header or parameters", jwt, jwt.getHeader(), jwt.getHeader().getJWTAlgorithm());
+		
 		StringBuilder sb = new StringBuilder();
 		byte[] b64Header = SharedBase64.encode(Base64Type.URL, GSONUtil.toJSON(jwt.getHeader(), false, false, false));
 		byte[] b64Payload = SharedBase64.encode(Base64Type.URL, GSONUtil.toJSON(jwt.getPayload(), false, false, false));
 		sb.append(SharedStringUtil.toString(b64Header));
 		sb.append(".");
 		sb.append(SharedStringUtil.toString(b64Payload));
-		byte[] b64Hash = SharedBase64.encode(Base64Type.URL, sha256_HMAC.doFinal(SharedStringUtil.getBytes(sb.toString())));
+		
+		byte[] b64Hash = null;
+		
+		
+		
+		switch(jwt.getHeader().getJWTAlgorithm())
+		{
+		case HS256:
+			SharedUtil.checkIfNulls("Null key", key);
+			Mac sha256_HMAC = Mac.getInstance(HMAC_SHA_256);
+			SecretKeySpec secret_key = new SecretKeySpec(key, HMAC_SHA_256);
+		    sha256_HMAC.init(secret_key);
+			b64Hash = SharedBase64.encode(Base64Type.URL, sha256_HMAC.doFinal(SharedStringUtil.getBytes(sb.toString())));
+			break;
+		case none:
+			break;
+		
+		}
+		
 		sb.append(".");
-		sb.append(SharedStringUtil.toString(b64Hash));
+		
+		if (b64Hash != null)
+			sb.append(SharedStringUtil.toString(b64Hash));
 
 		return sb.toString();
 	}
@@ -750,7 +768,7 @@ public class CryptoUtil
 				   SecurityException
 				   
 	{
-		return decodeJWT(SharedStringUtil.getBytes(key), token);
+		return decodeJWT(key != null ? SharedStringUtil.getBytes(key) : null, token);
 	}
 
 
@@ -760,26 +778,8 @@ public class CryptoUtil
 				   IOException, 
 				   SecurityException
 	{
-		SharedUtil.checkIfNulls("Null Parameters", key, token);
+		SharedUtil.checkIfNulls("Null token", token);
 		String tokens[] = token.trim().split("\\.");
-		if (tokens.length != JWTToken.values().length) {
-			throw new SecurityException("Invalid token");
-		}
-
-
-		Mac sha256HMAC = Mac.getInstance(HMAC_SHA_256);
-		SecretKeySpec secret_key = new SecretKeySpec(key, HMAC_SHA_256);
-		sha256HMAC.init(secret_key);
-		sha256HMAC.update(SharedStringUtil.getBytes(tokens[JWTToken.HEADER.ordinal()]));
-
-		sha256HMAC.update((byte) '.');
-		byte[] b64Hash = sha256HMAC.doFinal(SharedStringUtil.getBytes(tokens[JWTToken.PAYLOAD.ordinal()]));
-
-		if (!Arrays.equals(b64Hash, SharedBase64.decode(Base64Type.URL,tokens[JWTToken.HASH.ordinal()]))) {
-			throw new SecurityException("Invalid token");
-		}
-
-
 		JWTHeader jwtHeader = null;
 		JWTPayload jwtPayload = null;
 		try {
@@ -790,6 +790,35 @@ public class CryptoUtil
 			e.printStackTrace();
 		}
 		
+		SharedUtil.checkIfNulls("Null jwt header or parameters", jwtHeader, jwtHeader.getJWTAlgorithm());
+		
+		switch(jwtHeader.getJWTAlgorithm())
+		{
+		case HS256:
+			SharedUtil.checkIfNulls("Null key", key);
+			if (tokens.length != JWTToken.values().length) {
+				throw new SecurityException("Invalid token");
+			}
+			Mac sha256HMAC = Mac.getInstance(HMAC_SHA_256);
+			SecretKeySpec secret_key = new SecretKeySpec(key, HMAC_SHA_256);
+			sha256HMAC.init(secret_key);
+			sha256HMAC.update(SharedStringUtil.getBytes(tokens[JWTToken.HEADER.ordinal()]));
+
+			sha256HMAC.update((byte) '.');
+			byte[] b64Hash = sha256HMAC.doFinal(SharedStringUtil.getBytes(tokens[JWTToken.PAYLOAD.ordinal()]));
+
+			if (!Arrays.equals(b64Hash, SharedBase64.decode(Base64Type.URL,tokens[JWTToken.HASH.ordinal()]))) {
+				throw new SecurityException("Invalid token");
+			}
+			break;
+		case none:
+			if (tokens.length != JWTToken.values().length -1) {
+				throw new SecurityException("Invalid token");
+			}
+			break;
+		
+		}
+				
 		if (jwtHeader == null || jwtPayload == null)
 		{
 			throw new SecurityException("Invalid JWT");

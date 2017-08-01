@@ -47,7 +47,7 @@ public class ImageDAO
         WIDTH(NVConfigManager.createNVConfig("width", "Image width in pixels", "Width", false, false, long.class)),
         SIZE(NVConfigManager.createNVConfig("size", "Image size in bytes", "Size", true, false, long.class)),
         FORMAT(NVConfigManager.createNVConfig("format", "Image format type", "Format", true, false, ImageFormat.class)),
-        RESOURCE_LOCATOR(NVConfigManager.createNVConfig("resource_locator", "Resource locator", "ResourceLocator", true, false, false, String.class, null)),
+        RESOURCE_LOCATOR(NVConfigManager.createNVConfig("resource_locator", "Resource locator", "ResourceLocator", true, false, false, String.class, FilterType.URL)),
 
         ;
 

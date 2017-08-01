@@ -123,8 +123,30 @@ public final class SecurityConsts
 	}
 	
 	public enum JWTAlgorithm
+		implements GetName
 	{
-		HS256,
+		none("none"),
+		HS256("HS256"),
+		;
+		
+		private final String name;
+		
+		JWTAlgorithm(String name)
+		{
+			this.name = name;
+		}
+		
+		public String toString()
+		{
+			return getName();
+		}
+		
+		
+		public String getName()
+		{
+			return name;
+			
+		}
 	}
 
 }
