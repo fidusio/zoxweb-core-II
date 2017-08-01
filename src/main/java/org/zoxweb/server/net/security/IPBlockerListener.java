@@ -83,9 +83,7 @@ public class IPBlockerListener
 			// TODO Auto-generated method stub
 			TokenListenerManager tlm = new TokenListenerManager();
 			
-			IPBlockerListener ipbl = new IPBlockerListener(ipBlockerConfig.getAuthToken(),  ipBlockerConfig.getAuthValue(),  
-					ipBlockerConfig.getCommand(),  ipBlockerConfig.getCommandToken(), 
-										  ipBlockerConfig.getTriggerCount(), ipBlockerConfig.getRate(), TaskUtil.getDefaultTaskScheduler());
+			IPBlockerListener ipbl = new IPBlockerListener(ipBlockerConfig, TaskUtil.getDefaultTaskScheduler());
 			tlm.addEventListener(ipbl);
 
 			TaskUtil.getDefaultTaskScheduler().queue(new FileMonitor(ipBlockerConfig.getAuthFile(), tlm, true), new AppointmentDefault(TimeInMillis.MINUTE.MILLIS), ipbl);
@@ -99,33 +97,22 @@ public class IPBlockerListener
 	
 	private TaskSchedulerProcessor tsp = null;
 	
-	private String tokenMatch;
+//	private String tokenMatch;
 	
 
-	private String parameterName;
-	private String executionCommand;
-	private String commandToken;
-	private long minCount;
-	private float rate;
-	private long clearTimeout = TimeInMillis.MINUTE.MILLIS*10;
+//	private String parameterName;
+//	private String executionCommand;
+//	private String commandToken;
+//	private long minCount;
+//	private float rate;
+//	private long clearTimeout = TimeInMillis.MINUTE.MILLIS*10;
 	
 	private Map<String, RemoteIPInfo> ripiMap = new HashMap<String, RemoteIPInfo>();
 	
-	
-	public IPBlockerListener()
+	private IPBlockerConfig ipbc;
+	public IPBlockerListener(IPBlockerConfig ipbc,TaskSchedulerProcessor tsp)
 	{
-		
-	}
-
-	
-	public IPBlockerListener(String tokenMatch, String parameterName, String executionCommand, String commandToken, long minCount, float rate , TaskSchedulerProcessor tsp)
-	{
-		this.tokenMatch = tokenMatch;
-		this.parameterName = parameterName;
-		this.executionCommand = executionCommand;
-		this.commandToken = commandToken;
-		this.minCount = minCount;
-		this.rate = rate;
+		this.ipbc = ipbc;
 		this.tsp = tsp;
 	}
 	
@@ -146,7 +133,7 @@ public class IPBlockerListener
 			// removed temporarly
 			//if(!toCheck.blocked)
 			{
-				if (System.currentTimeMillis() - toCheck.detectionStartTime > clearTimeout)
+				if (System.currentTimeMillis() - toCheck.detectionStartTime >= ipbc.getResetTimeInMillis())
 				{
 					ripiMap.remove(toCheck.remoteHost);
 					log.info(toCheck + " was removed from check list");
@@ -162,10 +149,10 @@ public class IPBlockerListener
 		long timeStamp = ste.getTimeStamp();
 		
 		
-		if (SharedStringUtil.contains(token, tokenMatch, true))
+		if (SharedStringUtil.contains(token, ipbc.getAuthToken(), true))
 		{
 			List<NVPair> results = SharedUtil.toNVPairs(token, "=", " ");
-			NVPair parameter = SharedUtil.lookup(results, parameterName);
+			NVPair parameter = SharedUtil.lookup(results, ipbc.getAuthValue());
 			String value = SharedUtil.getValue(parameter);
 			if (!SharedStringUtil.isEmpty(value))
 			{
@@ -185,12 +172,12 @@ public class IPBlockerListener
 				
 				ripi.attackRate = ripi.lastTimeDetected > ripi.detectionStartTime ? ((ripi.attackCount*TimeInMillis.MINUTE.MILLIS) / ((ripi.lastTimeDetected - ripi.detectionStartTime))) : 0;
 				
-				log.info(ripi + " minCount: " + minCount + " rate: " + rate);
+				log.info(ripi + " minCount: " + ipbc.getTriggerCount() + " rate: " + ipbc.getRate());
 				
-				if (ripi.attackCount > minCount && ripi.attackRate >= rate)
+				if (ripi.attackCount > ipbc.getTriggerCount() && ripi.attackRate >= ipbc.getRate())
 				{
 					log.info("we must block:" + ripi);
-					String command = SharedStringUtil.embedText(executionCommand, commandToken, value);
+					String command = SharedStringUtil.embedText(ipbc.getCommand(), ipbc.getCommandToken(), value);
 					log.info("we will execute:" + command);
 					try 
 					{
@@ -214,44 +201,49 @@ public class IPBlockerListener
 	}
 	
 	
-	public String getTokenMatch()
+//	public String getTokenMatch()
+//	{
+//		return tokenMatch;
+//	}
+//
+//	public void setTokenMatch(String tokenMatch)
+//	{
+//		this.tokenMatch = tokenMatch;
+//	}
+//
+//
+//	public String getParameterName() {
+//		return parameterName;
+//	}
+//
+//
+//	public void setParameterName(String parameterName) {
+//		this.parameterName = parameterName;
+//	}
+//
+//
+//	public String getExecutionCommand() {
+//		return executionCommand;
+//	}
+//
+//
+//	public void setExecutionCommand(String executionCommand) {
+//		this.executionCommand = executionCommand;
+//	}
+//
+//
+//	public String getCommandToken() {
+//		return commandToken;
+//	}
+//
+//
+//	public void setCommandToken(String commandToken) {
+//		this.commandToken = commandToken;
+//	}
+	
+	public IPBlockerConfig getIPBlockerConfig()
 	{
-		return tokenMatch;
-	}
-
-	public void setTokenMatch(String tokenMatch)
-	{
-		this.tokenMatch = tokenMatch;
-	}
-
-
-	public String getParameterName() {
-		return parameterName;
-	}
-
-
-	public void setParameterName(String parameterName) {
-		this.parameterName = parameterName;
-	}
-
-
-	public String getExecutionCommand() {
-		return executionCommand;
-	}
-
-
-	public void setExecutionCommand(String executionCommand) {
-		this.executionCommand = executionCommand;
-	}
-
-
-	public String getCommandToken() {
-		return commandToken;
-	}
-
-
-	public void setCommandToken(String commandToken) {
-		this.commandToken = commandToken;
+		return ipbc;
 	}
 
 	@Override
