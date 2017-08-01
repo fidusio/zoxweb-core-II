@@ -80,10 +80,6 @@ public class NIOSocket
 		//SharedUtil.checkIfNulls("Null value", psf, sa);
 		selectorController = new SelectorController(Selector.open());
 		this.tsp = tsp;
-		
-
-				
-
 		if (sa != null)
 			addServerSocket(sa, psf);
 		
@@ -107,7 +103,7 @@ public class NIOSocket
 		
 		SelectionKey sk = selectorController.register(ssc, SelectionKey.OP_ACCEPT);
 		sk.attach(psf);
-		if (debug) logger.info(ssc + " added");
+		logger.info(ssc + " added");
 		
 		return sk;
 	}
@@ -126,7 +122,7 @@ public class NIOSocket
 		SharedUtil.checkIfNulls("Null values", dc, psf);
 		SelectionKey sk = selectorController.register(dc, SelectionKey.OP_ACCEPT);
 		sk.attach(psf);
-		if (debug) logger.info(dc + " added");
+		logger.info(dc + " added");
 		
 		return sk;
 	}
