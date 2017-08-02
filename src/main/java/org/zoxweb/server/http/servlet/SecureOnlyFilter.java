@@ -82,7 +82,7 @@ implements Filter
 				}
 				res.setStatus(HttpServletResponse.SC_MOVED_TEMPORARILY);
 				res.setHeader(HTTPHeaderName.LOCATION.getName(), httpsPath);
-				log.info("Redirect:" + originalURL + "->" + httpsPath);
+				log.info("from:" + req.getRemoteHost() + " redirect:" + originalURL + "->" + httpsPath);
 				return;
 			
 			

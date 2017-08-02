@@ -26,7 +26,7 @@ implements AppConfig
 		COMMAND(NVConfigManager.createNVConfig("command", "Command to be excuted", "Command", true, true, String.class)),
 		COMMAND_TOKEN(NVConfigManager.createNVConfig("command_token", "Command token to be replaced", "CommandToken", true, true, String.class)),
 		TIGGER_COUNT(NVConfigManager.createNVConfig("trigger_count", "Trigger count", "TriggerCount", true, true, long.class)),
-		RESET_TIME(NVConfigManager.createNVConfig("reset_time", "Reset time in min", "TriggerCount", true, true, false, long.class, new LongRangeFilter(1, true, 10, true))),
+		RESET_TIME(NVConfigManager.createNVConfig("reset_time", "Reset time in min", "TriggerCount", true, true, false, long.class, new LongRangeFilter(1, true, 15, true))),
 		RATE(NVConfigManager.createNVConfig("rate", "Rate", "Rate", true, true, false, float.class, new FloatRangeFilter(1, true, 100, true))),
 		;
 		

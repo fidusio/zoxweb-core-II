@@ -174,17 +174,20 @@ public class IPBlockerListener
 				
 				log.info(ripi + " minCount: " + ipbc.getTriggerCount() + " rate: " + ipbc.getRate());
 				
-				if (ripi.attackCount > ipbc.getTriggerCount() && ripi.attackRate >= ipbc.getRate())
+				if (ripi.attackCount >= ipbc.getTriggerCount() && ripi.attackRate >= ipbc.getRate())
 				{
 					log.info("we must block:" + ripi);
 					String command = SharedStringUtil.embedText(ipbc.getCommand(), ipbc.getCommandToken(), value);
 					log.info("we will execute:" + command);
 					try 
 					{
-						if (!ripi.blocked)
+						synchronized(this)
 						{
-							RuntimeUtil.runAndFinish(command);
-							ripi.blocked = true;
+							if (!ripi.blocked)
+							{
+								RuntimeUtil.runAndFinish(command);
+								ripi.blocked = true;
+							}
 						}
 					} 
 					catch (Exception e)
