@@ -21,6 +21,7 @@ import org.apache.shiro.authc.credential.CredentialsMatcher;
 
 import org.zoxweb.server.security.CryptoUtil;
 import org.zoxweb.shared.crypto.PasswordDAO;
+import org.zoxweb.shared.util.SharedStringUtil;
 
 public class PasswordDAOCredentialsMatcher
 	implements CredentialsMatcher
@@ -54,7 +55,7 @@ public class PasswordDAOCredentialsMatcher
 			}
 			else if (token.getCredentials() instanceof byte[])
 			{
-				password = new String((byte[])token.getCredentials(), "UTF-8");
+				password = SharedStringUtil.toString((byte[])token.getCredentials());
 			}
 			else if(token.getCredentials() instanceof String)
 			{

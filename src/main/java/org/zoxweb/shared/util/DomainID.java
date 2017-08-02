@@ -23,7 +23,7 @@ package org.zoxweb.shared.util;
  * @param <T>
  */
 public interface DomainID<T>
-    extends SetName, SetDescription
+//    extends SetName, SetDescription
 {
 
 	/**

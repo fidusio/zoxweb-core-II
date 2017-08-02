@@ -16,16 +16,19 @@
 package org.zoxweb.server.shiro.authc;
 
 import org.apache.shiro.authc.UsernamePasswordToken;
-
+import org.zoxweb.shared.util.AppID;
 import org.zoxweb.shared.util.SharedStringUtil;
+import org.zoxweb.shared.util.SubjectID;
 
 @SuppressWarnings("serial")
 public class DomainUsernamePasswordToken
     extends UsernamePasswordToken
+    implements AppID<String>,
+    			   SubjectID<String>
 {
 
 	private String domain_id;
-	private String application_id;
+	private String app_id;
 	private String user_id;
 	private boolean autoAuthenticationEnabled = false;
 
@@ -45,7 +48,7 @@ public class DomainUsernamePasswordToken
     {
 		super(SharedStringUtil.toLowerCase(usnernanme), password, rememberMe, host);
 		setDomainID(domainID);
-		setApplicationID(applicationID);
+		setAppID(applicationID);
 		//setUserID(realmID);
 	}
 
@@ -59,14 +62,14 @@ public class DomainUsernamePasswordToken
 		this.domain_id = SharedStringUtil.trimOrEmpty(SharedStringUtil.toLowerCase(domainID));
 	}
 	
-	public String getApplicationID()
+	public String getAppID()
     {
-		return application_id;
+		return app_id;
 	}
 
-	public void setApplicationID(String applicationID)
+	public void setAppID(String applicationID)
     {
-		this.application_id = SharedStringUtil.trimOrEmpty(SharedStringUtil.toLowerCase(applicationID));
+		this.app_id = SharedStringUtil.trimOrEmpty(SharedStringUtil.toLowerCase(applicationID));
 	}
 	
 	public String getUserID()
@@ -79,6 +82,8 @@ public class DomainUsernamePasswordToken
 		user_id = userID;
 	}
 	
+	
+	
 	public boolean isAutoAuthenticationEnabled()
     {
 		return autoAuthenticationEnabled;
@@ -87,6 +92,18 @@ public class DomainUsernamePasswordToken
 	public void setAutoAuthenticationEnabled(boolean autoAuthenticationEnabled)
     {
 		this.autoAuthenticationEnabled = autoAuthenticationEnabled;
+	}
+
+	@Override
+	public String getSubjectID() {
+		// TODO Auto-generated method stub
+		return getUsername();
+	}
+
+	@Override
+	public void setSubjectID(String subjectID) {
+		// TODO Auto-generated method stub
+		setUsername(subjectID);
 	}
 
 }

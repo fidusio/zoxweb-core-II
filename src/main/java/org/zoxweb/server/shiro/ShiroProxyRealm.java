@@ -85,7 +85,7 @@ public class ShiroProxyRealm extends AuthorizingRealm
 		if (proxyURL != null && token instanceof DomainUsernamePasswordToken)
 		{
 			domainID = ((DomainUsernamePasswordToken)token).getDomainID();
-			applicationID = ((DomainUsernamePasswordToken)token).getApplicationID();
+			applicationID = ((DomainUsernamePasswordToken)token).getAppID();
 			userID = ((DomainUsernamePasswordToken)token).getUserID();
 			
 			
