@@ -4,9 +4,12 @@ package org.zoxweb.shared.accounting;
  * Created on 6/24/17
  */
 public enum TransactionStatus {
-    SUCCESSFUL,
+    CANCELLED,
+    CAPTURED,
+    FAILED,
     PENDING,
     PROCESSING,
-    CAPTURED,
+    REFUNDED,
+    SUCCESSFUL,
 
 }

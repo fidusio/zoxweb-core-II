@@ -24,11 +24,28 @@ import org.zoxweb.shared.util.NVConfigManager;
 import org.zoxweb.shared.util.NVPair;
 
 
-/**
- *
- */
 public class DataConst 
 {
+
+    public enum Language
+        implements GetName {
+
+        ENGLISH("English"),
+        SPANISH("Espanol"),
+
+        ;
+
+        private String name;
+
+        Language(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String getName() {
+            return name;
+        }
+    }
 	
 	public enum PhoneType 
 	{

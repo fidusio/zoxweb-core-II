@@ -27,11 +27,11 @@ import org.zoxweb.shared.util.NVGetNameValueList;
 import org.zoxweb.shared.util.NVPairGetNameMap;
 import org.zoxweb.shared.util.SharedUtil;
 
-/**
- *
- */
 public class HTTPRequestAttributes 
 {
+
+    public static final String HRA = "HRA";
+
 	//private final List<GetNameValue<String>> headers;
 	private final NVPairGetNameMap headers;
 	private final NVGetNameValueList parameters;

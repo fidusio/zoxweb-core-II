@@ -992,8 +992,22 @@ public class ZWDataFactory
                 return ImageDAO.NVC_IMAGE_DAO;
             }
         },
+        USER_PREFERENCE_DAO(UserPreferenceDAO.class.getName())
+        {
+            @SuppressWarnings("unchecked")
+            @Override
+            public UserPreferenceDAO newInstance()
+            {
+                return new UserPreferenceDAO();
+            }
 
-		
+            @Override
+            public NVConfigEntity getNVConfigEntity()
+            {
+                return UserPreferenceDAO.NVC_USER_PREFERENCE_DAO;
+            }
+        },
+
 		;
 
 		private String name;
