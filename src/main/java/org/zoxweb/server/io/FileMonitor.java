@@ -156,13 +156,16 @@ public class FileMonitor extends RunnableTask
 						}
 						synchronized(this)
 						{
-							try
+							if (autoRun)
 							{
-								wait(TimeInMillis.MILLI.MILLIS*250);
-							}
-							catch(InterruptedException e)
-							{
-								
+								try
+								{
+									wait(TimeInMillis.MILLI.MILLIS*250);
+								}
+								catch(InterruptedException e)
+								{
+									
+								}
 							}
 						}
 					}
@@ -209,6 +212,10 @@ public class FileMonitor extends RunnableTask
 	public void close() 
 	{
 		autoRun = false;
+		synchronized(this)
+		{
+			notify();
+		}
 	}
 
 	@Override

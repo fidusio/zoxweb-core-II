@@ -15,6 +15,7 @@
  */
 package org.zoxweb.server.net.security;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +23,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import org.zoxweb.server.io.FileMonitor;
+import org.zoxweb.server.io.IOUtil;
 import org.zoxweb.server.task.TaskEvent;
 import org.zoxweb.server.task.TaskExecutor;
 import org.zoxweb.server.task.TaskSchedulerProcessor;
@@ -39,7 +41,7 @@ import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
 
 public class IPBlockerListener
-        implements StringTokenListener, TaskExecutor
+        implements StringTokenListener, TaskExecutor, Closeable
 {
 	class RemoteIPInfo
 	{
@@ -55,8 +57,6 @@ public class IPBlockerListener
 		long attackCount = 0;
 		boolean blocked = false;
 		float attackRate = 0;
-	
-		
 	}
 	
 	
@@ -85,8 +85,8 @@ public class IPBlockerListener
 			
 			IPBlockerListener ipbl = new IPBlockerListener(ipBlockerConfig, TaskUtil.getDefaultTaskScheduler());
 			tlm.addEventListener(ipbl);
-
-			TaskUtil.getDefaultTaskScheduler().queue(new FileMonitor(ipBlockerConfig.getAuthFile(), tlm, true), new AppointmentDefault(TimeInMillis.MINUTE.MILLIS), ipbl);
+			ipbl.fileMonitor = new FileMonitor(ipBlockerConfig.getAuthFile(), tlm, true);
+			TaskUtil.getDefaultTaskScheduler().queue(ipbl.fileMonitor, new AppointmentDefault(TimeInMillis.MINUTE.MILLIS), ipbl);
 			return ipbl;
 		}
 		
@@ -96,16 +96,9 @@ public class IPBlockerListener
 	
 	
 	private TaskSchedulerProcessor tsp = null;
-	
-//	private String tokenMatch;
+	protected transient volatile FileMonitor fileMonitor = null;
 	
 
-//	private String parameterName;
-//	private String executionCommand;
-//	private String commandToken;
-//	private long minCount;
-//	private float rate;
-//	private long clearTimeout = TimeInMillis.MINUTE.MILLIS*10;
 	
 	private Map<String, RemoteIPInfo> ripiMap = new HashMap<String, RemoteIPInfo>();
 	
@@ -204,45 +197,6 @@ public class IPBlockerListener
 	}
 	
 	
-//	public String getTokenMatch()
-//	{
-//		return tokenMatch;
-//	}
-//
-//	public void setTokenMatch(String tokenMatch)
-//	{
-//		this.tokenMatch = tokenMatch;
-//	}
-//
-//
-//	public String getParameterName() {
-//		return parameterName;
-//	}
-//
-//
-//	public void setParameterName(String parameterName) {
-//		this.parameterName = parameterName;
-//	}
-//
-//
-//	public String getExecutionCommand() {
-//		return executionCommand;
-//	}
-//
-//
-//	public void setExecutionCommand(String executionCommand) {
-//		this.executionCommand = executionCommand;
-//	}
-//
-//
-//	public String getCommandToken() {
-//		return commandToken;
-//	}
-//
-//
-//	public void setCommandToken(String commandToken) {
-//		this.commandToken = commandToken;
-//	}
 	
 	public IPBlockerConfig getIPBlockerConfig()
 	{
@@ -302,6 +256,12 @@ public class IPBlockerListener
 			e.printStackTrace();
 			System.err.println("IPBlocker fileToMonitor tokenMatch parameterName executionCommand commandToken");
 		}
+	}
+
+	@Override
+	public void close() throws IOException {
+		// TODO Auto-generated method stub
+		IOUtil.close(fileMonitor);
 	}
 
 

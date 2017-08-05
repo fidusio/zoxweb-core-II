@@ -2,7 +2,7 @@ package org.zoxweb.shared.security;
 
 import org.zoxweb.shared.data.SetNameDescriptionDAO;
 import org.zoxweb.shared.filters.FilterType;
-import org.zoxweb.shared.util.DomainID;
+import org.zoxweb.shared.util.AppID;
 import org.zoxweb.shared.util.GetNVConfig;
 import org.zoxweb.shared.util.NVConfig;
 import org.zoxweb.shared.util.NVConfigEntity;
@@ -14,7 +14,7 @@ import org.zoxweb.shared.util.SubjectID;
 @SuppressWarnings("serial")
 public class JWTPayload 
 extends SetNameDescriptionDAO
-implements DomainID<String>, SubjectID<String>
+implements AppID<String>, SubjectID<String>
 {
 	
 
@@ -25,15 +25,15 @@ implements DomainID<String>, SubjectID<String>
 		APP_ID(NVConfigManager.createNVConfig("app_id", "ApplicationID", "AppID", true, true, false, String.class, null)),
 		NONCE(NVConfigManager.createNVConfig("nonce", "ApplicationID", "Nonce", false, true, false, long.class, null)),
 		RANDOM(NVConfigManager.createNVConfig("random", "Random Data", "Rendom", false, true, false, byte[].class, null)),
-		ISS(NVConfigManager.createNVConfig("iss", "Issuer intentifier", "Issuer", true, true, false, String.class, null)),
-		SUB(NVConfigManager.createNVConfig("sub", "Subject Identifier", "SubjectID", true, true, false, String.class, null)),
-		AUD(NVConfigManager.createNVConfig("aud", "Audience", "Audience", true, true, false, String.class, null)),	
-		EXP(NVConfigManager.createNVConfig("exp", "Expiration time", "Expiration", true, true, false, long.class, null)),
-		NBF(NVConfigManager.createNVConfig("nbf", "Not Before", "NBF", true, true, false, long.class, null)),
-		IAT(NVConfigManager.createNVConfig("iat", "Issued At", "IAT", true, true, false, long.class, null)),
-		JTI(NVConfigManager.createNVConfig("jti", "JWT ID", "JWTID", true, true, false, String.class, null)),
-		NAME(NVConfigManager.createNVConfig("name", "name", "Name", true, true, false, String.class, null)),
-		ADMIN(NVConfigManager.createNVConfig("admin", "ApplicationID", "AppID", true, true, boolean.class)),
+		ISS(NVConfigManager.createNVConfig("iss", "Issuer intentifier", "Issuer", false, true, false, String.class, null)),
+		SUB(NVConfigManager.createNVConfig("sub", "Subject Identifier", "SubjectID", false, true, false, String.class, null)),
+		AUD(NVConfigManager.createNVConfig("aud", "Audience", "Audience", false, true, false, String.class, null)),	
+		EXP(NVConfigManager.createNVConfig("exp", "Expiration time", "Expiration", false, true, false, long.class, null)),
+		NBF(NVConfigManager.createNVConfig("nbf", "Not Before", "NBF", false, true, false, long.class, null)),
+		IAT(NVConfigManager.createNVConfig("iat", "Issued At", "IAT", false, true, false, long.class, null)),
+		JTI(NVConfigManager.createNVConfig("jti", "JWT ID", "JWTID", false, true, false, String.class, null)),
+		//NAME(NVConfigManager.createNVConfig("name", "name", "Name", true, true, false, String.class, null)),
+		ADMIN(NVConfigManager.createNVConfig("admin", "ApplicationID", "AppID", false, true, boolean.class)),
 		
 		
 		;

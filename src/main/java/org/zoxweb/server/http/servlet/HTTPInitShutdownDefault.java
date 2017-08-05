@@ -38,7 +38,8 @@ public class HTTPInitShutdownDefault
 {
 
 	private static final transient Logger log = Logger.getLogger("");
-	NIOConfig nioConfig = null;
+	private NIOConfig nioConfig = null;
+	private IPBlockerListener ipBlocker = null;
 	public void contextInitialized(ServletContextEvent event) 
 	{
 		try
@@ -74,7 +75,7 @@ public class HTTPInitShutdownDefault
 					IPBlockerListener.Creator c = new IPBlockerListener.Creator();
 					//log.info("\n" + GSONUtil.toJSON(appConfig, true, false, false));
 					c.setAppConfig(appConfig);
-					c.createApp();
+					ipBlocker = c.createApp();
 				}
 				catch(Exception e)
 				{
@@ -108,6 +109,7 @@ public class HTTPInitShutdownDefault
 		log.info("destroy started");
 		// TODO Auto-generated method stub
 		IOUtil.close(nioConfig);
+		IOUtil.close(ipBlocker);
 		TaskUtil.getDefaultTaskScheduler().close();
 		TaskUtil.getDefaultTaskProcessor().close();
 		log.info("destroy done");

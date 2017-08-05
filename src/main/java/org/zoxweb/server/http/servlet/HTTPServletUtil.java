@@ -75,7 +75,7 @@ public class HTTPServletUtil
 			Enumeration<String> headerValues = req.getHeaders(headerName);
 			for (; headerValues.hasMoreElements();)
 			{
-				ret.add( new NVPair(headerName, headerValues.nextElement()));
+				ret.add(new NVPair(headerName, headerValues.nextElement()));
 			}
 		}
 		
@@ -98,7 +98,7 @@ public class HTTPServletUtil
 		DiskFileItemFactory dfif = null;
 		List<FileItem> items = null;
 		// check if the request is of multipart type
-		List<GetNameValue<String>> headers = HTTPServletUtil.extractRequestHeaders(req);
+		List<GetNameValue<String>> headers = extractRequestHeaders(req);
 		List<GetNameValue<String>> params = new ArrayList<GetNameValue<String>>();
 		List<FileInfoStreamSource> streamList = new ArrayList<FileInfoStreamSource>();
 		
