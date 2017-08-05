@@ -1,4 +1,4 @@
-package org.zoxweb.server.http.servlet;
+package org.zoxweb.server.http.servlet.filters;
 
 import java.io.IOException;
 import java.util.Enumeration;

@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.zoxweb.server.filters;
+package org.zoxweb.server.http.servlet.filters;
 
 import java.io.IOException;
 import java.util.logging.Logger;
