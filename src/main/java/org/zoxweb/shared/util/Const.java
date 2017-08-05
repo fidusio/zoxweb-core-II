@@ -26,6 +26,8 @@ public class Const
 
 	public static final String LOGGER_NAME = "zoxweb-core";
 
+	public static final String UTF8 = "UTF-8";
+
 	public enum JavaClassVersion
     {
 		//VER_1_0("1.0", 45, 3),
