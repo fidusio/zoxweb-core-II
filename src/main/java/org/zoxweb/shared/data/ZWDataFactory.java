@@ -29,7 +29,6 @@ import org.zoxweb.shared.api.APIConfigInfoDAO;
 import org.zoxweb.shared.api.APICredentialsDAO;
 import org.zoxweb.shared.api.APIError;
 import org.zoxweb.shared.http.HTTPDefaultResponseDAO;
-import org.zoxweb.shared.security.JWT;
 import org.zoxweb.shared.util.NVEntityInstance;
 import org.zoxweb.shared.data.shiro.ShiroNVEntityCRUDs;
 import org.zoxweb.shared.data.shiro.ShiroPermissionDAO;
