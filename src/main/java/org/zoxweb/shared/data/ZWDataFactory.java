@@ -29,6 +29,7 @@ import org.zoxweb.shared.api.APIConfigInfoDAO;
 import org.zoxweb.shared.api.APICredentialsDAO;
 import org.zoxweb.shared.api.APIError;
 import org.zoxweb.shared.http.HTTPDefaultResponseDAO;
+import org.zoxweb.shared.security.JWT;
 import org.zoxweb.shared.util.NVEntityInstance;
 import org.zoxweb.shared.data.shiro.ShiroNVEntityCRUDs;
 import org.zoxweb.shared.data.shiro.ShiroPermissionDAO;
@@ -975,6 +976,21 @@ public class ZWDataFactory
             public NVConfigEntity getNVConfigEntity()
             {
                 return JWTPayload.NVC_JWT_PAYLOAD;
+            }
+        },
+        JWT(org.zoxweb.shared.security.JWT.class.getName())
+        {
+            @SuppressWarnings("unchecked")
+            @Override
+            public org.zoxweb.shared.security.JWT newInstance()
+            {
+                return new org.zoxweb.shared.security.JWT();
+            }
+
+            @Override
+            public NVConfigEntity getNVConfigEntity()
+            {
+                return org.zoxweb.shared.security.JWT.NVC_JWT;
             }
         },
         IMAGE_DAO(ImageDAO.class.getName())
