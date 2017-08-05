@@ -12,6 +12,7 @@ import org.zoxweb.shared.data.DataConst.Language;
 /**
  * Created on 8/4/17
  */
+@SuppressWarnings("serial")
 public class UserPreferenceDAO
         extends SetNameDescriptionDAO {
 
