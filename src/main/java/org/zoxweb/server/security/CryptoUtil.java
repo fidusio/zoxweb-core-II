@@ -726,7 +726,10 @@ public class CryptoUtil
 				   IOException,
 				   SecurityException
 	{
-		SharedUtil.checkIfNulls("Null jwt header or parameters", jwt, jwt.getHeader(), jwt.getHeader().getJWTAlgorithm());
+		SharedUtil.checkIfNulls("Null jwt", jwt);
+        SharedUtil.checkIfNulls("Null jwt header", jwt.getHeader());
+        SharedUtil.checkIfNulls("Null jwt algorithm", jwt.getHeader().getJWTAlgorithm());
+
 		
 		StringBuilder sb = new StringBuilder();
 		byte[] b64Header = SharedBase64.encode(Base64Type.URL, GSONUtil.toJSON(jwt.getHeader(), false, false, false));

@@ -53,6 +53,7 @@ extends HTTPAuthentication
 		this();
 		setJWTEncoder(encoder);
 		setKey(key);
+		setJWT(jwt);
 		
 	}
 	
