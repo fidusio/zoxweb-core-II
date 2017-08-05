@@ -13,13 +13,13 @@ import org.zoxweb.shared.util.SubjectID;
 
 @SuppressWarnings("serial")
 public class JWTPayload 
-extends SetNameDescriptionDAO
-implements AppID<String>, SubjectID<String>
+    extends SetNameDescriptionDAO
+    implements AppID<String>, SubjectID<String>
 {
 	
 
 	public enum Param
-	implements GetNVConfig
+	    implements GetNVConfig
 	{
 		DOMAIN_ID(NVConfigManager.createNVConfig("domain_id", "Domain identifier", "DomainID", true, true, false, String.class, FilterType.DOMAIN)),
 		APP_ID(NVConfigManager.createNVConfig("app_id", "ApplicationID", "AppID", true, true, false, String.class, null)),
@@ -67,171 +67,122 @@ implements AppID<String>, SubjectID<String>
 																				);
 
 
-	
 	public JWTPayload() 
 	{
 		super(NVC_JWT_PAYLOAD);
-		// TODO Auto-generated constructor stub
 	}
-
-
-
-	
-
-
 
 	@Override
 	public String getDomainID() 
 	{
-		// TODO Auto-generated method stub
 		return lookupValue(Param.DOMAIN_ID);
 	}
-
-
 
 	@Override
 	public void setDomainID(String domainID) 
 	{
-		// TODO Auto-generated method stub
 		setValue(Param.DOMAIN_ID, domainID);
 	}
-	
-	
-	
+
 	public String getAppID() 
 	{
-		// TODO Auto-generated method stub
 		return lookupValue(Param.APP_ID);
 	}
 
-
-
 	public void setAppID(String appID) 
 	{
-		// TODO Auto-generated method stub
 		setValue(Param.APP_ID, appID);
 	}
 	
 	public long getNonce() 
 	{
-		// TODO Auto-generated method stub
 		return lookupValue(Param.NONCE);
 	}
 
 	public String getSubjectID() 
 	{
-		// TODO Auto-generated method stub
 		return lookupValue(Param.SUB);
 	}
 
 	public void setSubjectID(String sub) 
 	{
-		// TODO Auto-generated method stub
 		setValue(Param.SUB, sub);
 	}
-	
-	
+
 	public boolean isAdmin() 
 	{
-		// TODO Auto-generated method stub
 		return lookupValue(Param.ADMIN);
 	}
 	
-	
 	public void setAdmin(boolean isAdmin) 
 	{
-		// TODO Auto-generated method stub
 		setValue(Param.ADMIN, isAdmin);
 	}
-	
-	
-	
-
 
 	public void setNonce(String nonce) 
 	{
-		// TODO Auto-generated method stub
 		setValue(Param.NONCE, nonce);
 	}
-	
-	
+
 	public byte[] getRandom() 
 	{
-		// TODO Auto-generated method stub
 		return lookupValue(Param.RANDOM);
 	}
 
 
 	public void setRandom(byte[] random) 
 	{
-		// TODO Auto-generated method stub
 		setValue(Param.RANDOM, random);
 	}
-	
 
 	public String getAudience() 
 	{
-		// TODO Auto-generated method stub
 		return lookupValue(Param.AUD);
 	}
 
 	public void setAudience(String aud) 
 	{
-		// TODO Auto-generated method stub
 		setValue(Param.AUD, aud);
 	}
 	
 	public long getExpirationTime() 
 	{
-		// TODO Auto-generated method stub
 		return lookupValue(Param.EXP);
 	}
 
 	public void setExpirationTime(long exp) 
 	{
-		// TODO Auto-generated method stub
 		setValue(Param.EXP, exp);
 	}
-	
-	
+
 	public long getNotBefore() 
 	{
-		// TODO Auto-generated method stub
 		return lookupValue(Param.NBF);
 	}
 
 	public void setNotBefore(long nbf) 
 	{
-		// TODO Auto-generated method stub
 		setValue(Param.NBF, nbf);
 	}
-	
-	
+
 	public long getIssuedAt() 
 	{
-		// TODO Auto-generated method stub
 		return lookupValue(Param.IAT);
 	}
 
 	public void setIssuedAt(long iat) 
 	{
-		// TODO Auto-generated method stub
 		setValue(Param.IAT, iat);
 	}
 
-	
 	public String getJWTID() 
 	{
-		// TODO Auto-generated method stub
 		return lookupValue(Param.JTI);
 	}
 
 	public void setJWTID(String jti) 
 	{
-		// TODO Auto-generated method stub
 		setValue(Param.JTI, jti);
 	}
+
 }
-
-
-

@@ -11,10 +11,10 @@ import org.zoxweb.shared.security.SecurityConsts.JWTAlgorithm;
 
 @SuppressWarnings("serial")
 public class JWTHeader
-extends SetNameDescriptionDAO
+    extends SetNameDescriptionDAO
 {
 	public enum Param
-	implements GetNVConfig
+	    implements GetNVConfig
 	{
 		ALG(NVConfigManager.createNVConfig("alg", "Algorithm", "Alg", true, true, JWTAlgorithm.class)),
 		TYP(NVConfigManager.createNVConfig("typ", "Content type", "ContentType",false, false, String.class)),
@@ -51,7 +51,6 @@ extends SetNameDescriptionDAO
 	public JWTHeader()
 	{
 		super(NVC_JWT_HEADER);
-		// TODO Auto-generated constructor stub
 	}
 	
 	public JWTAlgorithm getJWTAlgorithm()
@@ -73,6 +72,5 @@ extends SetNameDescriptionDAO
 	{
 		setValue(Param.TYP, type);
 	}
-	
 
 }
