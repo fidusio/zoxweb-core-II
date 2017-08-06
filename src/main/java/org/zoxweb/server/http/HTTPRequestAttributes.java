@@ -19,8 +19,11 @@ import java.util.List;
 
 import org.zoxweb.server.io.FileInfoStreamSource;
 import org.zoxweb.shared.http.HTTPAuthentication;
+import org.zoxweb.shared.http.HTTPAuthenticationBearer;
 import org.zoxweb.shared.http.HTTPAuthorizationType;
 import org.zoxweb.shared.http.HTTPHeaderName;
+import org.zoxweb.shared.http.HTTPMimeType;
+import org.zoxweb.shared.security.JWT;
 import org.zoxweb.shared.util.ArrayValues;
 import org.zoxweb.shared.util.GetNameValue;
 import org.zoxweb.shared.util.NVGetNameValueList;
@@ -47,6 +50,8 @@ public class HTTPRequestAttributes
 	private final HTTPAuthentication httpAuthentication;
 	private final String pathInfo;
 	
+	private JWT jwt = null;
+	
 	@SuppressWarnings("unchecked")
 	public HTTPRequestAttributes(String pathInfo, 
 								 String contentType,
@@ -66,6 +71,13 @@ public class HTTPRequestAttributes
 
 		if (headers != null)
 		{
+			HTTPAuthentication temp = HTTPAuthorizationType.parse((GetNameValue<String>) SharedUtil.lookup(headers, HTTPHeaderName.AUTHORIZATION));
+			
+			if (temp != null && temp instanceof HTTPAuthenticationBearer)
+			{
+				((HTTPAuthenticationBearer)temp).getToken();
+			}
+			
 			httpAuthentication = HTTPAuthorizationType.parse((GetNameValue<String>) SharedUtil.lookup(headers, HTTPHeaderName.AUTHORIZATION));
 		}
 		else
@@ -136,6 +148,12 @@ public class HTTPRequestAttributes
 		return contentType;
 	}
 	
+	
+	public HTTPMimeType getContentMimeType()
+	{
+		return HTTPMimeType.lookup(getContentType());
+	}
+	
 	/**
 	 * Returns any extra path information associated with the URL the client sent when it made this request. The extra path information follows the servlet path but precedes the query string and will start with a "/" character.
 	 * This method returns null if there was no extra path information. 
@@ -147,4 +165,9 @@ public class HTTPRequestAttributes
 		return pathInfo;
 	}
 	
+	
+	public JWT getJWT()
+	{
+		return jwt;
+	}
 }

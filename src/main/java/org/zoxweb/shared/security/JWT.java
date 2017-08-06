@@ -29,7 +29,8 @@ extends SetNameDescriptionDAO
 	implements GetNVConfig
 	{
 		JWT_HEADER(NVConfigManager.createNVConfigEntity("header", "Header", "Header", true, true, JWTHeader.class, null)),
-		JWT_PAYLOAD(NVConfigManager.createNVConfigEntity("payload", "Payload", "Payload",false, false, JWTPayload.class, null)),
+		JWT_PAYLOAD(NVConfigManager.createNVConfigEntity("payload", "Payload", "Payload", false, false, JWTPayload.class, null)),
+		JWT_HASH(NVConfigManager.createNVConfig("hash", "hash", "Hash", false, false, byte[].class)),
 		
 		;
 		
@@ -90,6 +91,18 @@ extends SetNameDescriptionDAO
 
 	public void setPayload(JWTPayload payload) {
 		setValue(Param.JWT_PAYLOAD, payload);
+	}
+	
+	
+	public byte[] getHash()
+	{
+		return lookupValue(Param.JWT_HASH);
+	}
+	
+	
+	public void setHash(byte[] hash)
+	{
+		setValue(Param.JWT_HASH, hash);
 	}
 
     public static JWT createJWT(JWTAlgorithm algorithm, String subjectID, AppID<String> appID) {

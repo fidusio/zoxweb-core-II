@@ -781,21 +781,27 @@ public class CryptoUtil
 				   IOException, 
 				   SecurityException
 	{
-		SharedUtil.checkIfNulls("Null token", token);
-		String tokens[] = token.trim().split("\\.");
-		JWTHeader jwtHeader = null;
-		JWTPayload jwtPayload = null;
-		try {
-			jwtHeader = GSONUtil.fromJSON(SharedStringUtil.toString(SharedBase64.decode(Base64Type.URL,tokens[JWTToken.HEADER.ordinal()])), JWTHeader.class);
-			jwtPayload = GSONUtil.fromJSON(SharedStringUtil.toString(SharedBase64.decode(Base64Type.URL,tokens[JWTToken.PAYLOAD.ordinal()])), JWTPayload.class);
-		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+//		SharedUtil.checkIfNulls("Null token", token);
+//		String tokens[] = token.trim().split("\\.");
+//		JWTHeader jwtHeader = null;
+//		JWTPayload jwtPayload = null;
+		JWT jwt = null;
+		try 
+		{
+			jwt = parseJWT(token);
+//			jwtHeader = GSONUtil.fromJSON(SharedStringUtil.toString(SharedBase64.decode(Base64Type.URL,tokens[JWTToken.HEADER.ordinal()])), JWTHeader.class);
+//			jwtPayload = GSONUtil.fromJSON(SharedStringUtil.toString(SharedBase64.decode(Base64Type.URL,tokens[JWTToken.PAYLOAD.ordinal()])), JWTPayload.class);
+		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e)
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new SecurityException();
 		}
 		
-		SharedUtil.checkIfNulls("Null jwt header or parameters", jwtHeader, jwtHeader.getJWTAlgorithm());
+//		SharedUtil.checkIfNulls("Null jwt header or parameters", jwtHeader, jwtHeader.getJWTAlgorithm());
 		
-		switch(jwtHeader.getJWTAlgorithm())
+		String tokens[] = token.trim().split("\\.");
+		switch(jwt.getHeader().getJWTAlgorithm())
 		{
 		case HS256:
 			SharedUtil.checkIfNulls("Null key", key);
@@ -810,7 +816,7 @@ public class CryptoUtil
 			sha256HMAC.update((byte) '.');
 			byte[] b64Hash = sha256HMAC.doFinal(SharedStringUtil.getBytes(tokens[JWTToken.PAYLOAD.ordinal()]));
 
-			if (!Arrays.equals(b64Hash, SharedBase64.decode(Base64Type.URL,tokens[JWTToken.HASH.ordinal()]))) {
+			if (!Arrays.equals(b64Hash, jwt.getHash())) {
 				throw new SecurityException("Invalid token");
 			}
 			break;
@@ -822,13 +828,54 @@ public class CryptoUtil
 		
 		}
 				
+		
+		return jwt;
+	}
+
+	
+	public static JWT parseJWT(String token) throws InstantiationException, IllegalAccessException, ClassNotFoundException, NullPointerException, IllegalArgumentException
+	{
+		SharedUtil.checkIfNulls("Null token", token);
+		String tokens[] = token.trim().split("\\.");
+		JWTHeader jwtHeader = null;
+		JWTPayload jwtPayload = null;
+		if(tokens.length < 2 || tokens.length> 3)
+		{
+			throw new IllegalArgumentException("Invalid token JWT token");
+		}
+		
+		jwtHeader = GSONUtil.fromJSON(SharedStringUtil.toString(SharedBase64.decode(Base64Type.URL,tokens[JWTToken.HEADER.ordinal()])), JWTHeader.class);
+		jwtPayload = GSONUtil.fromJSON(SharedStringUtil.toString(SharedBase64.decode(Base64Type.URL,tokens[JWTToken.PAYLOAD.ordinal()])), JWTPayload.class);
 		if (jwtHeader == null || jwtPayload == null)
 		{
 			throw new SecurityException("Invalid JWT");
 		}
-		return new JWT(jwtHeader, jwtPayload);
+		
+		
+		SharedUtil.checkIfNulls("Null jwt header or parameters", jwtHeader, jwtHeader.getJWTAlgorithm());
+		JWT ret = new JWT();
+		ret.setHeader(jwtHeader);
+		ret.setPayload(jwtPayload);
+		switch(jwtHeader.getJWTAlgorithm())
+		{
+		case HS256:
+			if (tokens.length !=  JWTToken.values().length)
+			{
+				throw new IllegalArgumentException("Invalid token JWT token length expected 3");
+			}
+			ret.setHash(SharedBase64.decode(Base64Type.URL,tokens[JWTToken.HASH.ordinal()]));
+			break;
+		case none:
+			if (tokens.length !=  JWTToken.values().length -1)
+			{
+				throw new IllegalArgumentException("Invalid token JWT token length expected 2");
+			}
+			break;
+		}
+		
+		
+		return ret;
 	}
-
 
 
 	public static SecretKey generateKey(int keySizeInBits, String algo) throws NoSuchAlgorithmException
