@@ -18,6 +18,7 @@ package org.zoxweb.server.http;
 import java.util.List;
 
 import org.zoxweb.server.io.FileInfoStreamSource;
+import org.zoxweb.server.security.CryptoUtil;
 import org.zoxweb.shared.http.HTTPAuthentication;
 import org.zoxweb.shared.http.HTTPAuthenticationBearer;
 import org.zoxweb.shared.http.HTTPAuthorizationType;
@@ -75,10 +76,17 @@ public class HTTPRequestAttributes
 			
 			if (temp != null && temp instanceof HTTPAuthenticationBearer)
 			{
-				((HTTPAuthenticationBearer)temp).getToken();
+				try
+				{
+					jwt = CryptoUtil.parseJWT(((HTTPAuthenticationBearer)temp).getToken());
+				}
+				catch (Exception e)
+				{
+					
+				}
 			}
 			
-			httpAuthentication = HTTPAuthorizationType.parse((GetNameValue<String>) SharedUtil.lookup(headers, HTTPHeaderName.AUTHORIZATION));
+			httpAuthentication = temp;//HTTPAuthorizationType.parse((GetNameValue<String>) SharedUtil.lookup(headers, HTTPHeaderName.AUTHORIZATION));
 		}
 		else
 		{
