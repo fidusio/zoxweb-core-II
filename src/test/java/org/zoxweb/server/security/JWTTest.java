@@ -93,11 +93,7 @@ public class JWTTest {
 		String test = CryptoUtil.encodeJWT("secret", localJwt);
 		System.out.println(test);
 		
-//		JWTPayload payload = new JWTPayload();
-//		payload.setSubjectID("1234567890");
-//		payload.setName("John Doe");
-//		payload.setAdmin(true);
-//		localJwt.setPayload(payload);
+
 		jsonNone = GSONUtil.toJSON(localJwt, false, false, false, Base64Type.URL);
 		System.out.println(jsonNone);
 		test = CryptoUtil.encodeJWT("secret", localJwt);
