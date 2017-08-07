@@ -17,7 +17,7 @@ package org.zoxweb.server.net.security;
 
 import java.io.Closeable;
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -57,6 +57,8 @@ public class IPBlockerListener
 		long attackCount = 0;
 		boolean blocked = false;
 		float attackRate = 0;
+	
+		
 	}
 	
 	
@@ -79,6 +81,7 @@ public class IPBlockerListener
 		}
 
 		@Override
+		
 		public IPBlockerListener createApp() throws NullPointerException, IllegalArgumentException, IOException {
 			// TODO Auto-generated method stub
 			TokenListenerManager tlm = new TokenListenerManager();
@@ -96,11 +99,8 @@ public class IPBlockerListener
 	
 	
 	private TaskSchedulerProcessor tsp = null;
-	protected transient volatile FileMonitor fileMonitor = null;
-	
-
-	
-	private Map<String, RemoteIPInfo> ripiMap = new HashMap<String, RemoteIPInfo>();
+	protected transient volatile FileMonitor fileMonitor = null;	
+	private Map<String, RemoteIPInfo> ripiMap = new LinkedHashMap<String, RemoteIPInfo>();
 	
 	private IPBlockerConfig ipbc;
 	public IPBlockerListener(IPBlockerConfig ipbc,TaskSchedulerProcessor tsp)
@@ -123,14 +123,10 @@ public class IPBlockerListener
 		RemoteIPInfo all[] = ripiMap.values().toArray(new RemoteIPInfo[0]);
 		for(RemoteIPInfo toCheck: all)
 		{
-			// removed temporarly
-			//if(!toCheck.blocked)
+			if (System.currentTimeMillis() - toCheck.detectionStartTime >= ipbc.getResetTimeInMillis())
 			{
-				if (System.currentTimeMillis() - toCheck.detectionStartTime >= ipbc.getResetTimeInMillis())
-				{
-					ripiMap.remove(toCheck.remoteHost);
-					log.info(toCheck + " was removed from check list");
-				}
+				ripiMap.remove(toCheck.remoteHost);
+				log.info(toCheck + " was removed from check list");
 			}
 		}
 	}
@@ -165,9 +161,9 @@ public class IPBlockerListener
 				
 				ripi.attackRate = ripi.lastTimeDetected > ripi.detectionStartTime ? ((ripi.attackCount*TimeInMillis.MINUTE.MILLIS) / ((ripi.lastTimeDetected - ripi.detectionStartTime))) : 0;
 				
-				log.info(ripi + " minCount: " + ipbc.getTriggerCount() + " rate: " + ipbc.getRate());
+				log.info(ripi + " minCount: " + ipbc.getTriggerCounter() + " rate: " + ipbc.getRate());
 				
-				if (ripi.attackCount >= ipbc.getTriggerCount() && ripi.attackRate >= ipbc.getRate())
+				if (ripi.attackCount >= ipbc.getTriggerCounter() && ripi.attackRate >= ipbc.getRate())
 				{
 					log.info("we must block:" + ripi);
 					String command = SharedStringUtil.embedText(ipbc.getCommand(), ipbc.getCommandToken(), value);
@@ -197,6 +193,7 @@ public class IPBlockerListener
 	}
 	
 	
+
 	
 	public IPBlockerConfig getIPBlockerConfig()
 	{
@@ -219,6 +216,13 @@ public class IPBlockerListener
 		
 	}
 	
+	@Override
+	public void close() throws IOException {
+		// TODO Auto-generated method stub
+		IOUtil.close(fileMonitor);
+	}
+
+	
 	public static void main(String ...args)
 	{
 		try
@@ -233,7 +237,7 @@ public class IPBlockerListener
 			ipbc.setAuthValue(args[index++]);
 			ipbc.setCommand(args[index++]);
 			ipbc.setCommandToken(args[index++]);
-			ipbc.setTriggerCount(Long.parseLong(args[index++]));
+			ipbc.setTriggerCounter(Long.parseLong(args[index++]));
 			ipbc.setRate(Float.parseFloat(args[index++]));
 			Creator c = new Creator();
 			c.setAppConfig(ipbc);
@@ -256,12 +260,6 @@ public class IPBlockerListener
 			e.printStackTrace();
 			System.err.println("IPBlocker fileToMonitor tokenMatch parameterName executionCommand commandToken");
 		}
-	}
-
-	@Override
-	public void close() throws IOException {
-		// TODO Auto-generated method stub
-		IOUtil.close(fileMonitor);
 	}
 
 

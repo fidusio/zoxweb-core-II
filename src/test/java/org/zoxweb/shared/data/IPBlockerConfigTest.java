@@ -24,7 +24,7 @@ public class IPBlockerConfigTest {
 		ipbc.setAuthValue("rhost");
 		ipbc.setCommand("/sbin/iptables -I INPUT 4 -s $$host$$ -p tcp -m tcp --dport 22 -j DROP");
 		ipbc.setCommandToken("$$host$$");
-		ipbc.setTriggerCount(10);
+		ipbc.setTriggerCounter(10);
 		ipbc.setRate((float) 12);
 	}
 	

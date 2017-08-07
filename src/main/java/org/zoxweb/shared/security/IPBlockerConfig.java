@@ -25,8 +25,8 @@ implements AppConfig
 		AUTH_VALUE(NVConfigManager.createNVConfig("auth_value", "Authentication value", "AuthenticationValue", true, true, String.class)),
 		COMMAND(NVConfigManager.createNVConfig("command", "Command to be excuted", "Command", true, true, String.class)),
 		COMMAND_TOKEN(NVConfigManager.createNVConfig("command_token", "Command token to be replaced", "CommandToken", true, true, String.class)),
-		TIGGER_COUNT(NVConfigManager.createNVConfig("trigger_count", "Trigger count", "TriggerCount", true, true, long.class)),
-		RESET_TIME(NVConfigManager.createNVConfig("reset_time", "Reset time in min", "TriggerCount", true, true, false, long.class, new LongRangeFilter(1, true, 15, true))),
+		TRIGGER_COUNTER(NVConfigManager.createNVConfig("trigger_counter", "Trigger counter", "TriggerCounter", true, true, false, long.class, new LongRangeFilter(5, true, 14, true))),
+		RESET_TIME(NVConfigManager.createNVConfig("reset_time", "Reset time in min", "ResetTime", true, true, false, long.class, new LongRangeFilter(1, true, 15, true))),
 		RATE(NVConfigManager.createNVConfig("rate", "Rate", "Rate", true, true, false, float.class, new FloatRangeFilter(1, true, 100, true))),
 		;
 		
@@ -138,14 +138,14 @@ implements AppConfig
 	 * How many failure to wait before trigger
 	 * @return
 	 */
-	public long getTriggerCount()
+	public long getTriggerCounter()
 	{
-		return lookupValue(Param.TIGGER_COUNT);
+		return lookupValue(Param.TRIGGER_COUNTER);
 	}
 	
-	public void setTriggerCount(long count)
+	public void setTriggerCounter(long count)
 	{
-		setValue(Param.TIGGER_COUNT, count);
+		setValue(Param.TRIGGER_COUNTER, count);
 	}
 	
 	
