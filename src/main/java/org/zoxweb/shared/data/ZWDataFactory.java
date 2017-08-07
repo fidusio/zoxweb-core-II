@@ -54,6 +54,10 @@ import org.zoxweb.shared.util.NVEntity;
 import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
 
+import org.zoxweb.shared.security.SubjectAPIKey;
+
+import org.zoxweb.shared.data.AppDeviceDAO;
+
 /**
  * This NVEntity factory contains all NVEntity objects within this project.
  * @author mzebib
@@ -134,6 +138,35 @@ public class ZWDataFactory
 			}
 			
 		},
+	   APP_DEVICE_DAO(AppDeviceDAO.class.getName())
+        {
+            @SuppressWarnings("unchecked")
+            public AppDeviceDAO newInstance()
+            {
+                return new AppDeviceDAO();
+            }
+
+            @Override
+            public NVConfigEntity getNVConfigEntity()
+            {
+                return AppDeviceDAO.NVC_APP_DEVICE_DAO;
+            };
+        },
+        SUBJECT_API_KEY(SubjectAPIKey.class.getName())
+        {
+            @SuppressWarnings("unchecked")
+            @Override
+            public SubjectAPIKey newInstance()
+            {
+                return new SubjectAPIKey();
+            }
+
+            @Override
+            public NVConfigEntity getNVConfigEntity()
+            {
+                return SubjectAPIKey.NVC_SUBJECT_API_KEY;
+            }
+        },
 		
 		//	org.zoxweb.shared.data
 		ADDRESS_DAO(AddressDAO.class.getName())
