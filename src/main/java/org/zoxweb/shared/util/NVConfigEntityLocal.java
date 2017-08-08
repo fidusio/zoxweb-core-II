@@ -17,6 +17,7 @@ package org.zoxweb.shared.util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 //import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -252,7 +253,7 @@ public class NVConfigEntityLocal
 	public synchronized void setAttributes(List<NVConfig> attrList)
 	{
 		this.attrList = attrList;
-		fastMap = new HashMap<String, NVConfig>();
+		fastMap = new LinkedHashMap<String, NVConfig>();
 		
 		
 		if (this.attrList != null)

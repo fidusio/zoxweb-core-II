@@ -46,9 +46,12 @@ public enum HTTPHeaderName
 	LOCATION("Location"),
 	PROXY_AGENT("Proxy-Agent"),
 	PROXY_CONNECTION("Proxy-Connection"),
+	PROXY_AUTHENTICATE("Proxy-Authenticate"),
+	PROXY_AUTHORIZATION("Proxy-Authorization"),
 	SET_COOKIE("Set-Cookie"),
 	TRANSFER_ENCODING("Transfer-Encoding"),
 	USER_AGENT("User-Agent"),
+	WWW_AUTHENTICATE("WWW-Authenticate"),
 	X_ACCEPT_ENCODING("X-Accept-Encoding"),
 	;
 
