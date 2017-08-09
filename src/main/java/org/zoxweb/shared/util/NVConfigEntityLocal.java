@@ -36,7 +36,7 @@ public class NVConfigEntityLocal
 	public String toString()
     {
 		return "NVConfigEntityLocal [byReference=" + byReference
-				+ ", attrList=" + attrList + ", displayList=" + displayList
+				+ ", attrList=" + fastMap + ", displayList=" + displayList
 				+ ", attributesValidationRequired="
 				+ attributesValidationRequired + ", domainID=" + domainID
 				+ ", getAttributes()=" + getAttributes()
@@ -241,7 +241,20 @@ public class NVConfigEntityLocal
 		}
 		
 		return attrList;
+		
 	}
+	
+	
+//	public List<NVConfig> getAttributes() 
+//	{
+//		if (byReference != null)
+//		{
+//			return byReference.getAttributes();
+//		}
+//		
+//		return new ArrayList<NVConfig>(fastMap.values());
+//	}
+
 
 	/**
 	 * Sets the NVConfig array list
@@ -283,6 +296,40 @@ public class NVConfigEntityLocal
 		
 	}
 
+	
+//	public synchronized void setAttributes(List<NVConfig> attrList)
+//	{
+//		
+//		fastMap = new LinkedHashMap<String, NVConfig>();
+//		
+//		
+//		if (attrList != null)
+//		{
+//			//ArrayList<NVConfig> toPurge = new ArrayList<NVConfig>();
+//			for(NVConfig nvc : attrList)
+//			{
+//				String attrName = nvc.getName().toLowerCase();
+//				
+//				NVConfig nvcToPurge = fastMap.get(attrName);
+//				if (nvcToPurge != null)
+//				{
+//					//throw new IllegalArgumentException("Attribute name " + attrName +" exist more than once");
+//					if ( !(nvc.getName().equalsIgnoreCase(nvcToPurge.getName()) && nvc.getClass().equals(nvcToPurge.getClass()) && nvc.isArray() == nvcToPurge.isArray()))
+//					{	
+//						throw new IllegalArgumentException("Attribute name " + attrName +" exist more than once can't be replaced");
+//					}
+//					
+//					
+//				}
+//				
+//				fastMap.put(attrName, nvc);
+//				
+//			}
+//
+//			
+//		}
+//		
+//	}
 
 	/**
 	 * Returns the specified list of attributes

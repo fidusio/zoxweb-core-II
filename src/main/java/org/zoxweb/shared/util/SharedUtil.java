@@ -1669,7 +1669,7 @@ public class SharedUtil
 	}
 	
 	@SafeVarargs
-	public static List<NVConfig> mergeMeta(boolean deepCopy1, List<NVConfig>... cList)
+	public static List<NVConfig> mergeMeta(boolean deepCopy, List<NVConfig>... cList)
     {
 		List<NVConfig> first = null;
 		
