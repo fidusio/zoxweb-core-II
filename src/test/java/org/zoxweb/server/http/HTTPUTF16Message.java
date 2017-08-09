@@ -29,7 +29,7 @@ import org.zoxweb.shared.http.HTTPMessageConfig.Params;
 import org.zoxweb.shared.util.GetName;
 import org.zoxweb.shared.util.GetNameValue;
 import org.zoxweb.shared.util.NVBlob;
-import org.zoxweb.shared.util.NVGetNameValueGenericMap;
+import org.zoxweb.shared.util.NVGenericMap;
 import org.zoxweb.shared.util.NVPair;
 import org.zoxweb.shared.util.SharedStringUtil;
 
@@ -50,7 +50,7 @@ public class HTTPUTF16Message
 			HTTPMessageConfigInterface hmci = HTTPMessageConfig.createAndInit(url, uri, method);
 			hmci.getHeaderParameters().add(new NVPair(HTTPHeaderName.CONTENT_TYPE, "text/xml"));
 
-			NVGetNameValueGenericMap params = new NVGetNameValueGenericMap(Params.HEADER_PARAMETERS.getNVConfig().getName(), new HashMap<GetName, GetNameValue<?>>());
+			NVGenericMap params = new NVGenericMap(Params.HEADER_PARAMETERS.getNVConfig().getName(), new HashMap<GetName, GetNameValue<?>>());
 
 //			hmci.getParameters().add(new NVPair("reply_to","26161"));
 //			hmci.getParameters().add(new NVPair("customer_id","1"));

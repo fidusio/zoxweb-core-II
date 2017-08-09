@@ -43,6 +43,15 @@ public class NVEntityReference
 		super(config.getName(), null);
 		nvce = (NVConfigEntity) config;
 	}
+	
+	
+	public NVEntityReference(NVEntity nve)
+	{
+		super(nve.getName() == null ? nve.getNVConfig().getName() : nve.getName(), nve);
+		nvce = (NVConfigEntity) nve.getNVConfig();
+	}
+	
+	
 
 	/**
 	 * This method returns the NVConfig.
