@@ -22,7 +22,7 @@ import java.nio.channels.SelectionKey;
 import org.zoxweb.server.io.ByteBufferUtil;
 
 import org.zoxweb.server.net.security.SSLSessionData;
-
+import org.zoxweb.shared.util.GenericProperties;
 import org.zoxweb.shared.util.GetDescription;
 import org.zoxweb.shared.util.GetName;
 
@@ -38,6 +38,7 @@ public abstract class ProtocolSessionProcessor
 	private volatile SSLSessionData outputSSLSessionData;
 	private volatile SSLSessionData inputSSLSessionData;
 	private volatile SelectionKey attachement;
+	private volatile GenericProperties properties = null;
 	
 	protected ProtocolSessionProcessor()
 	{
@@ -167,5 +168,15 @@ public abstract class ProtocolSessionProcessor
 		this.inputSSLSessionData = inputSSLSessionData;
 	}
 
+	
+	public void setProperties(GenericProperties prop)
+	{
+		properties = prop;
+	}
+	
+	public GenericProperties getProperties()
+	{
+		return properties;
+	}
 
 }

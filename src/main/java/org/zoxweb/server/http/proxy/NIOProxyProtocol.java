@@ -54,6 +54,8 @@ public class NIOProxyProtocol
 	private static boolean debug = false;
 	private static final transient Logger log = Logger.getLogger(NIOProxyProtocol.class.getName());
 	public static final String NAME = "ZWNIOProxy";
+	
+	public static final String AUTHENTICATION = "AUTHENTICATION";
 
 	private static class RequestInfo
 	{
@@ -121,6 +123,12 @@ public class NIOProxyProtocol
 		}
 		
 		
+		public HTTPMessageConfigInterface getHTTPMessageConfigInterface()
+		{
+			return hmci;
+		}
+		
+		
 	}
 	
 	
@@ -128,11 +136,17 @@ public class NIOProxyProtocol
 		extends ProtocolSessionFactoryBase<NIOProxyProtocol>
 	{
 
+		public NIOProxyProtocolFactory()
+		{
+			getSessionProperties().setProperty(NIOProxyProtocol.AUTHENTICATION, false);
+		}
+		
 		@Override
 		public NIOProxyProtocol newInstance()
 		{
 			NIOProxyProtocol ret = new NIOProxyProtocol();
 			ret.setOutgoingInetFilterRulesManager(getOutgoingInetFilterRulesManager());
+			ret.setProperties(getSessionProperties());
 			
 			return ret;
 		}
@@ -323,7 +337,23 @@ public class NIOProxyProtocol
 
 
 
-	
+	private boolean isRequestValid(RequestInfo requestInfo, UByteArrayOutputStream requestRawBuffer) throws IOException
+	{
+		if (getProperties().getProperty(AUTHENTICATION))
+		{
+			if (requestInfo.getHTTPMessageConfigInterface().getHeaderParameters().get(HTTPHeaderName.PROXY_AUTHORIZATION) == null)
+			{
+				HTTPMessageConfigInterface hccError = createErrorMSG(HTTPStatusCode.PROXY_AUTHENTICATION_REQUIRED.CODE, HTTPStatusCode.PROXY_AUTHENTICATION_REQUIRED.REASON, requestMCCI.getURI());
+				hccError.getHeaderParameters().add(new NVPair(HTTPHeaderName.PROXY_AUTHENTICATE, "Basic realm=\"zoxweb nioproxy global access\""));
+				ByteBufferUtil.write(clientChannel, HTTPUtil.formatResponse(hccError, requestRawBuffer));
+				close();
+				return false;	
+			}
+			
+			requestInfo.getHTTPMessageConfigInterface().getHeaderParameters().remove(HTTPHeaderName.PROXY_AUTHORIZATION);
+		}
+		return true;
+	}
 		
 	
 	
@@ -341,6 +371,10 @@ public class NIOProxyProtocol
 		
 		if (requestInfo != null)
 		{
+			if (!isRequestValid(requestInfo, requestRawBuffer))
+			{
+				return;
+			}	
 			//InetSocketAddressDAO remoteAddress = HTTPUtil.parseHost(requestMCCI.getURI());
 			if (requestMCCI.getMethod() == HTTPMethod.CONNECT)
 			{

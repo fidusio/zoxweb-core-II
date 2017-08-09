@@ -228,6 +228,7 @@ public class NIOSocket
 							    		
 							    		
 								    	ProtocolSessionProcessor psp = psf.newInstance();
+								    	psp.setProperties(psp.getProperties());
 								    	psp.setSelectorController(selectorController);
 								    	psp.setOutgoingInetFilterRulesManager(psf.getOutgoingInetFilterRulesManager());
 								    	

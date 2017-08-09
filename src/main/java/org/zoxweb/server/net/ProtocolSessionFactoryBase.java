@@ -15,9 +15,11 @@
  */
 package org.zoxweb.server.net;
 
+
 import java.util.logging.Logger;
 
 import org.zoxweb.server.net.security.SSLSessionDataFactory;
+import org.zoxweb.shared.util.GenericProperties;
 
 public abstract class ProtocolSessionFactoryBase<P extends ProtocolSessionProcessor>
 	implements ProtocolSessionFactory<P>
@@ -27,6 +29,8 @@ public abstract class ProtocolSessionFactoryBase<P extends ProtocolSessionProces
 	private InetFilterRulesManager outgoingInetFilterRulesManager;
 	protected SSLSessionDataFactory incomingSSLSessionFactory = null;
 	private Logger logger;
+	private GenericProperties properties = new GenericProperties();
+	
 
 	
 //	protected ProtocolSessionFactoryBase(InetFilterRulesManager incoming, InetFilterRulesManager outgoing, SSLUtil sslUtil)
@@ -86,6 +90,12 @@ public abstract class ProtocolSessionFactoryBase<P extends ProtocolSessionProces
 	public void setOutgoingInetFilterRulesManager(InetFilterRulesManager incomingIFRM) {
 		// TODO Auto-generated method stub
 		outgoingInetFilterRulesManager = incomingIFRM;
+	}
+	
+	
+	public GenericProperties getSessionProperties()
+	{
+		return properties;
 	}
 
 }

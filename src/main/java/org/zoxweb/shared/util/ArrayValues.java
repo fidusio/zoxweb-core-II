@@ -38,6 +38,7 @@ public interface ArrayValues<T>
 
 	T remove(String str);
 
+	T remove(GetName getName);
 	void clear();
 
 	void add(T[]vals, boolean clear);

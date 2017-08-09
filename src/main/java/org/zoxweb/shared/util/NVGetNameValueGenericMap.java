@@ -106,6 +106,12 @@ public class NVGetNameValueGenericMap
 		return value.remove(new GetNameKey(name, true));
 	}
 	
+	
+	public synchronized GetNameValue<?> remove(GetName name)
+	{
+		return value.remove(new GetNameKey(name, true));
+	}
+	
 	/**
 	 * @see org.zoxweb.shared.util.ArrayValues#remove(java.lang.Object)
 	 */

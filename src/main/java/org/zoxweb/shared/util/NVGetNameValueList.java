@@ -104,6 +104,12 @@ public class NVGetNameValueList
 		return null;
 	}
 
+	
+	
+	public synchronized GetNameValue<String> remove(GetName name)
+	{
+		return remove(name.getName());
+	}
 	/**
 	 * @see org.zoxweb.shared.util.ArrayValues#remove(java.lang.Object)
 	 */

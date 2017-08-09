@@ -18,26 +18,34 @@ package org.zoxweb.server.net;
 import java.util.logging.Logger;
 
 import org.zoxweb.server.net.security.SSLSessionDataFactory;
+import org.zoxweb.shared.util.GenericProperties;
 
 public interface ProtocolSessionFactory<P extends ProtocolSessionProcessor>
 {
-	public P newInstance();
+	P newInstance();
 	
-	public boolean isBlocking();
-	
-	
-	
-	public SSLSessionDataFactory getIncomingSSLSessionDataFactory();
-	public void setIncomingSSLSessionDataFactory(SSLSessionDataFactory sslSessionDataFactory);
+	boolean isBlocking();
 	
 	
-	public InetFilterRulesManager getIncomingInetFilterRulesManager();
-	public void setIncomingInetFilterRulesManager(InetFilterRulesManager incomingIFRM);
 	
-	public InetFilterRulesManager getOutgoingInetFilterRulesManager();
-	public void setOutgoingInetFilterRulesManager(InetFilterRulesManager incomingIFRM);
+	SSLSessionDataFactory getIncomingSSLSessionDataFactory();
+	void setIncomingSSLSessionDataFactory(SSLSessionDataFactory sslSessionDataFactory);
 	
-	public Logger getLogger();
 	
-	public void setLogger(Logger logger);
+	InetFilterRulesManager getIncomingInetFilterRulesManager();
+	void setIncomingInetFilterRulesManager(InetFilterRulesManager incomingIFRM);
+	
+	InetFilterRulesManager getOutgoingInetFilterRulesManager();
+	void setOutgoingInetFilterRulesManager(InetFilterRulesManager incomingIFRM);
+	
+	Logger getLogger();
+	
+	void setLogger(Logger logger);
+	
+	
+	
+	GenericProperties getSessionProperties();
+	
+	
+	
 }

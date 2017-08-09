@@ -72,6 +72,12 @@ public class NVPairGetNameMap
 		return value.remove(new GetNameKey(name, true));
 	}
 	
+	
+	public synchronized GetNameValue<String> remove(GetName name)
+	{
+		return value.remove(new GetNameKey(name, true));
+	}
+	
 	public synchronized GetNameValue<String> add(GetNameValue<String> nve)
 	{
 		return value.put(new GetNameKey(nve, true), nve);

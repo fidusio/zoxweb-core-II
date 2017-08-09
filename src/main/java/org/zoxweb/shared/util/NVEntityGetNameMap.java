@@ -60,6 +60,12 @@ public class NVEntityGetNameMap
 		return value.remove(new GetNameKey(name, true));
 	}
 	
+	public synchronized  NVEntity remove(GetName name)
+	{
+		return value.remove(new GetNameKey(name, true));
+	}
+	
+	
 	public synchronized NVEntity add(NVEntity nve)
 	{
 		return value.put(new GetNameKey((GetName) nve, true), nve);

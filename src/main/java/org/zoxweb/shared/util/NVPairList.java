@@ -122,6 +122,12 @@ public class NVPairList
 	{
 		return remove(get(str));
 	}
+	
+	
+	public synchronized NVPair remove(GetName name)
+	{
+		return remove(name.getName());
+	}
 
     /**
      *

@@ -103,6 +103,12 @@ public class NVEntityReferenceList
 		
 		return toRemove;
 	}
+	
+	
+	public synchronized NVEntity remove(GetName getName)
+	{
+		return remove(getName.getName());
+	}
 	/**
 	 * @see org.zoxweb.shared.util.ArrayValues#remove(java.lang.Object)
 	 */

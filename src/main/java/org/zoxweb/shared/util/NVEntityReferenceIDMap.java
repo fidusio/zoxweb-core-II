@@ -147,4 +147,10 @@ public class NVEntityReferenceIDMap
 
 	}
 
+	@Override
+	public NVEntity remove(GetName getName) {
+		// TODO Auto-generated method stub
+		throw new IllegalArgumentException("Method not supported.");
+	}
+
 }
