@@ -188,7 +188,8 @@ public class SharedUtil
 	 * @param str
 	 * @return matching enum
 	 */
-	public static Enum<?> lookupEnum(Enum<?>[] list, String str)
+	@SuppressWarnings("unchecked")
+	public static <V extends Enum<?>> V lookupEnum(Enum<?>[] list, String str)
     {
 		if (str != null)
 		{
@@ -196,22 +197,22 @@ public class SharedUtil
 			{
 				if (str.equalsIgnoreCase(e.name()))
 				{
-					return e;
+					return (V) e;
 				}
 				
 				if (str.equalsIgnoreCase(e.toString()))
 				{
-					return e;
+					return (V) e;
 				}
 				
 				if (e instanceof GetName && str.equalsIgnoreCase( ((GetName)e).getName()))
 				{
-					return e;
+					return (V) e;
 				}
 				
 				if (e instanceof GetValue && str.equalsIgnoreCase( "" + ((GetValue<?>)e).getValue()))
 				{
-					return e;
+					return (V) e;
 				}
 			}
 		}

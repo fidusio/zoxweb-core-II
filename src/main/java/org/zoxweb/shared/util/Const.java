@@ -695,6 +695,76 @@ public class Const
 		}
 
 	}
+	
+	
+	public enum GNVType
+		implements GetName
+	{
+		NVBLOB("byte[]"),
+		NVBOOLEAN("boolean"),
+		NVINT("int"),
+		NVLONG("long"),
+		NVFLOAT("float"),
+		NVDOUBLE("double")
+		;
+		
+		private final String name;
+		
+		GNVType(String name)
+		{
+			this.name = name;
+		}
+		
+		public String getName()
+		{
+			return name;
+		}
+		
+		public static String toName(GetNameValue<?> gnv, char sep)
+		{
+			if (gnv instanceof NVBoolean)
+			{
+				return NVBOOLEAN.getName() + sep + gnv.getName();
+			}
+			else if (gnv instanceof NVInt)
+			{
+				return NVINT.getName() + sep + gnv.getName();
+			}
+			else if (gnv instanceof NVLong)
+			{
+				return NVLONG.getName() + sep + gnv.getName();
+			}
+			else if (gnv instanceof NVFloat)
+			{
+				return NVFLOAT.getName() + sep + gnv.getName();
+			}
+			else if (gnv instanceof NVDouble)
+			{
+				return NVDOUBLE.getName() + sep + gnv.getName();
+			}
+			else if (gnv instanceof NVBlob)
+			{
+				return NVBLOB.getName() + sep + gnv.getName();
+			}
+			return gnv.getName();
+		}
+		
+		
+		public static GNVTypeName toNVType(String name, char sep)
+		{
+			String tokens[] = name.split("\\" + sep);
+			if (tokens.length > 1)
+			{
+				GNVType type = SharedUtil.lookupEnum(GNVType.values(), tokens[0]);
+				if (type != null)
+				{
+					return new GNVTypeName(type, tokens[1]);
+				}
+			}
+			return null;
+		}
+		
+	}
 
 	public enum DayOfWeek
 		implements GetNameValue<Integer>

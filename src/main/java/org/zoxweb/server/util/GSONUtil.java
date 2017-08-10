@@ -45,17 +45,27 @@ import org.zoxweb.shared.util.ArrayValues;
 import org.zoxweb.shared.util.Const;
 import org.zoxweb.shared.util.DynamicEnumMap;
 import org.zoxweb.shared.util.DynamicEnumMapManager;
+import org.zoxweb.shared.util.GNVTypeName;
 import org.zoxweb.shared.util.GetNameValue;
 import org.zoxweb.shared.util.MetaToken;
 import org.zoxweb.shared.util.NVBase;
+import org.zoxweb.shared.util.NVBlob;
+import org.zoxweb.shared.util.NVBoolean;
 import org.zoxweb.shared.util.NVConfig;
 import org.zoxweb.shared.util.NVConfigEntity;
+import org.zoxweb.shared.util.NVDouble;
 import org.zoxweb.shared.util.NVEntity;
+import org.zoxweb.shared.util.NVEntityReference;
+import org.zoxweb.shared.util.NVFloat;
+import org.zoxweb.shared.util.NVGenericMap;
+import org.zoxweb.shared.util.NVInt;
+import org.zoxweb.shared.util.NVLong;
 import org.zoxweb.shared.util.NVPair;
 import org.zoxweb.shared.util.SharedBase64;
 import org.zoxweb.shared.util.SharedBase64.Base64Type;
 import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
+import org.zoxweb.shared.util.Const.GNVType;
 import org.zoxweb.shared.util.Const.LogicalOperator;
 
 import com.google.gson.FieldNamingPolicy;
@@ -556,6 +566,182 @@ final public class GSONUtil
 		writer.endObject();
 		
 		return writer;
+	}
+	
+	public static String genericMapToJSON(NVGenericMap nvgm, boolean indent, boolean printNull, boolean printClassType, Base64Type b64Type) throws IOException
+	{
+		StringWriter sw = new StringWriter();
+		JsonWriter writer = new JsonWriter(sw);
+		writer.setSerializeNulls(true);
+		writer.setHtmlSafe(true);
+		
+		if (indent)
+		{
+			writer.setIndent("  ");
+		}
+		
+		
+		
+		
+		writer.beginObject();
+		
+		GetNameValue<?> values[] = nvgm.values();
+		for (GetNameValue<?> gnv : values)
+		{
+		
+			if (gnv.getValue() == null && printNull)
+			{
+				continue;
+			}
+			String name = GNVType.toName(gnv, ':');
+			
+			if (gnv instanceof NVBoolean)
+			{
+				writer.name(name).value((boolean)gnv.getValue()); 
+			}
+			else if (gnv instanceof  NVInt || gnv instanceof NVLong || gnv instanceof NVFloat || gnv instanceof NVDouble)
+			{
+				writer.name(name).value((Number)gnv.getValue()); 
+			}
+			else if (gnv.getValue() instanceof String)
+			{
+				writer.name(name).value((String)gnv.getValue()); 
+			}
+			else if (gnv instanceof NVBlob)
+			{
+				writer.name(name).value((String)SharedStringUtil.toString(SharedBase64.encode(b64Type, (byte[]) gnv.getValue()))); 
+			}
+			else if (gnv instanceof NVEntityReference)
+			{
+				System.out.println("" + gnv.getName());
+				writer.name(name);
+				toJSON(writer, ((NVEntity)gnv.getValue()).getClass(), (NVEntity)gnv.getValue(), printNull, printClassType, b64Type);
+			}
+		}
+		
+		
+		writer.endObject();
+		
+		writer.close();
+		
+		return sw.toString();
+	}
+	
+	public static NVGenericMap genericMapFromJSON(String json, Base64Type btype)
+	{
+		JsonElement je = new JsonParser().parse(json);
+		
+		if (je instanceof JsonObject)
+		{
+			NVGenericMap ret = new NVGenericMap();
+			Iterator<Map.Entry<String, JsonElement>> iterator = ((JsonObject) je).entrySet().iterator();
+			while(iterator.hasNext())
+			{
+				Map.Entry<String, JsonElement> element = iterator.next();
+				System.out.println(element.getKey());
+				JsonElement ja = element.getValue();
+				if (ja.isJsonArray())
+				{
+					
+				}
+				else if (ja.isJsonPrimitive())
+				{
+					ret.add(guessPrimitive(element.getKey(), (JsonPrimitive) ja, btype));
+				}
+				else if (ja.isJsonObject())
+				{
+					
+				}
+			}
+			
+			return ret;
+			
+		}
+		
+		return null;
+	}
+	
+	public static NVBase<?> guessPrimitive(String name, JsonPrimitive jp, Base64Type btype)
+	{
+		GNVTypeName tn = GNVType.toNVType(name, ':');
+		
+		if (tn != null)
+		{
+			switch(tn.getType())
+			{
+			case NVBLOB:
+				try
+				{
+					byte value[] = SharedBase64.decode(btype, jp.getAsString());
+					return new NVBlob(tn.getName(), value);
+				}
+				catch(Exception e)
+				{
+					
+				}
+				break;
+			case NVBOOLEAN:
+				return new NVBoolean(tn.getName(), jp.getAsBoolean());
+			case NVDOUBLE:
+				return new NVDouble(tn.getName(), jp.getAsDouble());
+			case NVFLOAT:
+				return new NVFloat(tn.getName(), jp.getAsFloat());
+			case NVINT:
+				return new NVInt(tn.getName(), jp.getAsInt());
+			case NVLONG:
+				return new NVLong(tn.getName(), jp.getAsLong());
+			
+			}
+		}
+		
+		
+		
+		
+		if (jp.isBoolean())
+		{
+			return new NVBoolean(name, jp.getAsBoolean());
+		}
+		else if (jp.isNumber())
+		{
+		
+			try
+			{
+				
+				return new NVLong(name, jp.getAsLong());
+			}
+			catch(NumberFormatException e)
+			{
+				e.printStackTrace();
+			}
+			
+			
+			try
+			{
+				return new NVDouble(name, jp.getAsDouble());
+			}
+			catch(NumberFormatException e)
+			{
+				e.printStackTrace();
+			}
+		}
+		else if (jp.isString())
+		{
+//			try
+//			{
+//				byte value[] = SharedBase64.decode(btype, jp.getAsString());
+//				return new NVBlob(name, value);
+//			}
+//			catch(Exception e)
+//			{
+//				
+//			}
+			
+			
+			return new NVPair(name, jp.getAsString());
+		}
+		
+		return null;
+		
 	}
 	
 	private static JsonWriter toJSON(JsonWriter writer, GetNameValue<String> nvp, boolean isObject, boolean printNull)
