@@ -593,7 +593,12 @@ final public class GSONUtil
 			{
 				continue;
 			}
-			String name = GNVType.toName(gnv, ':');
+			String name = null;
+			
+			if (printClassType)
+				name = GNVType.toName(gnv, ':');
+			else
+				name = gnv.getName();
 			
 			if (gnv instanceof NVBoolean)
 			{
@@ -613,7 +618,6 @@ final public class GSONUtil
 			}
 			else if (gnv instanceof NVEntityReference)
 			{
-				System.out.println("" + gnv.getName());
 				writer.name(name);
 				toJSON(writer, ((NVEntity)gnv.getValue()).getClass(), (NVEntity)gnv.getValue(), printNull, printClassType, b64Type);
 			}
@@ -627,12 +631,27 @@ final public class GSONUtil
 		return sw.toString();
 	}
 	
-	public static NVGenericMap genericMapFromJSON(String json, Base64Type btype)
+	public static NVGenericMap genericMapFromJSON(String json, NVConfigEntity nvce, Base64Type btype) throws InstantiationException, IllegalAccessException, ClassNotFoundException
 	{
 		JsonElement je = new JsonParser().parse(json);
 		
 		if (je instanceof JsonObject)
 		{
+			
+			return genericMapFromJSON((JsonObject)je, nvce, btype);
+			
+			
+		}
+		
+		return null;
+	}
+	
+	private static NVGenericMap genericMapFromJSON(JsonObject je, NVConfigEntity nvce, Base64Type btype) throws InstantiationException, IllegalAccessException, ClassNotFoundException
+	{
+		
+		
+		
+	
 			NVGenericMap ret = new NVGenericMap();
 			Iterator<Map.Entry<String, JsonElement>> iterator = ((JsonObject) je).entrySet().iterator();
 			while(iterator.hasNext())
@@ -646,34 +665,55 @@ final public class GSONUtil
 				}
 				else if (ja.isJsonPrimitive())
 				{
-					ret.add(guessPrimitive(element.getKey(), (JsonPrimitive) ja, btype));
+					ret.add(guessPrimitive(element.getKey(), nvce != null ? nvce.lookup(element.getKey()) : null,(JsonPrimitive) ja, btype));
 				}
 				else if (ja.isJsonObject())
 				{
-					
+					try
+					{
+						ret.add(new NVEntityReference(element.getKey(), (NVEntity)fromJSON(ja.getAsJsonObject(), null, btype)));
+					}
+					catch(Exception e)
+					{
+						NVGenericMap toAdd = genericMapFromJSON(ja.getAsJsonObject(), null, btype);
+						toAdd.setName(element.getKey());
+						ret.add(toAdd);
+					}
 				}
 			}
 			
 			return ret;
 			
-		}
+	
 		
-		return null;
 	}
 	
-	public static NVBase<?> guessPrimitive(String name, JsonPrimitive jp, Base64Type btype)
+	
+	
+	
+	public static NVBase<?> guessPrimitive(String name, NVConfig nvc, JsonPrimitive jp, Base64Type btype)
 	{
-		GNVTypeName tn = GNVType.toNVType(name, ':');
+		GNVType gnvType = nvc != null ? GNVType.toGNVType(nvc) : null;
 		
-		if (tn != null)
+		if (gnvType == null)
 		{
-			switch(tn.getType())
+			GNVTypeName tn = GNVType.toNVType(name, ':');
+			if (tn != null)
+			{
+				gnvType = tn.getType();
+				name = tn.getName();
+			}
+		}
+		
+		if (gnvType != null)
+		{
+			switch(gnvType)
 			{
 			case NVBLOB:
 				try
 				{
 					byte value[] = SharedBase64.decode(btype, jp.getAsString());
-					return new NVBlob(tn.getName(), value);
+					return new NVBlob(name, value);
 				}
 				catch(Exception e)
 				{
@@ -681,15 +721,15 @@ final public class GSONUtil
 				}
 				break;
 			case NVBOOLEAN:
-				return new NVBoolean(tn.getName(), jp.getAsBoolean());
+				return new NVBoolean(name, jp.getAsBoolean());
 			case NVDOUBLE:
-				return new NVDouble(tn.getName(), jp.getAsDouble());
+				return new NVDouble(name, jp.getAsDouble());
 			case NVFLOAT:
-				return new NVFloat(tn.getName(), jp.getAsFloat());
+				return new NVFloat(name, jp.getAsFloat());
 			case NVINT:
-				return new NVInt(tn.getName(), jp.getAsInt());
+				return new NVInt(name, jp.getAsInt());
 			case NVLONG:
-				return new NVLong(tn.getName(), jp.getAsLong());
+				return new NVLong(name, jp.getAsLong());
 			
 			}
 		}
@@ -703,25 +743,28 @@ final public class GSONUtil
 		}
 		else if (jp.isNumber())
 		{
-		
-			try
+			// if there is no dots it should be a 
+			if (jp.getAsString().indexOf(".") == -1)
 			{
-				
-				return new NVLong(name, jp.getAsLong());
+				try
+				{
+					return new NVLong(name, jp.getAsLong());
+				}
+				catch(NumberFormatException e)
+				{
+					e.printStackTrace();
+				}
 			}
-			catch(NumberFormatException e)
+			else
 			{
-				e.printStackTrace();
-			}
-			
-			
-			try
-			{
-				return new NVDouble(name, jp.getAsDouble());
-			}
-			catch(NumberFormatException e)
-			{
-				e.printStackTrace();
+				try
+				{
+					return new NVDouble(name, jp.getAsDouble());
+				}
+				catch(NumberFormatException e)
+				{
+					e.printStackTrace();
+				}
 			}
 		}
 		else if (jp.isString())
@@ -985,7 +1028,7 @@ final public class GSONUtil
 		{
 			if (!classType.isJsonNull())
 			{
-				clazz = (Class<? extends NVEntity>) Class.forName( classType.getAsString());
+				clazz = (Class<? extends NVEntity>) Class.forName(classType.getAsString());
 			}
 		}
 		

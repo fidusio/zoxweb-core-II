@@ -764,6 +764,41 @@ public class Const
 			return null;
 		}
 		
+		public static GNVType toGNVType(NVConfig nvc)
+		{
+			if (byte[].class.equals(nvc.getMetaType()))
+			{
+				return NVBLOB;
+			}
+			if (!nvc.isArray())
+			{
+				if (Long.class.equals(nvc.getMetaType()))
+				{
+					return NVLONG;
+				}
+				
+				if (Integer.class.equals(nvc.getMetaType()))
+				{
+					return NVINT;
+				}
+				
+				if (Float.class.equals(nvc.getMetaType()))
+				{
+					return NVFLOAT;
+				}
+				
+				if (Double.class.equals(nvc.getMetaType()))
+				{
+					return NVDOUBLE;
+				}
+				
+			}
+			
+			
+			return null;
+			
+		}
+		
 	}
 
 	public enum DayOfWeek

@@ -47,7 +47,12 @@ public class NVEntityReference
 	
 	public NVEntityReference(NVEntity nve)
 	{
-		super(nve.getName() == null ? nve.getNVConfig().getName() : nve.getName(), nve);
+		this(nve.getName() == null ? nve.getNVConfig().getName() : nve.getName(), nve);
+	}
+	
+	public NVEntityReference(String name, NVEntity nve)
+	{
+		super(name, nve);
 		nvce = (NVConfigEntity) nve.getNVConfig();
 	}
 	
