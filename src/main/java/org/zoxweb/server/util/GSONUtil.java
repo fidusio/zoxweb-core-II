@@ -597,7 +597,7 @@ final public class GSONUtil
 			
 			if (gnv instanceof NVBoolean)
 			{
-				writer.name(name).value((boolean)gnv.getValue()); 
+				writer.name(name).value((Boolean)gnv.getValue()); 
 			}
 			else if (gnv instanceof  NVInt || gnv instanceof NVLong || gnv instanceof NVFloat || gnv instanceof NVDouble)
 			{
