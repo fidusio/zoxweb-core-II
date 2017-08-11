@@ -4,8 +4,8 @@ import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
 
 @SuppressWarnings("serial")
-public class AppIDNameFilter 
-implements ValueFilter<String, String> 
+public class AppIDNameFilter
+        implements ValueFilter<String, String>
 {
 	
 	public static final AppIDNameFilter SINGLETON  = new AppIDNameFilter();
@@ -16,16 +16,20 @@ implements ValueFilter<String, String>
 	}
 	
 	@Override
-	public String toCanonicalID() {
-		// TODO Auto-generated method stub
+	public String toCanonicalID()
+    {
 		return null;
 	}
 
 	@Override
-	public String validate(String in) throws NullPointerException, IllegalArgumentException {
-		// TODO Auto-generated method stub
-		if(isValid(in))
-			return in.trim().toLowerCase();
+	public String validate(String in)
+            throws NullPointerException, IllegalArgumentException
+    {
+		if (isValid(in))
+        {
+            return in.trim().toLowerCase();
+        }
+
 		SharedUtil.checkIfNulls("Null APP name", in);
 		
 		throw new IllegalArgumentException("Invalid app name " + in);
@@ -44,10 +48,10 @@ implements ValueFilter<String, String>
 					return false;
 				}	
 			}
+
 			return true;
 		}
 			
-		// TODO Auto-generated method stub
 		return false;
 	}
 

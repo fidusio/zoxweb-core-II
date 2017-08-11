@@ -18,10 +18,11 @@ public class AppIDDAOTest {
 
     @Test
     public void testJSON() throws IOException {
-        AppIDDAO appIDDAO = new AppIDDAO("zoxweb.org", "zoxweb");
+        AppIDDAO appIDDAO = new AppIDDAO("zoxweb.org", "ZOXWEB ");
 
         System.out.println(GSONUtil.toJSON(appIDDAO, true, false, false, Base64Type.URL));
     }
+
 
     @Test (expected = UnsupportedOperationException.class)
     public void testInvalidSetAppID() {
