@@ -14,6 +14,7 @@ import java.util.List;
 /**
  * Created on 8/11/17
  */
+@SuppressWarnings("serial")
 public class AppConfigDAO
         extends SetNameDescriptionDAO {
 

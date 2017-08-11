@@ -1,6 +1,7 @@
 package org.zoxweb.shared.data;
 
 import org.zoxweb.shared.filters.FilterType;
+import org.zoxweb.shared.filters.AppIDNameFilter;
 import org.zoxweb.shared.util.AppID;
 import org.zoxweb.shared.util.GetNVConfig;
 import org.zoxweb.shared.util.NVConfig;
@@ -25,7 +26,7 @@ public class AppIDDAO
     {
         APP_ID(NVConfigManager.createNVConfig("app_id", "App ID","AddID", true, false, String.class)),
         DOMAIN_ID(NVConfigManager.createNVConfig("domain_id", "Domain ID", "Domain ID", true, true, false, String.class, FilterType.DOMAIN)),
-        SUBJECT_ID(NVConfigManager.createNVConfig("subject_id", "Subject ID", "Subject ID", true, false, true, String.class, null)),
+        SUBJECT_ID(NVConfigManager.createNVConfig("subject_id", "Subject ID", "Subject ID", true, false, true, String.class, AppIDNameFilter.SINGLETON)),
 
         ;
 
