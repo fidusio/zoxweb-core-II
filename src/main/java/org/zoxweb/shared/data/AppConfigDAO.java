@@ -59,6 +59,12 @@ public class AppConfigDAO
         super(NVC_APP_CONFIG_DAO);
     }
 
+    public AppConfigDAO(AppIDDAO appIDDAO)
+    {
+        this();
+        setAppIDDAO(appIDDAO);
+    }
+
     public AppIDDAO getAppIDDAO() {
         return lookupValue(Param.APP_ID);
     }
