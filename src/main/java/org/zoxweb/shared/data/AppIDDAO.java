@@ -9,6 +9,7 @@ import org.zoxweb.shared.util.NVConfigEntityLocal;
 import org.zoxweb.shared.util.NVConfigManager;
 import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
+import org.zoxweb.shared.util.SubjectID;
 
 /**
  * Created on 7/3/17
@@ -16,14 +17,15 @@ import org.zoxweb.shared.util.SharedUtil;
 @SuppressWarnings("serial")
 public class AppIDDAO
     extends SetNameDescriptionDAO
-    implements AppID<String>
+    implements AppID<String>, SubjectID<String>
 {
 
     public enum Param
         implements GetNVConfig
     {
         APP_ID(NVConfigManager.createNVConfig("app_id", "App ID","AddID", true, false, String.class)),
-        DOMAIN_ID(NVConfigManager.createNVConfig("domain_id", "Domain ID", "Domain ID", true, true, false, String.class, FilterType.DOMAIN))
+        DOMAIN_ID(NVConfigManager.createNVConfig("domain_id", "Domain ID", "Domain ID", true, true, false, String.class, FilterType.DOMAIN)),
+        SUBJECT_ID(NVConfigManager.createNVConfig("subject_id", "Subject ID", "Subject ID", true, false, true, String.class, null)),
 
         ;
 
@@ -64,8 +66,7 @@ public class AppIDDAO
     public AppIDDAO(String domainID, String appID)
     {
         this();
-        setDomainID(domainID);
-        setAppID(appID);
+        setDomainAppID(domainID, appID);
     }
 
     @Override
@@ -76,10 +77,10 @@ public class AppIDDAO
 
     @Override
     public void setDomainID(String domainID)
+            throws UnsupportedOperationException
     {
-        setValue(Param.DOMAIN_ID, domainID);
+        throw new UnsupportedOperationException("Not supported.");
     }
-
 
     @Override
     public String getAppID()
@@ -89,10 +90,29 @@ public class AppIDDAO
 
     @Override
     public void setAppID(String appID)
+            throws UnsupportedOperationException
     {
-        setValue(Param.APP_ID, appID);
+        throw new UnsupportedOperationException("Not supported.");
     }
 
+    @Override
+    public String getSubjectID()
+    {
+        return lookupValue(Param.SUBJECT_ID);
+    }
+
+    @Override
+    public void setSubjectID(String subjectID)
+            throws UnsupportedOperationException
+    {
+        throw new UnsupportedOperationException("Not supported.");
+    }
+
+    public synchronized void setDomainAppID(String domainID, String appID) {
+        setValue(Param.DOMAIN_ID, domainID);
+        setValue(Param.APP_ID, appID);
+        setValue(Param.SUBJECT_ID, getDomainID() + ":" + getAppID());
+    }
 
     @Override
     public boolean equals(Object obj) {
