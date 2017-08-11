@@ -657,7 +657,6 @@ final public class GSONUtil
 			while(iterator.hasNext())
 			{
 				Map.Entry<String, JsonElement> element = iterator.next();
-				System.out.println(element.getKey());
 				JsonElement ja = element.getValue();
 				if (ja.isJsonArray())
 				{

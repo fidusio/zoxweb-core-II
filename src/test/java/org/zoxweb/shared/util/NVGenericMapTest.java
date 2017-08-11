@@ -13,7 +13,7 @@ public class NVGenericMapTest
 		GetNameValue<?>[] avs = nvgm.values();
 		for(GetNameValue<?> av: avs)
 		{
-			System.out.println(av.getClass().getName() + ":" + av.getName() + "=" + av.getValue());
+			System.out.println(av.getClass().getName() + ":" + av);
 			
 		}
 		

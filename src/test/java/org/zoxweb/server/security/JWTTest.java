@@ -11,6 +11,9 @@ import org.zoxweb.shared.security.JWT;
 import org.zoxweb.shared.security.JWTHeader;
 import org.zoxweb.shared.security.JWTPayload;
 import org.zoxweb.shared.security.SecurityConsts.JWTAlgorithm;
+import org.zoxweb.shared.util.NVConfigEntity;
+import org.zoxweb.shared.util.NVGenericMap;
+import org.zoxweb.shared.util.NVGenericMapTest;
 import org.zoxweb.shared.util.SharedBase64.Base64Type;
 
 public class JWTTest {
@@ -66,9 +69,12 @@ public class JWTTest {
 		System.out.println(test);
 		
 		JWTPayload payload = new JWTPayload();
-		payload.setSubjectID("1234567890");
+		payload.setDomainID("xlogistx.io");
+		payload.setAppID("xlogistx");
+		payload.setSubjectID("support@xlogistx.io");
 		payload.setName("John Doe");
 		payload.setAdmin(true);
+		payload.setRandom(new byte[] {0,1,2,3});
 		localJwt.setPayload(payload);
 		json = GSONUtil.toJSON(localJwt, true, false, false, Base64Type.URL);
 		System.out.println(json);
@@ -76,6 +82,17 @@ public class JWTTest {
 		System.out.println(test);
 
 		System.out.println(CryptoUtil.decodeJWT("secret", test));
+		
+		String payloadJSON = GSONUtil.toJSON(payload, false, false, true, Base64Type.URL);
+		System.out.println("-------------------------------------------------------------------");
+		System.out.println(payloadJSON);
+	
+		
+		NVGenericMap gm = GSONUtil.genericMapFromJSON(payloadJSON,(NVConfigEntity)payload.getNVConfig(), Base64Type.URL);
+		//System.out.println(gm);
+		NVGenericMapTest.printValue(gm);
+		
+		System.out.println("-------------------------------------------------------------------");
 	}
 	
 	

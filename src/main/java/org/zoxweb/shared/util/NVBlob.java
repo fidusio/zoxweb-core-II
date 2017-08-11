@@ -15,6 +15,8 @@
  */
 package org.zoxweb.shared.util;
 
+import org.zoxweb.shared.util.SharedBase64.Base64Type;
+
 /**
  * This class declares NVBase of byte array type.
  * @author mzebib
@@ -43,4 +45,10 @@ public class NVBlob
 		super(name, value);
 	}
 
+	
+	
+	public String toString()
+    {
+		return "{" + (referenceId != null ? referenceId + "," : "") + name + ":" + SharedBase64.encodeAsString(Base64Type.URL,value) + "}";
+	}
 }

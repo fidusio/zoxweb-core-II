@@ -244,6 +244,12 @@ public class SharedBase64
 	{
 		return SharedStringUtil.toString(encode(bt, SharedStringUtil.getBytes(str)));
 	}
+	
+	
+	public static String encodeAsString(Base64Type bt, byte[] array)
+	{
+		return SharedStringUtil.toString(encode(bt, array));
+	}
 
     /**
      * Encodes a byte array to base64 array.
