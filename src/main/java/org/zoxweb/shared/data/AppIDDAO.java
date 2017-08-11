@@ -24,10 +24,9 @@ public class AppIDDAO
     public enum Param
         implements GetNVConfig
     {
-        APP_ID(NVConfigManager.createNVConfig("app_id", "App ID","AddID", true, false, String.class)),
+        APP_ID(NVConfigManager.createNVConfig("app_id", "App ID","AddID", true, false, false, String.class, AppIDNameFilter.SINGLETON)),
         DOMAIN_ID(NVConfigManager.createNVConfig("domain_id", "Domain ID", "Domain ID", true, true, false, String.class, FilterType.DOMAIN)),
-        SUBJECT_ID(NVConfigManager.createNVConfig("subject_id", "Subject ID", "Subject ID", true, false, true, String.class, AppIDNameFilter.SINGLETON)),
-
+        SUBJECT_ID(NVConfigManager.createNVConfig("subject_id", "Subject ID", "Subject ID", true, false, true, String.class, null)),
         ;
 
         private final NVConfig nvc;
