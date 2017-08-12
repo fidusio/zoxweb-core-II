@@ -85,7 +85,7 @@ public class SubjectAPIKey
         {
             return SharedStringUtil.getBytes(key);
         }
-        
+
     	return null;
     }
 
