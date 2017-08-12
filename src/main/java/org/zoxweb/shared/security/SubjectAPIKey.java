@@ -78,11 +78,14 @@ public class SubjectAPIKey
     }
     
     
-    public byte[] getAPIKeyAsArray()
+    public byte[] getAPIKeyAsBytes()
     {
     	String key = getAPIKey();
     	if (key != null)
-    		return SharedStringUtil.getBytes(key);
+        {
+            return SharedStringUtil.getBytes(key);
+        }
+        
     	return null;
     }
 
