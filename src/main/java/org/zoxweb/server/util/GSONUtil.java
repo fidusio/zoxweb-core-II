@@ -61,6 +61,7 @@ import org.zoxweb.shared.util.NVGenericMap;
 import org.zoxweb.shared.util.NVInt;
 import org.zoxweb.shared.util.NVLong;
 import org.zoxweb.shared.util.NVPair;
+
 import org.zoxweb.shared.util.SharedBase64;
 import org.zoxweb.shared.util.SharedBase64.Base64Type;
 import org.zoxweb.shared.util.SharedStringUtil;
@@ -588,10 +589,72 @@ final public class GSONUtil
 		GetNameValue<?> values[] = nvgm.values();
 		for (GetNameValue<?> gnv : values)
 		{
+			
+			genericMapToJSON(writer, gnv, indent, printNull, printClassType, b64Type);
+		
+//			if (gnv.getValue() == null && printNull)
+//			{
+//				continue;
+//			}
+//			String name = null;
+//			
+//			if (printClassType)
+//				name = GNVType.toName(gnv, ':');
+//			else
+//				name = gnv.getName();
+//			
+//			if (gnv instanceof NVBoolean)
+//			{
+//				writer.name(name).value((Boolean)gnv.getValue()); 
+//			}
+//			else if (gnv instanceof  NVInt || gnv instanceof NVLong || gnv instanceof NVFloat || gnv instanceof NVDouble)
+//			{
+//				writer.name(name).value((Number)gnv.getValue()); 
+//			}
+//			else if (gnv.getValue() instanceof String)
+//			{
+//				writer.name(name).value((String)gnv.getValue()); 
+//			}
+//			else if (gnv instanceof NVBlob)
+//			{
+//				writer.name(name).value((String)SharedStringUtil.toString(SharedBase64.encode(b64Type, (byte[]) gnv.getValue()))); 
+//			}
+//			else if (gnv instanceof NVEntityReference)
+//			{
+//				writer.name(name);
+//				toJSON(writer, ((NVEntity)gnv.getValue()).getClass(), (NVEntity)gnv.getValue(), printNull, printClassType, b64Type);
+//			}
+//			else if (gnv instanceof ArrayValues)
+//			{
+//				writer.beginArray();
+//				
+//				writer.endArray();
+//			}
+		}
+		
+		
+		writer.endObject();
+		
+		writer.close();
+		
+		return sw.toString();
+	}
+	
+	
+	
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	private static JsonWriter genericMapToJSON(JsonWriter writer, GetNameValue<?> gnv, boolean indent, boolean printNull, boolean printClassType, Base64Type b64Type) throws IOException
+	{
+		
+		
+//		GetNameValue<?> values[] = nvgm.values();
+//		for (GetNameValue<?> gnv : values)
+		{
 		
 			if (gnv.getValue() == null && printNull)
 			{
-				continue;
+				return writer;
 			}
 			String name = null;
 			
@@ -621,14 +684,49 @@ final public class GSONUtil
 				writer.name(name);
 				toJSON(writer, ((NVEntity)gnv.getValue()).getClass(), (NVEntity)gnv.getValue(), printNull, printClassType, b64Type);
 			}
+			else if (gnv instanceof ArrayValues)
+			{
+				writer.name(gnv.getName());
+				writer.beginArray();
+				ArrayValues<?> av = (ArrayValues<?>) gnv;
+				for (Object localGNV : av.values())
+				{
+					if(localGNV instanceof GetNameValue)
+					{
+						
+						if (((GetNameValue) localGNV).getValue() instanceof String)
+						{
+							toJSON(writer, (GetNameValue<String>)localGNV, true, printNull);
+						}
+						else
+						{
+							writer.beginObject();
+							genericMapToJSON(writer, (GetNameValue<?>) localGNV, indent, printNull, printClassType, b64Type);
+							writer.endObject();
+						}
+					}
+					else
+					{
+						if (localGNV instanceof Number)
+						{
+							writer.value((Number)localGNV);
+						}
+						else if (localGNV instanceof Boolean)
+						{
+							writer.value((Boolean) localGNV);
+						}
+						
+						//writer.value(localGNV);
+					}
+				}
+				writer.endArray();
+			}
 		}
 		
 		
-		writer.endObject();
+	
 		
-		writer.close();
-		
-		return sw.toString();
+		return writer;
 	}
 	
 	public static NVGenericMap genericMapFromJSON(String json, NVConfigEntity nvce, Base64Type btype) throws InstantiationException, IllegalAccessException, ClassNotFoundException

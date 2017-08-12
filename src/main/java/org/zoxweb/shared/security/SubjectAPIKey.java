@@ -9,6 +9,7 @@ import org.zoxweb.shared.util.NVConfigEntityLocal;
 import org.zoxweb.shared.util.SharedUtil;
 import org.zoxweb.shared.util.SubjectID;
 import org.zoxweb.shared.util.NVConfigManager;
+import org.zoxweb.shared.util.SharedStringUtil;
 
 
 /**
@@ -74,6 +75,15 @@ public class SubjectAPIKey
 
     public String getAPIKey() {
         return lookupValue(Param.API_KEY);
+    }
+    
+    
+    public byte[] getAPIKeyAsArray()
+    {
+    	String key = getAPIKey();
+    	if (key != null)
+    		return SharedStringUtil.getBytes(key);
+    	return null;
     }
 
     public void setAPIKey(String apiKey) {

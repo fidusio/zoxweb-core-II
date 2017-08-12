@@ -91,6 +91,7 @@ public class AppIDDAO
     }
 
     @Override
+    @Deprecated
     public void setDomainID(String domainID)
             throws UnsupportedOperationException
     {
@@ -104,6 +105,7 @@ public class AppIDDAO
     }
 
     @Override
+    @Deprecated
     public void setAppID(String appID)
             throws UnsupportedOperationException
     {
@@ -117,6 +119,7 @@ public class AppIDDAO
     }
 
     @Override
+    @Deprecated
     public void setSubjectID(String subjectID)
             throws UnsupportedOperationException
     {

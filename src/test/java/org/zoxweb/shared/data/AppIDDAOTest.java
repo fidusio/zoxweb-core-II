@@ -24,19 +24,22 @@ public class AppIDDAOTest {
     }
 
 
-    @Test (expected = UnsupportedOperationException.class)
+    @SuppressWarnings("deprecation")
+	@Test (expected = UnsupportedOperationException.class)
     public void testInvalidSetAppID() {
         AppIDDAO appIDDAO1 = new AppIDDAO();
         appIDDAO1.setAppID("zoxweb.org");
     }
 
-    @Test (expected = UnsupportedOperationException.class)
+    @SuppressWarnings("deprecation")
+	@Test (expected = UnsupportedOperationException.class)
     public void testInvalidSetDomainID() {
         AppIDDAO appIDDAO1 = new AppIDDAO();
         appIDDAO1.setDomainID("zoxweb");
     }
 
-    @Test (expected = UnsupportedOperationException.class)
+    @SuppressWarnings("deprecation")
+	@Test (expected = UnsupportedOperationException.class)
     public void testInvalidSetSubjectID() {
         AppIDDAO appIDDAO1 = new AppIDDAO();
         appIDDAO1.setSubjectID("zoxweb");

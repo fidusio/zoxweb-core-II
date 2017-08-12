@@ -37,7 +37,7 @@ public class APIError
 		MESSAGE(NVConfigManager.createNVConfig("message", "Error message", "Message", false, true, String.class)),
 		CAUSE(NVConfigManager.createNVConfig("cause", "Error cause", "Cause", false, true, String.class)),
 		URL_REDIRECT(NVConfigManager.createNVConfig("url_redirect", "URL redirect", "URLRedirect", false, true, String.class)),
-		RELOAD(NVConfigManager.createNVConfig("reload", "relaod", "Reload", false, true, boolean.class)),
+		RELOAD(NVConfigManager.createNVConfig("reload", "reload", "Reload", false, true, boolean.class)),
 		EXCEPTION_CLASS_NAME(NVConfigManager.createNVConfig("exp_classname", "Exception class name", "ExceptionClassName", false, true, String.class)),
 		
 		

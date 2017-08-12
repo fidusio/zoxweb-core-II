@@ -1,5 +1,7 @@
 package org.zoxweb.shared.util;
 
+import java.util.ArrayList;
+
 import org.zoxweb.server.util.GSONUtil;
 import org.zoxweb.shared.data.AddressDAO;
 import org.zoxweb.shared.util.SharedBase64.Base64Type;
@@ -41,9 +43,16 @@ public class NVGenericMapTest
 			address.setZIPOrPostalCode("90025");
 			nvgm.add(new NVEntityReference(address));
 			nvgm.add(new NVBlob("byteArrray", new byte[] {0,1,2,3,5,6,7,8}));
+			NVPairList nvp = new NVPairList("nvp", new ArrayList<NVPair>());
+			nvp.add(new NVPair("nameNVP", "valueNVP"));
+			nvgm.add(nvp);
 			
+	
+			NVLongList nvll = new NVLongList("nvll", new ArrayList<Long>());
+			nvll.getValue().add((long) 1);
+			nvll.getValue().add((long) 2);
+			nvgm.add(nvll);
 			printValue(nvgm);
-			
 			String json = GSONUtil.genericMapToJSON(nvgm, true, false, false, Base64Type.URL);
 			System.out.println(json);
 			
