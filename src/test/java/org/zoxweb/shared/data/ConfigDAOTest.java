@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.zoxweb.server.shiro.ZWEhCacheManager;
 import org.zoxweb.server.util.GSONUtil;
+import org.zoxweb.shared.util.NVInt;
 
 public class ConfigDAOTest 
 {
@@ -14,6 +15,7 @@ public class ConfigDAOTest
 			ConfigDAO cd = new ConfigDAO();
 			cd.setName("SimpleTest-1");
 			cd.setBeanClassName(ZWEhCacheManager.class);
+			cd.getProperties().add(new NVInt("port", 8080));
 			
 			String json = GSONUtil.toJSON(cd, true, false, true, null);
 			cd.setName("SimpleTest-2");

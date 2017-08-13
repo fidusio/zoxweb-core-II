@@ -33,6 +33,11 @@ public class NVGenericMap
 		this(null, new LinkedHashMap<GetName, GetNameValue<?>>());
 	}
 	
+	public NVGenericMap(String name)
+	{
+		this(name, new LinkedHashMap<GetName, GetNameValue<?>>());
+	}
+	
 	public NVGenericMap(String name, Map<GetName, GetNameValue<?>> map)
 	{
 		super(name, map);
@@ -48,6 +53,9 @@ public class NVGenericMap
 		
 		return null;
 	}
+	
+	
+	
 	
 	
 	/**
@@ -88,7 +96,7 @@ public class NVGenericMap
 	@Override
 	public GetNameValue<?>[] values()
 	{
-		return value.values().toArray(new GetNameValue[0]);
+		return getValue().values().toArray(new GetNameValue[0]);
 	}
 
 	/**

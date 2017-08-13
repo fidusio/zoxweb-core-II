@@ -42,7 +42,6 @@ import org.zoxweb.shared.util.AppCreator;
 import org.zoxweb.shared.util.ArrayValues;
 import org.zoxweb.shared.util.GetNameValue;
 import org.zoxweb.shared.util.NVEntity;
-import org.zoxweb.shared.util.SharedUtil;
 
 /**
  * NIO config starts multi 
@@ -95,20 +94,20 @@ implements Closeable,
 				if (config.attachment() instanceof ProtocolSessionFactory)
 				{
 					ProtocolSessionFactory<?> psf = (ProtocolSessionFactory<?>) config.attachment();
-					
+					int port = config.getProperties().getValue("port");
 					if (psf.getIncomingSSLSessionDataFactory() != null && psf instanceof NIOTunnelFactory)
 					{
 						log.info("Creating secure network tunnel:" + config.getProperties().get("port") + "," + ((NIOTunnelFactory)psf).getRemoteAddress() );
 						// secure temporary fix since the NIO Secure Socket still not fully operational
 						services.add(new SecureNetworkTunnel(psf.getIncomingSSLSessionDataFactory().getSSLContext().getServerSocketFactory(), 
-											    Integer.parseInt(SharedUtil.lookupValue(config.getProperties().get("port"))), 
+											    port, 
 											    ((NIOTunnelFactory)psf).getRemoteAddress()));
 					}
 					else
 					{
 						ServerSocketChannel ssc = ServerSocketChannel.open();
 					
-						ssc.bind(new InetSocketAddress(Integer.parseInt(SharedUtil.lookupValue(config.getProperties().get("port")))));
+						ssc.bind(new InetSocketAddress(port));
 	
 						ret.addServerSocket(ssc, psf);
 					}
@@ -143,12 +142,12 @@ implements Closeable,
 						
 						if (toAttach instanceof SSLSessionDataFactory)
 						{
-							SSLContext sslc = CryptoUtil.initSSLContext(SharedUtil.getValue(config.getProperties().get("keystore_file")), 
-																		SharedUtil.getValue(config.getProperties().get("keystore_type")), 
-																		SharedUtil.getValue(config.getProperties().get("keystore_password")).toCharArray(),  
-																		SharedUtil.getValue(config.getProperties().get("alias_password")) != null ?  SharedUtil.getValue(config.getProperties().get("alias_password")).toCharArray() : null, 
-																		SharedUtil.getValue(config.getProperties().get("trustore_file")), 
-																		SharedUtil.getValue(config.getProperties().get("trustore_password")) != null ?  SharedUtil.getValue(config.getProperties().get("trustore_password")).toCharArray() : null);
+							SSLContext sslc = CryptoUtil.initSSLContext((String)config.getProperties().getValue("keystore_file"), 
+																		(String)config.getProperties().getValue("keystore_type"), 
+																		((String)config.getProperties().getValue("keystore_password")).toCharArray(),  
+																		config.getProperties().getValue("alias_password") != null ?  ((String)config.getProperties().getValue("alias_password")).toCharArray() : null, 
+																		(String)config.getProperties().getValue("trustore_file"), 
+																		config.getProperties().getValue("trustore_password") != null ?  ((String)config.getProperties().getValue("trustore_password")).toCharArray() : null);
 							((SSLSessionDataFactory)toAttach).setSSLContext(sslc);
 							
 							((SSLSessionDataFactory)toAttach).setExecutor(TaskUtil.getDefaultTaskProcessor());
@@ -176,8 +175,8 @@ implements Closeable,
 					NIOTunnelFactory nioTF = (NIOTunnelFactory) config.attachment();
 					try 
 					{
-						String remote_host = SharedUtil.getValue(config.getProperties().get("remote_host"));
-						String ssl_engine = SharedUtil.getValue(config.getProperties().get("ssl_engine"));
+						String remote_host = config.getProperties().getValue("remote_host");
+						String ssl_engine = config.getProperties().getValue("ssl_engine");
 						nioTF.setRemoteAddress(new InetSocketAddressDAO(remote_host));
 						if (ssl_engine != null)
 						{
@@ -200,13 +199,13 @@ implements Closeable,
 					{
 						InetFilterRulesManager incomingIFRM =  new InetFilterRulesManager();
 						InetFilterRulesManager outgoingIFRM =  new InetFilterRulesManager();
-						for (GetNameValue<String> gnv : config.getProperties().values())
+						for (GetNameValue<?> gnv : config.getProperties().values())
 						{
 							if(gnv.getName().equals("incoming_inet_rule"))
 							{
 								if (gnv.getValue() != null)
 								{
-									incomingIFRM.addInetFilterProp(gnv.getValue());
+									incomingIFRM.addInetFilterProp((String)gnv.getValue());
 								}
 							}
 							
@@ -214,7 +213,7 @@ implements Closeable,
 							{
 								if (gnv.getValue() != null)
 								{
-									outgoingIFRM.addInetFilterProp(gnv.getValue());
+									outgoingIFRM.addInetFilterProp((String)gnv.getValue());
 								}
 							}
 						}
@@ -230,7 +229,7 @@ implements Closeable,
 						}
 						
 						
-						nioPPF.setLogger(LoggerUtil.loggerToFile(NIOProxyProtocol.class.getName()+".proxy", SharedUtil.lookupValue(config.getProperties().get("log_file"))));
+						nioPPF.setLogger(LoggerUtil.loggerToFile(NIOProxyProtocol.class.getName()+".proxy", (String)config.getProperties().getValue("log_file")));
 						
 					}
 					catch(Exception e)

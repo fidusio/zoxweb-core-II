@@ -44,6 +44,7 @@ import org.zoxweb.shared.net.InetSocketAddressDAO;
 import org.zoxweb.shared.protocol.ProtocolDelimiter;
 import org.zoxweb.shared.security.SecurityStatus;
 import org.zoxweb.shared.util.Const.SourceOrigin;
+import org.zoxweb.shared.util.NVBoolean;
 import org.zoxweb.shared.util.NVPair;
 import org.zoxweb.shared.util.SharedStringUtil;
 
@@ -138,7 +139,7 @@ public class NIOProxyProtocol
 
 		public NIOProxyProtocolFactory()
 		{
-			getSessionProperties().setProperty(NIOProxyProtocol.AUTHENTICATION, false);
+			getSessionProperties().add(new NVBoolean(NIOProxyProtocol.AUTHENTICATION, false));
 		}
 		
 		@Override
@@ -339,12 +340,12 @@ public class NIOProxyProtocol
 
 	private boolean isRequestValid(RequestInfo requestInfo, UByteArrayOutputStream requestRawBuffer) throws IOException
 	{
-		if (getProperties().getProperty(AUTHENTICATION))
+		if (((Boolean)getProperties().getValue(AUTHENTICATION)))
 		{
 			if (requestInfo.getHTTPMessageConfigInterface().getHeaderParameters().get(HTTPHeaderName.PROXY_AUTHORIZATION) == null)
 			{
 				HTTPMessageConfigInterface hccError = createErrorMSG(HTTPStatusCode.PROXY_AUTHENTICATION_REQUIRED.CODE, HTTPStatusCode.PROXY_AUTHENTICATION_REQUIRED.REASON, requestMCCI.getURI());
-				hccError.getHeaderParameters().add(new NVPair(HTTPHeaderName.PROXY_AUTHENTICATE, "Basic realm=\"zoxweb nioproxy global access\""));
+				hccError.getHeaderParameters().add(new NVPair(HTTPHeaderName.PROXY_AUTHENTICATE, "Basic "));
 				ByteBufferUtil.write(clientChannel, HTTPUtil.formatResponse(hccError, requestRawBuffer));
 				close();
 				return false;	

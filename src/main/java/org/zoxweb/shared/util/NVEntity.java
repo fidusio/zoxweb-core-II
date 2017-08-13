@@ -265,7 +265,7 @@ public abstract class NVEntity
 	 * @param v
 	 */
 	public <V> void setValue(NVConfig nvc, V v) {
-		setValue( nvc.getName(), v);
+		setValue(nvc.getName(), v);
 	}
 	
 	
@@ -292,7 +292,18 @@ public abstract class NVEntity
 							sb.append(",");
 						}
 						
-						if (nvb instanceof ArrayValues) {
+//						if (nvb instanceof NVGenericMap)
+//						{
+//							sb.append(nvb.getName() + ":[");
+//							for (Object o: ((ArrayValues)nvb).values())
+//							{
+//								sb.append(""+o);
+//							}
+//							sb.append("]");
+//						}
+//						
+//						else
+							if (nvb instanceof ArrayValues) {
 							sb.append( nvb.getName() + ":" + Arrays.toString(((ArrayValues)nvb).values()));
 						} else {
 							sb.append( nvb.getName() + ":" + nvb.getValue());

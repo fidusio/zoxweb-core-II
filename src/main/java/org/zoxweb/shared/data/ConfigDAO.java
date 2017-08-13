@@ -18,7 +18,6 @@ package org.zoxweb.shared.data;
 import org.zoxweb.shared.util.AppConfig;
 import org.zoxweb.shared.util.ArrayValues;
 import org.zoxweb.shared.util.GetNVConfig;
-import org.zoxweb.shared.util.GetNameValue;
 import org.zoxweb.shared.util.NVConfig;
 import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVConfigEntityLocal;
@@ -27,6 +26,7 @@ import org.zoxweb.shared.util.NVEntity;
 import org.zoxweb.shared.util.SetCanonicalID;
 import org.zoxweb.shared.util.SharedUtil;
 import org.zoxweb.shared.util.NVConfigEntity.ArrayType;
+import org.zoxweb.shared.util.NVGenericMap;
 
 /**
  * This class is a generic class configurator 
@@ -52,7 +52,7 @@ public class ConfigDAO
 	{
 		CANONICAL_ID(NVConfigManager.createNVConfig("canonical_id", "Canonical ID", "CanonicalID", false, true, String.class)),
 		BEAN_CLASS_NAME(NVConfigManager.createNVConfig("bean_class_name", "Bean class name", "BeanClassName", false, true, String.class)),
-		PROPERTIES(NVConfigManager.createNVConfig("properties", "Configuration properties", "Properties", false, true, String[].class)),
+		PROPERTIES(NVConfigManager.createNVConfig("properties", "Configuration properties", "Properties", false, true, NVGenericMap.class)),
 		CONTENT(NVConfigManager.createNVConfigEntity("content", "Sub configuration", "Content", false, true, NVEntity[].class, ArrayType.GET_NAME_MAP)),
 		;
 
@@ -153,10 +153,10 @@ public class ConfigDAO
 		setValue(Param.BEAN_CLASS_NAME, type);
 	}
 	
-	@SuppressWarnings("unchecked")
-	public ArrayValues<GetNameValue<String>> getProperties()
+
+	public NVGenericMap getProperties()
 	{
-		return (ArrayValues<GetNameValue<String>>) lookup(Param.PROPERTIES);
+		return (NVGenericMap) lookup(Param.PROPERTIES);
 	}
 	
 	

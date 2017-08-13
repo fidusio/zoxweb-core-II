@@ -544,7 +544,8 @@ final public class GSONUtil
 					{
 						writer.name(nvc.getName()).value((BigDecimal) nve.lookupValue(nvc));
 					}
-				} else if (nvc instanceof NVConfigEntity)
+				}
+				else if (nvc instanceof NVConfigEntity)
 				{
 					NVEntity tempNVE = (NVEntity)nve.lookupValue(nvc);
 					// we need to write the class type if the current object is derived from nvc.getClass()
@@ -561,6 +562,11 @@ final public class GSONUtil
 						writer.nullValue();
 					}
 				}
+				else if (NVGenericMap.class.equals(nvc.getMetaTypeBase()))
+				{
+					writer.name(nvc.getName());
+					genericMapToJSON(writer, (NVGenericMap)nve.lookup(nvc), false, printNull, printClassType, b64Type);
+				}
 			}
 		}
 	
@@ -576,71 +582,47 @@ final public class GSONUtil
 		writer.setSerializeNulls(true);
 		writer.setHtmlSafe(true);
 		
-		if (indent)
-		{
-			writer.setIndent("  ");
-		}
+//		if (indent)
+//		{
+//			writer.setIndent("  ");
+//		}
+//		
+//		
+//		
+//		
+//		writer.beginObject();
+//		
+//		GetNameValue<?> values[] = nvgm.values();
+//		for (GetNameValue<?> gnv : values)
+//		{
+//			genericMapToJSON(writer, gnv, indent, printNull, printClassType, b64Type);
+//		}
+//		
+//		
+//		writer.endObject();
 		
-		
-		
-		
-		writer.beginObject();
-		
-		GetNameValue<?> values[] = nvgm.values();
-		for (GetNameValue<?> gnv : values)
-		{
-			
-			genericMapToJSON(writer, gnv, indent, printNull, printClassType, b64Type);
-		
-//			if (gnv.getValue() == null && printNull)
-//			{
-//				continue;
-//			}
-//			String name = null;
-//			
-//			if (printClassType)
-//				name = GNVType.toName(gnv, ':');
-//			else
-//				name = gnv.getName();
-//			
-//			if (gnv instanceof NVBoolean)
-//			{
-//				writer.name(name).value((Boolean)gnv.getValue()); 
-//			}
-//			else if (gnv instanceof  NVInt || gnv instanceof NVLong || gnv instanceof NVFloat || gnv instanceof NVDouble)
-//			{
-//				writer.name(name).value((Number)gnv.getValue()); 
-//			}
-//			else if (gnv.getValue() instanceof String)
-//			{
-//				writer.name(name).value((String)gnv.getValue()); 
-//			}
-//			else if (gnv instanceof NVBlob)
-//			{
-//				writer.name(name).value((String)SharedStringUtil.toString(SharedBase64.encode(b64Type, (byte[]) gnv.getValue()))); 
-//			}
-//			else if (gnv instanceof NVEntityReference)
-//			{
-//				writer.name(name);
-//				toJSON(writer, ((NVEntity)gnv.getValue()).getClass(), (NVEntity)gnv.getValue(), printNull, printClassType, b64Type);
-//			}
-//			else if (gnv instanceof ArrayValues)
-//			{
-//				writer.beginArray();
-//				
-//				writer.endArray();
-//			}
-		}
-		
-		
-		writer.endObject();
+		genericMapToJSON(writer, nvgm, indent, printNull, printClassType, b64Type);
 		
 		writer.close();
 		
 		return sw.toString();
 	}
 	
-	
+	private static JsonWriter genericMapToJSON(JsonWriter writer, NVGenericMap nvgm, boolean indent, boolean printNull, boolean printClassType, Base64Type b64Type) throws IOException
+	{
+		writer.beginObject();
+		
+		GetNameValue<?> values[] = nvgm.values();
+		for (GetNameValue<?> gnv : values)
+		{
+			genericMapToJSON(writer, gnv, indent, printNull, printClassType, b64Type);
+		}
+		
+		
+		writer.endObject();
+		
+		return writer;
+	}
 	
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -1300,6 +1282,17 @@ final public class GSONUtil
 						{
 							((NVBase<NVEntity>) nvb).setValue(fromJSON(je.getAsJsonObject(), (Class<? extends NVEntity>) nvc.getMetaType(), b64Type));
 						}
+					}
+					else if (NVGenericMap.class.equals(metaType))
+					{
+						
+						if (!(je instanceof JsonNull))
+						{
+							NVGenericMap nvgm = genericMapFromJSON(je.getAsJsonObject(), null, b64Type);
+							((NVGenericMap)nve.lookup(nvc)).add(nvgm.values(), true);
+							
+						}
+					
 					}
 					else if (nvc.isEnum())
 					{

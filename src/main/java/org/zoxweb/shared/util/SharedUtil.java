@@ -1406,6 +1406,10 @@ public class SharedUtil
 			{
 				return new NVBigDecimal(config.getName(), new BigDecimal(0));
 			}
+			else if (NVGenericMap.class.equals(c))
+			{
+				return new NVGenericMap(config.getName());
+			}
 		}
 		
 		throw new IllegalArgumentException("Unsupported type " + config + " class:" + c);

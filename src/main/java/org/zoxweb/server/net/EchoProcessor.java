@@ -26,7 +26,7 @@ import java.util.logging.Logger;
 import org.zoxweb.server.io.IOUtil;
 import org.zoxweb.server.net.security.SSLSessionDataFactory;
 import org.zoxweb.server.task.TaskUtil;
-import org.zoxweb.shared.util.GenericProperties;
+import org.zoxweb.shared.util.NVGenericMap;
 
 import java.nio.channels.SocketChannel;
 
@@ -93,7 +93,7 @@ public class EchoProcessor
 				}
 				
 				@Override
-				public GenericProperties getSessionProperties() {
+				public NVGenericMap getSessionProperties() {
 					// TODO Auto-generated method stub
 					return null;
 				}

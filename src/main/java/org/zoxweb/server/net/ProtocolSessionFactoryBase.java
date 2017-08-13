@@ -19,7 +19,8 @@ package org.zoxweb.server.net;
 import java.util.logging.Logger;
 
 import org.zoxweb.server.net.security.SSLSessionDataFactory;
-import org.zoxweb.shared.util.GenericProperties;
+import org.zoxweb.shared.util.NVGenericMap;
+;
 
 public abstract class ProtocolSessionFactoryBase<P extends ProtocolSessionProcessor>
 	implements ProtocolSessionFactory<P>
@@ -29,7 +30,7 @@ public abstract class ProtocolSessionFactoryBase<P extends ProtocolSessionProces
 	private InetFilterRulesManager outgoingInetFilterRulesManager;
 	protected SSLSessionDataFactory incomingSSLSessionFactory = null;
 	private Logger logger;
-	private GenericProperties properties = new GenericProperties();
+	private NVGenericMap properties = new NVGenericMap();
 	
 
 	
@@ -93,7 +94,7 @@ public abstract class ProtocolSessionFactoryBase<P extends ProtocolSessionProces
 	}
 	
 	
-	public GenericProperties getSessionProperties()
+	public NVGenericMap getSessionProperties()
 	{
 		return properties;
 	}
