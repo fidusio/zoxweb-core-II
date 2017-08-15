@@ -719,10 +719,7 @@ final public class GSONUtil
 		
 		if (je instanceof JsonObject)
 		{
-			
 			return genericMapFromJSON((JsonObject)je, nvce, btype);
-			
-			
 		}
 		
 		return null;
@@ -773,6 +770,20 @@ final public class GSONUtil
 	
 	public static NVBase<?> guessNVBaseArray(JsonArray ja)
 	{
+		for (int i=0; i < ja.size(); i++)
+		{	
+			JsonElement je = ja.get(i);
+			
+			if (je.isJsonObject())
+			{
+				// could an NVEntity or NVPairList or NVGnericMap
+			}
+			else if (je.isJsonPrimitive())
+			{
+				GNVType df;
+			}
+		}
+		
 		return null;
 	}
 	
@@ -783,7 +794,7 @@ final public class GSONUtil
 		
 		if (gnvType == null)
 		{
-			GNVTypeName tn = GNVType.toNVType(name, ':');
+			GNVTypeName tn = GNVType.toGNVTypeName(name, ':');
 			if (tn != null)
 			{
 				gnvType = tn.getType();
@@ -795,7 +806,7 @@ final public class GSONUtil
 		{
 			switch(gnvType)
 			{
-			case NVBLOB:
+			case BLOB:
 				try
 				{
 					byte value[] = SharedBase64.decode(btype, jp.getAsString());
@@ -806,15 +817,15 @@ final public class GSONUtil
 					
 				}
 				break;
-			case NVBOOLEAN:
+			case BOOLEAN:
 				return new NVBoolean(name, jp.getAsBoolean());
-			case NVDOUBLE:
+			case DOUBLE:
 				return new NVDouble(name, jp.getAsDouble());
-			case NVFLOAT:
+			case FLOAT:
 				return new NVFloat(name, jp.getAsFloat());
-			case NVINT:
+			case INT:
 				return new NVInt(name, jp.getAsInt());
-			case NVLONG:
+			case LONG:
 				return new NVLong(name, jp.getAsLong());
 			
 			}

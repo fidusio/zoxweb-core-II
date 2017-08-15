@@ -58,6 +58,9 @@ public class NVGenericMapTest
 			
 			nvgm = GSONUtil.genericMapFromJSON(json, null, Base64Type.URL);
 			printValue(nvgm);
+			
+			
+			System.out.println(Float.parseFloat(""+Double.MAX_VALUE)); 
 		}
 		catch(Exception e)
 		{

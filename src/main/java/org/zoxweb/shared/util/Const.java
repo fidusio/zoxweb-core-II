@@ -700,12 +700,12 @@ public class Const
 	public enum GNVType
 		implements GetName
 	{
-		NVBLOB("byte[]"),
-		NVBOOLEAN("boolean"),
-		NVINT("int"),
-		NVLONG("long"),
-		NVFLOAT("float"),
-		NVDOUBLE("double")
+		BLOB("byte[]"),
+		BOOLEAN("boolean"),
+		INT("int"),
+		LONG("long"),
+		FLOAT("float"),
+		DOUBLE("double")
 		;
 		
 		private final String name;
@@ -724,33 +724,33 @@ public class Const
 		{
 			if (gnv instanceof NVBoolean)
 			{
-				return NVBOOLEAN.getName() + sep + gnv.getName();
+				return BOOLEAN.getName() + sep + gnv.getName();
 			}
 			else if (gnv instanceof NVInt)
 			{
-				return NVINT.getName() + sep + gnv.getName();
+				return INT.getName() + sep + gnv.getName();
 			}
 			else if (gnv instanceof NVLong)
 			{
-				return NVLONG.getName() + sep + gnv.getName();
+				return LONG.getName() + sep + gnv.getName();
 			}
 			else if (gnv instanceof NVFloat)
 			{
-				return NVFLOAT.getName() + sep + gnv.getName();
+				return FLOAT.getName() + sep + gnv.getName();
 			}
 			else if (gnv instanceof NVDouble)
 			{
-				return NVDOUBLE.getName() + sep + gnv.getName();
+				return DOUBLE.getName() + sep + gnv.getName();
 			}
 			else if (gnv instanceof NVBlob)
 			{
-				return NVBLOB.getName() + sep + gnv.getName();
+				return BLOB.getName() + sep + gnv.getName();
 			}
 			return gnv.getName();
 		}
 		
 		
-		public static GNVTypeName toNVType(String name, char sep)
+		public static GNVTypeName toGNVTypeName(String name, char sep)
 		{
 			String tokens[] = name.split("\\" + sep);
 			if (tokens.length > 1)
@@ -764,32 +764,77 @@ public class Const
 			return null;
 		}
 		
+		public static GNVType toGNVType(Number number)
+		{
+			
+			if (number != null)
+			{
+				if (number instanceof Float)
+				{
+					return FLOAT;
+				}
+				if (number instanceof Double)
+				{
+					return DOUBLE;
+				}
+			
+				if(number instanceof Long)
+				{
+					return LONG;
+				}
+				
+				if(number instanceof Integer)
+				{
+					return INT;
+				}
+				
+				// double or float
+				String numeric = number.toString();
+				if (numeric.indexOf('.') != -1)
+				{
+					// double or float
+					try
+					{
+						
+					}
+					catch(Exception e)
+					{
+						
+					}
+				}
+				// long or int
+			}
+			
+			return null;
+			
+		}
+		
 		public static GNVType toGNVType(NVConfig nvc)
 		{
 			if (byte[].class.equals(nvc.getMetaType()))
 			{
-				return NVBLOB;
+				return BLOB;
 			}
 			if (!nvc.isArray())
 			{
 				if (Long.class.equals(nvc.getMetaType()))
 				{
-					return NVLONG;
+					return LONG;
 				}
 				
 				if (Integer.class.equals(nvc.getMetaType()))
 				{
-					return NVINT;
+					return INT;
 				}
 				
 				if (Float.class.equals(nvc.getMetaType()))
 				{
-					return NVFLOAT;
+					return FLOAT;
 				}
 				
 				if (Double.class.equals(nvc.getMetaType()))
 				{
-					return NVDOUBLE;
+					return DOUBLE;
 				}
 				
 			}
