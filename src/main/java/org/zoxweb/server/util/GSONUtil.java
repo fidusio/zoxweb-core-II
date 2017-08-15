@@ -65,7 +65,7 @@ import org.zoxweb.shared.util.NVIntList;
 import org.zoxweb.shared.util.NVLong;
 import org.zoxweb.shared.util.NVLongList;
 import org.zoxweb.shared.util.NVPair;
-
+import org.zoxweb.shared.util.NVPairList;
 import org.zoxweb.shared.util.SharedBase64;
 import org.zoxweb.shared.util.SharedBase64.Base64Type;
 import org.zoxweb.shared.util.SharedStringUtil;
@@ -736,9 +736,35 @@ final public class GSONUtil
 				if (jne.isJsonArray())
 				{
 					JsonArray ja = jne.getAsJsonArray();
+					NVBase<?> nvb = guessNVBaseArray(ja);
+					nvb.setName(element.getKey());
+					ret.add(nvb);
 					for (int i = 0; i < ja.size(); i++)
 					{
-						
+						if (nvb instanceof NVPairList)
+						{
+							((NVPairList)nvb).add(toNVPair((JsonObject) ja.get(i)));
+						}
+						else if (nvb instanceof NVIntList)
+						{
+							((NVIntList)nvb).getValue().add(ja.get(i).getAsInt());
+						}
+						else if (nvb instanceof NVLongList)
+						{
+							((NVLongList)nvb).getValue().add(ja.get(i).getAsLong());
+						}
+						else if (nvb instanceof NVFloatList)
+						{
+							((NVFloatList)nvb).getValue().add(ja.get(i).getAsFloat());
+						}
+						else if (nvb instanceof NVDoubleList)
+						{
+							((NVDoubleList)nvb).getValue().add(ja.get(i).getAsDouble());
+						}
+						else if (nvb instanceof NVGenericMap)
+						{
+							((NVGenericMap)nvb).add(genericMapFromJSON((JsonObject)ja.get(i), null, btype));
+						}
 					}
 					
 					
@@ -768,8 +794,11 @@ final public class GSONUtil
 		
 	}
 	
-	public static NVBase<?> guessNVBaseArray(JsonArray ja)
+	private static NVBase<?> guessNVBaseArray(JsonArray ja)
 	{
+		NVBase<?> ret = null;
+		
+		GNVType guess = null;
 		for (int i=0; i < ja.size(); i++)
 		{	
 			JsonElement je = ja.get(i);
@@ -777,14 +806,90 @@ final public class GSONUtil
 			if (je.isJsonObject())
 			{
 				// could an NVEntity or NVPairList or NVGnericMap
+				// nvpair
+				JsonObject jo  = je.getAsJsonObject();
+				if (jo.size() == 1)
+				{
+					
+					if (ret == null)
+					{
+						ret = new NVPairList(null, new ArrayList<NVPair>());
+					}
+				}
+				if (jo.size()>1)
+				{
+					ret = new NVGenericMap();
+					break;
+				}
 			}
 			else if (je.isJsonPrimitive())
 			{
-				GNVType df;
+				GNVType gnv = GNVType.toGNVType(je.getAsNumber());
+				if (gnv != null)
+				{
+					if (guess == null)
+					{
+						guess = gnv;
+					}
+					else
+					{
+						switch(gnv)
+						{
+						
+						case NVDOUBLE:
+							if (guess == GNVType.NVINT || guess == GNVType.NVLONG || guess == GNVType.NVFLOAT)
+							{
+								guess = gnv;
+							}
+							break;
+						case NVFLOAT:
+							if (guess == GNVType.NVINT || guess == GNVType.NVLONG)
+							{
+								guess = gnv;
+							}
+							break;
+						case NVINT:
+							break;
+						case NVLONG:
+							if (guess == GNVType.NVINT)
+							{
+								guess = gnv;
+							}
+							break;
+						default:
+							break;
+						
+						}
+					}
+				}
 			}
 		}
 		
-		return null;
+		if (ret == null && guess != null)
+		{
+			switch(guess)
+			{
+			
+			case NVDOUBLE:
+				ret = new NVDoubleList(null, new ArrayList<Double>());
+				break;
+			case NVFLOAT:
+				ret = new NVFloatList(null, new ArrayList<Float>());
+				break;
+			case NVINT:
+				ret = new NVIntList(null, new ArrayList<Integer>());
+				break;
+			case NVLONG:
+				ret = new NVLongList(null, new ArrayList<Long>());
+				break;
+			default:
+				break;
+			
+			}
+		}
+		
+		
+		return ret;
 	}
 	
 	
@@ -806,7 +911,7 @@ final public class GSONUtil
 		{
 			switch(gnvType)
 			{
-			case BLOB:
+			case NVBLOB:
 				try
 				{
 					byte value[] = SharedBase64.decode(btype, jp.getAsString());
@@ -817,15 +922,15 @@ final public class GSONUtil
 					
 				}
 				break;
-			case BOOLEAN:
+			case NVBOOLEAN:
 				return new NVBoolean(name, jp.getAsBoolean());
-			case DOUBLE:
+			case NVDOUBLE:
 				return new NVDouble(name, jp.getAsDouble());
-			case FLOAT:
+			case NVFLOAT:
 				return new NVFloat(name, jp.getAsFloat());
-			case INT:
+			case NVINT:
 				return new NVInt(name, jp.getAsInt());
-			case LONG:
+			case NVLONG:
 				return new NVLong(name, jp.getAsLong());
 			
 			}

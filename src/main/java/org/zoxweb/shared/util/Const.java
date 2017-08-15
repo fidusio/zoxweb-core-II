@@ -700,12 +700,13 @@ public class Const
 	public enum GNVType
 		implements GetName
 	{
-		BLOB("byte[]"),
-		BOOLEAN("boolean"),
-		INT("int"),
-		LONG("long"),
-		FLOAT("float"),
-		DOUBLE("double")
+		NVBLOB("byte[]"),
+		NVBOOLEAN("boolean"),
+		NVINT("int"),
+		NVLONG("long"),
+		NVFLOAT("float"),
+		NVDOUBLE("double"),
+		
 		;
 		
 		private final String name;
@@ -724,27 +725,27 @@ public class Const
 		{
 			if (gnv instanceof NVBoolean)
 			{
-				return BOOLEAN.getName() + sep + gnv.getName();
+				return NVBOOLEAN.getName() + sep + gnv.getName();
 			}
 			else if (gnv instanceof NVInt)
 			{
-				return INT.getName() + sep + gnv.getName();
+				return NVINT.getName() + sep + gnv.getName();
 			}
 			else if (gnv instanceof NVLong)
 			{
-				return LONG.getName() + sep + gnv.getName();
+				return NVLONG.getName() + sep + gnv.getName();
 			}
 			else if (gnv instanceof NVFloat)
 			{
-				return FLOAT.getName() + sep + gnv.getName();
+				return NVFLOAT.getName() + sep + gnv.getName();
 			}
 			else if (gnv instanceof NVDouble)
 			{
-				return DOUBLE.getName() + sep + gnv.getName();
+				return NVDOUBLE.getName() + sep + gnv.getName();
 			}
 			else if (gnv instanceof NVBlob)
 			{
-				return BLOB.getName() + sep + gnv.getName();
+				return NVBLOB.getName() + sep + gnv.getName();
 			}
 			return gnv.getName();
 		}
@@ -771,21 +772,21 @@ public class Const
 			{
 				if (number instanceof Float)
 				{
-					return FLOAT;
+					return NVFLOAT;
 				}
 				if (number instanceof Double)
 				{
-					return DOUBLE;
+					return NVDOUBLE;
 				}
 			
 				if(number instanceof Long)
 				{
-					return LONG;
+					return NVLONG;
 				}
 				
 				if(number instanceof Integer)
 				{
-					return INT;
+					return NVINT;
 				}
 				
 				// double or float
@@ -802,6 +803,26 @@ public class Const
 						
 					}
 				}
+				else
+				{
+					try
+					{
+						Integer.parseInt(numeric);
+						return NVINT;
+					}
+					catch(NumberFormatException e)
+					{
+					}
+					
+					try
+					{
+						Long.parseLong(numeric);
+						return NVLONG;
+					}
+					catch(NumberFormatException e)
+					{
+					}
+				}
 				// long or int
 			}
 			
@@ -813,28 +834,28 @@ public class Const
 		{
 			if (byte[].class.equals(nvc.getMetaType()))
 			{
-				return BLOB;
+				return NVBLOB;
 			}
 			if (!nvc.isArray())
 			{
 				if (Long.class.equals(nvc.getMetaType()))
 				{
-					return LONG;
+					return NVLONG;
 				}
 				
 				if (Integer.class.equals(nvc.getMetaType()))
 				{
-					return INT;
+					return NVINT;
 				}
 				
 				if (Float.class.equals(nvc.getMetaType()))
 				{
-					return FLOAT;
+					return NVFLOAT;
 				}
 				
 				if (Double.class.equals(nvc.getMetaType()))
 				{
-					return DOUBLE;
+					return NVDOUBLE;
 				}
 				
 			}

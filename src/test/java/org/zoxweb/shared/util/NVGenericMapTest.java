@@ -61,6 +61,7 @@ public class NVGenericMapTest
 			
 			
 			System.out.println(Float.parseFloat(""+Double.MAX_VALUE)); 
+			System.out.println(Integer.parseInt(""+Integer.MAX_VALUE)); 
 		}
 		catch(Exception e)
 		{
