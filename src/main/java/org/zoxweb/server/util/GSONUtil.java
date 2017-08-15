@@ -54,12 +54,16 @@ import org.zoxweb.shared.util.NVBoolean;
 import org.zoxweb.shared.util.NVConfig;
 import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVDouble;
+import org.zoxweb.shared.util.NVDoubleList;
 import org.zoxweb.shared.util.NVEntity;
 import org.zoxweb.shared.util.NVEntityReference;
 import org.zoxweb.shared.util.NVFloat;
+import org.zoxweb.shared.util.NVFloatList;
 import org.zoxweb.shared.util.NVGenericMap;
 import org.zoxweb.shared.util.NVInt;
+import org.zoxweb.shared.util.NVIntList;
 import org.zoxweb.shared.util.NVLong;
+import org.zoxweb.shared.util.NVLongList;
 import org.zoxweb.shared.util.NVPair;
 
 import org.zoxweb.shared.util.SharedBase64;
@@ -581,25 +585,10 @@ final public class GSONUtil
 		JsonWriter writer = new JsonWriter(sw);
 		writer.setSerializeNulls(true);
 		writer.setHtmlSafe(true);
-		
-//		if (indent)
-//		{
-//			writer.setIndent("  ");
-//		}
-//		
-//		
-//		
-//		
-//		writer.beginObject();
-//		
-//		GetNameValue<?> values[] = nvgm.values();
-//		for (GetNameValue<?> gnv : values)
-//		{
-//			genericMapToJSON(writer, gnv, indent, printNull, printClassType, b64Type);
-//		}
-//		
-//		
-//		writer.endObject();
+		if (indent)
+		{
+			writer.setIndent("  ");
+		}
 		
 		genericMapToJSON(writer, nvgm, indent, printNull, printClassType, b64Type);
 		
@@ -703,6 +692,19 @@ final public class GSONUtil
 				}
 				writer.endArray();
 			}
+			else if (gnv instanceof NVIntList || gnv instanceof NVLongList || gnv instanceof NVFloatList || gnv instanceof NVDoubleList)
+			{
+				writer.name(gnv.getName());
+				writer.beginArray();
+				List<?> values = (List<?>) gnv.getValue();
+				
+				for (Object val : values)
+				{
+					writer.value((Number)val);
+				}
+				
+				writer.endArray();
+			}
 		}
 		
 		
@@ -728,33 +730,35 @@ final public class GSONUtil
 	
 	private static NVGenericMap genericMapFromJSON(JsonObject je, NVConfigEntity nvce, Base64Type btype) throws InstantiationException, IllegalAccessException, ClassNotFoundException
 	{
-		
-		
-		
-	
 			NVGenericMap ret = new NVGenericMap();
 			Iterator<Map.Entry<String, JsonElement>> iterator = ((JsonObject) je).entrySet().iterator();
 			while(iterator.hasNext())
 			{
 				Map.Entry<String, JsonElement> element = iterator.next();
-				JsonElement ja = element.getValue();
-				if (ja.isJsonArray())
+				JsonElement jne = element.getValue();
+				if (jne.isJsonArray())
 				{
+					JsonArray ja = jne.getAsJsonArray();
+					for (int i = 0; i < ja.size(); i++)
+					{
+						
+					}
+					
 					
 				}
-				else if (ja.isJsonPrimitive())
+				else if (jne.isJsonPrimitive())
 				{
-					ret.add(guessPrimitive(element.getKey(), nvce != null ? nvce.lookup(element.getKey()) : null,(JsonPrimitive) ja, btype));
+					ret.add(guessPrimitive(element.getKey(), nvce != null ? nvce.lookup(element.getKey()) : null,(JsonPrimitive) jne, btype));
 				}
-				else if (ja.isJsonObject())
+				else if (jne.isJsonObject())
 				{
 					try
 					{
-						ret.add(new NVEntityReference(element.getKey(), (NVEntity)fromJSON(ja.getAsJsonObject(), null, btype)));
+						ret.add(new NVEntityReference(element.getKey(), (NVEntity)fromJSON(jne.getAsJsonObject(), null, btype)));
 					}
 					catch(Exception e)
 					{
-						NVGenericMap toAdd = genericMapFromJSON(ja.getAsJsonObject(), null, btype);
+						NVGenericMap toAdd = genericMapFromJSON(jne.getAsJsonObject(), null, btype);
 						toAdd.setName(element.getKey());
 						ret.add(toAdd);
 					}
@@ -767,7 +771,10 @@ final public class GSONUtil
 		
 	}
 	
-	
+	public static NVBase<?> guessNVBaseArray(JsonArray ja)
+	{
+		return null;
+	}
 	
 	
 	public static NVBase<?> guessPrimitive(String name, NVConfig nvc, JsonPrimitive jp, Base64Type btype)
