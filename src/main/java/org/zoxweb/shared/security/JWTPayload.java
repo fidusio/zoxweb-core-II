@@ -8,6 +8,7 @@ import org.zoxweb.shared.util.NVConfig;
 import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVConfigEntityLocal;
 import org.zoxweb.shared.util.NVConfigManager;
+import org.zoxweb.shared.util.NVGenericMap;
 import org.zoxweb.shared.util.SharedUtil;
 import org.zoxweb.shared.util.SubjectID;
 
@@ -33,7 +34,7 @@ public class JWTPayload
 		IAT(NVConfigManager.createNVConfig("iat", "Issued At", "IAT", false, true, false, long.class, null)),
 		JTI(NVConfigManager.createNVConfig("jti", "JWT ID", "JWTID", false, true, false, String.class, null)),
 		//NAME(NVConfigManager.createNVConfig("name", "name", "Name", true, true, false, String.class, null)),
-		ADMIN(NVConfigManager.createNVConfig("admin", "ApplicationID", "AppID", false, true, boolean.class)),
+		ADMIN(NVConfigManager.createNVConfig("admin", "Admin", "admin", false, true, boolean.class)),
 		
 		
 		;
@@ -66,10 +67,17 @@ public class JWTPayload
 																					SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO
 																				);
 
+	
+	private final NVGenericMap genericMap;
 
 	public JWTPayload() 
 	{
 		super(NVC_JWT_PAYLOAD);
+		
+		genericMap = SharedUtil.toNVGenricMap(this);
+	
+		
+		//genericMap.
 	}
 
 	@Override
@@ -184,5 +192,11 @@ public class JWTPayload
 	{
 		setValue(Param.JTI, jti);
 	}
-
+	
+	
+	public NVGenericMap getNVGenericMap()
+	{
+		return genericMap;
+		
+	}
 }

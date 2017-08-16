@@ -1576,6 +1576,23 @@ public class SharedUtil
 		return ret;
 	}
 	
+	
+	public static NVGenericMap toNVGenricMap(NVEntity nve)
+	{
+		NVGenericMap ret = new NVGenericMap();
+		
+		NVConfigEntity nvce = (NVConfigEntity) nve.getNVConfig();
+		for(NVConfig nvc : nvce.getAttributes())
+		{
+			ret.add(nve.lookup(nvc));
+		}
+		
+		
+		return ret;
+		
+	}
+	
+	
 	/**
 	 * 
 	 * @param array

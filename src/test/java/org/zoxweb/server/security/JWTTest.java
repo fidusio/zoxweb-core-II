@@ -14,6 +14,7 @@ import org.zoxweb.shared.security.SecurityConsts.JWTAlgorithm;
 import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVGenericMap;
 import org.zoxweb.shared.util.NVGenericMapTest;
+import org.zoxweb.shared.util.NVPair;
 import org.zoxweb.shared.util.SharedBase64.Base64Type;
 
 public class JWTTest {
@@ -76,6 +77,10 @@ public class JWTTest {
 		payload.setAdmin(true);
 		payload.setRandom(new byte[] {0,1,2,3});
 		localJwt.setPayload(payload);
+		
+		NVGenericMap nvgm = payload.getNVGenericMap();
+		NVPair nvp = (NVPair)nvgm.get("name");
+		nvp.setValue("Marwan");
 		json = GSONUtil.toJSON(localJwt, true, false, false, Base64Type.URL);
 		System.out.println(json);
 		test = CryptoUtil.encodeJWT("secret", localJwt);
@@ -83,7 +88,7 @@ public class JWTTest {
 
 		System.out.println(CryptoUtil.decodeJWT("secret", test));
 		
-		String payloadJSON = GSONUtil.toJSON(payload, false, false, true, Base64Type.URL);
+		String payloadJSON = GSONUtil.toJSON(payload, true, false, true, Base64Type.URL);
 		System.out.println("-------------------------------------------------------------------");
 		System.out.println(payloadJSON);
 	
