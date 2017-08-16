@@ -140,9 +140,9 @@ final public class GSONUtil
 		writer.setHtmlSafe(true);
 		
 		if (indent)
-		{
 			writer.setIndent("  ");
-		}
+		else
+			writer.setIndent("");
 		
 		toJSON(writer, nve.getClass(), nve, printNull, printClassType, b64Type);
 		
@@ -165,9 +165,9 @@ final public class GSONUtil
 		writer.setHtmlSafe(true);
 		
 		if (indent)
-		{
 			writer.setIndent("  ");
-		}
+		else
+			writer.setIndent("");
 		
 		writer.beginObject();
 		writer.name(wrapName);
@@ -569,7 +569,7 @@ final public class GSONUtil
 				else if (NVGenericMap.class.equals(nvc.getMetaTypeBase()))
 				{
 					writer.name(nvc.getName());
-					genericMapToJSON(writer, (NVGenericMap)nve.lookup(nvc), false, printNull, printClassType, b64Type);
+					genericMapToJSON(writer, (NVGenericMap)nve.lookup(nvc),  printNull, printClassType, b64Type);
 				}
 			}
 		}
@@ -586,25 +586,25 @@ final public class GSONUtil
 		writer.setSerializeNulls(true);
 		writer.setHtmlSafe(true);
 		if (indent)
-		{
 			writer.setIndent("  ");
-		}
+		else
+			writer.setIndent("");
 		
-		genericMapToJSON(writer, nvgm, indent, printNull, printClassType, b64Type);
+		genericMapToJSON(writer, nvgm,  printNull, printClassType, b64Type);
 		
 		writer.close();
 		
 		return sw.toString();
 	}
 	
-	private static JsonWriter genericMapToJSON(JsonWriter writer, NVGenericMap nvgm, boolean indent, boolean printNull, boolean printClassType, Base64Type b64Type) throws IOException
+	private static JsonWriter genericMapToJSON(JsonWriter writer, NVGenericMap nvgm,  boolean printNull, boolean printClassType, Base64Type b64Type) throws IOException
 	{
 		writer.beginObject();
 		
 		GetNameValue<?> values[] = nvgm.values();
 		for (GetNameValue<?> gnv : values)
 		{
-			genericMapToJSON(writer, gnv, indent, printNull, printClassType, b64Type);
+			genericMapToJSON(writer, gnv, printNull, printClassType, b64Type);
 		}
 		
 		
@@ -615,7 +615,7 @@ final public class GSONUtil
 	
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private static JsonWriter genericMapToJSON(JsonWriter writer, GetNameValue<?> gnv, boolean indent, boolean printNull, boolean printClassType, Base64Type b64Type) throws IOException
+	private static JsonWriter genericMapToJSON(JsonWriter writer, GetNameValue<?> gnv,  boolean printNull, boolean printClassType, Base64Type b64Type) throws IOException
 	{
 		
 		
@@ -636,10 +636,20 @@ final public class GSONUtil
 			
 			if (gnv instanceof NVBoolean)
 			{
+				if (!printNull && !(Boolean)gnv.getValue())
+				{
+					return writer;
+				}
 				writer.name(name).value((Boolean)gnv.getValue()); 
 			}
 			else if (gnv instanceof  NVInt || gnv instanceof NVLong || gnv instanceof NVFloat || gnv instanceof NVDouble)
 			{
+				Number value = (Number) gnv.getValue();
+				if (!printNull && value.longValue()==0)
+				{
+					return writer;
+				}
+				
 				writer.name(name).value((Number)gnv.getValue()); 
 			}
 			else if (gnv.getValue() instanceof String)
@@ -672,7 +682,7 @@ final public class GSONUtil
 						else
 						{
 							writer.beginObject();
-							genericMapToJSON(writer, (GetNameValue<?>) localGNV, indent, printNull, printClassType, b64Type);
+							genericMapToJSON(writer, (GetNameValue<?>) localGNV, printNull, printClassType, b64Type);
 							writer.endObject();
 						}
 					}
@@ -732,6 +742,8 @@ final public class GSONUtil
 			while(iterator.hasNext())
 			{
 				Map.Entry<String, JsonElement> element = iterator.next();
+				if (element.getKey().equals(MetaToken.CLASS_TYPE.getName()))
+					continue;
 				JsonElement jne = element.getValue();
 				if (jne.isJsonArray())
 				{
@@ -1572,9 +1584,9 @@ final public class GSONUtil
 		writer.setHtmlSafe(true);
 
 		if (indent)
-		{
 			writer.setIndent("  ");
-		}
+		else
+			writer.setIndent("");
 
 		writer.beginObject();
 		writer.name(MetaToken.VALUES.getName());

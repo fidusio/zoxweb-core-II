@@ -97,6 +97,13 @@ public class JWTTest {
 		//System.out.println(gm);
 		NVGenericMapTest.printValue(gm);
 		
+		
+		JWTPayload tempJWTP = new  JWTPayload();
+		gm.add(new NVPair("http://toto.com", "batata"));
+		tempJWTP.setNVGenericMap(gm);
+		System.out.println(tempJWTP);
+		System.out.println("genericMapToJSON:" + GSONUtil.genericMapToJSON(tempJWTP.getNVGenericMap(), false, false, false, Base64Type.URL));
+		
 		System.out.println("-------------------------------------------------------------------");
 	}
 	
@@ -123,6 +130,39 @@ public class JWTTest {
 
 		System.out.println(CryptoUtil.decodeJWT((String)null, test));
 	}
+	
+	
+	
+	@Test
+	public void testJWTHS256() throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException, InvalidKeyException, NoSuchAlgorithmException
+	{
+		
+		System.out.println("--------------------------------------------------------------");
+		String jsonHS256 = GSONUtil.toJSON(jwtHS256, false, false, false, Base64Type.URL);
+		System.out.println(jsonHS256);
+		JWT localJwt = GSONUtil.fromJSON(jsonHS256, JWT.class, Base64Type.URL);
+		jsonHS256 = GSONUtil.toJSON(localJwt, true, false, false, Base64Type.URL);
+		System.out.println(jsonHS256);
+		
+		System.out.println(localJwt.getPayload());
+		
+		String test = CryptoUtil.encodeJWT("secret", localJwt);
+		System.out.println(test);
+		
+
+		jsonHS256 = GSONUtil.toJSON(localJwt, false, false, false, Base64Type.URL);
+		System.out.println(jsonHS256);
+		test = CryptoUtil.encodeJWT("secret", localJwt);
+		System.out.println(test);
+
+		System.out.println(CryptoUtil.decodeJWT("secret", test));
+		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+	}
+	
+	
+	
+	
+	
 	
 	@Test (expected = IllegalArgumentException.class)
 	public void invalidDomain()

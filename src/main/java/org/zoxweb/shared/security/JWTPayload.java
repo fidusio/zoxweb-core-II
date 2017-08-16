@@ -203,6 +203,6 @@ public class JWTPayload
 	
 	public void setNVGenericMap(NVGenericMap nvgm)
 	{
-		
+		SharedUtil.updateGetNVGenericMap(this, nvgm);
 	}
 }

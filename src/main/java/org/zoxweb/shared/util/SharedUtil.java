@@ -1588,8 +1588,16 @@ public class SharedUtil
 		return ret;
 	}
 	
+	
+	public static NVGenericMap updateGetNVGenericMap(GetNVGenericMap toUpdate, NVGenericMap value)
+	{
+		return updateNVGenericMap(toUpdate.getNVGenericMap(), value);
+	}
+	
+	
+	
 	@SuppressWarnings("unchecked")
-	public static NVGenericMap updateGetNVGenricMap(NVGenericMap toUpdate, NVGenericMap value)
+	public static NVGenericMap updateNVGenericMap(NVGenericMap toUpdate, NVGenericMap value)
 	{
 		for(GetNameValue<?> gnv : value.values())
 		{
