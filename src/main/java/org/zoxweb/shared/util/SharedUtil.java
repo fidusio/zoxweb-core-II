@@ -1580,16 +1580,31 @@ public class SharedUtil
 	public static NVGenericMap toNVGenricMap(NVEntity nve)
 	{
 		NVGenericMap ret = new NVGenericMap();
-		
 		NVConfigEntity nvce = (NVConfigEntity) nve.getNVConfig();
 		for(NVConfig nvc : nvce.getAttributes())
 		{
 			ret.add(nve.lookup(nvc));
 		}
-		
-		
 		return ret;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static NVGenericMap updateGetNVGenricMap(NVGenericMap toUpdate, NVGenericMap value)
+	{
+		for(GetNameValue<?> gnv : value.values())
+		{
+			GetNameValue<?> gnvToUpdate = toUpdate.get(gnv);
+			if (gnvToUpdate != null)
+			{
+				((NVBase<Object>)gnvToUpdate).setValue(gnv.getValue());
+			}
+			else
+			{
+				toUpdate.add(gnv);
+			}
+		}
 		
+		return toUpdate;
 	}
 	
 	

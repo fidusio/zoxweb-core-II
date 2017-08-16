@@ -4,6 +4,7 @@ import org.zoxweb.shared.data.SetNameDescriptionDAO;
 import org.zoxweb.shared.filters.FilterType;
 import org.zoxweb.shared.util.AppID;
 import org.zoxweb.shared.util.GetNVConfig;
+import org.zoxweb.shared.util.GetNVGenericMap;
 import org.zoxweb.shared.util.NVConfig;
 import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVConfigEntityLocal;
@@ -15,7 +16,8 @@ import org.zoxweb.shared.util.SubjectID;
 @SuppressWarnings("serial")
 public class JWTPayload 
     extends SetNameDescriptionDAO
-    implements AppID<String>, SubjectID<String>
+    implements AppID<String>, SubjectID<String>,
+    GetNVGenericMap
 {
 	
 
@@ -196,7 +198,11 @@ public class JWTPayload
 	
 	public NVGenericMap getNVGenericMap()
 	{
-		return genericMap;
+		return genericMap;	
+	}
+	
+	public void setNVGenericMap(NVGenericMap nvgm)
+	{
 		
 	}
 }
