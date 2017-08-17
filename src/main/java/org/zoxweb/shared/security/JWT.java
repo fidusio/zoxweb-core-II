@@ -112,7 +112,7 @@ extends SetNameDescriptionDAO
 	public static JWT createJWT(JWTAlgorithm algorithm, String subjectID, String domainID, String appID) {
         JWTHeader jwtHeader = new JWTHeader();
         jwtHeader.setJWTAlgorithm(algorithm);
-        jwtHeader.setType("JWT");
+        jwtHeader.setTokenType("JWT");
 
         JWTPayload jwtPayload = new JWTPayload();
         jwtPayload.setDomainID(domainID);

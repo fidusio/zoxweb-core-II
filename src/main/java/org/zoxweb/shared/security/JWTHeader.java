@@ -17,7 +17,8 @@ public class JWTHeader
 	    implements GetNVConfig
 	{
 		ALG(NVConfigManager.createNVConfig("alg", "Algorithm", "Alg", true, true, JWTAlgorithm.class)),
-		TYP(NVConfigManager.createNVConfig("typ", "Content type", "ContentType",false, false, String.class)),
+		CTY(NVConfigManager.createNVConfig("cty", "Content Type", "ContentType", false, false, String.class)),
+		TYP(NVConfigManager.createNVConfig("typ", "Token type", "TokenType",false, false, String.class)),
 		;
 		
 		private final NVConfig nvc;
@@ -63,14 +64,28 @@ public class JWTHeader
 		setValue(Param.ALG, type);
 	}
 	
-	public String getType()
+	public String getTokenType()
 	{
 		return lookupValue(Param.TYP);
 	}
 	
-	public void setType(String type)
+	public void setTokenType(String type)
 	{
 		setValue(Param.TYP, type);
 	}
+	
+	
+	public String getContentType()
+	{
+		return lookupValue(Param.CTY);
+	}
+	
+	public void setContentType(String contentType)
+	{
+		setValue(Param.CTY, contentType);
+	}
+	
+	
+	
 
 }

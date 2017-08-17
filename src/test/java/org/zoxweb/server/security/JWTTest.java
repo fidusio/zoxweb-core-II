@@ -29,7 +29,7 @@ public class JWTTest {
 		
 		
 		header.setJWTAlgorithm(JWTAlgorithm.HS256);
-		header.setType("JWT");
+		header.setTokenType("JWT");
 		JWTPayload payload = new JWTPayload();
 		payload.setDomainID("xlogistx.io");
 		payload.setAppID("xlogistx");
