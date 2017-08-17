@@ -533,7 +533,8 @@ final public class GSONUtil
 					}
 				}
 				else if (nvc.getMetaTypeBase() == Boolean.class) {
-					writer.name(nvc.getName()).value((boolean) nve.lookupValue(nvc));
+					if (printNull || (boolean) nve.lookupValue(nvc))
+						writer.name(nvc.getName()).value((boolean) nve.lookupValue(nvc));
 				}
 				else if (nvc.getMetaTypeBase() == Date.class)
 				{

@@ -72,7 +72,7 @@ public class JWTTest {
 		JWTPayload payload = new JWTPayload();
 		payload.setDomainID("xlogistx.io");
 		payload.setAppID("xlogistx");
-		payload.setSubjectID("support@xlogistx.io");
+		payload.setSubjectID("batata@xlogistx.io");
 		payload.setName("John Doe");
 		payload.setAdmin(true);
 		payload.setRandom(new byte[] {0,1,2,3});

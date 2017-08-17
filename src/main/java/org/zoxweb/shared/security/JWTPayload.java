@@ -24,10 +24,7 @@ public class JWTPayload
 	public enum Param
 	    implements GetNVConfig
 	{
-		DOMAIN_ID(NVConfigManager.createNVConfig("domain_id", "Domain identifier", "DomainID", true, true, false, String.class, FilterType.DOMAIN)),
-		APP_ID(NVConfigManager.createNVConfig("app_id", "ApplicationID", "AppID", true, true, false, String.class, null)),
-		NONCE(NVConfigManager.createNVConfig("nonce", "ApplicationID", "Nonce", false, true, false, long.class, null)),
-		RANDOM(NVConfigManager.createNVConfig("random", "Random Data", "Rendom", false, true, false, byte[].class, null)),
+		
 		ISS(NVConfigManager.createNVConfig("iss", "Issuer intentifier", "Issuer", false, true, false, String.class, null)),
 		SUB(NVConfigManager.createNVConfig("sub", "Subject Identifier", "SubjectID", false, true, false, String.class, null)),
 		AUD(NVConfigManager.createNVConfig("aud", "Audience", "Audience", false, true, false, String.class, null)),	
@@ -37,6 +34,10 @@ public class JWTPayload
 		JTI(NVConfigManager.createNVConfig("jti", "JWT ID", "JWTID", false, true, false, String.class, null)),
 		//NAME(NVConfigManager.createNVConfig("name", "name", "Name", true, true, false, String.class, null)),
 		ADMIN(NVConfigManager.createNVConfig("admin", "Admin", "admin", false, true, boolean.class)),
+		DOMAIN_ID(NVConfigManager.createNVConfig("domain_id", "Domain identifier", "DomainID", false, true, false, String.class, FilterType.DOMAIN)),
+		APP_ID(NVConfigManager.createNVConfig("app_id", "ApplicationID", "AppID", false, true, false, String.class, null)),
+		NONCE(NVConfigManager.createNVConfig("nonce", "Nonce", "Nonce", false, true, false, long.class, null)),
+		RANDOM(NVConfigManager.createNVConfig("random", "Random Data", "Random", false, true, false, byte[].class, null)),
 		
 		
 		;
