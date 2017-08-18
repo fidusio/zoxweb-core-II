@@ -624,7 +624,7 @@ final public class GSONUtil
 //		for (GetNameValue<?> gnv : values)
 		{
 		
-			if (gnv.getValue() == null && printNull)
+			if (gnv.getValue() == null && !printNull)
 			{
 				return writer;
 			}

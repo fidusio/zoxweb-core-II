@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.zoxweb.server.util.GSONUtil;
@@ -159,6 +160,23 @@ public class JWTTest {
 		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 	}
 	
+	
+	@Test
+	public void testJWTGWT() throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException, InvalidKeyException, NoSuchAlgorithmException
+	{
+		
+		System.out.println("--------------------------------------------------------------");
+		
+		String gwtToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb21haW5faWQiOiJ4bG9naXN0eC5pbyIsImFwcF9pZCI6Inhsb2dpc3R4In0.kUWx4se-XR3vLuWeMeC3k97oDThK3wIbZ8LlLuB3kzQ";
+		JWT decoded = CryptoUtil.decodeJWT("secret", gwtToken);		
+		String test = CryptoUtil.encodeJWT("secret", decoded);
+		System.out.println("GWT  :" + gwtToken);
+		System.out.println("local:" + test);
+		System.out.println(GSONUtil.toJSON(decoded, false, false, false, Base64Type.URL));
+		System.out.println("Are equals:" + test.equals(gwtToken));
+		Assert.assertEquals("2 tokens equals", test, gwtToken);
+		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+	}
 	
 	
 	
