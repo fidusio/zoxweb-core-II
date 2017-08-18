@@ -659,7 +659,7 @@ final public class GSONUtil
 			}
 			else if (gnv instanceof NVBlob)
 			{
-				writer.name(name).value((String)SharedStringUtil.toString(SharedBase64.encode(b64Type, (byte[]) gnv.getValue()))); 
+				writer.name(name).value(SharedBase64.encodeAsString(b64Type, (byte[]) gnv.getValue())); 
 			}
 			else if (gnv instanceof NVEntityReference)
 			{
