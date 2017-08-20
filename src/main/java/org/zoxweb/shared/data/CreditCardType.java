@@ -51,11 +51,11 @@ public enum CreditCardType
            this(pattern, "?", null);
     }
     
-    private CreditCardType(String pattern, String verisignCode, String display)
+    private CreditCardType(String pattern, String verisign, String display)
     {
     	this.pattern  = pattern;
-        this.verisign = verisignCode;
-        this.displayForm = display;
+        this.verisign = verisign;
+        this.display = display;
     }
     
     public String getPayPalCode()
@@ -65,12 +65,12 @@ public enum CreditCardType
     
     public String getDisplay()
     {
-    	return displayForm;
+    	return display;
     }
     
     private String pattern;
     private String verisign;
-    private String displayForm;
+    private String display;
 
 	/**
 	 * This method returns Canonical ID.
@@ -78,7 +78,7 @@ public enum CreditCardType
 	@Override
 	public String toCanonicalID() 
 	{
-		return (displayForm != null) ? displayForm : name() ;
+		return (display != null) ? display : name() ;
 	}
 
 	/**
