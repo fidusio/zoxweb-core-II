@@ -656,9 +656,9 @@ public final class SharedStringUtil
 	 */
 	public static String concat(String s1, String s2, String sep)
     {
-		s1 = trimOrEmpty( s1);
-		s2 = trimOrEmpty( s2);
-		sep = trimOrEmpty( sep);
+		s1 = trimOrEmpty(s1);
+		s2 = trimOrEmpty(s2);
+		sep = trimOrEmpty(sep);
 		
 		if ((s1.endsWith(sep) && !s2.startsWith(sep)) || (!s1.endsWith(sep) && s2.startsWith(sep)))
 		{
