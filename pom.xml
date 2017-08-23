@@ -18,6 +18,9 @@
       </license>
     </licenses>
     
+
+    
+    
     <scm>
     	<url>https://github.com/fidusio/zoxweb-core.git</url>
     	<connection>scm:git:git://github.com/fidusio/zoxweb-core.git</connection>
@@ -61,6 +64,7 @@
 		<maven-javadoc.version>2.10.4</maven-javadoc.version>
         <javaee-api.version>7.0</javaee-api.version>
         <javax-servlet.version>3.0.1</javax-servlet.version>
+        <ehcache-jcache.version>1.0.2-SNAPSHOT</ehcache-jcache.version>
 
     </properties>
 
@@ -215,6 +219,14 @@
             <version>${javax-mail.version}</version>
             <scope>provided</scope>
         </dependency>
+       <!--  
+        <dependency>
+	        <groupId>org.ehcache</groupId>
+	        <artifactId>jcache</artifactId>
+	        <version>${ehcache-jcache.version}</version>
+	        <scope>provided</scope>
+          </dependency>
+       -->
        
         <!--  
         <dependency>
