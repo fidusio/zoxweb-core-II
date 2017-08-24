@@ -20,7 +20,7 @@ public class UserPreferenceDAO
         implements GetNVConfig {
 
         DEFAULT_LANGUAGE(NVConfigManager.createNVConfig("language", "Default language", "DefaultLanguage", false, true, Language.class)),
-        DEFAULT_SHIPPING_ADDRESS(NVConfigManager.createNVConfigEntity("shipping_address", "Default shipping address", "DefaultShippingAddress", false, true, AddressDAO.NVC_ADDRESS_DAO, ArrayType.NOT_ARRAY)),
+        DEFAULT_DELIVERY_ADDRESS(NVConfigManager.createNVConfigEntity("delivery_address", "Default delivery address", "DefaultDeliveryAddress", false, true, AddressDAO.NVC_ADDRESS_DAO, ArrayType.NOT_ARRAY)),
         DEFAULT_BILLING_ADDRESS(NVConfigManager.createNVConfigEntity("billing_address", "Default billing address", "DefaultBillingAddress", false, true, AddressDAO.NVC_ADDRESS_DAO, ArrayType.NOT_ARRAY)),
         DEFAULT_CREDIT_CARD(NVConfigManager.createNVConfigEntity("credit_card", "Default credit card", "DefaultCreditCard", false, true, CreditCardDAO.NVC_CREDIT_CARD_DAO, ArrayType.NOT_ARRAY)),
 
@@ -67,14 +67,14 @@ public class UserPreferenceDAO
         setValue(Param.DEFAULT_LANGUAGE, language);
     }
 
-    public AddressDAO getDefaultShippingAddress()
+    public AddressDAO getDefaultDeliveryAddress()
     {
-        return lookupValue(Param.DEFAULT_SHIPPING_ADDRESS);
+        return lookupValue(Param.DEFAULT_DELIVERY_ADDRESS);
     }
 
-    public void setDefaultShippingAddress(AddressDAO address)
+    public void setDefaultDeliveryAddress(AddressDAO address)
     {
-        setValue(Param.DEFAULT_SHIPPING_ADDRESS, address);
+        setValue(Param.DEFAULT_DELIVERY_ADDRESS, address);
     }
 
     public AddressDAO getDefaultBillingAddress()
