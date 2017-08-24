@@ -30,7 +30,7 @@ public class SubjectAPIKey
 
         SUBJECT_ID(NVConfigManager.createNVConfig("subject_id", "Subject ID", "SubjectID", true, false, true, String.class, null)),
         API_KEY(NVConfigManager.createNVConfig("api_key", "API Key", "APIKey", true, false, true, String.class, null)),
-        API_SECRET(NVConfigManager.createNVConfig("api_secret", "API Key", "APIKey", true, false, false, String.class, FilterType.ENCRYPT)),
+        API_SECRET(NVConfigManager.createNVConfig("api_secret", "API Secret", "APISecret", true, false, false, String.class, FilterType.ENCRYPT)),
 
         ;
 
