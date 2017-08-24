@@ -12,6 +12,7 @@ import org.zoxweb.shared.util.NVConfigManager;
 import org.zoxweb.shared.util.SharedStringUtil;
 
 
+
 /**
  * Created on 7/13/17
  */
@@ -24,7 +25,8 @@ public class SubjectAPIKey
         implements GetNVConfig {
 
         SUBJECT_ID(NVConfigManager.createNVConfig("subject_id", "Subject ID", "SubjectID", true, false, true, String.class, null)),
-        API_KEY(NVConfigManager.createNVConfig("api_key", "API Key", "APIKey", true, false, false, String.class, FilterType.ENCRYPT)),
+        API_KEY(NVConfigManager.createNVConfig("api_key", "API Key", "APIKey", true, false, true, String.class, null)),
+        API_SECRET(NVConfigManager.createNVConfig("api_secret", "API Key", "APIKey", true, false, false, String.class, FilterType.ENCRYPT)),
 
         ;
 
@@ -78,9 +80,36 @@ public class SubjectAPIKey
     }
     
     
-    public byte[] getAPIKeyAsBytes()
+//    public byte[] getAPIKeyAsBytes()
+//    {
+//    	String key = getAPIKey();
+//    	if (key != null)
+//        {
+//            return SharedStringUtil.getBytes(key);
+//        }
+//
+//    	return null;
+//    }
+
+    public void setAPIKey(String apiKey) 
     {
-    	String key = getAPIKey();
+        setValue(Param.API_KEY, apiKey);
+    }
+    
+    
+    public void setAPISecret(String secret)
+    {
+    	 setValue(Param.API_SECRET, secret);
+    }
+    
+    public String getAPISecret() {
+        return lookupValue(Param.API_SECRET);
+    }
+    
+
+    public byte[] getAPISecretAsBytes()
+    {
+    	String key = getAPISecret();
     	if (key != null)
         {
             return SharedStringUtil.getBytes(key);
@@ -88,9 +117,4 @@ public class SubjectAPIKey
 
     	return null;
     }
-
-    public void setAPIKey(String apiKey) {
-        setValue(Param.API_KEY, apiKey);
-    }
-
 }
