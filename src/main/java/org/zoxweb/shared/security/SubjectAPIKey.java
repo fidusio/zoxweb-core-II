@@ -1,5 +1,7 @@
 package org.zoxweb.shared.security;
 
+
+
 import org.zoxweb.shared.data.TimeStampDAO;
 import org.zoxweb.shared.filters.FilterType;
 import org.zoxweb.shared.util.GetNVConfig;
@@ -9,7 +11,9 @@ import org.zoxweb.shared.util.NVConfigEntityLocal;
 import org.zoxweb.shared.util.SharedUtil;
 import org.zoxweb.shared.util.SubjectID;
 import org.zoxweb.shared.util.NVConfigManager;
-import org.zoxweb.shared.util.SharedStringUtil;
+import org.zoxweb.shared.util.SharedBase64;
+import org.zoxweb.shared.util.SharedBase64.Base64Type;
+
 
 
 
@@ -106,13 +110,12 @@ public class SubjectAPIKey
         return lookupValue(Param.API_SECRET);
     }
     
-
     public byte[] getAPISecretAsBytes()
     {
-    	String key = getAPISecret();
-    	if (key != null)
+    	String secret = getAPISecret();
+    	if (secret != null)
         {
-            return SharedStringUtil.getBytes(key);
+            return SharedBase64.decode(Base64Type.URL, secret);
         }
 
     	return null;
