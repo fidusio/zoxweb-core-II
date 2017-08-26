@@ -64,7 +64,7 @@
 		<maven-javadoc.version>2.10.4</maven-javadoc.version>
         <javaee-api.version>7.0</javaee-api.version>
         <javax-servlet.version>3.0.1</javax-servlet.version>
-        <ehcache-jcache.version>1.0.2-SNAPSHOT</ehcache-jcache.version>
+        <ehcache-jcache.version>1.5.0-0.5</ehcache-jcache.version>
 
     </properties>
 
@@ -219,6 +219,13 @@
             <version>${javax-mail.version}</version>
             <scope>provided</scope>
         </dependency>
+        
+        <dependency>
+		    <groupId>net.sf.ehcache</groupId>
+		    <artifactId>ehcache-jcache</artifactId>
+		    <version>${ehcache-jcache.version}</version>
+		    <scope>provided</scope>
+		</dependency>
        <!--  
         <dependency>
 	        <groupId>org.ehcache</groupId>

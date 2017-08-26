@@ -101,9 +101,9 @@ public class SubjectAPIKey
     }
     
     
-    public void setAPISecret(String secret)
+    public void setAPISecret(byte[] secret)
     {
-    	 setValue(Param.API_SECRET, secret);
+    	 setValue(Param.API_SECRET, SharedBase64.encodeAsString(Base64Type.URL, secret));
     }
     
     public String getAPISecret() {
