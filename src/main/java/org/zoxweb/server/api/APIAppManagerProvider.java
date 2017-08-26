@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 import org.zoxweb.server.security.CryptoUtil;
-import org.zoxweb.server.security.JWTValidatorProvider;
+import org.zoxweb.server.security.JWTProvider;
 import org.zoxweb.shared.api.APIAppManager;
 import org.zoxweb.shared.api.APIDataStore;
 import org.zoxweb.shared.data.AppDeviceDAO;
@@ -152,9 +152,15 @@ implements APIAppManager
 		
 		// lookup subject id
 		SubjectAPIKey sak = lookupSubjectAPIKey(jwt.getPayload().getSubjectID());
+		if (sak == null)
+		{
+			throw new AccessSecurityException("Subject Not found: " + jwt.getPayload().getSubjectID());
+		}
+		
+		
 		if (sak.getStatus() != Status.ACTIVE)
 		{
-			throw new AccessSecurityException("Invalid SubjectAPIKey:" + sak.getStatus());
+			throw new AccessSecurityException("Invalid SubjectAPIKey: " + sak.getStatus());
 		}
 		
 		if (sak instanceof AppDeviceDAO)
@@ -168,7 +174,7 @@ implements APIAppManager
 			}
 		}
 		
-		return JWTValidatorProvider.SINGLETON.decodeJWT(sak.getAPISecretAsBytes(), token);
+		return JWTProvider.SINGLETON.decodeJWT(sak.getAPISecretAsBytes(), token);
 	}
 
 	@Override

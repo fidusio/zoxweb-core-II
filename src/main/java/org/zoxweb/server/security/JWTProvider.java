@@ -9,12 +9,12 @@ import org.zoxweb.shared.crypto.JWTEncoder;
 import org.zoxweb.shared.security.AccessSecurityException;
 import org.zoxweb.shared.security.JWT;
 
-public final class JWTValidatorProvider
+public final class JWTProvider
 implements JWTEncoder, JWTDecoder {
 	
-	public final static JWTValidatorProvider SINGLETON = new JWTValidatorProvider();
+	public final static JWTProvider SINGLETON = new JWTProvider();
 	
-	private JWTValidatorProvider()
+	private JWTProvider()
 	{
 		
 	}
