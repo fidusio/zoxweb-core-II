@@ -1,5 +1,10 @@
 package org.zoxweb.server.api;
 
+import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
+import java.util.UUID;
+
+import org.zoxweb.server.security.CryptoUtil;
 import org.zoxweb.shared.api.APIAppManager;
 import org.zoxweb.shared.api.APIDataStore;
 import org.zoxweb.shared.data.AppDeviceDAO;
@@ -11,8 +16,10 @@ import org.zoxweb.shared.util.SharedUtil;
 public class APIAppManagerProvider
 implements APIAppManager
 {
-
+	
 	private volatile APIDataStore<?> ds;
+	
+	private HashMap<String, SubjectAPIKey> cache = new HashMap<>();
 	
 	@Override
 	public SubjectAPIKey createAppDeviceDAO(AppDeviceDAO add)
@@ -37,16 +44,37 @@ implements APIAppManager
 	public SubjectAPIKey createSubjectAPIKey(SubjectAPIKey sak)
 			throws NullPointerException, IllegalArgumentException, AccessException
 	{
+		SharedUtil.checkIfNulls("Null SubjectAPIKey", sak);
+		if (sak.getSubjectID() == null)
+		{
+			// the uuid if null
+			sak.setSubjectID(UUID.randomUUID().toString());
+		}
+		
+		if (sak.getAPIKey() == null)
+		{
+			sak.setAPIKey(UUID.randomUUID().toString());
+		}
+		if (sak.getAPISecret() == null)
+		{
+			try {
+				sak.setAPISecret(CryptoUtil.generateKey(256, CryptoUtil.AES).getEncoded());
+			} catch (NoSuchAlgorithmException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		cache.put(sak.getSubjectID(), sak);
 		
 		// TODO Auto-generated method stub
-		return null;
+		return sak;
 	}
 
 	@Override
 	public void deleteSubjectAPIKey(String subjectID)
 			throws NullPointerException, IllegalArgumentException, AccessException
 	{
-		// TODO Auto-generated method stub
+		cache.remove(subjectID);
 
 	}
 
@@ -71,6 +99,7 @@ implements APIAppManager
 			throws NullPointerException, IllegalArgumentException, AccessException
 	{
 		// TODO Auto-generated method stub
+		cache.put(sak.getSubjectID(), sak);
 
 	}
 
