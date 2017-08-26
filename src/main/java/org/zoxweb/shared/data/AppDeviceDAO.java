@@ -17,7 +17,6 @@ package org.zoxweb.shared.data;
 
 import org.zoxweb.shared.security.SubjectAPIKey;
 
-import org.zoxweb.shared.util.Const.Status;
 import org.zoxweb.shared.util.GetNVConfig;
 import org.zoxweb.shared.util.NVConfig;
 import org.zoxweb.shared.util.NVConfigEntity;
@@ -35,7 +34,7 @@ public class AppDeviceDAO
 
         APP_ID(NVConfigManager.createNVConfigEntity("app_id", "App ID", "AppID", true, false, AppIDDAO.NVC_APP_ID_DAO, NVConfigEntity.ArrayType.NOT_ARRAY)),
         DEVICE(NVConfigManager.createNVConfigEntity("device", "Device information", "Device", true, false, DeviceDAO.NVC_DEVICE_DAO, NVConfigEntity.ArrayType.NOT_ARRAY)),
-        STATUS(NVConfigManager.createNVConfig("status", "Status", "Status", true, false, Status.class)),
+       
 
         ;
 
@@ -118,20 +117,6 @@ public class AppDeviceDAO
         setValue(Param.DEVICE, device);
     }
 
-    /**
-     * Returns the status.
-     * @return
-     */
-    public Status getStatus() {
-        return lookupValue(Param.STATUS);
-    }
-
-    /**
-     * Sets the status.
-     * @param status
-     */
-    public void setStatus(Status status) {
-        setValue(Param.STATUS, status);
-    }
+   
 
 }

@@ -10,6 +10,7 @@ import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVConfigEntityLocal;
 import org.zoxweb.shared.util.SharedUtil;
 import org.zoxweb.shared.util.SubjectID;
+import org.zoxweb.shared.util.Const.Status;
 import org.zoxweb.shared.util.NVConfigManager;
 import org.zoxweb.shared.util.SharedBase64;
 import org.zoxweb.shared.util.SharedBase64.Base64Type;
@@ -31,6 +32,7 @@ public class SubjectAPIKey
         SUBJECT_ID(NVConfigManager.createNVConfig("subject_id", "Subject ID", "SubjectID", true, false, true, String.class, null)),
         API_KEY(NVConfigManager.createNVConfig("api_key", "API Key", "APIKey", true, false, true, String.class, null)),
         API_SECRET(NVConfigManager.createNVConfig("api_secret", "API Secret", "APISecret", true, false, false, String.class, FilterType.ENCRYPT)),
+        STATUS(NVConfigManager.createNVConfig("status", "Status", "Status", true, false, Status.class)),
 
         ;
 
@@ -119,5 +121,21 @@ public class SubjectAPIKey
         }
 
     	return null;
+    }
+    
+    /**
+     * Returns the status.
+     * @return
+     */
+    public Status getStatus() {
+        return lookupValue(Param.STATUS);
+    }
+
+    /**
+     * Sets the status.
+     * @param status
+     */
+    public void setStatus(Status status) {
+        setValue(Param.STATUS, status);
     }
 }
