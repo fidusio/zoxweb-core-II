@@ -13,28 +13,23 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.zoxweb.shared.data.shiro;
+package org.zoxweb.shared.security.shiro;
 
-public enum ShiroAssociationType 
+import java.util.List;
+
+import org.zoxweb.shared.db.QueryMarker;
+
+/**
+ *
+ */
+public interface ShiroRulesManager 
 {
-	/**
-	 * Permission Associated to Role
-	 */
-	PERMISSION_TO_ROLE,
-	/**
-	 * Permission Associated to Subject
-	 */
-	PERMISSION_TO_SUBJECT,
-	/**
-	 * Role Associated to Subject
-	 */
-	ROLE_TO_SUBJECT,
-	/**
-	 * Role Associated to RoleGroup
-	 */
-	ROLE_TO_ROLEGROUP,
-	/**
-	 * RoleGroup Associated to Subject
-	 */
-	ROLEGROUP_TO_SUBJECT
+	public void addShiroRule(ShiroAssociationRuleDAO sard);
+	
+	public void deleteShiroRule(ShiroAssociationRuleDAO sard);
+	
+	public void updateShiroRule(ShiroAssociationRuleDAO sard);
+	
+	List<ShiroAssociationRuleDAO> search(QueryMarker ...queryCriteria);
+
 }

@@ -13,34 +13,13 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.zoxweb.shared.data.shiro;
+package org.zoxweb.shared.security.shiro;
 
-import org.zoxweb.shared.util.GetValue;
-import org.zoxweb.shared.util.SharedStringUtil;
+import org.zoxweb.shared.util.CanonicalID;
 
-public enum ShiroTokenReplacement
-    implements GetValue<String>
-{
-	SUBJECT_ID("$$SUBJECT_ID$$")
+public interface ShiroDAO
+        extends CanonicalID {
 
-	;
+	public final static char CAN_ID_SEP = '-';
 	
-	private final String tokenValue;
-
-	ShiroTokenReplacement(String tokenValue)
-	{
-		this.tokenValue = tokenValue;
-	}
-
-	@Override
-	public String getValue()
-    {
-		return tokenValue;
-	}
-	
-	public String replace(String text, String value)
-	{
-		return SharedStringUtil.embedText(text, SharedStringUtil.toLowerCase(tokenValue), SharedStringUtil.toLowerCase(value));
-	}
-
 }

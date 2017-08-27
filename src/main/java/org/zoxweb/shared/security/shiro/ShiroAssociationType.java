@@ -13,12 +13,28 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.zoxweb.shared.data.shiro;
+package org.zoxweb.shared.security.shiro;
 
-public class  SessionInfoDAO 
+public enum ShiroAssociationType 
 {
-
-	public static final String DOMAIN_ID = "DOMAIN_ID";
-	public static final String LOGOUT_URL = "LOGOUT_URL";
-
+	/**
+	 * Permission Associated to Role
+	 */
+	PERMISSION_TO_ROLE,
+	/**
+	 * Permission Associated to Subject
+	 */
+	PERMISSION_TO_SUBJECT,
+	/**
+	 * Role Associated to Subject
+	 */
+	ROLE_TO_SUBJECT,
+	/**
+	 * Role Associated to RoleGroup
+	 */
+	ROLE_TO_ROLEGROUP,
+	/**
+	 * RoleGroup Associated to Subject
+	 */
+	ROLEGROUP_TO_SUBJECT
 }

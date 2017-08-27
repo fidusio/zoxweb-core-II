@@ -29,7 +29,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.zoxweb.server.shiro.authc.DomainAuthenticationInfo;
 import org.zoxweb.server.shiro.authc.DomainUsernamePasswordToken;
 import org.zoxweb.server.shiro.authc.DomainPrincipalCollection;
-import org.zoxweb.shared.data.shiro.LoginStatusDAO;
+import org.zoxweb.shared.security.shiro.LoginStatusDAO;
 import org.zoxweb.shared.util.Const;
 import org.zoxweb.shared.util.NVPair;
 import org.zoxweb.shared.util.SharedUtil;

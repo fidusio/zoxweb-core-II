@@ -30,10 +30,6 @@ import org.zoxweb.shared.api.APICredentialsDAO;
 import org.zoxweb.shared.api.APIError;
 
 import org.zoxweb.shared.util.NVEntityInstance;
-import org.zoxweb.shared.data.shiro.ShiroNVEntityCRUDs;
-import org.zoxweb.shared.data.shiro.ShiroPermissionDAO;
-import org.zoxweb.shared.data.shiro.ShiroRoleDAO;
-import org.zoxweb.shared.data.shiro.ShiroRoleGroupDAO;
 import org.zoxweb.shared.data.ticket.TicketContainerDAO;
 import org.zoxweb.shared.data.ticket.TicketIssuerDAO;
 import org.zoxweb.shared.data.ticket.TicketResolutionDAO;
@@ -55,7 +51,10 @@ import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
 
 import org.zoxweb.shared.security.SubjectAPIKey;
-
+import org.zoxweb.shared.security.shiro.ShiroNVEntityCRUDs;
+import org.zoxweb.shared.security.shiro.ShiroPermissionDAO;
+import org.zoxweb.shared.security.shiro.ShiroRoleDAO;
+import org.zoxweb.shared.security.shiro.ShiroRoleGroupDAO;
 import org.zoxweb.shared.data.AppDeviceDAO;
 
 /**

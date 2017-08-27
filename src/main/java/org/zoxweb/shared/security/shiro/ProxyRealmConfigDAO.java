@@ -13,23 +13,18 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.zoxweb.shared.data.shiro;
+package org.zoxweb.shared.security.shiro;
 
-import java.util.List;
+import org.zoxweb.shared.data.SetNameDescriptionDAO;
 
-import org.zoxweb.shared.db.QueryMarker;
-
-/**
- *
- */
-public interface ShiroRulesManager 
+@SuppressWarnings("serial")
+public class ProxyRealmConfigDAO
+	extends SetNameDescriptionDAO
 {
-	public void addShiroRule(ShiroAssociationRuleDAO sard);
-	
-	public void deleteShiroRule(ShiroAssociationRuleDAO sard);
-	
-	public void updateShiroRule(ShiroAssociationRuleDAO sard);
-	
-	List<ShiroAssociationRuleDAO> search(QueryMarker ...queryCriteria);
+
+	public ProxyRealmConfigDAO()
+	{
+		super(SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO);
+	}
 
 }

@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.zoxweb.shared.data.shiro;
+package org.zoxweb.shared.security.shiro;
 
 @SuppressWarnings("serial")
 public class ShiroSubjectRoleGroupDAO

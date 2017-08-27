@@ -32,7 +32,7 @@ import org.zoxweb.server.shiro.authc.DomainAuthenticationInfo;
 import org.zoxweb.server.shiro.authc.DomainPrincipalCollection;
 import org.zoxweb.server.shiro.authc.DomainUsernamePasswordToken;
 import org.zoxweb.shared.crypto.PasswordDAO;
-import org.zoxweb.shared.data.shiro.ShiroRulesManager;
+import org.zoxweb.shared.security.shiro.ShiroRulesManager;
 import org.zoxweb.shared.util.Const;
 
 public abstract class ShiroBaseRealm

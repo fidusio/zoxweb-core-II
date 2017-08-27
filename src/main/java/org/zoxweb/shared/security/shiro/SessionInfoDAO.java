@@ -13,18 +13,12 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.zoxweb.shared.data.shiro;
+package org.zoxweb.shared.security.shiro;
 
-import org.zoxweb.shared.data.SetNameDescriptionDAO;
-
-@SuppressWarnings("serial")
-public class ProxyRealmConfigDAO
-	extends SetNameDescriptionDAO
+public class  SessionInfoDAO 
 {
 
-	public ProxyRealmConfigDAO()
-	{
-		super(SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO);
-	}
+	public static final String DOMAIN_ID = "DOMAIN_ID";
+	public static final String LOGOUT_URL = "LOGOUT_URL";
 
 }

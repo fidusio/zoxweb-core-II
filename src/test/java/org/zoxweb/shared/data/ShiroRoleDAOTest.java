@@ -16,9 +16,9 @@
 package org.zoxweb.shared.data;
 
 import org.zoxweb.server.shiro.ShiroUtil;
-import org.zoxweb.shared.data.shiro.ShiroNVEntityCRUDs;
-import org.zoxweb.shared.data.shiro.ShiroPermissionDAO;
-import org.zoxweb.shared.data.shiro.ShiroRoleDAO;
+import org.zoxweb.shared.security.shiro.ShiroNVEntityCRUDs;
+import org.zoxweb.shared.security.shiro.ShiroPermissionDAO;
+import org.zoxweb.shared.security.shiro.ShiroRoleDAO;
 import org.zoxweb.shared.util.CRUD;
 
 public class ShiroRoleDAOTest {

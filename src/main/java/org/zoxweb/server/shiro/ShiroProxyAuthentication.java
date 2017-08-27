@@ -18,8 +18,6 @@ package org.zoxweb.server.shiro;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-import org.zoxweb.shared.data.shiro.LoginStatusDAO;
-import org.zoxweb.shared.data.shiro.ShiroLoginTokenDAO;
 import org.zoxweb.server.http.HTTPCall;
 import org.zoxweb.server.security.SSLCheckDisabler;
 import org.zoxweb.server.util.GSONUtil;
@@ -29,6 +27,8 @@ import org.zoxweb.shared.http.HTTPMethod;
 import org.zoxweb.shared.http.HTTPResponseData;
 import org.zoxweb.shared.http.HTTPStatusCode;
 import org.zoxweb.shared.security.AccessException;
+import org.zoxweb.shared.security.shiro.LoginStatusDAO;
+import org.zoxweb.shared.security.shiro.ShiroLoginTokenDAO;
 import org.zoxweb.shared.util.Const;
 
 public class ShiroProxyAuthentication
