@@ -9,6 +9,7 @@ import org.zoxweb.server.security.JWTProvider;
 import org.zoxweb.shared.api.APIAppManager;
 import org.zoxweb.shared.api.APIDataStore;
 import org.zoxweb.shared.data.AppDeviceDAO;
+import org.zoxweb.shared.data.UserIDDAO;
 import org.zoxweb.shared.security.AccessSecurityException;
 import org.zoxweb.shared.security.JWT;
 import org.zoxweb.shared.security.SubjectAPIKey;
@@ -157,7 +158,6 @@ implements APIAppManager
 			throw new AccessSecurityException("Subject Not found: " + jwt.getPayload().getSubjectID());
 		}
 		
-		
 		if (sak.getStatus() != Status.ACTIVE)
 		{
 			throw new AccessSecurityException("Invalid SubjectAPIKey: " + sak.getStatus());
@@ -191,6 +191,26 @@ implements APIAppManager
 		// TODO Auto-generated method stub
 		return ds;
 	}
+
+	@Override
+	public UserIDDAO createUser(String subjectID, String password)
+			throws NullPointerException, IllegalArgumentException, AccessSecurityException
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void resetPassword(String subjectID, String oldPasswordToken, String newPassword)
+			throws NullPointerException, IllegalArgumentException, AccessSecurityException 
+	{
+		// TODO Auto-generated method stub
+	}
+	
+	
+	
+	
+	
 
 	
 

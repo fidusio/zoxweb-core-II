@@ -30,7 +30,7 @@ public class SubjectAPIKey
         implements GetNVConfig {
 
         SUBJECT_ID(NVConfigManager.createNVConfig("subject_id", "Subject ID", "SubjectID", true, false, true, String.class, null)),
-        API_KEY(NVConfigManager.createNVConfig("api_key", "API Key", "APIKey", true, false, true, String.class, null)),
+        //API_KEY(NVConfigManager.createNVConfig("api_key", "API Key", "APIKey", true, false, true, String.class, null)),
         API_SECRET(NVConfigManager.createNVConfig("api_secret", "API Secret", "APISecret", true, false, false, String.class, FilterType.ENCRYPT)),
         STATUS(NVConfigManager.createNVConfig("status", "Status", "Status", true, false, Status.class)),
 
@@ -82,7 +82,7 @@ public class SubjectAPIKey
     }
 
     public String getAPIKey() {
-        return lookupValue(Param.API_KEY);
+        return getSubjectID();
     }
     
     
@@ -99,7 +99,8 @@ public class SubjectAPIKey
 
     public void setAPIKey(String apiKey) 
     {
-        setValue(Param.API_KEY, apiKey);
+    	setSubjectID(apiKey);
+        //setValue(Param.API_KEY, apiKey);
     }
     
     

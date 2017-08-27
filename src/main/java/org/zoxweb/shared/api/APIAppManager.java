@@ -1,6 +1,7 @@
 package org.zoxweb.shared.api;
 
 import org.zoxweb.shared.data.AppDeviceDAO;
+import org.zoxweb.shared.data.UserIDDAO;
 import org.zoxweb.shared.security.AccessSecurityException;
 import org.zoxweb.shared.security.JWT;
 import org.zoxweb.shared.security.SubjectAPIKey;
@@ -33,5 +34,13 @@ public interface APIAppManager
 			throws NullPointerException, IllegalArgumentException;
 	
 	APIDataStore<?> getAPIDataStore();
+	
+	
+	UserIDDAO createUser(String subjectID, String password)
+			throws NullPointerException, IllegalArgumentException, AccessSecurityException;
+	
+	void resetPassword(String subjectID, String oldPasswordToken, String newPassword)
+			throws NullPointerException, IllegalArgumentException, AccessSecurityException;
+	
 	
 }
