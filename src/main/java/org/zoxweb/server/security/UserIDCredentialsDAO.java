@@ -21,6 +21,7 @@ import org.zoxweb.shared.crypto.PasswordDAO;
 import org.zoxweb.shared.data.SetNameDescriptionDAO;
 
 import org.zoxweb.shared.util.Const;
+import org.zoxweb.shared.util.DoNotExpose;
 import org.zoxweb.shared.util.GetNVConfig;
 import org.zoxweb.shared.util.GetValue;
 import org.zoxweb.shared.util.NVConfig;
@@ -38,6 +39,7 @@ import org.zoxweb.shared.util.SharedUtil;
 @SuppressWarnings("serial")
 public class UserIDCredentialsDAO
     extends SetNameDescriptionDAO
+    implements DoNotExpose
 {
 
 	/**

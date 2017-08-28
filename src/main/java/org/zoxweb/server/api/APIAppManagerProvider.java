@@ -10,10 +10,12 @@ import org.zoxweb.shared.api.APIAppManager;
 import org.zoxweb.shared.api.APIDataStore;
 import org.zoxweb.shared.data.AppDeviceDAO;
 import org.zoxweb.shared.data.UserIDDAO;
+import org.zoxweb.shared.data.UserPreferenceDAO;
 import org.zoxweb.shared.security.AccessSecurityException;
 import org.zoxweb.shared.security.JWT;
 import org.zoxweb.shared.security.SubjectAPIKey;
 import org.zoxweb.shared.util.Const.Status;
+import org.zoxweb.shared.util.NVEntity;
 import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
 
@@ -201,10 +203,44 @@ implements APIAppManager
 	}
 
 	@Override
-	public void resetPassword(String subjectID, String oldPasswordToken, String newPassword)
+	public void resetPassword(String subjectID)
 			throws NullPointerException, IllegalArgumentException, AccessSecurityException 
 	{
 		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public UserIDDAO createUserID(UserIDDAO userDAO, String password)
+			throws NullPointerException, IllegalArgumentException, AccessSecurityException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public UserIDDAO lookupUserID(String subjectID)
+			throws NullPointerException, IllegalArgumentException, AccessSecurityException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public UserPreferenceDAO lookupUserPrecerence(String subjectID)
+			throws NullPointerException, IllegalArgumentException, AccessSecurityException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public <V extends NVEntity> V update(V nve) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void changePassword(String subjectID, String oldPassword, String newPassword)
+			throws NullPointerException, IllegalArgumentException, AccessSecurityException {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	
