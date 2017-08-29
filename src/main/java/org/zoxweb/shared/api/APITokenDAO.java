@@ -18,6 +18,7 @@ package org.zoxweb.shared.api;
 import java.util.List;
 
 import org.zoxweb.shared.util.ArrayValues;
+import org.zoxweb.shared.util.DoNotExpose;
 import org.zoxweb.shared.util.GetNVConfig;
 import org.zoxweb.shared.util.NVConfig;
 import org.zoxweb.shared.util.NVConfigEntity;
@@ -33,7 +34,9 @@ import org.zoxweb.shared.util.NVConfigEntity.ArrayType;
  */
 @SuppressWarnings("serial")
 public class APITokenDAO
-		extends APIAccessTokenDAO {
+	extends APIAccessTokenDAO
+	implements DoNotExpose
+{
 	
 	public enum Params
 			implements GetNVConfig {

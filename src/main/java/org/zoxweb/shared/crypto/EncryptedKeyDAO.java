@@ -16,6 +16,7 @@
 package org.zoxweb.shared.crypto;
 
 import org.zoxweb.shared.security.AccessException;
+import org.zoxweb.shared.util.DoNotExpose;
 import org.zoxweb.shared.util.GetNVConfig;
 import org.zoxweb.shared.util.NVConfig;
 import org.zoxweb.shared.util.NVConfigEntity;
@@ -27,6 +28,7 @@ import org.zoxweb.shared.util.SharedUtil;
 @SuppressWarnings("serial")
 public class EncryptedKeyDAO
     extends EncryptedDAO
+    implements DoNotExpose
 {
 
 	protected enum Param
