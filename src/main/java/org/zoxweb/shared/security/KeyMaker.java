@@ -12,6 +12,8 @@ public interface KeyMaker
 	
 	EncryptedKeyDAO createNVEntityKey(APIDataStore<?> dataStore, NVEntity nve, byte[] key)
 		throws NullPointerException, IllegalArgumentException, AccessException;
+
+	
 	
 	byte[] getKey(APIDataStore<?> dataStore, final byte[] key, String ...chainedIDs) 
 		throws NullPointerException, IllegalArgumentException, AccessException;

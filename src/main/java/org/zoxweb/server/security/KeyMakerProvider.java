@@ -48,9 +48,10 @@ implements KeyMaker
 	
 	
 	
-	public final synchronized void setMasterKey(KeyStore keystore, String alias, String aliasPassword) 
+	public final synchronized void setMasterKey(KeyStore keystore, String alias, String aliasPassword)
+			throws NullPointerException, IllegalArgumentException, AccessException
 	{
-		
+		SharedUtil.checkIfNulls("Null parameters", keystore, alias, aliasPassword);
 		try
 		{
 			if (!keystore.containsAlias(alias))
@@ -58,7 +59,7 @@ implements KeyMaker
 				throw new IllegalArgumentException("Alias for key not found");
 			}
 			
-			masterKey = (SecretKey) keystore.getKey(alias, aliasPassword.toCharArray());
+			setMasterKey((SecretKey) keystore.getKey(alias, aliasPassword.toCharArray()));
 			log.info("MK loaded");
 		}
 		catch(UnrecoverableKeyException | KeyStoreException | NoSuchAlgorithmException e)
@@ -66,8 +67,14 @@ implements KeyMaker
 			throw new AccessException(e.getMessage());
 		}
 		
-	
 	}
+	
+	public final synchronized void setMasterKey(SecretKey key)
+			throws NullPointerException, IllegalArgumentException, AccessException
+	{
+		masterKey = key;
+	}
+	
 	
 	public final byte[] getMasterKey()
 			throws NullPointerException,
