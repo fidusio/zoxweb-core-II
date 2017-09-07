@@ -32,4 +32,5 @@ public class DomainAuthenticationInfo
 //	 {
 //		this(principal, credentials, realmName, domainID, null);
 //	 }
+	
 }
