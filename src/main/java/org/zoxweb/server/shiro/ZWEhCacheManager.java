@@ -19,7 +19,10 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.logging.Logger;
 
+import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
+import org.apache.shiro.util.Destroyable;
+import org.apache.shiro.util.Initializable;
 
 /**
  * @author mnael
@@ -27,6 +30,7 @@ import org.apache.shiro.cache.ehcache.EhCacheManager;
  */
 public class ZWEhCacheManager
     extends EhCacheManager
+    implements CacheManager, Initializable, Destroyable
 {
 	
 	private static final Logger log = Logger.getLogger(ZWEhCacheManager.class.getName());
@@ -49,7 +53,7 @@ public class ZWEhCacheManager
     {
 		synchronized(CACHE_SET)
         {
-			log.info("Started destroy all " + CACHE_SET.size() + " to be destryed.");
+			log.info("Started destroy all " + CACHE_SET.size() + " to be destroyed.");
 		
 			CACHE_SET.iterator();
 			
