@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.zoxweb.server.shiro.servlet;
+package org.zoxweb.server.security.shiro.servlet;
 
 import java.io.IOException;
 import java.util.logging.Logger;
@@ -69,7 +69,7 @@ public class ShiroSessionStatusServlet
 	}
 
 	/**
-	 * @see org.zoxweb.server.shiro.servlet.ShiroBaseServlet#isSecurityCheckRequired(org.zoxweb.shared.http.HTTPMethod, javax.servlet.http.HttpServletRequest)
+	 * @see org.zoxweb.server.security.shiro.servlet.ShiroBaseServlet#isSecurityCheckRequired(org.zoxweb.shared.http.HTTPMethod, javax.servlet.http.HttpServletRequest)
 	 */
 	@Override
 	protected boolean isSecurityCheckRequired(HTTPMethod httpMethod, HttpServletRequest req)

@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.zoxweb.server.shiro;
+package org.zoxweb.server.security.shiro;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -35,8 +35,8 @@ import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.Factory;
 import org.apache.shiro.util.ThreadContext;
-import org.zoxweb.server.shiro.authc.DomainPrincipalCollection;
-import org.zoxweb.server.shiro.authc.DomainUsernamePasswordToken;
+import org.zoxweb.server.security.shiro.authc.DomainPrincipalCollection;
+import org.zoxweb.server.security.shiro.authc.DomainUsernamePasswordToken;
 import org.zoxweb.shared.security.AccessException;
 import org.zoxweb.shared.security.shiro.ShiroNVEntityCRUDs;
 import org.zoxweb.shared.security.shiro.ShiroTokenReplacement;

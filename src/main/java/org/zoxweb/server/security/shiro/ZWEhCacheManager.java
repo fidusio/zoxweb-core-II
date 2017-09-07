@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.zoxweb.server.shiro;
+package org.zoxweb.server.security.shiro;
 
 import java.util.HashSet;
 import java.util.Iterator;

@@ -3,7 +3,7 @@ package org.zoxweb.shared.data;
 import java.util.List;
 
 import org.zoxweb.server.io.IOUtil;
-import org.zoxweb.server.shiro.ZWEhCacheManager;
+import org.zoxweb.server.security.shiro.ZWEhCacheManager;
 import org.zoxweb.server.util.GSONUtil;
 
 public class ConfigDAOTest 

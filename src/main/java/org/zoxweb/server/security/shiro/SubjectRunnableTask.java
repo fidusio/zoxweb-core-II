@@ -13,40 +13,42 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.zoxweb.server.shiro.servlet;
+package org.zoxweb.server.security.shiro;
 
-import javax.websocket.Session;
-
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 
-import org.zoxweb.shared.util.SharedUtil;
+import org.zoxweb.server.task.RunnableTask;
+import org.zoxweb.server.task.TaskEvent;
 
-public class ShiroWebSocketSession
+public abstract class SubjectRunnableTask
+    extends RunnableTask
 {
-	private final Subject subject;
-	private final Session session;
+	protected final Subject subject;
 	
-	public ShiroWebSocketSession(Session session, Subject subject)
+	protected SubjectRunnableTask()
     {
-		SharedUtil.checkIfNulls("Null Parameter", session, subject);
-		this.session = session;
+		this(SecurityUtils.getSubject());
+	}
+	
+	protected SubjectRunnableTask(Subject subject)
+    {
 		this.subject = subject;
-	
 	}
 
-	public final Subject getSubject()
+	@Override
+	public void executeTask(TaskEvent event)
     {
-		return subject;
-	}
+		this.te = event;
 
-	public final Session getSession()
-    {
-		return session;
+		if (subject != null)
+		{
+			subject.execute(this);
+		}
+		else
+        {
+			run();
+		}
 	}
-	
-//	public  void sendText(String txt) throws IOException
-//	{
-//		session.getBasicRemote().sendText(txt);
-//	}
 
 }

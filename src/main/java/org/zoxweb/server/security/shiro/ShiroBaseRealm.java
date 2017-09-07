@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.zoxweb.server.shiro;
+package org.zoxweb.server.security.shiro;
 
 import java.util.Set;
 import java.util.logging.Logger;
@@ -28,9 +28,9 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.zoxweb.server.shiro.authc.DomainAuthenticationInfo;
-import org.zoxweb.server.shiro.authc.DomainPrincipalCollection;
-import org.zoxweb.server.shiro.authc.DomainUsernamePasswordToken;
+import org.zoxweb.server.security.shiro.authc.DomainAuthenticationInfo;
+import org.zoxweb.server.security.shiro.authc.DomainPrincipalCollection;
+import org.zoxweb.server.security.shiro.authc.DomainUsernamePasswordToken;
 import org.zoxweb.shared.crypto.PasswordDAO;
 import org.zoxweb.shared.security.shiro.ShiroRulesManager;
 import org.zoxweb.shared.util.Const;

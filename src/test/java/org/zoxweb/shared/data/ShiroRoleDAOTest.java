@@ -15,7 +15,7 @@
  */
 package org.zoxweb.shared.data;
 
-import org.zoxweb.server.shiro.ShiroUtil;
+import org.zoxweb.server.security.shiro.ShiroUtil;
 import org.zoxweb.shared.security.shiro.ShiroNVEntityCRUDs;
 import org.zoxweb.shared.security.shiro.ShiroPermissionDAO;
 import org.zoxweb.shared.security.shiro.ShiroRoleDAO;
