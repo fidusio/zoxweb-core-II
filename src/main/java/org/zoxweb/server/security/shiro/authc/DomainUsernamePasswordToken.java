@@ -106,7 +106,7 @@ public class DomainUsernamePasswordToken
 
 	@Override
 	@Deprecated
-	public String getAppGlobalID()
+	public String getAppGID()
 		throws UnsupportedOperationException
 	{
 		throw new UnsupportedOperationException();
@@ -115,7 +115,7 @@ public class DomainUsernamePasswordToken
 
 	@Override
 	@Deprecated
-	public void setAppGlobalID(String appGID)
+	public void setAppGID(String appGID)
 		throws UnsupportedOperationException
 	{
 		// TODO Auto-generated method stub

@@ -168,7 +168,7 @@ public class AppIDDAO
     }
 
 	@Override
-	public String getAppGlobalID()
+	public String getAppGID()
 	{
 		// TODO Auto-generated method stub
 		return getGlobalID();
@@ -176,7 +176,7 @@ public class AppIDDAO
 
 	@Override
 	@Deprecated
-	public void setAppGlobalID(String appGID)
+	public void setAppGID(String appGID)
 		throws UnsupportedOperationException
 	{
 		// TODO Auto-generated method stub
