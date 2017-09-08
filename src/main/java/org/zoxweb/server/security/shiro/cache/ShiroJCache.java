@@ -1,53 +1,128 @@
 package org.zoxweb.server.security.shiro.cache;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
+
+import javax.cache.Cache.Entry;
 
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheException;
+import org.zoxweb.shared.util.SharedUtil;
 
 public class ShiroJCache<K, V> implements Cache<K, V>{
 
+	private javax.cache.Cache<K, V> cache;
+	private AtomicInteger size = new AtomicInteger(0);
+	
+	public ShiroJCache(javax.cache.Cache<K,V>  cache)
+	{
+		SharedUtil.checkIfNulls("Null cache", cache);
+		this.cache = cache;
+	}
+	
+	
 	@Override
 	public V get(K key) throws CacheException {
 		// TODO Auto-generated method stub
-		return null;
+		return cache.get(key);
 	}
 
 	@Override
-	public V put(K key, V value) throws CacheException {
+	public synchronized V put(K key, V value) throws CacheException {
+		SharedUtil.checkIfNulls("Null key", key);
 		// TODO Auto-generated method stub
-		return null;
+		V ret = get(key);
+		if (ret == null)
+			size.incrementAndGet();
+		cache.put(key, value);
+		return ret;
 	}
 
 	@Override
-	public V remove(K key) throws CacheException {
+	public synchronized V remove(K key) throws CacheException {
 		// TODO Auto-generated method stub
-		return null;
+		V ret = get(key);
+		if(ret != null)
+		{
+			size.decrementAndGet();
+			cache.remove(key);
+		}
+		return ret;
 	}
 
 	@Override
 	public void clear() throws CacheException {
 		// TODO Auto-generated method stub
-		
+		cache.clear();
 	}
 
 	@Override
 	public int size() {
 		// TODO Auto-generated method stub
-		return 0;
+		return size.intValue();
 	}
 
 	@Override
-	public Set<K> keys() {
+	public synchronized Set<K> keys() {
 		// TODO Auto-generated method stub
-		return null;
+		 Iterator<Entry<K, V>> it = cache.iterator();
+		 Set<K> ret = new HashSet<K>();
+		 Consumer<Entry<K, V>> c = new Consumer<Entry<K, V>>() {
+
+			private Set<K> set; 
+			
+			
+			Consumer<Entry<K, V>> init(Set<K> set)
+			{
+				this.set = set;
+				return this;
+			}
+			@Override
+			public void accept(Entry<K, V> t) 
+			{
+				set.add(t.getKey());
+			}
+			 
+		 }.init(ret);
+//		 while(it.hasNext())
+//		 {
+//			 ret.add(it.next().getKey());
+//		 }
+		
+		 it.forEachRemaining(c);
+		return ret;
 	}
 
 	@Override
-	public Collection<V> values() {
-		// TODO Auto-generated method stub
-		return null;
+	public synchronized Collection<V> values() {
+		 Iterator<Entry<K, V>> it = cache.iterator();
+		 List<V> ret = new ArrayList<V>();
+		 Consumer<Entry<K, V>> c = new Consumer<Entry<K, V>>() {
+
+			private List<V> list; 
+			
+			
+			Consumer<Entry<K, V>> init(List<V> list)
+			{
+				this.list = list;
+				return this;
+			}
+			@Override
+			public void accept(Entry<K, V> t) 
+			{
+				list.add(t.getValue());
+			}
+			 
+		 }.init(ret);
+
+		 it.forEachRemaining(c);
+		return ret;
 	}
 
 }
