@@ -50,11 +50,13 @@ public class HTTPRequestAttributes
 	private final String contentType;
 	private final HTTPAuthentication httpAuthentication;
 	private final String pathInfo;
+	private final String uri;
 	
 	private JWT jwt = null;
 	
 	@SuppressWarnings("unchecked")
-	public HTTPRequestAttributes(String pathInfo, 
+	public HTTPRequestAttributes(String uri,
+                                 String pathInfo,
 								 String contentType,
 								 boolean isMultiPart,
 								 List<GetNameValue<String>> headers, 
@@ -62,6 +64,7 @@ public class HTTPRequestAttributes
 								 List<FileInfoStreamSource> streamList,
 								 String content)
 	{
+	    this.uri = uri;
 		this.pathInfo = pathInfo;
 		this.isMultiPart = isMultiPart;
 		this.headers = new NVPairGetNameMap("headers", headers);
@@ -93,6 +96,8 @@ public class HTTPRequestAttributes
 			httpAuthentication = null;
 		}
 	}
+
+
 
 	/**
 	 * Get the incoming request headers
@@ -178,4 +183,8 @@ public class HTTPRequestAttributes
 	{
 		return jwt;
 	}
+
+	public String getURI() {
+	    return uri;
+    }
 }
