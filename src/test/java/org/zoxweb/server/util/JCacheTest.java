@@ -53,6 +53,8 @@ public class JCacheTest {
 		System.out.println("marwan:"+sjc.get("marwan"));
 		System.out.println(sjc.values());
 		System.out.println(sjc.keys());
+		
+		System.out.println(sjc.size());
 		System.out.println("delta :" + (System.currentTimeMillis() - delta));
 		
 		

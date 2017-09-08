@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 
 import javax.cache.Cache.Entry;
@@ -18,7 +17,6 @@ import org.zoxweb.shared.util.SharedUtil;
 public class ShiroJCache<K, V> implements Cache<K, V>{
 
 	private javax.cache.Cache<K, V> cache;
-	private AtomicInteger size = new AtomicInteger(0);
 	
 	public ShiroJCache(javax.cache.Cache<K,V>  cache)
 	{
@@ -38,8 +36,6 @@ public class ShiroJCache<K, V> implements Cache<K, V>{
 		SharedUtil.checkIfNulls("Null key", key);
 		// TODO Auto-generated method stub
 		V ret = get(key);
-		if (ret == null)
-			size.incrementAndGet();
 		cache.put(key, value);
 		return ret;
 	}
@@ -50,7 +46,6 @@ public class ShiroJCache<K, V> implements Cache<K, V>{
 		V ret = get(key);
 		if(ret != null)
 		{
-			size.decrementAndGet();
 			cache.remove(key);
 		}
 		return ret;
@@ -65,7 +60,16 @@ public class ShiroJCache<K, V> implements Cache<K, V>{
 	@Override
 	public int size() {
 		// TODO Auto-generated method stub
-		return size.intValue();
+		Iterator<Entry<K, V>> it = cache.iterator();
+		int ret = 0;
+		while(it.hasNext())
+		{
+			it.next();
+			ret++;
+		}
+		
+	
+		return ret;
 	}
 
 	@Override
@@ -90,10 +94,6 @@ public class ShiroJCache<K, V> implements Cache<K, V>{
 			}
 			 
 		 }.init(ret);
-//		 while(it.hasNext())
-//		 {
-//			 ret.add(it.next().getKey());
-//		 }
 		
 		 it.forEachRemaining(c);
 		return ret;
