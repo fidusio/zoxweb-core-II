@@ -1,4 +1,4 @@
-package org.zoxweb.server.util;
+package org.zoxweb.server.util.cache;
 
 import java.io.Serializable;
 

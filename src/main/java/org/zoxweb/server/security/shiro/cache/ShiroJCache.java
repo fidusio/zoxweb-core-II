@@ -12,16 +12,24 @@ import javax.cache.Cache.Entry;
 
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheException;
+import org.zoxweb.server.util.cache.JCacheListener;
 import org.zoxweb.shared.util.SharedUtil;
 
 public class ShiroJCache<K, V> implements Cache<K, V>{
 
 	private javax.cache.Cache<K, V> cache;
+	private JCacheListener<K,V> cacheListener = new JCacheListener<K,V>();
+ 	
+	
+	
+	
+	///MutableCacheEntryListenerConfiguration mclc;
 	
 	public ShiroJCache(javax.cache.Cache<K,V>  cache)
 	{
 		SharedUtil.checkIfNulls("Null cache", cache);
 		this.cache = cache;
+		cache.registerCacheEntryListener(JCacheListener.toConfiguration(cacheListener));
 	}
 	
 	
@@ -32,24 +40,19 @@ public class ShiroJCache<K, V> implements Cache<K, V>{
 	}
 
 	@Override
-	public synchronized V put(K key, V value) throws CacheException {
-		SharedUtil.checkIfNulls("Null key", key);
+	public V put(K key, V value) throws CacheException {
+		SharedUtil.checkIfNulls("Null key or value", key, value);
 		// TODO Auto-generated method stub
-		V ret = get(key);
-		cache.put(key, value);
-		return ret;
+		return cache.getAndPut(key, value);
 	}
 
 	@Override
-	public synchronized V remove(K key) throws CacheException {
+	public  V remove(K key) throws CacheException {
 		// TODO Auto-generated method stub
-		V ret = get(key);
-		if(ret != null)
-		{
-			cache.remove(key);
-		}
-		return ret;
+		SharedUtil.checkIfNulls("Null key", key);
+		return cache.getAndRemove(key);
 	}
+		
 
 	@Override
 	public void clear() throws CacheException {
@@ -58,18 +61,19 @@ public class ShiroJCache<K, V> implements Cache<K, V>{
 	}
 
 	@Override
-	public int size() {
+	public  int size() {
+		return cacheListener.size();
 		// TODO Auto-generated method stub
-		Iterator<Entry<K, V>> it = cache.iterator();
-		int ret = 0;
-		while(it.hasNext())
-		{
-			it.next();
-			ret++;
-		}
-		
-	
-		return ret;
+//		Iterator<Entry<K, V>> it = cache.iterator();
+//		int ret = 0;
+//		while(it.hasNext())
+//		{
+//			it.next();
+//			ret++;
+//		}
+//		
+//	
+//		return ret;
 	}
 
 	@Override
@@ -116,7 +120,9 @@ public class ShiroJCache<K, V> implements Cache<K, V>{
 			@Override
 			public void accept(Entry<K, V> t) 
 			{
-				list.add(t.getValue());
+				if(t!= null)
+				list.add(
+						t.getValue());
 			}
 			 
 		 }.init(ret);

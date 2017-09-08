@@ -25,7 +25,6 @@ import org.zoxweb.shared.util.NVConfigEntityLocal;
 import org.zoxweb.shared.util.NVConfigManager;
 import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
-import org.zoxweb.shared.util.SubjectID;
 
 /**
  * Created on 7/3/17
@@ -33,7 +32,7 @@ import org.zoxweb.shared.util.SubjectID;
 @SuppressWarnings("serial")
 public class AppIDDAO
     extends SetNameDescriptionDAO
-    implements AppID<String>, SubjectID<String>
+    implements AppID<String>
 {
 
     public enum Param
@@ -167,6 +166,22 @@ public class AppIDDAO
 
         return super.hashCode();
     }
+
+	@Override
+	public String getAppGlobalID()
+	{
+		// TODO Auto-generated method stub
+		return getGlobalID();
+	}
+
+	@Override
+	@Deprecated
+	public void setAppGlobalID(String appGID)
+		throws UnsupportedOperationException
+	{
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Not supported");
+	}
 
 
 }

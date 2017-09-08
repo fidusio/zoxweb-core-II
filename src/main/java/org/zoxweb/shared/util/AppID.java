@@ -4,7 +4,10 @@ package org.zoxweb.shared.util;
  * Created on 7/22/17
  */
 public interface AppID<T>
-        extends DomainID<T> {
+        extends DomainID<T>,
+                SubjectID<T>,
+                AppGlobalID<T>
+{
 
 
     /**
@@ -20,4 +23,6 @@ public interface AppID<T>
     void setAppID(T appID);
 
 
+    
+    
 }

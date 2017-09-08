@@ -11,13 +11,13 @@ import org.zoxweb.shared.util.NVConfigEntityLocal;
 import org.zoxweb.shared.util.NVConfigManager;
 import org.zoxweb.shared.util.NVGenericMap;
 import org.zoxweb.shared.util.SharedUtil;
-import org.zoxweb.shared.util.SubjectID;
+
 
 @SuppressWarnings("serial")
 public class JWTPayload 
     extends SetNameDescriptionDAO
-    implements AppID<String>, SubjectID<String>,
-    GetNVGenericMap
+    implements AppID<String>,
+    		   GetNVGenericMap
 {
 	
 
@@ -205,5 +205,23 @@ public class JWTPayload
 	public void setNVGenericMap(NVGenericMap nvgm)
 	{
 		SharedUtil.updateGetNVGenericMap(this, nvgm);
+	}
+
+	@Override
+	@Deprecated
+	public String getAppGlobalID()
+		throws UnsupportedOperationException
+	{
+		throw new UnsupportedOperationException();
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	@Deprecated
+	public void setAppGlobalID(String appGID)
+		throws UnsupportedOperationException
+	{
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException();
 	}
 }

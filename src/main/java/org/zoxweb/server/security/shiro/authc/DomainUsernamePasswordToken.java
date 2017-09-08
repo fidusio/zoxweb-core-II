@@ -18,13 +18,11 @@ package org.zoxweb.server.security.shiro.authc;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.zoxweb.shared.util.AppID;
 import org.zoxweb.shared.util.SharedStringUtil;
-import org.zoxweb.shared.util.SubjectID;
 
 @SuppressWarnings("serial")
 public class DomainUsernamePasswordToken
     extends UsernamePasswordToken
-    implements AppID<String>,
-    			   SubjectID<String>
+    implements AppID<String>
 {
 
 	private String domain_id;
@@ -104,6 +102,24 @@ public class DomainUsernamePasswordToken
 	public void setSubjectID(String subjectID) {
 		// TODO Auto-generated method stub
 		setUsername(subjectID);
+	}
+
+	@Override
+	@Deprecated
+	public String getAppGlobalID()
+		throws UnsupportedOperationException
+	{
+		throw new UnsupportedOperationException();
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	@Deprecated
+	public void setAppGlobalID(String appGID)
+		throws UnsupportedOperationException
+	{
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException();
 	}
 
 }
