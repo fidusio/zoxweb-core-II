@@ -55,8 +55,7 @@ public class JWTPayload
 		}
 	}
 	
-	public static final NVConfigEntity NVC_JWT_PAYLOAD = new NVConfigEntityLocal(
-																					"jwt_payload", 
+	public static final NVConfigEntity NVC_JWT_PAYLOAD = new NVConfigEntityLocal(  "jwt_payload", 
 																					null , 
 																					"JWTPayload", 
 																					true, 
