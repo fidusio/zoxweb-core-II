@@ -20,10 +20,10 @@ import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
 
 public class APIAppManagerProvider
-implements APIAppManager
+    implements APIAppManager
 {
 	
-	private volatile APIDataStore<?> ds;
+	private volatile APIDataStore<?> dataStore;
 	
 	private HashMap<String, SubjectAPIKey> cache = new HashMap<>();
 	
@@ -32,6 +32,7 @@ implements APIAppManager
 			throws NullPointerException, IllegalArgumentException, AccessSecurityException
 	{
 		SharedUtil.checkIfNulls("Null AppDeviceDAO", add);
+
 		if (add.getAppID() == null || add.getDomainID() == null)
 		{
 			throw new IllegalArgumentException("AppID or DomainID null");
@@ -42,7 +43,6 @@ implements APIAppManager
 			throw new IllegalArgumentException("Device null");
 		}
 		
-		// TODO Auto-generated method stub
 		return createSubjectAPIKey(add);
 	}
 	
@@ -51,6 +51,7 @@ implements APIAppManager
 			throws NullPointerException, IllegalArgumentException, AccessSecurityException
 	{
 		SharedUtil.checkIfNulls("Null SubjectAPIKey", sak);
+
 		if (sak.getSubjectID() == null)
 		{
 			// the uuid if null
@@ -66,12 +67,11 @@ implements APIAppManager
 			try {
 				sak.setAPISecret(CryptoUtil.generateKey(256, CryptoUtil.AES).getEncoded());
 			} catch (NoSuchAlgorithmException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 		
-		if(sak.getStatus() == null)
+		if (sak.getStatus() == null)
 		{
 			sak.setStatus(Status.ACTIVE);
 		}
@@ -80,10 +80,7 @@ implements APIAppManager
 		{
 			cache.put(sak.getSubjectID(), sak);
 		}
-		
-		
-		
-		// TODO Auto-generated method stub
+
 		return sak;
 	}
 
@@ -102,7 +99,6 @@ implements APIAppManager
 	public void deleteSubjectAPIKey(SubjectAPIKey sak)
 			throws NullPointerException, IllegalArgumentException, AccessSecurityException
 	{
-		// TODO Auto-generated method stub
 		if (sak != null)
 		{
 			deleteSubjectAPIKey(sak.getUserID());
@@ -113,7 +109,6 @@ implements APIAppManager
 	public SubjectAPIKey lookupSubjectAPIKey(String subjectID)
 			throws NullPointerException, IllegalArgumentException, AccessSecurityException 
 	{
-		// TODO Auto-generated method stub
 		synchronized(cache)
 		{
 			return cache.get(subjectID);
@@ -124,7 +119,6 @@ implements APIAppManager
 	public void updateSubjectAPIKey(SubjectAPIKey sak)
 			throws NullPointerException, IllegalArgumentException, AccessSecurityException
 	{
-		// TODO Auto-generated method stub
 		synchronized(cache)
 		{
 			cache.put(sak.getSubjectID(), sak);
@@ -143,7 +137,6 @@ implements APIAppManager
 			jwt = CryptoUtil.parseJWT(token);
 		}
 		catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			throw new AccessSecurityException("Invalid token");
 		}
@@ -179,26 +172,23 @@ implements APIAppManager
 		return JWTProvider.SINGLETON.decodeJWT(sak.getAPISecretAsBytes(), token);
 	}
 
-	@Override
-	public synchronized void setAPIDataStore(APIDataStore<?> ds)
-			throws NullPointerException, IllegalArgumentException
-	{
-		// TODO Auto-generated method stub
-		this.ds = ds;
-	}
+    @Override
+    public APIDataStore<?> getAPIDataStore()
+    {
+        return dataStore;
+    }
 
 	@Override
-	public APIDataStore<?> getAPIDataStore()
+	public synchronized void setAPIDataStore(APIDataStore<?> dataStore)
+			throws NullPointerException, IllegalArgumentException
 	{
-		// TODO Auto-generated method stub
-		return ds;
+		this.dataStore = dataStore;
 	}
 
 	@Override
 	public UserIDDAO createUser(String subjectID, String password)
 			throws NullPointerException, IllegalArgumentException, AccessSecurityException
 	{
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -206,48 +196,40 @@ implements APIAppManager
 	public void resetPassword(String subjectID)
 			throws NullPointerException, IllegalArgumentException, AccessSecurityException 
 	{
-		// TODO Auto-generated method stub
+
 	}
 
 	@Override
 	public UserIDDAO createUserID(UserIDDAO userDAO, String password)
-			throws NullPointerException, IllegalArgumentException, AccessSecurityException {
-		// TODO Auto-generated method stub
+			throws NullPointerException, IllegalArgumentException, AccessSecurityException
+    {
 		return null;
 	}
 
 	@Override
 	public UserIDDAO lookupUserID(String subjectID)
-			throws NullPointerException, IllegalArgumentException, AccessSecurityException {
-		// TODO Auto-generated method stub
+			throws NullPointerException, IllegalArgumentException, AccessSecurityException
+    {
 		return null;
 	}
 
 	@Override
 	public UserPreferenceDAO lookupUserPrecerence(String subjectID)
-			throws NullPointerException, IllegalArgumentException, AccessSecurityException {
-		// TODO Auto-generated method stub
+			throws NullPointerException, IllegalArgumentException, AccessSecurityException
+    {
 		return null;
 	}
 
 	@Override
-	public <V extends NVEntity> V update(V nve) {
-		// TODO Auto-generated method stub
+	public <V extends NVEntity> V update(V nve)
+    {
 		return null;
 	}
 
 	@Override
 	public void changePassword(String subjectID, String oldPassword, String newPassword)
 			throws NullPointerException, IllegalArgumentException, AccessSecurityException {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	
-	
-	
-	
 
-	
+	}
 
 }
