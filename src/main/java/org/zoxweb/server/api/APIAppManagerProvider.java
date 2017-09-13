@@ -47,41 +47,42 @@ public class APIAppManagerProvider
 	}
 	
 	@Override
-	public SubjectAPIKey createSubjectAPIKey(SubjectAPIKey sak)
+	public SubjectAPIKey createSubjectAPIKey(SubjectAPIKey subjectAPIKey)
 			throws NullPointerException, IllegalArgumentException, AccessSecurityException
 	{
-		SharedUtil.checkIfNulls("Null SubjectAPIKey", sak);
+		SharedUtil.checkIfNulls("Null SubjectAPIKey", subjectAPIKey);
 
-		if (sak.getSubjectID() == null)
+		if (subjectAPIKey.getSubjectID() == null)
 		{
 			// the uuid if null
-			sak.setSubjectID(UUID.randomUUID().toString());
+            subjectAPIKey.setSubjectID(UUID.randomUUID().toString());
 		}
 		
-		if (sak.getAPIKey() == null)
+		if (subjectAPIKey.getAPIKey() == null)
 		{
-			sak.setAPIKey(UUID.randomUUID().toString());
+            subjectAPIKey.setAPIKey(UUID.randomUUID().toString());
 		}
-		if (sak.getAPISecret() == null)
+
+		if (subjectAPIKey.getAPISecret() == null)
 		{
 			try {
-				sak.setAPISecret(CryptoUtil.generateKey(256, CryptoUtil.AES).getEncoded());
+                subjectAPIKey.setAPISecret(CryptoUtil.generateKey(256, CryptoUtil.AES).getEncoded());
 			} catch (NoSuchAlgorithmException e) {
 				e.printStackTrace();
 			}
 		}
 		
-		if (sak.getStatus() == null)
+		if (subjectAPIKey.getStatus() == null)
 		{
-			sak.setStatus(Status.ACTIVE);
+            subjectAPIKey.setStatus(Status.ACTIVE);
 		}
 		
 		synchronized(cache)
 		{
-			cache.put(sak.getSubjectID(), sak);
+			cache.put(subjectAPIKey.getSubjectID(), subjectAPIKey);
 		}
 
-		return sak;
+		return subjectAPIKey;
 	}
 
 	@Override
@@ -96,12 +97,12 @@ public class APIAppManagerProvider
 	}
 
 	@Override
-	public void deleteSubjectAPIKey(SubjectAPIKey sak)
+	public void deleteSubjectAPIKey(SubjectAPIKey subjectAPIKey)
 			throws NullPointerException, IllegalArgumentException, AccessSecurityException
 	{
-		if (sak != null)
+		if (subjectAPIKey != null)
 		{
-			deleteSubjectAPIKey(sak.getUserID());
+			deleteSubjectAPIKey(subjectAPIKey.getUserID());
 		}
 	}
 
@@ -116,12 +117,12 @@ public class APIAppManagerProvider
 	}
 
 	@Override
-	public void updateSubjectAPIKey(SubjectAPIKey sak)
+	public void updateSubjectAPIKey(SubjectAPIKey subjectAPIKey)
 			throws NullPointerException, IllegalArgumentException, AccessSecurityException
 	{
 		synchronized(cache)
 		{
-			cache.put(sak.getSubjectID(), sak);
+			cache.put(subjectAPIKey.getSubjectID(), subjectAPIKey);
 		}
 
 	}
@@ -147,21 +148,22 @@ public class APIAppManagerProvider
 		}
 		
 		// lookup subject id
-		SubjectAPIKey sak = lookupSubjectAPIKey(jwt.getPayload().getSubjectID());
-		if (sak == null)
+		SubjectAPIKey subjectAPIKey = lookupSubjectAPIKey(jwt.getPayload().getSubjectID());
+
+		if (subjectAPIKey == null)
 		{
 			throw new AccessSecurityException("Subject Not found: " + jwt.getPayload().getSubjectID());
 		}
 		
-		if (sak.getStatus() != Status.ACTIVE)
+		if (subjectAPIKey.getStatus() != Status.ACTIVE)
 		{
-			throw new AccessSecurityException("Invalid SubjectAPIKey: " + sak.getStatus());
+			throw new AccessSecurityException("Invalid SubjectAPIKey: " + subjectAPIKey.getStatus());
 		}
 		
-		if (sak instanceof AppDeviceDAO)
+		if (subjectAPIKey instanceof AppDeviceDAO)
 		{
 			// validate domainID and AppID
-			AppDeviceDAO add = (AppDeviceDAO) sak;
+			AppDeviceDAO add = (AppDeviceDAO) subjectAPIKey;
 			if (!SharedStringUtil.equals(add.getDomainID(), jwt.getPayload().getDomainID(), true) ||
 			    !SharedStringUtil.equals(add.getAppID(), jwt.getPayload().getAppID(), true))
 			{
@@ -169,7 +171,7 @@ public class APIAppManagerProvider
 			}
 		}
 		
-		return JWTProvider.SINGLETON.decodeJWT(sak.getAPISecretAsBytes(), token);
+		return JWTProvider.SINGLETON.decodeJWT(subjectAPIKey.getAPISecretAsBytes(), token);
 	}
 
     @Override
@@ -214,7 +216,7 @@ public class APIAppManagerProvider
 	}
 
 	@Override
-	public UserPreferenceDAO lookupUserPrecerence(String subjectID)
+	public UserPreferenceDAO lookupUserPreference(String subjectID)
 			throws NullPointerException, IllegalArgumentException, AccessSecurityException
     {
 		return null;

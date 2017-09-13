@@ -10,6 +10,7 @@ import org.zoxweb.shared.util.NVEntity;
 
 public interface APIAppManager
 {
+
 	/**
 	 * Create a userDAO, the creation requires persistence of the following:
 	 * <ol>
@@ -47,13 +48,9 @@ public interface APIAppManager
 	 * @throws IllegalArgumentException
 	 * @throws AccessSecurityException
 	 */
-	UserPreferenceDAO lookupUserPrecerence(String subjectID)
+	UserPreferenceDAO lookupUserPreference(String subjectID)
 			throws NullPointerException, IllegalArgumentException, AccessSecurityException;
-	
-	
-	
-	
-	
+
 	/**
 	 * Update a data object
 	 * @param nve
@@ -61,34 +58,32 @@ public interface APIAppManager
 	 */
 	<V extends NVEntity> V update(V nve);
 	
-	
-	SubjectAPIKey createAppDeviceDAO(AppDeviceDAO sak)
+	SubjectAPIKey createAppDeviceDAO(AppDeviceDAO subjectAPIKey)
 			throws NullPointerException, IllegalArgumentException, AccessSecurityException;
 	
-	SubjectAPIKey createSubjectAPIKey(SubjectAPIKey sak)
+	SubjectAPIKey createSubjectAPIKey(SubjectAPIKey subjectAPIKey)
 			throws NullPointerException, IllegalArgumentException, AccessSecurityException;
 	
 	void deleteSubjectAPIKey(String subjectID)
 			throws NullPointerException, IllegalArgumentException, AccessSecurityException;
 	
-	void deleteSubjectAPIKey(SubjectAPIKey sak)
+	void deleteSubjectAPIKey(SubjectAPIKey subjectAPIKey)
 			throws NullPointerException, IllegalArgumentException, AccessSecurityException;
 	
 	SubjectAPIKey lookupSubjectAPIKey(String subjectID)
 			throws NullPointerException, IllegalArgumentException, AccessSecurityException;
 	
-	void updateSubjectAPIKey(SubjectAPIKey sak)
+	void updateSubjectAPIKey(SubjectAPIKey subjectAPIKey)
 			throws NullPointerException, IllegalArgumentException, AccessSecurityException;
 	
 	JWT validateJWT(String token)
 			throws NullPointerException, IllegalArgumentException, AccessSecurityException;
-	
+
+    APIDataStore<?> getAPIDataStore();
+
 	void setAPIDataStore(APIDataStore<?> ds)
 			throws NullPointerException, IllegalArgumentException;
-	
-	APIDataStore<?> getAPIDataStore();
-	
-	
+
 	UserIDDAO createUser(String subjectID, String password)
 			throws NullPointerException, IllegalArgumentException, AccessSecurityException;
 	
@@ -98,6 +93,5 @@ public interface APIAppManager
 	
 	void changePassword(String subjectID, String oldPassword, String newPassword)
 			throws NullPointerException, IllegalArgumentException, AccessSecurityException;
-	
-	
+
 }
