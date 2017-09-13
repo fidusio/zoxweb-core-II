@@ -2,6 +2,7 @@ package org.zoxweb.server.api;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 import org.zoxweb.server.security.CryptoUtil;
@@ -223,15 +224,33 @@ public class APIAppManagerProvider
 	}
 
 	@Override
-	public <V extends NVEntity> V update(V nve)
-    {
-		return null;
-	}
-
-	@Override
 	public void changePassword(String subjectID, String oldPassword, String newPassword)
 			throws NullPointerException, IllegalArgumentException, AccessSecurityException {
 
 	}
+
+    @Override
+    public <V extends NVEntity> V create(V nve)
+    {
+        return null;
+    }
+
+    @Override
+    public  <V extends NVEntity> List<V> lookup(String subjectID, Class<V> classType)
+    {
+	    return null;
+    }
+
+    @Override
+    public <V extends NVEntity> V update(V nve)
+    {
+        return null;
+    }
+
+    @Override
+    public <V extends NVEntity> boolean delete(V nve)
+    {
+	    return false;
+    }
 
 }

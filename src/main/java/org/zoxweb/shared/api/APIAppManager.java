@@ -8,6 +8,8 @@ import org.zoxweb.shared.security.JWT;
 import org.zoxweb.shared.security.SubjectAPIKey;
 import org.zoxweb.shared.util.NVEntity;
 
+import java.util.List;
+
 public interface APIAppManager
 {
 
@@ -51,14 +53,7 @@ public interface APIAppManager
 	UserPreferenceDAO lookupUserPreference(String subjectID)
 			throws NullPointerException, IllegalArgumentException, AccessSecurityException;
 
-	/**
-	 * Update a data object
-	 * @param nve
-	 * @return
-	 */
-	<V extends NVEntity> V update(V nve);
-	
-	SubjectAPIKey createAppDeviceDAO(AppDeviceDAO subjectAPIKey)
+    SubjectAPIKey createAppDeviceDAO(AppDeviceDAO subjectAPIKey)
 			throws NullPointerException, IllegalArgumentException, AccessSecurityException;
 	
 	SubjectAPIKey createSubjectAPIKey(SubjectAPIKey subjectAPIKey)
@@ -89,9 +84,45 @@ public interface APIAppManager
 	
 	void resetPassword(String subjectID)
 			throws NullPointerException, IllegalArgumentException, AccessSecurityException;
-	
-	
+
 	void changePassword(String subjectID, String oldPassword, String newPassword)
 			throws NullPointerException, IllegalArgumentException, AccessSecurityException;
+
+    /**
+     * Create a NVEntity object.
+     * @param nve
+     * @return
+     */
+    <V extends NVEntity> V create(V nve);
+
+    /**
+     * Create a NVEntity object.
+     * @param nve
+     * @return
+     */
+
+    /**
+     * Looks up NVEntity objects based on given given subject ID and NVEntity class type.
+     * @param subjectID
+     * @param classType
+     * @param <V>
+     * @return
+     */
+    <V extends NVEntity> List<V> lookup(String subjectID, Class<V> classType);
+
+    /**
+     * Update a NVEntity object.
+     * @param nve
+     * @return
+     */
+    <V extends NVEntity> V update(V nve);
+
+    /**
+     * Delete an NVEntity object.
+     * @param nve
+     * @param <V>
+     * @return
+     */
+    <V extends NVEntity> boolean delete(V nve);
 
 }
