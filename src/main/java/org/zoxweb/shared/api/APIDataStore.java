@@ -335,4 +335,16 @@ public interface APIDataStore<ST>
 	
 	public <NT, RT, NIT> NT lookupByReferenceID(String metaTypeName, RT objectId, NIT projection);
 	
+	void createSequence(String sequenceName)
+			throws NullPointerException, IllegalArgumentException, AccessException, APIException;;
+	void createSequence(String sequenceName, long startValue, long defaultIncrement)
+			throws NullPointerException, IllegalArgumentException, AccessException, APIException;
+	void deleteSequence(String sequenceName)
+			throws NullPointerException, IllegalArgumentException, AccessException, APIException;
+	long currentSequenceValue(String sequenceName)
+			throws NullPointerException, IllegalArgumentException, AccessException, APIException;
+	long nextSequenceValue(String sequenceName)
+			throws NullPointerException, IllegalArgumentException, AccessException, APIException;
+	long nextSequenceValue(String sequenceName, long increment)
+			throws NullPointerException, IllegalArgumentException, AccessException, APIException;
 }
