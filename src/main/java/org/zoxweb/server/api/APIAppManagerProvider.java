@@ -28,6 +28,8 @@ public class APIAppManagerProvider
 	
 	private HashMap<String, SubjectAPIKey> cache = new HashMap<>();
 	
+	
+	
 	@Override
 	public SubjectAPIKey createAppDeviceDAO(AppDeviceDAO add)
 			throws NullPointerException, IllegalArgumentException, AccessSecurityException
@@ -252,5 +254,6 @@ public class APIAppManagerProvider
     {
 	    return false;
     }
+
 
 }

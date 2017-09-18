@@ -124,5 +124,9 @@ public interface APIAppManager
      * @return
      */
     <V extends NVEntity> boolean delete(V nve);
+    
+    
+
+    
 
 }
