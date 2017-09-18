@@ -500,7 +500,22 @@ public class ZWDataFactory
 			{
 				return LoginTokenDAO.NVC_LOGIN_IN_DAO;
 			}
-		},	
+		},
+		LONG_SEQUENCE(LongSequence.class.getName())
+		{
+			@SuppressWarnings("unchecked")
+			@Override
+			public LongSequence newInstance()
+			{
+				return new LongSequence();
+			}
+
+			@Override
+			public NVConfigEntity getNVConfigEntity()
+			{
+				return LongSequence.NVC_LONG_SEQUENCE;
+			}
+		},
 		
 		MERCHANT_DAO(MerchantDAO.class.getName())
 		{
