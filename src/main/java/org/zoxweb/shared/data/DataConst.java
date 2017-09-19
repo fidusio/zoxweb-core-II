@@ -71,6 +71,38 @@ public class DataConst
 	}
 
 	
+	
+	public enum SessionParam 
+	implements GetName
+	{
+		FS_TOKEN("fstoken"),
+		USER_ID("user_id"),
+		SESSION_CACHE("session_cache"),
+		SUBJECT("subject"),
+		WEBSOCKET_SESSION("websocket_session"),
+		LOCK_OBJECT("lock_object")
+		
+		;
+		
+		private String name;
+		
+		SessionParam(String name)
+		{
+			this.name = name;
+		}
+	
+		@Override
+		public String getName() 
+		{
+			return name;
+		}
+	
+		public String toString()
+		{
+			return name;
+		}
+	}
+	
 	public enum DataParam
 	    implements GetNVConfig
 	{
