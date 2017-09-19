@@ -40,4 +40,18 @@ public interface APISecurityManager<S>
 	 
 	 boolean isNVEntityAccessible(String nveRefID, String nveUserID, CRUD ...permissions);
 	 
+	 
+	 String checkNVEntityAccess(NVEntity nve, CRUD ...permissions)
+				throws NullPointerException, IllegalArgumentException, AccessException;
+	 String checkNVEntityAccess(LogicalOperator lo, NVEntity nve, CRUD ...permissions)
+				throws NullPointerException, IllegalArgumentException, AccessException;
+	 String checkNVEntityAccess(String nveRefID, String nveUserID, CRUD ...permissions)
+				throws NullPointerException, IllegalArgumentException, AccessException;
+	 
+	 void checkSubject(String subjectID)
+				throws NullPointerException, AccessException;
+	 
+	 String checkNVEntityAccess(String nveRefID, CRUD ...permissions)
+				throws NullPointerException, IllegalArgumentException, AccessException;
+	 
 }
