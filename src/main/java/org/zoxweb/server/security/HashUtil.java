@@ -153,19 +153,19 @@ public class HashUtil
 
     public static byte[] hashSequence(String algorithm, byte[] ...seqs) throws NoSuchAlgorithmException
     {
-    	MessageDigest md = MessageDigest.getInstance(algorithm);
-    	for (byte[] seq: seqs)
-    	{
-    		md.update(seq);
-    	}
-    	
-    	return md.digest();
+	    	MessageDigest md = MessageDigest.getInstance(algorithm);
+	    	for (byte[] seq: seqs)
+	    	{
+	    		md.update(seq);
+	    	}
+	    	
+	    	return md.digest();
     }
     
     
     public static byte[] hashSequence(String algorithm, String...seqs) throws NoSuchAlgorithmException
     {
-    	return hashSequence(algorithm, SharedStringUtil.getBytesArray(seqs));
+    		return hashSequence(algorithm, SharedStringUtil.getBytesArray(seqs));
     }
 
 }
