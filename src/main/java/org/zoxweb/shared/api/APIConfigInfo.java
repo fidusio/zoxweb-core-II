@@ -17,6 +17,7 @@ package org.zoxweb.shared.api;
 
 import java.util.List;
 
+import org.zoxweb.shared.security.KeyMaker;
 import org.zoxweb.shared.util.AccountID;
 import org.zoxweb.shared.util.ArrayValues;
 import org.zoxweb.shared.util.CanonicalID;
@@ -143,6 +144,15 @@ public interface APIConfigInfo
 	 * @param version
 	 */
 	public void setOAuthVersion(OAuthVersion version);
+	
+	void setKeyMaker(KeyMaker keyMaker);
+	KeyMaker getKeyMaker();
+	
+	void setAPISecurityManager(APISecurityManager<?> apiSM);
+	APISecurityManager<?> getAPISecurityManager();
+	
+	
+	
 	
 
 }

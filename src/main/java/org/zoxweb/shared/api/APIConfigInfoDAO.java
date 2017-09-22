@@ -21,6 +21,7 @@ import java.util.List;
 
 
 import org.zoxweb.shared.data.TimeStampDAO;
+import org.zoxweb.shared.security.KeyMaker;
 import org.zoxweb.shared.util.ArrayValues;
 import org.zoxweb.shared.util.GetNVConfig;
 import org.zoxweb.shared.util.NVConfig;
@@ -78,6 +79,8 @@ public class APIConfigInfoDAO
 	
 	// This variable should not be part of the NVConfig definition;
 	private APIConfigStatus status = APIConfigStatus.INACTIVE;	
+	private volatile KeyMaker keyMaker = null;
+	private volatile APISecurityManager<?> apiSecurityManager = null;
 	/**
 	 * This NVConfigEntity type constant is set to an instantiation of a NVConfigEntityLocal object based on API ConfigInfoDAO.
 	 */
@@ -309,6 +312,34 @@ public class APIConfigInfoDAO
 		// TODO Auto-generated method stub
 		setValue(Params.DEFAULT_LOCATION, location);
 		
+	}
+
+	@Override
+	public void setKeyMaker(KeyMaker keyMaker)
+	{
+		// TODO Auto-generated method stub
+		this.keyMaker = keyMaker;
+	}
+
+	@Override
+	public KeyMaker getKeyMaker()
+	{
+		// TODO Auto-generated method stub
+		return keyMaker;
+	}
+
+	@Override
+	public void setAPISecurityManager(APISecurityManager<?> apiSM)
+	{
+		// TODO Auto-generated method stub
+		apiSecurityManager = apiSM;
+	}
+
+	@Override
+	public APISecurityManager<?> getAPISecurityManager()
+	{
+		// TODO Auto-generated method stub
+		return apiSecurityManager;
 	}
 
 //	/**
