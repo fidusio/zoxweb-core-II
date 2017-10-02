@@ -117,7 +117,10 @@ public class Base64Test {
 		{
 			byte[] b64 = SharedBase64.encode("1234567890");
 			String str = SharedStringUtil.toString(b64);
-			System.out.println(str);
+			System.out.println("1234567890 b64:" + str);
+			System.out.println(SharedBase64.decodeAsString(Base64Type.DEFAULT, "MTIzNDU2Nzg5MA"));
+			System.out.println(SharedBase64.decodeAsString(Base64Type.DEFAULT, "MTIzNDU2Nzg5MA="));
+			
 			b64 = SharedBase64.decode(str+"^");
 		}
 		catch(Exception e)

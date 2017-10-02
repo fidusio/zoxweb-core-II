@@ -150,8 +150,8 @@ public class SharedBase64
     		bt = Base64Type.DEFAULT;
     	}
     	
-	    if(Base64Type.DEFAULT == bt && len % 4 != 0)
-	    	throw new IllegalArgumentException("Invalid length not divisible by 4");
+//	    if(Base64Type.DEFAULT == bt && len % 4 != 0)
+//	    	throw new IllegalArgumentException("Invalid length not divisible by 4");
 	   
 	    	
 	    	
