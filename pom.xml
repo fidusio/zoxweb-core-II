@@ -8,7 +8,7 @@
 	<name>zoxweb-core</name>
     <groupId>org.zoxweb</groupId>
     <artifactId>zoxweb-core</artifactId>
-    <version>2.0.7</version>
+    <version>2.0.8</version>
     <packaging>jar</packaging>
 
     <licenses>
@@ -180,32 +180,7 @@
 	    	<version>${javax-servlet.version}</version>
 	    	<scope>provided</scope>
 		</dependency>
-        <!--  
-        <dependency>
-            <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-core</artifactId>
-            <version>${apache-shiro.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-web</artifactId>
-            <version>${apache-shiro.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-      		<groupId>net.sf.ehcache</groupId>
-      		<artifactId>ehcache</artifactId>
-      		<version>${ehcache.version}</version>
-      		<scope>provided</scope>
-    	</dependency>
-        <dependency>
-            <groupId>org.apache.shiro</groupId>
-            <artifactId>shiro-ehcache</artifactId>
-            <version>${apache-shiro.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        -->
+       
         <dependency>
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
@@ -224,14 +199,7 @@
             <version>${javax-mail.version}</version>
             <scope>provided</scope>
         </dependency>
-        <!--
-        <dependency>
-		    <groupId>net.sf.ehcache</groupId>
-		    <artifactId>ehcache-jcache</artifactId>
-		    <version>${ehcache-jcache.version}</version>
-		    <scope>provided</scope>
-		</dependency>
-		-->
+        
 		<dependency>
 		      <groupId>org.ehcache</groupId>
 		      <artifactId>ehcache</artifactId>
@@ -245,23 +213,7 @@
 		  <version>1.0.0</version>
 		</dependency>
 		
-       <!--  
-        <dependency>
-	        <groupId>org.ehcache</groupId>
-	        <artifactId>jcache</artifactId>
-	        <version>${ehcache-jcache.version}</version>
-	        <scope>provided</scope>
-          </dependency>
-       -->
-       
-        <!--  
-        <dependency>
-		    <groupId>javax.persistence</groupId>
-		    <artifactId>persistence-api</artifactId>
-		    <version>${persistence.version}</version>
-		    <scope>provided</scope>
-		</dependency>
-       -->
+      
 
 
     </dependencies>
