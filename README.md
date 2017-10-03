@@ -28,6 +28,7 @@ Copyright (C) 2008-2017 http://www.zoxweb.com
 ## RELEASES
 
 <ul>
+<li>2.0.7 2017-09-03
 <li>2.0.5 2017-05-09
 <li>2.0.2 2017-03-16
 </ul>
