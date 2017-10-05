@@ -348,30 +348,30 @@ public class JHTTPPServer
 	 */
 	public void saveSettings() throws IOException {
 		serverproperties.setProperty("server.http-proxy",
-				new Boolean(use_proxy).toString());
+				Boolean.toString(use_proxy).toString());
 		serverproperties.setProperty("server.http-proxy.hostname", proxy
 				.getHostAddress());
-		serverproperties.setProperty("server.http-proxy.port", new Integer(
+		serverproperties.setProperty("server.http-proxy.port", Integer.toString(
 				proxy_port).toString());
-		serverproperties.setProperty("server.filter.http", new Boolean(
+		serverproperties.setProperty("server.filter.http", Boolean.toString(
 				filter_http).toString());
-		serverproperties.setProperty("server.filter.url", new Boolean(
+		serverproperties.setProperty("server.filter.url", Boolean.toString(
 				block_urls).toString());
 		serverproperties.setProperty("server.filter.http.useragent",
 				http_useragent);
 		serverproperties.setProperty("server.enable-cookies-by-default",
-				new Boolean(enable_cookies_by_default).toString());
-		serverproperties.setProperty("server.debug-logging", new Boolean(isDebugEnabled())
+				 Boolean.toString(enable_cookies_by_default).toString());
+		serverproperties.setProperty("server.debug-logging", Boolean.toString(isDebugEnabled())
 				.toString());
-		serverproperties.setProperty("server.port", new Integer(getProxyPort())
+		serverproperties.setProperty("server.port", Integer.toString(getProxyPort())
 				.toString());
-		serverproperties.setProperty("server.access.log", new Boolean(
+		serverproperties.setProperty("server.access.log", Boolean.toString(
 				log_access).toString());
 		serverproperties.setProperty("server.access.log.filename",
 				log_access_filename);
-		serverproperties.setProperty("server.webconfig", new Boolean(webconfig)
+		serverproperties.setProperty("server.webconfig", Boolean.toString(webconfig)
 				.toString());
-		serverproperties.setProperty("server.www", new Boolean(www_server)
+		serverproperties.setProperty("server.www", Boolean.toString(www_server)
 				.toString());
 		serverproperties.setProperty("server.webconfig.username", config_user);
 		serverproperties.setProperty("server.webconfig.password",
