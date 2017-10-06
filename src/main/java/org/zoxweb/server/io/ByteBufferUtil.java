@@ -34,13 +34,7 @@ public class ByteBufferUtil
 	}
 	
 	private static final ByteBufferUtil SINGLETON = new ByteBufferUtil();
-//	private static final String CLASS_NAME = "java.nio.CustomHeapByteBuffer";
-//	private static final transient Logger log = Logger.getLogger(ByteBufferUtil.class.getName());
-	
-//	private Constructor<?> constructor = null;
-//	private Method getInternalBuffer = null;
-//	private Method limit = null;
-//	private volatile long counter = 0;
+
 	private Map<Integer, SimpleQueue<ByteBuffer>> cachedBuffers = new HashMap<Integer, SimpleQueue<ByteBuffer>>();
 
 	public static final int DEFAULT_BUFFER_SIZE = 4096;
@@ -48,20 +42,7 @@ public class ByteBufferUtil
 	
 	private ByteBufferUtil()
 	{	
-//		try
-//		{
-//			//InternalBufferAccess iab = null;
-//			CustomClassLoader cl = new CustomClassLoader(((URLClassLoader) Thread.currentThread().getContextClassLoader()).getURLs());
-//			Class<?> clazz = Class.forName(CLASS_NAME, true, cl);
-//			constructor = clazz.getConstructor(byte[].class, int.class, int.class);
-//			getInternalBuffer = clazz.getMethod("getInternalBuffer");
-//			limit = clazz.getMethod("limit");
-//			
-//		}
-//		catch(Throwable t)
-//		{
-//			System.err.println(CLASS_NAME + " NOT LOADED.");		
-//		}
+
 		
 	}
 	
@@ -106,125 +87,39 @@ public class ByteBufferUtil
 				bb = sq.dequeue();
 			}
 		}
-
-//		if (constructor != null)
-//		{
-//			try 
-//			{
-//			
-//				if (bb == null)
-//				{
-//					if (buffer == null)
-//					{
-//						buffer = new byte[length-offset];
-//						bb = (ByteBuffer) constructor.newInstance(buffer, offset, length);
-//						bb.clear();
-//					}
-//					else
-//						bb = (ByteBuffer) constructor.newInstance(buffer, offset, length);
-//					log.info("["+ (counter++) + "]must create new buffer:" + bb.capacity() + " " + bb.getClass().getName());
-//				}
-//				else
-//				{
-//					bb.put(buffer, offset, length);
-//				}
-//				if (!copy)
-//					bb.clear();				
-//			} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
-//					| InvocationTargetException e) 
-//			{
-//				e.printStackTrace();
-//			}
-//
-//		}
-//		else
+		
+		if (bb == null)
 		{
-			if (bb == null)
+			switch(bType)
 			{
-				switch(bType)
-				{
-				case DIRECT:
-					bb = ByteBuffer.allocateDirect(length-offset);
-					break;
-				case HEAP:
-					bb = ByteBuffer.allocate(length-offset);
-					break;
-				
-				}
+			case DIRECT:
+				bb = ByteBuffer.allocateDirect(length-offset);
+				break;
+			case HEAP:
 				bb = ByteBuffer.allocate(length-offset);
-				//log.info("["+ (counter++) + "]must create new buffer:" + bb.capacity() + " " + bb.getClass().getName());
-			}
-
-			if (copy)
-			{
-				bb.put(buffer, offset, length);
-				bb.flip();
-			}
+				break;
 			
+			}
+			bb = ByteBuffer.allocate(length-offset);
+			//log.info("["+ (counter++) + "]must create new buffer:" + bb.capacity() + " " + bb.getClass().getName());
 		}
+
+		if (copy)
+		{
+			bb.put(buffer, offset, length);
+			bb.flip();
+		}
+			
+		
 		
 		return bb;
 		
 	}
 	
-//	private ByteBuffer toByteBuffer0(UByteArrayOutputStream ubaos)
-//	{
-//		//synchronized(ubaos)
-//		{
-//			return toByteBuffer0(ubaos.getInternalBuffer(), 0, ubaos.size(), true);
-//		}
-//	}
-	
-	
-//	private ByteBuffer toByteBuffer1(byte[] buffer, int offset, int length)
-//	{
-//			
-//		ByteBuffer bb = null;
-//		
-//		if (constructor != null)
-//		{
-//			try 
-//			{
-//				bb = (ByteBuffer) constructor.newInstance(buffer, offset, length);
-//				return bb;
-//				
-//			} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
-//					| InvocationTargetException e) 
-//			{
-//				e.printStackTrace();
-//			}
-//
-//		}
-//		
-//		if (bb == null)
-//		{
-//			bb = ByteBuffer.allocate(length-offset);
-//			bb.put(buffer, offset, length);
-//			bb.flip();
-//		}
-//		
-//		return bb;
-//		
-//	}
-	
-//	public static ByteBuffer toByteBuffer(UByteArrayOutputStream ubaos)
-//	{
-//		return SINGLETON.toByteBuffer0(ubaos);
-//	}
-//	
-//	
-//	
-//	public static ByteBuffer toByteBuffer(byte[] buffer, int offset, int length)
-//	{
-//		return SINGLETON.toByteBuffer0(buffer, offset, length, true);
-//	}
+
 	
 	public static void write(ByteChannel bc, UByteArrayOutputStream ubaos) throws IOException
-	{
-//		ByteBuffer bb = SINGLETON.toByteBuffer0(ubaos);
-//		while(bb.hasRemaining())
-//			bc.write(bb);
-		
+	{	
 		write(bc, ubaos.getInternalBuffer(), 0, ubaos.size());
 	}
 	
@@ -292,30 +187,7 @@ public class ByteBufferUtil
 		return ubaos.toString();
 	}
 	
-//	public static void fastWrite(UByteArrayOutputStream ubaos, ByteBuffer bb) throws IOException
-//	{
-//		
-////		if (bb.getClass().getName().equals(CLASS_NAME))
-////		{
-////			try
-////			{
-////				bb.flip();
-////				byte[] buf = (byte[]) SINGLETON.getInternalBuffer.invoke(bb);
-////				int size = (int) SINGLETON.limit.invoke(bb);
-////				ubaos.write(buf, 0, size);
-////			}
-////			catch(IllegalAccessException | IllegalArgumentException | InvocationTargetException  e)
-////			{
-////				e.printStackTrace();
-////			}
-////			
-////		}
-////		else 
-//		{
-//			write(ubaos, bb);
-//		}
-//		
-//	}
+
 
 	public static void write(UByteArrayOutputStream ubaos, ByteBuffer bb) throws IOException
 	{
