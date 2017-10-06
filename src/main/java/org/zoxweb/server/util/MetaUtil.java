@@ -15,6 +15,7 @@
  */
 package org.zoxweb.server.util;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -37,7 +38,7 @@ public class MetaUtil
 				   InstantiationException,
 				   IllegalAccessException,
 				   NullPointerException,
-				   IllegalArgumentException
+				   IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException
     {
 		SharedUtil.checkIfNulls("Null class name", className);
 		NVConfigEntity nvce = classNameToNVCE.get(className);
@@ -52,7 +53,7 @@ public class MetaUtil
 	}
 
 	public NVConfigEntity fromClass(Class<?> clazz) 
-        throws InstantiationException, IllegalAccessException, NullPointerException, IllegalArgumentException
+        throws InstantiationException, IllegalAccessException, NullPointerException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException
     {
 		SharedUtil.checkIfNulls("Null class name", clazz);
 		Object obj = clazz.getDeclaredConstructor().newInstance();

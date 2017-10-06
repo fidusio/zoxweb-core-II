@@ -18,6 +18,7 @@ package org.zoxweb.server.util;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 import java.math.BigDecimal;
 import java.security.MessageDigest;
@@ -1253,12 +1254,16 @@ final public class GSONUtil
         {
 			nve = clazz.getDeclaredConstructor().newInstance();
 		}
-		catch(InstantiationException ie)
+		catch(InstantiationException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException ie)
         {
 		    ie.printStackTrace();
 			log.info("Error class:" + clazz);
 			log.info("" + jo.toString());
-			throw ie;
+			if (ie instanceof InstantiationException)
+				throw (InstantiationException)ie;
+			else 
+				throw new InstantiationException(ie.getMessage());
+			
 		}
 		
 		if (jo.get(MetaToken.REFERENCE_ID.getName()) != null && !jo.get(MetaToken.REFERENCE_ID.getName()).isJsonNull())
