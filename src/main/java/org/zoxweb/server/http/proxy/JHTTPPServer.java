@@ -394,7 +394,7 @@ public class JHTTPPServer
 	public void restoreSettings()// throws Exception
 	{
 		getServerProperties();
-		use_proxy = new Boolean(serverproperties.getProperty(
+		use_proxy = Boolean.valueOf(serverproperties.getProperty(
 				"server.http-proxy", "false")).booleanValue();
 		try {
 			proxy = InetAddress.getByName(serverproperties.getProperty(
@@ -403,26 +403,26 @@ public class JHTTPPServer
 		}
 //		proxy_port = new Integer(serverproperties.getProperty(
 //				"server.http-proxy.port", ""+getProxyPort())).intValue();
-		block_urls = new Boolean(serverproperties.getProperty(
+		block_urls = Boolean.valueOf(serverproperties.getProperty(
 				"server.filter.url", "false")).booleanValue();
 		http_useragent = serverproperties.getProperty(
 				"server.filter.http.useragent",
 				"Mozilla/4.0 (compatible; MSIE 4.0; WindowsNT 5.0)");
-		filter_http = new Boolean(serverproperties.getProperty(
+		filter_http = Boolean.valueOf(serverproperties.getProperty(
 				"server.filter.http", "false")).booleanValue();
-		enable_cookies_by_default = new Boolean(serverproperties.getProperty(
+		enable_cookies_by_default = Boolean.valueOf(serverproperties.getProperty(
 				"server.enable-cookies-by-default", "true")).booleanValue();
-		setDebugEnabled(new Boolean(serverproperties.getProperty(
+		setDebugEnabled(Boolean.valueOf(serverproperties.getProperty(
 				"server.debug-logging", "false")).booleanValue());
 //		port = new Integer(serverproperties.getProperty("server.port", "8080"))
 //				.intValue();
-		log_access = new Boolean(serverproperties.getProperty(
+		log_access = Boolean.valueOf(serverproperties.getProperty(
 				"server.access.log", "true")).booleanValue();
 		log_access_filename = serverproperties.getProperty(
 				"server.access.log.filename", "paccess.log");
-		webconfig = new Boolean(serverproperties.getProperty(
+		webconfig = Boolean.valueOf(serverproperties.getProperty(
 				"server.webconfig", "true")).booleanValue();
-		www_server = new Boolean(serverproperties.getProperty("server.www",
+		www_server = Boolean.valueOf(serverproperties.getProperty("server.www",
 				"true")).booleanValue();
 		config_user = serverproperties.getProperty("server.webconfig.username",
 				"root");

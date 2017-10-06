@@ -139,7 +139,7 @@ implements Closeable,
 				{
 					try 
 					{
-						Object toAttach = Class.forName(config.getBeanClassName()).newInstance();
+						Object toAttach = Class.forName(config.getBeanClassName()).getDeclaredConstructor().newInstance();
 						
 						if (toAttach instanceof SSLSessionDataFactory)
 						{

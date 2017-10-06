@@ -115,7 +115,7 @@ public abstract class APIServiceProviderBase<V>
 			case ASYNC_UPDATE:
 				break;
 			case RETRY_DELAY:
-				return (T) new Long(Const.TimeInMillis.SECOND.MILLIS*ServerUtil.RNG.nextInt(4) + Const.TimeInMillis.SECOND.MILLIS*2);
+				return (T)  Long.valueOf(Const.TimeInMillis.SECOND.MILLIS*ServerUtil.RNG.nextInt(4) + Const.TimeInMillis.SECOND.MILLIS*2);
 				
 			default:
 				break;

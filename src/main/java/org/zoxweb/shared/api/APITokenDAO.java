@@ -105,7 +105,7 @@ public class APITokenDAO
 	/**
 	 * Returns the API token.
 	 * @return the api token
-	 * @deprecated
+	 * @Deprecated
 	 */
 	public String getAPIToken() {
 		return lookupValue(Params.API_TOKEN);
@@ -114,7 +114,7 @@ public class APITokenDAO
 	/**
 	 * Sets the API token.
 	 * @param apiToken
-	 * @deprecated
+	 * @Deprecated
 	 */
 	public void setAPIToken(String apiToken) {
 		setValue(Params.API_TOKEN, apiToken);

@@ -57,7 +57,7 @@ public class DynamicEnumMapManager
 	/**
 	 * This method is for bean compliance only.
 	 * @param allEnumMaps
-	 * @deprecated caller must never invoke this method
+	 * @Deprecated caller must never invoke this method
 	 */
 	public void setAllEnumMaps(HashMap<String, DynamicEnumMap> allEnumMaps)
     {

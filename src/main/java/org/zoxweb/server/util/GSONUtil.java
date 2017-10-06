@@ -1251,7 +1251,7 @@ final public class GSONUtil
 		
 		try
         {
-			nve = clazz.newInstance();
+			nve = clazz.getDeclaredConstructor().newInstance();
 		}
 		catch(InstantiationException ie)
         {

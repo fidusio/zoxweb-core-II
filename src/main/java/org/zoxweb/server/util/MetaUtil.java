@@ -55,7 +55,7 @@ public class MetaUtil
         throws InstantiationException, IllegalAccessException, NullPointerException, IllegalArgumentException
     {
 		SharedUtil.checkIfNulls("Null class name", clazz);
-		Object obj = clazz.newInstance();
+		Object obj = clazz.getDeclaredConstructor().newInstance();
 
 		if (obj instanceof NVEntity)
 		{
