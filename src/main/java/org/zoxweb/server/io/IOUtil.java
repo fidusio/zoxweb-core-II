@@ -123,7 +123,6 @@ public class IOUtil
 	}
 
     /**
-     *
      * @param filename
      * @return
      * @throws IOException
@@ -132,6 +131,18 @@ public class IOUtil
 		throws IOException
 	{
 		return inputStreamToString(new FileInputStream(filename), true);
+	}
+	
+	/**
+	 * Load file 
+	 * @param file
+	 * @return
+	 * @throws IOException
+	 */
+	public static String inputStreamToString(File file) 
+			throws IOException
+	{
+		return inputStreamToString(new FileInputStream(file), true);
 	}
 
     /**
