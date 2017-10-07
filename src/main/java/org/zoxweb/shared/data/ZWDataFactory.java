@@ -870,6 +870,21 @@ public class ZWDataFactory
 				return ShiroPermissionDAO.NVC_SHIRO_PERMISSION_DAO;
 			}
 		},
+		STAT_COUNTER(StatCounter.class.getName())
+		{
+			@SuppressWarnings("unchecked")
+			@Override
+			public StatCounter newInstance()
+			{
+				return new StatCounter();
+			}
+
+			@Override
+			public NVConfigEntity getNVConfigEntity() 
+			{
+				return StatCounter.NVC_STAT_COUNTER_DAO;
+			}
+		},
 		UUID_INFO_DAO(UUIDInfoDAO.class.getName())
 		{
 			@SuppressWarnings("unchecked")
