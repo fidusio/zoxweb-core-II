@@ -2,6 +2,7 @@ package org.zoxweb.shared.api;
 
 import org.zoxweb.shared.data.AppDeviceDAO;
 import org.zoxweb.shared.data.UserIDDAO;
+import org.zoxweb.shared.data.UserInfoDAO;
 import org.zoxweb.shared.data.UserPreferenceDAO;
 import org.zoxweb.shared.security.AccessSecurityException;
 import org.zoxweb.shared.security.JWT;
@@ -12,6 +13,18 @@ import java.util.List;
 
 public interface APIAppManager
 {
+	/**
+	 * Register a device
+	 * @param userInfoDAO
+	 * @param appDeviceDAO
+	 * @param token
+	 * @return
+	 * @throws NullPointerException
+	 * @throws IllegalArgumentException
+	 * @throws AccessSecurityException
+	 */
+	SubjectAPIKey registerSubjectAPIKey(UserInfoDAO userInfoDAO, AppDeviceDAO appDeviceDAO, String token)
+			throws NullPointerException, IllegalArgumentException, AccessSecurityException;
 
 	/**
 	 * Create a userDAO, the creation requires persistence of the following:

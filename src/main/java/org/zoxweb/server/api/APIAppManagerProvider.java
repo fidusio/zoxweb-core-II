@@ -11,6 +11,7 @@ import org.zoxweb.shared.api.APIAppManager;
 import org.zoxweb.shared.api.APIDataStore;
 import org.zoxweb.shared.data.AppDeviceDAO;
 import org.zoxweb.shared.data.UserIDDAO;
+import org.zoxweb.shared.data.UserInfoDAO;
 import org.zoxweb.shared.data.UserPreferenceDAO;
 import org.zoxweb.shared.security.AccessSecurityException;
 import org.zoxweb.shared.security.JWT;
@@ -254,6 +255,13 @@ public class APIAppManagerProvider
     {
 	    return false;
     }
+
+	@Override
+	public SubjectAPIKey registerSubjectAPIKey(UserInfoDAO userInfoDAO, AppDeviceDAO appDeviceDAO, String token)
+			throws NullPointerException, IllegalArgumentException, AccessSecurityException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 
 }
