@@ -19,6 +19,7 @@ public class UserPreferenceDAO
     public enum Param
         implements GetNVConfig {
 
+        APP_ID(NVConfigManager.createNVConfigEntity("app_id", "App ID", "AppID", true, false, AppIDDAO.NVC_APP_ID_DAO, NVConfigEntity.ArrayType.NOT_ARRAY)),
         DEFAULT_LANGUAGE(NVConfigManager.createNVConfig("language", "Default language", "DefaultLanguage", false, true, Language.class)),
         DEFAULT_DELIVERY_ADDRESS(NVConfigManager.createNVConfigEntity("delivery_address", "Default delivery address", "DefaultDeliveryAddress", false, true, AddressDAO.NVC_ADDRESS_DAO, ArrayType.NOT_ARRAY)),
         DEFAULT_BILLING_ADDRESS(NVConfigManager.createNVConfigEntity("billing_address", "Default billing address", "DefaultBillingAddress", false, true, AddressDAO.NVC_ADDRESS_DAO, ArrayType.NOT_ARRAY)),
@@ -55,6 +56,22 @@ public class UserPreferenceDAO
     public UserPreferenceDAO()
     {
         super(NVC_USER_PREFERENCE_DAO);
+    }
+
+    /**
+     * Returns the app ID.
+     * @return
+     */
+    public AppIDDAO getAppIDDAO() {
+        return lookupValue(AppDeviceDAO.Param.APP_ID);
+    }
+
+    /**
+     * Sets the app ID.
+     * @param appID
+     */
+    public void setAppIDDAO(AppIDDAO appID) {
+        setValue(AppDeviceDAO.Param.APP_ID, appID);
     }
 
     public Language getDefaultLanguage()
