@@ -34,8 +34,8 @@ public class JWTPayload
 		JTI(NVConfigManager.createNVConfig("jti", "JWT ID", "JWTID", false, true, false, String.class, null)),
 		//NAME(NVConfigManager.createNVConfig("name", "name", "Name", true, true, false, String.class, null)),
 		ADMIN(NVConfigManager.createNVConfig("admin", "Admin", "admin", false, true, boolean.class)),
-		DOMAIN_ID(NVConfigManager.createNVConfig("domain_id", "Domain identifier", "DomainID", false, true, false, String.class, FilterType.DOMAIN)),
-		APP_ID(NVConfigManager.createNVConfig("app_id", "ApplicationID", "AppID", false, true, false, String.class, null)),
+		DOMAIN_ID(NVConfigManager.createNVConfig("domain", "Domain identifier", "DomainID", false, true, false, String.class, FilterType.DOMAIN)),
+		APP_ID(NVConfigManager.createNVConfig("app", "ApplicationID", "AppID", false, true, false, String.class, null)),
 		NONCE(NVConfigManager.createNVConfig("nonce", "Nonce", "Nonce", false, true, false, long.class, null)),
 		RANDOM(NVConfigManager.createNVConfig("random", "Random Data", "Random", false, true, false, byte[].class, null)),
 		
