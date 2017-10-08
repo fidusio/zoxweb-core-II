@@ -60,6 +60,7 @@ public class QueryMatch<V>
 	public QueryMatch(RelationalOperator operator, V value, String... names)
     {
 		setName(SharedUtil.toCanonicalID('.', (Object[])names));
+		
 		setValue(value);
 		setOperator(operator);
 	}
@@ -82,6 +83,7 @@ public class QueryMatch<V>
 		}
 
 		setName(name.toString());
+		
 		setValue(value);
 		setOperator(operator);
 	}
@@ -181,5 +183,6 @@ public class QueryMatch<V>
     {
         return getName() + ":" + getOperator() + ":" + getValue();
     }
+	
 
 }
