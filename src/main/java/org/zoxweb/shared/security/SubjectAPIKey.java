@@ -139,4 +139,14 @@ public class SubjectAPIKey
     public void setStatus(Status status) {
         setValue(Param.STATUS, status);
     }
+
+    public static SubjectAPIKey copy(SubjectAPIKey subjectAPIKey) {
+        SharedUtil.checkIfNulls("SubjectAPIKey is null.", subjectAPIKey);
+
+        SubjectAPIKey ret = new SubjectAPIKey();
+        ret.setSubjectID(subjectAPIKey.getSubjectID());
+        ret.setAPISecret(subjectAPIKey.getAPISecretAsBytes());
+
+        return ret;
+    }
 }

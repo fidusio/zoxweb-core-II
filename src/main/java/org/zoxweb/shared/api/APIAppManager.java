@@ -1,118 +1,244 @@
 package org.zoxweb.shared.api;
 
 import org.zoxweb.shared.data.AppDeviceDAO;
+import org.zoxweb.shared.data.AppIDDAO;
 import org.zoxweb.shared.data.UserIDDAO;
 import org.zoxweb.shared.data.UserInfoDAO;
 import org.zoxweb.shared.data.UserPreferenceDAO;
-import org.zoxweb.shared.security.AccessSecurityException;
+import org.zoxweb.shared.db.QueryMatchString;
+import org.zoxweb.shared.security.AccessException;
 import org.zoxweb.shared.security.JWT;
 import org.zoxweb.shared.security.SubjectAPIKey;
+import org.zoxweb.shared.util.MetaToken;
 import org.zoxweb.shared.util.NVEntity;
 
 import java.util.List;
 
 public interface APIAppManager
 {
-	/**
-	 * Register a device
-	 * @param userInfoDAO
-	 * @param appDeviceDAO
-	 * @param token
-	 * @return
-	 * @throws NullPointerException
-	 * @throws IllegalArgumentException
-	 * @throws AccessSecurityException
-	 */
-	SubjectAPIKey registerSubjectAPIKey(UserInfoDAO userInfoDAO, AppDeviceDAO appDeviceDAO, String token)
-			throws NullPointerException, IllegalArgumentException, AccessSecurityException;
 
-	/**
-	 * Create a userDAO, the creation requires persistence of the following:
-	 * <ol>
-	 * <li> UserIDDAO the user id
-	 * <li> UserInfoDAO the user data addresses, cc etc
-	 * <li> UserIDCredentialsDAO the password info
-	 * <li> UserPreferenceDAO his/her preferences
-	 * </ol>
-	 * 
-	 * @param userDAO
-	 * @return persisted UserIDDOA
-	 * @throws NullPointerException
-	 * @throws IllegalArgumentException if the user already exist
-	 * @throws AccessSecurityException 
-	 */
-	UserIDDAO createUserID(UserIDDAO userDAO, String password)
-			throws NullPointerException, IllegalArgumentException, AccessSecurityException;
-	
-	/**
-	 * Lookup a userID
-	 * @param subjectID
-	 * @return
-	 * @throws NullPointerException
-	 * @throws IllegalArgumentException
-	 * @throws AccessSecurityException only superAdmin can do lookup
-	 */
-	UserIDDAO lookupUserID(String subjectID)
-			throws NullPointerException, IllegalArgumentException, AccessSecurityException;
-	
-	/**
-	 * Lookup a user preference DAO
-	 * @param subjectID
-	 * @return
-	 * @throws NullPointerException
-	 * @throws IllegalArgumentException
-	 * @throws AccessSecurityException
-	 */
-	UserPreferenceDAO lookupUserPreference(String subjectID)
-			throws NullPointerException, IllegalArgumentException, AccessSecurityException;
-
-    SubjectAPIKey createAppDeviceDAO(AppDeviceDAO subjectAPIKey)
-			throws NullPointerException, IllegalArgumentException, AccessSecurityException;
-	
-	SubjectAPIKey createSubjectAPIKey(SubjectAPIKey subjectAPIKey)
-			throws NullPointerException, IllegalArgumentException, AccessSecurityException;
-	
-	void deleteSubjectAPIKey(String subjectID)
-			throws NullPointerException, IllegalArgumentException, AccessSecurityException;
-	
-	void deleteSubjectAPIKey(SubjectAPIKey subjectAPIKey)
-			throws NullPointerException, IllegalArgumentException, AccessSecurityException;
-	
-	SubjectAPIKey lookupSubjectAPIKey(String subjectID)
-			throws NullPointerException, IllegalArgumentException, AccessSecurityException;
-	
-	void updateSubjectAPIKey(SubjectAPIKey subjectAPIKey)
-			throws NullPointerException, IllegalArgumentException, AccessSecurityException;
-	
-	JWT validateJWT(String token)
-			throws NullPointerException, IllegalArgumentException, AccessSecurityException;
-
+    /**
+     * Retruns the APIDataStore.
+     * @return
+     */
     APIDataStore<?> getAPIDataStore();
 
-	void setAPIDataStore(APIDataStore<?> ds)
-			throws NullPointerException, IllegalArgumentException;
+    /**
+     * Set the APIDataStore.
+     * @param dataStore
+     * @throws NullPointerException
+     * @throws IllegalArgumentException
+     */
+    void setAPIDataStore(APIDataStore<?> dataStore)
+            throws NullPointerException, IllegalArgumentException;
 
-	UserIDDAO createUser(String subjectID, String password)
-			throws NullPointerException, IllegalArgumentException, AccessSecurityException;
-	
+    /**
+     * Register user.
+     * @param userInfoDAO
+     * @param appDeviceDAO
+     * @param username
+     * @param password
+     * @return
+     * @throws NullPointerException
+     * @throws IllegalArgumentException
+     * @throws AccessException
+     * @throws APIException
+     */
+	SubjectAPIKey registerSubjectAPIKey(UserInfoDAO userInfoDAO, AppDeviceDAO appDeviceDAO, String username, String password)
+			throws NullPointerException, IllegalArgumentException, AccessException, APIException;
+
+    /**
+     * Create a userDAO, the creation requires persistence of the following:
+     * <ol>
+     * <li> UserIDDAO the user id
+     * <li> UserInfoDAO the user data addresses, cc etc
+     * <li> UserIDCredentialsDAO the password info
+     * <li> UserPreferenceDAO his/her preferences
+     * </ol>
+     *
+     * @param userIDDAO
+     * @param password
+     * @return
+     * @throws NullPointerException
+     * @throws IllegalArgumentException
+     * @throws AccessException
+     * @throws APIException
+     */
+	UserIDDAO createUserIDDAO(UserIDDAO userIDDAO, String password)
+            throws NullPointerException, IllegalArgumentException, AccessException, APIException;
+
+    /**
+     * Create UserIDDAO.
+     * @param subjectID
+     * @param password
+     * @return
+     * @throws NullPointerException
+     * @throws IllegalArgumentException
+     * @throws AccessException
+     * @throws APIException
+     */
+    UserIDDAO createUserIDDAO(String subjectID, String password)
+            throws NullPointerException, IllegalArgumentException, AccessException, APIException;
+
+    /**
+     * Look up UserIDDAO based on subject ID.
+     * @param subjectID
+     * @return
+     * @throws NullPointerException
+     * @throws IllegalArgumentException
+     * @throws AccessException - only Super Admin can do lookup
+     * @throws APIException
+     */
+	UserIDDAO lookupUserIDDAO(String subjectID)
+            throws NullPointerException, IllegalArgumentException, AccessException, APIException;
+
+
+    /**
+     * Look up UserPreferenceDAO based on subject ID.
+     * @param subjectID
+     * @return
+     * @throws NullPointerException
+     * @throws IllegalArgumentException
+     * @throws AccessException
+     * @throws APIException
+     */
+	UserPreferenceDAO lookupUserPreferenceDAO(String subjectID)
+            throws NullPointerException, IllegalArgumentException, AccessException, APIException;
+
+
+	UserPreferenceDAO lookupUserPreferenceDAO(AppIDDAO appIDDAO, UserIDDAO userIDDAO)
+            throws NullPointerException, IllegalArgumentException, AccessException, APIException;
+
+    /**
+     * Create AppDeviceDAO.
+     * @param subjectAPIKey
+     * @return
+     * @throws NullPointerException
+     * @throws IllegalArgumentException
+     * @throws AccessException
+     * @throws APIException
+     */
+    SubjectAPIKey createAppDeviceDAO(AppDeviceDAO subjectAPIKey)
+            throws NullPointerException, IllegalArgumentException, AccessException, APIException;
+
+    /**
+     * Create SubjectAPIKey.
+     * @param subjectAPIKey
+     * @return
+     * @throws NullPointerException
+     * @throws IllegalArgumentException
+     * @throws AccessException
+     * @throws APIException
+     */
+	SubjectAPIKey createSubjectAPIKey(SubjectAPIKey subjectAPIKey)
+            throws NullPointerException, IllegalArgumentException, AccessException, APIException;
+
+    /**
+     * Delete SubjectAPIKey.
+     * @param subjectID
+     * @throws NullPointerException
+     * @throws IllegalArgumentException
+     * @throws AccessException
+     * @throws APIException
+     */
+	void deleteSubjectAPIKey(String subjectID)
+            throws NullPointerException, IllegalArgumentException, AccessException, APIException;
+
+    /**
+     * Delete SubjectAPIKey.
+     * @param subjectAPIKey
+     * @throws NullPointerException
+     * @throws IllegalArgumentException
+     * @throws AccessException
+     * @throws APIException
+     */
+	void deleteSubjectAPIKey(SubjectAPIKey subjectAPIKey)
+            throws NullPointerException, IllegalArgumentException, AccessException, APIException;
+
+    /**
+     * Look up SubjectAPIKey.
+     * @param subjectID
+     * @return
+     * @throws NullPointerException
+     * @throws IllegalArgumentException
+     * @throws AccessException
+     * @throws APIException
+     */
+	SubjectAPIKey lookupSubjectAPIKey(String subjectID)
+            throws NullPointerException, IllegalArgumentException, AccessException, APIException;
+
+    /**
+     * Update SubjectAPIKey.
+     * @param subjectAPIKey
+     * @throws NullPointerException
+     * @throws IllegalArgumentException
+     * @throws AccessException
+     * @throws APIException
+     */
+	void updateSubjectAPIKey(SubjectAPIKey subjectAPIKey)
+            throws NullPointerException, IllegalArgumentException, AccessException, APIException;
+
+    /**
+     * Look up AppIDDAO based on domain ID and app ID.
+     * @param domainID
+     * @param appID
+     * @return
+     * @throws NullPointerException
+     * @throws IllegalArgumentException
+     * @throws AccessException
+     * @throws APIException
+     */
+	AppIDDAO lookupAppIDDAO(String domainID, String appID)
+            throws NullPointerException, IllegalArgumentException, AccessException, APIException;
+
+    /**
+     * Validate JWT token.
+     * @param token
+     * @return
+     * @throws NullPointerException
+     * @throws IllegalArgumentException
+     * @throws AccessException
+     * @throws APIException
+     */
+	JWT validateJWT(String token)
+            throws NullPointerException, IllegalArgumentException, AccessException, APIException;
+
+    /**
+     * Reset password.
+     * @param subjectID
+     * @throws NullPointerException
+     * @throws IllegalArgumentException
+     * @throws AccessException
+     * @throws APIException
+     */
 	void resetPassword(String subjectID)
-			throws NullPointerException, IllegalArgumentException, AccessSecurityException;
+            throws NullPointerException, IllegalArgumentException, AccessException, APIException;
 
+    /**
+     * Change password.
+     * @param subjectID
+     * @param oldPassword
+     * @param newPassword
+     * @throws NullPointerException
+     * @throws IllegalArgumentException
+     * @throws AccessException
+     * @throws APIException
+     */
 	void changePassword(String subjectID, String oldPassword, String newPassword)
-			throws NullPointerException, IllegalArgumentException, AccessSecurityException;
+            throws NullPointerException, IllegalArgumentException, AccessException, APIException;
 
     /**
-     * Create a NVEntity object.
+     * Create NVEntity object.
      * @param nve
+     * @param <V>
      * @return
+     * @throws NullPointerException
+     * @throws IllegalArgumentException
+     * @throws AccessException
+     * @throws APIException
      */
-    <V extends NVEntity> V create(V nve);
-
-    /**
-     * Create a NVEntity object.
-     * @param nve
-     * @return
-     */
+    <V extends NVEntity> V create(V nve)
+            throws NullPointerException, IllegalArgumentException, AccessException, APIException;
 
     /**
      * Looks up NVEntity objects based on given given subject ID and NVEntity class type.
@@ -120,26 +246,39 @@ public interface APIAppManager
      * @param classType
      * @param <V>
      * @return
+     * @throws NullPointerException
+     * @throws IllegalArgumentException
+     * @throws AccessException
+     * @throws APIException
      */
-    <V extends NVEntity> List<V> lookup(String subjectID, Class<V> classType);
+    <V extends NVEntity> List<V> lookup(String subjectID, Class<V> classType)
+            throws NullPointerException, IllegalArgumentException, AccessException, APIException;
 
     /**
-     * Update a NVEntity object.
-     * @param nve
-     * @return
-     */
-    <V extends NVEntity> V update(V nve);
-
-    /**
-     * Delete an NVEntity object.
+     * Update NVEntity object.
      * @param nve
      * @param <V>
      * @return
+     * @throws NullPointerException
+     * @throws IllegalArgumentException
+     * @throws AccessException
+     * @throws APIException
      */
-    <V extends NVEntity> boolean delete(V nve);
-    
-    
+    <V extends NVEntity> V update(V nve)
+            throws NullPointerException, IllegalArgumentException, AccessException, APIException;
 
-    
+    /**
+     * Delete NVEntity object.
+     * @param nve
+     * @param <V>
+     * @return
+     * @throws NullPointerException
+     * @throws IllegalArgumentException
+     * @throws AccessException
+     * @throws APIException
+     */
+    <V extends NVEntity> boolean delete(V nve)
+            throws NullPointerException, IllegalArgumentException, AccessException, APIException;
+
 
 }
