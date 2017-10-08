@@ -20,7 +20,7 @@ public class StatCounter
 	public enum Param
 	implements GetNVConfig
 	{
-		TS_UNIT(NVConfigManager.createNVConfig("ts_unit", "TimeStampUnit.", "TimeStampUnit", true, false, TimeUnitType.class)),
+		//TS_UNIT(NVConfigManager.createNVConfig("ts_unit", "TimeStampUnit.", "TimeStampUnit", true, false, TimeUnitType.class)),
 		COUNTER(NVConfigManager.createNVConfig("counter", "Counter.", "Counter", true, true, long.class)),	
 		;
 	
@@ -62,17 +62,14 @@ public class StatCounter
 	public StatCounter(TimeUnitType tut)
 	{
 		this();
-		switch(tut)
-		{
-		case MILLIS:
-			setCreationTime(System.currentTimeMillis());
-			break;
-		case NANOS:
-			setCreationTime(System.nanoTime());
-			break;
-		
-		}
-		setTimeStampUnit(tut);
+//		switch(tut)
+//		{
+//		 default:
+		setCreationTime(System.currentTimeMillis());
+//			
+//		
+//		}
+//		setTimeStampUnit(tut);
 		increment(0);
 	}
 	
@@ -87,15 +84,16 @@ public class StatCounter
 	{
 		long val = getCounter() + increment;
 		setCounter(val);
-		switch(getTimeStampUnit())
-		{
-		case MILLIS:
+		setLastTimeUpdated(System.currentTimeMillis());
+//		switch(getTimeStampUnit())
+//		{
+//		case MILLIS:
 			setLastTimeUpdated(System.currentTimeMillis());
-			break;
-		case NANOS:
-			setLastTimeUpdated(System.nanoTime());
-			break;
-		}
+//			break;
+//		case NANOS:
+//			setLastTimeUpdated(System.nanoTime());
+//			break;
+//		}
 		return val;
 	}
 	
@@ -109,15 +107,15 @@ public class StatCounter
 		setValue(Param.COUNTER, counter);
 	}
 	
-	public void setTimeStampUnit(TimeUnitType tut)
-	{
-		setValue(Param.TS_UNIT, tut);
-	}
+//	public void setTimeStampUnit(TimeUnitType tut)
+//	{
+//		setValue(Param.TS_UNIT, tut);
+//	}
 	
-	public TimeUnitType getTimeStampUnit()
-	{
-		return lookupValue(Param.TS_UNIT);
-	}
+//	public TimeUnitType getTimeStampUnit()
+//	{
+//		return lookupValue(Param.TS_UNIT);
+//	}
 	
 	public double rate()
 	{
