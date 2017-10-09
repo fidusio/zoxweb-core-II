@@ -2,13 +2,15 @@ package org.zoxweb.shared.data;
 
 
 
+import java.util.Date;
+
 import org.zoxweb.shared.util.GetNVConfig;
 import org.zoxweb.shared.util.NVConfig;
 import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVConfigEntityLocal;
 import org.zoxweb.shared.util.NVConfigManager;
 import org.zoxweb.shared.util.SharedUtil;
-import org.zoxweb.shared.util.Const.TimeUnitType;
+
 
 @SuppressWarnings("serial")
 public class StatCounter
@@ -20,8 +22,9 @@ public class StatCounter
 	public enum Param
 	implements GetNVConfig
 	{
-		//TS_UNIT(NVConfigManager.createNVConfig("ts_unit", "TimeStampUnit.", "TimeStampUnit", true, false, TimeUnitType.class)),
-		COUNTER(NVConfigManager.createNVConfig("counter", "Counter.", "Counter", true, true, long.class)),	
+		COUNTER(NVConfigManager.createNVConfig("counter", "Counter.", "Counter", true, true, long.class)),
+		REFERENCE_TS(NVConfigManager.createNVConfig("ref_ts", "Time stamp reference", "TimeStampReference", true, false, false, true, Date.class, null)),
+		
 		;
 	
 		private final NVConfig nvc;
@@ -56,24 +59,17 @@ public class StatCounter
 	{
 		super(NVC_STAT_COUNTER_DAO);
 		// TODO Auto-generated constructor stub
-		
-	}
-	
-	public StatCounter(TimeUnitType tut)
-	{
-		this();
-//		switch(tut)
-//		{
-//		 default:
 		setCreationTime(System.currentTimeMillis());
-//			
-//		
-//		}
-//		setTimeStampUnit(tut);
+		setReferenceTime(getCreationTime());
+
 		increment(0);
 	}
 	
 	
+	/**
+	 * Increment by 1
+	 * @return
+	 */
 	public long increment()
 	{
 		return increment(1);
@@ -85,15 +81,6 @@ public class StatCounter
 		long val = getCounter() + increment;
 		setCounter(val);
 		setLastTimeUpdated(System.currentTimeMillis());
-//		switch(getTimeStampUnit())
-//		{
-//		case MILLIS:
-			setLastTimeUpdated(System.currentTimeMillis());
-//			break;
-//		case NANOS:
-//			setLastTimeUpdated(System.nanoTime());
-//			break;
-//		}
 		return val;
 	}
 	
@@ -107,20 +94,47 @@ public class StatCounter
 		setValue(Param.COUNTER, counter);
 	}
 	
-//	public void setTimeStampUnit(TimeUnitType tut)
-//	{
-//		setValue(Param.TS_UNIT, tut);
-//	}
+	/**
+	 * Return the time in millis
+	 * @return
+	 */
+	public long getReferenceTime()
+	{
+		return lookupValue(Param.REFERENCE_TS);
+	}
 	
-//	public TimeUnitType getTimeStampUnit()
-//	{
-//		return lookupValue(Param.TS_UNIT);
-//	}
+	public synchronized void setReferenceTime(long ts)
+	{
+		setValue(Param.REFERENCE_TS, ts);
+	}
 	
 	public double rate()
 	{
-		double rate = (getLastTimeUpdated() - getCreationTime())/getCounter();
+		double rate = delta()/getCounter();
 		
 		return rate;
+	}
+	
+	/**
+	 * Return lastime updated - reference time in millis
+	 * @return
+	 */
+	public long delta()
+	{
+		return getLastTimeUpdated() - getReferenceTime();
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public long detlaNow()
+	{
+		return System.currentTimeMillis() - getReferenceTime();
+	}
+	
+	public long deltaSinceCreation()
+	{
+		return System.currentTimeMillis() - getCreationTime();
 	}
 }
