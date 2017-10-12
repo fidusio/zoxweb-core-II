@@ -541,7 +541,8 @@ final public class GSONUtil
 				{
 					if ((long) nve.lookupValue(nvc) != 0)
 					{
-						writer.name( nvc.getName()).value((long)nve.lookupValue(nvc));
+						//writer.name( nvc.getName()).value((long)nve.lookupValue(nvc));
+						writer.name(nvc.getName()).value(DateFilter.DEFAULT_GMT.format(new Date((long)nve.lookupValue(nvc))));
 					}
 				}
 				else if (nvc.getMetaTypeBase() == BigDecimal.class)
@@ -1481,12 +1482,16 @@ final public class GSONUtil
 					{
 						JsonPrimitive jp = (JsonPrimitive) je;
 
-						if (jp.isString() && nvc.getValueFilter() != null)
+						if (jp.isString())
 						{
-							((NVBase<Long>) nvb).setValue((Long) nvc.getValueFilter().validate(jp.getAsString()));
+							if (nvc.getValueFilter() != null)
+								((NVBase<Long>) nvb).setValue((Long) nvc.getValueFilter().validate(jp.getAsString()));
+							else
+								((NVBase<Long>) nvb).setValue(DateFilter.SINGLETON.validate(jp.getAsString()));
 						}
+						
 						else
-						    {
+						{
 							((NVBase<Long>) nvb).setValue(jp.getAsLong());
 						}
 					}

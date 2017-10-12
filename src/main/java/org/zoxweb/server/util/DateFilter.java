@@ -2,6 +2,7 @@ package org.zoxweb.server.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.TimeZone;
 
 import org.zoxweb.shared.filters.ValueFilter;
 
@@ -15,16 +16,33 @@ public class DateFilter
 	implements ValueFilter<String, Long>
 {
 	
+	public static class SDFBuilder extends SimpleDateFormat
+	{
+		public SDFBuilder(String pattern)
+		{
+			super(pattern);
+		}
+		
+		public SDFBuilder timeZone(TimeZone tz)
+		{
+			setTimeZone(tz);
+			return this;
+		}
+	}
+	
 	/**
 	 * Sets the default date format.
 	 */
 	public static final SimpleDateFormat DEFAULT_DATE_FORMAT = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss_SSS");
+	
+	public static final SimpleDateFormat DEFAULT_GMT = new SDFBuilder("yyyy-MM-dd HH:mm:ss:SSS'Z'").timeZone(TimeZone.getTimeZone("UTC"));
 	
 	/**
 	 * Defines an array of support date formats.
 	 */
 	private static SimpleDateFormat[] sdf = 
 		{
+			DEFAULT_GMT,
 			new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"),
 			new SimpleDateFormat("yyyy-MM-dd"),	
 			

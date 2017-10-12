@@ -11,6 +11,7 @@ import org.zoxweb.shared.util.NVConfigEntityLocal;
 import org.zoxweb.shared.util.NVConfigManager;
 import org.zoxweb.shared.util.NVGenericMap;
 import org.zoxweb.shared.util.SharedUtil;
+import java.util.Date;
 
 
 @SuppressWarnings("serial")
@@ -28,8 +29,8 @@ public class JWTPayload
 		ISS(NVConfigManager.createNVConfig("iss", "Issuer intentifier", "Issuer", false, true, false, String.class, null)),
 		SUB(NVConfigManager.createNVConfig("sub", "Subject Identifier", "SubjectID", false, true, false, String.class, null)),
 		AUD(NVConfigManager.createNVConfig("aud", "Audience", "Audience", false, true, false, String.class, null)),	
-		EXP(NVConfigManager.createNVConfig("exp", "Expiration time", "Expiration", false, true, false, long.class, null)),
-		NBF(NVConfigManager.createNVConfig("nbf", "Not Before", "NBF", false, true, false, long.class, null)),
+		EXP(NVConfigManager.createNVConfig("exp", "Expiration time", "Expiration", false, true, false, Date.class, null)),
+		NBF(NVConfigManager.createNVConfig("nbf", "Not Before", "NBF", false, true, false, Date.class, null)),
 		IAT(NVConfigManager.createNVConfig("iat", "Issued At", "IAT", false, true, false, long.class, null)),
 		JTI(NVConfigManager.createNVConfig("jti", "JWT ID", "JWTID", false, true, false, String.class, null)),
 		//NAME(NVConfigManager.createNVConfig("name", "name", "Name", true, true, false, String.class, null)),
