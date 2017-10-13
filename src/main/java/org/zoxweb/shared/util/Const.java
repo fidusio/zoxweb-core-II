@@ -706,6 +706,7 @@ public class Const
 		NVLONG("long"),
 		NVFLOAT("float"),
 		NVDOUBLE("double"),
+		//NVDATE("date"),
 		
 		;
 		
