@@ -34,7 +34,7 @@ public class JWTTest {
 		JWTPayload payload = new JWTPayload();
 		payload.setDomainID("xlogistx.io");
 		payload.setAppID("xlogistx");
-		payload.setRandom(new byte[] {0,1,2,3});
+		//payload.setRandom(new byte[] {0,1,2,3});
 		payload.setSubjectID("support@xlogistx.io");
 		jwtHS256 = new JWT();
 		jwtHS256.setHeader(header);
@@ -46,7 +46,7 @@ public class JWTTest {
 		payload = new JWTPayload();
 		payload.setDomainID("xlogistx.io");
 		payload.setAppID("xlogistx");
-		payload.setRandom(new byte[] {0,1,2,3});
+		//payload.setRandom(new byte[] {0,1,2,3});
 		payload.setSubjectID("none@xlogistx.io");
 		jwtNONE = new JWT();
 		jwtNONE.setHeader(header);
@@ -76,7 +76,7 @@ public class JWTTest {
 		payload.setSubjectID("batata@xlogistx.io");
 		payload.setName("John Doe");
 		payload.setAdmin(true);
-		payload.setRandom(new byte[] {0,1,2,3});
+		//payload.setRandom(new byte[] {0,1,2,3});
 		localJwt.setPayload(payload);
 		
 		NVGenericMap nvgm = payload.getNVGenericMap();
@@ -191,7 +191,7 @@ public class JWTTest {
 		
 		payload.setDomainID("xlogistx");
 		payload.setAppID("xlogistx");
-		payload.setRandom(new byte[] {0,1,2,3});
+		//payload.setRandom(new byte[] {0,1,2,3});
 		payload.setSubjectID("support@xlogistx.io");
 	}
 }

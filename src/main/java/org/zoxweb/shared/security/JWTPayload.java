@@ -26,7 +26,7 @@ public class JWTPayload
 	{
 		
 		ISS(NVConfigManager.createNVConfig("iss", "Issuer intentifier", "Issuer", false, true, false, String.class, null)),
-		SUB(NVConfigManager.createNVConfig("sub", "Subject Identifier", "SubjectID", false, true, false, String.class, null)),
+		SUB(NVConfigManager.createNVConfig("sub", "Subject Identifier", "SubjectID", true, true, false, String.class, null)),
 		AUD(NVConfigManager.createNVConfig("aud", "Audience", "Audience", false, true, false, String.class, null)),	
 		EXP(NVConfigManager.createNVConfig("exp", "Expiration time", "Expiration", false, true, false, long.class, null)),
 		NBF(NVConfigManager.createNVConfig("nbf", "Not Before", "NBF", false, true, false, long.class, null)),
@@ -37,7 +37,7 @@ public class JWTPayload
 		DOMAIN_ID(NVConfigManager.createNVConfig("domain", "Domain identifier", "DomainID", false, true, false, String.class, FilterType.DOMAIN)),
 		APP_ID(NVConfigManager.createNVConfig("app", "ApplicationID", "AppID", false, true, false, String.class, null)),
 		NONCE(NVConfigManager.createNVConfig("nonce", "Nonce", "Nonce", false, true, false, long.class, null)),
-		RANDOM(NVConfigManager.createNVConfig("random", "Random Data", "Random", false, true, false, byte[].class, null)),
+		//RANDOM(NVConfigManager.createNVConfig("random", "Random Data", "Random", false, true, false, byte[].class, null)),
 		
 		
 		;
@@ -65,7 +65,7 @@ public class JWTPayload
 																					JWTPayload.class, 
 																					SharedUtil.extractNVConfigs(Param.values()), 
 																					null, 
-																					false, 
+																					true, 
 																					SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO
 																				);
 
@@ -134,16 +134,16 @@ public class JWTPayload
 		setValue(Param.NONCE, nonce);
 	}
 
-	public byte[] getRandom() 
-	{
-		return lookupValue(Param.RANDOM);
-	}
-
-
-	public void setRandom(byte[] random) 
-	{
-		setValue(Param.RANDOM, random);
-	}
+//	public byte[] getRandom() 
+//	{
+//		return lookupValue(Param.RANDOM);
+//	}
+//
+//
+//	public void setRandom(byte[] random) 
+//	{
+//		setValue(Param.RANDOM, random);
+//	}
 
 	public String getAudience() 
 	{
