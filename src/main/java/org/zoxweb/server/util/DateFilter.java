@@ -35,7 +35,7 @@ public class DateFilter
 	 */
 	public static final SimpleDateFormat DEFAULT_DATE_FORMAT = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss_SSS");
 	
-	public static final SimpleDateFormat DEFAULT_GMT = new SDFBuilder("yyyy-MM-dd HH:mm:ss:SSS'Z'").timeZone(TimeZone.getTimeZone("UTC"));
+	public static final SimpleDateFormat DEFAULT_GMT = new SDFBuilder("yyyy-MM-dd HH:mm:ss.SSSX").timeZone(TimeZone.getTimeZone("UTC"));
 	
 	/**
 	 * Defines an array of support date formats.
