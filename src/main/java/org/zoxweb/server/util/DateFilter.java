@@ -35,19 +35,22 @@ public class DateFilter
 	 */
 	public static final SimpleDateFormat DEFAULT_DATE_FORMAT = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss_SSS");
 	
-	public static final SimpleDateFormat DEFAULT_GMT = new SDFBuilder("yyyy-MM-dd HH:mm:ss.SSSX").timeZone(TimeZone.getTimeZone("UTC"));
+	public static final SimpleDateFormat DEFAULT_GMT_MILLIS = new SDFBuilder("yyyy-MM-dd'T'HH:mm:ss.SSSX").timeZone(TimeZone.getTimeZone("UTC"));
+	public static final SimpleDateFormat DEFAULT_GMT = new SDFBuilder("yyyy-MM-dd'T'HH:mm:ssX").timeZone(TimeZone.getTimeZone("UTC"));
+	
 	
 	/**
 	 * Defines an array of support date formats.
 	 */
 	private static SimpleDateFormat[] sdf = 
 		{
+			DEFAULT_GMT_MILLIS,
 			DEFAULT_GMT,
-			new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"),
-			new SimpleDateFormat("yyyy-MM-dd"),	
+			new SDFBuilder("yyyy-MM-dd hh:mm:ss").timeZone(TimeZone.getTimeZone("UTC")),
+			new SDFBuilder("yyyy-MM-dd").timeZone(TimeZone.getTimeZone("UTC")),	
 			
-			new SimpleDateFormat("MM-yy"),
-			new SimpleDateFormat("MM-yyyy"),
+			new SDFBuilder("MM-yy").timeZone(TimeZone.getTimeZone("UTC")),
+			new SDFBuilder("MM-yyyy").timeZone(TimeZone.getTimeZone("UTC")),
 		};
 	
 	/**
