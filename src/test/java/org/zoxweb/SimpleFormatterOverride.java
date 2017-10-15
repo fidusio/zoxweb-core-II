@@ -40,7 +40,7 @@ public class SimpleFormatterOverride {
 //			field.set(null, "marwan");
 //			modifiersField.setInt( field, oldModifier);
 			
-			System.out.println("" + ReflectionUtil.updateFinalStatic(simpleFormatter, "format", "marwan nael"));
+			System.out.println("" + ReflectionUtil.updateFinalStatic(simpleFormatter, "format", "mario taza"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

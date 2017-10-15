@@ -15,7 +15,7 @@ import org.zoxweb.shared.util.SharedUtil;
  * iprange .
  * 
  * @version
- * @author Marwan NAEL
+ * @author JavaConsigliere
  */
 @SuppressWarnings("serial")
 public class IPRangeDAO

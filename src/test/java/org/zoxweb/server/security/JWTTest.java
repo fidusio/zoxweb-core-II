@@ -83,7 +83,7 @@ public class JWTTest {
 		
 		NVGenericMap nvgm = payload.getNVGenericMap();
 		NVPair nvp = (NVPair)nvgm.get("name");
-		nvp.setValue("Marwan");
+		nvp.setValue("Mario");
 		json = GSONUtil.toJSON(localJwt, true, false, false, Base64Type.URL);
 		System.out.println(json);
 		test = CryptoUtil.encodeJWT("secret", localJwt);
@@ -108,9 +108,9 @@ public class JWTTest {
 	
 		tempJWTP.getNotBefore();
 		System.out.println("genericMapToJSON:" + GSONUtil.genericMapToJSON(tempJWTP.getNVGenericMap(), false, false, false, Base64Type.URL));
+		System.out.println( GSONUtil.toJSON(tempJWTP, false, false, true, Base64Type.URL));
 		
-		
-		System.out.println("-------------------------------------------------------------------");
+		System.out.println("---------------++++++++++++++++++++----------------------------------------------------");
 	}
 	
 	
