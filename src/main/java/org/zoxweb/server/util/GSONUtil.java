@@ -995,7 +995,10 @@ final public class GSONUtil
 //			{
 //				
 //			}
-			
+			if (DateFilter.SINGLETON.isValid(jp.getAsString()))
+			{
+				return new NVLong(name, DateFilter.SINGLETON.validate(jp.getAsString()));
+			}
 			
 			return new NVPair(name, jp.getAsString());
 		}

@@ -76,6 +76,8 @@ public class JWTTest {
 		payload.setSubjectID("batata@xlogistx.io");
 		payload.setName("John Doe");
 		payload.setAdmin(true);
+		payload.setNotBefore(System.currentTimeMillis());
+		
 		//payload.setRandom(new byte[] {0,1,2,3});
 		localJwt.setPayload(payload);
 		
@@ -103,7 +105,10 @@ public class JWTTest {
 		gm.add(new NVPair("http://toto.com", "batata"));
 		tempJWTP.setNVGenericMap(gm);
 		System.out.println(tempJWTP);
+	
+		tempJWTP.getNotBefore();
 		System.out.println("genericMapToJSON:" + GSONUtil.genericMapToJSON(tempJWTP.getNVGenericMap(), false, false, false, Base64Type.URL));
+		
 		
 		System.out.println("-------------------------------------------------------------------");
 	}

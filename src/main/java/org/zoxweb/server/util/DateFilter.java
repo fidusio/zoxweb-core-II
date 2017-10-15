@@ -46,6 +46,8 @@ public class DateFilter
 		{
 			DEFAULT_GMT_MILLIS,
 			DEFAULT_GMT,
+			new SDFBuilder("yyyy-MM-dd'T'HH:mm:ss.SSSZ").timeZone(TimeZone.getTimeZone("UTC")),
+			new SDFBuilder("yyyy-MM-dd'T'HH:mm:ssZ").timeZone(TimeZone.getTimeZone("UTC")),
 			new SDFBuilder("yyyy-MM-dd hh:mm:ss").timeZone(TimeZone.getTimeZone("UTC")),
 			new SDFBuilder("yyyy-MM-dd").timeZone(TimeZone.getTimeZone("UTC")),	
 			
