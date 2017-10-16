@@ -88,7 +88,6 @@ public class TaskSchedulerProcessorTest {
 		/**
 		 * @see org.zoxweb.server.task.TaskExecutor#executeTask(org.zoxweb.server.task.TaskEvent)
 		 */
-		@Override
 		public void executeTask(TaskEvent event) {
 			long ts = System.currentTimeMillis();
 			Appointment tScheduler = (Appointment) event.getTaskExecutorParameters()[0];
@@ -99,7 +98,6 @@ public class TaskSchedulerProcessorTest {
 		/**
 		 * @see org.zoxweb.server.task.TaskExecutor#finishTask(org.zoxweb.server.task.TaskEvent)
 		 */
-		@Override
 		public void finishTask(TaskEvent event) {
 
 		}

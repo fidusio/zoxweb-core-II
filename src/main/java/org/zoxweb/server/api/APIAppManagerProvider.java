@@ -36,25 +36,25 @@ public class APIAppManagerProvider
     implements APIAppManager {
 
     private volatile APIDataStore<?> dataStore;
-    private HashMap<String, SubjectAPIKey> cache = new HashMap<>();
+    private HashMap<String, SubjectAPIKey> cache = new HashMap<String, SubjectAPIKey>();
 
 
     public APIAppManagerProvider() {
 
     }
 
-    @Override
+    
     public APIDataStore<?> getAPIDataStore() {
         return dataStore;
     }
 
-    @Override
+ 
     public synchronized void setAPIDataStore(APIDataStore<?> dataStore)
             throws NullPointerException, IllegalArgumentException {
         this.dataStore = dataStore;
     }
 
-    @Override
+    
     public SubjectAPIKey createAppDeviceDAO(AppDeviceDAO appDeviceDAO)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException{
         SharedUtil.checkIfNulls("AppDeviceDAO is null", appDeviceDAO);
@@ -70,7 +70,7 @@ public class APIAppManagerProvider
         return createSubjectAPIKey(appDeviceDAO);
     }
 
-    @Override
+  
     public SubjectAPIKey createSubjectAPIKey(SubjectAPIKey subjectAPIKey)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException {
         SharedUtil.checkIfNulls("Null SubjectAPIKey", subjectAPIKey);
@@ -100,7 +100,7 @@ public class APIAppManagerProvider
         return SubjectAPIKey.copy(subjectAPIKey);
     }
 
-    @Override
+  
     public void deleteSubjectAPIKey(String subjectID)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException {
 
@@ -110,7 +110,7 @@ public class APIAppManagerProvider
 
     }
 
-    @Override
+   
     public void deleteSubjectAPIKey(SubjectAPIKey subjectAPIKey)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException {
 
@@ -119,7 +119,7 @@ public class APIAppManagerProvider
         }
     }
 
-    @Override
+    
     public SubjectAPIKey lookupSubjectAPIKey(String subjectID)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException {
         synchronized (cache) {
@@ -136,7 +136,7 @@ public class APIAppManagerProvider
 
     }
 
-    @Override
+   
     public JWT validateJWT(String token)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException{
         SharedUtil.checkIfNulls("Null Token", token);

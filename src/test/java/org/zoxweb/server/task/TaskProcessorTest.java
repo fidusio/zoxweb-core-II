@@ -23,7 +23,6 @@ public class TaskProcessorTest
 	AtomicInteger ai = new AtomicInteger();
 	int counter = 0;
 	
-	@Override
 	public void run() {
 		ai.addAndGet(1);
 		inc();
