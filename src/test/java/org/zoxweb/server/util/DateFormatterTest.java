@@ -18,14 +18,14 @@ public class DateFormatterTest {
 	public void testFormat()
 	{
 		System.out.println(DateFilter.DEFAULT_DATE_FORMAT.format(new Date()));
-		System.out.println(DateFilter.DEFAULT_GMT_MILLIS.format(new Date()));
+		System.out.println(DateFilter.DEFAULT_GMT_MILLIS.SDF.format(new Date()));
 	}
 	
 	@Test
 	public void testParseGMT()
 	{
 		Date date = new Date();
-		String strDate = DateFilter.DEFAULT_GMT_MILLIS.format(date);
+		String strDate = DateFilter.DEFAULT_GMT_MILLIS.SDF.format(date);
 		Date newDate = new Date(DateFilter.SINGLETON.validate(strDate));
 		Assert.assertEquals(date, newDate);
 	}

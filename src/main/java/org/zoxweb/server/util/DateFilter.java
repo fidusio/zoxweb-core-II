@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
 
+import org.zoxweb.server.filters.DateTimeValueFilter;
 import org.zoxweb.shared.filters.ValueFilter;
 
 /**
@@ -35,8 +36,8 @@ public class DateFilter
 	 */
 	public static final SimpleDateFormat DEFAULT_DATE_FORMAT = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss_SSS");
 	
-	public static final SimpleDateFormat DEFAULT_GMT_MILLIS = new SDFBuilder("yyyy-MM-dd'T'HH:mm:ss.SSSX").timeZone(TimeZone.getTimeZone("UTC"));
-	public static final SimpleDateFormat DEFAULT_GMT = new SDFBuilder("yyyy-MM-dd'T'HH:mm:ssX").timeZone(TimeZone.getTimeZone("UTC"));
+	public static final DateTimeValueFilter DEFAULT_GMT_MILLIS = new DateTimeValueFilter("yyyy-MM-dd'T'HH:mm:ss.SSSX", "UTC");
+	public static final DateTimeValueFilter DEFAULT_GMT = new DateTimeValueFilter("yyyy-MM-dd'T'HH:mm:ssX", "UTC");
 	
 	
 	/**
@@ -44,8 +45,8 @@ public class DateFilter
 	 */
 	private static SimpleDateFormat[] sdf = 
 		{
-			DEFAULT_GMT_MILLIS,
-			DEFAULT_GMT,
+			DEFAULT_GMT_MILLIS.SDF,
+			DEFAULT_GMT.SDF,
 			new SDFBuilder("yyyy-MM-dd'T'HH:mm:ss.SSSZ").timeZone(TimeZone.getTimeZone("UTC")),
 			new SDFBuilder("yyyy-MM-dd'T'HH:mm:ssZ").timeZone(TimeZone.getTimeZone("UTC")),
 			new SDFBuilder("yyyy-MM-dd hh:mm:ss").timeZone(TimeZone.getTimeZone("UTC")),

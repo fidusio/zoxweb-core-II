@@ -542,7 +542,7 @@ final public class GSONUtil
 					if ((long) nve.lookupValue(nvc) != 0)
 					{
 						//writer.name( nvc.getName()).value((long)nve.lookupValue(nvc));
-						writer.name(nvc.getName()).value(DateFilter.DEFAULT_GMT_MILLIS.format(new Date((long)nve.lookupValue(nvc))));
+						writer.name(nvc.getName()).value(DateFilter.DEFAULT_GMT_MILLIS.SDF.format(new Date((long)nve.lookupValue(nvc))));
 					}
 				}
 				else if (nvc.getMetaTypeBase() == BigDecimal.class)
