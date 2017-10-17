@@ -35,6 +35,7 @@ import java.util.Set;
 import java.util.Map.Entry;
 import java.util.logging.Logger;
 
+import org.zoxweb.server.filters.TimestampFilter;
 import org.zoxweb.shared.db.QueryMarker;
 import org.zoxweb.shared.db.QueryMatch;
 import org.zoxweb.shared.db.QueryMatchLong;
@@ -542,7 +543,7 @@ final public class GSONUtil
 					if ((long) nve.lookupValue(nvc) != 0)
 					{
 						//writer.name( nvc.getName()).value((long)nve.lookupValue(nvc));
-						writer.name(nvc.getName()).value(DateFilter.DEFAULT_GMT_MILLIS.SDF.format(new Date((long)nve.lookupValue(nvc))));
+						writer.name(nvc.getName()).value(TimestampFilter.DEFAULT_GMT_MILLIS.SDF.format(new Date((long)nve.lookupValue(nvc))));
 					}
 				}
 				else if (nvc.getMetaTypeBase() == BigDecimal.class)
@@ -995,9 +996,9 @@ final public class GSONUtil
 //			{
 //				
 //			}
-			if (DateFilter.SINGLETON.isValid(jp.getAsString()))
+			if (TimestampFilter.SINGLETON.isValid(jp.getAsString()))
 			{
-				return new NVLong(name, DateFilter.SINGLETON.validate(jp.getAsString()));
+				return new NVLong(name, TimestampFilter.SINGLETON.validate(jp.getAsString()));
 			}
 			
 			return new NVPair(name, jp.getAsString());
@@ -1490,7 +1491,7 @@ final public class GSONUtil
 							if (nvc.getValueFilter() != null)
 								((NVBase<Long>) nvb).setValue((Long) nvc.getValueFilter().validate(jp.getAsString()));
 							else
-								((NVBase<Long>) nvb).setValue(DateFilter.SINGLETON.validate(jp.getAsString()));
+								((NVBase<Long>) nvb).setValue(TimestampFilter.SINGLETON.validate(jp.getAsString()));
 						}
 						
 						else

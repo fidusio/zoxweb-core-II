@@ -1,10 +1,9 @@
-package org.zoxweb.server.util;
+package org.zoxweb.server.filters;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
 
-import org.zoxweb.server.filters.DateTimeValueFilter;
 import org.zoxweb.shared.filters.ValueFilter;
 
 /**
@@ -13,7 +12,7 @@ import org.zoxweb.shared.filters.ValueFilter;
  *
  */
 @SuppressWarnings("serial")
-public class DateFilter 
+public class TimestampFilter 
 	implements ValueFilter<String, Long>
 {
 	
@@ -59,13 +58,13 @@ public class DateFilter
 	/**
 	 * Declares that only one instance of this class can be created.
 	 */
-	public static final DateFilter SINGLETON = new DateFilter();
+	public static final TimestampFilter SINGLETON = new TimestampFilter();
 	
 	/**
 	 * The default constructor is declared private to prevent
 	 * outside instantiation of this class.
 	 */
-	private DateFilter()
+	private TimestampFilter()
 	{
 		
 	}
