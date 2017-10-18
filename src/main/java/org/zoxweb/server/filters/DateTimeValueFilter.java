@@ -27,12 +27,12 @@ public class DateTimeValueFilter
 	implements ValueFilter<String, Long>
 {
 
-	private SimpleDateFormat sdf = null;
+	public final  SimpleDateFormat SDF;
 
 	public DateTimeValueFilter(String pattern, String timezone)
 	{
-		sdf = new SimpleDateFormat(pattern);
-		sdf.setTimeZone(TimeZone.getTimeZone(timezone));
+		SDF = new SimpleDateFormat(pattern);
+		SDF.setTimeZone(TimeZone.getTimeZone(timezone));
 	}
 
 	/**
@@ -58,7 +58,7 @@ public class DateTimeValueFilter
 	{
 		try
 		{
-			return sdf.parse(in).getTime();
+			return SDF.parse(in).getTime();
 		}
 		catch (ParseException e)
 		{
@@ -74,6 +74,15 @@ public class DateTimeValueFilter
 	@Override
 	public boolean isValid(String in)
 	{
+		try
+		{
+			validate(in);
+			return true;
+		}
+		catch(Exception e)
+		{
+
+		}
 		return false;
 	}
 

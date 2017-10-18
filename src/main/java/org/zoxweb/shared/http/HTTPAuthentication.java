@@ -31,7 +31,7 @@ import org.zoxweb.shared.util.SharedUtil;
 public abstract class HTTPAuthentication
 extends SetNameDAO
 {
-	
+	Object obj;
 	public static final NVConfig NVC_HTTP_AUTHORIZATION_TYPE = NVConfigManager.createNVConfig("authorization", null,"HTTPAuthorizationType", false, true, HTTPAuthorizationType.class);
 	
 	public static final NVConfigEntity NVC_HTTP_AUTHENTICATION = new NVConfigEntityLocal(null, null , null, true, false, false, false, HTTPAuthentication.class, SharedUtil.toNVConfigList(NVC_HTTP_AUTHORIZATION_TYPE), null, false, SetNameDAO.NVC_NAME_DAO);

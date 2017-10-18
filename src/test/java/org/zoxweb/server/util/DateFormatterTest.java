@@ -5,6 +5,7 @@ import java.util.Date;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.zoxweb.server.filters.TimestampFilter;
 
 public class DateFormatterTest {
 
@@ -17,16 +18,16 @@ public class DateFormatterTest {
 	@Test
 	public void testFormat()
 	{
-		System.out.println(DateFilter.DEFAULT_DATE_FORMAT.format(new Date()));
-		System.out.println(DateFilter.DEFAULT_GMT_MILLIS.format(new Date()));
+		System.out.println(TimestampFilter.DEFAULT_DATE_FORMAT.format(new Date()));
+		System.out.println(TimestampFilter.DEFAULT_GMT_MILLIS.SDF.format(new Date()));
 	}
 	
 	@Test
 	public void testParseGMT()
 	{
 		Date date = new Date();
-		String strDate = DateFilter.DEFAULT_GMT_MILLIS.format(date);
-		Date newDate = new Date(DateFilter.SINGLETON.validate(strDate));
+		String strDate = TimestampFilter.DEFAULT_GMT_MILLIS.SDF.format(date);
+		Date newDate = new Date(TimestampFilter.SINGLETON.validate(strDate));
 		Assert.assertEquals(date, newDate);
 	}
 	
@@ -34,13 +35,13 @@ public class DateFormatterTest {
 	public void testParsePatial()
 	{
 		
-		System.out.println(DateFilter.SINGLETON.validate("2017-10-13T22:50:18.437Z"));
-		System.out.println(DateFilter.SINGLETON.validate("2017-10-13T22:50:18Z"));
+		System.out.println(TimestampFilter.SINGLETON.validate("2017-10-13T22:50:18.437Z"));
+		System.out.println(TimestampFilter.SINGLETON.validate("2017-10-13T22:50:18Z"));
 		
-		System.out.println(DateFilter.SINGLETON.validate("2017-10-14T14:33:04.398-07:00"));
-		System.out.println(DateFilter.SINGLETON.validate("2017-10-14T14:33:04-07:00"));
+		System.out.println(TimestampFilter.SINGLETON.validate("2017-10-14T14:33:04.398-07:00"));
+		System.out.println(TimestampFilter.SINGLETON.validate("2017-10-14T14:33:04-07:00"));
 		
-		System.out.println(new Date(DateFilter.SINGLETON.validate("2017-10-14T14:33:04-07:00")));
+		System.out.println(new Date(TimestampFilter.SINGLETON.validate("2017-10-14T14:33:04-07:00")));
 		
 	}
 	
