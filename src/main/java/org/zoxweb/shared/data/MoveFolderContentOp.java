@@ -67,7 +67,7 @@ extends SetNameDescriptionDAO
 		 
 		  for (NVEntity nve : list)
 		  {
-			  addNVEToConent(nve);
+			  addNVEToContent(nve);
 		  }
 	  }
 	  
@@ -107,9 +107,9 @@ extends SetNameDescriptionDAO
 		  return (ArrayValues<NVPair>)lookup(Param.NVES_REF);
 	  }
 	  
-	  public void addNVEToConent(NVEntity nve)
+	  public void addNVEToContent(NVEntity nve)
 	  {
-		  getNVEs().add(new NVPair(nve.getName(), nve.getReferenceID()));
+		  getNVEs().add(new NVPair(nve.getName() != null ? nve.getName() : nve.getReferenceID(), nve.getReferenceID()));
 	  }
 
 }
