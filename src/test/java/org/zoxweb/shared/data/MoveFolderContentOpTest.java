@@ -20,6 +20,7 @@ public class MoveFolderContentOpTest
 			String json = GSONUtil.toJSON(mfco, false, false, true);
 			
 			System.out.println(json);
+			
 			mfco = GSONUtil.fromJSON(json);
 			json = GSONUtil.toJSON(mfco, false, false, true);
 			
