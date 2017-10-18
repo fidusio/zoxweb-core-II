@@ -745,6 +745,22 @@ public class ZWDataFactory
 				return MoneyValueDAO.NVC_MONEY_VALUE_DAO;
 			}
 		},
+		MOVE_FOLDER_CONTENT_OP(MoveFolderContentOp.class.getName())
+		{
+			@SuppressWarnings("unchecked")
+			@Override
+			public MoveFolderContentOp newInstance()
+			{
+				return new MoveFolderContentOp();
+			}
+
+			@Override
+			public NVConfigEntity getNVConfigEntity() 
+			{
+				return MoveFolderContentOp.NVC_MOVE_FOLDER_CONTENT_OP;
+			}
+		},
+		
 		PAYMENT_INFO_DAO(PaymentInfoDAO.class.getName())
 		{
 			@SuppressWarnings("unchecked")
