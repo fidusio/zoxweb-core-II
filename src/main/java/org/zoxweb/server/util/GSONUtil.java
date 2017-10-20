@@ -573,7 +573,7 @@ final public class GSONUtil
 				else if (NVGenericMap.class.equals(nvc.getMetaTypeBase()))
 				{
 					writer.name(nvc.getName());
-					genericMapToJSON(writer, (NVGenericMap)nve.lookup(nvc),  printNull, printClassType, b64Type);
+					toJSONGenericMap(writer, (NVGenericMap)nve.lookup(nvc),  printNull, printClassType, b64Type);
 				}
 			}
 		}
@@ -583,7 +583,7 @@ final public class GSONUtil
 		return writer;
 	}
 	
-	public static String genericMapToJSON(NVGenericMap nvgm, boolean indent, boolean printNull, boolean printClassType, Base64Type b64Type) throws IOException
+	public static String toJSONGenericMap(NVGenericMap nvgm, boolean indent, boolean printNull, boolean printClassType, Base64Type b64Type) throws IOException
 	{
 		StringWriter sw = new StringWriter();
 		JsonWriter writer = new JsonWriter(sw);
@@ -594,21 +594,21 @@ final public class GSONUtil
 		else
 			writer.setIndent("");
 		
-		genericMapToJSON(writer, nvgm,  printNull, printClassType, b64Type);
+		toJSONGenericMap(writer, nvgm,  printNull, printClassType, b64Type);
 		
 		writer.close();
 		
 		return sw.toString();
 	}
 	
-	private static JsonWriter genericMapToJSON(JsonWriter writer, NVGenericMap nvgm,  boolean printNull, boolean printClassType, Base64Type b64Type) throws IOException
+	private static JsonWriter toJSONGenericMap(JsonWriter writer, NVGenericMap nvgm,  boolean printNull, boolean printClassType, Base64Type b64Type) throws IOException
 	{
 		writer.beginObject();
 		
 		GetNameValue<?> values[] = nvgm.values();
 		for (GetNameValue<?> gnv : values)
 		{
-			genericMapToJSON(writer, gnv, printNull, printClassType, b64Type);
+			toJSONGenericMap(writer, gnv, printNull, printClassType, b64Type);
 		}
 		
 		
@@ -619,7 +619,7 @@ final public class GSONUtil
 	
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private static JsonWriter genericMapToJSON(JsonWriter writer, GetNameValue<?> gnv,  boolean printNull, boolean printClassType, Base64Type b64Type) throws IOException
+	private static JsonWriter toJSONGenericMap(JsonWriter writer, GetNameValue<?> gnv,  boolean printNull, boolean printClassType, Base64Type b64Type) throws IOException
 	{
 		
 		
@@ -686,7 +686,7 @@ final public class GSONUtil
 						else
 						{
 							writer.beginObject();
-							genericMapToJSON(writer, (GetNameValue<?>) localGNV, printNull, printClassType, b64Type);
+							toJSONGenericMap(writer, (GetNameValue<?>) localGNV, printNull, printClassType, b64Type);
 							writer.endObject();
 						}
 					}
@@ -727,19 +727,19 @@ final public class GSONUtil
 		return writer;
 	}
 	
-	public static NVGenericMap genericMapFromJSON(String json, NVConfigEntity nvce, Base64Type btype) throws InstantiationException, IllegalAccessException, ClassNotFoundException
+	public static NVGenericMap fromJSONGenericMap(String json, NVConfigEntity nvce, Base64Type btype) throws InstantiationException, IllegalAccessException, ClassNotFoundException
 	{
 		JsonElement je = new JsonParser().parse(json);
 		
 		if (je instanceof JsonObject)
 		{
-			return genericMapFromJSON((JsonObject)je, nvce, btype);
+			return fromJSONGenericMap((JsonObject)je, nvce, btype);
 		}
 		
 		return null;
 	}
 	
-	private static NVGenericMap genericMapFromJSON(JsonObject je, NVConfigEntity nvce, Base64Type btype) throws InstantiationException, IllegalAccessException, ClassNotFoundException
+	private static NVGenericMap fromJSONGenericMap(JsonObject je, NVConfigEntity nvce, Base64Type btype) throws InstantiationException, IllegalAccessException, ClassNotFoundException
 	{
 			NVGenericMap ret = new NVGenericMap();
 			Iterator<Map.Entry<String, JsonElement>> iterator = ((JsonObject) je).entrySet().iterator();
@@ -779,7 +779,7 @@ final public class GSONUtil
 						}
 						else if (nvb instanceof NVGenericMap)
 						{
-							((NVGenericMap)nvb).add(genericMapFromJSON((JsonObject)ja.get(i), null, btype));
+							((NVGenericMap)nvb).add(fromJSONGenericMap((JsonObject)ja.get(i), null, btype));
 						}
 					}
 					
@@ -797,7 +797,7 @@ final public class GSONUtil
 					}
 					catch(Exception e)
 					{
-						NVGenericMap toAdd = genericMapFromJSON(jne.getAsJsonObject(), null, btype);
+						NVGenericMap toAdd = fromJSONGenericMap(jne.getAsJsonObject(), null, btype);
 						toAdd.setName(element.getKey());
 						ret.add(toAdd);
 					}
@@ -1434,7 +1434,7 @@ final public class GSONUtil
 						
 						if (!(je instanceof JsonNull))
 						{
-							NVGenericMap nvgm = genericMapFromJSON(je.getAsJsonObject(), null, b64Type);
+							NVGenericMap nvgm = fromJSONGenericMap(je.getAsJsonObject(), null, b64Type);
 							((NVGenericMap)nve.lookup(nvc)).add(nvgm.values(), true);
 							
 						}

@@ -96,7 +96,7 @@ public class JWTTest {
 		System.out.println(payloadJSON);
 	
 		
-		NVGenericMap gm = GSONUtil.genericMapFromJSON(payloadJSON,(NVConfigEntity)payload.getNVConfig(), Base64Type.URL);
+		NVGenericMap gm = GSONUtil.fromJSONGenericMap(payloadJSON,(NVConfigEntity)payload.getNVConfig(), Base64Type.URL);
 		//System.out.println(gm);
 		NVGenericMapTest.printValue(gm);
 		
@@ -107,7 +107,7 @@ public class JWTTest {
 		System.out.println(tempJWTP);
 	
 		tempJWTP.getNotBefore();
-		System.out.println("genericMapToJSON:" + GSONUtil.genericMapToJSON(tempJWTP.getNVGenericMap(), false, false, false, Base64Type.URL));
+		System.out.println("genericMapToJSON:" + GSONUtil.toJSONGenericMap(tempJWTP.getNVGenericMap(), false, false, false, Base64Type.URL));
 		System.out.println( GSONUtil.toJSON(tempJWTP, false, false, true, Base64Type.URL));
 		
 		System.out.println("---------------++++++++++++++++++++----------------------------------------------------");
@@ -175,8 +175,9 @@ public class JWTTest {
 		String gwtToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb21haW5faWQiOiJ4bG9naXN0eC5pbyIsImFwcF9pZCI6Inhsb2dpc3R4In0.kUWx4se-XR3vLuWeMeC3k97oDThK3wIbZ8LlLuB3kzQ";
 		JWT decoded = CryptoUtil.decodeJWT("secret", gwtToken);		
 		String test = CryptoUtil.encodeJWT("secret", decoded);
-		System.out.println("GWT  :" + gwtToken);
+		System.out.println("TESTGWT  :" + gwtToken);
 		System.out.println("local:" + test);
+		System.out.println(decoded.getPayload());
 		System.out.println(GSONUtil.toJSON(decoded, false, false, false, Base64Type.URL));
 		System.out.println("Are equals:" + test.equals(gwtToken));
 		Assert.assertEquals("2 tokens equals", test, gwtToken);

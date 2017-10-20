@@ -53,10 +53,10 @@ public class NVGenericMapTest
 			nvll.getValue().add((long) 2);
 			nvgm.add(nvll);
 			printValue(nvgm);
-			String json = GSONUtil.genericMapToJSON(nvgm, true, false, false, Base64Type.URL);
+			String json = GSONUtil.toJSONGenericMap(nvgm, true, false, false, Base64Type.URL);
 			System.out.println(json);
 			
-			nvgm = GSONUtil.genericMapFromJSON(json, null, Base64Type.URL);
+			nvgm = GSONUtil.fromJSONGenericMap(json, null, Base64Type.URL);
 			printValue(nvgm);
 			
 			
