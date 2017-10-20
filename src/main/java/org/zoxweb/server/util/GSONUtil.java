@@ -48,6 +48,7 @@ import org.zoxweb.shared.util.Const;
 import org.zoxweb.shared.util.DynamicEnumMap;
 import org.zoxweb.shared.util.DynamicEnumMapManager;
 import org.zoxweb.shared.util.GNVTypeName;
+import org.zoxweb.shared.util.GetNVGenericMap;
 import org.zoxweb.shared.util.GetNameValue;
 import org.zoxweb.shared.util.MetaToken;
 import org.zoxweb.shared.util.NVBase;
@@ -562,6 +563,11 @@ final public class GSONUtil
 					if (tempNVE != null)
 					{
 						writer.name(nvc.getName());
+						if (tempNVE instanceof GetNVGenericMap)
+						{
+							toJSONGenericMap(writer, ((GetNVGenericMap) tempNVE).getNVGenericMap(), printNull, printClassType, b64Type);
+						}
+						else
 						toJSON( writer,  (Class<? extends NVEntity>) ((NVConfigEntity) nvc).getMetaType(), (NVEntity)nve.lookupValue(nvc), printNull, printClassType, b64Type);
 					}
 					else if (printNull)
@@ -633,9 +639,9 @@ final public class GSONUtil
 			}
 			String name = null;
 			
-			if (printClassType)
-				name = GNVType.toName(gnv, ':');
-			else
+//			if (printClassType)
+//				name = GNVType.toName(gnv, ':');
+//			else
 				name = gnv.getName();
 			
 			if (gnv instanceof NVBoolean)
@@ -1260,7 +1266,7 @@ final public class GSONUtil
         {
 			nve = clazz.getDeclaredConstructor().newInstance();
 		}
-		catch(InstantiationException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException ie)
+		catch(InstantiationException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException ie )
         {
 		    ie.printStackTrace();
 			log.info("Error class:" + clazz);

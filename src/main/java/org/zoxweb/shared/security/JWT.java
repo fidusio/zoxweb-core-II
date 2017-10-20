@@ -30,7 +30,7 @@ extends SetNameDescriptionDAO
 	{
 		JWT_HEADER(NVConfigManager.createNVConfigEntity("header", "Header", "Header", true, true, JWTHeader.class, null)),
 		JWT_PAYLOAD(NVConfigManager.createNVConfigEntity("payload", "Payload", "Payload", false, false, JWTPayload.class, null)),
-		JWT_HASH(NVConfigManager.createNVConfig("hash", "hash", "Hash", false, false, byte[].class)),
+		JWT_HASH(NVConfigManager.createNVConfig("hash", "hash", "Hash", false, false, String.class)),
 		
 		;
 		
@@ -94,13 +94,13 @@ extends SetNameDescriptionDAO
 	}
 	
 	
-	public byte[] getHash()
+	public String getHash()
 	{
 		return lookupValue(Param.JWT_HASH);
 	}
 	
 	
-	public void setHash(byte[] hash)
+	public void setHash(String hash)
 	{
 		setValue(Param.JWT_HASH, hash);
 	}

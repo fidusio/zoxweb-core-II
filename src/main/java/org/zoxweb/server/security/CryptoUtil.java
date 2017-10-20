@@ -33,7 +33,6 @@ import java.security.SecureRandom;
 import java.security.SignatureException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
-import java.util.Arrays;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -739,7 +738,7 @@ public class CryptoUtil
 		sb.append(".");
 		sb.append(SharedStringUtil.toString(b64Payload));
 		
-		byte[] b64Hash = null;
+		String b64Hash = null;
 		
 		
 		
@@ -750,7 +749,7 @@ public class CryptoUtil
 			Mac sha256_HMAC = Mac.getInstance(HMAC_SHA_256);
 			SecretKeySpec secret_key = new SecretKeySpec(key, HMAC_SHA_256);
 		    sha256_HMAC.init(secret_key);
-			b64Hash = SharedBase64.encode(Base64Type.URL, sha256_HMAC.doFinal(SharedStringUtil.getBytes(sb.toString())));
+			b64Hash = SharedBase64.encodeAsString(Base64Type.URL, sha256_HMAC.doFinal(SharedStringUtil.getBytes(sb.toString())));
 			break;
 		case none:
 			break;
@@ -760,7 +759,7 @@ public class CryptoUtil
 		sb.append(".");
 		
 		if (b64Hash != null)
-			sb.append(SharedStringUtil.toString(b64Hash));
+			sb.append(b64Hash);
 
 		return sb.toString();
 	}
@@ -816,8 +815,9 @@ public class CryptoUtil
 
 			sha256HMAC.update((byte) '.');
 			byte[] b64Hash = sha256HMAC.doFinal(SharedStringUtil.getBytes(tokens[JWTToken.PAYLOAD.ordinal()]));
-
-			if (!Arrays.equals(b64Hash, jwt.getHash())) {
+			
+			
+			if (!SharedBase64.encodeAsString(Base64Type.URL, b64Hash).equals(jwt.getHash())) {
 				throw new SecurityException("Invalid token");
 			}
 			break;
@@ -870,7 +870,7 @@ public class CryptoUtil
 			{
 				throw new IllegalArgumentException("Invalid token JWT token length expected 3");
 			}
-			ret.setHash(SharedBase64.decode(Base64Type.URL,tokens[JWTToken.HASH.ordinal()]));
+			ret.setHash(tokens[JWTToken.HASH.ordinal()]);
 			break;
 		case none:
 			if (tokens.length !=  JWTToken.values().length -1)

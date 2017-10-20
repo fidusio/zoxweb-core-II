@@ -171,8 +171,8 @@ public class JWTTest {
 	{
 		
 		System.out.println("--------------------------------------------------------------");
-		
-		String gwtToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkb21haW5faWQiOiJ4bG9naXN0eC5pbyIsImFwcF9pZCI6Inhsb2dpc3R4In0.kUWx4se-XR3vLuWeMeC3k97oDThK3wIbZ8LlLuB3kzQ";
+		//"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE1MDg0NjA1MzMzNDEsImRvbWFpbiI6Inhsb2dpc3R4LmlvIiwiYXBwIjoieGxvZ2lzdHgifQ.oxqpJP18sxq51qNt8_kisYeS0oR31QL2DrP-M_wYaO0";
+		String gwtToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE1MDg0NzMyMzU0OTMsImRvbWFpbiI6Inhsb2dpc3R4LmlvIiwiYXBwIjoieGxvZ2lzdHgifQ.MrrlKa90ut2RBcfJ61lXB7ScwHikPyvkvpd_DVxPnFg";
 		JWT decoded = CryptoUtil.decodeJWT("secret", gwtToken);		
 		String test = CryptoUtil.encodeJWT("secret", decoded);
 		System.out.println("TESTGWT  :" + gwtToken);
@@ -181,6 +181,12 @@ public class JWTTest {
 		System.out.println(GSONUtil.toJSON(decoded, false, false, false, Base64Type.URL));
 		System.out.println("Are equals:" + test.equals(gwtToken));
 		Assert.assertEquals("2 tokens equals", test, gwtToken);
+		decoded.getPayload().getNVGenericMap().add(new NVPair("mario", "taza"));
+		String json = GSONUtil.toJSON(decoded, false, false, true, Base64Type.URL);
+		System.out.println(json);
+		JWT fromJSON = GSONUtil.fromJSON(json);
+		json = GSONUtil.toJSON(fromJSON, false, false, false, Base64Type.URL);
+		System.out.println(json);
 		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 	}
 	
