@@ -23,12 +23,12 @@ import org.zoxweb.shared.util.GetName;
  *
  * @param <E>
  */
-public interface QueueListener<E extends QueueEvent>
+public interface QueueListener<E extends QueueEvent<?>>
     extends EventListener,
     		GetName
 {
     /**
-     * Process given event.
+     * Process given event
      * @param event
      */
 	public void incomingEvent(E event);		

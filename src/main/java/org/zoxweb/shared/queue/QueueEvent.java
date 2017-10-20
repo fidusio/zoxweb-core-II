@@ -18,13 +18,21 @@ package org.zoxweb.shared.queue;
 import java.util.EventObject;
 
 @SuppressWarnings("serial")
-public class QueueEvent
+public class QueueEvent<V>
     extends EventObject
 {
+	
+	private final V content;
     
-	public QueueEvent(Object source)
+	public QueueEvent(Object source, V content)
     {
 		super(source);
+		this.content = content;
+	}
+	
+	public V getContent()
+	{
+		return content;
 	}
 
 }
