@@ -666,6 +666,7 @@ final public class GSONUtil
 			}
 			else if (gnv instanceof NVEntityReference)
 			{
+				
 				writer.name(name);
 				toJSON(writer, ((NVEntity)gnv.getValue()).getClass(), (NVEntity)gnv.getValue(), printNull, printClassType, b64Type);
 			}
