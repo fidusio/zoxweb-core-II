@@ -13,9 +13,11 @@ import org.zoxweb.shared.util.NVConfigManager;
 import org.zoxweb.shared.util.NVEntity;
 import org.zoxweb.shared.util.NVPair;
 import org.zoxweb.shared.util.SharedUtil;
+import org.zoxweb.shared.util.NVConfigEntity.ArrayType;
+import org.zoxweb.shared.util.CRUD;
 
 @SuppressWarnings("serial")
-public class MoveFolderContentOp
+public class FolderContentOp
 extends SetNameDescriptionDAO
 {
 	  public enum Param
@@ -24,6 +26,8 @@ extends SetNameDescriptionDAO
 	      FROM_FOLDER_REF(NVConfigManager.createNVConfig("from_folder_ref", "From folder reference id","FromFolderRef", true, false, String.class)),
 	      TO_FOLDER_REF(NVConfigManager.createNVConfig("to_folder_ref", "To folder reference id", "ToFolderRef", true, true, String.class)),
 	      NVES_REF(NVConfigManager.createNVConfig("nves_ref", "List of nves reference id", "NVESRef", true, true, String[].class)),
+	      CONTENT(NVConfigManager.createNVConfigEntity("content", "The folder content", "Content", false, true, NVEntity[].class, ArrayType.LIST)),
+	      CRUD_OP(NVConfigManager.createNVConfig("action", "CRUD operation", "Action", true, true, CRUD.class)),
 	      ;
 	
 	      private final NVConfig nvc;
@@ -40,12 +44,12 @@ extends SetNameDescriptionDAO
 	  }
 	
 	  public static final NVConfigEntity NVC_MOVE_FOLDER_CONTENT_OP = new NVConfigEntityLocal(
-	          "move_folder_content_op",
-	          "AppIDDAO" ,
-	          MoveFolderContentOp.class.getSimpleName(),
+	          "folder_content_op",
+	          "FolderContentOp" ,
+	          FolderContentOp.class.getSimpleName(),
 	          true, false,
 	          false, false,
-	          MoveFolderContentOp.class,
+	          FolderContentOp.class,
 	          SharedUtil.extractNVConfigs(Param.values()),
 	          null,
 	          false,
@@ -53,13 +57,13 @@ extends SetNameDescriptionDAO
 	  );
 	  
 	  
-	  public MoveFolderContentOp()
+	  public FolderContentOp()
 	  {
 		  super(NVC_MOVE_FOLDER_CONTENT_OP);
 	  }
 	  
 	  
-	  public MoveFolderContentOp(FolderInfoDAO fromFolder, FolderInfoDAO toFolder, List<NVEntity> list)
+	  public FolderContentOp(FolderInfoDAO fromFolder, FolderInfoDAO toFolder, List<NVEntity> list)
 	  {
 		  this();
 		  setFromFolder(fromFolder);
@@ -67,7 +71,7 @@ extends SetNameDescriptionDAO
 		 
 		  for (NVEntity nve : list)
 		  {
-			  addNVEToContent(nve);
+			  addNVERef(nve);
 		  }
 	  }
 	  
@@ -101,15 +105,32 @@ extends SetNameDescriptionDAO
 		  return lookupValue(Param.TO_FOLDER_REF);
 	  }
 	  
+	  
 	  @SuppressWarnings("unchecked")
-	  public ArrayValues<NVPair> getNVEs()
+	public ArrayValues<NVEntity> getContent()
+	  {
+		  return (ArrayValues<NVEntity>)lookup(Param.CONTENT);
+	  }
+	  
+	  @SuppressWarnings("unchecked")
+	  public ArrayValues<NVPair> getNVERefs()
 	  {
 		  return (ArrayValues<NVPair>)lookup(Param.NVES_REF);
 	  }
 	  
-	  public void addNVEToContent(NVEntity nve)
+	  public void addNVERef(NVEntity nve)
 	  {
-		  getNVEs().add(new NVPair(nve.getName() != null ? nve.getName() : nve.getReferenceID(), nve.getReferenceID()));
+		  getNVERefs().add(new NVPair(nve.getName() != null ? nve.getName() : nve.getReferenceID(), nve.getReferenceID()));
+	  }
+	  
+	  public CRUD getOp()
+	  {
+		  return lookupValue(Param.CRUD_OP);
+	  }
+	  
+	  public void setOp(CRUD crud)
+	  {
+		  setValue(Param.CRUD_OP, crud);
 	  }
 
 }

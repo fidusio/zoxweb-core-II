@@ -35,7 +35,7 @@ public class NVGenericMapTest
 			
 			
 			AddressDAO address = new AddressDAO();
-			
+			address.setName("tizi");
 			address.setStreet("123 Main St.");
 			address.setCity("Los Angeles");
 			address.setStateOrProvince("CA");
@@ -61,7 +61,19 @@ public class NVGenericMapTest
 			
 			
 			System.out.println(Float.parseFloat(""+Double.MAX_VALUE)); 
-			System.out.println(Integer.parseInt(""+Integer.MAX_VALUE)); 
+			System.out.println(Integer.parseInt(""+Integer.MAX_VALUE));
+			
+			nvgm = new NVGenericMap();
+			nvgm.setName("name");
+			nvgm.add(new NVPair ("folderRef", "1234325"));
+			NVEntityReferenceList nvl = new NVEntityReferenceList("nves");
+			nvl.add(address);
+			nvgm.add(nvl);
+			json = GSONUtil.toJSONGenericMap(nvgm, true, false, false, Base64Type.URL);
+			System.out.println(json);
+			//nvgm = GSONUtil.fromJSONGenericMap(json, null, Base64Type.URL);
+			
+			
 		}
 		catch(Exception e)
 		{

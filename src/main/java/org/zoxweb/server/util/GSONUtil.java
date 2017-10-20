@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.zoxweb.server.filters.TimestampFilter;
@@ -697,6 +698,15 @@ final public class GSONUtil
 							writer.endObject();
 						}
 					}
+					if (localGNV instanceof NVEntity)
+					{
+						//writer.beginObject();
+						
+						
+						toJSON(writer,  ((NVEntity)localGNV).getClass(), (NVEntity) localGNV, printNull, printClassType, b64Type);
+						
+						//writer.endObject();
+					}
 					else
 					{
 						if (localGNV instanceof Number)
@@ -1081,7 +1091,7 @@ final public class GSONUtil
 		
 		JsonElement je = new JsonParser().parse(json);
 		
-		log.info("JSONElement created from json (String): " + je);
+		log.log(Level.FINE, "JSONElement created from json (String): " + je);
 		
 		if (je instanceof JsonObject)
 		{
