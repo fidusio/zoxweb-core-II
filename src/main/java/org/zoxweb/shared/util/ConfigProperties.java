@@ -1,11 +1,7 @@
 package org.zoxweb.shared.util;
 
-public interface ConfigProperties 
+public interface ConfigProperties
 {
-	
-	
-	ArrayValues<GetNameValue<String>> getProperties();
-	
-	void setProperties(ArrayValues<GetNameValue<String>> aValues);
-	
+	NVGenericMap getProperties();
+	void setProperties(NVGenericMap nvgm);
 }

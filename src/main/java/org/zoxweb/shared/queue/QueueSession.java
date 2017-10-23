@@ -15,14 +15,24 @@
  */
 package org.zoxweb.shared.queue;
 
-import org.zoxweb.shared.util.ConfigProperties;
+import java.io.IOException;
+
+import org.zoxweb.shared.util.GetNVGenericMap;
+import org.zoxweb.shared.util.NVGenericMap;
 
 /**
  * The queue session interface.
  */
 public interface QueueSession
-    extends AutoCloseable, ConfigProperties
+    extends AutoCloseable, GetNVGenericMap
 {
+	
+	
+	void connect(NVGenericMap config)
+			throws NullPointerException, IllegalArgumentException, IOException;
+	
+	
+	
 	
 	/**
 	 * Adds consumer listener.
