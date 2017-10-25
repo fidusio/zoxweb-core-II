@@ -51,7 +51,7 @@ public interface QueueSession
 	 * Dispatches producer event.
 	 * @param qe
 	 */
-	void dispatchEvent(QueueEvent<?> qe);
+	void queueEvent(QueueEvent<?> qe);
 	
 	QueueListener<QueueEvent<?>> [] getAllListeners();
 
