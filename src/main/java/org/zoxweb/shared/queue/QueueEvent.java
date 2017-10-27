@@ -17,16 +17,21 @@ package org.zoxweb.shared.queue;
 
 import java.util.EventObject;
 
+import org.zoxweb.shared.util.SharedUtil;
+import org.zoxweb.shared.util.ToBytes;
+
 @SuppressWarnings("serial")
-public class QueueEvent<V>
+public abstract class QueueEvent<V>
     extends EventObject
+    implements ToBytes
 {
 	
-	private final V content;
+	protected final V content;
     
 	public QueueEvent(Object source, V content)
     {
 		super(source);
+		SharedUtil.checkIfNulls("Null content", content);
 		this.content = content;
 	}
 	
@@ -35,4 +40,6 @@ public class QueueEvent<V>
 		return content;
 	}
 
+	
+	
 }

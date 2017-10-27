@@ -51,7 +51,8 @@ public interface QueueSession
 	 * Dispatches producer event.
 	 * @param qe
 	 */
-	void queueEvent(QueueEvent<?> qe);
+	void queueEvent(QueueEvent<?> qe)
+			throws NullPointerException, IllegalArgumentException, IOException;
 	
 	QueueListener<QueueEvent<?>> [] getAllListeners();
 
