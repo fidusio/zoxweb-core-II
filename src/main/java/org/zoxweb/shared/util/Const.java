@@ -358,6 +358,10 @@ public class Const
     {
 		NANOS,
 		MILLIS,
+		SECOND,
+		MINUTES,
+		HOUR,
+		DAY,
 	}
 	
 	public enum FilenameSep

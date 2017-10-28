@@ -26,14 +26,20 @@ public abstract class QueueEvent<V>
     implements ToBytes
 {
 	
-	protected final V content;
+	protected V content;
     
+	public QueueEvent(Object source)
+    {
+		super(source);
+	}
+	
 	public QueueEvent(Object source, V content)
     {
 		super(source);
 		SharedUtil.checkIfNulls("Null content", content);
 		this.content = content;
 	}
+	
 	
 	public V getContent()
 	{

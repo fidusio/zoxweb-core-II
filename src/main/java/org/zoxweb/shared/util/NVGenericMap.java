@@ -68,8 +68,13 @@ public class NVGenericMap
 	}
 	
 	
-	@SuppressWarnings("unchecked")
 	public <V> V getValue(String name)
+	{
+		return getValue(name, null);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public <V> V getValue(String name, V defaultValue)
 	{
 		GetNameValue<?> ret = get(name);
 
@@ -78,7 +83,7 @@ public class NVGenericMap
             return (V) ret.getValue();
         }
 
-		return null;
+		return defaultValue;
 	}
 
 	/**

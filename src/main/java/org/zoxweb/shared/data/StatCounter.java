@@ -4,6 +4,8 @@ package org.zoxweb.shared.data;
 
 import java.util.Date;
 
+import org.zoxweb.shared.util.Const.TimeInMillis;
+import org.zoxweb.shared.util.Const.TimeUnitType;
 import org.zoxweb.shared.util.GetNVConfig;
 import org.zoxweb.shared.util.NVConfig;
 import org.zoxweb.shared.util.NVConfigEntity;
@@ -22,7 +24,7 @@ public class StatCounter
 	public enum Param
 	implements GetNVConfig
 	{
-		COUNTER(NVConfigManager.createNVConfig("counter", "Counter.", "Counter", true, true, long.class)),
+		COUNTER(NVConfigManager.createNVConfig("counter", "Counter", "Counter", true, true, long.class)),
 		REFERENCE_TS(NVConfigManager.createNVConfig("ref_ts", "Time stamp reference", "TimeStampReference", true, false, false, true, Date.class, null)),
 		
 		;
@@ -108,9 +110,32 @@ public class StatCounter
 		setValue(Param.REFERENCE_TS, ts);
 	}
 	
-	public double rate()
+	public double rate(TimeUnitType tut)
 	{
-		double rate = delta()/getCounter();
+		// default in millis
+		double rate = (double)getCounter()/(double)delta();
+		switch(tut)
+		{
+		case DAY:
+			rate *= TimeInMillis.DAY.MILLIS;
+			break;
+		case HOUR:
+			rate *= TimeInMillis.HOUR.MILLIS;
+			break;
+		case MINUTES:
+			rate *= TimeInMillis.MINUTE.MILLIS;
+			break;
+		case NANOS:
+			rate /= 1000000;
+			break;
+		case SECOND:
+			rate *= TimeInMillis.SECOND.MILLIS;
+			break;
+		case MILLIS:
+			// no conversion 
+		default:
+			break;
+		}
 		
 		return rate;
 	}

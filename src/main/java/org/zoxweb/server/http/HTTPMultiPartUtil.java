@@ -55,8 +55,11 @@ public class HTTPMultiPartUtil
 		case MILLIS:
 			return Long.toString(System.currentTimeMillis(), 16);
 		case NANOS:
-		default:
 			return Long.toString(System.nanoTime(), 16);
+		default:
+			throw new IllegalArgumentException("Unit not supported:" + tut);
+		
+			
 		}
 	}
 
