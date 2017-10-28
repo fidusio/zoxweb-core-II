@@ -27,9 +27,14 @@ public class NVEntityQueueEvent extends QueueEvent<NVEntity>
 {
 
 	
-	public NVEntityQueueEvent(Object source, byte[] data) 
+	public NVEntityQueueEvent(Object source, byte[] data)
 	{
-		super(source);
+		this(source, false, 0, data);
+	}
+	
+	public NVEntityQueueEvent(Object source, boolean persistent, int priority, byte[] data) 
+	{
+		super(source, persistent, priority);
 		// TODO Auto-generated constructor stub
 		try {
 			content = GSONUtil.fromJSON(SharedStringUtil.toString(data));
@@ -40,9 +45,9 @@ public class NVEntityQueueEvent extends QueueEvent<NVEntity>
 		}
 	}
 	
-	public NVEntityQueueEvent(Object source, NVEntity content) 
+	public NVEntityQueueEvent(Object source, boolean persistent, int priority, NVEntity content) 
 	{
-		super(source, content);
+		super(source, persistent, priority,  content);
 		// TODO Auto-generated constructor stub
 	}
 

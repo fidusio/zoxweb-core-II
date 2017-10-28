@@ -27,15 +27,19 @@ public abstract class QueueEvent<V>
 {
 	
 	protected V content;
+	private boolean persistent;
+	private int priority;
     
-	public QueueEvent(Object source)
+	public QueueEvent(Object source, boolean persistent, int priority)
     {
 		super(source);
+		this.persistent= persistent;
+		this.priority = priority;
 	}
 	
-	public QueueEvent(Object source, V content)
+	public QueueEvent(Object source, boolean persistent, int priority, V content)
     {
-		super(source);
+		this(source, persistent, priority);
 		SharedUtil.checkIfNulls("Null content", content);
 		this.content = content;
 	}
@@ -44,6 +48,15 @@ public abstract class QueueEvent<V>
 	public V getContent()
 	{
 		return content;
+	}
+	
+	public boolean isPersistent()
+	{
+		return persistent;
+	}
+	public int getPriority()
+	{
+		return priority;
 	}
 
 	
