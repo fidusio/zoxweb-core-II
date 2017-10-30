@@ -770,33 +770,36 @@ final public class GSONUtil
 				{
 					JsonArray ja = jne.getAsJsonArray();
 					NVBase<?> nvb = guessNVBaseArray(ja);
-					nvb.setName(element.getKey());
-					ret.add(nvb);
-					for (int i = 0; i < ja.size(); i++)
+					if (nvb != null)
 					{
-						if (nvb instanceof NVPairList)
+						nvb.setName(element.getKey());
+						ret.add(nvb);
+						for (int i = 0; i < ja.size(); i++)
 						{
-							((NVPairList)nvb).add(toNVPair((JsonObject) ja.get(i)));
-						}
-						else if (nvb instanceof NVIntList)
-						{
-							((NVIntList)nvb).getValue().add(ja.get(i).getAsInt());
-						}
-						else if (nvb instanceof NVLongList)
-						{
-							((NVLongList)nvb).getValue().add(ja.get(i).getAsLong());
-						}
-						else if (nvb instanceof NVFloatList)
-						{
-							((NVFloatList)nvb).getValue().add(ja.get(i).getAsFloat());
-						}
-						else if (nvb instanceof NVDoubleList)
-						{
-							((NVDoubleList)nvb).getValue().add(ja.get(i).getAsDouble());
-						}
-						else if (nvb instanceof NVGenericMap)
-						{
-							((NVGenericMap)nvb).add(fromJSONGenericMap((JsonObject)ja.get(i), null, btype));
+							if (nvb instanceof NVPairList)
+							{
+								((NVPairList)nvb).add(toNVPair((JsonObject) ja.get(i)));
+							}
+							else if (nvb instanceof NVIntList)
+							{
+								((NVIntList)nvb).getValue().add(ja.get(i).getAsInt());
+							}
+							else if (nvb instanceof NVLongList)
+							{
+								((NVLongList)nvb).getValue().add(ja.get(i).getAsLong());
+							}
+							else if (nvb instanceof NVFloatList)
+							{
+								((NVFloatList)nvb).getValue().add(ja.get(i).getAsFloat());
+							}
+							else if (nvb instanceof NVDoubleList)
+							{
+								((NVDoubleList)nvb).getValue().add(ja.get(i).getAsDouble());
+							}
+							else if (nvb instanceof NVGenericMap)
+							{
+								((NVGenericMap)nvb).add(fromJSONGenericMap((JsonObject)ja.get(i), null, btype));
+							}
 						}
 					}
 					
@@ -857,6 +860,12 @@ final public class GSONUtil
 			}
 			else if (je.isJsonPrimitive())
 			{
+				if (je.getAsJsonPrimitive().isString())
+				{
+					// must be fixed
+					//break;
+				}
+				
 				GNVType gnv = GNVType.toGNVType(je.getAsNumber());
 				if (gnv != null)
 				{
