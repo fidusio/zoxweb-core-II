@@ -23,6 +23,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import org.zoxweb.shared.util.Const;
 import org.zoxweb.shared.util.DaemonController;
 import org.zoxweb.shared.util.SharedUtil;
+import org.zoxweb.server.task.RunnableTask.RunnableTaskContainer;
 import org.zoxweb.shared.util.Appointment;
 import org.zoxweb.shared.util.AppointmentDefault;
 
@@ -106,22 +107,31 @@ public class TaskSchedulerProcessor
 		return !live;
 	}
 	
-	public TaskSchedulerAppointment queue(Object source,  Appointment ts, TaskExecutor te, Object... params) {
+	public TaskSchedulerAppointment queue(Object source,  Appointment a, TaskExecutor te, Object... params) {
 		TaskEvent tEvent = new TaskEvent(source, te, params);
 
-		if (ts == null) {
-			ts = new AppointmentDefault();
+		if (a == null) {
+			a = new AppointmentDefault();
 		}
 
-		return queue(new TaskSchedulerAppointment( ts, tEvent));
+		return queue(new TaskSchedulerAppointment( a, tEvent));
 	}
 
-	public TaskSchedulerAppointment queue(Appointment ts, TaskEvent te) {
-		if (ts == null) {
-			ts = new AppointmentDefault();
+	public TaskSchedulerAppointment queue(Appointment a, TaskEvent te) {
+		if (a == null) {
+			a = new AppointmentDefault();
 		}
 
-		return queue(new TaskSchedulerAppointment( ts, te));
+		return queue(new TaskSchedulerAppointment(a, te));
+	}
+	
+	
+	public TaskSchedulerAppointment queue(Appointment a, Runnable command)
+	{
+		if (command != null)
+			return queue(a, new TaskEvent(this, new RunnableTaskContainer(), command));
+		
+		return null;
 	}
 
 	private TaskSchedulerAppointment queue(TaskSchedulerAppointment te) {
