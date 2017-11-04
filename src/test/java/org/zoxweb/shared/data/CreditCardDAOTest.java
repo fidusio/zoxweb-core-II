@@ -41,7 +41,8 @@ public class CreditCardDAOTest {
 			//MasterCard
 			CreditCardDAO card1 = new CreditCardDAO();
 			card1.setCardType(CreditCardType.MASTER);
-			card1.setCardHolderName("John Smith");
+            card1.setFirstName("John");
+            card1.setLastName("Smith");
 			card1.setCardNumber("5-1-1234-56789-11234");
 			card1.setSecurityCode("999");
 			card1.setExpirationDate(DEFAULT_DATE_FORMAT.parse("06-2015").getTime());
@@ -58,7 +59,8 @@ public class CreditCardDAOTest {
 			//VISA
 			CreditCardDAO card2 = new CreditCardDAO();
 			card2.setCardType(CreditCardType.VISA);
-			card2.setCardHolderName("John Smith");
+            card2.setFirstName("John");
+            card2.setLastName("Smith");
 			card2.setCardNumber("4400-0000-1111-2222");
 			card2.setSecurityCode("000");
 			card2.setExpirationDate(DEFAULT_DATE_FORMAT.parse("06-2015").getTime());
@@ -75,7 +77,8 @@ public class CreditCardDAOTest {
 			//AMEX
 			CreditCardDAO card3 = new CreditCardDAO();
 			card3.setCardType(CreditCardType.AMEX);
-			card3.setCardHolderName("John Smith");
+            card3.setFirstName("John");
+            card3.setLastName("Smith");
 			card3.setCardNumber("3-4-99999-99999-000");
 			card3.setSecurityCode("2222");
 			card3.setExpirationDate(DEFAULT_DATE_FORMAT.parse("06-2015").getTime());

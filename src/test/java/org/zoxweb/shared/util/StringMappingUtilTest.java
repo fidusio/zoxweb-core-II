@@ -33,7 +33,8 @@ public class StringMappingUtilTest {
 	public void testA1() throws ParseException {
 		CreditCardDAO card = new CreditCardDAO();
 		card.setCardType(CreditCardType.MASTER);
-		card.setCardHolderName("John Smith");
+        card.setFirstName("John");
+        card.setLastName("Smith");
 		card.setCardNumber("5-1-1234-56789-11234");
 		card.setSecurityCode("999");
 		card.setExpirationDate(DEFAULT_DATE_FORMAT.parse("06-2015").getTime());

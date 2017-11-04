@@ -46,8 +46,11 @@ public class CreditCardDAO
 	public enum Param
 		implements GetNVConfig
 	{
-		CARD_TYPE(NVConfigManager.createNVConfig("credit_card_type", "Type of credit card", "CreditCardType", true, true, CreditCardType.class)),
-		CARD_HOLDER_NAME(NVConfigManager.createNVConfig("card_holder_name", "Name of card holder", "CardHolderName", true, true, String.class)),
+        FIRST_NAME(NVConfigManager.createNVConfig("first_name", "First name", "FirstName", true, true, String.class)),
+        LAST_NAME(NVConfigManager.createNVConfig("last_name", "Last name", "LastName", true, true, String.class)),
+
+        CARD_TYPE(NVConfigManager.createNVConfig("credit_card_type", "Type of credit card", "CreditCardType", true, true, CreditCardType.class)),
+//		CARD_HOLDER_NAME(NVConfigManager.createNVConfig("card_holder_name", "Name of card holder", "CardHolderName", true, true, String.class)),
 //		CARD_NUMBER(NVConfigManager.createNVConfig("card_number", "Credit card number", "CardNumber", true, true, false, String.class, CreditCardNumberFilter.SINGLETON)),
 		@SuppressWarnings("unchecked")
 		CARD_NUMBER(NVConfigManager.createNVConfig("card_number", "Credit card number", "CardNumber", true, true, false, String.class, new ChainedFilter(CreditCardNumberFilter.SINGLETON, FilterType.ENCRYPT_MASK))),
@@ -110,24 +113,53 @@ public class CreditCardDAO
 	{
 		setValue(Param.CARD_TYPE, type);
 	}
-	
+
+    /**
+     * Returns the first name.
+     * @return
+     */
+    public String getFirstName()
+    {
+        return lookupValue(Param.FIRST_NAME);
+    }
+
+    /**
+     * Sets the first name.
+     * @param firstName
+     */
+    public void setFirstName(String firstName)
+    {
+        setValue(Param.FIRST_NAME, firstName);
+    }
+
+    /**
+     * Returns the last name.
+     * @return
+     */
+    public String getLastName()
+    {
+        return lookupValue(Param.LAST_NAME);
+    }
+
+    /**
+     * Sets the last name.
+     * @param lastName
+     */
+    public void setLastName(String lastName)
+    {
+        setValue(Param.LAST_NAME, lastName);
+    }
+
+
 	/**
 	 * Returns the card holder name.
 	 * @return name of card holder
 	 */
 	public String getCardHolderName() 
 	{
-		return lookupValue(Param.CARD_HOLDER_NAME);
+		return getFirstName() + " " + getLastName();
 	}
-	
-	/**
-	 * Sets the card holder name.
-	 * @param name
-	 */
-	public void setCardHolderName(String name) 
-	{
-		setValue(Param.CARD_HOLDER_NAME, name);
-	}
+
 	
 	/**
 	 * Returns the card number.

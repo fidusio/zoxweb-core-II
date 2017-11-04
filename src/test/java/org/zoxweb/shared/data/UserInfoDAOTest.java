@@ -21,12 +21,6 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import org.zoxweb.server.util.GSONUtil;
-import org.zoxweb.shared.data.AddressDAO;
-import org.zoxweb.shared.data.CreditCardDAO;
-import org.zoxweb.shared.data.CreditCardType;
-import org.zoxweb.shared.data.PhoneDAO;
-import org.zoxweb.shared.data.UserIDDAO;
-import org.zoxweb.shared.data.UserInfoDAO;
 import org.zoxweb.shared.util.NVPair;
 
 public class UserInfoDAOTest {
@@ -39,7 +33,6 @@ public class UserInfoDAOTest {
 		try {
             UserInfoDAO user1 = new UserInfoDAO();
             user1.setReferenceID("10205452");
-
             user1.setTitle("MR");
             user1.setFirstName("John");
             user1.setLastName("Smith");
@@ -86,13 +79,14 @@ public class UserInfoDAOTest {
             user1.setListOfAliases(aliasList);
 
             ArrayList<CreditCardDAO> creditcardlist= new ArrayList<>();
-            CreditCardDAO cards1 = new CreditCardDAO();
-            cards1.setCardType(CreditCardType.VISA);
-            cards1.setCardHolderName("John Smith");
-            cards1.setCardNumber("4500 4000 0000 0000");
-            cards1.setExpirationDate(DEFAULT_EXPIRATION_DATE_FORMAT.parse("06-2014").getTime());
-            cards1.setSecurityCode("000");
-            creditcardlist.add(cards1);
+            CreditCardDAO card1 = new CreditCardDAO();
+            card1.setCardType(CreditCardType.VISA);
+            card1.setFirstName("John");
+            card1.setLastName("Smith");
+            card1.setCardNumber("4500 4000 0000 0000");
+            card1.setExpirationDate(DEFAULT_EXPIRATION_DATE_FORMAT.parse("06-2014").getTime());
+            card1.setSecurityCode("000");
+            creditcardlist.add(card1);
             user1.setListOfCreditCards(creditcardlist);
 
             ArrayList<NVPair> nvplist = new ArrayList<NVPair>();

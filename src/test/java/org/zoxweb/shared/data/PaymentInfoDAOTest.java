@@ -44,7 +44,8 @@ public class PaymentInfoDAOTest {
 	public void testGetCreditCard() throws ParseException {
 		CreditCardDAO card = new CreditCardDAO();
 		card.setCardType(CreditCardType.VISA);
-		card.setCardHolderName("John Smith");
+		card.setFirstName("John");
+		card.setLastName("Smith");
 		card.setCardNumber("4400-0000-1111-2222");
 		card.setSecurityCode("999");
 		card.setExpirationDate(DEFAULT_DATE_FORMAT.parse("06-2015").getTime());
@@ -59,7 +60,8 @@ public class PaymentInfoDAOTest {
 	public void testSetCreditCard() throws ParseException {
 		CreditCardDAO card = new CreditCardDAO();
 		card.setCardType(CreditCardType.VISA);
-		card.setCardHolderName("John Smith");
+        card.setFirstName("John");
+        card.setLastName("Smith");
 		card.setCardNumber("4400-0000-1111-2222");
 		card.setSecurityCode(null);
 		card.setExpirationDate(DEFAULT_DATE_FORMAT.parse("06-2015").getTime());
