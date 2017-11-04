@@ -18,8 +18,6 @@ package org.zoxweb.shared.api;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 import org.zoxweb.shared.data.TimeStampDAO;
 import org.zoxweb.shared.security.KeyMaker;
 import org.zoxweb.shared.util.ArrayValues;
@@ -194,7 +192,6 @@ public class APIConfigInfoDAO
 	@Override
 	public void setConfigParameters(ArrayValues<NVPair> configParams)
 	{
-		// TODO Auto-generated method stub
 		getConfigParameters().add(configParams.values(), true);
 	}
 
@@ -255,7 +252,6 @@ public class APIConfigInfoDAO
 	@Override
 	public APIConfigStatus getStatus()
 	{
-		// TODO Auto-generated method stub
 		return status;
 	}
 
@@ -265,11 +261,8 @@ public class APIConfigInfoDAO
 	@Override
 	public void setStatus(APIConfigStatus status)
 	{
-		// TODO Auto-generated method stub
 		this.status = status;
 	}
-	
-	
 	
 	/**
 	 * @see org.zoxweb.shared.api.APIConfigInfo#getStatus()
@@ -277,7 +270,6 @@ public class APIConfigInfoDAO
 	@Override
 	public OAuthVersion getOAuthVersion()
 	{
-		// TODO Auto-generated method stub
 		return lookupValue(Params.OAUTH_VERSION);
 	}
 
@@ -288,18 +280,15 @@ public class APIConfigInfoDAO
 	@Override
 	public void setOAuthVersion(OAuthVersion version)
 	{
-		// TODO Auto-generated method stub
 		setValue(Params.OAUTH_VERSION, version);
 	}
-	
-	
 
 	/**
 	 * @see org.zoxweb.shared.api.APIConfigInfo#getDefaultLocation()
 	 */
 	@Override
-	public String getDefaultLocation() {
-		// TODO Auto-generated method stub
+	public String getDefaultLocation()
+    {
 		return lookupValue(Params.DEFAULT_LOCATION);
 	}
 
@@ -309,36 +298,30 @@ public class APIConfigInfoDAO
 	@Override
 	public void setDefaultLocation(String location) 
 	{
-		// TODO Auto-generated method stub
 		setValue(Params.DEFAULT_LOCATION, location);
-		
 	}
 
 	@Override
 	public void setKeyMaker(KeyMaker keyMaker)
 	{
-		// TODO Auto-generated method stub
 		this.keyMaker = keyMaker;
 	}
 
 	@Override
 	public KeyMaker getKeyMaker()
 	{
-		// TODO Auto-generated method stub
 		return keyMaker;
 	}
 
 	@Override
 	public void setAPISecurityManager(APISecurityManager<?> apiSM)
 	{
-		// TODO Auto-generated method stub
 		apiSecurityManager = apiSM;
 	}
 
 	@Override
 	public APISecurityManager<?> getAPISecurityManager()
 	{
-		// TODO Auto-generated method stub
 		return apiSecurityManager;
 	}
 
@@ -348,7 +331,6 @@ public class APIConfigInfoDAO
 //	@Override
 //	public String getAPIKeyRefID()
 //	{
-//		// TODO Auto-generated method stub
 //		return lookupValue(Params.API_KEY_REF_ID);
 //	}
 //
@@ -362,7 +344,5 @@ public class APIConfigInfoDAO
 //		
 //	}
 
-	
-	
 
 }

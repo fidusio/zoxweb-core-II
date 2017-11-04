@@ -30,7 +30,9 @@ public enum APIServiceType {
 	//	SMS notification
 	SMS_NOTIFICATION,
 	//	Voice notification
-	VOICE_NOTIFCATION
+	VOICE_NOTIFICATION,
+
+    PAYMENT_PROCESSOR
 
 	;
 }
