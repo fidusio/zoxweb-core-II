@@ -33,9 +33,13 @@ public class LongSequence
 		}
 	}
 	
+	
+	
+	private volatile long upperValue;
+	
 	public static final NVConfigEntity NVC_LONG_SEQUENCE = new NVConfigEntityLocal(
 	        "long_sequence",
-	        null ,
+	        null,
 	        "LongSequence",
 	        true,
 	        false,
@@ -54,13 +58,13 @@ public class LongSequence
 		// TODO Auto-generated constructor stub
 	}
 	
-	public void setSequenceValue(long val)
+	public synchronized void setSequenceValue(long val)
 	{
 		setValue(Param.SEQUENCE, val);
 	}
 	
 	
-	public long getSequenceValue()
+	public synchronized long getSequenceValue()
 	{
 		return lookupValue(Param.SEQUENCE);
 	}
@@ -72,10 +76,20 @@ public class LongSequence
 	}
 	
 	
-	public long getDefualtIncrement()
+	public long getDefaultIncrement()
 	{
 		return lookupValue(Param.DEFAULT_INCREMENT);
 	}
+
+	public long getUpperValue() {
+		return upperValue;
+	}
+
+	public void setUpperValue(long upperValue) {
+		this.upperValue = upperValue;
+	}
+	
+	
 	
 	
 

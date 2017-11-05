@@ -22,7 +22,7 @@ import org.zoxweb.shared.security.AccessException;
 import org.zoxweb.shared.util.DynamicEnumMap;
 import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVEntity;
-
+import org.zoxweb.shared.data.LongSequence;
 import org.zoxweb.shared.db.QueryMarker;
 
 /**
@@ -335,9 +335,9 @@ public interface APIDataStore<ST>
 	
 	public <NT, RT, NIT> NT lookupByReferenceID(String metaTypeName, RT objectId, NIT projection);
 	
-	void createSequence(String sequenceName)
+	LongSequence createSequence(String sequenceName)
 			throws NullPointerException, IllegalArgumentException, AccessException, APIException;;
-	void createSequence(String sequenceName, long startValue, long defaultIncrement)
+	LongSequence createSequence(String sequenceName, long startValue, long defaultIncrement)
 			throws NullPointerException, IllegalArgumentException, AccessException, APIException;
 	void deleteSequence(String sequenceName)
 			throws NullPointerException, IllegalArgumentException, AccessException, APIException;
