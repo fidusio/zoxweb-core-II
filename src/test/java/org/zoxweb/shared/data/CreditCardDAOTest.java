@@ -41,8 +41,10 @@ public class CreditCardDAOTest {
 			//MasterCard
 			CreditCardDAO card1 = new CreditCardDAO();
 			card1.setCardType(CreditCardType.MASTER);
-            card1.setFirstName("John");
-            card1.setLastName("Smith");
+			
+			card1.setCardHolderName("John      Adam Smith ");
+            //card1.setFirstName("John");
+            //card1.setLastName("Smith");
 			card1.setCardNumber("5-1-1234-56789-11234");
 			card1.setSecurityCode("999");
 			card1.setExpirationDate(DEFAULT_DATE_FORMAT.parse("06-2015").getTime());
