@@ -106,6 +106,17 @@ public class IOUtil
 		con.connect();
 		return inputStreamToByteArray(con.getInputStream(), true); 
 	}
+	
+	public static File locateFile(String filename)
+	{
+		File ret = new File(filename);
+		if (!ret.exists() || !ret.isFile())
+		{
+			ret = new File(ClassLoader.getSystemClassLoader().getResource(filename).getFile());
+		}
+		
+		return ret;
+	}
 
     /**
      *
