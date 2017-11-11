@@ -105,6 +105,11 @@ public class StatCounter
 		return lookupValue(Param.REFERENCE_TS);
 	}
 	
+	public void setReferenceTime()
+	{
+		setReferenceTime(System.currentTimeMillis());
+	}
+	
 	public synchronized void setReferenceTime(long ts)
 	{
 		setValue(Param.REFERENCE_TS, ts);
@@ -140,6 +145,10 @@ public class StatCounter
 		return rate;
 	}
 	
+	
+	
+	
+	
 	/**
 	 * Return lastime updated - reference time in millis
 	 * @return
@@ -153,7 +162,7 @@ public class StatCounter
 	 * 
 	 * @return
 	 */
-	public long detlaNow()
+	public long deltaNow()
 	{
 		return System.currentTimeMillis() - getReferenceTime();
 	}
