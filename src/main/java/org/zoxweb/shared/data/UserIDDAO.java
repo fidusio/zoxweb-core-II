@@ -22,6 +22,7 @@ import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVConfigEntityLocal;
 import org.zoxweb.shared.util.NVConfigManager;
 import org.zoxweb.shared.util.SharedUtil;
+import org.zoxweb.shared.util.SubjectID;
 
 /**
  * This class defines the user id data access object used to create
@@ -32,6 +33,7 @@ import org.zoxweb.shared.util.SharedUtil;
 @SuppressWarnings("serial")
 public class UserIDDAO 
 	extends SetNameDescriptionDAO
+	implements SubjectID<String>
 {
 	
 	/**
@@ -129,6 +131,20 @@ public class UserIDDAO
 	public String getUserID()
 	{
 	    return getReferenceID();
+	}
+
+
+	@Override
+	public String getSubjectID() {
+		// TODO Auto-generated method stub
+		return getPrimaryEmail();
+	}
+
+
+	@Override
+	public void setSubjectID(String id) {
+		setPrimaryEmail(id);
+		
 	}
 	
 }
