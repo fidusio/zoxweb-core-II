@@ -33,7 +33,7 @@ public class KeyStoreInfoDAO
         KEY_STORE(NVConfigManager.createNVConfig("key_store", "Key store", "KeyStore", true, true, false, String.class, null)),
         KEY_STORE_PASSWORD(NVConfigManager.createNVConfig("key_store_password", "Key store password", "KeyStorePassword", true, true, false, String.class, null)),
         ALIAS(NVConfigManager.createNVConfig("alias", "Alias", "Alias", true, true, false, String.class, null)),
-        ALIAS_PASSWORD(NVConfigManager.createNVConfig("alias_password", "Alias password", "AliasPassword", true, true, false, String.class, null)),
+        KEY_PASSWORD(NVConfigManager.createNVConfig("key_password", "key password", "KeyPassword", true, true, false, String.class, null)),
 
         ;
 
@@ -110,24 +110,24 @@ public class KeyStoreInfoDAO
         setValue(Param.ALIAS, alias);
     }
 
-    public String getAliasPassword()
+    public String getKeyPassword()
     {
-        return lookupValue(Param.ALIAS_PASSWORD);
+        return lookupValue(Param.KEY_PASSWORD);
     }
 
-    public byte[] getAliasPasswordAsBytes()
+    public byte[] getKeyPasswordAsBytes()
     {
-        return SharedStringUtil.hexToBytes(lookupValue(Param.ALIAS_PASSWORD));
+        return SharedStringUtil.hexToBytes(lookupValue(Param.KEY_PASSWORD));
     }
 
-    public void setAliasPassword(String aliasPassword)
+    public void setKeyPassword(String aliasPassword)
     {
-        setValue(Param.ALIAS_PASSWORD, aliasPassword);
+        setValue(Param.KEY_PASSWORD, aliasPassword);
     }
 
-    public void setAliasPassword(byte[] aliasPassword)
+    public void setKeyPassword(byte[] aliasPassword)
     {
-        setValue(Param.ALIAS_PASSWORD, SharedStringUtil.bytesToHex(aliasPassword));
+        setValue(Param.KEY_PASSWORD, SharedStringUtil.bytesToHex(aliasPassword));
     }
 
 }

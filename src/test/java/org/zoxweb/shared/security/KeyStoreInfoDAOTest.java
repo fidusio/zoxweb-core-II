@@ -19,12 +19,12 @@ public class KeyStoreInfoDAOTest {
         keyStoreInfoDAO.setKeyStore(KEYSTORE);
         keyStoreInfoDAO.setKeyStorePassword(KEYSTORE_PASSWORD.getBytes());
         keyStoreInfoDAO.setAlias(ALIAS);
-        keyStoreInfoDAO.setAliasPassword(ALIAS_PASSWORD.getBytes());
+        keyStoreInfoDAO.setKeyPassword(ALIAS_PASSWORD.getBytes());
 
         assertEquals(KEYSTORE, keyStoreInfoDAO.getKeyStore());
         assertEquals(KEYSTORE_PASSWORD, new String(keyStoreInfoDAO.getKeyStorePasswordAsBytes()));
         assertEquals(ALIAS, keyStoreInfoDAO.getAlias());
-        assertEquals(ALIAS_PASSWORD, new String(keyStoreInfoDAO.getAliasPasswordAsBytes()));
+        assertEquals(ALIAS_PASSWORD, new String(keyStoreInfoDAO.getKeyPasswordAsBytes()));
     }
 
 }

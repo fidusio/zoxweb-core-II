@@ -61,6 +61,7 @@ import org.zoxweb.shared.filters.BytesValueFilter;
 import org.zoxweb.shared.security.AccessException;
 import org.zoxweb.shared.security.JWTHeader;
 import org.zoxweb.shared.security.JWTPayload;
+import org.zoxweb.shared.security.KeyStoreInfoDAO;
 import org.zoxweb.shared.security.JWT;
 import org.zoxweb.shared.security.JWT.JWTToken;
 import org.zoxweb.shared.util.Const;
@@ -890,6 +891,16 @@ public class CryptoUtil
 		KeyGenerator kg = KeyGenerator.getInstance(algo);
 		kg.init(keySizeInBits, (SecureRandom)defaultSecureRandom());
 		return kg.generateKey();
+	}
+	
+	public static KeyStoreInfoDAO generateKeyStoreInfo(String keyStoreName, String alias) throws NoSuchAlgorithmException
+	{
+		KeyStoreInfoDAO ret = new KeyStoreInfoDAO();
+		ret.setKeyStore(keyStoreName);
+		ret.setAlias(alias);
+		ret.setKeyStorePassword(generateKey(AES_256_KEY_SIZE*8, AES).getEncoded());
+		ret.setKeyPassword(generateKey(AES_256_KEY_SIZE*8, AES).getEncoded());
+		return ret;
 	}
 
 }
