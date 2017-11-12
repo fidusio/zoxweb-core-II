@@ -28,7 +28,7 @@ import org.zoxweb.shared.api.APIBatchResult;
 import org.zoxweb.shared.api.APIConfigInfoDAO;
 import org.zoxweb.shared.api.APICredentialsDAO;
 import org.zoxweb.shared.api.APIError;
-
+import org.zoxweb.shared.security.KeyStoreInfoDAO;
 import org.zoxweb.shared.util.NVEntityInstance;
 import org.zoxweb.shared.data.ticket.TicketContainerDAO;
 import org.zoxweb.shared.data.ticket.TicketIssuerDAO;
@@ -49,13 +49,11 @@ import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVEntity;
 import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
-
 import org.zoxweb.shared.security.SubjectAPIKey;
 import org.zoxweb.shared.security.shiro.ShiroNVEntityCRUDs;
 import org.zoxweb.shared.security.shiro.ShiroPermissionDAO;
 import org.zoxweb.shared.security.shiro.ShiroRoleDAO;
 import org.zoxweb.shared.security.shiro.ShiroRoleGroupDAO;
-import org.zoxweb.shared.data.AppDeviceDAO;
 
 /**
  * This NVEntity factory contains all NVEntity objects within this project.
@@ -1098,6 +1096,22 @@ public class ZWDataFactory
             public NVConfigEntity getNVConfigEntity()
             {
                 return UserPreferenceDAO.NVC_USER_PREFERENCE_DAO;
+            }
+        },
+
+        KEY_STORE_INFO_DAO(KeyStoreInfoDAO.class.getName())
+        {
+            @SuppressWarnings("unchecked")
+            @Override
+            public KeyStoreInfoDAO newInstance()
+            {
+                return new KeyStoreInfoDAO();
+            }
+
+            @Override
+            public NVConfigEntity getNVConfigEntity()
+            {
+                return KeyStoreInfoDAO.NVC_KEY_STORE_INFO_DAO;
             }
         },
 
