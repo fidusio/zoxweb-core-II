@@ -1,5 +1,6 @@
 package org.zoxweb.shared.api;
 
+import org.zoxweb.server.security.UserIDCredentialsDAO.UserStatus;
 import org.zoxweb.shared.data.AppDeviceDAO;
 import org.zoxweb.shared.data.AppIDDAO;
 import org.zoxweb.shared.data.UserIDDAO;
@@ -63,7 +64,7 @@ public interface APIAppManager
      * @throws AccessException
      * @throws APIException
      */
-	UserIDDAO createUserIDDAO(UserIDDAO userIDDAO, String password)
+	UserIDDAO createUserIDDAO(UserIDDAO userIDDAO, UserStatus userIDstatus, String password)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException;
 
     /**
@@ -76,7 +77,7 @@ public interface APIAppManager
      * @throws AccessException
      * @throws APIException
      */
-    UserIDDAO createUserIDDAO(String subjectID, String password)
+    UserIDDAO createUserIDDAO(String subjectID, UserStatus userIDstatus, String password)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException;
 
     /**

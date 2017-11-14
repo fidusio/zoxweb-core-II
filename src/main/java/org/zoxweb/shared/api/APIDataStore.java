@@ -20,6 +20,7 @@ import java.util.Set;
 
 import org.zoxweb.shared.security.AccessException;
 import org.zoxweb.shared.util.DynamicEnumMap;
+import org.zoxweb.shared.util.IDGenerator;
 import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVEntity;
 import org.zoxweb.shared.data.LongSequence;
@@ -314,6 +315,8 @@ public interface APIDataStore<ST>
 	 */
 	public void deleteDynamicEnumMap(String name)
 		throws NullPointerException, IllegalArgumentException, APIException;
+	
+	public IDGenerator<String> getIDGenerator();
 	
 	
 	/**

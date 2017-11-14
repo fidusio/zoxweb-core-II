@@ -1,23 +1,32 @@
 package org.zoxweb.server.api;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Logger;
+
 
 import org.zoxweb.server.security.CryptoUtil;
 import org.zoxweb.server.security.JWTProvider;
+import org.zoxweb.server.security.KeyMakerProvider;
 import org.zoxweb.server.security.UserIDCredentialsDAO;
+import org.zoxweb.server.security.UserIDCredentialsDAO.UserStatus;
+import org.zoxweb.server.util.IDGeneratorUtil;
 import org.zoxweb.shared.api.APIAppManager;
 import org.zoxweb.shared.api.APIDataStore;
 import org.zoxweb.shared.api.APIException;
-import org.zoxweb.shared.crypto.CryptoConst;
+import org.zoxweb.shared.api.APISecurityManager;
+import org.zoxweb.shared.crypto.EncryptedKeyDAO;
 import org.zoxweb.shared.crypto.PasswordDAO;
+import org.zoxweb.shared.crypto.CryptoConst.MDType;
 import org.zoxweb.shared.data.AppDeviceDAO;
 import org.zoxweb.shared.data.AppIDDAO;
 import org.zoxweb.shared.data.UserIDDAO;
 import org.zoxweb.shared.data.UserInfoDAO;
 import org.zoxweb.shared.data.UserPreferenceDAO;
+import org.zoxweb.shared.db.QueryMatch;
 import org.zoxweb.shared.db.QueryMatchString;
 import org.zoxweb.shared.filters.FilterType;
 import org.zoxweb.shared.security.AccessException;
@@ -27,6 +36,7 @@ import org.zoxweb.shared.security.SubjectAPIKey;
 import org.zoxweb.shared.util.Const.LogicalOperator;
 import org.zoxweb.shared.util.Const.RelationalOperator;
 import org.zoxweb.shared.util.Const.Status;
+import org.zoxweb.shared.util.GetValue;
 import org.zoxweb.shared.util.MetaToken;
 import org.zoxweb.shared.util.NVEntity;
 import org.zoxweb.shared.util.SharedStringUtil;
@@ -36,7 +46,11 @@ public class APIAppManagerProvider
     implements APIAppManager {
 
     private volatile APIDataStore<?> dataStore;
+    private volatile APISecurityManager<?> apiSecurityManager;
+
     private HashMap<String, SubjectAPIKey> cache = new HashMap<String, SubjectAPIKey>();
+	private static final transient Logger log = Logger.getLogger(APIAppManagerProvider.class.getName());
+    
 
 
     public APIAppManagerProvider() {
@@ -44,7 +58,20 @@ public class APIAppManagerProvider
     }
 
     
-    public APIDataStore<?> getAPIDataStore() {
+  
+
+
+	public APISecurityManager<?> getAPISecurityManager() {
+		return apiSecurityManager;
+	}
+
+
+	public void setAPISecurityManager(APISecurityManager<?> apiSecurityManager) {
+		this.apiSecurityManager = apiSecurityManager;
+	}
+
+
+	public APIDataStore<?> getAPIDataStore() {
         return dataStore;
     }
 
@@ -76,7 +103,7 @@ public class APIAppManagerProvider
         SharedUtil.checkIfNulls("Null SubjectAPIKey", subjectAPIKey);
 
         if (subjectAPIKey.getSubjectID() == null) {
-            subjectAPIKey.setSubjectID(UUID.randomUUID().toString());
+            subjectAPIKey.setSubjectID(IDGeneratorUtil.UUIDSHA256Base64.generateID());
         }
 
         if (subjectAPIKey.getAPISecret() == null) {
@@ -100,6 +127,168 @@ public class APIAppManagerProvider
         return SubjectAPIKey.copy(subjectAPIKey);
     }
 
+    
+    public  UserIDDAO lookupUserID(String subjectID, String ...params)
+			throws NullPointerException, IllegalArgumentException, AccessException, APIException
+	{
+		SharedUtil.checkIfNulls("subjectID null", subjectID);
+		QueryMatch<?> query = null;
+		if (FilterType.EMAIL.isValid(subjectID))
+		{
+			// if we have an email
+			query = new QueryMatch<String>(RelationalOperator.EQUAL, subjectID, UserIDDAO.Param.PRIMARY_EMAIL.getNVConfig());
+		}
+		else
+		{
+			query = new QueryMatch<String>(RelationalOperator.EQUAL, subjectID, MetaToken.REFERENCE_ID);//"_id", new BasicDBObject("$in", listOfObjectID)
+		}
+	
+		ArrayList<String> listParams = null;
+		if (params != null && params.length > 0)
+		{
+			listParams = new ArrayList<String>();
+			for (String str : params)
+			{
+				if (!SharedStringUtil.isEmpty(str))
+				{
+					listParams.add(str);
+				}
+			}
+		}
+		
+		List<UserIDDAO> listOfUserIDDAO = dataStore.search(UserIDDAO.NVC_USER_ID_DAO, listParams, query);
+		
+		if (listOfUserIDDAO == null || listOfUserIDDAO.size() != 1)
+		{
+			return null;
+		}
+		
+		return listOfUserIDDAO.get(0);
+
+	}
+	
+	public  UserIDDAO lookupUserID(GetValue<String> subjectID, String ...params)
+			throws NullPointerException, IllegalArgumentException, AccessException
+	{
+		SharedUtil.checkIfNulls("DB or user ID null", dataStore, subjectID);
+		return lookupUserID(subjectID.getValue(), params);
+	}
+	
+	public UserIDDAO createUserIDDAO(UserIDDAO userID, UserStatus userIDstatus, String password)
+			throws NullPointerException, IllegalArgumentException, AccessException, APIException
+	{
+		SharedUtil.checkIfNulls("UserIDDAO object is null.", userID, userIDstatus);
+		password = FilterType.PASSWORD.validate(password);
+		
+		
+		if (lookupUserID(userID.getSubjectID()) != null)
+		{
+			throw new APIException("User already exist");
+		}
+			
+		log.info("User Name: " + userID.getPrimaryEmail());
+		log.info("First Name: " + userID.getUserInfo().getFirstName());
+		log.info("Middle Name: " + userID.getUserInfo().getMiddleName());
+		log.info("Last Name: " + userID.getUserInfo().getLastName());
+		log.info("Birthday: " + userID.getUserInfo().getDOB());
+		
+		userID.setReferenceID(null);
+		SharedUtil.validate(userID, true, true);
+		
+		
+		
+
+		
+			
+		
+		// special case to avoid chicken and egg situation
+		
+		String userIDRef = dataStore.getIDGenerator().generateID();
+		apiSecurityManager.associateNVEntityToSubjectUserID(userID, userIDRef);
+		userID.setReferenceID(userIDRef);
+		userID.getUserInfo().setReferenceID(userIDRef);
+		////////////////////////
+		
+		try
+		{
+			// insert the user_info dao first
+			dataStore.insert(userID.getUserInfo());
+			
+			dataStore.insert(userID);
+			
+			UserIDCredentialsDAO userIDCredentials = new UserIDCredentialsDAO();
+			userIDCredentials.setReferenceID(userID.getReferenceID());
+			userIDCredentials.setUserID(userID.getReferenceID());
+			userIDCredentials.setLastStatusUpdateTimestamp(System.currentTimeMillis());
+			userIDCredentials.setUserStatus(userIDstatus);
+			PasswordDAO passwordDAO = CryptoUtil.hashedPassword(MDType.SHA_512, 0, 8196, password);
+			passwordDAO.setUserID(userID.getReferenceID());
+			userIDCredentials.setPassword(passwordDAO);
+			
+			
+			
+			switch(userIDstatus)
+			{
+			case ACTIVE:
+				break;
+			case DEACTIVATED:
+				break;
+			case INACTIVE:
+				break;
+			case PENDING_ACCOUNT_ACTIVATION:
+			case PENDING_RESET_PASSWORD:
+				userIDCredentials.setPendingToken(UUID.randomUUID().toString());
+				break;
+
+			
+			}
+			
+			
+			dataStore.insert(userIDCredentials);
+			userIDCredentials.getPassword().setReferenceID(userIDCredentials.getReferenceID());
+			dataStore.update(userIDCredentials);
+			// create the user master key
+			dataStore.insert(KeyMakerProvider.SINGLETON.createUserIDKey(userID, KeyMakerProvider.SINGLETON.getMasterKey()));
+			
+			// removed for now created during login
+			// MN 2014-12-23
+			// FidusStoreDataManager.SINGLETON.setUpUserAccount(userID, dataStore, (APIDocumentStore<?>) dataStore);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			throw new AccessException(e.getMessage());			
+		}
+		
+		return userID;
+	}
+	
+	
+	public void deleteUser(String subjectID)
+		throws NullPointerException, IllegalArgumentException, AccessException, APIException
+	{
+		
+		// crutial permission check
+		// of the super admin can delete user
+		
+		SharedUtil.checkIfNulls("subjectID null", subjectID);
+		UserIDDAO userID = lookupUserID(subjectID);
+		if (userID == null)
+		{
+			throw new APIException("subjectID " + subjectID + " not found.");
+		}
+		// delete a user requires the following
+		// delete the associated UserInfoDOA, UserIDCredentialsDAO and the encrypted key dao associated with the user id
+		dataStore.delete(userID, true);
+		dataStore.delete(UserIDCredentialsDAO.NVC_USER_ID_CREDENTIALS_DAO,  new QueryMatch<String>(RelationalOperator.EQUAL, userID.getReferenceID(), MetaToken.REFERENCE_ID));
+		dataStore.delete(EncryptedKeyDAO.NVCE_ENCRYPTED_KEY_DAO,  new QueryMatch<String>(RelationalOperator.EQUAL, userID.getReferenceID(), MetaToken.REFERENCE_ID));
+		
+		// TODO check if a user is logged in and invalidate his current session
+		
+		
+	}
+    
+    
   
     public void deleteSubjectAPIKey(String subjectID)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException {
@@ -182,43 +371,45 @@ public class APIAppManagerProvider
     }
 
     @Override
-    public UserIDDAO createUserIDDAO(String subjectID, String password)
-            throws NullPointerException, IllegalArgumentException, AccessException, APIException {
+    public UserIDDAO createUserIDDAO(String subjectID, UserStatus userIDstatus, String password)
+            throws NullPointerException, IllegalArgumentException, AccessException, APIException
+    {
 
-
-        return null;
+    	UserIDDAO uid = new UserIDDAO();
+    	uid.setPrimaryEmail(subjectID);
+        return createUserIDDAO(uid, userIDstatus, password);
     }
 
 
-    @Override
-    public UserIDDAO createUserIDDAO(UserIDDAO userIDDAO, String password)
-            throws NullPointerException, IllegalArgumentException, AccessException, APIException {
-        SharedUtil.checkIfNulls("UserIDDAO is null.", userIDDAO);
-        SharedUtil.checkIfNulls("Password is null.", password);
-
-        password = FilterType.PASSWORD.validate(password);
-
-        try {
-            userIDDAO = dataStore.insert(userIDDAO);
-
-            UserIDCredentialsDAO userIDCredentials = new UserIDCredentialsDAO();
-            userIDCredentials.setReferenceID(userIDDAO.getReferenceID());
-            userIDCredentials.setUserID(userIDDAO.getReferenceID());
-            userIDCredentials.setLastStatusUpdateTimestamp(System.currentTimeMillis());
-            userIDCredentials.setUserStatus(UserIDCredentialsDAO.UserStatus.ACTIVE);
-            PasswordDAO passwordDAO = CryptoUtil.hashedPassword(CryptoConst.MDType.SHA_512, 0, 8196, password);
-            passwordDAO.setUserID(userIDDAO.getReferenceID());
-            userIDCredentials.setPassword(passwordDAO);
-            dataStore.insert(userIDCredentials);
-            userIDCredentials.getPassword().setReferenceID(userIDCredentials.getReferenceID());
-            dataStore.update(userIDCredentials);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new AccessException(e.getMessage());
-        }
-
-        return userIDDAO;
-    }
+//    @Override
+//    public UserIDDAO createUserIDDAO(UserIDDAO userIDDAO, String password)
+//            throws NullPointerException, IllegalArgumentException, AccessException, APIException {
+//        SharedUtil.checkIfNulls("UserIDDAO is null.", userIDDAO);
+//        SharedUtil.checkIfNulls("Password is null.", password);
+//
+//        password = FilterType.PASSWORD.validate(password);
+//
+//        try {
+//            userIDDAO = dataStore.insert(userIDDAO);
+//
+//            UserIDCredentialsDAO userIDCredentials = new UserIDCredentialsDAO();
+//            userIDCredentials.setReferenceID(userIDDAO.getReferenceID());
+//            userIDCredentials.setUserID(userIDDAO.getReferenceID());
+//            userIDCredentials.setLastStatusUpdateTimestamp(System.currentTimeMillis());
+//            userIDCredentials.setUserStatus(UserIDCredentialsDAO.UserStatus.ACTIVE);
+//            PasswordDAO passwordDAO = CryptoUtil.hashedPassword(CryptoConst.MDType.SHA_512, 0, 8196, password);
+//            passwordDAO.setUserID(userIDDAO.getReferenceID());
+//            userIDCredentials.setPassword(passwordDAO);
+//            dataStore.insert(userIDCredentials);
+//            userIDCredentials.getPassword().setReferenceID(userIDCredentials.getReferenceID());
+//            dataStore.update(userIDCredentials);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            throw new AccessException(e.getMessage());
+//        }
+//
+//        return userIDDAO;
+//    }
 
     @Override
     public UserIDDAO lookupUserIDDAO(String subjectID)
@@ -339,7 +530,7 @@ public class APIAppManagerProvider
         UserIDDAO userIDDAO = new UserIDDAO();
         userIDDAO.setPrimaryEmail(username);
         userIDDAO.setUserInfo(userInfoDAO);
-        userIDDAO = createUserIDDAO(userIDDAO, password);
+        userIDDAO = createUserIDDAO(userIDDAO, UserStatus.ACTIVE, password);
 
         // Lookup UserPreferenceDAO based on AppIDDAO and UserIDDAO
         UserPreferenceDAO userPreferenceDAO = lookupUserPreferenceDAO(appIDDAO, userIDDAO);

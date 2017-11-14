@@ -88,16 +88,16 @@ public class SubjectAPIKey
 
     @Override
     public String getSubjectID() {
-        return lookupValue(Param.API_KEY);
+        return getAPIKey();
     }
 
     @Override
     public void setSubjectID(String id) {
-        setValue(Param.API_KEY, id);
+    	setAPIKey(id);
     }
 
     public String getAPIKey() {
-        return getSubjectID();
+        return lookupValue(Param.API_KEY);
     }
     
     
@@ -114,7 +114,7 @@ public class SubjectAPIKey
 
     public void setAPIKey(String apiKey) 
     {
-    	setSubjectID(apiKey);
+    	 setValue(Param.API_KEY, apiKey);
         //setValue(Param.API_KEY, apiKey);
     }
     
