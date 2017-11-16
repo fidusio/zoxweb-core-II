@@ -87,7 +87,7 @@ public class KeyStoreInfoDAO
 
     public byte[] getKeyStorePasswordAsBytes()
     {
-        return SharedStringUtil.hexToBytes(lookupValue(Param.KEY_STORE_PASSWORD));
+        return SharedStringUtil.hexToBytes(getKeyStorePassword());
     }
 
     public void setKeyStorePassword(String keyStorePassword)
@@ -117,7 +117,7 @@ public class KeyStoreInfoDAO
 
     public byte[] getKeyPasswordAsBytes()
     {
-        return SharedStringUtil.hexToBytes(lookupValue(Param.KEY_PASSWORD));
+        return SharedStringUtil.hexToBytes(getKeyPassword());
     }
 
     public void setKeyPassword(String aliasPassword)
