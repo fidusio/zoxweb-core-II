@@ -281,4 +281,6 @@ public interface APIAppManager
             throws NullPointerException, IllegalArgumentException, AccessException, APIException;
 
 
+    
+    AppIDDAO createAppIDDAO(String domainID, String appID);
 }

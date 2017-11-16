@@ -54,4 +54,8 @@ public interface APISecurityManager<S>
 	 String checkNVEntityAccess(String nveRefID, CRUD ...permissions)
 				throws NullPointerException, IllegalArgumentException, AccessException;
 	 
+	 S login(String subjectID, String credentials, String domainID, String appID, boolean autoLogin);
+	 
+	 void logout();
+	 
 }

@@ -114,7 +114,22 @@ public class AppIDDAO
     @Override
     public String getSubjectID()
     {
-        return lookupValue(Param.SUBJECT_ID);
+        String ret = lookupValue(Param.SUBJECT_ID);
+        if (ret == null)
+        {
+        	synchronized(this)
+        	{
+        		if (lookupValue(Param.SUBJECT_ID) == null)
+        		{
+	        		if (getDomainID() != null && getAppID() != null)
+	        		{
+	        			ret = getDomainID() + ":" + getAppID();
+	        			setValue(Param.SUBJECT_ID, ret);
+	        		}
+        		}
+        	}
+        }
+        return ret;
     }
 
     @Override

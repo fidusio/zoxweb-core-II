@@ -28,6 +28,7 @@ import org.zoxweb.shared.data.UserInfoDAO;
 import org.zoxweb.shared.data.UserPreferenceDAO;
 import org.zoxweb.shared.db.QueryMatch;
 import org.zoxweb.shared.db.QueryMatchString;
+import org.zoxweb.shared.filters.AppIDNameFilter;
 import org.zoxweb.shared.filters.FilterType;
 import org.zoxweb.shared.security.AccessException;
 import org.zoxweb.shared.security.AccessSecurityException;
@@ -478,23 +479,37 @@ public class APIAppManagerProvider
     @Override
     public AppIDDAO lookupAppIDDAO(String domainID, String appID)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException {
-        SharedUtil.checkIfNulls("Domain ID is null", domainID);
-        SharedUtil.checkIfNulls("App ID is null", appID);
+      return lookupAppIDDAO(domainID, appID, true);
+    }
+    
+    
+    private  AppIDDAO lookupAppIDDAO(String domainID, String appID, boolean exceptionIfNotFound)
+            throws NullPointerException, IllegalArgumentException, AccessException, APIException {
+//        SharedUtil.checkIfNulls("Domain ID is null", domainID);
+//        SharedUtil.checkIfNulls("App ID is null", appID);
+        domainID = FilterType.DOMAIN.validate(domainID);
+        appID =  AppIDNameFilter.SINGLETON.validate(appID);
+        
 
         List<AppIDDAO> result = dataStore.search(AppIDDAO.NVC_APP_ID_DAO, null,
                 new QueryMatchString(RelationalOperator.EQUAL, domainID, AppIDDAO.Param.DOMAIN_ID),
                 LogicalOperator.AND,
                 new QueryMatchString(RelationalOperator.EQUAL, appID, AppIDDAO.Param.APP_ID));
+        
 
-        if (result == null || result.isEmpty()) {
-            throw new APIException("AppIDDAO not found");
+        if (result == null || result.isEmpty()) 
+        {
+        	if (exceptionIfNotFound)
+        		throw new APIException("AppIDDAO not found");
+        	else
+        		return null;
         }
 
         return result.get(0);
     }
 
     @Override
-    public SubjectAPIKey registerSubjectAPIKey(UserInfoDAO userInfoDAO, AppDeviceDAO appDeviceDAO, String username, String password)
+    public SubjectAPIKey registerSubjectAPIKey(UserInfoDAO userInfoDAO, AppDeviceDAO appDeviceDAO, String subjectID, String password)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException {
 
         // Procedure
@@ -509,29 +524,32 @@ public class APIAppManagerProvider
         SharedUtil.checkIfNulls("UserInfoDAO is null", userInfoDAO);
         SharedUtil.checkIfNulls("AppDeviceDAO is null", appDeviceDAO);
         SharedUtil.checkIfNulls("AppIDDAO is null", appDeviceDAO.getAppIDDAO());
-
-        if (SharedStringUtil.isEmpty(username) || SharedStringUtil.isEmpty(password)) {
-            throw new NullPointerException("Username and/or password is null");
-        }
-
+        
+        
         String domainID = appDeviceDAO.getDomainID();
         String appID = appDeviceDAO.getAppID();
 
+        // check and confirm that app already exist
         AppIDDAO appIDDAO = lookupAppIDDAO(domainID, appID);
+        
 
-        // Search UserIDDAO based on username (if found throw error)
-        List<UserIDDAO> userIDDAOResult = dataStore.search(UserIDDAO.NVC_USER_ID_DAO, null,
-                new QueryMatchString(RelationalOperator.EQUAL, username, UserIDDAO.Param.PRIMARY_EMAIL));
-
-        if (userIDDAOResult != null && !userIDDAOResult.isEmpty()) {
-            throw new APIException("UserIDDAO already exists");
+        if (SharedStringUtil.isEmpty(subjectID) || SharedStringUtil.isEmpty(password)) {
+            throw new NullPointerException("Username and/or password is null");
         }
 
+       
+     
+    
+
         UserIDDAO userIDDAO = new UserIDDAO();
-        userIDDAO.setPrimaryEmail(username);
+        userIDDAO.setSubjectID(subjectID);
         userIDDAO.setUserInfo(userInfoDAO);
         userIDDAO = createUserIDDAO(userIDDAO, UserStatus.ACTIVE, password);
 
+        apiSecurityManager.login(subjectID, password, appIDDAO.getDomainID(), appIDDAO.getAppID(), false);
+        
+      
+        
         // Lookup UserPreferenceDAO based on AppIDDAO and UserIDDAO
         UserPreferenceDAO userPreferenceDAO = lookupUserPreferenceDAO(appIDDAO, userIDDAO);
         if (userPreferenceDAO == null) {
@@ -548,6 +566,22 @@ public class APIAppManagerProvider
         appDeviceDAO = (AppDeviceDAO) createAppDeviceDAO(appDeviceDAO);
 
         return appDeviceDAO;
+    }
+    
+    
+    public AppIDDAO createAppIDDAO(String domainID, String appID)
+    {
+    	
+    	// permission super admin only
+    	AppIDDAO ret = lookupAppIDDAO(domainID, appID, false);
+    	if (ret == null)
+    	{
+    		ret = new AppIDDAO(domainID, appID);
+ 
+    		ret = dataStore.insert(ret);
+    	}
+    	
+    	return ret;
     }
 
 }
