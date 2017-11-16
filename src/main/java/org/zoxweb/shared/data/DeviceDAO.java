@@ -44,7 +44,7 @@ public class DeviceDAO
 	}
 
 	public static final NVConfigEntity NVC_DEVICE_DAO = new NVConfigEntityLocal(
-											            "DeviceDAO",
+											            "device_dao",
 											            null ,
 											            null,
 											            true,

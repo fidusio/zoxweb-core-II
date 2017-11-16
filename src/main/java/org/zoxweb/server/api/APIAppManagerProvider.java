@@ -125,7 +125,7 @@ public class APIAppManagerProvider
             cache.put(subjectAPIKey.getSubjectID(), subjectAPIKey);
         }
 
-        return SubjectAPIKey.copy(subjectAPIKey);
+        return subjectAPIKey;
     }
 
     
@@ -414,8 +414,23 @@ public class APIAppManagerProvider
 
     @Override
     public UserIDDAO lookupUserIDDAO(String subjectID)
-            throws NullPointerException, IllegalArgumentException, AccessException, APIException {
-        return null;
+            throws NullPointerException, IllegalArgumentException, AccessException, APIException 
+    {
+    	subjectID = FilterType.EMAIL.validate(subjectID);
+    	
+
+        UserIDDAO ret = null;
+
+        List<UserIDDAO> result = dataStore.search(UserIDDAO.NVC_USER_ID_DAO, null,
+                new QueryMatchString(RelationalOperator.EQUAL, subjectID, UserIDDAO.Param.PRIMARY_EMAIL)
+        );
+
+        if (result != null && !result.isEmpty()) {
+            ret = result.get(0);
+        }
+
+        return ret;
+    	
     }
 
     @Override
@@ -539,12 +554,16 @@ public class APIAppManagerProvider
 
        
      
-    
+        appDeviceDAO.setAppIDDAO(appIDDAO);
 
-        UserIDDAO userIDDAO = new UserIDDAO();
-        userIDDAO.setSubjectID(subjectID);
-        userIDDAO.setUserInfo(userInfoDAO);
-        userIDDAO = createUserIDDAO(userIDDAO, UserStatus.ACTIVE, password);
+        UserIDDAO userIDDAO = lookupUserIDDAO(subjectID);
+        if (userIDDAO == null)
+        {
+        	userIDDAO = new UserIDDAO();
+        	userIDDAO.setSubjectID(subjectID);
+        	userIDDAO.setUserInfo(userInfoDAO);
+        	userIDDAO = createUserIDDAO(userIDDAO, UserStatus.ACTIVE, password);
+        }
 
         apiSecurityManager.login(subjectID, password, appIDDAO.getDomainID(), appIDDAO.getAppID(), false);
         

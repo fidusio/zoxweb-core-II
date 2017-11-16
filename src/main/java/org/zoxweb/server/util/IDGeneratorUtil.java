@@ -17,8 +17,15 @@ public class IDGeneratorUtil
 		public String generateID() 
 		{
 			
-			try {
-				return SharedBase64.encodeAsString(Base64Type.URL, HashUtil.hashSequence("SHA-256", UUID.randomUUID().toString()));
+			try 
+			{
+				String ret;
+				do 
+				{
+					ret = SharedBase64.encodeAsString(Base64Type.URL, HashUtil.hashSequence("SHA-256", UUID.randomUUID().toString()));
+				}while(!valide(ret));
+				
+				return ret;
 			} catch (NoSuchAlgorithmException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -44,8 +51,14 @@ public class IDGeneratorUtil
 		@Override
 		public String generateID() 
 		{
+			String ret;
 			
-			return SharedBase64.encodeAsString(Base64Type.URL, UUID.randomUUID().toString());
+			do 
+			{
+				ret = SharedBase64.encodeAsString(Base64Type.URL, UUID.randomUUID().toString());
+			}while(!valide(ret));
+			
+			return ret;
 		}
 
 		@Override
@@ -59,6 +72,16 @@ public class IDGeneratorUtil
 	
 	private IDGeneratorUtil()
 	{
+	}
+	
+	
+	private static boolean valide(String str)
+	{
+		if (str.charAt(0) == '_' || str.charAt(0) == '-')
+		{
+			return false;
+		}
+		return true;
 	}
 	
 }
