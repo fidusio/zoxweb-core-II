@@ -31,6 +31,20 @@ public interface APIAppManager
      */
     void setAPIDataStore(APIDataStore<?> dataStore)
             throws NullPointerException, IllegalArgumentException;
+    
+    /**
+     * Get the API security manager
+     * @return
+     */
+    APISecurityManager<?> getAPISecurityManager();
+	
+
+    /**
+     * Set the api security manager
+     * @param apiSecurityManager
+     */
+	void setAPISecurityManager(APISecurityManager<?> apiSecurityManager);
+
 
     /**
      * Register user.
