@@ -179,6 +179,12 @@ public class ApplicationConfigManager
 			IOUtil.close( fos);
 		}	
 	}
+	
+	
+	public static File locateFile(String filename)
+	{
+		return new File(getDefaultApplicationEnvVar(), filename);
+	}
 
 	public File locateFile(ApplicationConfigDAO acd, String varName)
         throws NullPointerException, IOException
