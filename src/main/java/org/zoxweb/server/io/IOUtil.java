@@ -110,24 +110,24 @@ public class IOUtil
 	public static File locateFile(String filename)
 	{
 		
-		//return locateFile(ClassLoader.getSystemClassLoader().getClass(), filename);
-		File ret = new File(filename);
-		if (!ret.exists() || !ret.isFile())
-		{
-			ret = new File(ClassLoader.getSystemClassLoader().getResource(filename).getFile());
-		}
-		
-		return ret;
+		return locateFile(ClassLoader.getSystemClassLoader(), filename);
+//		File ret = new File(filename);
+//		if (!ret.exists() || !ret.isFile())
+//		{
+//			ret = new File(ClassLoader.getSystemClassLoader().getResource(filename).getFile());
+//		}
+//		
+//		return ret;
 	}
 	
 	
 	
-	public static File locateFile(Class<?> cl, String filename)
+	public static File locateFile(ClassLoader cl, String filename)
 	{
 		File ret = new File(filename);
 		if (!ret.exists() || !ret.isFile())
 		{
-			ret = new File(cl.getClassLoader().getResource(filename).getFile());
+			ret = new File(cl.getResource(filename).getFile());
 		}
 		
 		return ret;
