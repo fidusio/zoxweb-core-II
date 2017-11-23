@@ -178,8 +178,9 @@ public interface APIAppManager
      * @throws AccessException
      * @throws APIException
      */
-	SubjectAPIKey lookupSubjectAPIKey(String subjectID)
+	<V extends SubjectAPIKey> V lookupSubjectAPIKey(String subjectID)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException;
+	
 
     /**
      * Update SubjectAPIKey.

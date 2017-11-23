@@ -310,12 +310,31 @@ public class APIAppManagerProvider
     }
 
     
-    public SubjectAPIKey lookupSubjectAPIKey(String subjectID)
+    @SuppressWarnings("unchecked")
+	public 	<V extends SubjectAPIKey> V  lookupSubjectAPIKey(String subjectID)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException {
-        synchronized (cache) {
-            return cache.get(subjectID);
-        }
+    	List<SubjectAPIKey> result = dataStore.search(AppDeviceDAO.NVC_APP_DEVICE_DAO, 
+    			null, 
+    			new QueryMatchString(RelationalOperator.EQUAL, subjectID, SubjectAPIKey.Param.API_KEY));
+    	
+    	if (result == null || result.size() == 0)
+    	{
+    		result = dataStore.search(SubjectAPIKey.NVC_SUBJECT_API_KEY, 
+        			null, 
+        			new QueryMatchString(RelationalOperator.EQUAL, subjectID, SubjectAPIKey.Param.API_KEY));
+    		
+    	}
+    	
+    	if (result == null || result.size() != 1)
+    	{
+    		throw new APIException("Subject not found " + subjectID);
+    		
+    	}
+    	
+    	return (V)result.get(0);
     }
+    
+   
 
     @Override
     public void updateSubjectAPIKey(SubjectAPIKey subjectAPIKey)
