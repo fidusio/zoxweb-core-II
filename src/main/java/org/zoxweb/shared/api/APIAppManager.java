@@ -172,13 +172,14 @@ public interface APIAppManager
     /**
      * Look up SubjectAPIKey.
      * @param subjectID
+     * @param throwExceptionIfNotFound if true and the subject api key not found an API exception is throw otherwise null is returned
      * @return
      * @throws NullPointerException
      * @throws IllegalArgumentException
      * @throws AccessException
      * @throws APIException
      */
-	<V extends SubjectAPIKey> V lookupSubjectAPIKey(String subjectID)
+	<V extends SubjectAPIKey> V lookupSubjectAPIKey(String subjectID, boolean throwExceptionIfNotFound)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException;
 	
 

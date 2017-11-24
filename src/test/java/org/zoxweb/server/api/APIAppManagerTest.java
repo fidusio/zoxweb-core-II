@@ -41,7 +41,7 @@ public class APIAppManagerTest {
 	@Test
 	public void testToGSON() throws IOException
 	{
-		SubjectAPIKey sak  = aam.lookupSubjectAPIKey(subjectID);
+		SubjectAPIKey sak  = aam.lookupSubjectAPIKey(subjectID, true);
 		System.out.println(GSONUtil.toJSON(sak, false, false, false));
 	}
 	
@@ -50,7 +50,7 @@ public class APIAppManagerTest {
 	public void jwtValidation() throws IOException
 	{
 
-		SubjectAPIKey sak  = aam.lookupSubjectAPIKey(subjectID);
+		SubjectAPIKey sak  = aam.lookupSubjectAPIKey(subjectID, true);
 		JWTHeader header = new JWTHeader();
 		
 		header.setJWTAlgorithm(JWTAlgorithm.HS256);

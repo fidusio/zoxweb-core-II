@@ -311,7 +311,7 @@ public class APIAppManagerProvider
 
     
     @SuppressWarnings("unchecked")
-	public 	<V extends SubjectAPIKey> V  lookupSubjectAPIKey(String subjectID)
+	public 	<V extends SubjectAPIKey> V  lookupSubjectAPIKey(String subjectID, boolean throwExceptionIfNotFound)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException {
     	List<SubjectAPIKey> result = dataStore.search(AppDeviceDAO.NVC_APP_DEVICE_DAO, 
     			null, 
@@ -327,7 +327,9 @@ public class APIAppManagerProvider
     	
     	if (result == null || result.size() != 1)
     	{
-    		throw new APIException("Subject not found " + subjectID);
+    		if (throwExceptionIfNotFound)
+    			throw new APIException("Subject not found " + subjectID);
+    		else return null;
     		
     	}
     	
@@ -362,7 +364,7 @@ public class APIAppManagerProvider
         }
 
         // lookup subject id
-        SubjectAPIKey subjectAPIKey = lookupSubjectAPIKey(jwt.getPayload().getSubjectID());
+        SubjectAPIKey subjectAPIKey = lookupSubjectAPIKey(jwt.getPayload().getSubjectID(), true);
 
         if (subjectAPIKey == null) {
             throw new AccessSecurityException("Subject not found: " + jwt.getPayload().getSubjectID());
