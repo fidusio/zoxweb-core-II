@@ -80,7 +80,6 @@ public class SMTPMessageIDFilter
 	 * Returns canonical ID.
 	 * @return
 	 */
-	@Override
 	public String toCanonicalID() 
 	{
 		return SMTPMessageIDFilter.class.getName();

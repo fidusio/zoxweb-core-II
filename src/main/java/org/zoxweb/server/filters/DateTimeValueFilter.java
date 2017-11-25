@@ -39,7 +39,6 @@ public class DateTimeValueFilter
 	 * @see org.zoxweb.shared.util.CanonicalID#toCanonicalID()
 	 * @return
 	 */
-	@Override
 	public String toCanonicalID()
 	{
 		return null;
@@ -52,7 +51,6 @@ public class DateTimeValueFilter
 	 * @throws NullPointerException
 	 * @throws IllegalArgumentException
 	 */
-	@Override
 	public Long validate(String in)
         throws NullPointerException, IllegalArgumentException
 	{
@@ -71,7 +69,6 @@ public class DateTimeValueFilter
 	 * @param in value to be checked
 	 * @return
 	 */
-	@Override
 	public boolean isValid(String in)
 	{
 		try

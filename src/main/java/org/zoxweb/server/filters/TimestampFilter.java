@@ -72,7 +72,6 @@ public class TimestampFilter
 	/**
 	 * Gets the string representation of this class.
 	 */
-	@Override
 	public String toCanonicalID() 
 	{
 		return null;
@@ -82,7 +81,6 @@ public class TimestampFilter
 	 * Validates a string input and returns a long value.
 	 * @param in
 	 */
-	@Override
 	public Long validate(String in) 
 			throws NullPointerException, IllegalArgumentException 
 	{
@@ -115,7 +113,6 @@ public class TimestampFilter
 	 * Checks whether the input is valid or not.
 	 * @param in
 	 */
-	@Override
 	public boolean isValid(String in) 
 	{
 		try

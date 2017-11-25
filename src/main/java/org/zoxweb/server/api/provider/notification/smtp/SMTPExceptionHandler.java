@@ -49,13 +49,13 @@ public class SMTPExceptionHandler
 			this.code = code;
 		}
 
-		@Override
+	
 		public String getName() 
 		{
 			return name;
 		}
 
-		@Override
+		
 		public Integer getValue() 
 		{
 			return value;
@@ -92,7 +92,6 @@ public class SMTPExceptionHandler
 	 * @param e
 	 * @throws APIException
 	 */
-	@Override
 	public void throwException(Exception e)
         throws APIException
 	{
@@ -109,7 +108,6 @@ public class SMTPExceptionHandler
 	 * @param e
 	 * @return
 	 */
-	@Override
 	public APIException mapException(Exception e) 
 	{	
 		return null;

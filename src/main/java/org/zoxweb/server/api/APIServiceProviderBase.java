@@ -69,33 +69,32 @@ public abstract class APIServiceProviderBase<V>
 		return System.currentTimeMillis() - lastTimeAccessed();
 	}
 
-	@Override
+
 	public APIConfigInfo getAPIConfigInfo()
 	{
 		return apiConfigInfo;
 	}
 
-	@Override
+
 	public void setAPIConfigInfo(APIConfigInfo configInfo)
 	{
 		apiConfigInfo = configInfo;
 	}
 	
 	
-	@Override
+	
 	public APIExceptionHandler getAPIExceptionHandler()
 	{
 		return apiExceptionHandler;
 	}
 
-	@Override
+	
 	public void setAPIExceptionHandler(APIExceptionHandler exceptionHandler)
 	{
 		this.apiExceptionHandler = exceptionHandler;
 	}
 
 	@SuppressWarnings("unchecked")
-	@Override
 	public <T> T lookupProperty(GetName propertyName) 
 	{
 		SharedUtil.checkIfNulls("Null property name", propertyName);

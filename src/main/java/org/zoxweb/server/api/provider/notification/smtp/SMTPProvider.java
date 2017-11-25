@@ -83,7 +83,7 @@ public class SMTPProvider
 			this.name = name;
 		}
 		
-		@Override
+		
 		public String getValue() 
 		{
 			return name;
@@ -96,7 +96,6 @@ public class SMTPProvider
 		extends RunnableTask
 	{
 
-		@Override
 		public void  run() 
 		{
 			//sendAPIMessageInternal((APIMessage) event.getTaskExecutorParameters()[0]);
@@ -215,21 +214,21 @@ public class SMTPProvider
 	//private Session session;
 
 
-	@Override
+	
 	public Void connect() 
 			throws APIException
 	{
 		return null;
 	}
 
-	@Override
+	
 	public void close() 
 			throws APIException 
 	{
 		
 	}
 
-	@Override
+	
 	public boolean isProviderActive()
 	{
 		return false;
@@ -247,37 +246,37 @@ public class SMTPProvider
 		this.exceptionHandler = exceptionHandler;
 	}
 
-	@Override
+
 	public void setDescription(String str) 
 	{
 		description = str;
 	}
 
-	@Override
+
 	public String getDescription() 
 	{
 		return description;
 	}
 
-	@Override
+
 	public void setName(String name) 
 	{
 		this.name = name;
 	}
 
-	@Override
+	
 	public String getName() 
 	{
 		return name;
 	}
 
-	@Override
+	
 	public String toCanonicalID() 
 	{
 		return null;
 	}
 
-	@Override
+	
 	public APITransactionInfo sendAPIMessage(APIMessage message, APINotificationDelivery apind)
         throws NullPointerException, IllegalArgumentException, APIException
 	{
@@ -478,7 +477,7 @@ public class SMTPProvider
 	   return session;
 	}
 
-	@Override
+
 	public APITransactionInfo updateTransactionInfo(APITransactionInfo transaction) 
         throws NullPointerException, IllegalArgumentException, APIException
 	{
@@ -486,7 +485,7 @@ public class SMTPProvider
 		return null;
 	}
 
-	@Override
+	
 	public Void newConnection()
         throws APIException
 	{

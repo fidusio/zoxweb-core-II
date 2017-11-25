@@ -74,13 +74,13 @@ public class SMTPCreator
 			this.vf = vf;
 		}
 		
-		@Override
+	
 		public String getName() 
 		{
 			return name;
 		}
 
-		@Override
+		
 		public String getValue() 
 		{
 			return value;
@@ -97,7 +97,6 @@ public class SMTPCreator
 	 * @return APIConfigInfo
 	 */
 	@SuppressWarnings("unchecked")
-	@Override 
 	public APIConfigInfo createEmptyConfigInfo()
 	{
 		APIConfigInfoDAO configInfo = new APIConfigInfoDAO();
@@ -121,7 +120,7 @@ public class SMTPCreator
 	 * Returns the exception handler.
 	 * @return APIExceptionHandler
 	 */
-	@Override
+
 	public APIExceptionHandler getExceptionHandler()
 	{
 		return SMTPExceptionHandler.SINGLETON;
@@ -132,7 +131,7 @@ public class SMTPCreator
 	 * @param apiConfig
 	 * @return APIServiceProvider
 	 */
-	@Override
+	
 	public APIServiceProvider<Void> createAPI(APIDataStore<?> dataStore, APIConfigInfo apiConfig)
         throws APIException
 	{
@@ -143,13 +142,13 @@ public class SMTPCreator
 		return serviceProvider;
 	}
 
-	@Override
+
 	public String getName() 
 	{
 		return API_NAME;
 	}
 
-	@Override
+
 	public APITokenManager getAPITokenManager() 
 	{
 		return null;

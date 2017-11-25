@@ -338,7 +338,7 @@ public class APIAppManagerProvider
     
    
 
-    @Override
+  
     public void updateSubjectAPIKey(SubjectAPIKey subjectAPIKey)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException {
         synchronized (cache) {
@@ -386,13 +386,13 @@ public class APIAppManagerProvider
         return JWTProvider.SINGLETON.decodeJWT(subjectAPIKey.getAPISecretAsBytes(), token);
     }
 
-    @Override
+   
     public void resetPassword(String subjectID)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException {
 
     }
 
-    @Override
+  
     public UserIDDAO createUserIDDAO(String subjectID, UserStatus userIDstatus, String password)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException
     {
@@ -433,7 +433,7 @@ public class APIAppManagerProvider
 //        return userIDDAO;
 //    }
 
-    @Override
+
     public UserIDDAO lookupUserIDDAO(String subjectID)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException 
     {
@@ -454,13 +454,13 @@ public class APIAppManagerProvider
     	
     }
 
-    @Override
+  
     public UserPreferenceDAO lookupUserPreferenceDAO(String subjectID)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException {
         return null;
     }
 
-    @Override
+  
     public UserPreferenceDAO lookupUserPreferenceDAO(AppIDDAO appIDDAO, UserIDDAO userIDDAO)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException {
         SharedUtil.checkIfNulls("AppIDDAO is null", appIDDAO);
@@ -481,38 +481,38 @@ public class APIAppManagerProvider
         return ret;
     }
 
-    @Override
+ 
     public void changePassword(String subjectID, String oldPassword, String newPassword)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException {
 
     }
 
-    @Override
+  
     public <V extends NVEntity> V create(V nve)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException {
 
         return null;
     }
 
-    @Override
+    
     public <V extends NVEntity> List<V> lookup(String subjectID, Class<V> classType)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException {
         return null;
     }
 
-    @Override
+   
     public <V extends NVEntity> V update(V nve)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException {
         return null;
     }
 
-    @Override
+   
     public <V extends NVEntity> boolean delete(V nve)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException {
         return false;
     }
 
-    @Override
+   
     public AppIDDAO lookupAppIDDAO(String domainID, String appID)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException {
       return lookupAppIDDAO(domainID, appID, true);
@@ -544,7 +544,7 @@ public class APIAppManagerProvider
         return result.get(0);
     }
 
-    @Override
+ 
     public SubjectAPIKey registerSubjectAPIKey(UserInfoDAO userInfoDAO, AppDeviceDAO appDeviceDAO, String subjectID, String password)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException {
 
