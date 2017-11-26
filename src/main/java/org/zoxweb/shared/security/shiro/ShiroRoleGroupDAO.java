@@ -55,26 +55,24 @@ public class ShiroRoleGroupDAO
 	
 	public static final NVConfigEntity  NVC_SHIRO_ROLE_GROUP_DAO = new NVConfigEntityLocal("shiro_rolegroup_dao", "Shiro rolegroup dao object" , 
 			"ShiroRoleGroupDAO", false, true, false, false, ShiroRoleGroupDAO.class, SharedUtil.extractNVConfigs(Param.values()),
-			null, false, ShiroDomainDAO.NVC_SHIRO_DOMAIN_DAO);
+			null, false, ShiroDomainDAO.NVC_APP_ID_DAO);
 	
 	public ShiroRoleGroupDAO()
 	{
 		super(NVC_SHIRO_ROLE_GROUP_DAO);
 	}
 	
-	public ShiroRoleGroupDAO(String domainID, String name, String description)
+	public ShiroRoleGroupDAO(String domainID, String appID, String name, String description)
 	{
 		this();
-		setDomainID( domainID);
-		setName( name);
-		setDescription( description);
+		// MN do not change sequence
+		setName(name);
+		setDescription(description);
+		setDomainAppID(domainID, appID);
 	}
 	
-	@Override
-	public String toCanonicalID()
-	{
-		return SharedUtil.toCanonicalID(CAN_ID_SEP, getDomainID(), getName());
-	}
+	
+	
 	
 //	public boolean equals(Object o)
 //	{

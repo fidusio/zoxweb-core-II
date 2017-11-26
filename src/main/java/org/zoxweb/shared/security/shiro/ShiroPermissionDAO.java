@@ -31,19 +31,20 @@ public class ShiroPermissionDAO
 	
 	public static final NVConfigEntity  NVC_SHIRO_PERMISSION_DAO = new NVConfigEntityLocal("shiro_permission_dao", "Shiro permission dao object" , 
 			"ShiroPermissionDAO", false, true, false, false, ShiroPermissionDAO.class, SharedUtil.toNVConfigList(NVC_PATTERN),
-			null, false, ShiroDomainDAO.NVC_SHIRO_DOMAIN_DAO);
+			null, false, ShiroDomainDAO.NVC_APP_ID_DAO);
 	
 	public ShiroPermissionDAO()
 	{
 		super(NVC_SHIRO_PERMISSION_DAO);
 	}
 	
-	public ShiroPermissionDAO(String domainID, String name, String description, String pattern)
+	public ShiroPermissionDAO(String domainID, String appID, String name, String description, String pattern)
 	{
 		this();
-		setDomainID( domainID);
+		// MN do not change sequence
 		setName(name);
 		setDescription(description);
+		setDomainAppID(domainID, appID);
 		setPermissionPattern(pattern);
 	}
 	
@@ -70,12 +71,6 @@ public class ShiroPermissionDAO
 //		
 //		return false;
 //	}
-	
-	@Override
-	public String toCanonicalID()
-	{
-		return SharedUtil.toCanonicalID(CAN_ID_SEP, getDomainID(), getName(), getPermissionPattern());
-	}
 	
 	public String getPermissionPattern() 
 	{

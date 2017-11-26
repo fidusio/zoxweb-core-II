@@ -278,7 +278,7 @@ public class NVConfigEntityLocal
 				if (nvcToPurge != null)
 				{
 					//throw new IllegalArgumentException("Attribute name " + attrName +" exist more than once");
-					if ( nvc.getName().equalsIgnoreCase(nvcToPurge.getName()) && nvc.getClass().equals(nvcToPurge.getClass()) && nvc.isArray() == nvcToPurge.isArray())
+					if (nvc.getName().equalsIgnoreCase(nvcToPurge.getName()) && nvc.getClass().equals(nvcToPurge.getClass()) && nvc.isArray() == nvcToPurge.isArray())
 						toPurge.add( fastMap.get(attrName));
 					else
 						throw new IllegalArgumentException("Attribute name " + attrName +" exist more than once can't be replaced");

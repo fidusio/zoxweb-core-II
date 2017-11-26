@@ -54,19 +54,21 @@ public class ShiroRoleDAO
 	}
 	
 	public static final NVConfigEntity NVC_SHIRO_ROLE_DAO = new NVConfigEntityLocal("shiro_role_dao", "Shiro role dao object" , "ShiroRoleDAO", 
-			false, true, false, false, ShiroRoleDAO.class, SharedUtil.extractNVConfigs(Param.values()), null, false, ShiroDomainDAO.NVC_SHIRO_DOMAIN_DAO);
+			false, true, false, false, ShiroRoleDAO.class, SharedUtil.extractNVConfigs(Param.values()), null, false, ShiroDomainDAO.NVC_APP_ID_DAO);
 	
 	public ShiroRoleDAO()
 	{
 		super(NVC_SHIRO_ROLE_DAO);
 	}
 	
-	public ShiroRoleDAO(String domainID, String roleName, String description)
+	public ShiroRoleDAO(String domainID, String appID, String roleName, String description)
 	{
 		this();
-		setDomainID(domainID);
-		setName( roleName);
+		// MN do not change sequence
+		setName(roleName);
 		setDescription(description);
+		setDomainAppID(domainID, appID);
+		
 	}
 	
 //	public boolean equals(Object o)
@@ -98,11 +100,7 @@ public class ShiroRoleDAO
 //		return false;
 //	}
 	
-	@Override
-	public String toCanonicalID()
-	{
-		return SharedUtil.toCanonicalID(CAN_ID_SEP, getDomainID(), getName());
-	}
+	
 	
 	@SuppressWarnings("unchecked")
 	public ArrayValues<NVEntity> getPermissions()

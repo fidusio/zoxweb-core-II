@@ -24,12 +24,12 @@ public class ShiroRolePermissionDAO
 
 	public ShiroRolePermissionDAO()
 	{
-		super( ShiroAssociationType.PERMISSION_TO_ROLE, null, null);
+		super(ShiroAssociationType.PERMISSION_TO_ROLE, null, null);
 	}
 	
 	public ShiroRolePermissionDAO(ShiroRoleDAO role, ShiroPermissionDAO permission)
 	{
-		super( ShiroAssociationType.PERMISSION_TO_ROLE, role, permission);
+		super(ShiroAssociationType.PERMISSION_TO_ROLE, role, permission);
 	}
 
 	@Override

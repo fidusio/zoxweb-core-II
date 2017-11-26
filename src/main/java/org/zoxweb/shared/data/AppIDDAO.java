@@ -18,6 +18,7 @@ package org.zoxweb.shared.data;
 import org.zoxweb.shared.filters.FilterType;
 import org.zoxweb.shared.filters.AppIDNameFilter;
 import org.zoxweb.shared.util.AppID;
+import org.zoxweb.shared.util.CanonicalID;
 import org.zoxweb.shared.util.GetNVConfig;
 import org.zoxweb.shared.util.NVConfig;
 import org.zoxweb.shared.util.NVConfigEntity;
@@ -32,7 +33,7 @@ import org.zoxweb.shared.util.SharedUtil;
 @SuppressWarnings("serial")
 public class AppIDDAO
     extends SetNameDescriptionDAO
-    implements AppID<String>
+    implements AppID<String>, CanonicalID
 {
 
     public enum Param
@@ -76,6 +77,11 @@ public class AppIDDAO
     {
         super(NVC_APP_ID_DAO);
     }
+    
+    protected AppIDDAO(NVConfigEntity nvce)
+    {
+    	 super(nvce);
+    }
 
     public AppIDDAO(String domainID, String appID)
     {
@@ -83,13 +89,13 @@ public class AppIDDAO
         setDomainAppID(domainID, appID);
     }
 
-    @Override
+  
     public String getDomainID()
     {
         return lookupValue(Param.DOMAIN_ID);
     }
 
-    @Override
+
     @Deprecated
     public void setDomainID(String domainID)
             throws UnsupportedOperationException
@@ -97,13 +103,13 @@ public class AppIDDAO
         throw new UnsupportedOperationException("Not supported.");
     }
 
-    @Override
+
     public String getAppID()
     {
         return lookupValue(Param.APP_ID);
     }
 
-    @Override
+    
     @Deprecated
     public void setAppID(String appID)
             throws UnsupportedOperationException
@@ -111,7 +117,6 @@ public class AppIDDAO
         throw new UnsupportedOperationException("Not supported.");
     }
 
-    @Override
     public String getSubjectID()
     {
         String ret = lookupValue(Param.SUBJECT_ID);
@@ -123,7 +128,7 @@ public class AppIDDAO
         		{
 	        		if (getDomainID() != null && getAppID() != null)
 	        		{
-	        			ret = getDomainID() + ":" + getAppID();
+	        			ret = toCanonicalID();
 	        			setValue(Param.SUBJECT_ID, ret);
 	        		}
         		}
@@ -132,7 +137,7 @@ public class AppIDDAO
         return ret;
     }
 
-    @Override
+  
     @Deprecated
     public void setSubjectID(String subjectID)
             throws UnsupportedOperationException
@@ -143,10 +148,10 @@ public class AppIDDAO
     public synchronized void setDomainAppID(String domainID, String appID) {
         setValue(Param.DOMAIN_ID, domainID);
         setValue(Param.APP_ID, appID);
-        setValue(Param.SUBJECT_ID, getDomainID() + ":" + getAppID());
+        setValue(Param.SUBJECT_ID, toCanonicalID());
     }
 
-    @Override
+  
     public boolean equals(Object obj) {
         if (obj == this) {
             return true;
@@ -167,8 +172,9 @@ public class AppIDDAO
 
     @Override
     public int hashCode() {
+        
         if (getDomainID() != null && getAppID() != null) {
-            return 31 * getDomainID().hashCode() + getAppID().hashCode();
+            return 31 * getDomainID().hashCode() + getAppID().hashCode() + (getName() != null ? getName().hashCode() : 0);
         }
 
         if (getDomainID() != null) {
@@ -198,5 +204,11 @@ public class AppIDDAO
 		throw new UnsupportedOperationException("Not supported");
 	}
 
+	public String toCanonicalID()
+	{
+		
+		return SharedUtil.toCanonicalID(':', getDomainID(), getAppID(), getName());
+		
+	}
 
 }

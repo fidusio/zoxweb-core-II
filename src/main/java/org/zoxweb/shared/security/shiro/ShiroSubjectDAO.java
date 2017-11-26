@@ -15,55 +15,53 @@
  */
 package org.zoxweb.shared.security.shiro;
 
-import org.zoxweb.shared.util.NVConfig;
+
 import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVConfigEntityLocal;
-import org.zoxweb.shared.util.NVConfigManager;
-import org.zoxweb.shared.util.SharedUtil;
+
 
 @SuppressWarnings("serial")
 public class ShiroSubjectDAO
 	extends ShiroDomainDAO
 {
 	
-	private static final NVConfig NVC_AUTHENTICATION_REALM =  NVConfigManager.createNVConfig("authentication_realm", null,"AuthenticationRealm",true, false, String.class);
-	private static final NVConfig NVC_PASSWORD =  NVConfigManager.createNVConfig("password", null,"Password",true, false, String.class);
+//	private static final NVConfig NVC_AUTHENTICATION_REALM =  NVConfigManager.createNVConfig("authentication_realm", null,"AuthenticationRealm",true, false, String.class);
+//	private static final NVConfig NVC_PASSWORD =  NVConfigManager.createNVConfig("password", null,"Password",true, false, String.class);
 	
-	public static final NVConfigEntity  NVC_SHIRO_SUBJECT_DAO = new NVConfigEntityLocal("shiro_subject_dao", "Shiro subject dao object" , "ShiroSubjectDAO", false, true, false, false, ShiroSubjectDAO.class, SharedUtil.toNVConfigList(NVC_AUTHENTICATION_REALM, NVC_PASSWORD), null, false, ShiroDomainDAO.NVC_SHIRO_DOMAIN_DAO);
+	public static final NVConfigEntity  NVC_SHIRO_SUBJECT_DAO = new NVConfigEntityLocal("shiro_subject_dao", "Shiro subject dao object" , "ShiroSubjectDAO", false, true, false, false, ShiroSubjectDAO.class, null, null, false, ShiroDomainDAO.NVC_APP_ID_DAO);
 	
 	public ShiroSubjectDAO()
 	{
 		super(NVC_SHIRO_SUBJECT_DAO);
 	}
 	
-	public ShiroSubjectDAO(String domainID, String authenticationRelam, String userName, String passwd)
+	public ShiroSubjectDAO(String domainID, String appID, String username)
 	{
 		this();
-		setDomainID(domainID);
-		setName( userName);
-		setAuthenticationRealm(authenticationRelam);
-		setPassword( passwd);
+		// MN do not change sequence
+		setName(username);
+		setDomainAppID(domainID, appID);
 	}
 	
-	public String getAuthenticationRealm()
-	{
-		return lookupValue(NVC_AUTHENTICATION_REALM);
-	}
+//	public String getAuthenticationRealm()
+//	{
+//		return lookupValue(NVC_AUTHENTICATION_REALM);
+//	}
+//
+//	public void setAuthenticationRealm(String authenticationRealm) 
+//	{
+//		setValue(NVC_AUTHENTICATION_REALM, authenticationRealm);
+//	}
 
-	public void setAuthenticationRealm(String authenticationRealm) 
-	{
-		setValue(NVC_AUTHENTICATION_REALM, authenticationRealm);
-	}
-
-	public String getPassword()
-	{
-		return lookupValue(NVC_PASSWORD);
-	}
-
-	public void setPassword(String password) 
-	{		
-		setValue(NVC_PASSWORD, password);
-	}
+//	public String getPassword()
+//	{
+//		return lookupValue(NVC_PASSWORD);
+//	}
+//
+//	public void setPassword(String password) 
+//	{		
+//		setValue(NVC_PASSWORD, password);
+//	}
 	
 //	public boolean equals(Object o)
 //	{
@@ -82,10 +80,5 @@ public class ShiroSubjectDAO
 //	}
 	
 	
-	@Override
-	public String toCanonicalID()
-	{
-		return SharedUtil.toCanonicalID(CAN_ID_SEP, getDomainID(), getAuthenticationRealm(), getName());
-	}
 	
 }

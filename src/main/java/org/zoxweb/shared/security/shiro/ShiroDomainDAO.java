@@ -15,25 +15,23 @@
  */
 package org.zoxweb.shared.security.shiro;
 
+import org.zoxweb.shared.data.AppIDDAO;
 import org.zoxweb.shared.data.DataConst.DataParam;
-import org.zoxweb.shared.data.SetNameDescriptionDAO;
-import org.zoxweb.shared.util.NVConfig;
+
 import org.zoxweb.shared.util.NVConfigEntity;
-import org.zoxweb.shared.util.NVConfigEntityLocal;
-import org.zoxweb.shared.util.NVConfigManager;
 import org.zoxweb.shared.util.SharedStringUtil;
-import org.zoxweb.shared.util.DomainID;
-import org.zoxweb.shared.util.SharedUtil;
+
+
 
 @SuppressWarnings("serial")
 public abstract class ShiroDomainDAO
-	extends SetNameDescriptionDAO
-	implements  DomainID<String>, ShiroDAO
+	extends AppIDDAO
+	implements  ShiroDAO
 {
 	
-	private static final NVConfig NVC_DOMAIN_ID =  NVConfigManager.createNVConfig("domain_id", null,"DomainID",true, false, String.class);
+	//private static final NVConfig NVC_DOMAIN_ID =  NVConfigManager.createNVConfig("domain_id", null,"DomainID",true, false, String.class);
 	
-	public static final NVConfigEntity NVC_SHIRO_DOMAIN_DAO = new NVConfigEntityLocal("shiro_domain_dao", null , "ShiroDomainDAO", false, true, false, false, ShiroDomainDAO.class, SharedUtil.toNVConfigList(NVC_DOMAIN_ID), null, false, SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO);//,SharedUtil.extractNVConfigs( new Params[]{Params.REFERENCE_ID, Params.NAME, Params.LENGTH}));
+	//public static final NVConfigEntity NVC_SHIRO_DOMAIN_APP_DAO = new NVConfigEntityLocal("shiro_domain_app_dao", null , "ShiroDomainAPPDAO", false, true, false, false, ShiroDomainDAO.class, SharedUtil.toNVConfigList(DataParam.DOMAIN_ID.getNVConfig()), null, false, AppIDDAO.NVC_APP_ID_DAO);//,SharedUtil.extractNVConfigs( new Params[]{Params.REFERENCE_ID, Params.NAME, Params.LENGTH}));
 	
 	
 	protected ShiroDomainDAO(NVConfigEntity nvce) 
@@ -41,15 +39,6 @@ public abstract class ShiroDomainDAO
 		super(nvce);
 	}
 	
-	public String getDomainID()
-	{
-		return lookupValue(NVC_DOMAIN_ID);
-	}
-	
-	public void setDomainID(String domainID)
-	{
-		setValue(NVC_DOMAIN_ID, SharedStringUtil.toLowerCase( domainID));
-	}
 	
 	public void setName(String name)
 	{
@@ -72,14 +61,23 @@ public abstract class ShiroDomainDAO
 			{
 				return getReferenceID().equals(to.getReferenceID());
 			}
+			
+			if (getSubjectID() != null && to.getSubjectID() != null)
+			{
+				return getSubjectID().equals(to.getSubjectID());
+			}
 		}
 		return false;
-	}
-
-	@Override
+	}	
+	
+	
+	
 	public String toString()
 	{
-		return toCanonicalID();
+		return getSubjectID();
 	}
+	
+	
+	
 	
 }

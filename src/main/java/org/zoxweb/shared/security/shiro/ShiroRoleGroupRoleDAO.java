@@ -23,12 +23,12 @@ public class ShiroRoleGroupRoleDAO
 
 	public ShiroRoleGroupRoleDAO()
 	{
-		super( ShiroAssociationType.ROLE_TO_ROLEGROUP, null, null);
+		super(ShiroAssociationType.ROLE_TO_ROLEGROUP, null, null);
 	}
 	
-	public ShiroRoleGroupRoleDAO( ShiroRoleGroupDAO roleGroup, ShiroRoleDAO role)
+	public ShiroRoleGroupRoleDAO(ShiroRoleGroupDAO roleGroup, ShiroRoleDAO role)
 	{
-		super( ShiroAssociationType.ROLE_TO_ROLEGROUP, roleGroup, role);
+		super(ShiroAssociationType.ROLE_TO_ROLEGROUP, roleGroup, role);
 	}
 
 	public ShiroRoleDAO getRole()
@@ -49,15 +49,5 @@ public class ShiroRoleGroupRoleDAO
 		setAssociatedTo( roleGroup);
 	}
 
-	@Override
-	public String getAccountID()
-    {
-		return null;
-	}
-
-	@Override
-	public void setAccountID(String accountID) {
-
-	}
 
 }
