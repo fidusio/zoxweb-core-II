@@ -350,4 +350,6 @@ public interface APIDataStore<ST>
 			throws NullPointerException, IllegalArgumentException, AccessException, APIException;
 	long nextSequenceValue(String sequenceName, long increment)
 			throws NullPointerException, IllegalArgumentException, AccessException, APIException;
+	
+	boolean isValidReferenceID(String refID);
 }

@@ -66,6 +66,17 @@ public interface ShiroRealmDAOManager
 	 */
 	public ShiroRoleDAO addRole(ShiroRoleDAO role)
         throws NullPointerException, IllegalArgumentException, AccessException;
+	
+	/**
+	 * Lookup for a role based on the role ID which can either be ref_id or the role subject id
+	 * @param roleID
+	 * @return the matching role or null if not found
+	 * @throws NullPointerException
+	 * @throws IllegalArgumentException
+	 * @throws AccessException
+	 */
+	public ShiroRoleDAO lookupRole(String roleID)
+			throws NullPointerException, IllegalArgumentException, AccessException;
 
 	/**
 	 * Delete a role.
@@ -133,6 +144,17 @@ public interface ShiroRealmDAOManager
 	 */
 	public ShiroPermissionDAO addPermission(ShiroPermissionDAO permission)
         throws NullPointerException, IllegalArgumentException, AccessException;
+	
+	/**
+	 * Lookup permission based on the permission permission ID which can either be ref_id or the permission subject id
+	 * @param permissionID
+	 * @return
+	 * @throws NullPointerException
+	 * @throws IllegalArgumentException
+	 * @throws AccessException
+	 */
+	public ShiroPermissionDAO lookupPermission(String permissionID)
+			throws NullPointerException, IllegalArgumentException, AccessException;
 
 	/**
 	 * Delete a permission
