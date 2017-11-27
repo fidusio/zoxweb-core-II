@@ -33,6 +33,7 @@ public interface APISecurityManager<S>
 	 String getCurrentUserID();
 	 
 	 S getDaemonSubject();
+	 void setDaemonSubject(S subject);
 	 
 	 boolean isNVEntityAccessible(NVEntity nve, CRUD ...permissions);
 	 
