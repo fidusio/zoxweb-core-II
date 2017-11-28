@@ -10,7 +10,7 @@ import org.zoxweb.shared.util.NVConfigManager;
 import org.zoxweb.shared.util.SharedUtil;
 
 @SuppressWarnings("serial")
-public class JWTDAO
+public class JWTToken
 extends SetNameDescriptionDAO
 {
 	public enum Param
@@ -18,7 +18,7 @@ extends SetNameDescriptionDAO
 	{
 		JWT(NVConfigManager.createNVConfigEntity("jwt", "JWT object", "JWT", true, false, JWT.class, null)),
 		TOKEN(NVConfigManager.createNVConfig("token", "Original token", "Token", true, false, String.class)),
-		SECRET(NVConfigManager.createNVConfig("secret", "The secret to validate the token", "Secret", true, false, byte[].class)),
+
 		;
 		
 		private final NVConfig nvc;
@@ -41,7 +41,7 @@ extends SetNameDescriptionDAO
 																				false, 
 																				false, 
 																				false, 
-																				JWTDAO.class, 
+																				JWTToken.class, 
 																				SharedUtil.extractNVConfigs(Param.values()), 
 																				null, 
 																				false, 
@@ -52,18 +52,16 @@ extends SetNameDescriptionDAO
 	
 	
 	
-	public JWTDAO()
+	public JWTToken()
 	{
 		super(NVC_JWT_TOKEN);
 	}
 
-	public JWTDAO(JWT jwt, String token, byte secret[])
+	public JWTToken(JWT jwt, String token)
 	{
 		this();
 		setJWT(jwt);
 		setToken(token);
-		setSecret(secret);
-
 	}
 	
 	
@@ -87,13 +85,5 @@ extends SetNameDescriptionDAO
 		setValue(Param.TOKEN, token);
 	}
 	
-	public byte[] getSecret()
-	{
-		return lookupValue(Param.SECRET);
-	}
 	
-	public void setSecret(byte[] secret)
-	{
-		setValue(Param.SECRET, secret);
-	}
 }

@@ -31,7 +31,7 @@ public class JWT
 extends SetNameDescriptionDAO
 {
 
-	public enum JWTToken
+	public enum JWTField
 	{
 		HEADER,
 		PAYLOAD,

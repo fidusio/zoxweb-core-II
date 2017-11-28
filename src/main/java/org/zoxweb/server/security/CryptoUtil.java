@@ -63,7 +63,7 @@ import org.zoxweb.shared.security.JWTHeader;
 import org.zoxweb.shared.security.JWTPayload;
 import org.zoxweb.shared.security.KeyStoreInfoDAO;
 import org.zoxweb.shared.security.JWT;
-import org.zoxweb.shared.security.JWT.JWTToken;
+import org.zoxweb.shared.security.JWT.JWTField;
 import org.zoxweb.shared.util.Const;
 import org.zoxweb.shared.util.NVGenericMap;
 import org.zoxweb.shared.util.SharedBase64;
@@ -806,16 +806,16 @@ public class CryptoUtil
 		{
 		case HS256:
 			SharedUtil.checkIfNulls("Null key", key);
-			if (tokens.length != JWTToken.values().length) {
+			if (tokens.length != JWTField.values().length) {
 				throw new SecurityException("Invalid token");
 			}
 			Mac sha256HMAC = Mac.getInstance(HMAC_SHA_256);
 			SecretKeySpec secret_key = new SecretKeySpec(key, HMAC_SHA_256);
 			sha256HMAC.init(secret_key);
-			sha256HMAC.update(SharedStringUtil.getBytes(tokens[JWTToken.HEADER.ordinal()]));
+			sha256HMAC.update(SharedStringUtil.getBytes(tokens[JWTField.HEADER.ordinal()]));
 
 			sha256HMAC.update((byte) '.');
-			byte[] b64Hash = sha256HMAC.doFinal(SharedStringUtil.getBytes(tokens[JWTToken.PAYLOAD.ordinal()]));
+			byte[] b64Hash = sha256HMAC.doFinal(SharedStringUtil.getBytes(tokens[JWTField.PAYLOAD.ordinal()]));
 			
 			
 			if (!SharedBase64.encodeAsString(Base64Type.URL, b64Hash).equals(jwt.getHash())) {
@@ -823,7 +823,7 @@ public class CryptoUtil
 			}
 			break;
 		case none:
-			if (tokens.length != JWTToken.values().length -1) {
+			if (tokens.length != JWTField.values().length -1) {
 				throw new SecurityException("Invalid token");
 			}
 			break;
@@ -846,8 +846,8 @@ public class CryptoUtil
 			throw new IllegalArgumentException("Invalid token JWT token");
 		}
 		
-		jwtHeader = GSONUtil.fromJSON(SharedBase64.decodeAsString(Base64Type.URL,tokens[JWTToken.HEADER.ordinal()]), JWTHeader.class);
-		NVGenericMap nvgmPayload = GSONUtil.fromJSONGenericMap(SharedBase64.decodeAsString(Base64Type.URL,tokens[JWTToken.PAYLOAD.ordinal()]), JWTPayload.NVC_JWT_PAYLOAD, Base64Type.URL);
+		jwtHeader = GSONUtil.fromJSON(SharedBase64.decodeAsString(Base64Type.URL,tokens[JWTField.HEADER.ordinal()]), JWTHeader.class);
+		NVGenericMap nvgmPayload = GSONUtil.fromJSONGenericMap(SharedBase64.decodeAsString(Base64Type.URL,tokens[JWTField.PAYLOAD.ordinal()]), JWTPayload.NVC_JWT_PAYLOAD, Base64Type.URL);
 		if (nvgmPayload == null)
 			throw new SecurityException("Invalid JWT");
 		
@@ -867,14 +867,14 @@ public class CryptoUtil
 		switch(jwtHeader.getJWTAlgorithm())
 		{
 		case HS256:
-			if (tokens.length !=  JWTToken.values().length)
+			if (tokens.length !=  JWTField.values().length)
 			{
 				throw new IllegalArgumentException("Invalid token JWT token length expected 3");
 			}
-			ret.setHash(tokens[JWTToken.HASH.ordinal()]);
+			ret.setHash(tokens[JWTField.HASH.ordinal()]);
 			break;
 		case none:
-			if (tokens.length !=  JWTToken.values().length -1)
+			if (tokens.length !=  JWTField.values().length -1)
 			{
 				throw new IllegalArgumentException("Invalid token JWT token length expected 2");
 			}
