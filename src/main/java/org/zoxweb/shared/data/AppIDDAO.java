@@ -165,10 +165,14 @@ public class AppIDDAO
                 return true;
             }
         }
-
-
         return false;
     }
+    
+    
+    public String toString()
+	{
+		return getSubjectID();
+	}
 
     @Override
     public int hashCode() {
@@ -206,9 +210,7 @@ public class AppIDDAO
 
 	public String toCanonicalID()
 	{
-		
-		return SharedUtil.toCanonicalID(':', getDomainID(), getAppID(), getName());
-		
+		return SharedUtil.toCanonicalID(':', getDomainID(), getAppID());	
 	}
 
 }

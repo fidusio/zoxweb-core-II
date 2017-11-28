@@ -25,6 +25,7 @@ import org.zoxweb.shared.http.HTTPAuthorizationType;
 import org.zoxweb.shared.http.HTTPHeaderName;
 import org.zoxweb.shared.http.HTTPMimeType;
 import org.zoxweb.shared.security.JWT;
+import org.zoxweb.shared.security.JWTDAO;
 import org.zoxweb.shared.util.ArrayValues;
 import org.zoxweb.shared.util.GetNameValue;
 import org.zoxweb.shared.util.NVGetNameValueList;
@@ -52,7 +53,7 @@ public class HTTPRequestAttributes
 	private final String pathInfo;
 	private final String uri;
 	
-	private JWT jwt = null;
+	private JWTDAO jwtDAO = null;
 	
 	@SuppressWarnings("unchecked")
 	public HTTPRequestAttributes(String uri,
@@ -81,7 +82,10 @@ public class HTTPRequestAttributes
 			{
 				try
 				{
-					jwt = CryptoUtil.parseJWT(((HTTPAuthenticationBearer)temp).getToken());
+					JWT jwt = CryptoUtil.parseJWT(((HTTPAuthenticationBearer)temp).getToken());
+					jwtDAO = new JWTDAO();
+					jwtDAO.setJWT(jwt);
+					jwtDAO.setToken(((HTTPAuthenticationBearer)temp).getToken());
 				}
 				catch (Exception e)
 				{
@@ -179,9 +183,9 @@ public class HTTPRequestAttributes
 	}
 	
 	
-	public JWT getJWT()
+	public JWTDAO getJWTDAO()
 	{
-		return jwt;
+		return jwtDAO;
 	}
 
 	public String getURI() {

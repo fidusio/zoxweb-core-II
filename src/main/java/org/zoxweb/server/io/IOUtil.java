@@ -25,7 +25,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.RandomAccessFile;
-
+import java.io.Reader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.file.Files;
@@ -197,6 +197,27 @@ public class IOUtil
 
 		return sb.toString();
 	}
+	
+	public static String readerToString(Reader is, boolean close) 
+	        throws IOException
+		{
+			char buffer[] = new char[4096];
+			StringBuilder sb = new StringBuilder();
+			int read;
+
+			while ((read = is.read(buffer, 0, buffer.length)) > 0)
+			{
+				sb.append(buffer, 0, read);
+			}
+			
+			if ( close)
+			{
+				close(is);
+			}
+
+			return sb.toString();
+		}
+	
 	
 	/**
 	 * Read the all the content of an input stream and return it as a byte array

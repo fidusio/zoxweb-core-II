@@ -20,6 +20,7 @@ import org.zoxweb.shared.data.DataConst.DataParam;
 
 import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.SharedStringUtil;
+import org.zoxweb.shared.util.SharedUtil;
 
 
 
@@ -70,14 +71,10 @@ public abstract class ShiroDomainDAO
 		return false;
 	}	
 	
-	
-	
-	public String toString()
+	public String toCanonicalID()
 	{
-		return getSubjectID();
+		return SharedUtil.toCanonicalID(':', getDomainID(), getAppID(), getName());	
 	}
-	
-	
 	
 	
 }
