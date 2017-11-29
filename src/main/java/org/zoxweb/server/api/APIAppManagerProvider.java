@@ -2,7 +2,7 @@ package org.zoxweb.server.api;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.HashMap;
+
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
@@ -49,7 +49,7 @@ public class APIAppManagerProvider
     private volatile APIDataStore<?> dataStore;
     private volatile APISecurityManager<?> apiSecurityManager;
 
-    private HashMap<String, SubjectAPIKey> cache = new HashMap<String, SubjectAPIKey>();
+    //private HashMap<String, SubjectAPIKey> cache = new HashMap<String, SubjectAPIKey>();
 	private static final transient Logger log = Logger.getLogger(APIAppManagerProvider.class.getName());
     
 
@@ -119,20 +119,25 @@ public class APIAppManagerProvider
             subjectAPIKey.setStatus(Status.ACTIVE);
         }
 
-        subjectAPIKey = dataStore.insert(subjectAPIKey);
+        subjectAPIKey = getAPIDataStore().insert(subjectAPIKey);
 
-        synchronized (cache) {
-            cache.put(subjectAPIKey.getSubjectID(), subjectAPIKey);
-        }
+        
 
         return subjectAPIKey;
     }
 
     
-    public  UserIDDAO lookupUserID(String subjectID, String ...params)
+    public UserIDDAO lookupUserID(String subjectID, String ...params)
 			throws NullPointerException, IllegalArgumentException, AccessException, APIException
 	{
-		SharedUtil.checkIfNulls("subjectID null", subjectID);
+    	return lookupUserID(getAPIDataStore(), subjectID, params);
+	}
+    
+    
+    public static UserIDDAO lookupUserID(APIDataStore<?> dataStore, String subjectID, String ...params)
+			throws NullPointerException, IllegalArgumentException, AccessException, APIException
+	{
+		SharedUtil.checkIfNulls("subjectID null", dataStore, subjectID);
 		QueryMatch<?> query = null;
 		if (FilterType.EMAIL.isValid(subjectID))
 		{
@@ -167,11 +172,12 @@ public class APIAppManagerProvider
 		return listOfUserIDDAO.get(0);
 
 	}
+    
 	
-	public  UserIDDAO lookupUserID(GetValue<String> subjectID, String ...params)
+	public UserIDDAO lookupUserID(GetValue<String> subjectID, String ...params)
 			throws NullPointerException, IllegalArgumentException, AccessException
 	{
-		SharedUtil.checkIfNulls("DB or user ID null", dataStore, subjectID);
+		SharedUtil.checkIfNulls("DB or user ID null", subjectID);
 		return lookupUserID(subjectID.getValue(), params);
 	}
 	
@@ -204,7 +210,7 @@ public class APIAppManagerProvider
 		
 		// special case to avoid chicken and egg situation
 		
-		String userIDRef = dataStore.getIDGenerator().generateID();
+		String userIDRef = getAPIDataStore().getIDGenerator().generateID();
 		apiSecurityManager.associateNVEntityToSubjectUserID(userID, userIDRef);
 		userID.setReferenceID(userIDRef);
 		userID.getUserInfo().setReferenceID(userIDRef);
@@ -213,9 +219,9 @@ public class APIAppManagerProvider
 		try
 		{
 			// insert the user_info dao first
-			dataStore.insert(userID.getUserInfo());
+			getAPIDataStore().insert(userID.getUserInfo());
 			
-			dataStore.insert(userID);
+			getAPIDataStore().insert(userID);
 			
 			UserIDCredentialsDAO userIDCredentials = new UserIDCredentialsDAO();
 			userIDCredentials.setReferenceID(userID.getReferenceID());
@@ -245,11 +251,11 @@ public class APIAppManagerProvider
 			}
 			
 			
-			dataStore.insert(userIDCredentials);
+			getAPIDataStore().insert(userIDCredentials);
 			userIDCredentials.getPassword().setReferenceID(userIDCredentials.getReferenceID());
-			dataStore.update(userIDCredentials);
+			getAPIDataStore().update(userIDCredentials);
 			// create the user master key
-			dataStore.insert(KeyMakerProvider.SINGLETON.createUserIDKey(userID, KeyMakerProvider.SINGLETON.getMasterKey()));
+			getAPIDataStore().insert(KeyMakerProvider.SINGLETON.createUserIDKey(userID, KeyMakerProvider.SINGLETON.getMasterKey()));
 			
 			// removed for now created during login
 			// MN 2014-12-23
@@ -280,9 +286,9 @@ public class APIAppManagerProvider
 		}
 		// delete a user requires the following
 		// delete the associated UserInfoDOA, UserIDCredentialsDAO and the encrypted key dao associated with the user id
-		dataStore.delete(userID, true);
-		dataStore.delete(UserIDCredentialsDAO.NVC_USER_ID_CREDENTIALS_DAO,  new QueryMatch<String>(RelationalOperator.EQUAL, userID.getReferenceID(), MetaToken.REFERENCE_ID));
-		dataStore.delete(EncryptedKeyDAO.NVCE_ENCRYPTED_KEY_DAO,  new QueryMatch<String>(RelationalOperator.EQUAL, userID.getReferenceID(), MetaToken.REFERENCE_ID));
+		getAPIDataStore().delete(userID, true);
+		getAPIDataStore().delete(UserIDCredentialsDAO.NVC_USER_ID_CREDENTIALS_DAO,  new QueryMatch<String>(RelationalOperator.EQUAL, userID.getReferenceID(), MetaToken.REFERENCE_ID));
+		getAPIDataStore().delete(EncryptedKeyDAO.NVCE_ENCRYPTED_KEY_DAO,  new QueryMatch<String>(RelationalOperator.EQUAL, userID.getReferenceID(), MetaToken.REFERENCE_ID));
 		
 		// TODO check if a user is logged in and invalidate his current session
 		
@@ -294,9 +300,7 @@ public class APIAppManagerProvider
     public void deleteSubjectAPIKey(String subjectID)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException {
 
-        synchronized (cache) {
-            cache.remove(subjectID);
-        }
+    	delete(lookupSubjectAPIKey(subjectID, true));
 
     }
 
@@ -304,22 +308,20 @@ public class APIAppManagerProvider
     public void deleteSubjectAPIKey(SubjectAPIKey subjectAPIKey)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException {
 
-        if (subjectAPIKey != null) {
-            deleteSubjectAPIKey(subjectAPIKey.getUserID());
-        }
+        delete(subjectAPIKey);
     }
 
     
     @SuppressWarnings("unchecked")
 	public 	<V extends SubjectAPIKey> V  lookupSubjectAPIKey(String subjectID, boolean throwExceptionIfNotFound)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException {
-    	List<SubjectAPIKey> result = dataStore.search(AppDeviceDAO.NVC_APP_DEVICE_DAO, 
+    	List<SubjectAPIKey> result = getAPIDataStore().search(AppDeviceDAO.NVC_APP_DEVICE_DAO, 
     			null, 
     			new QueryMatchString(RelationalOperator.EQUAL, subjectID, SubjectAPIKey.Param.API_KEY));
     	
     	if (result == null || result.size() == 0)
     	{
-    		result = dataStore.search(SubjectAPIKey.NVC_SUBJECT_API_KEY, 
+    		result = getAPIDataStore().search(SubjectAPIKey.NVC_SUBJECT_API_KEY, 
         			null, 
         			new QueryMatchString(RelationalOperator.EQUAL, subjectID, SubjectAPIKey.Param.API_KEY));
     		
@@ -341,9 +343,7 @@ public class APIAppManagerProvider
   
     public void updateSubjectAPIKey(SubjectAPIKey subjectAPIKey)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException {
-        synchronized (cache) {
-            cache.put(subjectAPIKey.getSubjectID(), subjectAPIKey);
-        }
+        
 
     }
 
@@ -442,7 +442,7 @@ public class APIAppManagerProvider
 
         UserIDDAO ret = null;
 
-        List<UserIDDAO> result = dataStore.search(UserIDDAO.NVC_USER_ID_DAO, null,
+        List<UserIDDAO> result = getAPIDataStore().search(UserIDDAO.NVC_USER_ID_DAO, null,
                 new QueryMatchString(RelationalOperator.EQUAL, subjectID, UserIDDAO.Param.PRIMARY_EMAIL)
         );
 
@@ -468,7 +468,7 @@ public class APIAppManagerProvider
 
         UserPreferenceDAO ret = null;
 
-        List<UserPreferenceDAO> result = dataStore.search(UserPreferenceDAO.NVC_USER_PREFERENCE_DAO, null,
+        List<UserPreferenceDAO> result = getAPIDataStore().search(UserPreferenceDAO.NVC_USER_PREFERENCE_DAO, null,
                 new QueryMatchString(RelationalOperator.EQUAL, userIDDAO.getReferenceID(), MetaToken.USER_ID),
                 LogicalOperator.AND,
                 new QueryMatchString(RelationalOperator.EQUAL, appIDDAO.getReferenceID(), UserPreferenceDAO.Param.APP_ID.getNVConfig(), MetaToken.REFERENCE_ID)
@@ -508,8 +508,10 @@ public class APIAppManagerProvider
 
    
     public <V extends NVEntity> boolean delete(V nve)
-            throws NullPointerException, IllegalArgumentException, AccessException, APIException {
-        return false;
+            throws NullPointerException, IllegalArgumentException, AccessException, APIException 
+    {
+    	return getAPIDataStore().delete(nve, false);
+        
     }
 
    
@@ -527,7 +529,7 @@ public class APIAppManagerProvider
         appID =  AppIDNameFilter.SINGLETON.validate(appID);
         
 
-        List<AppIDDAO> result = dataStore.search(AppIDDAO.NVC_APP_ID_DAO, null,
+        List<AppIDDAO> result = getAPIDataStore().search(AppIDDAO.NVC_APP_ID_DAO, null,
                 new QueryMatchString(RelationalOperator.EQUAL, domainID, AppIDDAO.Param.DOMAIN_ID),
                 LogicalOperator.AND,
                 new QueryMatchString(RelationalOperator.EQUAL, appID, AppIDDAO.Param.APP_ID));
@@ -598,7 +600,7 @@ public class APIAppManagerProvider
             userPreferenceDAO.setUserID(userIDDAO.getReferenceID());
             userPreferenceDAO.setAppIDDAO(appIDDAO);
 
-            dataStore.insert(userPreferenceDAO);
+            getAPIDataStore().insert(userPreferenceDAO);
         }
 
         // Create AppDeviceDAO
@@ -618,7 +620,7 @@ public class APIAppManagerProvider
     	{
     		ret = new AppIDDAO(domainID, appID);
  
-    		ret = dataStore.insert(ret);
+    		ret = getAPIDataStore().insert(ret);
     	}
     	
     	return ret;
