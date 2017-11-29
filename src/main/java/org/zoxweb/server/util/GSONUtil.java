@@ -1093,6 +1093,13 @@ final public class GSONUtil
 		return fromJSON(json, null, null);
 	}
 	
+	
+	public static <V extends NVEntity> V fromJSON(byte[] json) 
+	        throws InstantiationException, IllegalAccessException, ClassNotFoundException
+	    {
+			return fromJSON(SharedStringUtil.toString(json), null, null);
+		}
+	
 	public static Map<String, ?> fromJSONMap(String json, Base64Type b64Type) 
         throws InstantiationException, IllegalAccessException, ClassNotFoundException
     {
