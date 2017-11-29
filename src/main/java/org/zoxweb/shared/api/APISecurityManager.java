@@ -28,9 +28,12 @@ public interface APISecurityManager<S>
 	 
 	 void associateNVEntityToSubjectUserID(NVEntity nve, String userID);
 	 
-	 String getCurrentPrincipal();
+	 String currentSubjectID();
 	 
-	 String getCurrentUserID();
+	 String currentUserID();
+	 
+	 String currentDomainID();
+	 String currentAppID();
 	 
 	 S getDaemonSubject();
 	 void setDaemonSubject(S subject);
