@@ -192,21 +192,21 @@ public class AppIDDAO
         return super.hashCode();
     }
 
-	@Override
-	public String getAppGID()
-	{
-		// TODO Auto-generated method stub
-		return getGlobalID();
-	}
-
-	@Override
-	@Deprecated
-	public void setAppGID(String appGID)
-		throws UnsupportedOperationException
-	{
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Not supported");
-	}
+//	@Override
+//	public String getAppGID()
+//	{
+//		// TODO Auto-generated method stub
+//		return getGlobalID();
+//	}
+//
+//	@Override
+//	@Deprecated
+//	public void setAppGID(String appGID)
+//		throws UnsupportedOperationException
+//	{
+//		// TODO Auto-generated method stub
+//		throw new UnsupportedOperationException("Not supported");
+//	}
 
 	public String toCanonicalID()
 	{

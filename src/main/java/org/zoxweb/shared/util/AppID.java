@@ -5,8 +5,8 @@ package org.zoxweb.shared.util;
  */
 public interface AppID<T>
         extends DomainID<T>,
-                SubjectID<T>,
-                AppGlobalID<T>
+                SubjectID<T>
+                //AppGlobalID<T>
 {
 
 
