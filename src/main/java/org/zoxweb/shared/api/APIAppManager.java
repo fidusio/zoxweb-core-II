@@ -229,21 +229,11 @@ public interface APIAppManager
      */
 	void resetPassword(String subjectID)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException;
-	/**
-	 * Update the user password
-	 * @param oldPassword
-	 * @param newPassword
-	 * @throws NullPointerException
-	 * @throws IllegalArgumentException
-	 * @throws AccessException
-	 * @throws APIException
-	 */
-	void updatePassword(String oldPassword, String newPassword)
-			 throws NullPointerException, IllegalArgumentException, AccessException, APIException;
+	
+	
 
     /**
      * Change password.
-     * @param subjectID
      * @param oldPassword
      * @param newPassword
      * @throws NullPointerException
@@ -251,7 +241,7 @@ public interface APIAppManager
      * @throws AccessException
      * @throws APIException
      */
-	void changePassword(String subjectID, String oldPassword, String newPassword)
+	void changePassword(String oldPassword, String newPassword)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException;
 
     /**

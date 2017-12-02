@@ -484,9 +484,34 @@ public class APIAppManagerProvider
     }
 
  
-    public void changePassword(String subjectID, String oldPassword, String newPassword)
+    public void changePassword(String oldPassword, String newPassword)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException {
-
+    	newPassword = FilterType.PASSWORD.validate(newPassword);
+    	// make the user is logged in
+    	String userID = getAPISecurityManager().currentUserID();
+    	
+    	List<UserIDCredentialsDAO>  ret= getAPIDataStore().search(UserIDCredentialsDAO.NVC_USER_ID_CREDENTIALS_DAO, null, new QueryMatchString(RelationalOperator.EQUAL, userID, UserIDCredentialsDAO.NVC_REFERENCE_ID));
+    	if (ret == null || ret.size() != 1)
+    	{
+    		throw new AccessException("User not found");
+    	}
+    	
+    	
+    	UserIDCredentialsDAO credentials = ret.get(0);
+    	// validate the old password
+    	CryptoUtil.validatePassword(credentials.getPassword(), oldPassword);
+    	
+    	try 
+    	{
+			PasswordDAO newPasswordDAO = CryptoUtil.hashedPassword(MDType.SHA_512, 0, 8196, newPassword);
+			credentials.setPassword(newPasswordDAO);
+			getAPIDataStore().update(credentials);
+			
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			throw new AccessException("Invalid new Password");
+		}
+    	
     }
 
   
@@ -612,41 +637,6 @@ public class APIAppManagerProvider
         return appDeviceDAO;
     }
     
-    
-    
-    public void updatePassword(String oldPassword, String newPassword)
-			 throws NullPointerException, IllegalArgumentException, AccessException, APIException
-	{
-    	
-    	newPassword = FilterType.PASSWORD.validate(newPassword);
-    	// make the user is logged in
-    	String userID = getAPISecurityManager().currentUserID();
-    	
-    	List<UserIDCredentialsDAO>  ret= getAPIDataStore().search(UserIDCredentialsDAO.NVC_USER_ID_CREDENTIALS_DAO, null, new QueryMatchString(RelationalOperator.EQUAL, userID, UserIDCredentialsDAO.NVC_REFERENCE_ID));
-    	if (ret == null || ret.size() != 1)
-    	{
-    		throw new AccessException("User not found");
-    	}
-    	
-    	
-    	UserIDCredentialsDAO credentials = ret.get(0);
-    	// validate the old password
-    	CryptoUtil.validatePassword(credentials.getPassword(), oldPassword);
-    	
-    	try 
-    	{
-			PasswordDAO newPasswordDAO = CryptoUtil.hashedPassword(MDType.SHA_512, 0, 8196, newPassword);
-			credentials.setPassword(newPasswordDAO);
-			getAPIDataStore().update(credentials);
-			
-		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
-			throw new AccessException("Invalid new Password");
-		}
-    	
-    	
-    	
-	}
     
     
     
