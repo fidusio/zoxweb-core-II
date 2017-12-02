@@ -23,6 +23,7 @@ import org.zoxweb.shared.crypto.PasswordDAO;
 import org.zoxweb.shared.crypto.CryptoConst.MDType;
 import org.zoxweb.shared.data.AppDeviceDAO;
 import org.zoxweb.shared.data.AppIDDAO;
+import org.zoxweb.shared.data.DeviceDAO;
 import org.zoxweb.shared.data.UserIDDAO;
 import org.zoxweb.shared.data.UserInfoDAO;
 import org.zoxweb.shared.data.UserPreferenceDAO;
@@ -119,12 +120,38 @@ public class APIAppManagerProvider
         if (subjectAPIKey.getStatus() == null) {
             subjectAPIKey.setStatus(Status.ACTIVE);
         }
+        
+        if (subjectAPIKey instanceof AppDeviceDAO)
+        {
+        	AppDeviceDAO temp = (AppDeviceDAO) subjectAPIKey;
+        	DeviceDAO device = lookupDeviceDAO(temp.getDevice().getDeviceID());
+        	if(device != null)
+        	{
+        		temp.getDevice().setReferenceID(device.getReferenceID());
+        		temp.getDevice().setUserID(getAPISecurityManager().currentUserID());
+        	}
+        }
 
         subjectAPIKey = getAPIDataStore().insert(subjectAPIKey);
 
         
 
         return subjectAPIKey;
+    }
+    
+    
+    public DeviceDAO lookupDeviceDAO(String deviceID)
+    {
+    	 SharedUtil.checkIfNulls("Null SubjectAPIKey", deviceID);
+    	 List<DeviceDAO> ret = getAPIDataStore().search(DeviceDAO.NVC_DEVICE_DAO, null, new QueryMatchString(RelationalOperator.EQUAL, deviceID, DeviceDAO.Param.DEVICE_ID));
+    	 
+    	 if(ret != null && ret.size() == 1)
+    	 {
+    		 return ret.get(0);
+    	 }
+    	 
+    	 
+    	 return null;
     }
 
     
