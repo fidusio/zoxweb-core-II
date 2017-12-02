@@ -34,6 +34,7 @@ import org.zoxweb.shared.security.AccessException;
 import org.zoxweb.shared.security.AccessSecurityException;
 import org.zoxweb.shared.security.JWT;
 import org.zoxweb.shared.security.SubjectAPIKey;
+import org.zoxweb.shared.security.model.SecurityModel;
 import org.zoxweb.shared.util.Const.LogicalOperator;
 import org.zoxweb.shared.util.Const.RelationalOperator;
 import org.zoxweb.shared.util.Const.Status;
@@ -211,7 +212,7 @@ public class APIAppManagerProvider
 		// special case to avoid chicken and egg situation
 		
 		String userIDRef = getAPIDataStore().getIDGenerator().generateID();
-		apiSecurityManager.associateNVEntityToSubjectUserID(userID, userIDRef);
+		getAPISecurityManager().associateNVEntityToSubjectUserID(userID, userIDRef);
 		userID.setReferenceID(userIDRef);
 		userID.getUserInfo().setReferenceID(userIDRef);
 		////////////////////////
@@ -277,6 +278,7 @@ public class APIAppManagerProvider
 		
 		// crutial permission check
 		// of the super admin can delete user
+		getAPISecurityManager().checkPermissions(SecurityModel.Permission.DELETE_USER.getValue());
 		
 		SharedUtil.checkIfNulls("subjectID null", subjectID);
 		UserIDDAO userID = lookupUserID(subjectID);
@@ -588,7 +590,7 @@ public class APIAppManagerProvider
         	userIDDAO = createUserIDDAO(userIDDAO, UserStatus.ACTIVE, password);
         }
 
-        apiSecurityManager.login(subjectID, password, appIDDAO.getDomainID(), appIDDAO.getAppID(), false);
+        getAPISecurityManager().login(subjectID, password, appIDDAO.getDomainID(), appIDDAO.getAppID(), false);
         
       
         
@@ -612,8 +614,10 @@ public class APIAppManagerProvider
     
     
     public AppIDDAO createAppIDDAO(String domainID, String appID)
+    		throws NullPointerException, IllegalArgumentException, AccessException, APIException
     {
     	
+    	getAPISecurityManager().checkPermissions(SecurityModel.Permission.CREATE_APP_ID.getValue());
     	// permission super admin only
     	AppIDDAO ret = lookupAppIDDAO(domainID, appID, false);
     	if (ret == null)

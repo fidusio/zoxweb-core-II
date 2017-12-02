@@ -6,6 +6,7 @@ import org.zoxweb.shared.util.AppID;
 import org.zoxweb.shared.util.GetDescription;
 import org.zoxweb.shared.util.GetName;
 import org.zoxweb.shared.util.GetNameValue;
+import org.zoxweb.shared.util.SharedUtil;
 
 public class SecurityModel
 {
@@ -24,6 +25,8 @@ public class SecurityModel
 		DELETE_ROLE("delete_role", "Permission to delete a role", "delete:role"),
 		CREATE_APP_ID("create_app_id", "Permission to create an app", "create:app:id"),
 		DELETE_APP_ID("delete_app_id", "Permission to delete an app", "delete:app:id"),
+		CREATE_USER("create_user", "Permission to create a user", "create:user"),
+		DELETE_USER("delete_user", "Permission to delete an app", "delete:user"),
 		;
 		private final String name;
 		private final String value;
@@ -52,9 +55,9 @@ public class SecurityModel
 		}
 		
 		
-		public ShiroPermissionDAO toPermission()
+		public ShiroPermissionDAO toPermission(String domainID, String appID)
 		{
-			return toPermission(getName(), getDescription(), getValue());
+			return toPermission(domainID, appID, getName(), getDescription(), getValue());
 		}
 		
 		
@@ -63,17 +66,18 @@ public class SecurityModel
 		 * @param gnv
 		 * @return
 		 */
-		public static ShiroPermissionDAO toPermission(GetNameValue<String> gnv)
+		public static ShiroPermissionDAO toPermission(String domainID, String appID, GetNameValue<String> gnv)
 		{
-			return toPermission(gnv.getName(), null,  gnv.getValue());
+			return toPermission(domainID, appID, gnv.getName(), null,  gnv.getValue());
 		}
 		
-		public static ShiroPermissionDAO toPermission(String name, String description, String pattern)
+		public static ShiroPermissionDAO toPermission(String domainID, String appID, String name, String description, String pattern)
 		{
 			ShiroPermissionDAO ret = new ShiroPermissionDAO();
 			ret.setName(name);
 			ret.setPermissionPattern(pattern);
 			ret.setDescription(description);
+			ret.setDomainAppID(domainID, appID);
 			return ret;
 			
 		}
@@ -82,8 +86,8 @@ public class SecurityModel
 	public enum Role
 	implements GetName, GetDescription
 	{
-		SUPER_ADMIN("super_admin", "Super admin role"),
-		DOMAIN_ADMIN("domain_admin", "domain admin role"),
+		SUPER_ADMIN("super_admin_role", "Super admin role"),
+		DOMAIN_ADMIN("domain_admin_role", "domain admin role"),
 		
 		;
 		private final String name;
@@ -137,9 +141,17 @@ public class SecurityModel
 			role.getPermissions().add(permission);
 			return role;
 		}
-
-
-		
+	}
 	
+	
+	public static String toSubjectID(String domainID, String appID, GetName gn)
+	{
+		return toSubjectID(domainID, appID, gn.getName());
+	}
+	
+	
+	public static String toSubjectID(String domainID, String appID, String name)
+	{
+		return SharedUtil.toCanonicalID(':', domainID, appID, name);
 	}
 }
