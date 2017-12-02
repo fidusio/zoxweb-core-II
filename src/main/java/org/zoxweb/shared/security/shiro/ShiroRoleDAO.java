@@ -61,6 +61,12 @@ public class ShiroRoleDAO
 		super(NVC_SHIRO_ROLE_DAO);
 	}
 	
+	
+	public ShiroRoleDAO(String domainID, String appID, String roleName)
+	{
+		this(domainID, appID, roleName, null);
+	}
+	
 	public ShiroRoleDAO(String domainID, String appID, String roleName, String description)
 	{
 		this();
