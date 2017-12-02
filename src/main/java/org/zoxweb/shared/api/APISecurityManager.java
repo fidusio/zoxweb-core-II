@@ -28,12 +28,20 @@ public interface APISecurityManager<S>
 	 
 	 void associateNVEntityToSubjectUserID(NVEntity nve, String userID);
 	 
-	 String currentSubjectID();
+	 String currentSubjectID()
+			 throws AccessException;
 	 
-	 String currentUserID();
+	 String currentUserID()
+			 throws AccessException;
 	 
-	 String currentDomainID();
-	 String currentAppID();
+	 String currentDomainID()
+			 throws AccessException;
+	 
+	 String currentAppID()
+			 throws AccessException;
+	 
+	 String currentJWTSubjectID()
+			 throws AccessException;
 	 
 	 S getDaemonSubject();
 	 void setDaemonSubject(S subject);
