@@ -84,10 +84,13 @@ public class SecurityModel
 	}
 	
 	public enum Role
-	implements GetName, GetDescription
+	    implements GetName, GetDescription
 	{
 		SUPER_ADMIN("super_admin_role", "Super admin role"),
 		DOMAIN_ADMIN("domain_admin_role", "domain admin role"),
+        APP_ADMIN("app_admin", "App admin role"),
+        APP_USER("app_user", "App user role"),
+        APP_SERVICE_PROVIDER("app_service_provider", "App service provider role"),
 		
 		;
 		private final String name;
@@ -100,18 +103,13 @@ public class SecurityModel
 			this.description = description;
 		}
 		
-		public String getName()
-		{
-			// TODO Auto-generated method stub
+		public String getName() {
 			return name;
 		}
 		
 		public String getDescription() {
-			// TODO Auto-generated method stub
 			return description;
 		}
-		
-		
 		
 		public ShiroRoleDAO toRole(AppID<String> appID)
 		{
