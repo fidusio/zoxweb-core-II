@@ -129,6 +129,7 @@ public class APIAppManagerProvider
         	{
         		temp.getDevice().setReferenceID(device.getReferenceID());
         		temp.getDevice().setUserID(getAPISecurityManager().currentUserID());
+        		temp.getDevice().setGlobalID(device.getGlobalID());
         	}
         }
 
