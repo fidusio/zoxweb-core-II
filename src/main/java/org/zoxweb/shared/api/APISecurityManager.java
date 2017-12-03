@@ -1,6 +1,7 @@
 package org.zoxweb.shared.api;
 
 import org.zoxweb.shared.security.AccessException;
+import org.zoxweb.shared.security.JWTToken;
 import org.zoxweb.shared.util.CRUD;
 import org.zoxweb.shared.util.Const.LogicalOperator;
 import org.zoxweb.shared.util.NVBase;
@@ -69,6 +70,7 @@ public interface APISecurityManager<S>
 			 throws NullPointerException, AccessException;
 	 
 	 S login(String subjectID, String credentials, String domainID, String appID, boolean autoLogin);
+	 S login(JWTToken jwtToken);
 	 
 	 void logout();
 	 

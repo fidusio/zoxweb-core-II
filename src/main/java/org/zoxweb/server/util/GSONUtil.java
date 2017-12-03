@@ -74,6 +74,7 @@ import org.zoxweb.shared.util.SharedBase64;
 import org.zoxweb.shared.util.SharedBase64.Base64Type;
 import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
+import org.zoxweb.shared.util.SubjectID;
 import org.zoxweb.shared.util.Const.GNVType;
 import org.zoxweb.shared.util.Const.LogicalOperator;
 
@@ -1542,6 +1543,11 @@ final public class GSONUtil
 				
 		}
 		
+		
+		if (nve instanceof SubjectID)
+		{
+			((SubjectID<?>) nve).getSubjectID();
+		}
 		return nve;
 	}
 	

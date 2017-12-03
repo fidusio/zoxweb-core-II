@@ -124,7 +124,7 @@ public class APIAppManagerProvider
         if (subjectAPIKey instanceof AppDeviceDAO)
         {
         	AppDeviceDAO temp = (AppDeviceDAO) subjectAPIKey;
-        	DeviceDAO device = lookupDeviceDAO(temp.getDevice().getDeviceID());
+        	DeviceDAO device = lookupDeviceDAO(temp.getDevice().getSubjectID());
         	if (device != null)
         	{
         		temp.getDevice().setReferenceID(device.getReferenceID());
@@ -150,7 +150,7 @@ public class APIAppManagerProvider
     public DeviceDAO lookupDeviceDAO(String deviceID)
     {
     	 SharedUtil.checkIfNulls("Null SubjectAPIKey", deviceID);
-    	 List<DeviceDAO> ret = getAPIDataStore().search(DeviceDAO.NVC_DEVICE_DAO, null, new QueryMatchString(RelationalOperator.EQUAL, deviceID, DeviceDAO.Param.DEVICE_ID));
+    	 List<DeviceDAO> ret = getAPIDataStore().search(DeviceDAO.NVC_DEVICE_DAO, null, new QueryMatchString(RelationalOperator.EQUAL, deviceID, DeviceDAO.Param.SUBJECT_ID));
     	 
     	 if(ret != null && ret.size() == 1)
     	 {
