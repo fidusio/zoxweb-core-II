@@ -125,12 +125,18 @@ public class APIAppManagerProvider
         {
         	AppDeviceDAO temp = (AppDeviceDAO) subjectAPIKey;
         	DeviceDAO device = lookupDeviceDAO(temp.getDevice().getDeviceID());
-        	if(device != null)
+        	if (device != null)
         	{
         		temp.getDevice().setReferenceID(device.getReferenceID());
         		temp.getDevice().setUserID(getAPISecurityManager().currentUserID());
         		temp.getDevice().setGlobalID(device.getGlobalID());
         	}
+
+        	AppIDDAO appIDDAO = lookupAppIDDAO(temp.getAppIDDAO().getDomainID(), temp.getAppIDDAO().getAppID());
+
+        	if (appIDDAO != null) {
+        	    temp.setAppIDDAO(appIDDAO);
+            }
         }
 
         subjectAPIKey = getAPIDataStore().insert(subjectAPIKey);
