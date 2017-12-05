@@ -119,22 +119,12 @@ public class AppIDDAO
 
     public String getSubjectID()
     {
-        String ret = lookupValue(Param.SUBJECT_ID);
-        if (ret == null)
-        {
-        	synchronized(this)
-        	{
-        		if (lookupValue(Param.SUBJECT_ID) == null)
-        		{
-	        		if (getDomainID() != null && getAppID() != null)
-	        		{
-	        			ret = toCanonicalID();
-	        			setValue(Param.SUBJECT_ID, ret);
-	        		}
-        		}
-        	}
-        }
-        return ret;
+        synchronized(this)
+    	{
+    		String ret = toCanonicalID();
+			setValue(Param.SUBJECT_ID, ret);
+			return ret;
+    	}
     }
 
   
@@ -148,7 +138,8 @@ public class AppIDDAO
     public synchronized void setDomainAppID(String domainID, String appID) {
         setValue(Param.DOMAIN_ID, domainID);
         setValue(Param.APP_ID, appID);
-        setValue(Param.SUBJECT_ID, toCanonicalID());
+//        setValue(Param.SUBJECT_ID, toCanonicalID());
+        getSubjectID();
     }
 
   
