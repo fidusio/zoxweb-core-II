@@ -36,6 +36,9 @@ import org.zoxweb.shared.security.AccessSecurityException;
 import org.zoxweb.shared.security.JWT;
 import org.zoxweb.shared.security.SubjectAPIKey;
 import org.zoxweb.shared.security.model.SecurityModel;
+import org.zoxweb.shared.security.model.SecurityModel.Role;
+import org.zoxweb.shared.security.shiro.ShiroAssociationRuleDAO;
+import org.zoxweb.shared.security.shiro.ShiroAssociationType;
 import org.zoxweb.shared.util.Const.LogicalOperator;
 import org.zoxweb.shared.util.Const.RelationalOperator;
 import org.zoxweb.shared.util.Const.Status;
@@ -137,7 +140,21 @@ public class APIAppManagerProvider
         	if (appIDDAO != null) {
         	    temp.setAppIDDAO(appIDDAO);
             }
+        	
+        	
+        	ShiroAssociationRuleDAO sard = new ShiroAssociationRuleDAO();
+     		sard.setAssociatedTo(getAPISecurityManager().currentSubjectID());
+     		sard.setAssociate(SecurityModel.toSubjectID(temp.getAppIDDAO().getDomainID(), temp.getAppIDDAO().getAppID(), Role.APP_USER));
+     		sard.setAssociationType(ShiroAssociationType.ROLE_TO_SUBJECT);
+     		sard.setName("AppUserRule");
+     		sard.setExpiration(null);
+     		sard.setAssociationStatus(Status.ACTIVE);
+             
+             getAPISecurityManager().addShiroRule(sard);
         }
+        
+        
+       
 
         subjectAPIKey = getAPIDataStore().insert(subjectAPIKey);
 

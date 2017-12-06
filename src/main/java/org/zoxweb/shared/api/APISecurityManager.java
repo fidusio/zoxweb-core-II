@@ -3,6 +3,7 @@ package org.zoxweb.shared.api;
 import org.zoxweb.shared.security.AccessException;
 import org.zoxweb.shared.security.JWTToken;
 import org.zoxweb.shared.security.shiro.ShiroRealmDAOManager;
+import org.zoxweb.shared.security.shiro.ShiroRulesManager;
 import org.zoxweb.shared.util.CRUD;
 import org.zoxweb.shared.util.Const.LogicalOperator;
 import org.zoxweb.shared.util.NVBase;
@@ -11,7 +12,7 @@ import org.zoxweb.shared.util.NVEntity;
 import org.zoxweb.shared.util.NVPair;
 
 public interface APISecurityManager<S>
-	extends ShiroRealmDAOManager
+	extends ShiroRealmDAOManager, ShiroRulesManager
 {
 	
 	Object encryptValue(APIDataStore<?> dataStore, NVEntity container, NVConfig nvc, NVBase<?> nvb, byte msKey[])
@@ -69,7 +70,18 @@ public interface APISecurityManager<S>
 	 String checkNVEntityAccess(String nveRefID, CRUD ...permissions)
 				throws NullPointerException, IllegalArgumentException, AccessException;
 	 void checkPermissions(String ...permissions)
-			 throws NullPointerException, AccessException;
+			 throws NullPointerException, IllegalArgumentException, AccessException;
+	 
+	 boolean hasPermimission(String permission)
+			 throws NullPointerException, IllegalArgumentException, AccessException;
+	 
+	 void checkRoles(String ...roles)
+			 throws NullPointerException, IllegalArgumentException, AccessException;
+	 
+	 boolean hasRole(String role)
+			 throws NullPointerException, IllegalArgumentException, AccessException;
+	 
+	 
 	 
 	 S login(String subjectID, String credentials, String domainID, String appID, boolean autoLogin);
 	 S login(JWTToken jwtToken);
