@@ -21,12 +21,15 @@ public class SecurityModel
 		NVE_CREAD_ALL("nve_create_all", "Permission to create all nventities", "nventity:create:*"),
 		ADD_PERMISSION("add_permission", "Permission to add a permission", "add:permission"),
 		DELETE_PERMISSION("delete_permission", "Permission to delete a permission", "delete:permission"),
+		UPTDATE_PERMISSION("update_permission", "Permission to update a permission", "update:permission"),
 		ADD_ROLE("add_role", "Permission to add a role", "add:role"),
 		DELETE_ROLE("delete_role", "Permission to delete a role", "delete:role"),
+		UPDATE_ROLE("update_role", "Permission to update a role", "update:role"),
 		CREATE_APP_ID("create_app_id", "Permission to create an app", "create:app:id"),
 		DELETE_APP_ID("delete_app_id", "Permission to delete an app", "delete:app:id"),
 		CREATE_USER("create_user", "Permission to create a user", "create:user"),
-		DELETE_USER("delete_user", "Permission to delete an app", "delete:user"),
+		DELETE_USER("delete_user", "Permission to delete a user", "delete:user"),
+		UPDATE_USER("update_user", "Permission to update a user", "update:user"),
 		;
 		private final String name;
 		private final String value;

@@ -72,7 +72,7 @@ public interface APISecurityManager<S>
 	 void checkPermissions(String ...permissions)
 			 throws NullPointerException, IllegalArgumentException, AccessException;
 	 
-	 boolean hasPermimission(String permission)
+	 boolean hasPermission(String permission)
 			 throws NullPointerException, IllegalArgumentException, AccessException;
 	 
 	 void checkRoles(String ...roles)
