@@ -77,7 +77,14 @@ public interface APISecurityManager<S>
 	 
 	 void checkRoles(String ...roles)
 			 throws NullPointerException, IllegalArgumentException, AccessException;
-	 
+	 /**
+	  * Check if the user has the role
+	  * @param role
+	  * @return
+	  * @throws NullPointerException
+	  * @throws IllegalArgumentException
+	  * @throws AccessException
+	  */
 	 boolean hasRole(String role)
 			 throws NullPointerException, IllegalArgumentException, AccessException;
 	 
