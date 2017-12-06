@@ -1098,7 +1098,6 @@ public class ZWDataFactory
                 return UserPreferenceDAO.NVC_USER_PREFERENCE_DAO;
             }
         },
-
         KEY_STORE_INFO_DAO(KeyStoreInfoDAO.class.getName())
         {
             @SuppressWarnings("unchecked")
@@ -1112,6 +1111,21 @@ public class ZWDataFactory
             public NVConfigEntity getNVConfigEntity()
             {
                 return KeyStoreInfoDAO.NVC_KEY_STORE_INFO_DAO;
+            }
+        },
+        APP_ACCESS_MODE(AppAccessMode.class.getName())
+        {
+            @SuppressWarnings("unchecked")
+            @Override
+            public AppAccessMode newInstance()
+            {
+                return new AppAccessMode();
+            }
+
+            @Override
+            public NVConfigEntity getNVConfigEntity()
+            {
+                return AppAccessMode.NVC_APP_ACCESS_MODE;
             }
         },
 

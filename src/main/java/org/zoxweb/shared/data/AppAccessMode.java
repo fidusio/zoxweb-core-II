@@ -55,26 +55,23 @@ public class AppAccessMode
 	         SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO
 	 );
 
-	
-	
 
 	public AppAccessMode() 
 	{
 		super(NVC_APP_ACCESS_MODE);
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
 	 * Return the subject id, if it is an acutal user will return the email address, if a system or device return the subject id
 	 */
-	public String getSubjectID() {
-		// TODO Auto-generated method stub
+	public String getSubjectID()
+    {
 		return lookupValue(Param.SUBJECT_ID);
 	}
 
 	@Override
-	public void setSubjectID(String id) {
-		// TODO Auto-generated method stub
+	public void setSubjectID(String id)
+    {
 		setValue(Param.SUBJECT_ID, id);
 	}
 	
