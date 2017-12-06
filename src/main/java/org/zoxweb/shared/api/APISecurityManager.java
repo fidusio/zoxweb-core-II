@@ -2,6 +2,7 @@ package org.zoxweb.shared.api;
 
 import org.zoxweb.shared.security.AccessException;
 import org.zoxweb.shared.security.JWTToken;
+import org.zoxweb.shared.security.shiro.ShiroRealmDAOManager;
 import org.zoxweb.shared.util.CRUD;
 import org.zoxweb.shared.util.Const.LogicalOperator;
 import org.zoxweb.shared.util.NVBase;
@@ -9,7 +10,8 @@ import org.zoxweb.shared.util.NVConfig;
 import org.zoxweb.shared.util.NVEntity;
 import org.zoxweb.shared.util.NVPair;
 
-public interface APISecurityManager<S> 
+public interface APISecurityManager<S>
+	extends ShiroRealmDAOManager
 {
 	
 	Object encryptValue(APIDataStore<?> dataStore, NVEntity container, NVConfig nvc, NVBase<?> nvb, byte msKey[])

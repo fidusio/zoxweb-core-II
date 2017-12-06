@@ -15,7 +15,8 @@
  */
 package org.zoxweb.shared.security.shiro;
 
-import java.util.ArrayList;
+
+import java.util.List;
 
 import org.zoxweb.shared.security.AccessException;
 
@@ -183,7 +184,7 @@ public interface ShiroRealmDAOManager
 	 * @return list of ShiroSubjectDAO
 	 * @throws AccessException
 	 */
-	public ArrayList<ShiroSubjectDAO> getAllShiroSubjects()
+	public List<ShiroSubjectDAO> getAllShiroSubjects()
         throws AccessException;
 
 	/**
@@ -191,7 +192,7 @@ public interface ShiroRealmDAOManager
 	 * @return list ShiroRoleDAO
 	 * @throws AccessException
 	 */
-	public ArrayList<ShiroRoleDAO> getAllShiroRoles()
+	public List<ShiroRoleDAO> getAllShiroRoles()
 		throws AccessException;
 
 	/**
@@ -199,7 +200,7 @@ public interface ShiroRealmDAOManager
 	 * @return list ShiroRoleGroupDAO
 	 * @throws AccessException
 	 */
-	public ArrayList<ShiroRoleGroupDAO> getAllShiroRoleGroups()
+	public List<ShiroRoleGroupDAO> getAllShiroRoleGroups()
 		throws AccessException;
 
 	/**
@@ -207,7 +208,7 @@ public interface ShiroRealmDAOManager
 	 * @return list ShiroPermissionDAO
 	 * @throws AccessException
 	 */
-	public ArrayList<ShiroPermissionDAO> getAllShiroPermissions()
+	public List<ShiroPermissionDAO> getAllShiroPermissions()
 		throws AccessException;
 	
 	/**

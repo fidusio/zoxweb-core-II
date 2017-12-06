@@ -690,7 +690,12 @@ public class APIAppManagerProvider
     		ret = new AppIDDAO(domainID, appID);
  
     		ret = getAPIDataStore().insert(ret);
+    		apiSecurityManager.addRole(SecurityModel.Role.APP_ADMIN.toRole(domainID, appID));
+    		apiSecurityManager.addRole(SecurityModel.Role.APP_USER.toRole(domainID, appID));
+    		apiSecurityManager.addRole(SecurityModel.Role.APP_SERVICE_PROVIDER.toRole(domainID, appID));
     	}
+    	
+    	
     	
     	return ret;
     }
