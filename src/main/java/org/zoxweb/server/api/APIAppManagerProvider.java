@@ -143,7 +143,7 @@ public class APIAppManagerProvider
         	
         	
         	ShiroAssociationRuleDAO sard = new ShiroAssociationRuleDAO();
-     		sard.setAssociatedTo(getAPISecurityManager().currentSubjectID());
+     		sard.setAssociatedTo(getAPISecurityManager().currentUserID());
      		sard.setAssociate(SecurityModel.toSubjectID(temp.getAppIDDAO().getDomainID(), temp.getAppIDDAO().getAppID(), Role.APP_USER));
      		sard.setAssociationType(ShiroAssociationType.ROLE_TO_SUBJECT);
      		sard.setName("AppUserRule");
