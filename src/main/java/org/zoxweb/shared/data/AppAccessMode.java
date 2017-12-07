@@ -80,7 +80,7 @@ public class AppAccessMode
 		return (NVEnumList) lookup(Param.ROLES);
 	}
 	
-	public SecurityModel.Role[] geRoles()
+	public SecurityModel.Role[] getRoles()
 	{
 		List<Enum<?>> val = lookupValue(Param.ROLES);
 		SecurityModel.Role[] ret = new SecurityModel.Role[val.size()];

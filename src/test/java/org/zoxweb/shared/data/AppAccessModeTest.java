@@ -30,10 +30,10 @@ public class AppAccessModeTest {
         assertEquals(SecurityModel.Role.APP_ADMIN, appAccessMode.getRolesAsList().getValue().get(0));
         assertEquals(SecurityModel.Role.APP_USER, appAccessMode.getRolesAsList().getValue().get(1));
         assertEquals(SecurityModel.Role.APP_SERVICE_PROVIDER, appAccessMode.getRolesAsList().getValue().get(2));
-        assertNotNull(appAccessMode.geRoles());
-        assertTrue(appAccessMode.geRoles().length > 0);
+        assertNotNull(appAccessMode.getRoles());
+        assertTrue(appAccessMode.getRoles().length > 0);
 
-        for (SecurityModel.Role role : appAccessMode.geRoles()) {
+        for (SecurityModel.Role role : appAccessMode.getRoles()) {
             System.out.println("Role: " + role);
         }
     }
