@@ -17,6 +17,7 @@ package org.zoxweb.shared.data;
 
 import org.zoxweb.shared.filters.FilterType;
 import org.zoxweb.shared.filters.AppIDNameFilter;
+import org.zoxweb.shared.util.AppGlobalID;
 import org.zoxweb.shared.util.AppID;
 import org.zoxweb.shared.util.CanonicalID;
 import org.zoxweb.shared.util.GetNVConfig;
@@ -33,7 +34,7 @@ import org.zoxweb.shared.util.SharedUtil;
 @SuppressWarnings("serial")
 public class AppIDDAO
     extends SetNameDescriptionDAO
-    implements AppID<String>, CanonicalID
+    implements AppID<String>, CanonicalID, AppGlobalID<String>
 {
 
     public enum Param
@@ -183,21 +184,21 @@ public class AppIDDAO
         return super.hashCode();
     }
 
-//	@Override
-//	public String getAppGID()
-//	{
-//		// TODO Auto-generated method stub
-//		return getGlobalID();
-//	}
-//
-//	@Override
-//	@Deprecated
-//	public void setAppGID(String appGID)
-//		throws UnsupportedOperationException
-//	{
-//		// TODO Auto-generated method stub
-//		throw new UnsupportedOperationException("Not supported");
-//	}
+	
+	public String getAppGID()
+	{
+		// TODO Auto-generated method stub
+		return getSubjectID();
+	}
+
+
+	@Deprecated
+	public void setAppGID(String appGID)
+		throws UnsupportedOperationException
+	{
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Not supported");
+	}
 
 	public String toCanonicalID()
 	{

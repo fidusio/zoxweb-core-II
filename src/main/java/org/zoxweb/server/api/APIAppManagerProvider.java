@@ -698,7 +698,7 @@ public class APIAppManagerProvider
     
     
     
-    public AppIDDAO createAppIDDAO(String domainID, String appID)
+    public synchronized AppIDDAO createAppIDDAO(String domainID, String appID)
     		throws NullPointerException, IllegalArgumentException, AccessException, APIException
     {
     	
@@ -713,6 +713,7 @@ public class APIAppManagerProvider
     		apiSecurityManager.addRole(SecurityModel.Role.APP_ADMIN.toRole(domainID, appID));
     		apiSecurityManager.addRole(SecurityModel.Role.APP_USER.toRole(domainID, appID));
     		apiSecurityManager.addRole(SecurityModel.Role.APP_SERVICE_PROVIDER.toRole(domainID, appID));
+    		getAPIDataStore().createSequence(ret.getSubjectID());
     	}
     	
     	return ret;
