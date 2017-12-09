@@ -265,6 +265,7 @@ public class APIAppManagerProvider
 		String userIDRef = getAPIDataStore().getIDGenerator().generateID();
 		getAPISecurityManager().associateNVEntityToSubjectUserID(userID, userIDRef);
 		userID.setReferenceID(userIDRef);
+		userID.setUserID(userIDRef);
 		userID.getUserInfo().setReferenceID(userIDRef);
 		////////////////////////
 		
