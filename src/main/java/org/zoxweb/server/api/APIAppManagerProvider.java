@@ -27,6 +27,7 @@ import org.zoxweb.shared.data.DeviceDAO;
 import org.zoxweb.shared.data.UserIDDAO;
 import org.zoxweb.shared.data.UserInfoDAO;
 import org.zoxweb.shared.data.UserPreferenceDAO;
+import org.zoxweb.shared.db.QueryMarker;
 import org.zoxweb.shared.db.QueryMatch;
 import org.zoxweb.shared.db.QueryMatchString;
 import org.zoxweb.shared.filters.AppIDNameFilter;
@@ -44,6 +45,7 @@ import org.zoxweb.shared.util.Const.RelationalOperator;
 import org.zoxweb.shared.util.Const.Status;
 import org.zoxweb.shared.util.GetValue;
 import org.zoxweb.shared.util.MetaToken;
+import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVEntity;
 import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
@@ -713,9 +715,19 @@ public class APIAppManagerProvider
     		apiSecurityManager.addRole(SecurityModel.Role.APP_SERVICE_PROVIDER.toRole(domainID, appID));
     	}
     	
-    	
-    	
     	return ret;
     }
+    
+    public <V extends NVEntity> List<V> search(NVConfigEntity nvce, QueryMarker ... queryCriteria) 
+			throws NullPointerException, IllegalArgumentException, AccessException, APIException
+	{
+    	return search(nvce, null, queryCriteria);
+	}
+    public <V extends NVEntity> List<V> search(NVConfigEntity nvce, List<String> fieldNames, QueryMarker ... queryCriteria)
+			throws NullPointerException, IllegalArgumentException, AccessException, APIException
+	{
+    	return getAPIDataStore().search(nvce, fieldNames, queryCriteria);
+	}
+			
 
 }

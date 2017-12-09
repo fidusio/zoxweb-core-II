@@ -6,10 +6,11 @@ import org.zoxweb.shared.data.AppIDDAO;
 import org.zoxweb.shared.data.UserIDDAO;
 import org.zoxweb.shared.data.UserInfoDAO;
 import org.zoxweb.shared.data.UserPreferenceDAO;
-
+import org.zoxweb.shared.db.QueryMarker;
 import org.zoxweb.shared.security.AccessException;
 import org.zoxweb.shared.security.JWT;
 import org.zoxweb.shared.security.SubjectAPIKey;
+import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVEntity;
 
 import java.util.List;
@@ -300,4 +301,10 @@ public interface APIAppManager
 
     
     AppIDDAO createAppIDDAO(String domainID, String appID);
+    
+    
+    <V extends NVEntity> List<V> search(NVConfigEntity nvce, QueryMarker ... queryCriteria) 
+    		throws NullPointerException, IllegalArgumentException, AccessException, APIException;
+    <V extends NVEntity> List<V> search(NVConfigEntity nvce, List<String> fieldNames, QueryMarker ... queryCriteria) 
+    		throws NullPointerException, IllegalArgumentException, AccessException, APIException;
 }
