@@ -188,10 +188,10 @@ public class APIAppManagerProvider
 	}
     
     
-    public static UserIDDAO lookupUserID(APIDataStore<?> dataStore, String subjectID, String ...params)
+    public static UserIDDAO lookupUserID(APIDataStore<?> apiDataStore, String subjectID, String ...params)
 			throws NullPointerException, IllegalArgumentException, AccessException, APIException
 	{
-		SharedUtil.checkIfNulls("subjectID null", dataStore, subjectID);
+		SharedUtil.checkIfNulls("subjectID null", apiDataStore, subjectID);
 		QueryMatch<?> query = null;
 		if (FilterType.EMAIL.isValid(subjectID))
 		{
@@ -216,7 +216,7 @@ public class APIAppManagerProvider
 			}
 		}
 		
-		List<UserIDDAO> listOfUserIDDAO = dataStore.search(UserIDDAO.NVC_USER_ID_DAO, listParams, query);
+		List<UserIDDAO> listOfUserIDDAO = apiDataStore.search(UserIDDAO.NVC_USER_ID_DAO, listParams, query);
 		
 		if (listOfUserIDDAO == null || listOfUserIDDAO.size() != 1)
 		{
