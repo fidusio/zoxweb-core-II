@@ -69,13 +69,20 @@ public interface APISecurityManager<S>
 	 
 	 String checkNVEntityAccess(String nveRefID, CRUD ...permissions)
 				throws NullPointerException, IllegalArgumentException, AccessException;
+	 
+	 
 	 void checkPermissions(String ...permissions)
+			 throws NullPointerException, IllegalArgumentException, AccessException;
+	 void checkPermissions(boolean partial, String ...permissions)
 			 throws NullPointerException, IllegalArgumentException, AccessException;
 	 
 	 boolean hasPermission(String permission)
 			 throws NullPointerException, IllegalArgumentException, AccessException;
 	 
 	 void checkRoles(String ...roles)
+			 throws NullPointerException, IllegalArgumentException, AccessException;
+	 
+	 void checkRoles(boolean partial, String ...roles)
 			 throws NullPointerException, IllegalArgumentException, AccessException;
 	 /**
 	  * Check if the user has the role

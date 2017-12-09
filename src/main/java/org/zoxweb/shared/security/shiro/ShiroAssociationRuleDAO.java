@@ -76,6 +76,7 @@ public class ShiroAssociationRuleDAO
 	public ShiroAssociationRuleDAO()
 	{
 		super(NVC_SHIRO_ASSOCIATION_RULE_DAO);
+		setExpiration(null);
 	}
 	
 	public ShiroAssociationRuleDAO(String name, NVEntity associate, NVEntity associatedTo, Status status, ShiroAssociationType at, Date expiration, CRUD crud)
