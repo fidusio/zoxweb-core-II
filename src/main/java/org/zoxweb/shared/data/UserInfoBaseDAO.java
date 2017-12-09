@@ -30,6 +30,7 @@ import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVConfigEntity.ArrayType;
 import org.zoxweb.shared.util.NVConfigEntityLocal;
 import org.zoxweb.shared.util.NVConfigManager;
+import org.zoxweb.shared.util.NVEntity;
 import org.zoxweb.shared.util.NVPair;
 import org.zoxweb.shared.util.SharedUtil;
 
@@ -188,6 +189,10 @@ public abstract class UserInfoBaseDAO
 	{
 		return lookupValue(Param.LIST_OF_ADDRESSES);
 	}
+
+	public ArrayValues<NVEntity> getAddressesAsArrayValues() {
+	    return (ArrayValues<NVEntity>) lookup(Param.LIST_OF_ADDRESSES);
+    }
 	
 	/**
 	 * Sets the list of addresses.
@@ -206,7 +211,12 @@ public abstract class UserInfoBaseDAO
 	{
 		return lookupValue(Param.LIST_OF_PHONES);
 	}
-	
+
+    public ArrayValues<NVEntity> getPhonesAsArrayValues()
+    {
+        return (ArrayValues<NVEntity>) lookup(Param.LIST_OF_PHONES);
+    }
+
 	/**
 	 * Sets the list of phones.
 	 * @param list
@@ -215,8 +225,7 @@ public abstract class UserInfoBaseDAO
 	{
 		setValue(Param.LIST_OF_PHONES, list);
 	}
-	
-	
+
 	
 	@SuppressWarnings("unchecked")
 	public ArrayValues<NVPair> getEmails()

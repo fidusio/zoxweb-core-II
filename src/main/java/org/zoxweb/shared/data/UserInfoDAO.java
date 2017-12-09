@@ -17,11 +17,13 @@ package org.zoxweb.shared.data;
 
 import java.util.List;
 
+import org.zoxweb.shared.util.ArrayValues;
 import org.zoxweb.shared.util.GetNVConfig;
 import org.zoxweb.shared.util.NVConfig;
 import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVConfigEntityLocal;
 import org.zoxweb.shared.util.NVConfigManager;
+import org.zoxweb.shared.util.NVEntity;
 import org.zoxweb.shared.util.NVPair;
 import org.zoxweb.shared.util.SharedUtil;
 import org.zoxweb.shared.util.NVConfigEntity.ArrayType;
@@ -105,7 +107,12 @@ public class UserInfoDAO
 	{
 		return lookupValue(Param.LIST_OF_CREDIT_CARDS);
 	}
-	
+
+    public ArrayValues<NVEntity> getCreditCardsAsArrayValues()
+    {
+        return (ArrayValues<NVEntity>) lookup(Param.LIST_OF_CREDIT_CARDS);
+    }
+
 	/**
 	 * Sets the list of credit cards.
 	 * @param list
