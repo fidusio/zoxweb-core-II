@@ -59,14 +59,28 @@ public class NVEntityReferenceList
 		return null;
 	}
 	
+
+	
 	/**
-	 * This method returns the NVConfig.
-	 * @return matching nvconfig
+	 * Get nve entity based on name or ReferenceID
+	 * @param name or refid
+	 * @return matching nventity
 	 */
-	@Override	
-	public NVEntity get(String str)
+	public NVEntity get(String name)
 	{
-		return SharedUtil.lookup((List<? extends GetName>) value, str);
+		//NVEntity ret = SharedUtil.lookup((List<? extends GetName>) value, name);
+		if (!SharedStringUtil.isEmpty(name))
+		{
+			for (NVEntity nve : values())
+			{
+				if (name.equalsIgnoreCase(nve.getName()))
+					return nve;
+				if (name.equals(nve.getReferenceID()))
+					return nve;
+			}
+		}
+		
+		return null;
 	}
 	
 	public int size()
