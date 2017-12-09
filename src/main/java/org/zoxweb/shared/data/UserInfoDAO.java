@@ -108,7 +108,8 @@ public class UserInfoDAO
 		return lookupValue(Param.LIST_OF_CREDIT_CARDS);
 	}
 
-    public ArrayValues<NVEntity> getCreditCardsAsArrayValues()
+    @SuppressWarnings("unchecked")
+	public ArrayValues<NVEntity> getCreditCardsAsArrayValues()
     {
         return (ArrayValues<NVEntity>) lookup(Param.LIST_OF_CREDIT_CARDS);
     }

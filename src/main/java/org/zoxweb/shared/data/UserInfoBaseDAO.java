@@ -190,6 +190,7 @@ public abstract class UserInfoBaseDAO
 		return lookupValue(Param.LIST_OF_ADDRESSES);
 	}
 
+	@SuppressWarnings("unchecked")
 	public ArrayValues<NVEntity> getAddressesAsArrayValues() {
 	    return (ArrayValues<NVEntity>) lookup(Param.LIST_OF_ADDRESSES);
     }
@@ -212,7 +213,8 @@ public abstract class UserInfoBaseDAO
 		return lookupValue(Param.LIST_OF_PHONES);
 	}
 
-    public ArrayValues<NVEntity> getPhonesAsArrayValues()
+    @SuppressWarnings("unchecked")
+	public ArrayValues<NVEntity> getPhonesAsArrayValues()
     {
         return (ArrayValues<NVEntity>) lookup(Param.LIST_OF_PHONES);
     }
