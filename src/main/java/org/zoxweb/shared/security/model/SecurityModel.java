@@ -1,5 +1,6 @@
 package org.zoxweb.shared.security.model;
 
+import org.zoxweb.shared.security.shiro.ShiroDAO;
 import org.zoxweb.shared.security.shiro.ShiroPermissionDAO;
 import org.zoxweb.shared.security.shiro.ShiroRoleDAO;
 import org.zoxweb.shared.util.AppID;
@@ -153,6 +154,6 @@ public class SecurityModel
 	
 	public static String toSubjectID(String domainID, String appID, String name)
 	{
-		return SharedUtil.toCanonicalID(':', domainID, appID, name);
+		return SharedUtil.toCanonicalID(ShiroDAO.CAN_ID_SEP, domainID, appID, name);
 	}
 }

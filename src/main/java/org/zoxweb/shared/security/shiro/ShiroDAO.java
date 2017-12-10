@@ -20,6 +20,6 @@ import org.zoxweb.shared.util.CanonicalID;
 public interface ShiroDAO
         extends CanonicalID {
 
-	public final static char CAN_ID_SEP = ':';
+	public final static char CAN_ID_SEP = '-';
 	
 }

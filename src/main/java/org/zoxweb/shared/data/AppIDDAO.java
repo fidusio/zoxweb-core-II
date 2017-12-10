@@ -16,6 +16,7 @@
 package org.zoxweb.shared.data;
 
 import org.zoxweb.shared.filters.FilterType;
+import org.zoxweb.shared.security.shiro.ShiroDAO;
 import org.zoxweb.shared.filters.AppIDNameFilter;
 import org.zoxweb.shared.util.AppGlobalID;
 import org.zoxweb.shared.util.AppID;
@@ -202,7 +203,7 @@ public class AppIDDAO
 
 	public String toCanonicalID()
 	{
-		return SharedUtil.toCanonicalID(':', getDomainID(), getAppID());	
+		return SharedUtil.toCanonicalID(ShiroDAO.CAN_ID_SEP, getDomainID(), getAppID());	
 	}
 
 }

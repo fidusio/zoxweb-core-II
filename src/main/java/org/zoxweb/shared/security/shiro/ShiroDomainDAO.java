@@ -73,7 +73,7 @@ public abstract class ShiroDomainDAO
 	
 	public String toCanonicalID()
 	{
-		return SharedUtil.toCanonicalID(':', getDomainID(), getAppID(), getName());	
+		return SharedUtil.toCanonicalID(ShiroDAO.CAN_ID_SEP, getDomainID(), getAppID(), getName());	
 	}
 	
 	
