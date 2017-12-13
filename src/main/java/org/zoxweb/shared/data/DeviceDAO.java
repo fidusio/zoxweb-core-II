@@ -9,6 +9,7 @@ import org.zoxweb.shared.util.NVConfig;
 import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVConfigEntityLocal;
 import org.zoxweb.shared.util.NVConfigManager;
+import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
 import org.zoxweb.shared.util.SubjectID;
 
@@ -219,7 +220,11 @@ public class DeviceDAO
 		String subID = lookupValue(Param.SUBJECT_ID);
 		if (subID == null)
 		{
-			subID = SharedUtil.toCanonicalID(ShiroDAO.CAN_ID_SEP, getManufacturer(), getModel(), getVersion(), getSerialNumber(), getDeviceID());
+			if (!SharedStringUtil.isEmpty(getManufacturer()))
+				subID = SharedUtil.toCanonicalID(ShiroDAO.CAN_ID_SEP, getManufacturer(), getModel(), getVersion(), getSerialNumber(), getDeviceID());
+			else
+				subID = SharedUtil.toCanonicalID(ShiroDAO.CAN_ID_SEP, getModel(), getVersion(), getSerialNumber(), getDeviceID());
+				
 			setValue(Param.SUBJECT_ID, subID);
 		}
 		// TODO Auto-generated method stub
