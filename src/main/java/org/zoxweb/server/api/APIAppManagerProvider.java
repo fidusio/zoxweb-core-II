@@ -568,7 +568,6 @@ public class APIAppManagerProvider
 			getAPIDataStore().update(credentials);
 			
 		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
 			throw new AccessException("Invalid new Password");
 		}
     	
@@ -577,8 +576,7 @@ public class APIAppManagerProvider
   
     public <V extends NVEntity> V create(V nve)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException {
-
-        return null;
+        return getAPIDataStore().insert(nve);
     }
 
     
@@ -590,7 +588,7 @@ public class APIAppManagerProvider
    
     public <V extends NVEntity> V update(V nve)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException {
-        return null;
+        return getAPIDataStore().update(nve);
     }
 
    
@@ -604,7 +602,7 @@ public class APIAppManagerProvider
    
     public AppIDDAO lookupAppIDDAO(String domainID, String appID)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException {
-      return lookupAppIDDAO(domainID, appID, true);
+        return lookupAppIDDAO(domainID, appID, true);
     }
     
     
