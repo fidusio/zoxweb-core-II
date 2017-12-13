@@ -1,5 +1,6 @@
 package org.zoxweb.shared.data;
 
+import org.zoxweb.shared.security.shiro.ShiroDAO;
 import org.zoxweb.shared.util.ArrayValues;
 import org.zoxweb.shared.util.DeviceID;
 import org.zoxweb.shared.util.GetNVConfig;
@@ -218,7 +219,7 @@ public class DeviceDAO
 		String subID = lookupValue(Param.SUBJECT_ID);
 		if (subID == null)
 		{
-			subID = SharedUtil.toCanonicalID(':', getManufacturer(), getModel(), getVersion(), getSerialNumber(), getDeviceID());
+			subID = SharedUtil.toCanonicalID(ShiroDAO.CAN_ID_SEP, getManufacturer(), getModel(), getVersion(), getSerialNumber(), getDeviceID());
 			setValue(Param.SUBJECT_ID, subID);
 		}
 		// TODO Auto-generated method stub

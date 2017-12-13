@@ -94,11 +94,13 @@ public class APIAppManagerProvider
             throws NullPointerException, IllegalArgumentException, AccessException, APIException{
         SharedUtil.checkIfNulls("AppDeviceDAO is null", appDeviceDAO);
 
-        if (appDeviceDAO.getAppID() == null || appDeviceDAO.getDomainID() == null) {
+        if (appDeviceDAO.getAppID() == null || appDeviceDAO.getDomainID() == null)
+        {
             throw new IllegalArgumentException("AppID or DomainID null");
         }
 
-        if (appDeviceDAO.getDevice() == null) {
+        if (appDeviceDAO.getDevice() == null) 
+        {
             throw new IllegalArgumentException("Device null");
         }
 
@@ -142,6 +144,10 @@ public class APIAppManagerProvider
         	if (appIDDAO != null) {
         	    temp.setAppIDDAO(appIDDAO);
             }
+        	else 
+        	{
+        		throw new APIException("APP " + new AppIDDAO(temp.getAppIDDAO().getDomainID(), temp.getAppIDDAO().getAppID()).getSubjectID() + " do not exists" );
+        	}
         	
         	
         	ShiroAssociationRuleDAO sard = new ShiroAssociationRuleDAO();
@@ -149,7 +155,7 @@ public class APIAppManagerProvider
      		sard.setAssociate(SecurityModel.toSubjectID(temp.getAppIDDAO().getDomainID(), temp.getAppIDDAO().getAppID(), Role.APP_USER));
      		sard.setAssociationType(ShiroAssociationType.ROLE_TO_SUBJECT);
      		sard.setName("AppUserRule");
-     		sard.setExpiration(null);
+     		///sard.setExpiration(null);
      		sard.setAssociationStatus(Status.ACTIVE);
              
              getAPISecurityManager().addShiroRule(sard);
