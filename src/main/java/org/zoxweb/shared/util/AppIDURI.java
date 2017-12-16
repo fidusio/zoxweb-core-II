@@ -27,7 +27,7 @@ public class AppIDURI
 	
 	public static AppIDURI parse(String path)
 	{
-		if (path.startsWith("/"))
+		while(path.startsWith("/"))
 		{
 			path = path.substring(1);
 		}
@@ -39,7 +39,6 @@ public class AppIDURI
 		
 		AppIDURI ret = new AppIDURI();
 		int index = 0;
-		System.out.println(Arrays.toString(tokens));
 		ret.appID = new AppIDDAO(tokens[index++], tokens[index++]);
 		
 		if (tokens.length > index)
