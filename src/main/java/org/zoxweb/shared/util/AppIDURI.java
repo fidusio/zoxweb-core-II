@@ -1,5 +1,7 @@
 package org.zoxweb.shared.util;
 
+import java.util.Arrays;
+
 import org.zoxweb.shared.data.AppIDDAO;
 
 public class AppIDURI 
@@ -25,14 +27,19 @@ public class AppIDURI
 	
 	public static AppIDURI parse(String path)
 	{
-		String tokens[] = path.split("/");
+		if (path.startsWith("/"))
+		{
+			path = path.substring(1);
+		}
 		
+		String tokens[] = path.split("/");
 		
 		if(tokens.length < 2)
 			throw new IllegalArgumentException("path too short");
 		
 		AppIDURI ret = new AppIDURI();
 		int index = 0;
+		System.out.println(Arrays.toString(tokens));
 		ret.appID = new AppIDDAO(tokens[index++], tokens[index++]);
 		
 		if (tokens.length > index)
