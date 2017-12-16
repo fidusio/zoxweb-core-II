@@ -301,6 +301,7 @@ public interface APIAppManager
 
     
     AppIDDAO createAppIDDAO(String domainID, String appID);
+    AppIDDAO deleteAppIDDAO(String domainID, String appID);
     
     
     <V extends NVEntity> List<V> search(NVConfigEntity nvce, QueryMarker ... queryCriteria) 

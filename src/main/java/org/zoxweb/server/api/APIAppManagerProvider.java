@@ -723,6 +723,17 @@ public class APIAppManagerProvider
     	return ret;
     }
     
+    
+    public AppIDDAO deleteAppIDDAO(String domainID, String appID)
+    	throws NullPointerException, IllegalArgumentException, AccessException, APIException
+    {
+    	getAPISecurityManager().checkPermissions(SecurityModel.Permission.DELETE_APP_ID.getValue());
+    	AppIDDAO ret = lookupAppIDDAO(domainID, appID, true);
+    	delete(ret);
+    	return ret;
+    	
+    }
+    
     public <V extends NVEntity> List<V> search(NVConfigEntity nvce, QueryMarker ... queryCriteria) 
 			throws NullPointerException, IllegalArgumentException, AccessException, APIException
 	{
