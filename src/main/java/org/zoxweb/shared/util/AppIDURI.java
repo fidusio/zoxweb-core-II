@@ -14,7 +14,7 @@ public class AppIDURI
 		
 	}
 	
-	public AppIDDAO getAppID()
+	public AppIDDAO getAppIDDAO()
 	{
 		return appID;
 	}
