@@ -22,18 +22,19 @@ public class JWTTest {
 
 	private JWT jwtHS256 = null;
 	private JWT jwtNONE = null;
+	private long index = 0;
 	
 	@Before
 	public void init()
 	{
 		JWTHeader header = new JWTHeader();
 		
-		
 		header.setJWTAlgorithm(JWTAlgorithm.HS256);
 		header.setTokenType("JWT");
 		JWTPayload payload = new JWTPayload();
 		payload.setDomainID("xlogistx.io");
 		payload.setAppID("xlogistx");
+		payload.setNonce(index++);
 		//payload.setRandom(new byte[] {0,1,2,3});
 		payload.setSubjectID("support@xlogistx.io");
 		jwtHS256 = new JWT();
@@ -46,6 +47,7 @@ public class JWTTest {
 		payload = new JWTPayload();
 		payload.setDomainID("xlogistx.io");
 		payload.setAppID("xlogistx");
+		payload.setNonce(index++);
 		//payload.setRandom(new byte[] {0,1,2,3});
 		payload.setSubjectID("none@xlogistx.io");
 		jwtNONE = new JWT();
@@ -60,7 +62,7 @@ public class JWTTest {
 		String json = GSONUtil.toJSON(jwtHS256, true, false, false, Base64Type.URL);
 		System.out.println(json);
 		
-		
+		System.out.println("ToGSON:***************************************************************");
 		JWT localJwt = GSONUtil.fromJSON(json, JWT.class, Base64Type.URL);
 		json = GSONUtil.toJSON(localJwt, true, false, false, Base64Type.URL);
 		System.out.println(json);
@@ -77,6 +79,7 @@ public class JWTTest {
 		payload.setName("John Doe");
 		payload.setAdmin(true);
 		payload.setNotBefore(System.currentTimeMillis());
+		payload.setNonce(index++);
 		
 		//payload.setRandom(new byte[] {0,1,2,3});
 		localJwt.setPayload(payload);

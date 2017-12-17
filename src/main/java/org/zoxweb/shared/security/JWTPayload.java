@@ -52,7 +52,7 @@ public class JWTPayload
 		ADMIN(NVConfigManager.createNVConfig("admin", "Admin", "admin", false, true, boolean.class)),
 		DOMAIN_ID(NVConfigManager.createNVConfig("domain", "Domain identifier", "DomainID", false, true, false, String.class, FilterType.DOMAIN)),
 		APP_ID(NVConfigManager.createNVConfig("app", "ApplicationID", "AppID", false, true, false, String.class, null)),
-		NONCE(NVConfigManager.createNVConfig("nonce", "Nonce", "Nonce", false, true, false, long.class, null)),
+		NONCE(NVConfigManager.createNVConfig("nonce", "Nonce", "Nonce", false, true, false, String.class, null)),
 		//RANDOM(NVConfigManager.createNVConfig("random", "Random Data", "Random", false, true, false, byte[].class, null)),
 		
 		
@@ -120,7 +120,7 @@ public class JWTPayload
 		setValue(Param.APP_ID, appID);
 	}
 	
-	public long getNonce() 
+	public String getNonce() 
 	{
 		return lookupValue(Param.NONCE);
 	}
@@ -145,6 +145,11 @@ public class JWTPayload
 		setValue(Param.ADMIN, isAdmin);
 	}
 
+	public void setNonce(long nonce) 
+	{
+		setValue(Param.NONCE, ""+nonce);
+	}
+	
 	public void setNonce(String nonce) 
 	{
 		setValue(Param.NONCE, nonce);

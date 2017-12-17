@@ -26,6 +26,7 @@ import org.zoxweb.shared.http.HTTPHeaderName;
 import org.zoxweb.shared.http.HTTPMimeType;
 import org.zoxweb.shared.security.JWT;
 import org.zoxweb.shared.security.JWTToken;
+import org.zoxweb.shared.util.AppIDURI;
 import org.zoxweb.shared.util.ArrayValues;
 import org.zoxweb.shared.util.GetNameValue;
 import org.zoxweb.shared.util.NVGetNameValueList;
@@ -52,6 +53,7 @@ public class HTTPRequestAttributes
 	private final HTTPAuthentication httpAuthentication;
 	private final String pathInfo;
 	private final String uri;
+	private AppIDURI appIDURI;
 	
 	private JWTToken jwtToken = null;
 	
@@ -99,6 +101,15 @@ public class HTTPRequestAttributes
 		{
 			httpAuthentication = null;
 		}
+		
+		try
+		{
+			appIDURI = AppIDURI.parse(pathInfo);
+		}
+		catch(Exception e)
+		{
+			
+		}
 	}
 
 
@@ -130,6 +141,12 @@ public class HTTPRequestAttributes
 	public final boolean isMultiPart()
 	{
 		return isMultiPart;
+	}
+	
+	
+	public AppIDURI getAppIDURI()
+	{
+		return appIDURI;
 	}
 	
 	/**

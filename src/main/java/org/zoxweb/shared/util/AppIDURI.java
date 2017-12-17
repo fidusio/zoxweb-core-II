@@ -1,6 +1,5 @@
 package org.zoxweb.shared.util;
 
-import java.util.Arrays;
 
 import org.zoxweb.shared.data.AppIDDAO;
 
@@ -8,13 +7,14 @@ public class AppIDURI
 {
 	private AppIDDAO appID;
 	private String rest[];
+	private static final String EMPTY[] = new String[0]; 
 	
 	private AppIDURI()
 	{
 		
 	}
 	
-	public AppIDDAO getAppIDDAO()
+	public AppIDDAO getAppID()
 	{
 		return appID;
 	}
@@ -44,10 +44,14 @@ public class AppIDURI
 		if (tokens.length > index)
 		{
 			ret.rest = new String[tokens.length - index];
-			for(int marker = index;index < tokens.length; index++)
+			for(int marker = index; index < tokens.length; index++)
 			{
 				ret.rest[index - marker] = tokens[index];
 			}
+		}
+		else
+		{
+			ret.rest = EMPTY;
 		}
 		
 		
