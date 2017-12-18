@@ -18,7 +18,9 @@ package org.zoxweb.server.queue;
 import java.io.IOException;
 
 import org.zoxweb.server.util.GSONUtil;
+import org.zoxweb.shared.api.APIException;
 import org.zoxweb.shared.queue.QueueEvent;
+import org.zoxweb.shared.security.AccessException;
 import org.zoxweb.shared.util.NVEntity;
 import org.zoxweb.shared.util.SharedStringUtil;
 
@@ -38,7 +40,7 @@ public class NVEntityQueueEvent extends QueueEvent<NVEntity>
 		// TODO Auto-generated constructor stub
 		try {
 			content = GSONUtil.fromJSON(SharedStringUtil.toString(data));
-		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException | NullPointerException
+		} catch (AccessException | APIException | NullPointerException
 				| IllegalArgumentException e) {
 			// TODO Auto-generated catch block
 			throw new IllegalArgumentException(e.getMessage());

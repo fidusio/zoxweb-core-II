@@ -37,6 +37,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.zoxweb.server.filters.TimestampFilter;
+import org.zoxweb.shared.api.APIException;
 import org.zoxweb.shared.db.QueryMarker;
 import org.zoxweb.shared.db.QueryMatch;
 import org.zoxweb.shared.db.QueryMatchLong;
@@ -44,10 +45,12 @@ import org.zoxweb.shared.db.QueryMatchString;
 import org.zoxweb.shared.db.QueryRequest;
 import org.zoxweb.shared.filters.FilterType;
 import org.zoxweb.shared.filters.ValueFilter;
+import org.zoxweb.shared.security.AccessException;
 import org.zoxweb.shared.util.ArrayValues;
 import org.zoxweb.shared.util.Const;
 import org.zoxweb.shared.util.DynamicEnumMap;
 import org.zoxweb.shared.util.DynamicEnumMapManager;
+import org.zoxweb.shared.util.ExceptionReason.Reason;
 import org.zoxweb.shared.util.GNVTypeName;
 import org.zoxweb.shared.util.GetNVGenericMap;
 import org.zoxweb.shared.util.GetNameValue;
@@ -757,7 +760,8 @@ final public class GSONUtil
 		return null;
 	}
 	
-	private static NVGenericMap fromJSONGenericMap(JsonObject je, NVConfigEntity nvce, Base64Type btype) throws InstantiationException, IllegalAccessException, ClassNotFoundException
+	private static NVGenericMap fromJSONGenericMap(JsonObject je, NVConfigEntity nvce, Base64Type btype) 
+			throws APIException, AccessException
 	{
 			NVGenericMap ret = new NVGenericMap();
 			Iterator<Map.Entry<String, JsonElement>> iterator = ((JsonObject) je).entrySet().iterator();
@@ -1089,20 +1093,20 @@ final public class GSONUtil
 	}	
 	
 	public static <V extends NVEntity> V fromJSON(String json) 
-        throws InstantiationException, IllegalAccessException, ClassNotFoundException
+        throws  APIException
     {
 		return fromJSON(json, null, null);
 	}
 	
 	
 	public static <V extends NVEntity> V fromJSON(byte[] json) 
-	        throws InstantiationException, IllegalAccessException, ClassNotFoundException
-	    {
-			return fromJSON(SharedStringUtil.toString(json), null, null);
-		}
+	        throws  APIException
+    {
+		return fromJSON(SharedStringUtil.toString(json), null, null);
+	}
 	
 	public static Map<String, ?> fromJSONMap(String json, Base64Type b64Type) 
-        throws InstantiationException, IllegalAccessException, ClassNotFoundException
+        throws APIException
     {
 		Map<String, Object> ret = new LinkedHashMap<String, Object>();
 		
@@ -1251,14 +1255,14 @@ final public class GSONUtil
 	
 	
 	public static <V extends NVEntity> V fromJSON(String json, Class<? extends NVEntity> clazz) 
-	        throws InstantiationException, IllegalAccessException, ClassNotFoundException
+	        throws  AccessException, APIException
 	{
 		return fromJSON(json, clazz, null);
 	}
 	
 	@SuppressWarnings("unchecked")
 	public static <V extends NVEntity> V fromJSON(String json, Class<? extends NVEntity> clazz, Base64Type b64Type) 
-        throws InstantiationException, IllegalAccessException, ClassNotFoundException
+        throws AccessException, APIException
     {
 		JsonElement je = new JsonParser().parse(json);
 		
@@ -1272,7 +1276,7 @@ final public class GSONUtil
 	
 	@SuppressWarnings("unchecked")
 	private static NVEntity fromJSON(JsonObject jo, Class<? extends NVEntity> clazz, Base64Type b64Type)
-        throws InstantiationException, IllegalAccessException, ClassNotFoundException
+        throws AccessException, APIException
     {
 
 		// check if the jo has class name setup
@@ -1283,7 +1287,17 @@ final public class GSONUtil
 		{
 			if (!classType.isJsonNull())
 			{
-				clazz = (Class<? extends NVEntity>) Class.forName(classType.getAsString());
+				
+				try
+				{
+					clazz = (Class<? extends NVEntity>) Class.forName(classType.getAsString());
+				} 
+				catch (ClassNotFoundException e) 
+				{
+					// TODO Auto-generated catch block
+					//e.printStackTrace();
+					throw new APIException(e.getMessage(), Reason.NOT_FOUND);
+				}
 			}
 		}
 		
@@ -1291,18 +1305,29 @@ final public class GSONUtil
 		
 		try
         {
-			nve = clazz.getDeclaredConstructor().newInstance();
+			try {
+				nve = clazz.getDeclaredConstructor().newInstance();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				//e.printStackTrace();
+				throw new APIException(e.getMessage(), Reason.NOT_FOUND);
+			}
 		}
-		catch(InstantiationException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException ie )
+		catch(InstantiationException | InvocationTargetException | NoSuchMethodException ie )
         {
 		    ie.printStackTrace();
 			log.info("Error class:" + clazz);
 			log.info("" + jo.toString());
-			if (ie instanceof InstantiationException)
-				throw (InstantiationException)ie;
-			else 
-				throw new InstantiationException(ie.getMessage());
+			throw new APIException(ie.getMessage(), Reason.NOT_FOUND);
+//			if (ie instanceof InstantiationException)
+//				throw (InstantiationException)ie;
+//			else 
+//				throw new InstantiationException(ie.getMessage());
 			
+		}
+		catch(SecurityException ie)
+		{
+			throw new AccessException(ie.getMessage(), Reason.ACCESS_DENIED);
 		}
 		
 		if (jo.get(MetaToken.REFERENCE_ID.getName()) != null && !jo.get(MetaToken.REFERENCE_ID.getName()).isJsonNull())
@@ -1709,7 +1734,7 @@ final public class GSONUtil
 	}
 	
 	public static DynamicEnumMap fromJSONDynamicEnumMap(String json)
-        throws InstantiationException, IllegalAccessException, ClassNotFoundException
+        throws InstantiationException, IllegalAccessException
     {
 		DynamicEnumMap ret = new DynamicEnumMap();
 	
