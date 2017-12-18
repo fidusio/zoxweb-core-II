@@ -727,8 +727,13 @@ public class APIAppManagerProvider
     public AppIDDAO deleteAppIDDAO(String domainID, String appID)
     	throws NullPointerException, IllegalArgumentException, AccessException, APIException
     {
+    	SharedUtil.checkIfNulls("Null domain or app id", domainID, appID);
     	getAPISecurityManager().checkPermissions(SecurityModel.Permission.DELETE_APP_ID.getValue());
     	AppIDDAO ret = lookupAppIDDAO(domainID, appID, true);
+    	if (ret == null)
+    	{
+    		throw new APIException("app id " + new AppIDDAO(domainID, appID) + " does not exist");
+    	}
     	delete(ret);
     	return ret;
     	
