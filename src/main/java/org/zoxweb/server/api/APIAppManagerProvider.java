@@ -43,6 +43,7 @@ import org.zoxweb.shared.security.shiro.ShiroAssociationType;
 import org.zoxweb.shared.util.Const.LogicalOperator;
 import org.zoxweb.shared.util.Const.RelationalOperator;
 import org.zoxweb.shared.util.Const.Status;
+import org.zoxweb.shared.util.ExceptionReason.Reason;
 import org.zoxweb.shared.util.GetValue;
 import org.zoxweb.shared.util.MetaToken;
 import org.zoxweb.shared.util.NVConfigEntity;
@@ -623,7 +624,7 @@ public class APIAppManagerProvider
         if (result == null || result.isEmpty()) 
         {
         	if (exceptionIfNotFound)
-        		throw new APIException("AppIDDAO not found");
+        		throw new APIException("AppIDDAO not found", Reason.NOT_FOUND);
         	else
         		return null;
         }
@@ -730,10 +731,6 @@ public class APIAppManagerProvider
     	SharedUtil.checkIfNulls("Null domain or app id", domainID, appID);
     	getAPISecurityManager().checkPermissions(SecurityModel.Permission.DELETE_APP_ID.getValue());
     	AppIDDAO ret = lookupAppIDDAO(domainID, appID, true);
-    	if (ret == null)
-    	{
-    		throw new APIException("app id " + new AppIDDAO(domainID, appID) + " does not exist");
-    	}
     	delete(ret);
     	return ret;
     	

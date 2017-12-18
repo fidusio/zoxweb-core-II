@@ -15,6 +15,8 @@
  */
 package org.zoxweb.shared.security;
 
+import org.zoxweb.shared.util.ExceptionReason;
+
 /**
  * This exception is caused by a security access revocation 
  * @author mnael
@@ -23,18 +25,30 @@ package org.zoxweb.shared.security;
 @SuppressWarnings("serial")
 public class AccessException
     extends RuntimeException
+    implements ExceptionReason
 {
 	private String urlRedirect = null;
 	private boolean reload = false;
 	
+	
+	
+	private Reason reason = Reason.ACCESS_DENIED;
+	
 	public AccessException()
 	{
 		super();
+		
 	}
 	
 	public AccessException(String message)
 	{
 		super(message);
+	}
+	
+	public AccessException(String message, Reason reason)
+	{
+		super(message);
+		this.reason = reason;
 	}
 
 	public AccessException(String message, String urlRedirect)
@@ -45,7 +59,7 @@ public class AccessException
 	
 	public AccessException(String message, String urlRedirect, boolean reload)
 	{
-		super( message);
+		super(message);
 		this.urlRedirect = urlRedirect;
 		this.reload = reload;
 	}
@@ -77,6 +91,22 @@ public class AccessException
 	public void setReloadRequired(boolean reload)
 	{
 		this.reload = reload;
+	}
+	
+	
+	
+
+
+	public Reason getReason()
+	{
+		// TODO Auto-generated method stub
+		return reason;
+	}
+
+	public void setReason(Reason reason) 
+	{
+		// TODO Auto-generated method stub
+		this.reason = reason;
 	}
 	
 }

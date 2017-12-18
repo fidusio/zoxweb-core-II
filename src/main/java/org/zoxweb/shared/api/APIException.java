@@ -15,6 +15,7 @@
  */
 package org.zoxweb.shared.api;
 
+import org.zoxweb.shared.util.ExceptionReason;
 import org.zoxweb.shared.util.GetValue;
 
 /**
@@ -25,7 +26,11 @@ import org.zoxweb.shared.util.GetValue;
 @SuppressWarnings("serial")
 public class APIException 
 	extends RuntimeException
+	implements ExceptionReason
 {
+	
+	
+	private Reason reason = Reason.INCOMPLETE;
 	/**
 	 * This enum includes error categories.
 	 * @author mzebib
@@ -121,9 +126,14 @@ public class APIException
 	 * This constructor instantiates APIStoreException based given reason.
 	 * @param reason
 	 */
-	public APIException(String reason)
+	public APIException(String message)
 	{
-		super(reason);
+		super(message);
+	}
+	public APIException(String message, Reason reason)
+	{
+		super(message);
+		setReason(reason);
 	}
 	
 	/**
@@ -138,6 +148,18 @@ public class APIException
 		super(reason);
 		this.category = category;
 		this.code = code;
+	}
+
+	
+	public Reason getReason() {
+		// TODO Auto-generated method stub
+		return reason;
+	}
+
+	
+	public void setReason(Reason reason) {
+		// TODO Auto-generated method stub
+		this.reason = reason;
 	}
 	
 	
