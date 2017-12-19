@@ -21,6 +21,7 @@ import org.zoxweb.shared.api.APISecurityManager;
 import org.zoxweb.shared.crypto.EncryptedKeyDAO;
 import org.zoxweb.shared.crypto.PasswordDAO;
 import org.zoxweb.shared.crypto.CryptoConst.MDType;
+import org.zoxweb.shared.data.AppConfigDAO;
 import org.zoxweb.shared.data.AppDeviceDAO;
 import org.zoxweb.shared.data.AppIDDAO;
 import org.zoxweb.shared.data.DeviceDAO;
@@ -40,6 +41,7 @@ import org.zoxweb.shared.security.model.SecurityModel;
 import org.zoxweb.shared.security.model.SecurityModel.Role;
 import org.zoxweb.shared.security.shiro.ShiroAssociationRuleDAO;
 import org.zoxweb.shared.security.shiro.ShiroAssociationType;
+import org.zoxweb.shared.util.Const;
 import org.zoxweb.shared.util.Const.LogicalOperator;
 import org.zoxweb.shared.util.Const.RelationalOperator;
 import org.zoxweb.shared.util.Const.Status;
@@ -719,21 +721,32 @@ public class APIAppManagerProvider
     		apiSecurityManager.addRole(SecurityModel.Role.APP_USER.toRole(domainID, appID));
     		apiSecurityManager.addRole(SecurityModel.Role.APP_SERVICE_PROVIDER.toRole(domainID, appID));
     		getAPIDataStore().createSequence(ret.getSubjectID());
+
+            AppConfigDAO appConfigDAO = new AppConfigDAO();
+            appConfigDAO.setAppIDDAO(ret);
+            appConfigDAO = create(appConfigDAO);
     	}
     	
     	return ret;
     }
     
     
-    public AppIDDAO deleteAppIDDAO(String domainID, String appID)
+    public synchronized AppIDDAO deleteAppIDDAO(String domainID, String appID)
     	throws NullPointerException, IllegalArgumentException, AccessException, APIException
     {
     	SharedUtil.checkIfNulls("Null domain or app id", domainID, appID);
     	getAPISecurityManager().checkPermissions(SecurityModel.Permission.DELETE_APP_ID.getValue());
     	AppIDDAO ret = lookupAppIDDAO(domainID, appID, true);
-    	delete(ret);
+
+        List<AppConfigDAO> list = search(AppConfigDAO.NVC_APP_CONFIG_DAO, new QueryMatchString(Const.RelationalOperator.EQUAL, ret.getReferenceID(), AppConfigDAO.Param.APP_ID.getNVConfig().getName(), MetaToken.REFERENCE_ID.getName()));
+
+        if (list != null && list.size() == 1) {
+            delete(list.get(0));
+        }
+
+        delete(ret);
+
     	return ret;
-    	
     }
     
     public <V extends NVEntity> List<V> search(NVConfigEntity nvce, QueryMarker ... queryCriteria) 
@@ -741,6 +754,7 @@ public class APIAppManagerProvider
 	{
     	return search(nvce, null, queryCriteria);
 	}
+
     public <V extends NVEntity> List<V> search(NVConfigEntity nvce, List<String> fieldNames, QueryMarker ... queryCriteria)
 			throws NullPointerException, IllegalArgumentException, AccessException, APIException
 	{
