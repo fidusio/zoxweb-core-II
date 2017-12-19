@@ -609,7 +609,7 @@ public class APIAppManagerProvider
     }
     
     
-    private  AppIDDAO lookupAppIDDAO(String domainID, String appID, boolean exceptionIfNotFound)
+    private AppIDDAO lookupAppIDDAO(String domainID, String appID, boolean exceptionIfNotFound)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException {
 //        SharedUtil.checkIfNulls("Domain ID is null", domainID);
 //        SharedUtil.checkIfNulls("App ID is null", appID);
@@ -634,7 +634,23 @@ public class APIAppManagerProvider
         return result.get(0);
     }
 
- 
+    public AppConfigDAO lookupAppConfigDAO(String domainID, String appID)
+            throws NullPointerException, IllegalArgumentException, AccessException, APIException {
+        domainID = FilterType.DOMAIN.validate(domainID);
+        appID =  AppIDNameFilter.SINGLETON.validate(appID);
+
+
+        AppIDDAO appIDDAO = lookupAppIDDAO(domainID, appID);
+
+        List<AppConfigDAO> result = search(AppConfigDAO.NVC_APP_CONFIG_DAO, new QueryMatchString(Const.RelationalOperator.EQUAL, appIDDAO.getReferenceID(), AppConfigDAO.Param.APP_ID.getNVConfig().getName(), MetaToken.REFERENCE_ID.getName()));
+
+        if (result == null || result.size() != 1) {
+            throw new APIException("AppConfigDAO not found", Reason.NOT_FOUND);
+        }
+
+        return result.get(0);
+    }
+
     public SubjectAPIKey registerSubjectAPIKey(UserInfoDAO userInfoDAO, AppDeviceDAO appDeviceDAO, String subjectID, String password)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException {
 

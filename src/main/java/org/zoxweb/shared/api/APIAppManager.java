@@ -1,6 +1,7 @@
 package org.zoxweb.shared.api;
 
 import org.zoxweb.server.security.UserIDCredentialsDAO.UserStatus;
+import org.zoxweb.shared.data.AppConfigDAO;
 import org.zoxweb.shared.data.AppDeviceDAO;
 import org.zoxweb.shared.data.AppIDDAO;
 import org.zoxweb.shared.data.UserIDDAO;
@@ -206,6 +207,20 @@ public interface APIAppManager
      * @throws APIException
      */
 	AppIDDAO lookupAppIDDAO(String domainID, String appID)
+            throws NullPointerException, IllegalArgumentException, AccessException, APIException;
+
+
+    /**
+     * Look up AppConfigDAO based on domain ID and app ID.
+     * @param domainID
+     * @param appID
+     * @return
+     * @throws NullPointerException
+     * @throws IllegalArgumentException
+     * @throws AccessException
+     * @throws APIException
+     */
+    AppConfigDAO lookupAppConfigDAO(String domainID, String appID)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException;
 
     /**
