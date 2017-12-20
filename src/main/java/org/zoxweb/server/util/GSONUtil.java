@@ -139,6 +139,57 @@ final public class GSONUtil
 		return toJSON(nve, indent, printNull, printClassType, null);
 	}
 	
+	public static List<NVEntity> fromJSONArray(String json, Base64Type b64Type)
+	{
+		List<NVEntity> ret = new ArrayList<NVEntity>();
+		JsonElement je = new JsonParser().parse(json);
+		
+		if (je instanceof JsonArray)
+		{
+			JsonArray ja = (JsonArray) je;
+			for (int i = 0; i < ja.size(); i++)
+			{
+				JsonObject jo = (JsonObject) ja.get(i);
+				ret.add(fromJSON(jo, null, b64Type));
+			}
+			
+		}
+		
+		return ret;
+	}
+	
+	
+	public static String toJSONArray(List<NVEntity> list, boolean indent, boolean printNull, Base64Type b64Type)
+		throws IOException
+	{
+		return toJSONArray(list.toArray(new NVEntity[list.size()]), indent, printNull, b64Type);
+	}
+	
+	public static String toJSONArray(NVEntity[] nves, boolean indent, boolean printNull, Base64Type b64Type)
+		 throws IOException
+	{
+		StringWriter sw = new StringWriter();
+		JsonWriter writer = new JsonWriter(sw);
+		writer.setSerializeNulls(true);
+		writer.setHtmlSafe(true);
+		
+		if (indent)
+			writer.setIndent("  ");
+		else
+			writer.setIndent("");
+		writer.beginArray();
+		for (NVEntity nve: nves)
+		{
+			if (nve != null)
+			{
+				toJSON(writer, nve.getClass(), nve, printNull, true, b64Type);
+			}
+		}
+		writer.endArray();
+		writer.close();
+		return sw.toString();
+	}
+	
 	public static String toJSON(NVEntity nve, boolean indent, boolean printNull, boolean printClassType, Base64Type b64Type) 
         throws IOException
     {
@@ -158,6 +209,7 @@ final public class GSONUtil
 		
 		return sw.toString();
 	}
+	
 	
 	public static String toJSONWrapper(String wrapName, 
 									   NVEntity nve, 

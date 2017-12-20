@@ -1154,6 +1154,7 @@ public class Const
 	public enum ReturnType
 	{
 		NVENTITY,
+		// this is the old way
 		NVENTITY_LIST,
 		VOID,
 		BOOLEAN,
@@ -1164,7 +1165,9 @@ public class Const
 		DOUBLE,
 		MAP,
 		DYNAMIC_ENUM_MAP,
-		DYNAMIC_ENUM_MAP_LIST
+		DYNAMIC_ENUM_MAP_LIST,
+		// this to replace NENTITY_LIST,
+		NVENTITY_ARRAY,
 	}
 	
 	/**

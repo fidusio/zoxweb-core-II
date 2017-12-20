@@ -97,6 +97,10 @@ public class JSONTest {
 			System.out.println(jsonValues);
 			List<NVEntity> values = GSONUtil.fromJSONValues(jsonValues, Base64Type.DEFAULT);
 			System.out.println(values);
+			String json  = GSONUtil.toJSONArray(values, true, false, Base64Type.DEFAULT);
+			System.out.println(json);
+			List<NVEntity> nves = GSONUtil.fromJSONArray(json, Base64Type.DEFAULT);
+			System.out.println(nves);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
