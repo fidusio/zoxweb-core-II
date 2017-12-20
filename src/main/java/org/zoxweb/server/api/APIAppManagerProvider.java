@@ -567,6 +567,7 @@ public class APIAppManagerProvider
     	try 
     	{
 			PasswordDAO newPasswordDAO = CryptoUtil.hashedPassword(MDType.SHA_512, 0, 8196, newPassword);
+            newPasswordDAO.setUserID(userID);
 			credentials.setPassword(newPasswordDAO);
 			getAPIDataStore().update(credentials);
 			
