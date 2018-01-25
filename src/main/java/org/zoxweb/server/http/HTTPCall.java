@@ -29,6 +29,7 @@ import java.util.Map;
 import org.zoxweb.server.io.CloseEnabledInputStream;
 import org.zoxweb.server.io.IOUtil;
 
+import org.zoxweb.server.security.SSLCheckDisabler;
 import org.zoxweb.server.security.SSLSocketProp;
 
 import org.zoxweb.shared.filters.ReplacementFilter;
@@ -95,6 +96,13 @@ public class HTTPCall
 		this.osBypass = osBypass;
 		//this.embedParamsInURI = embedParamsInURI;
 		this.contentAsIS = contentAsIS;
+
+		// if the ssl override  is not set but secure check is disabled then set
+		// it to the default SSLCheckDisabler
+		if (this.ssp == null && !params.isSecureCheckEnabled())
+		{
+			this.ssp = SSLCheckDisabler.SINGLETON;
+		}
 	}
 	
 	

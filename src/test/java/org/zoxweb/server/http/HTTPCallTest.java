@@ -57,14 +57,7 @@ public class HTTPCallTest
 		
 		
 		
-		try
-        {
-			HTTPUtil.addHTTPPatch();
-		}
-		catch (Exception e)
-        {
-			e.printStackTrace();
-		}
+
 
 		HTTPCall call = new HTTPCall( hcc, SSLCheckDisabler.SINGLETON);
         long ts = System.currentTimeMillis();

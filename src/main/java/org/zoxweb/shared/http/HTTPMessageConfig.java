@@ -49,7 +49,7 @@ import org.zoxweb.shared.util.NVConfigEntity.ArrayType;
  * <li> do a http rest invocation
  * </ul
  * </p> 
- * @author mnael
+ * @author javaconsigliere
  *
  */
 
@@ -84,6 +84,7 @@ public class HTTPMessageConfig
 		PARAMETERS(NVConfigManager.createNVConfig("parameters", "parameters", "Parameters", false, true, false, String[].class, null)),
 		PROXY_ADDRESS(NVConfigManager.createNVConfigEntity("proxy_address", "The proxy address if not null","ProxyAddress",true, false, InetSocketAddressDAO.class, ArrayType.NOT_ARRAY)),
 		ENABLE_ENCODING(NVConfigManager.createNVConfig("enable_encoding", "The NVP will be url encoded", "EnableEncoding", false, true, Boolean.class)),
+		ENABLE_SECURE_CHECK(NVConfigManager.createNVConfig("enable_secure_check", "If the connection is secure, certificte will be valiated", "EnableSecureCheck", false, true, Boolean.class)),
 		HTTP_PARAMETER_FORMATTER(NVConfigManager.createNVConfig("http_parameter_formatter", "The NVP parameter formatter", "HTTPParameterFormatter", false, true, HTTPParameterFormatter.class)),
 		
 		CONTENT(NVConfigManager.createNVConfig("content", "The payload content", "Content", false, true, byte[].class)),
@@ -133,6 +134,7 @@ public class HTTPMessageConfig
 		super(nvce);
 		setRedirectEnabled(true);
 		setURLEncodingEnabled(true);
+		setSecureCheckEnabled(true);
 		setHTTPParameterFormatter(HTTPParameterFormatter.URL_ENCODED);
 		// updating PARAMETERS and HEADER_PARAMETERS to NVGetNameValueMap
 		// reason to support multi-parts parameters
@@ -411,6 +413,18 @@ public class HTTPMessageConfig
 	public int getConnectTimeout() 
 	{
 		return lookupValue(Params.CONNECTION_TIMEOUT);
+	}
+
+	@Override
+	public boolean isSecureCheckEnabled()
+	{
+		return lookupValue(Params.ENABLE_SECURE_CHECK);
+	}
+
+	@Override
+	public void setSecureCheckEnabled(boolean sslCheck)
+	{
+		setValue(Params.ENABLE_SECURE_CHECK, sslCheck);
 	}
 
 

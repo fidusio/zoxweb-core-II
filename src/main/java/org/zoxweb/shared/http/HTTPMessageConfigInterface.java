@@ -34,12 +34,12 @@ extends ReferenceID<String>, SetName, SetDescription
 	/**
 	 * @return true if mutli part encoding
 	 */
-	public boolean isMultiPartEncoding();
+	boolean isMultiPartEncoding();
 
 	/**
 	 * @param multiPartEncoding true to enable multi part encoding
 	 */
-	public void setMultiPartEncoding(boolean multiPartEncoding);
+	void setMultiPartEncoding(boolean multiPartEncoding);
 	
 	
 	/**
@@ -47,91 +47,91 @@ extends ReferenceID<String>, SetName, SetDescription
 	 * The parameters sequence should be preserved during invocation 
 	 * @return http parameters
 	 */
-	public ArrayValues<GetNameValue<String>> getParameters();
+	ArrayValues<GetNameValue<String>> getParameters();
 
 	/**
 	 * Set the action parameters list
 	 * @param params
 	 */
-	public void setParameters(List<GetNameValue<String>> params);
+	void setParameters(List<GetNameValue<String>> params);
 
 	/**
 	 * Get the action type
 	 * @return the method
 	 */
-	public HTTPMethod getMethod();
+	HTTPMethod getMethod();
 	
 	/**
 	 * Set the action type
 	 * @param httpMethod
 	 */
-	public void setMethod(HTTPMethod httpMethod);
+	void setMethod(HTTPMethod httpMethod);
 	
 	/**
 	 * Set the action type
 	 * @param httpMethod
 	 */
-	public void setMethod(String httpMethod);
+	void setMethod(String httpMethod);
 	
 	/**
 	 * Get the URI extension
 	 * @return the uri part
 	 */
-	public String getURI();
+	String getURI();
 	
 	/**
 	 * Set the URI extension
 	 * @param uri
 	 */
-	public void setURI(String uri);
+	void setURI(String uri);
 	
 	/**
 	 * Get the URL
 	 * @return url part 
 	 */
-	public String getURL();
+	String getURL();
 	
 	
 	/**
 	 * Set the URL
 	 * @param url
 	 */
-	public void setURL(String url);
+	void setURL(String url);
 
 	/**
 	 * Set the HTTP request parameters
 	 * @return headers
 	 */
-	public ArrayValues<GetNameValue<String>> getHeaderParameters();
+	ArrayValues<GetNameValue<String>> getHeaderParameters();
 
 	/**
 	 * Get the HTTP request parameters
 	 * @param headerParams
 	 */
-	public void setHeaderParameters(List<GetNameValue<String>> headerParams);
+	void setHeaderParameters(List<GetNameValue<String>> headerParams);
 	
 	/**
 	 * @return true if url encoding is enabled
 	 */
-	public HTTPParameterFormatter getHTTPParameterFormatter();
+	HTTPParameterFormatter getHTTPParameterFormatter();
 	
 	/**
 	 * enable url encoding
 	 * @param value
 	 */
-	public void setHTTPParameterFormatter(HTTPParameterFormatter value);
+	void setHTTPParameterFormatter(HTTPParameterFormatter value);
 	
 	
 	/**
 	 * @return true if url encoding is enabled
 	 */
-	public boolean isURLEncodingEnabled();
+	boolean isURLEncodingEnabled();
 	
 	/**
 	 * enable url encoding
 	 * @param value
 	 */
-	public void setURLEncodingEnabled(boolean value);
+	void setURLEncodingEnabled(boolean value);
 	
 	
 	
@@ -139,81 +139,96 @@ extends ReferenceID<String>, SetName, SetDescription
 	 * Set the request payload or content
 	 * @param payload
 	 */
-	public void setContent(byte[] payload);
+	void setContent(byte[] payload);
 
 	/**
 	 * Set the request payload or content
 	 * @param payload
 	 */
-	public void setContent(String payload);
+	void setContent(String payload);
 	
 	
 	/**
 	 * Get the request payload or content
 	 * @return content
 	 */
-	public byte[] getContent();
+	byte[] getContent();
 	
 	/**
 	 * @return content length
 	 */
-	public int getContentLength();
+	int getContentLength();
 	/**
 	 * Set the content length
 	 * @param length
 	 */
-	public void setContentLength(int length);
+	void setContentLength(int length);
 
 	/**
 	 * @return the multipart boundary 
 	 */
-	public String getBoundary();
+	String getBoundary();
 
 	/**
 	 * This is a optional parameter that is set by the http call 
 	 * in case of mutlitpart post
 	 * @param boundary
 	 */
-	public void setBoundary(String boundary);
+	void setBoundary(String boundary);
 	
 	/**
 	 * @return true if redirect is enabled
 	 */
-	public boolean isRedirectEnabled();
+	boolean isRedirectEnabled();
 
-	public void setRedirectEnabled(boolean redirectEnabled);
+	void setRedirectEnabled(boolean redirectEnabled);
 	
 	/**
 	 * The connect timeout in millis seconds before throwing an exception, 0 to disable
 	 * 
 	 * @return connection timeout in millis
 	 */
-	public int getConnectTimeout();
+	int getConnectTimeout();
+
+
+	/**
+	 * If true ssl check will be enabled, if the connection is a secure connection the remote server certificate will be checked.
+	 * If false ssl check will be disabled, this mode should be used for selfsigned server certificate connections
+	 * @return true if enabled, false disabled
+	 */
+	boolean isSecureCheckEnabled();
+
+	/**
+	 * Set the ssl check status
+	 * @param sslCheck
+	 */
+	void setSecureCheckEnabled(boolean sslCheck);
+
 	
 	/**
 	 * Set the connection timeout is millis 
 	 * @param connectTimeout
 	 */
-	public void setConnectTimeout(int connectTimeout);
+	void setConnectTimeout(int connectTimeout);
 	
 	/**
 	 * The read timeout in millis seconds before throwing an exception, 0 to disable
 	 * 
 	 * @return the read timeout in millis
 	 */
-	public int getReadTimeout();
+	int getReadTimeout();
 	
 	/**
 	 * Set the read timeout is millis
 	 * @param readTimeout
 	 */
-	public void setReadTimeout(int readTimeout);
+	void setReadTimeout(int readTimeout);
 
 	/**
 	 * Get the encoding to be used for the parameter, if null default will be used
 	 * @return charset
 	 */
-	public String getCharset();
+	String getCharset();
 
 
 	/**
@@ -221,30 +236,30 @@ extends ReferenceID<String>, SetName, SetDescription
 	 * Set the charset	 
 	 * @param charset
 	 */
-	public void setCharset(String charset);
+	void setCharset(String charset);
 	
 	/**
 	 * 
 	 * @return the user
 	 */
-	public String getUser();
+	String getUser();
 	
 	/**
 	 * Set the user
 	 * @param user
 	 */
-	public void setUser(String user);
+	void setUser(String user);
 	
 	/**
 	 * @return user password
 	 */
-	public String getPassword();
+	String getPassword();
 	
 	/**
 	 * Set user password
 	 * @param password
 	 */
-	public void setPassword(String password);
+	void setPassword(String password);
 
 
 	
@@ -252,27 +267,27 @@ extends ReferenceID<String>, SetName, SetDescription
 	 * 
 	 * @return HTTPAuthentication
 	 */
-	public HTTPAuthentication getAuthentitcation();
+	HTTPAuthentication getAuthentitcation();
 	
-	public void setAuthentication(HTTPAuthentication httpAuthentication);
+	void setAuthentication(HTTPAuthentication httpAuthentication);
 	
 	/**
 	 * @return the proxy address null if not set
 	 */
-	public InetSocketAddressDAO getProxyAddress();
+	InetSocketAddressDAO getProxyAddress();
 	
 	/**
 	 * Set the proxy address
 	 * @param proxyAddress
 	 */
-	public void setProxyAddress(InetSocketAddressDAO proxyAddress);
+	void setProxyAddress(InetSocketAddressDAO proxyAddress);
 	
 	/**
 	 * @return reason
 	 */
-	public String getReason();
+	String getReason();
 	
-	public void setReason(String reason);
+	void setReason(String reason);
 	
 	/**
 	 * 
@@ -280,14 +295,14 @@ extends ReferenceID<String>, SetName, SetDescription
 	 * 
 	 * @return content type
 	 */
-	public String getContentType();
+	String getContentType();
 	
 	/**
 	 * Set the header content type
 	 * 
 	 * @param contentType
 	 */
-	public void setContentType(String contentType);
+	void setContentType(String contentType);
 	
 	/**
 	 * 
@@ -295,39 +310,39 @@ extends ReferenceID<String>, SetName, SetDescription
 	 * 
 	 * @param contentType
 	 */
-	public void setContentType(GetValue<String> contentType);
+	void setContentType(GetValue<String> contentType);
 	
 	/**
 	 * Return the Cookie header value
 	 * @return cookie
 	 */
-	public String getCookie();
+	String getCookie();
 	
 	/**
 	 * Set cookie
 	 * @param cookieValue
 	 */
-	public void setCookie(String cookieValue);
+	void setCookie(String cookieValue);
 	
 	/**
 	 * Set cookie
 	 * @param cookieValue
 	 */
-	public void setCookie(GetValue<String> cookieValue);
+	void setCookie(GetValue<String> cookieValue);
 	
 	/**
 	 * @return HTTPVersion
 	 */
-	public HTTPVersion getHTTPVersion();
+	HTTPVersion getHTTPVersion();
 	
-	public void setHTTPVersion(String version);
+	void setHTTPVersion(String version);
 	
-	public void setHTTPVersion(HTTPVersion version);
+	void setHTTPVersion(HTTPVersion version);
 	
 	
-	public void setHTTPStatusCode(HTTPStatusCode status);
+	void setHTTPStatusCode(HTTPStatusCode status);
 	
-	public HTTPStatusCode getHTTPStatusCode();
+	HTTPStatusCode getHTTPStatusCode();
 	
 	
 }
