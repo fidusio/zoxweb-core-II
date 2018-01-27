@@ -38,7 +38,7 @@ public class QueueTest {
 		for (int j = 0; j < 30; j++) {
 			System.out.println("\nTest run " + j);
 			for (int i = 0; i < limit; i++) {
-				uQueue.queue(new Object());
+				uQueue.queue(o);
 				clQueue.add(o);
 				lbQueue.add(o);
 				abQueue.add(o);

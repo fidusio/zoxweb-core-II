@@ -30,6 +30,7 @@ public class SimpleQueue<O>
 	private QueueNode<O> head;
 	private long totalQueued = 0;
 	private boolean equalityEnabled = true;
+
 	
 	/**
 	 * Create a empty queue.
@@ -125,7 +126,8 @@ public class SimpleQueue<O>
 	 * Dequeue an object, if the queue is empty it will return null.
 	 * @return first object or null 
 	 */
-	public synchronized O dequeue() {
+	public synchronized O dequeue()
+	{
 		O retval = null;
 
 		// if the queue is not empty
