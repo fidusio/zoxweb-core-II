@@ -17,6 +17,7 @@ package org.zoxweb;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import org.zoxweb.server.util.RuntimeUtil;
@@ -34,8 +35,10 @@ public class QueueTest {
 		ArrayBlockingQueue<Object> abQueue = new ArrayBlockingQueue<Object>(limit);
 		VMInfoDAO startVMID = RuntimeUtil.vmSnapshot();
 		Object o = new Object();
+		
 
 		for (int j = 0; j < 30; j++) {
+			ConcurrentSkipListMap<Long, String> results = new ConcurrentSkipListMap<Long, String>();
 			System.out.println("\nTest run " + j);
 			for (int i = 0; i < limit; i++) {
 				uQueue.queue(o);
@@ -51,7 +54,9 @@ public class QueueTest {
 			}
 			
 			ts = System.nanoTime() - ts;
-			System.out.println( ts + " nanos SimpleQueue took  sec to dequeue " + limit + ":" + uQueue.size());
+			String message = ts + " nanos SimpleQueue took to dequeue " + limit + ":" + uQueue.size();
+			results.put(ts, message);
+			//System.out.println( ts + " nanos SimpleQueue took  sec to dequeue " + limit + ":" + uQueue.size());
 			
 			
 			ts = System.nanoTime();
@@ -61,7 +66,9 @@ public class QueueTest {
 			}
 			
 			ts = System.nanoTime() - ts;
-			System.out.println( ts + " nanos ConcurrentLinkedQueue took  sec to dequeue " + limit + ":" + clQueue.size());
+			message = ts + " nanos ConcurrentLinkedQueue took to dequeue " + limit + ":" + clQueue.size();
+			results.put(ts, message);
+			//System.out.println( ts + " nanos ConcurrentLinkedQueue took  sec to dequeue " + limit + ":" + clQueue.size());
 			
 			ts = System.nanoTime();
 
@@ -70,7 +77,9 @@ public class QueueTest {
 			}
 			
 			ts = System.nanoTime() - ts;
-			System.out.println( ts + " nanos LinkedBlockingQueue took  sec to dequeue " + limit + ":" + lbQueue.size());
+			message =  ts + " nanos LinkedBlockingQueue took to dequeue " + limit + ":" + lbQueue.size();
+			results.put(ts, message);
+			//System.out.println( ts + " nanos LinkedBlockingQueue took  sec to dequeue " + limit + ":" + lbQueue.size());
 			
 			ts = System.nanoTime();
 
@@ -79,8 +88,14 @@ public class QueueTest {
 			}
 			
 			ts = System.nanoTime() - ts;
-			System.out.println( ts + " nanos ArrayBlockingQueue took  sec to dequeue " + limit + ":" + abQueue.size());
-		
+			message = ts + " nanos ArrayBlockingQueue took to dequeue " + limit + ":" + abQueue.size();
+			results.put(ts, message);
+			//System.out.println( ts + " nanos ArrayBlockingQueue took  sec to dequeue " + limit + ":" + abQueue.size());
+			
+			for(String msg : results.values())
+			{
+				System.out.println(msg);
+			}
 		}
 
 		System.out.println();

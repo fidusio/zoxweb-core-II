@@ -132,6 +132,7 @@ public class SimpleQueue<O>
 
 		// if the queue is not empty
 		if (head.next != null && head.previous != null) {
+			
 			QueueNode<O> toRemove = head.previous;
 			retval = toRemove.obj;
 
@@ -151,6 +152,7 @@ public class SimpleQueue<O>
 			toRemove.previous = null;
 			toRemove.obj = null;
 			size--;
+			
 		}
 
 		return retval;
