@@ -15,6 +15,7 @@
  */
 package org.zoxweb;
 
+import java.util.Map;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ConcurrentSkipListMap;
@@ -26,6 +27,16 @@ import org.zoxweb.shared.util.SimpleQueueInterface;
 import org.zoxweb.shared.util.SimpleQueue;
 
 public class QueueTest {
+	
+	
+	static void add(Map<Long, String> map, long k, String v)
+	{
+		while(map.get(k) != null)
+		{
+			k++;
+		}
+		map.put(k, v);
+	}
 
 	public static void main(String[] args) {
 		int limit = 50000;
@@ -55,7 +66,7 @@ public class QueueTest {
 			
 			ts = System.nanoTime() - ts;
 			String message = ts + " nanos SimpleQueue took to dequeue " + limit + ":" + uQueue.size();
-			results.put(ts, message);
+			add(results, ts, message);
 			//System.out.println( ts + " nanos SimpleQueue took  sec to dequeue " + limit + ":" + uQueue.size());
 			
 			
@@ -67,7 +78,7 @@ public class QueueTest {
 			
 			ts = System.nanoTime() - ts;
 			message = ts + " nanos ConcurrentLinkedQueue took to dequeue " + limit + ":" + clQueue.size();
-			results.put(ts, message);
+			add(results, ts, message);
 			//System.out.println( ts + " nanos ConcurrentLinkedQueue took  sec to dequeue " + limit + ":" + clQueue.size());
 			
 			ts = System.nanoTime();
@@ -78,7 +89,7 @@ public class QueueTest {
 			
 			ts = System.nanoTime() - ts;
 			message =  ts + " nanos LinkedBlockingQueue took to dequeue " + limit + ":" + lbQueue.size();
-			results.put(ts, message);
+			add(results, ts, message);
 			//System.out.println( ts + " nanos LinkedBlockingQueue took  sec to dequeue " + limit + ":" + lbQueue.size());
 			
 			ts = System.nanoTime();
@@ -89,7 +100,7 @@ public class QueueTest {
 			
 			ts = System.nanoTime() - ts;
 			message = ts + " nanos ArrayBlockingQueue took to dequeue " + limit + ":" + abQueue.size();
-			results.put(ts, message);
+			add(results, ts, message);
 			//System.out.println( ts + " nanos ArrayBlockingQueue took  sec to dequeue " + limit + ":" + abQueue.size());
 			
 			for(String msg : results.values())
