@@ -88,7 +88,7 @@ public abstract class ProtocolSessionProcessor
 	{
 		try
 		{
-			processRead(detach());
+			readData(detach());
 		}
 		catch(Exception e)
 		{
@@ -99,7 +99,7 @@ public abstract class ProtocolSessionProcessor
 	}
 	
 	
-	protected abstract void processRead(SelectionKey sk);
+	protected abstract void readData(SelectionKey sk);
 
 
 	/**

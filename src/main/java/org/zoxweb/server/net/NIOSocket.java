@@ -186,7 +186,7 @@ public class NIOSocket
 								    	}
 								    	else
 								    	{
-								    		currentPSP.processRead(key);
+								    		currentPSP.readData(key);
 								    	}
 							    	}
 							    } 
@@ -197,6 +197,8 @@ public class NIOSocket
 							    	SocketChannel sc = ((ServerSocketChannel)key.channel()).accept();
 							    	if (debug) logger.info("Accepted:" + sc);
 							    	ProtocolSessionFactory<?> psf = (ProtocolSessionFactory<?>) key.attachment();
+							    	
+							    	// check if the incoming connection is allowed
 							    	if (NetUtil.checkSecurityStatus(psf.getIncomingInetFilterRulesManager(), sc.getRemoteAddress(), null) !=  SecurityStatus.ALLOW)
 							    	{
 							    		try
@@ -225,7 +227,7 @@ public class NIOSocket
 							    	{
 							    			    		
 							    		//ProtocolSessionFactory<?> psf = (ProtocolSessionFactory<?>) key.attachment();
-							    		
+							    		// connection allowed lets set it up
 							    		
 								    	ProtocolSessionProcessor psp = psf.newInstance();
 								    	

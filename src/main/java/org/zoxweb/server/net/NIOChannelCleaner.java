@@ -41,7 +41,7 @@ public class NIOChannelCleaner
 	private long runCall = 0;
 	
 	
-	public static final NIOChannelCleaner DEFAULT = new NIOChannelCleaner(TaskUtil.getDefaultTaskScheduler(), TimeInMillis.SECOND.MILLIS*10);
+	public static final NIOChannelCleaner DEFAULT = new NIOChannelCleaner(TaskUtil.getDefaultTaskScheduler(), TimeInMillis.SECOND.MILLIS*4);
 	
 	public NIOChannelCleaner(TaskSchedulerProcessor tsp, long sleepTime)
 	{

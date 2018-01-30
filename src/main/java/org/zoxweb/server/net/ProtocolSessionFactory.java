@@ -22,30 +22,70 @@ import org.zoxweb.shared.util.NVGenericMap;
 
 public interface ProtocolSessionFactory<P extends ProtocolSessionProcessor>
 {
-	P newInstance();
 	
+	/**
+	 * Create a new instance of the undelying protocol
+	 * @return 
+	 */
+	P newInstance();
+	/**
+	 * True if the factory is of blocking type
+	 * @return
+	 */
 	boolean isBlocking();
 	
 	
-	
+	/**
+	 * Get the SSL session factory
+	 * @return
+	 */
 	SSLSessionDataFactory getIncomingSSLSessionDataFactory();
+	
+	/**
+	 * Set the SSL session factory for incoming connection
+	 * @param sslSessionDataFactory
+	 */
 	void setIncomingSSLSessionDataFactory(SSLSessionDataFactory sslSessionDataFactory);
 	
-	
+	/**
+	 * Set the filer rule manager for incoming connections
+	 * @return
+	 */
 	InetFilterRulesManager getIncomingInetFilterRulesManager();
+	/**
+	 * Set the incoming filter rule manager.
+	 * @param incomingIFRM
+	 */
 	void setIncomingInetFilterRulesManager(InetFilterRulesManager incomingIFRM);
 	
+	/**
+	 * Get the outgoing connection rule manager if applicable
+	 * @return
+	 */
 	InetFilterRulesManager getOutgoingInetFilterRulesManager();
+	/**
+	 * Set the outgoing connection rule manager if applicable
+	 * @param incomingIFRM
+	 */
 	void setOutgoingInetFilterRulesManager(InetFilterRulesManager incomingIFRM);
 	
+	/**
+	 * Get the logger
+	 * @return
+	 */
 	Logger getLogger();
 	
+	/**
+	 * Set the logger
+	 * @param logger
+	 */
 	void setLogger(Logger logger);
 	
 	
-	
+	/**
+	 * Get the generic properties
+	 * @return
+	 */
 	NVGenericMap getSessionProperties();
-	
-	
 	
 }

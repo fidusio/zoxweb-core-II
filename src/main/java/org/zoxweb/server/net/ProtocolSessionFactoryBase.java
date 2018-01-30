@@ -20,17 +20,17 @@ import java.util.logging.Logger;
 
 import org.zoxweb.server.net.security.SSLSessionDataFactory;
 import org.zoxweb.shared.util.NVGenericMap;
-;
+
 
 public abstract class ProtocolSessionFactoryBase<P extends ProtocolSessionProcessor>
 	implements ProtocolSessionFactory<P>
 {
 
-	private InetFilterRulesManager incomingInetFilterRulesManager;
-	private InetFilterRulesManager outgoingInetFilterRulesManager;
-	protected SSLSessionDataFactory incomingSSLSessionFactory = null;
-	private Logger logger;
-	private NVGenericMap properties = new NVGenericMap();
+	private volatile InetFilterRulesManager incomingInetFilterRulesManager;
+	private volatile InetFilterRulesManager outgoingInetFilterRulesManager;
+	protected volatile SSLSessionDataFactory incomingSSLSessionFactory = null;
+	private volatile Logger logger;
+	private volatile NVGenericMap properties = new NVGenericMap();
 	
 
 	

@@ -114,7 +114,7 @@ public class  ChannelRelayTunnel
 	}
 	
 	
-	public synchronized  void processRead(SelectionKey key)
+	public synchronized  void readData(SelectionKey key)
 	{
 		try
 		{

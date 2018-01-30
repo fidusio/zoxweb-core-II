@@ -205,7 +205,7 @@ public class NIOProxyProtocol
 	}
 
 	@Override
-	protected void processRead(SelectionKey key) 
+	protected void readData(SelectionKey key) 
 	{
 		try
     	{
@@ -399,7 +399,7 @@ public class NIOProxyProtocol
 					{
 						// try to read any pending data
 						// very very nasty bug
-						channelRelay.processRead(remoteChannelSK);
+						channelRelay.readData(remoteChannelSK);
 						channelRelay.waitThenStopReading();
 					}
 					else
@@ -471,7 +471,7 @@ public class NIOProxyProtocol
 					//IOUtil.close(remoteChannel);
 					if (channelRelay != null)
 					{
-						channelRelay.processRead(remoteChannelSK);
+						channelRelay.readData(remoteChannelSK);
 						channelRelay.waitThenStopReading();
 						if(debug)
 							log.info("THIS IS  supposed to happen RELAY STOP:" +lastRemoteAddress + "," + requestInfo.remoteAddress);
