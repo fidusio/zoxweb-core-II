@@ -184,7 +184,7 @@ public enum HTTPStatusCode
 	public final int CODE;
 	public final String REASON;
 	public final Family FAMILY;
-	HTTPStatusCode( int value, String reason)
+	HTTPStatusCode(int value, String reason)
 	{
 		CODE = value;
 		REASON = reason;

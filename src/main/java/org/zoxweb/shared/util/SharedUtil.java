@@ -79,13 +79,26 @@ public class SharedUtil
 		return v;
 	}
 	
+	public static <V> void putUnique(Map<Long, V> map, long key, V v)
+	{
+		synchronized(map)
+		{
+			while (map.get(key) != null)
+			{
+				key++;
+			}
+			
+			map.put(key, v);
+		}
+	}
+	
 	/**
 	 * Creates a canonical string based on an array of objects which are separated by a character.
 	 * @param sep
 	 * @param objArray
 	 * @return obj0.toString() + sep + obj1.toString() + sep + obj2.toString() ...
 	 */
-	public static String toCanonicalID(char sep, Object...objArray)
+	public static String toCanonicalID(char sep, Object... objArray)
     {
 		return toCanonicalID(false, sep, objArray);
 	}
