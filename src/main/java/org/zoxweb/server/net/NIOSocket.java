@@ -341,7 +341,7 @@ public class NIOSocket
 				IOUtil.close(sk.channel());
 			try
 			{
-				sk.cancel();
+				selectorController.cancelSelectionKey(sk);
 			}
 			catch(Exception e)
 			{
