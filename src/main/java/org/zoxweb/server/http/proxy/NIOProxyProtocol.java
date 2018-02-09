@@ -630,10 +630,34 @@ public class NIOProxyProtocol
 			factory.setIncomingInetFilterRulesManager(clientIFRM);
 			
 			
-			NIOSocket nsio = new NIOSocket(factory, new InetSocketAddress(port), TaskUtil.getDefaultTaskProcessor());
-			nsio.setStatLogCounter(0);
+			NIOSocket nios = new NIOSocket(factory, new InetSocketAddress(port), TaskUtil.getDefaultTaskProcessor());
+			nios.setStatLogCounter(0);
 			
 			//nios.addSeverSocket(2401, new NIOTunnelFactory(new InetSocketAddressDAO("10.0.0.1:2401")));
+			Runnable cleaner = new Runnable()
+					{
+						NIOSocket toClose;
+						Runnable init(NIOSocket nios)
+						{
+							this.toClose = nios;
+							log.info("Cleaner initiated");
+							return this;
+						}
+						@Override
+						public void run() 
+						{
+							long ts = System.nanoTime();
+							// TODO Auto-generated method stub
+							IOUtil.close(toClose);
+							TaskUtil.getDefaultTaskScheduler().close();
+							TaskUtil.getDefaultTaskProcessor().close();
+							ts = System.nanoTime() - ts;
+							log.info("Cleanup took:" + ts);
+						}
+				
+					}.init(nios);
+			
+			Runtime.getRuntime().addShutdownHook(new Thread(cleaner));
 		}
 		catch(Exception e)
 		{
