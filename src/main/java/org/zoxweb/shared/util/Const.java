@@ -39,6 +39,7 @@ public class Const
 		VER_1_6("1.6", 50, 0),
 		VER_1_7("1.7", 51, 0),
 		VER_1_8("1.8", 52, 0),
+		VER_1_9("1.9", 53, 0),
 		VER_UNKOWN("UNKOWN", 0, 0)
 		
 		;
@@ -1179,10 +1180,10 @@ public class Const
 					new NVPair("API_KEY_TO_CONFIG", "APIKey to APIConfig")
 			);
 	
-	/**
-	 * An Object that can be used for locking mechanism.
-	 */
-	public static final Object LOCK = new Object();
+//	/**
+//	 * An Object that can be used for locking mechanism.
+//	 */
+//	public static final Object LOCK = new Object();
 	
 	/**
 	 * This character array contains the numbers and letter representations 

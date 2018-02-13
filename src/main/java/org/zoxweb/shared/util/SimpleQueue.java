@@ -35,13 +35,15 @@ public class SimpleQueue<O>
 	/**
 	 * Create a empty queue.
 	 */
-	public SimpleQueue() {
+	public SimpleQueue()
+	{
 		head = new QueueNode<O>(null, null, null);
 		// make the last node point to the head node
 		size = 0;
 	}
 
-	public SimpleQueue(boolean equalityEnabled) {
+	public SimpleQueue(boolean equalityEnabled)
+	{
 		this();
 		this.equalityEnabled = equalityEnabled;
 	}
@@ -50,8 +52,10 @@ public class SimpleQueue<O>
 	/**
 	 * Clears the queue. It removes all the elements from it.
 	 */
-	public synchronized void clear() {
-		while (!(isEmpty())) {
+	public synchronized void clear()
+	{
+		while (!(isEmpty()))
+		{
 			dequeue();
 		}
 	}
@@ -59,9 +63,10 @@ public class SimpleQueue<O>
 	/**
 	 * This QueuceNode is a linked list class.
 	 */
-	 static class QueueNode<O> {
-
-		QueueNode(O o, QueueNode<O> p, QueueNode<O> n) {
+	 static class QueueNode<O>
+	 {
+		QueueNode(O o, QueueNode<O> p, QueueNode<O> n)
+		{
 			obj = o;
 			previous = p;
 			next = n;
@@ -78,7 +83,8 @@ public class SimpleQueue<O>
 	 * Returns the size of the queue.
 	 * @return the size of the queue.
 	 */
-	public int size() {
+	public int size() 
+	{
 		return size;
 	}
 
@@ -88,28 +94,32 @@ public class SimpleQueue<O>
 	 * @param toQueue the object to add in the queue
 	 * 
 	 */
-	public synchronized void queue(O toQueue) {
+	public synchronized void queue(O toQueue) 
+	{
 
 		/**
 		 * The implementation of this queue is based on the algorithm of a
 		 * circular double link list.
 		 * 
 		 */
-		if (toQueue == null) {
+		if (toQueue == null)
+		{
 			throw new IllegalArgumentException("Can't queue a null object");
 		}
 
 		QueueNode<O> newNode = new QueueNode<O>(toQueue, null, null);
 
 		// empty queue
-		if (head.next == null && head.previous == null) {
+		if (head.next == null && head.previous == null)
+		{
 			// we have
 			head.next = newNode;
 			head.previous = newNode;
 			newNode.next = head;
 			newNode.previous = head;
-		} else {
-
+		}
+		else
+		{
 			newNode.next = head.next;
 			newNode.previous = head;
 			head.next.previous = newNode;
@@ -131,21 +141,23 @@ public class SimpleQueue<O>
 		O retval = null;
 
 		// if the queue is not empty
-		if (head.next != null && head.previous != null) {
+		if (head.next != null && head.previous != null)
+		{
 			
 			QueueNode<O> toRemove = head.previous;
 			retval = toRemove.obj;
 
-			if (toRemove.previous == head) {
+			if (toRemove.previous == head)
+			{
 				// this the last element in the queue
 				head.next = null;
 				head.previous = null;
-			} else {
+			} 
+			else 
+			{
 				// remove the node from the
 				head.previous = toRemove.previous;
-				head.previous.next = head;
-				//
-				
+				head.previous.next = head;	
 			}
 			// decrement the queue size;
 			toRemove.next = null;
@@ -164,19 +176,25 @@ public class SimpleQueue<O>
 	 * @param o the object to check
 	 * @return true if found, false if not
 	 */
-	public synchronized boolean contains(O o) {
+	public synchronized boolean contains(O o)
+	{
 		QueueNode<O> temp = head;
 
-		while (temp.next != null) {
-			if (temp.obj == o) {
+		while (temp.next != null)
+		{
+			if (temp.obj == o)
+			{
 				return true;
-			} else if (equalityEnabled && temp.obj != null && temp.obj.equals(o)) {
+			}
+			else if (equalityEnabled && temp.obj != null && temp.obj.equals(o))
+			{
 				return true;
 			}
 
 			temp = temp.next;
 
-			if (temp == head) {
+			if (temp == head)
+			{
 				break;
 			}
 		}
@@ -188,7 +206,8 @@ public class SimpleQueue<O>
 	 * Check if the queue is empty.
 	 * @return true if empty. false otherwise.
 	 */
-	public synchronized boolean isEmpty() {
+	public synchronized boolean isEmpty()
+	{
 		return (size == 0);
 	}
 	
@@ -196,7 +215,8 @@ public class SimpleQueue<O>
 	 * Returns the total number of objects queued.
 	 * @return the total number of object queued
 	 */
-	public long totalQueued() {
+	public long totalQueued() 
+	{
 		return totalQueued;
 	}
 	
@@ -204,7 +224,8 @@ public class SimpleQueue<O>
 	 * Returns the total number of objects dequeued.
 	 * @return the total number of object dequeued
 	 */
-	public long totalDequeued() {
+	public synchronized long totalDequeued()
+	{
 		return totalQueued - size;
 	}
 
