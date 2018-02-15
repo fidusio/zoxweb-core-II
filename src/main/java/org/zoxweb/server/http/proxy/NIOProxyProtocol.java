@@ -585,7 +585,7 @@ public class NIOProxyProtocol
 
 	
 	
-	@SuppressWarnings("resource")
+	
 	public static void main(String ...args)
 	{
 		try

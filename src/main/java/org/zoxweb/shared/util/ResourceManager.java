@@ -50,17 +50,17 @@ public class ResourceManager
 		return lookup(gn.getName());
 	}
 	
-	public <V> void map(String name, V res)
+	public synchronized <V> void map(String name, V res)
 	{
 		resources.put(name, res);
 	}
 	
-	public <V> void map(GetName gn, V res)
+	public synchronized <V> void map(GetName gn, V res)
 	{
 		map(gn.getName(), res);
 	}
 	
-	public Object [] resources()
+	public synchronized Object [] resources()
 	{
 		return resources.values().toArray();
 	}
