@@ -15,6 +15,7 @@
  */
 package org.zoxweb.server.http.servlet;
 
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.logging.Logger;
@@ -31,6 +32,7 @@ import org.zoxweb.server.util.GSONUtil;
 import org.zoxweb.shared.data.ApplicationConfigDAO;
 import org.zoxweb.shared.data.ConfigDAO;
 import org.zoxweb.shared.security.IPBlockerConfig;
+import org.zoxweb.shared.util.ResourceManager;
 import org.zoxweb.shared.data.ApplicationConfigDAO.ApplicationDefaultParam;
 
 public class HTTPInitShutdownDefault
@@ -38,8 +40,8 @@ public class HTTPInitShutdownDefault
 {
 
 	private static final transient Logger log = Logger.getLogger("");
-	private NIOConfig nioConfig = null;
-	private IPBlockerListener ipBlocker = null;
+	//private NIOConfig nioConfig = null;
+	//private IPBlockerListener ipBlocker = null;
 	public void contextInitialized(ServletContextEvent event) 
 	{
 		try
@@ -54,8 +56,9 @@ public class HTTPInitShutdownDefault
 					File file = ApplicationConfigManager.SINGLETON.locateFile(ApplicationConfigManager.SINGLETON.loadDefault(), filename);
 					ConfigDAO configDAO = GSONUtil.fromJSON(IOUtil.inputStreamToString(new FileInputStream(file), true));
 					log.info("" + configDAO);
-					nioConfig = new NIOConfig(configDAO);
+					NIOConfig nioConfig = new NIOConfig(configDAO);
 					nioConfig.createApp();
+					ResourceManager.SINGLETON.map(NIOConfig.RESOURCE_NAME, nioConfig);
 				}
 				catch(Exception e)
 				{
@@ -75,7 +78,8 @@ public class HTTPInitShutdownDefault
 					IPBlockerListener.Creator c = new IPBlockerListener.Creator();
 					//log.info("\n" + GSONUtil.toJSON(appConfig, true, false, false));
 					c.setAppConfig(appConfig);
-					ipBlocker = c.createApp();
+					IPBlockerListener ipBlocker = c.createApp();
+					ResourceManager.SINGLETON.map(IPBlockerListener.RESOURCE_NAME, ipBlocker);
 				}
 				catch(Exception e)
 				{
@@ -108,8 +112,16 @@ public class HTTPInitShutdownDefault
 	{
 		log.info("destroy started");
 		// TODO Auto-generated method stub
-		IOUtil.close(nioConfig);
-		IOUtil.close(ipBlocker);
+		for(Object res : ResourceManager.SINGLETON.resources())
+		{
+			if (res instanceof AutoCloseable)
+			{
+				IOUtil.close((AutoCloseable)res);
+			}
+		}
+		
+//		IOUtil.close(nioConfig);
+//		IOUtil.close(ipBlocker);
 		TaskUtil.getDefaultTaskScheduler().close();
 		TaskUtil.getDefaultTaskProcessor().close();
 		log.info("destroy done");

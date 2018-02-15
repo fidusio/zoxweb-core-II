@@ -53,6 +53,7 @@ public class NIOConfig
 implements Closeable,
 		   AppCreator<NIOSocket, ConfigDAO>
 {
+	public static final String RESOURCE_NAME = "NIO_CONFIG";
 	
 	private ConfigDAO configDAO;
 	private static final transient Logger log = Logger.getLogger(NIOConfig.class.getName());

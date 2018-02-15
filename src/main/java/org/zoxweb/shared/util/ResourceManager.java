@@ -59,4 +59,9 @@ public class ResourceManager
 	{
 		map(gn.getName(), res);
 	}
+	
+	public Object [] resources()
+	{
+		return resources.values().toArray();
+	}
 }

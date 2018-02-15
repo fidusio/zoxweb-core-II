@@ -43,6 +43,7 @@ import org.zoxweb.shared.util.SharedUtil;
 public class IPBlockerListener
         implements StringTokenListener, TaskExecutor, Closeable
 {
+	public static final String RESOURCE_NAME = "IP_BLOCKER";
 	class RemoteIPInfo
 	{
 		@Override
