@@ -36,9 +36,11 @@ public class ServiceManager
 	
 	public synchronized void loadServices() throws NullPointerException, IOException
 	{
+		
 		String filename = ApplicationConfigManager.SINGLETON.loadDefault().lookupValue(ApplicationDefaultParam.NIO_CONFIG);
 		if (filename != null)
 		{
+			log.info("creating NIO_CONFIG");
 			if (ResourceManager.SINGLETON.lookup(NIOConfig.RESOURCE_NAME) != null)
 			{
 				close(ResourceManager.SINGLETON.lookup(NIOConfig.RESOURCE_NAME));
@@ -63,6 +65,7 @@ public class ServiceManager
 		filename = ApplicationConfigManager.SINGLETON.loadDefault().lookupValue("ip_blocker_config");
 		if (filename != null)
 		{
+			log.info("creating IP_BLOCKER");
 			try
 			{
 				if (ResourceManager.SINGLETON.lookup(IPBlockerListener.RESOURCE_NAME) != null)
@@ -82,6 +85,9 @@ public class ServiceManager
 				e.printStackTrace();
 			}
 		}
+		
+		
+		log.info("Finished");
 	}
 
 
