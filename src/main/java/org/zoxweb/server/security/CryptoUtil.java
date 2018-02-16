@@ -902,5 +902,19 @@ public class CryptoUtil
 		ret.setKeyPassword(generateKey(AES_256_KEY_SIZE*8, AES).getEncoded());
 		return ret;
 	}
+	
+	
+	public static void main(String ...args)
+	{
+		try
+		{
+			int index = 0;
+			System.out.println(GSONUtil.toJSON(CryptoUtil.generateKeyStoreInfo(args[index++], args[index++]), true, false, false));
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
 
 }
