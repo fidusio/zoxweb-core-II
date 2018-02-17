@@ -110,7 +110,7 @@ public class ApplicationConfigManager
 		if (defaultFile.lastModified() != defaultFileLastAccess)
 		{
 			System.out.println(ApplicationConfigDAO.DEFAULT_APPLICATION_ENV_VAR + "=" + getDefaultApplicationEnvVar());
-			String jsonString = IOUtil.inputStreamToString( defaultFile.toURI().toURL().openStream(), true);
+			String jsonString = IOUtil.inputStreamToString(defaultFile.toURI().toURL().openStream(), true);
 			defaultACD =  GSONUtil.create(true).fromJson(jsonString, ApplicationConfigDAO.class);
 			defaultFileLastAccess = defaultFile.lastModified();
 		}
