@@ -58,8 +58,7 @@ implements KeyMaker
 			{
 				throw new IllegalArgumentException("Alias for key not found");
 			}
-			
-			setMasterKey((SecretKey) keystore.getKey(alias, aliasPassword.toCharArray()));
+			setMasterKey((SecretKey) CryptoUtil.getKeyFromKeyStore(keystore, alias, aliasPassword));
 			log.info("MK loaded");
 		}
 		catch(UnrecoverableKeyException | KeyStoreException | NoSuchAlgorithmException e)

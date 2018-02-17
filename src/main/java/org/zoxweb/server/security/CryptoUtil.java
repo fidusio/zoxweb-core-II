@@ -100,6 +100,7 @@ public class CryptoUtil
 	public static final int MIN_KEY_BYTES = 6;
 
 	public static final String KEY_STORE_TYPE = "JCEKS";
+	public static final String PKCS12 = "PKCS12";
 	public static final String HMAC_SHA_256 = "HmacSHA256";
 	public static final String SHA_256 = "SHA-256";
 	public static final String AES = "AES";
@@ -491,7 +492,7 @@ public class CryptoUtil
 										 String keyStoreType,
 										 String keystorePass,
 										 String alias,
-										 String keyPass)
+										 String aliasPass)
 		throws KeyStoreException, NoSuchAlgorithmException, CertificateException, IOException, UnrecoverableKeyException
 	{
 		KeyStore keystore = loadKeyStore(keyStoreIS, keyStoreType,  keystorePass.toCharArray()); 
@@ -500,11 +501,13 @@ public class CryptoUtil
 		{
 			throw new IllegalArgumentException("Alias for key not found");
 		}
+		return getKeyFromKeyStore(keystore, alias, aliasPass);
+	}
 	
-		Key key = keystore.getKey(alias, keyPass.toCharArray());
-	
-		return key;
-		
+	public static Key getKeyFromKeyStore(KeyStore ks, String alias, String aliasPassword) 
+			throws UnrecoverableKeyException, KeyStoreException, NoSuchAlgorithmException
+	{
+		return ks.getKey(alias, aliasPassword != null ? aliasPassword.toCharArray() : null);
 	}
 
 	public static SSLContext initSSLContext(final String keyStoreFilename, String keyStoreType, final char[] keyStorePassword, 
@@ -648,6 +651,8 @@ public class CryptoUtil
 	{
 		try
         {
+			if (keyStoreType == null)
+				keyStoreType = KEY_STORE_TYPE;
 			KeyStore keystore = KeyStore.getInstance(keyStoreType);
 			keystore.load(keyStoreIS, keyStorePassword);
 			return keystore;
@@ -893,13 +898,21 @@ public class CryptoUtil
 		return kg.generateKey();
 	}
 	
-	public static KeyStoreInfoDAO generateKeyStoreInfo(String keyStoreName, String alias) throws NoSuchAlgorithmException
+	public static KeyStoreInfoDAO generateKeyStoreInfo(String keyStoreName, String alias, String keyStoreType) throws NoSuchAlgorithmException
 	{
 		KeyStoreInfoDAO ret = new KeyStoreInfoDAO();
 		ret.setKeyStore(keyStoreName);
 		ret.setAlias(alias);
 		ret.setKeyStorePassword(generateKey(AES_256_KEY_SIZE*8, AES).getEncoded());
-		ret.setKeyPassword(generateKey(AES_256_KEY_SIZE*8, AES).getEncoded());
+		if (PKCS12.equalsIgnoreCase(keyStoreType))
+		{
+			ret.setAliasPassword(ret.getKeyStorePassword());
+		}
+		else
+		{
+			ret.setAliasPassword(generateKey(AES_256_KEY_SIZE*8, AES).getEncoded());
+		}
+		ret.setKeyStoreType(keyStoreType);
 		return ret;
 	}
 	
@@ -909,11 +922,34 @@ public class CryptoUtil
 		try
 		{
 			int index = 0;
-			System.out.println(GSONUtil.toJSON(CryptoUtil.generateKeyStoreInfo(args[index++], args[index++]), true, false, false));
+			String command = args[index++];
+			switch(command.toLowerCase())
+			{
+			case "generate":
+				System.out.println(GSONUtil.toJSON(CryptoUtil.generateKeyStoreInfo(args[index++], args[index++], args[index++]), true, false, false));
+				break;
+			case "read":
+				String keystoreName  = args[index++];
+				String ksType = args[index++];
+				String ksPassword = args[index++];
+				String alias = args[index++];
+				String aliasPassword = args.length > index ? args[index++] : null;
+				
+				KeyStore keystore = CryptoUtil.loadKeyStore(new FileInputStream(keystoreName), ksType, ksPassword.toCharArray());
+				Key key = CryptoUtil.getKeyFromKeyStore(keystore, alias, aliasPassword);
+				System.out.println("algo:"+key.getAlgorithm() + " format:" + key.getFormat() + " size:" +(key.getEncoded().length*8) +  " in bits  key:" +SharedBase64.encodeAsString(Base64Type.DEFAULT, key.getEncoded()));
+				break;
+			default:
+				throw new Exception();
+			}
+				
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
+			System.err.println("usage:\n"
+					+ "read keystore keystoreType keyStorePassword alias [aliasPassword]\n"
+					+ "generate keystore keystoreType keyStorePassword ");
 		}
 	}
 

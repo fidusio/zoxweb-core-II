@@ -12,7 +12,8 @@
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
  * License for the specific language governing permissions and limitations under
  * the License.
- */package org.zoxweb.shared.security;
+ */
+package org.zoxweb.shared.security;
 
 import org.zoxweb.shared.data.SetNameDescriptionDAO;
 import org.zoxweb.shared.util.GetNVConfig;
@@ -31,9 +32,11 @@ public class KeyStoreInfoDAO
         implements GetNVConfig
     {
         KEY_STORE(NVConfigManager.createNVConfig("key_store", "Key store", "KeyStore", true, true, false, String.class, null)),
+        KEY_STORE_TYPE(NVConfigManager.createNVConfig("key_store_type", "Key store type", "KeyStoreType", true, true, false, String.class, null)),
         KEY_STORE_PASSWORD(NVConfigManager.createNVConfig("key_store_password", "Key store password", "KeyStorePassword", true, true, false, String.class, null)),
         ALIAS(NVConfigManager.createNVConfig("alias", "Alias", "Alias", true, true, false, String.class, null)),
-        KEY_PASSWORD(NVConfigManager.createNVConfig("key_password", "key password", "KeyPassword", true, true, false, String.class, null)),
+        ALIAS_PASSWORD(NVConfigManager.createNVConfig("alias_password", "key password", "KeyPassword", true, true, false, String.class, null)),
+       
 
         ;
 
@@ -79,6 +82,17 @@ public class KeyStoreInfoDAO
     {
         setValue(Param.KEY_STORE, keyStore);
     }
+    
+    
+    public String getKeyStoreType()
+    {
+        return lookupValue(Param.KEY_STORE_TYPE);
+    }
+
+    public void setKeyStoreType(String keyStoreType)
+    {
+        setValue(Param.KEY_STORE_TYPE, keyStoreType);
+    }
 
     public String getKeyStorePassword()
     {
@@ -110,24 +124,24 @@ public class KeyStoreInfoDAO
         setValue(Param.ALIAS, alias);
     }
 
-    public String getKeyPassword()
+    public String getAliasPassword()
     {
-        return lookupValue(Param.KEY_PASSWORD);
+        return lookupValue(Param.ALIAS_PASSWORD);
     }
 
-    public byte[] getKeyPasswordAsBytes()
+    public byte[] getAliasPasswordAsBytes()
     {
-        return SharedStringUtil.hexToBytes(getKeyPassword());
+        return SharedStringUtil.hexToBytes(getAliasPassword());
     }
 
-    public void setKeyPassword(String aliasPassword)
+    public void setAliasPassword(String aliasPassword)
     {
-        setValue(Param.KEY_PASSWORD, aliasPassword);
+        setValue(Param.ALIAS_PASSWORD, aliasPassword);
     }
 
-    public void setKeyPassword(byte[] aliasPassword)
+    public void setAliasPassword(byte[] aliasPassword)
     {
-        setValue(Param.KEY_PASSWORD, SharedStringUtil.bytesToHex(aliasPassword));
+        setValue(Param.ALIAS_PASSWORD, SharedStringUtil.bytesToHex(aliasPassword));
     }
 
 }
