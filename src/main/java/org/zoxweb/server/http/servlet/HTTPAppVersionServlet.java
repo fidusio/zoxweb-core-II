@@ -27,6 +27,7 @@ import org.zoxweb.server.io.IOUtil;
 import org.zoxweb.server.util.ApplicationConfigManager;
 import org.zoxweb.shared.data.ApplicationConfigDAO.ApplicationDefaultParam;
 import org.zoxweb.shared.http.HTTPMimeType;
+import org.zoxweb.shared.util.SharedStringUtil;
 
 @SuppressWarnings("serial")
 public class HTTPAppVersionServlet 
@@ -46,6 +47,7 @@ public class HTTPAppVersionServlet
 		
 		
 		resp.setContentType(HTTPMimeType.APPLICATION_JSON.getValue());
+		resp.setCharacterEncoding(SharedStringUtil.UTF_8);
 		resp.getWriter().write(version.get());
 		
 	}
