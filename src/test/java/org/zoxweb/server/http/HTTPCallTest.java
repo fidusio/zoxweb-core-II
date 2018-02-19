@@ -15,15 +15,15 @@
  */
 package org.zoxweb.server.http;
 
-import org.zoxweb.server.security.SSLCheckDisabler;
+
 import org.zoxweb.server.util.GSONUtil;
 import org.zoxweb.shared.http.HTTPMessageConfigInterface;
 import org.zoxweb.shared.http.HTTPMessageConfig;
 import org.zoxweb.shared.http.HTTPMimeType;
-import org.zoxweb.shared.http.HTTPMethod;
+
 import org.zoxweb.shared.http.HTTPResponseData;
-import org.zoxweb.shared.net.InetSocketAddressDAO;
-import org.zoxweb.shared.util.NVPair;
+import org.zoxweb.shared.http.HTTPVersion;
+
 
 public class HTTPCallTest
 {
@@ -44,22 +44,26 @@ public class HTTPCallTest
 //		parameters.add( new NVPair("com.ca.amds.client.rpc.config.AMDSConfigService", "reloadCache"));
 //		hcc.setParameters(parameters);
 
-		hcc.setURL("http://10.0.1.12");
-		hcc.setURI("userRpm/SysRebootRpm.htm");
+		int index = 0;
+		hcc.setURL(args[index++]);
+//		hcc.setURI(args[index++]);
+//		hcc.setURI("*");
 		
-		hcc.setMethod(HTTPMethod.GET);
-		hcc.setProxyAddress( new InetSocketAddressDAO("localhost", 8080));
+		hcc.setMethod(args[index++]);
+		hcc.setHTTPVersion(HTTPVersion.HTTP_1_0);
+		hcc.setRedirectEnabled(true);
+		//hcc.setProxyAddress( new InetSocketAddressDAO("localhost", 8080));
 		
 		
-		hcc.getHeaderParameters().add(new NVPair("Authorization", "Basic YWRtaW46dzFyMmwzc3M="));
-		hcc.getHeaderParameters().add(new NVPair("Cookie", "ui_language=en_US"));
-		hcc.getParameters().add(new NVPair("Reboot", "Reboot"));
+		//hcc.getHeaderParameters().add(new NVPair("Authorization", "Basic YWRtaW46dzFyMmwzc3M="));
+		//hcc.getHeaderParameters().add(new NVPair("Cookie", "ui_language=en_US"));
+		//hcc.getParameters().add(new NVPair("Reboot", "Reboot"));
 		
 		
 		
 
 
-		HTTPCall call = new HTTPCall( hcc, SSLCheckDisabler.SINGLETON);
+		HTTPCall call = new HTTPCall(hcc);
         long ts = System.currentTimeMillis();
 		long delta = 0;
 

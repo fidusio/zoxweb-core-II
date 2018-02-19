@@ -247,14 +247,18 @@ public class HTTPMessageConfig
 	public void setMethod(String method) 
 	{
 	
-		for (HTTPMethod m : HTTPMethod.values())
-		{
-			if (m.getName().equalsIgnoreCase(method))
-			{
-				setMethod(m);
-				break;
-			}
-		}
+		System.out.println(method);
+		HTTPMethod httpMethod = SharedUtil.lookupEnum(HTTPMethod.values(), method);
+		setMethod(httpMethod);
+		
+//		for (HTTPMethod m : HTTPMethod.values())
+//		{
+//			if (m.getName().equalsIgnoreCase(method))
+//			{
+//				setMethod(m);
+//				break;
+//			}
+//		}
 		
 	}
 	
