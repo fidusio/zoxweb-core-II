@@ -848,7 +848,6 @@ public class CryptoUtil
 			sha512HMAC.update((byte) '.');
 			b64Hash = sha512HMAC.doFinal(SharedStringUtil.getBytes(tokens[JWTField.PAYLOAD.ordinal()]));
 			
-			
 			if (!SharedBase64.encodeAsString(Base64Type.URL, b64Hash).equals(jwt.getHash())) {
 				throw new SecurityException("Invalid token");
 			}
