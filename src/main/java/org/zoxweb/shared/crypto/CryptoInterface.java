@@ -21,15 +21,18 @@ public interface CryptoInterface
 	extends JWTEncoder, JWTDecoder
 {
 
-	public byte[] hash(String mdAlgo, byte[]... tokens)
+	byte[] hash(String mdAlgo, byte[]... tokens)
 		throws AccessSecurityException;
 	
-	public byte[] hash(String mdAlgo, String... tokens)
+	byte[] hash(String mdAlgo, String... tokens)
 		throws AccessSecurityException;
 	
 	
-	public byte[] hmacSHA256(byte[] key, byte[] data)
+	byte[] hmacSHA256(byte[] key, byte[] data)
 		throws AccessSecurityException;
+	
+	byte[] hmacSHA512(byte[] key, byte[] data)
+			throws AccessSecurityException;
 
 
 }
