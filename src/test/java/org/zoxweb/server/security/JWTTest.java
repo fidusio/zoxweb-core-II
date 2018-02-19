@@ -22,6 +22,7 @@ public class JWTTest {
 
 	private JWT jwtHS256 = null;
 	private JWT jwtNONE = null;
+	private JWT jwtHS512 = null;
 	private long index = 0;
 	
 	@Before
@@ -53,6 +54,22 @@ public class JWTTest {
 		jwtNONE = new JWT();
 		jwtNONE.setHeader(header);
 		jwtNONE.setPayload(payload);
+		
+		
+		
+		header = new JWTHeader();
+			
+		header.setJWTAlgorithm(JWTAlgorithm.HS512);
+		header.setTokenType("JWT");
+		payload = new JWTPayload();
+		payload.setDomainID("xlogistx.io");
+		payload.setAppID("xlogistx");
+		payload.setNonce(index++);
+		//payload.setRandom(new byte[] {0,1,2,3});
+		payload.setSubjectID("support@xlogistx.io");
+		jwtHS512 = new JWT();
+		jwtHS512.setHeader(header);
+		jwtHS512.setPayload(payload);
 		
 	}
 	
@@ -161,6 +178,33 @@ public class JWTTest {
 
 		jsonHS256 = GSONUtil.toJSON(localJwt, false, false, false, Base64Type.URL);
 		System.out.println(jsonHS256);
+		test = CryptoUtil.encodeJWT("secret", localJwt);
+		System.out.println(test);
+
+		System.out.println(CryptoUtil.decodeJWT("secret", test));
+		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+	}
+	
+	
+	@Test
+	public void testJWTHS512() throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException, InvalidKeyException, NoSuchAlgorithmException
+	{
+		
+		System.out.println("testJWTHS512--------------------------------------------------------------");
+		String jsonHS512 = GSONUtil.toJSON(jwtHS512, false, false, false, Base64Type.URL);
+		System.out.println(jsonHS512);
+		JWT localJwt = GSONUtil.fromJSON(jsonHS512, JWT.class, Base64Type.URL);
+		jsonHS512 = GSONUtil.toJSON(localJwt, true, false, false, Base64Type.URL);
+		System.out.println(jsonHS512);
+		
+		System.out.println(localJwt.getPayload());
+		
+		String test = CryptoUtil.encodeJWT("secret", localJwt);
+		System.out.println(test);
+		
+
+		jsonHS512 = GSONUtil.toJSON(localJwt, false, false, false, Base64Type.URL);
+		System.out.println(jsonHS512);
 		test = CryptoUtil.encodeJWT("secret", localJwt);
 		System.out.println(test);
 

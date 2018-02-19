@@ -102,6 +102,7 @@ public class CryptoUtil
 	public static final String KEY_STORE_TYPE = "JCEKS";
 	public static final String PKCS12 = "PKCS12";
 	public static final String HMAC_SHA_256 = "HmacSHA256";
+	public static final String HMAC_SHA_512 = "HmacSHA512";
 	public static final String SHA_256 = "SHA-256";
 	public static final String AES = "AES";
 	public static final String AES_ENCRYPTION_CBC_NO_PADDING = "AES/CBC/NoPadding";
@@ -757,6 +758,13 @@ public class CryptoUtil
 		    sha256_HMAC.init(secret_key);
 			b64Hash = SharedBase64.encodeAsString(Base64Type.URL, sha256_HMAC.doFinal(SharedStringUtil.getBytes(sb.toString())));
 			break;
+		case HS512:
+			SharedUtil.checkIfNulls("Null key", key);
+			Mac sha512_HMAC = Mac.getInstance(HMAC_SHA_512);
+			secret_key = new SecretKeySpec(key, HMAC_SHA_512);
+			sha512_HMAC.init(secret_key);
+			b64Hash = SharedBase64.encodeAsString(Base64Type.URL, sha512_HMAC.doFinal(SharedStringUtil.getBytes(sb.toString())));
+			break;
 		case none:
 			break;
 		
@@ -827,6 +835,25 @@ public class CryptoUtil
 				throw new SecurityException("Invalid token");
 			}
 			break;
+		case HS512:
+			SharedUtil.checkIfNulls("Null key", key);
+			if (tokens.length != JWTField.values().length) {
+				throw new SecurityException("Invalid token");
+			}
+			Mac sha512HMAC = Mac.getInstance(HMAC_SHA_512);
+			secret_key = new SecretKeySpec(key, HMAC_SHA_512);
+			sha512HMAC.init(secret_key);
+			sha512HMAC.update(SharedStringUtil.getBytes(tokens[JWTField.HEADER.ordinal()]));
+
+			sha512HMAC.update((byte) '.');
+			b64Hash = sha512HMAC.doFinal(SharedStringUtil.getBytes(tokens[JWTField.PAYLOAD.ordinal()]));
+			
+			
+			if (!SharedBase64.encodeAsString(Base64Type.URL, b64Hash).equals(jwt.getHash())) {
+				throw new SecurityException("Invalid token");
+			}
+			break;
+			
 		case none:
 			if (tokens.length != JWTField.values().length -1) {
 				throw new SecurityException("Invalid token");
@@ -872,6 +899,7 @@ public class CryptoUtil
 		switch(jwtHeader.getJWTAlgorithm())
 		{
 		case HS256:
+		case HS512:
 			if (tokens.length !=  JWTField.values().length)
 			{
 				throw new IllegalArgumentException("Invalid token JWT token length expected 3");
@@ -921,6 +949,8 @@ public class CryptoUtil
 	{
 		try
 		{
+			
+			
 			int index = 0;
 			String command = args[index++];
 			switch(command.toLowerCase())
