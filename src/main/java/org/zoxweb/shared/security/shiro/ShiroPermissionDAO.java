@@ -27,10 +27,11 @@ public class ShiroPermissionDAO
 	extends ShiroDomainDAO
 {
 	
-	private static final NVConfig NVC_PATTERN =  NVConfigManager.createNVConfig("pattern", null,"Pattern",true, false, String.class);
+	public static final NVConfig NVC_EMBED_APP_ID =  NVConfigManager.createNVConfig("embed_app_id", null,"EmbedAppID",true, false, Boolean.class);
+	public static final NVConfig NVC_PATTERN =  NVConfigManager.createNVConfig("pattern", null,"Pattern",true, false, String.class);
 	
 	public static final NVConfigEntity  NVC_SHIRO_PERMISSION_DAO = new NVConfigEntityLocal("shiro_permission_dao", "Shiro permission dao object" , 
-			"ShiroPermissionDAO", false, true, false, false, ShiroPermissionDAO.class, SharedUtil.toNVConfigList(NVC_PATTERN),
+			"ShiroPermissionDAO", false, true, false, false, ShiroPermissionDAO.class, SharedUtil.toNVConfigList(NVC_EMBED_APP_ID, NVC_PATTERN),
 			null, false, ShiroDomainDAO.NVC_APP_ID_DAO);
 	
 	public ShiroPermissionDAO()
@@ -77,9 +78,26 @@ public class ShiroPermissionDAO
 		return lookupValue(NVC_PATTERN);	
 	}
 	
-	public void setPermissionPattern(String pattern)
+	public synchronized void setPermissionPattern(String pattern)
 	{
-		setValue(NVC_PATTERN, SharedStringUtil.trimOrEmpty(SharedStringUtil.toLowerCase(pattern)));
+		if (isEmbedAppIDEnabled())
+		{
+			setValue(NVC_PATTERN, SharedStringUtil.trimOrEmpty(SharedStringUtil.toLowerCase(SharedUtil.toCanonicalID(':', pattern, getDomainID(), getAppID()))));
+		}
+		else
+		{
+			setValue(NVC_PATTERN, SharedStringUtil.trimOrEmpty(SharedStringUtil.toLowerCase(pattern)));
+		}
+	}
+	
+	public boolean isEmbedAppIDEnabled()
+	{
+		return lookupValue(NVC_EMBED_APP_ID);
+	}
+	
+	public void setEmbedAppIDEnabled(boolean enable)
+	{
+		setValue(NVC_EMBED_APP_ID, enable);
 	}
 	
 }

@@ -31,16 +31,32 @@ public class SecurityModel
 		CREATE_USER("create_user", "Permission to create a user", "create:user"),
 		DELETE_USER("delete_user", "Permission to delete a user", "delete:user"),
 		UPDATE_USER("update_user", "Permission to update a user", "update:user"),
+		CREATE_FILE("upload_file", "Permission to upload a file", "create:file", true),
+		READ_FILE("read_file", "Permission to delete a file", "read:file", true),
+		UPDATE_FILE("update_file", "Permission to update a file", "update:file", true),
+		DELETE_FILE("delete_file", "Permission to delete a file", "delete:file", true),
+	
+	
+		
 		;
 		private final String name;
 		private final String value;
 		private final String description;
+		private final boolean isAppIDSpecific;
+		
 		
 		Permission(String name, String description, String value)
+		{
+			this(name, description, value, false);
+		}
+			
+		
+		Permission(String name, String description, String value, boolean isAppIDSpecific)
 		{
 			this.name = name;
 			this.value = value;
 			this.description = description;
+			this.isAppIDSpecific = isAppIDSpecific;
 		}
 	
 		
@@ -58,10 +74,20 @@ public class SecurityModel
 			return value;
 		}
 		
+		public boolean isAppIDSpecific()
+		{
+			return isAppIDSpecific;
+		}
+		
+		
 		
 		public ShiroPermissionDAO toPermission(String domainID, String appID)
 		{
-			return toPermission(domainID, appID, getName(), getDescription(), getValue());
+			return toPermission(domainID, appID, false);
+		}
+		public ShiroPermissionDAO toPermission(String domainID, String appID, boolean embedAppID)
+		{
+			return toPermission(domainID, appID, embedAppID, getName(), getDescription(), getValue());
 		}
 		
 		
@@ -70,18 +96,19 @@ public class SecurityModel
 		 * @param gnv
 		 * @return
 		 */
-		public static ShiroPermissionDAO toPermission(String domainID, String appID, GetNameValue<String> gnv)
+		public static ShiroPermissionDAO toPermission(String domainID,  boolean embedAppID, String appID, GetNameValue<String> gnv)
 		{
-			return toPermission(domainID, appID, gnv.getName(), null,  gnv.getValue());
+			return toPermission(domainID, appID, embedAppID, gnv.getName(),   null,  gnv.getValue());
 		}
 		
-		public static ShiroPermissionDAO toPermission(String domainID, String appID, String name, String description, String pattern)
+		public static ShiroPermissionDAO toPermission(String domainID, String appID, boolean embedAppID, String name, String description, String pattern)
 		{
 			ShiroPermissionDAO ret = new ShiroPermissionDAO();
 			ret.setName(name);
-			ret.setPermissionPattern(pattern);
 			ret.setDescription(description);
+			ret.setEmbedAppIDEnabled(embedAppID);
 			ret.setDomainAppID(domainID, appID);
+			ret.setPermissionPattern(pattern);
 			return ret;
 			
 		}

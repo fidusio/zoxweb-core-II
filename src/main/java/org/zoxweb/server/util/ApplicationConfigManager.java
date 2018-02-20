@@ -220,7 +220,7 @@ public class ApplicationConfigManager
 		
 		for (GetValue<?> dir: DEFAULT_DIR_NAMES)
 		{
-			file = new File( concatWithEnvVar((String)dir.getValue(),varValue));
+			file = new File(concatWithEnvVar((String)dir.getValue(),varValue));
 
 			if (file.exists())
 			{
