@@ -32,6 +32,7 @@ import org.zoxweb.shared.util.SharedStringUtil;
 public class ApplicationConfigDAO
 	implements Serializable
 {
+	public final static String RESOURCE_NAME = "APPLICATION_CONFIG";
 	
 	public final static String DEFAULT_APPLICATION_CONF_FILENAME = "ApplicationConf.json";
 	public final static String DEFAULT_APPLICATION_ENV_VAR = "APPLICATION_CONF_VAR";
@@ -54,6 +55,7 @@ public class ApplicationConfigDAO
 		APPLICATON_NAME("APPLICATON_NAME", ""),
 		APPLICATION_DESCRIPTION("APPLICATION_DESCRIPTION", ""),
 		APPLICATION_URL("APPLICATION_URL", ""),
+		APPLICATION_HOST("APPLICATION_HOST", ""),
 		APPLICATION_VERSION_RESOURCE("APPLICATION_VERSION_RESOURCE", ""),
 		FORWARD_URL("FORWARD_URL", ""),
 		SECURE_URL("SECURE_URL", ""),

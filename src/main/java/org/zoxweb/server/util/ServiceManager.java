@@ -11,6 +11,7 @@ import org.zoxweb.server.io.IOUtil;
 import org.zoxweb.server.net.NIOConfig;
 import org.zoxweb.server.net.security.IPBlockerListener;
 import org.zoxweb.shared.data.ConfigDAO;
+import org.zoxweb.shared.data.ApplicationConfigDAO;
 import org.zoxweb.shared.data.ApplicationConfigDAO.ApplicationDefaultParam;
 import org.zoxweb.shared.security.IPBlockerConfig;
 import org.zoxweb.shared.util.ResourceManager;
@@ -36,8 +37,13 @@ public class ServiceManager
 	
 	public synchronized void loadServices() throws NullPointerException, IOException
 	{
+		ApplicationConfigDAO acd = ApplicationConfigManager.SINGLETON.loadDefault();
+		if (acd != null)
+		{
+			ResourceManager.SINGLETON.map(ApplicationConfigDAO.RESOURCE_NAME, acd);
+		}
 		
-		String filename = ApplicationConfigManager.SINGLETON.loadDefault().lookupValue(ApplicationDefaultParam.NIO_CONFIG);
+		String filename = acd.lookupValue(ApplicationDefaultParam.NIO_CONFIG);
 		if (filename != null)
 		{
 			log.info("creating NIO_CONFIG");
@@ -47,7 +53,7 @@ public class ServiceManager
 			}
 			try
 			{
-				File file = ApplicationConfigManager.SINGLETON.locateFile(ApplicationConfigManager.SINGLETON.loadDefault(), filename);
+				File file = ApplicationConfigManager.SINGLETON.locateFile(acd, filename);
 				ConfigDAO configDAO = GSONUtil.fromJSON(IOUtil.inputStreamToString(new FileInputStream(file), true));
 				log.info("" + configDAO);
 				NIOConfig nioConfig = new NIOConfig(configDAO);
@@ -62,7 +68,7 @@ public class ServiceManager
 		
 		
 		
-		filename = ApplicationConfigManager.SINGLETON.loadDefault().lookupValue("ip_blocker_config");
+		filename = acd.lookupValue("ip_blocker_config");
 		if (filename != null)
 		{
 			log.info("creating IP_BLOCKER");
@@ -72,7 +78,7 @@ public class ServiceManager
 				{
 					close(ResourceManager.SINGLETON.lookup(IPBlockerListener.RESOURCE_NAME));
 				}
-				File file = ApplicationConfigManager.SINGLETON.locateFile(ApplicationConfigManager.SINGLETON.loadDefault(), filename);
+				File file = ApplicationConfigManager.SINGLETON.locateFile(acd, filename);
 				IPBlockerConfig appConfig = GSONUtil.fromJSON(IOUtil.inputStreamToString(new FileInputStream(file), true), IPBlockerConfig.class);
 				IPBlockerListener.Creator c = new IPBlockerListener.Creator();
 				//log.info("\n" + GSONUtil.toJSON(appConfig, true, false, false));
