@@ -37,6 +37,32 @@ public final class SecurityConsts
 
 	}
 	
+	
+	
+	public enum AuthType
+	implements GetName
+	{
+		BASIC("Basic"),
+		BEARER("Bearer"),
+		DIGEST("Digest"),
+		HOBA("HOBA"),
+		OAUTH("OAuth"),
+		NONE("None");
+
+		private final String name;
+		AuthType(String val)
+		{
+			name = val;
+		}
+		
+		@Override
+		public String getName() 
+		{
+			// TODO Auto-generated method stub
+			return name;
+		}
+	}
+	
 	public enum OAuthParam
 		implements GetName,GetNVConfig
 	{
