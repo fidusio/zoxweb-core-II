@@ -93,7 +93,7 @@ public class JSONTest {
 			System.out.println(GSONUtil.toJSON(address, true, false, false, null));
 			System.out.println(GSONUtil.toJSONWrapper("address", address, true, false, false, null));
 			
-			String jsonValues = GSONUtil.toJSONValues(sysDAO.getNetworkInterfaces().values(), true, false, null);
+			String jsonValues = GSONUtil.toJSONValues(sysDAO.getNetworkInterfaces().values(), true, false, true, null);
 			System.out.println(jsonValues);
 			List<NVEntity> values = GSONUtil.fromJSONValues(jsonValues, Base64Type.DEFAULT);
 			System.out.println(values);

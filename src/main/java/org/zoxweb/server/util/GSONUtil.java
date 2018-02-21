@@ -1706,7 +1706,7 @@ final public class GSONUtil
 		return sb.toString();
 	}
 	
-	public static String toJSONValues(NVEntity[] list, boolean indent, boolean printNull, Base64Type b64Type) 
+	public static String toJSONValues(NVEntity[] list, boolean indent, boolean printNull, boolean printClass, Base64Type b64Type) 
         throws IOException
     {
 		StringWriter sw = new StringWriter();
