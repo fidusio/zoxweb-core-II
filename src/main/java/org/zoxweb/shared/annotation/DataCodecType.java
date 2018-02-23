@@ -11,8 +11,10 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface DataCodecType 
 {
+	boolean autoConvert() default true;
 	Class<?> inputFormat();
  	Class<?> returnType();
+ 	boolean  returnRequired() default true;
 	String[] pemissions() default {};
 	String[] roles() default {};
 }

@@ -55,6 +55,8 @@ public class HTTPRequestAttributes
 	private final String uri;
 	private AppIDURI appIDURI;
 	
+	private Object contentObject = null;
+	
 	private JWTToken jwtToken = null;
 	
 	@SuppressWarnings("unchecked")
@@ -209,4 +211,19 @@ public class HTTPRequestAttributes
 	{
 	    return uri;
     }
+
+
+
+	@SuppressWarnings("unchecked")
+	public <V extends Object> V getContentObject() 
+	{
+		return (V) contentObject;
+	}
+
+
+
+	public void setContentObject(Object contentObject) 
+	{
+		this.contentObject = contentObject;
+	}
 }

@@ -20,6 +20,8 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -36,18 +38,18 @@ public class ReflectionUtil
 	}
 
 	public static Object updateFinalStatic(Class<?> clazz, String fieldName, Object newValue) 
-        throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException
-    {
+			throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException
+	{
 	
 		Field field = clazz.getDeclaredField(fieldName);
 		boolean fieldAccessible = field.isAccessible();
 		field.setAccessible(true);
 		Field modifiersField = Field.class.getDeclaredField("modifiers");
 		boolean modifierAccessible = modifiersField.isAccessible();
-        modifiersField.setAccessible(true);
-        int oldModifier = field.getModifiers();
-        modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
-       
+		modifiersField.setAccessible(true);
+		int oldModifier = field.getModifiers();
+		modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
+		   
 		//field.setInt( field, field.getModifiers() & ~Modifier.FINAL );
 		field.set(null, newValue);
 		modifiersField.setInt(field, oldModifier);
@@ -66,6 +68,22 @@ public class ReflectionUtil
 	public static <T extends Annotation> T getAnnotionFromMethod(Method m, Class<T> t)
 	{
 		return m.getAnnotation(t);
+	}
+	
+	public static <T extends Annotation>  Map<Method, T> extractFromClass(Class<?> c, Class<T> t)
+	{
+		Map<Method, T> ret = new HashMap<Method, T>();
+		
+		for(Method m : c.getMethods())
+		{
+			T a = m.getAnnotation(t);
+			if (a != null)
+			{
+				ret.put(m, a);
+			}
+		}
+		
+		return ret;
 	}
 
 }

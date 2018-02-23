@@ -901,7 +901,7 @@ public class SharedUtil
 			{
 				if (name.equalsIgnoreCase(nvp.getName()))
 				{
-					ret.add( nvp);
+					ret.add(nvp);
 				}
 			}
 		}

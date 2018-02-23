@@ -15,38 +15,52 @@
  */
 package org.zoxweb.shared.http;
 
-import org.zoxweb.shared.util.GetName;
+import org.zoxweb.shared.util.GetNameValue;
+import org.zoxweb.shared.util.SharedUtil;
 
 /**
  * HTTP Protocol methods or actions RFC2616
- * @author naema01
+ * @author javconsigliere
  *
  */
 public enum HTTPMethod
-implements GetName
+implements GetNameValue<String>
 {
 	
-	OPTIONS("OPTIONS"),
-	GET("GET"),
-	HEAD("HEAD"),
-	POST("POST"),
-	PUT("PUT"),
-	DELETE("DELETE"),
-	TRACE("TRACE"),
-	CONNECT("CONNECT"),
+	OPTIONS("OPTIONS", "doOptions"),
+	GET("GET", "doGet"),
+	HEAD("HEAD", "doHead"),
+	POST("POST", "doPost"),
+	PUT("PUT", "doPut"),
+	DELETE("DELETE", "doDelete"),
+	TRACE("TRACE", "doTrace"),
+	CONNECT("CONNECT", "doConnect"),
 	// This is a new method crucial for update support
-	PATCH("PATCH"),
+	PATCH("PATCH", "doPatch"),
 	;
 
 	private String name;
+	private String value;
 	
-	HTTPMethod(String name)
+	HTTPMethod(String name, String value)
 	{
 		this.name= name;
+		this.value = value;
 	}
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
 		return name;
+	}
+	@Override
+	public String getValue() 
+	{
+		// TODO Auto-generated method stub
+		return value;
+	}
+	
+	public static HTTPMethod lookup(String match)
+	{
+		return SharedUtil.lookupEnum(values(), match);
 	}
 }
