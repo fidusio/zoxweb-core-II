@@ -15,9 +15,18 @@
  */
 package org.zoxweb.server.util;
 
+
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
+
+/**
+ * 
+ * @author javaconsigliere
+ *
+ */
 public class ReflectionUtil
 {
 
@@ -49,5 +58,14 @@ public class ReflectionUtil
 		
 		return ret;
    }
+	
+	
+	
+	
+	
+	public static <T extends Annotation> T getAnnotionFromMethod(Method m, Class<T> t)
+	{
+		return m.getAnnotation(t);
+	}
 
 }
