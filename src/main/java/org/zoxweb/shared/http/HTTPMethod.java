@@ -27,16 +27,27 @@ public enum HTTPMethod
 implements GetNameValue<String>
 {
 	
-	OPTIONS("OPTIONS", "doOptions"),
+	//  "GET", "POST", "HEAD", "OPTIONS", "PUT", "DELETE", "TRACE"
+	
+	
 	GET("GET", "doGet"),
-	HEAD("HEAD", "doHead"),
 	POST("POST", "doPost"),
+	HEAD("HEAD", "doHead"),
+	OPTIONS("OPTIONS", "doOptions"),
 	PUT("PUT", "doPut"),
 	DELETE("DELETE", "doDelete"),
 	TRACE("TRACE", "doTrace"),
 	CONNECT("CONNECT", "doConnect"),
 	// This is a new method crucial for update support
 	PATCH("PATCH", "doPatch"),
+	COPY("COPY", "doCopy"),
+	LINK("LINK", "doLink"),
+	UNLINK("UNLINK", "doUnlink"),
+	PURGE("PURGE", "doPurge"),
+	LOCK("LOCK", "doLock"),
+	UNLOCK("UNLOCK", "doUnlock"),
+	PROPFIND("PROPFIND", "doPropFind"),
+	VIEW("VIEW", "doView")
 	;
 
 	private String name;
@@ -62,5 +73,18 @@ implements GetNameValue<String>
 	public static HTTPMethod lookup(String match)
 	{
 		return SharedUtil.lookupEnum(values(), match);
+	}
+	
+	public static String[] toMethodNames()
+	{
+		
+		HTTPMethod all[] = values();
+		String ret[] = new String[all.length];
+		for (int i=0; i< all.length; i++)
+		{
+			ret[i] = all[i].getName();
+		}
+		
+		return ret;
 	}
 }

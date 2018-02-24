@@ -62,7 +62,7 @@ public class HTTPCall
 	{
 		try
 		{
-			HTTPUtil.addHTTPPatch();
+			HTTPUtil.addHTTPMethods();
 		}
 		catch(Exception e)
 		{
@@ -163,6 +163,16 @@ public class HTTPCall
 			case GET:
 			case DELETE:
 			case PATCH:
+			case PURGE:
+			case CONNECT:
+			case COPY:
+			case LINK:
+			case LOCK:
+			case PROPFIND:
+			case TRACE:
+			case UNLINK:
+			case UNLOCK:
+			case VIEW:
 				// if we have a GET
 				if (!SharedStringUtil.isEmpty(encodedContentParams))
 				{
@@ -175,6 +185,8 @@ public class HTTPCall
 				}
 				break;
 			default:
+				break;
+			
 					
 			}
 		}

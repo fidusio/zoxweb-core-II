@@ -69,7 +69,7 @@ public class HTTPUtil
 {
 
 	private static final Lock LOCK = new ReentrantLock();
-	private static AtomicBoolean patchAdded =  new AtomicBoolean();
+	private static AtomicBoolean extraMethodAdded =  new AtomicBoolean();
 
 	/**
 	 * The constructor is declared private to prevent instantiation.
@@ -224,22 +224,24 @@ public class HTTPUtil
 		return ubaos;
 	}
 	
-	public static void addHTTPPatch() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException
+	public static void addHTTPMethods() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException
 	{
-		if (!patchAdded.get())
+		if (!extraMethodAdded.get())
 		{
 			try
 			{
 				LOCK.lock();
 
-				if (!patchAdded.get())
+				if (!extraMethodAdded.get())
 				{
-					ReflectionUtil.updateFinalStatic(HttpURLConnection.class, "methods",  new String[]
-							{
-								// We are adding patch at the end
-								"GET", "POST", "HEAD", "OPTIONS", "PUT", "DELETE", "TRACE", "PATCH"
-							});
-					patchAdded.set(true);
+					
+					ReflectionUtil.updateFinalStatic(HttpURLConnection.class, "methods", HTTPMethod.toMethodNames());
+//					new String[]
+//							{
+//								// We are adding patch at the end
+//								"GET", "POST", "HEAD", "OPTIONS", "PUT", "DELETE", "TRACE", "PATCH", "COPY", "LINK", "UNLINK", "PURGE", "LOCK", "UNLOCK"
+//							});
+					extraMethodAdded.set(true);
 				}
 			}
 			finally

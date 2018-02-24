@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface DataCodecType 
+public @interface ContentDataType 
 {
 	boolean autoConvert() default true;
 	Class<?> inputFormat();
