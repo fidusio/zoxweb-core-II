@@ -70,7 +70,7 @@ public class ReflectionUtil
 		return m.getAnnotation(t);
 	}
 	
-	public static <T extends Annotation>  Map<Method, T> extractFromClass(Class<?> c, Class<T> t)
+	public static <T extends Annotation>  Map<Method, T> scanMethodsAnnotation(Class<?> c, Class<T> t)
 	{
 		Map<Method, T> ret = new HashMap<Method, T>();
 		

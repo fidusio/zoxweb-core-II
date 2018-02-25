@@ -11,7 +11,18 @@ import org.zoxweb.shared.util.SharedUtil;
 
 public class SecurityModel
 {
-	
+	public final static String PERM_ADD_PERMISSION = "add:permission";
+	public final static String PERM_DELETE_PERMISSION = "delete:permission";
+	public final static String PERM_UPDATE_PERMISSION = "update:permission";
+	public final static String PERM_ADD_ROLE = "add:role";
+	public final static String PERM_DELETE_ROLE = "delete:role";
+	public final static String PERM_UPDATE_ROLE = "update:role";
+	public final static String PERM_CREATE_APP_ID = "create:app:id";
+	public final static String PERM_DELETE_APP_ID = "delete:app:id";
+	public final static String PERM_ADD_USER = "create:user";
+	public final static String PERM_DELETE_USER = "delete:user";
+	public final static String PERM_UPDATE_USER = "update:user";
+
 
 	public enum Permission
 	implements GetNameValue<String>, GetDescription
@@ -20,17 +31,17 @@ public class SecurityModel
 		NVE_UPDATE_ALL("nve_update_all", "Permission to read all nventities", "nventity:update:*"),
 		NVE_DELETE_ALL("nve_delete_all", "Permission to delete all nventities", "nventity:delete:*"),
 		NVE_CREAD_ALL("nve_create_all", "Permission to create all nventities", "nventity:create:*"),
-		ADD_PERMISSION("add_permission", "Permission to add a permission", "add:permission"),
-		DELETE_PERMISSION("delete_permission", "Permission to delete a permission", "delete:permission"),
-		UPTDATE_PERMISSION("update_permission", "Permission to update a permission", "update:permission"),
-		ADD_ROLE("add_role", "Permission to add a role", "add:role"),
-		DELETE_ROLE("delete_role", "Permission to delete a role", "delete:role"),
-		UPDATE_ROLE("update_role", "Permission to update a role", "update:role"),
-		CREATE_APP_ID("create_app_id", "Permission to create an app", "create:app:id"),
-		DELETE_APP_ID("delete_app_id", "Permission to delete an app", "delete:app:id"),
-		CREATE_USER("create_user", "Permission to create a user", "create:user"),
-		DELETE_USER("delete_user", "Permission to delete a user", "delete:user"),
-		UPDATE_USER("update_user", "Permission to update a user", "update:user"),
+		ADD_PERMISSION("add_permission", "Permission to add a permission", PERM_ADD_PERMISSION),
+		DELETE_PERMISSION("delete_permission", "Permission to delete a permission", PERM_DELETE_PERMISSION),
+		UPTDATE_PERMISSION("update_permission", "Permission to update a permission", PERM_UPDATE_PERMISSION),
+		ADD_ROLE("add_role", "Permission to add a role", PERM_ADD_ROLE),
+		DELETE_ROLE("delete_role", "Permission to delete a role", PERM_DELETE_ROLE),
+		UPDATE_ROLE("update_role", "Permission to update a role", PERM_UPDATE_ROLE),
+		CREATE_APP_ID("create_app_id", "Permission to create an app", PERM_CREATE_APP_ID),
+		DELETE_APP_ID("delete_app_id", "Permission to delete an app", PERM_DELETE_APP_ID),
+		CREATE_USER("create_user", "Permission to create a user", PERM_ADD_USER),
+		DELETE_USER("delete_user", "Permission to delete a user", PERM_DELETE_USER),
+		UPDATE_USER("update_user", "Permission to update a user", PERM_UPDATE_USER),
 		CREATE_FILE("upload_file", "Permission to upload a file", "create:file", true),
 		READ_FILE("read_file", "Permission to delete a file", "read:file", true),
 		UPDATE_FILE("update_file", "Permission to update a file", "update:file", true),

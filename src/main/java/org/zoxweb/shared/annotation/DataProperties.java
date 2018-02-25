@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ResourceAccessProp 
+public @interface DataProperties 
 {
 	
 	boolean  authRequired() default false;
@@ -17,6 +17,6 @@ public @interface ResourceAccessProp
  	Class<?> dataType();
  	boolean  dataRequired() default true;
  	boolean  dataAutoConvert() default true;
-	String[] pemissions() default {};
-	String[] roles() default {};
+	//String[] pemissions() default {};
+	//String[] roles() default {};
 }
