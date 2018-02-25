@@ -15,4 +15,6 @@ public interface ExceptionReason
 	Reason getReason();
 	void setReason(Reason reason);
 	
+	String getMessage();
+	
 }

@@ -97,8 +97,10 @@ public interface APISecurityManager<S>
 	 
 	 
 	 
-	 S login(String subjectID, String credentials, String domainID, String appID, boolean autoLogin);
-	 S login(JWTToken jwtToken);
+	 S login(String subjectID, String credentials, String domainID, String appID, boolean autoLogin)
+			 throws NullPointerException, IllegalArgumentException, AccessException;
+	 S login(JWTToken jwtToken)
+			 throws NullPointerException, IllegalArgumentException, AccessException;
 	 
 	 void logout();
 	 

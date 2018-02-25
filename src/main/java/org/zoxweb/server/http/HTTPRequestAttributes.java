@@ -215,14 +215,14 @@ public class HTTPRequestAttributes
 
 
 	@SuppressWarnings("unchecked")
-	public <V extends Object> V getContentObject() 
+	public <V extends Object> V getDataContent() 
 	{
 		return (V) contentObject;
 	}
 
 
 
-	public void setContentObject(Object contentObject) 
+	public void setDataContent(Object contentObject) 
 	{
 		this.contentObject = contentObject;
 	}

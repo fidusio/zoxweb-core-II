@@ -9,12 +9,14 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ContentDataType 
+public @interface ResourceAccessProp 
 {
-	boolean autoConvert() default true;
+	
+	boolean  authRequired() default false;
 	Class<?> inputFormat();
- 	Class<?> returnType();
- 	boolean  returnRequired() default true;
+ 	Class<?> dataType();
+ 	boolean  dataRequired() default true;
+ 	boolean  dataAutoConvert() default true;
 	String[] pemissions() default {};
 	String[] roles() default {};
 }

@@ -304,15 +304,9 @@ public class HTTPServletUtil
 			throws IOException
 	{
 		String json = null;
-		boolean printClass = true;
-		if (code != null && code != HTTPStatusCode.OK)
-		{
-			printClass = false;
-		}
-		
 		if (nve != null)
 		{
-			json = nve instanceof APIError ? GSONUtil.toJSON(nve, true, false, printClass) : GSONUtil.toJSON(nve, false, false, printClass);
+			json = nve instanceof APIError ? GSONUtil.toJSON(nve, true, false, true) : GSONUtil.toJSON(nve, false, false, true);
 		}
 		
 		return sendJSON(req, resp, code, json);
@@ -320,24 +314,14 @@ public class HTTPServletUtil
 	
 	public static int sendJSON(HttpServletRequest req, HttpServletResponse resp, HTTPStatusCode code, List<? extends NVEntity> nves)
 			throws IOException
-	{
-		boolean printClass = true;
-		if (code != null && code != HTTPStatusCode.OK)
-		{
-			printClass = false;
-		}
-		return sendJSON(req, resp, code, nves != null ? GSONUtil.toJSONValues(nves.toArray(new NVEntity[0]), false, false, printClass, null) : null);	
+	{	
+		return sendJSON(req, resp, code, nves != null ? GSONUtil.toJSONValues(nves.toArray(new NVEntity[0]), false, false, true, null) : null);	
 	}
 	
 	public static int sendJSON(HttpServletRequest req, HttpServletResponse resp, HTTPStatusCode code, NVEntity nves[])
 			throws IOException
-	{
-		boolean printClass = true;
-		if (code != null && code != HTTPStatusCode.OK)
-		{
-			printClass = false;
-		}
-		return sendJSON(req, resp, code, nves != null ? GSONUtil.toJSONValues(nves, false, false, printClass, null) : null);
+	{	
+		return sendJSON(req, resp, code, nves != null ? GSONUtil.toJSONValues(nves, false, false, true, null) : null);
 	}
 	
 	public static int sendJSON(HttpServletRequest req, HttpServletResponse resp, HTTPStatusCode code, String json)
