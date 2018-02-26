@@ -22,6 +22,7 @@ public class SecurityModel
 	public final static String PERM_ADD_USER = "create:user";
 	public final static String PERM_DELETE_USER = "delete:user";
 	public final static String PERM_UPDATE_USER = "update:user";
+	public final static String PERM_ALL_USERS = "all:users";
 
 
 	public enum Permission
@@ -46,6 +47,7 @@ public class SecurityModel
 		READ_FILE("read_file", "Permission to delete a file", "read:file", true),
 		UPDATE_FILE("update_file", "Permission to update a file", "update:file", true),
 		DELETE_FILE("delete_file", "Permission to delete a file", "delete:file", true),
+		ALL_USERS("all_users", "permission granted to all users", PERM_ALL_USERS),
 	
 	
 		
