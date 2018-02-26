@@ -628,7 +628,7 @@ public class APIAppManagerProvider
         if (result == null || result.isEmpty()) 
         {
         	if (exceptionIfNotFound)
-        		throw new APIException("AppIDDAO not found", Reason.NOT_FOUND);
+        		throw new APIException("AppID " + new AppIDDAO(domainID, appID) + " not found", Reason.NOT_FOUND);
         	else
         		return null;
         }
