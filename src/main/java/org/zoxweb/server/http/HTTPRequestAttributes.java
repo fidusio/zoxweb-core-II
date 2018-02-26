@@ -20,6 +20,7 @@ import java.util.List;
 import org.zoxweb.server.io.FileInfoStreamSource;
 import org.zoxweb.server.security.CryptoUtil;
 import org.zoxweb.shared.http.HTTPAuthentication;
+import org.zoxweb.shared.http.HTTPAuthenticationBasic;
 import org.zoxweb.shared.http.HTTPAuthenticationBearer;
 import org.zoxweb.shared.http.HTTPAuthorizationType;
 import org.zoxweb.shared.http.HTTPHeaderName;
@@ -54,6 +55,7 @@ public class HTTPRequestAttributes
 	private final String pathInfo;
 	private final String uri;
 	private AppIDURI appIDURI;
+	private String subjectID = null;
 	
 	private Object contentObject = null;
 	
@@ -90,11 +92,16 @@ public class HTTPRequestAttributes
 					jwtToken = new JWTToken();
 					jwtToken.setJWT(jwt);
 					jwtToken.setToken(((HTTPAuthenticationBearer)temp).getToken());
+					subjectID = jwt.getPayload().getSubjectID();
 				}
 				catch (Exception e)
 				{
 					
 				}
+			}
+			else if (temp != null && temp instanceof HTTPAuthenticationBasic)
+			{
+				subjectID = ((HTTPAuthenticationBasic)temp).getUser();
 			}
 			
 			httpAuthentication = temp;//HTTPAuthorizationType.parse((GetNameValue<String>) SharedUtil.lookup(headers, HTTPHeaderName.AUTHORIZATION));
@@ -225,5 +232,10 @@ public class HTTPRequestAttributes
 	public void setDataContent(Object contentObject) 
 	{
 		this.contentObject = contentObject;
+	}
+	
+	public String getSubjectID()
+	{
+		return subjectID;
 	}
 }
