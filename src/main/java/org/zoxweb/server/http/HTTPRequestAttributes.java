@@ -128,7 +128,7 @@ public class HTTPRequestAttributes
 	 * 
 	 * @return the headers
 	 */
-	public final ArrayValues<GetNameValue<String>> getHeaders()
+	public ArrayValues<GetNameValue<String>> getHeaders()
 	{
 		return headers;
 	}
@@ -138,7 +138,7 @@ public class HTTPRequestAttributes
 	 * 
 	 * @return parameters
 	 */
-	public final ArrayValues<GetNameValue<String>> getParameters()
+	public  ArrayValues<GetNameValue<String>> getParameters()
 	{
 		return parameters;
 	}
@@ -147,7 +147,7 @@ public class HTTPRequestAttributes
 	 * 
 	 * @return true is the  request is a multipart request
 	 */
-	public final boolean isMultiPart()
+	public boolean isMultiPart()
 	{
 		return isMultiPart;
 	}
@@ -162,7 +162,7 @@ public class HTTPRequestAttributes
 	 * 
 	 * @return the HTTPAuthentication 
 	 */
-	public final HTTPAuthentication getHTTPAuthentication()
+	public HTTPAuthentication getHTTPAuthentication()
 	{
 		return httpAuthentication;
 	}
@@ -172,7 +172,7 @@ public class HTTPRequestAttributes
 	 * 
 	 * @return stream list
 	 */
-	public final List<FileInfoStreamSource> getFileInfoStreamSources()
+	public List<FileInfoStreamSource> getFileInfoStreamSources()
 	{
 		return streamList;
 	}

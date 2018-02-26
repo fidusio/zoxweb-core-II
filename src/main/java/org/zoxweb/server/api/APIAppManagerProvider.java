@@ -755,14 +755,15 @@ public class APIAppManagerProvider
     	SharedUtil.checkIfNulls("Null domain or app id", domainID, appID);
     	getAPISecurityManager().checkPermissions(SecurityModel.Permission.DELETE_APP_ID.getValue());
     	AppIDDAO ret = lookupAppIDDAO(domainID, appID, true);
+//
+//        List<AppConfigDAO> list = search(AppConfigDAO.NVC_APP_CONFIG_DAO, new QueryMatchString(Const.RelationalOperator.EQUAL, ret.getReferenceID(), AppConfigDAO.Param.APP_ID.getNVConfig().getName(), MetaToken.REFERENCE_ID.getName()));
+//
+//        if (list != null && list.size() == 1) {
+//            delete(list.get(0));
+//        }
 
-        List<AppConfigDAO> list = search(AppConfigDAO.NVC_APP_CONFIG_DAO, new QueryMatchString(Const.RelationalOperator.EQUAL, ret.getReferenceID(), AppConfigDAO.Param.APP_ID.getNVConfig().getName(), MetaToken.REFERENCE_ID.getName()));
-
-        if (list != null && list.size() == 1) {
-            delete(list.get(0));
-        }
-
-        delete(ret);
+    	if (ret != null)
+    		delete(ret);
 
     	return ret;
     }
