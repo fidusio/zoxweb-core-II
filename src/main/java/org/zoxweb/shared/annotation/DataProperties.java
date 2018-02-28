@@ -12,11 +12,22 @@ import java.lang.annotation.Target;
 public @interface DataProperties 
 {
 	
-	boolean  authRequired() default false;
+	
 	Class<?> inputFormat();
+	/**
+	 * Specify the class type of the data
+	 * @return
+	 */
  	Class<?> dataType();
+ 	/**
+ 	 * If true the data is mandatory
+ 	 * @return
+ 	 */
  	boolean  dataRequired() default true;
+ 	/**
+ 	 * If true an attempt will be made to convert the data in advance
+ 	 * @return
+ 	 */
  	boolean  dataAutoConvert() default true;
-	//String[] pemissions() default {};
-	//String[] roles() default {};
+	
 }
