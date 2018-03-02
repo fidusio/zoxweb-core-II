@@ -23,6 +23,38 @@ public class SecurityModel
 	public final static String PERM_DELETE_USER = "delete:user";
 	public final static String PERM_UPDATE_USER = "update:user";
 	public final static String PERM_ALL_USERS = "all:users";
+	
+	public final static String TOK_RESOURCE_ID = "$$resource_id$$";
+	public final static String TOK_SUBJECT_ID = "$$subject_id$$";
+	public final static String TOK_APP_ID = "$$app_id$$";
+	public final static String TOK_PUBLIC= "public";
+	public final static String TOK_PRIVATE = "private";
+	
+	
+	public enum PermissionToken
+		implements GetName
+	{
+		RESOURCE_ID(TOK_RESOURCE_ID),
+		SUBJECT_ID(TOK_SUBJECT_ID),
+		APP_ID(TOK_APP_ID),
+		PUBLIC(TOK_PUBLIC),
+		PRIVATE(TOK_PRIVATE),
+		;
+
+		
+		public final String name;
+		PermissionToken(String name)
+		{
+			this.name = name ;
+		}
+		
+		@Override
+		public String getName() {
+			// TODO Auto-generated method stub
+			return name;
+		}
+		
+	}
 
 
 	public enum Permission
