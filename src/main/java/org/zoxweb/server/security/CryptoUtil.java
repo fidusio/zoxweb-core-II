@@ -25,6 +25,8 @@ import java.security.GeneralSecurityException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.Key;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.MessageDigest;
@@ -922,7 +924,17 @@ public class CryptoUtil
 	{
 		KeyGenerator kg = KeyGenerator.getInstance(algo);
 		kg.init(keySizeInBits, (SecureRandom)defaultSecureRandom());
+		//kg.init(keySizeInBits);
 		return kg.generateKey();
+	}
+	
+	
+	public static KeyPair generateKeyPair(int keySizeInBits, String algo) throws NoSuchAlgorithmException
+	{
+		KeyPairGenerator kg = KeyPairGenerator.getInstance(algo);
+		kg.initialize(keySizeInBits, (SecureRandom)defaultSecureRandom());
+		//kg.init(keySizeInBits);
+		return kg.generateKeyPair();
 	}
 	
 	public static KeyStoreInfoDAO generateKeyStoreInfo(String keyStoreName, String alias, String keyStoreType) throws NoSuchAlgorithmException
