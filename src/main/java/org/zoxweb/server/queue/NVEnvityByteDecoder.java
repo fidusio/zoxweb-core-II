@@ -1,8 +1,8 @@
 package org.zoxweb.server.queue;
 
-import org.zoxweb.shared.util.ValueDecoder;
+import org.zoxweb.shared.util.DataDecoder;
 
-public class NVEnvityByteDecoder implements ValueDecoder<byte[], NVEntityQueueEvent> {
+public class NVEnvityByteDecoder implements DataDecoder<byte[], NVEntityQueueEvent> {
 
 	@Override
 	public NVEntityQueueEvent decode(byte[] input) 
