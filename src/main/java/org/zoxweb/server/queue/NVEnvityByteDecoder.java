@@ -1,11 +1,11 @@
 package org.zoxweb.server.queue;
 
-import org.zoxweb.shared.util.ValueGetter;
+import org.zoxweb.shared.util.ValueDecoder;
 
-public class NVEnvityByteDecoder implements ValueGetter<byte[], NVEntityQueueEvent> {
+public class NVEnvityByteDecoder implements ValueDecoder<byte[], NVEntityQueueEvent> {
 
 	@Override
-	public NVEntityQueueEvent getValue(byte[] input) 
+	public NVEntityQueueEvent decode(byte[] input) 
 	{
 		// TODO Auto-generated method stub
 		return new NVEntityQueueEvent(this, input);

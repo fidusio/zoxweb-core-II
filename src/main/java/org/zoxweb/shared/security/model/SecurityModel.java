@@ -24,21 +24,29 @@ public class SecurityModel
 	public final static String PERM_UPDATE_USER = "update:user";
 	public final static String PERM_ALL_USERS = "all:users";
 	
-	public final static String TOK_RESOURCE_ID = "$$resource_id$$";
-	public final static String TOK_SUBJECT_ID = "$$subject_id$$";
+	
 	public final static String TOK_APP_ID = "$$app_id$$";
-	public final static String TOK_PUBLIC= "public";
 	public final static String TOK_PRIVATE = "private";
+	public final static String TOK_PUBLIC= "public";
+	public final static String TOK_REFERENCE_ID = "$$resource_id$$";
+	public final static String TOK_RESOURCE_ID = "$$resource_id$$";
+	public final static String TOK_SUBJECT_ID = "$$subject_id$$";	
+	public final static String TOK_USER_ID = "$$user_id$$";
+	
+
+	
 	
 	
 	public enum PermissionToken
 		implements GetName
 	{
+		APP_ID(TOK_APP_ID),
+		PRIVATE(TOK_PRIVATE),
+		PUBLIC(TOK_PUBLIC),
+		REFERENCE_ID(TOK_REFERENCE_ID),
 		RESOURCE_ID(TOK_RESOURCE_ID),
 		SUBJECT_ID(TOK_SUBJECT_ID),
-		APP_ID(TOK_APP_ID),
-		PUBLIC(TOK_PUBLIC),
-		PRIVATE(TOK_PRIVATE),
+		USER_ID(TOK_USER_ID),
 		;
 
 		

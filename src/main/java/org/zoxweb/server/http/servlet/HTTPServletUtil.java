@@ -121,7 +121,6 @@ public class HTTPServletUtil
 		if (ServletFileUpload.isMultipartContent(req))
 		{
 			
-			String body = null;
 			dfif = new DiskFileItemFactory();
 			try
 			{
@@ -161,7 +160,7 @@ public class HTTPServletUtil
 				}
 			}
 			
-			ret = new HTTPRequestAttributes(req.getRequestURI(), pathInfo, req.getContentType(), true, headers, params, streamList, body);
+			ret = new HTTPRequestAttributes(req.getRequestURI(), pathInfo, req.getContentType(), true, headers, params, streamList, null);
 		}
 		else
 		{

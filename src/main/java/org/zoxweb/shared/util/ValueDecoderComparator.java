@@ -17,14 +17,14 @@ package org.zoxweb.shared.util;
 
 import java.util.Comparator;
 
-public abstract class ValueGetterComparator<I,O>
+public abstract class ValueDecoderComparator<I,O>
     implements Comparator<I>
 {
     public static class StringValueGetterComparator<I>
-        extends ValueGetterComparator<I, String>
+        extends ValueDecoderComparator<I, String>
     {
 
-		public StringValueGetterComparator(boolean ascending, ValueGetter<I, String> valueGetter)
+		public StringValueGetterComparator(boolean ascending, ValueDecoder<I, String> valueGetter)
         {
 		    super(ascending, valueGetter);
 		}
@@ -32,8 +32,8 @@ public abstract class ValueGetterComparator<I,O>
 		@Override
 		public int compare(I o1, I o2)
         {
-			String st1 = o1 != null ?  valueGetter.getValue(o1) : null;
-			String st2 = o2 != null ?  valueGetter.getValue(o2) : null;
+			String st1 = o1 != null ?  valueDecoder.decode(o1) : null;
+			String st2 = o2 != null ?  valueDecoder.decode(o2) : null;
 			int ret = NVConfigComparators.STRING.COMPARATOR.compare(st1, st2);
 
 			if (!ascending)
@@ -45,12 +45,12 @@ public abstract class ValueGetterComparator<I,O>
 		}
 	}
 
-	protected final ValueGetter<I,O> valueGetter;
+	protected final ValueDecoder<I,O> valueDecoder;
 	protected final boolean ascending;
 
-	public ValueGetterComparator(boolean ascending, ValueGetter<I,O> valueGetter)
+	public ValueDecoderComparator(boolean ascending, ValueDecoder<I,O> valueGetter)
     {
-		this.valueGetter = valueGetter;
+		this.valueDecoder = valueGetter;
 		this.ascending = ascending;
 	}
 

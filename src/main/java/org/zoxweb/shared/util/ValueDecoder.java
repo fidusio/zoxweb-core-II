@@ -20,9 +20,9 @@ package org.zoxweb.shared.util;
  * @param <I>
  * @param <O>
  */
-public interface ValueGetter<I,O>
+public interface ValueDecoder<I,O>
 {
 
-	O getValue(I input);
+	O decode(I input);
 
 }
