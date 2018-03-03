@@ -20,11 +20,11 @@ import java.util.Comparator;
 public abstract class ValueDecoderComparator<I,O>
     implements Comparator<I>
 {
-    public static class StringValueGetterComparator<I>
+    public static class StringValueDecoderComparator<I>
         extends ValueDecoderComparator<I, String>
     {
 
-		public StringValueGetterComparator(boolean ascending, ValueDecoder<I, String> valueGetter)
+		public StringValueDecoderComparator(boolean ascending, ValueDecoder<I, String> valueGetter)
         {
 		    super(ascending, valueGetter);
 		}
