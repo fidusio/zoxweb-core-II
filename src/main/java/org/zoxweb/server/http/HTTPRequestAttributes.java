@@ -32,6 +32,7 @@ import org.zoxweb.shared.util.ArrayValues;
 import org.zoxweb.shared.util.GetNameValue;
 import org.zoxweb.shared.util.NVGetNameValueList;
 import org.zoxweb.shared.util.NVPairGetNameMap;
+import org.zoxweb.shared.util.OutputDataDecoder;
 import org.zoxweb.shared.util.SharedUtil;
 
 public class HTTPRequestAttributes 
@@ -49,7 +50,8 @@ public class HTTPRequestAttributes
 	 */
 	private final List<FileInfoStreamSource> streamList;
 	private final boolean isMultiPart;
-	private final String content;
+	private String content = null;
+	private OutputDataDecoder<String> contentDecoder = null;
 	private final String contentType;
 	private final HTTPAuthentication httpAuthentication;
 	private final String pathInfo;
@@ -61,15 +63,52 @@ public class HTTPRequestAttributes
 	
 	private JWTToken jwtToken = null;
 	
-	@SuppressWarnings("unchecked")
 	public HTTPRequestAttributes(String uri,
+            String pathInfo,
+			 String contentType,
+			 boolean isMultiPart,
+			 List<GetNameValue<String>> headers, 
+			 List<GetNameValue<String>> parameters, 
+			 List<FileInfoStreamSource> streamList,
+			 String content)
+	{
+		this(uri, pathInfo, contentType, isMultiPart, headers, parameters, streamList, content, null);
+	}
+	
+	public HTTPRequestAttributes(String uri,
+            String pathInfo,
+			 String contentType,
+			 boolean isMultiPart,
+			 List<GetNameValue<String>> headers, 
+			 List<GetNameValue<String>> parameters, 
+			 List<FileInfoStreamSource> streamList,
+			 OutputDataDecoder<String> dataDecoder)
+	{
+		this(uri, pathInfo, contentType, isMultiPart, headers, parameters, streamList, null, dataDecoder);
+	}
+	
+	public HTTPRequestAttributes(String uri,
+            String pathInfo,
+			 String contentType,
+			 boolean isMultiPart,
+			 List<GetNameValue<String>> headers, 
+			 List<GetNameValue<String>> parameters, 
+			 List<FileInfoStreamSource> streamList)
+	{
+		this(uri, pathInfo, contentType, isMultiPart, headers, parameters, streamList, null, null);
+	}
+	
+	
+	
+	@SuppressWarnings("unchecked")
+	private HTTPRequestAttributes(String uri,
                                  String pathInfo,
 								 String contentType,
 								 boolean isMultiPart,
 								 List<GetNameValue<String>> headers, 
 								 List<GetNameValue<String>> parameters, 
 								 List<FileInfoStreamSource> streamList,
-								 String content)
+								 String content, OutputDataDecoder<String> dataDecoder)
 	{
 	    this.uri = uri;
 		this.pathInfo = pathInfo;
@@ -79,6 +118,7 @@ public class HTTPRequestAttributes
 		this.streamList = streamList;
 		this.content = content;
 		this.contentType = contentType;
+		this.contentDecoder = dataDecoder;
 
 		if (headers != null)
 		{
@@ -179,6 +219,16 @@ public class HTTPRequestAttributes
 
 	public String getContent()
 	{
+		if(content == null && contentDecoder != null)
+		{
+			synchronized(this)
+			{
+				if(content == null && contentDecoder != null)
+				{
+					content = contentDecoder.decode();
+				}
+			}
+		}
 		return content;
 	}
 	

@@ -160,7 +160,7 @@ public class HTTPServletUtil
 				}
 			}
 			
-			ret = new HTTPRequestAttributes(req.getRequestURI(), pathInfo, req.getContentType(), true, headers, params, streamList, null);
+			ret = new HTTPRequestAttributes(req.getRequestURI(), pathInfo, req.getContentType(), true, headers, params, streamList);
 		}
 		else
 		{
@@ -170,7 +170,7 @@ public class HTTPServletUtil
 			}
 			 
 			 
-			ret = new HTTPRequestAttributes(req.getRequestURI(), pathInfo, req.getContentType(), false, headers, params, streamList, IOUtil.inputStreamToString(req.getInputStream(), false));
+			ret = new HTTPRequestAttributes(req.getRequestURI(), pathInfo, req.getContentType(), false, headers, params, streamList, new HTTPRequestStringContentDecoder(req));
 		}
 		
 		return ret; 

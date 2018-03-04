@@ -23,6 +23,6 @@ package org.zoxweb.shared.util;
 public interface DataDecoder<I,O>
 {
 
-	O decode(I input);
+	public O decode(I input);
 
 }
