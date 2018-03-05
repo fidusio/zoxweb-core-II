@@ -67,6 +67,7 @@
         <javax-servlet.version>3.0.1</javax-servlet.version>
        
         <ehcache-org.version>3.4.0</ehcache-org.version>
+        <skipTests>true</skipTests>
 
     </properties>
 
@@ -99,6 +100,15 @@
                 </configuration>
                 
             </plugin>
+            
+            <plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-surefire-plugin</artifactId>
+		        <version>2.12.4</version>
+		        <configuration>
+		          <skipTests>${skipTests}</skipTests>
+		        </configuration>
+		      </plugin>
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

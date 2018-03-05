@@ -53,7 +53,7 @@ import org.zoxweb.shared.util.SharedUtil;
 
 public class HTTPServletUtil
 {
-	public static final int ZIP_LIMIT = 512;
+	public static final int ZIP_LIMIT = 4096;
 	
 	private static final transient Logger log = Logger.getLogger(HTTPServletUtil.class.getName());
 
@@ -341,9 +341,10 @@ public class HTTPServletUtil
 			if (zip != null)
 			{
 				setZIPEncodingHeader(resp, zip);
-				log.info("content will be compressed " + zip);
+				byte toZip [] = SharedStringUtil.getBytes(json);
+				log.info("content will be compressed " + zip + " size " + toZip.length );
 				// compress
-				byte[] responseBytes = compress(zip.getValue(), SharedStringUtil.getBytes(json));
+				byte[] responseBytes = compress(zip.getValue(), toZip);
 				// encode base64
 				if (zip == HTTPHeaderValue.CONTENT_ENCODING_LZ)
 				{
