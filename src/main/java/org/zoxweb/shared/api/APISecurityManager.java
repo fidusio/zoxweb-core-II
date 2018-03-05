@@ -76,12 +76,35 @@ public interface APISecurityManager<S>
 	 void checkPermissions(boolean partial, String ...permissions)
 			 throws NullPointerException, IllegalArgumentException, AccessException;
 	 
+	 /**
+	  * Return true of subject has all the permissions
+	  * @param permission
+	  * @return
+	  * @throws NullPointerException
+	  * @throws IllegalArgumentException
+	  * @throws AccessException
+	  */
 	 boolean hasPermission(String permission)
 			 throws NullPointerException, IllegalArgumentException, AccessException;
 	 
+	 /**
+	  * Check if the current subject has all the roles
+	  * @param roles
+	  * @throws NullPointerException
+	  * @throws IllegalArgumentException
+	  * @throws AccessException
+	  */
 	 void checkRoles(String ...roles)
 			 throws NullPointerException, IllegalArgumentException, AccessException;
 	 
+	 /**
+	  * Check if the current subject has the roles, if partial is true one of the is sufficient
+	  * @param partial
+	  * @param roles
+	  * @throws NullPointerException
+	  * @throws IllegalArgumentException
+	  * @throws AccessException
+	  */
 	 void checkRoles(boolean partial, String ...roles)
 			 throws NullPointerException, IllegalArgumentException, AccessException;
 	 /**
@@ -96,12 +119,36 @@ public interface APISecurityManager<S>
 			 throws NullPointerException, IllegalArgumentException, AccessException;
 	 
 	 
-	 
+	 /**
+	  * Login a user based on user name and password
+	  * @param subjectID
+	  * @param credentials
+	  * @param domainID
+	  * @param appID
+	  * @param autoLogin
+	  * @return
+	  * @throws NullPointerException
+	  * @throws IllegalArgumentException
+	  * @throws AccessException
+	  */
 	 S login(String subjectID, String credentials, String domainID, String appID, boolean autoLogin)
 			 throws NullPointerException, IllegalArgumentException, AccessException;
+	 
+	 /**
+	  * Login a subject based on jwtToken
+	  * @param jwtToken
+	  * @return
+	  * @throws NullPointerException
+	  * @throws IllegalArgumentException
+	  * @throws AccessException
+	  */
 	 S login(JWTToken jwtToken)
 			 throws NullPointerException, IllegalArgumentException, AccessException;
-	 
+	
+	 /**
+	  * Logou the current subject
+	  */
 	 void logout();
+	
 	 
 }
