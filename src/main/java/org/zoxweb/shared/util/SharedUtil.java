@@ -2005,6 +2005,37 @@ public class SharedUtil
 			diff |= a[i] ^ b[i];
 		return diff == 0;
 	}
+	
+	
+	/**
+	 * Compares two byte arrays 
+     * 
+     * @param   a       the first byte array
+     * @param   b       the second byte array 
+     * @param	length	the length to be compared
+     * @return          true if both byte arrays are the same, false if not
+	 */
+	public static boolean equals(byte[] a, byte[] b, int length) {
+		checkIfNulls("one of the byte array is null", a, b);
+		if (length < 0 || length > a.length || length > b.length)
+		{
+			throw new IllegalArgumentException("Invalid length " + length);
+		}
+		
+		
+		for(int i = 0; i < length; i++)
+		{
+			if (a[i] != b[i])
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	
+	
+	
 
 //	/**
 //	 * Format a list of NPairs
@@ -2365,6 +2396,8 @@ public class SharedUtil
 			}
 		}
 	}
+	
+	
 	
 	public static boolean equals(NVEntity nve1, NVEntity nve2)
     {

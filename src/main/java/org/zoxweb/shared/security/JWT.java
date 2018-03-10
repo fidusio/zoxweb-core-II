@@ -15,6 +15,8 @@
  */
 package org.zoxweb.shared.security;
 
+import java.util.Date;
+
 import org.zoxweb.shared.data.SetNameDescriptionDAO;
 
 import org.zoxweb.shared.util.AppID;
@@ -133,6 +135,7 @@ extends SetNameDescriptionDAO
         jwtPayload.setDomainID(domainID);
         jwtPayload.setAppID(appID);
         jwtPayload.setSubjectID(subjectID);
+        jwtPayload.setJWTID("" + new Date().getTime());
 
         JWT jwt = new JWT();
         jwt.setHeader(jwtHeader);
