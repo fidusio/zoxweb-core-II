@@ -34,6 +34,7 @@ public class TimestampFilter
 	 * Sets the default date format.
 	 */
 	public static final SimpleDateFormat DEFAULT_DATE_FORMAT = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss_SSS");
+	public static final SimpleDateFormat DEFAULT_JAVA_FORMAT = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
 	
 	public static final DateTimeValueFilter DEFAULT_GMT_MILLIS = new DateTimeValueFilter("yyyy-MM-dd'T'HH:mm:ss.SSSX", "UTC");
 	public static final DateTimeValueFilter DEFAULT_GMT = new DateTimeValueFilter("yyyy-MM-dd'T'HH:mm:ssX", "UTC");
@@ -46,6 +47,7 @@ public class TimestampFilter
 		{
 			DEFAULT_GMT_MILLIS.SDF,
 			DEFAULT_GMT.SDF,
+			DEFAULT_JAVA_FORMAT,
 			new SDFBuilder("yyyy-MM-dd'T'HH:mm:ss.SSSZ").timeZone(TimeZone.getTimeZone("UTC")),
 			new SDFBuilder("yyyy-MM-dd'T'HH:mm:ssZ").timeZone(TimeZone.getTimeZone("UTC")),
 			new SDFBuilder("yyyy-MM-dd hh:mm:ss").timeZone(TimeZone.getTimeZone("UTC")),
@@ -53,6 +55,7 @@ public class TimestampFilter
 			
 			new SDFBuilder("MM-yy").timeZone(TimeZone.getTimeZone("UTC")),
 			new SDFBuilder("MM-yyyy").timeZone(TimeZone.getTimeZone("UTC")),
+			
 		};
 	
 	/**

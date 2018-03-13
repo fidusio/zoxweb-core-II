@@ -15,12 +15,12 @@
  */
 package org.zoxweb.shared.security;
 
-import java.util.Date;
 
 import org.zoxweb.shared.data.SetNameDescriptionDAO;
 
 import org.zoxweb.shared.util.AppID;
 import org.zoxweb.shared.util.GetNVConfig;
+import org.zoxweb.shared.util.IDGenerator;
 import org.zoxweb.shared.util.NVConfig;
 import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVConfigEntityLocal;
@@ -135,7 +135,8 @@ extends SetNameDescriptionDAO
         jwtPayload.setDomainID(domainID);
         jwtPayload.setAppID(appID);
         jwtPayload.setSubjectID(subjectID);
-        jwtPayload.setJWTID("" + new Date().getTime());
+        if (ID_GENERATOR != null)
+        	jwtPayload.setJWTID(ID_GENERATOR.generateID());
 
         JWT jwt = new JWT();
         jwt.setHeader(jwtHeader);
@@ -144,4 +145,6 @@ extends SetNameDescriptionDAO
         return jwt;
     }
 
+	
+	public static IDGenerator<String> ID_GENERATOR = null;
 }

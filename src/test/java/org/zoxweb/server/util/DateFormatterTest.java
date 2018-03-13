@@ -1,5 +1,6 @@
 package org.zoxweb.server.util;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.junit.Assert;
@@ -43,6 +44,19 @@ public class DateFormatterTest {
 		
 		System.out.println(new Date(TimestampFilter.SINGLETON.validate("2017-10-14T14:33:04-07:00")));
 		
+	}
+	
+	@Test
+	public void defaultFormat()
+	{
+		SimpleDateFormat format = new SimpleDateFormat();
+		System.out.println(format.toLocalizedPattern());
+		System.out.println("Pattern: " + format.toPattern());
+		Date date = new Date();
+		
+		System.out.println(date);
+		System.out.println(TimestampFilter.DEFAULT_JAVA_FORMAT.format(date));
+		System.out.println(new Date(TimestampFilter.SINGLETON.validate("" + new Date())));
 	}
 	
 	

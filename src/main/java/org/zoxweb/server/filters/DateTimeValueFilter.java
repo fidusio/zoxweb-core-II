@@ -29,6 +29,13 @@ public class DateTimeValueFilter
 
 	public final  SimpleDateFormat SDF;
 
+	public DateTimeValueFilter(String pattern)
+	{
+		SDF = new SimpleDateFormat(pattern);
+	}
+
+	
+	
 	public DateTimeValueFilter(String pattern, String timezone)
 	{
 		SDF = new SimpleDateFormat(pattern);

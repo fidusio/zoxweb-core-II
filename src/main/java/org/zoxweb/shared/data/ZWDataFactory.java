@@ -256,6 +256,21 @@ public class ZWDataFactory
 				return CRUDNVEntityDAO.NVC_CRUD_NVENTITY_DAO;
 			}
 		},
+		CURRENT_TIMESTAMP(CurrentTimestamp.class.getName())
+		{
+			@SuppressWarnings("unchecked")
+			@Override
+			public CurrentTimestamp newInstance()
+			{
+				return new CurrentTimestamp();
+			}
+
+			@Override
+			public NVConfigEntity getNVConfigEntity() 
+			{
+				return CurrentTimestamp.NVC_CURRENT_TIMESTAMP;
+			}
+		},
 		DATA_CONTENT_DAO(DataContentDAO.class.getName())
 		{
 			@SuppressWarnings("unchecked")
