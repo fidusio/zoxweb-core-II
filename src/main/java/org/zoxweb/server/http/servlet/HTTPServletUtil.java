@@ -53,7 +53,7 @@ import org.zoxweb.shared.util.SharedUtil;
 
 public class HTTPServletUtil
 {
-	public static final int ZIP_LIMIT = 4096;
+	public static final int ZIP_LIMIT = 1024;
 	
 	private static final transient Logger log = Logger.getLogger(HTTPServletUtil.class.getName());
 
