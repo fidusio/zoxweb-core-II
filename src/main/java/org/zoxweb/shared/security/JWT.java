@@ -19,8 +19,8 @@ package org.zoxweb.shared.security;
 import org.zoxweb.shared.data.SetNameDescriptionDAO;
 
 import org.zoxweb.shared.util.AppID;
+import org.zoxweb.shared.util.DataEncoder;
 import org.zoxweb.shared.util.GetNVConfig;
-import org.zoxweb.shared.util.IDGenerator;
 import org.zoxweb.shared.util.NVConfig;
 import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVConfigEntityLocal;
@@ -135,8 +135,10 @@ extends SetNameDescriptionDAO
         jwtPayload.setDomainID(domainID);
         jwtPayload.setAppID(appID);
         jwtPayload.setSubjectID(subjectID);
-        if (ID_GENERATOR != null)
-        	jwtPayload.setJWTID(ID_GENERATOR.generateID());
+        // trick for multi-threading safety 
+        DataEncoder<JWTPayload, JWTPayload> tempEncoder = PAYLOAD_ENCODER;
+        if (tempEncoder != null)
+        	jwtPayload = tempEncoder.encode(jwtPayload);
 
         JWT jwt = new JWT();
         jwt.setHeader(jwtHeader);
@@ -146,5 +148,5 @@ extends SetNameDescriptionDAO
     }
 
 	
-	public static IDGenerator<String> ID_GENERATOR = null;
+	public static DataEncoder<JWTPayload, JWTPayload>  PAYLOAD_ENCODER = null;
 }

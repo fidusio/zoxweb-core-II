@@ -21,6 +21,7 @@ package org.zoxweb.shared.util;
  * @param <O>
  */
 public interface DataDecoder<I,O>
+	extends Codec<I,O>
 {
 
 	public O decode(I input);
