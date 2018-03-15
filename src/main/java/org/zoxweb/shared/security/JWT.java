@@ -139,6 +139,8 @@ extends SetNameDescriptionDAO
         DataEncoder<JWTPayload, JWTPayload> tempEncoder = PAYLOAD_ENCODER;
         if (tempEncoder != null)
         	jwtPayload = tempEncoder.encode(jwtPayload);
+        else
+        	jwtPayload.setIssuedAt(System.currentTimeMillis());
 
         JWT jwt = new JWT();
         jwt.setHeader(jwtHeader);
