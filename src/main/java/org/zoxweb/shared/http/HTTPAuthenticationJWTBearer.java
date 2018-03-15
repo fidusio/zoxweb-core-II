@@ -15,8 +15,8 @@
  */
 package org.zoxweb.shared.http;
 
-import org.zoxweb.shared.crypto.JWTEncoder;
 import org.zoxweb.shared.security.JWT;
+import org.zoxweb.shared.security.JWTEncoder;
 import org.zoxweb.shared.util.GetNameValue;
 import org.zoxweb.shared.util.NVConfig;
 import org.zoxweb.shared.util.NVConfigEntity;
@@ -94,7 +94,7 @@ extends HTTPAuthentication
 
 	public GetNameValue<String> toHTTPHeader()
 	{
-		return getType().toHTTPHeader(jwtEncoder.encodeJWT(getKey(), getJWT()));
+		return getType().toHTTPHeader(jwtEncoder.encode(getKey(), getJWT()));
 	}
 	
 }

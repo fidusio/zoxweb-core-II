@@ -4,10 +4,12 @@ import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
-import org.zoxweb.shared.crypto.JWTDecoder;
-import org.zoxweb.shared.crypto.JWTEncoder;
 import org.zoxweb.shared.security.AccessSecurityException;
 import org.zoxweb.shared.security.JWT;
+import org.zoxweb.shared.security.JWTDecoder;
+import org.zoxweb.shared.security.JWTDecoderData;
+import org.zoxweb.shared.security.JWTEncoder;
+import org.zoxweb.shared.security.JWTEncoderData;
 
 public final class JWTProvider
 implements JWTEncoder, JWTDecoder {
@@ -21,7 +23,7 @@ implements JWTEncoder, JWTDecoder {
 	
 
 	@Override
-	public String encodeJWT(byte[] key, JWT jwt) throws AccessSecurityException {
+	public String encode(byte[] key, JWT jwt) throws AccessSecurityException {
 		// TODO Auto-generated method stub
 		try 
 		{
@@ -34,7 +36,7 @@ implements JWTEncoder, JWTDecoder {
 
 
 	@Override
-	public JWT decodeJWT(byte[] key, String b64urlToken) throws AccessSecurityException {
+	public JWT decode(byte[] key, String b64urlToken) throws AccessSecurityException {
 		// TODO Auto-generated method stub
 		try 
 		{
@@ -43,6 +45,22 @@ implements JWTEncoder, JWTDecoder {
 	
 			throw new AccessSecurityException(e.getMessage());
 		}
+	}
+
+
+	@Override
+	public String encode(JWTEncoderData jed)
+			throws AccessSecurityException
+	{
+		return encode(jed.getKey(), jed.getJWT());
+	}
+
+
+	@Override
+	public JWT decode(JWTDecoderData jdd)
+			throws AccessSecurityException
+	{
+		return decode(jdd.getKey(), jdd.getToken());
 	}
 
 }

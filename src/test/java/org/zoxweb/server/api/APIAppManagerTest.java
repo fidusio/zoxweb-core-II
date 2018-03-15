@@ -63,7 +63,7 @@ public class APIAppManagerTest {
 		jwt.setHeader(header);
 		jwt.setPayload(payload);
 		
-		String token = JWTProvider.SINGLETON.encodeJWT(sak.getAPISecretAsBytes(), jwt);
+		String token = JWTProvider.SINGLETON.encode(sak.getAPISecretAsBytes(), jwt);
 		
 		System.out.println(token);
 		

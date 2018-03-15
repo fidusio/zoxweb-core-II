@@ -16,6 +16,8 @@
 package org.zoxweb.shared.crypto;
 
 import org.zoxweb.shared.security.AccessSecurityException;
+import org.zoxweb.shared.security.JWTDecoder;
+import org.zoxweb.shared.security.JWTEncoder;
 
 public interface CryptoInterface
 	extends JWTEncoder, JWTDecoder

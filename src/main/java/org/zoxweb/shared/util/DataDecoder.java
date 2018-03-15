@@ -20,10 +20,10 @@ package org.zoxweb.shared.util;
  * @param <I>
  * @param <O>
  */
-public interface DataDecoder<I,O>
-	extends Codec<I,O>
+public interface DataDecoder<DI,DO>
+	extends Codec
 {
 
-	public O decode(I input);
+	public DO decode(DI input);
 
 }

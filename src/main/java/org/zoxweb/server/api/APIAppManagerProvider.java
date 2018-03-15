@@ -448,7 +448,7 @@ public class APIAppManagerProvider
             }
         }
 
-        return JWTProvider.SINGLETON.decodeJWT(subjectAPIKey.getAPISecretAsBytes(), token);
+        return JWTProvider.SINGLETON.decode(subjectAPIKey.getAPISecretAsBytes(), token);
     }
 
    

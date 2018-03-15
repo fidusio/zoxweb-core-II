@@ -1,7 +1,7 @@
 package org.zoxweb.shared.util;
 
-public interface DataEncoder<I, O>
-extends Codec<I, O> 
+public interface DataEncoder<EI, EO>
+	extends Codec 
 {
-	O encode(I input);
+	EO encode(EI input);
 }
