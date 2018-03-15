@@ -17,7 +17,7 @@ public class CurrentTimestamp
 	public enum Param
 	implements GetNVConfig
 	{
-		CURRENT_TIME(NVConfigManager.createNVConfig("current_time", "Current time value", "CurrentTime", true, false, false, true, Long.class, null)),
+		TIMESTAMP(NVConfigManager.createNVConfig("timestamp", "Current time value", "Timestamp", true, false, false, true, Long.class, null)),
 		UNIT(NVConfigManager.createNVConfig("unit", "current time value unit", "Unit", true, false, false, true, TimeUnitType.class, null)),
 		SOURCE(NVConfigManager.createNVConfig("source", "current time value unit", "Source", false, false, String.class)),
 		;
@@ -52,7 +52,7 @@ public class CurrentTimestamp
 	
 	public CurrentTimestamp()
 	{
-		super(NVC_CURRENT_TIMESTAMP);
+		this(System.currentTimeMillis(), TimeUnitType.MILLIS, null);
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -63,15 +63,15 @@ public class CurrentTimestamp
 	
 	public CurrentTimestamp(long currentTimeValue, TimeUnitType tut, String source)
 	{
-		this();
-		setValue(Param.CURRENT_TIME, currentTimeValue);
+		super(NVC_CURRENT_TIMESTAMP);
+		setValue(Param.TIMESTAMP, currentTimeValue);
 		setValue(Param.UNIT, tut);
 		setValue(Param.SOURCE, source);
 	}
 	
-	public long currentTime()
+	public long currentTimestamp()
 	{
-		return lookupValue(Param.CURRENT_TIME);
+		return lookupValue(Param.TIMESTAMP);
 	}
 	
 	public TimeUnitType unit()
