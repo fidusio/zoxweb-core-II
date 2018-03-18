@@ -140,7 +140,7 @@ public class TaskProcessor
 		 * This method will queue one task
 		 * @param event if null it will reset the task can only be set to null by the ExecutorThread
 		 */
-		protected  void queueInternalTask( TaskEvent event) {
+		protected  void queueInternalTask(TaskEvent event) {
 			synchronized(this) {
 				this.event = event;
 				
