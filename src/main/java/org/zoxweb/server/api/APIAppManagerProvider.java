@@ -459,7 +459,11 @@ public class APIAppManagerProvider
    
     public void resetPassword(String subjectID)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException {
-
+    	// lookup user id 
+    	// generate token 
+    	// send email 
+    	
+    	getAPISecurityManager().invalidateResource(subjectID);
     }
 
   
@@ -555,6 +559,7 @@ public class APIAppManagerProvider
     public void changePassword(String oldPassword, String newPassword)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException {
     	newPassword = FilterType.PASSWORD.validate(newPassword);
+    	String subjectID = getAPISecurityManager().currentSubjectID();
     	// make the user is logged in
     	String userID = getAPISecurityManager().currentUserID();
     	
@@ -580,6 +585,7 @@ public class APIAppManagerProvider
 		} catch (NoSuchAlgorithmException e) {
 			throw new AccessException("Invalid new Password");
 		}
+    	getAPISecurityManager().invalidateResource(subjectID);
     	
     }
 
