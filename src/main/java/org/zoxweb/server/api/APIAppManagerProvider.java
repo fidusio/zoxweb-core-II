@@ -365,14 +365,19 @@ public class APIAppManagerProvider
     public void deleteSubjectAPIKey(String subjectID)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException {
 
-    	delete(lookupSubjectAPIKey(subjectID, true));
+    	SubjectAPIKey sak = lookupSubjectAPIKey(subjectID, true);
+    	
+    	deleteSubjectAPIKey(sak);
 
     }
 
    
     public void deleteSubjectAPIKey(SubjectAPIKey subjectAPIKey)
-            throws NullPointerException, IllegalArgumentException, AccessException, APIException {
-
+            throws NullPointerException, IllegalArgumentException, AccessException, APIException
+    {
+    	if (subjectAPIKey != null)
+    		getAPISecurityManager().invalidateResource(subjectAPIKey.getSubjectID());
+    	
         delete(subjectAPIKey);
     }
 

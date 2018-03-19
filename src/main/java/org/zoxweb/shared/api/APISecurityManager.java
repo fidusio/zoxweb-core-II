@@ -146,9 +146,16 @@ public interface APISecurityManager<S>
 			 throws NullPointerException, IllegalArgumentException, AccessException;
 	
 	 /**
-	  * Logou the current subject
+	  * Logout the current subject
 	  */
 	 void logout();
+	 
+	 
+	 /**
+	  * Invalidate a resource
+	  * @param resouceID
+	  */
+	 void invalidateResource(String resouceID);
 	
 	 
 }
