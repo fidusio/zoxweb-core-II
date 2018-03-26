@@ -66,7 +66,7 @@
         <javaee-api.version>7.0</javaee-api.version>
         <javax-servlet.version>3.0.1</javax-servlet.version>
        
-        <ehcache-org.version>3.4.0</ehcache-org.version>
+        <ehcache-org.version>3.5.2</ehcache-org.version>
         <skipTests>true</skipTests>
 
     </properties>
