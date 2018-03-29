@@ -30,4 +30,22 @@ public class NVCollection<T>
 		setName(name);
 		setValue(values);
 	}
+	
+	public List<T> asList()
+	{
+		if (getValue() instanceof List)
+		{
+			return (List<T>)getValue();
+		}
+		return null;
+	}
+	
+	public Set<T> asSet()
+	{
+		if (getValue() instanceof List)
+		{
+			return (Set<T>)getValue();
+		}
+		return null;
+	}
 }
