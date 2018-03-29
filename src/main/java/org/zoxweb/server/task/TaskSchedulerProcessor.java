@@ -129,10 +129,15 @@ public class TaskSchedulerProcessor
 	public TaskSchedulerAppointment queue(Appointment a, Runnable command)
 	{
 		if (command != null)
-			return queue(a, new TaskEvent(this, new RunnableTaskContainer(), command));
+			return queue(a, new TaskEvent(this, new RunnableTaskContainer(command),(Object[]) null));
 		
 		return null;
 	}
+	
+	
+	
+	
+	
 
 	private TaskSchedulerAppointment queue(TaskSchedulerAppointment te) {
 		if (!live) {

@@ -381,8 +381,9 @@ public class TaskProcessor
 	public void execute(Runnable command) 
 	{
 		if (command != null)
-			queueTask(new TaskEvent(this, new RunnableTaskContainer(), command));		
+			queueTask(new TaskEvent(this, new RunnableTaskContainer(command), (Object[])null));
 	}
+	
 	
 	/**
 	 * The tasks queue is used to add task to the task processor

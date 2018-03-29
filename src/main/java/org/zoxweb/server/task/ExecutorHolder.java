@@ -29,8 +29,7 @@ import org.zoxweb.shared.util.SharedUtil;
  *
  * @param <E> Executor
  */
-public class ExecutorHolder<E
-    extends Executor>
+public class ExecutorHolder<E extends Executor>
     implements Executor, GetName, GetDescription, AutoCloseable {
 
 	protected final E es;

@@ -19,11 +19,21 @@ public abstract class RunnableTask
 		implements TaskExecutor, Runnable {
 
 	static class RunnableTaskContainer extends RunnableTask {
-
+		
+		private final Runnable runnable;
+		
+		RunnableTaskContainer(Runnable runnable)
+		{
+			this.runnable = runnable;
+		}
+		
+		
 	    @Override
 		public void run() {
-			TaskEvent te = attachedEvent();
-			((Runnable)te.getTaskExecutorParameters()[0]).run();
+	    	
+	    	runnable.run();
+//			TaskEvent te = attachedEvent();
+//			((Runnable)te.getTaskExecutorParameters()[0]).run();
 		}
 	}
 
