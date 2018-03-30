@@ -394,7 +394,7 @@ public class Const
 	public enum TimeInMillis
     {
 		// One millisecond
-		MILLI(1, "millis"),
+		MILLI(1, "millis", "milli"),
 		
 		// One second in milliseconds
 		SECOND(MILLI.MILLIS *1000, "seconds", "second", "secs","sec", "s"),
