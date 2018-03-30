@@ -52,9 +52,15 @@ public class InetSocketAddressDAO
 	
 	public InetSocketAddressDAO(String address, int port)
     {
+		this(address, port, null);
+	}
+	
+	public InetSocketAddressDAO(String address, int port, ProxyType pt)
+    {
 		this();
 		setInetAddress(address);
 		setPort(port);
+		setProxyType(pt);
 	}
 
 	public String getInetAddress()
