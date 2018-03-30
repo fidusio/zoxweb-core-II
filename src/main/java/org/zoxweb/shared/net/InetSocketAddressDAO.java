@@ -29,7 +29,8 @@ public class InetSocketAddressDAO
 	
 	private static final NVConfig INET_ADDRESS = NVConfigManager.createNVConfig("inet_address", "The ip address","InetAddress",true, false, String.class);
 	private static final NVConfig PORT = NVConfigManager.createNVConfig("port", "The port number","Port", true, false, int.class);
-	public static final NVConfigEntity NVC_INET_SOCKET_ADDRESS_DAO = new NVConfigEntityLocal("inet_socket_address_dao", null , "InetSocketAddressDAO", true, false, false, false, InetSocketAddressDAO.class, SharedUtil.toNVConfigList(INET_ADDRESS, PORT), null, false, SetNameDAO.NVC_NAME_DAO);
+	private static final NVConfig PROXY_TYPE = NVConfigManager.createNVConfig("proxy_type", "proxy type","ProxyType", false, false, ProxyType.class);
+	public static final NVConfigEntity NVC_INET_SOCKET_ADDRESS_DAO = new NVConfigEntityLocal("inet_socket_address_dao", null , "InetSocketAddressDAO", true, false, false, false, InetSocketAddressDAO.class, SharedUtil.toNVConfigList(INET_ADDRESS, PORT, PROXY_TYPE), null, false, SetNameDAO.NVC_NAME_DAO);
 
 	public InetSocketAddressDAO()
     {
@@ -70,6 +71,18 @@ public class InetSocketAddressDAO
     {
 		return lookupValue(PORT);
 	}
+	
+	
+	public void setProxyType(ProxyType pt)
+    {
+		setValue(PROXY_TYPE, pt);
+	}
+	
+	public ProxyType getProxyType()
+    {
+		return lookupValue(PROXY_TYPE);
+	}
+	
 	
 	public void setPort(int port)
     {

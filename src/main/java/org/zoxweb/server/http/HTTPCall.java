@@ -28,7 +28,7 @@ import java.util.Map;
 
 import org.zoxweb.server.io.CloseEnabledInputStream;
 import org.zoxweb.server.io.IOUtil;
-
+import org.zoxweb.server.net.NetUtil;
 import org.zoxweb.server.security.SSLCheckDisabler;
 import org.zoxweb.server.security.SSLSocketProp;
 
@@ -201,7 +201,7 @@ public class HTTPCall
 		Proxy proxy = null;
 		if (hcc.getProxyAddress() != null)
 		{
-			proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress(hcc.getProxyAddress().getInetAddress(),  hcc.getProxyAddress().getPort()));
+			proxy = new Proxy(NetUtil.lookup(hcc.getProxyAddress().getProxyType()), new InetSocketAddress(hcc.getProxyAddress().getInetAddress(),  hcc.getProxyAddress().getPort()));
 		}
 		
 		try

@@ -23,6 +23,7 @@ import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
+import java.net.Proxy;
 import java.net.SocketAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -40,6 +41,7 @@ import org.zoxweb.shared.net.InetProp.NICategory;
 import org.zoxweb.shared.net.InetProp.NIStatus;
 import org.zoxweb.shared.net.InetProp.NIType;
 import org.zoxweb.shared.net.InetSocketAddressDAO;
+import org.zoxweb.shared.net.ProxyType;
 import org.zoxweb.shared.security.SecurityStatus;
 import org.zoxweb.shared.net.InetProp.IPVersion;
 import org.zoxweb.shared.net.InetProp.InetProto;
@@ -257,6 +259,27 @@ public class NetUtil
 		}
 		return Arrays.equals(network, tempNetwork);
 			
+	}
+	
+	
+	public static Proxy.Type lookup(ProxyType pt)
+	{
+		if (pt != null)
+		{
+			switch(pt)
+			{
+			case DIRECT:
+				return Proxy.Type.DIRECT;
+			case HTTP:
+				return Proxy.Type.HTTP;
+			case SOCKS:
+				return Proxy.Type.SOCKS;
+			
+			
+			}
+		}
+		
+		return Proxy.Type.HTTP;
 	}
 	
 	
