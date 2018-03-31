@@ -319,7 +319,7 @@ public class HTTPCall
 			
 			
 			IOUtil.flush(os);
-			status = con.getResponseCode();
+			status = (proxy != null && proxy.type() == Proxy.Type.SOCKS) ? 200 : con.getResponseCode();
 			
 			// check if we have an error in the response
 			isError = con.getErrorStream();
