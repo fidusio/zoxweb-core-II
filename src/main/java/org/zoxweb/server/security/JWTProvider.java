@@ -42,7 +42,8 @@ implements JWTEncoder, JWTDecoder {
 		{
 			return CryptoUtil.decodeJWT(key, b64urlToken);
 		} catch (InvalidKeyException | NoSuchAlgorithmException | SecurityException | IOException e) {
-	
+
+			e.printStackTrace();
 			throw new AccessSecurityException(e.getMessage());
 		}
 	}

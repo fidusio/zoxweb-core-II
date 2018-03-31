@@ -68,6 +68,23 @@ public class IDGeneratorUtil
 			return "UUIDBase64";
 		}
 	};
+	
+	public static final IDGenerator<String> UUIDV4 = new IDGenerator<String>()
+	{
+
+		@Override
+		public String getName() {
+			// TODO Auto-generated method stub
+			return "UUID-V4";
+		}
+
+		@Override
+		public String generateID() {
+			// TODO Auto-generated method stub
+			return UUID.randomUUID().toString();
+		}
+		
+	};
 
 	
 	private IDGeneratorUtil()

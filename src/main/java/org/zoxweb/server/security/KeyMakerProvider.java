@@ -112,12 +112,12 @@ implements KeyMaker
 		return masterKey.getEncoded();
 	}
 	
-	public EncryptedKeyDAO createUserIDKey(UserIDDAO userID, byte[]key)
+	public EncryptedKeyDAO createUserIDKey(UserIDDAO userIDDAO, byte[]key)
 			throws NullPointerException, IllegalArgumentException, AccessException
 	{
-		SharedUtil.checkIfNulls("User ID is null.", userID, key);
+		SharedUtil.checkIfNulls("User ID is null.", userIDDAO, key);
 		
-		if (userID.getUserID() == null)
+		if (userIDDAO.getUserID() == null)
 		{
 			throw new IllegalArgumentException("Get user ID is null.");
 		}
@@ -131,9 +131,10 @@ implements KeyMaker
 		{
 			throw new AccessException(e.getMessage());
 		}
-		ekd.setObjectReference(userID);
+		ekd.setObjectReference(userIDDAO);
 		ekd.setKeyLockType(KeyLockType.USER_ID);
-		ekd.setUserID(userID.getReferenceID());
+		ekd.setUserID(userIDDAO.getReferenceID());
+		ekd.setGlobalID(userIDDAO.getGlobalID());
 		return ekd;
 	}
 	

@@ -274,24 +274,29 @@ public class APIAppManagerProvider
 		// special case to avoid chicken and egg situation
 		
 		String userIDRef = getAPIDataStore().getIDGenerator().generateID();
+		String globalID = IDGeneratorUtil.UUIDV4.generateID();
 		getAPISecurityManager().associateNVEntityToSubjectUserID(userID, userIDRef);
 		userID.setReferenceID(userIDRef);
 		userID.setUserID(userIDRef);
 		userID.getUserInfo().setReferenceID(userIDRef);
+		userID.setGlobalID(globalID);
 		////////////////////////
 		
 		try
 		{
 			// insert the user_info dao first
+			userID.getUserInfo().setGlobalID(globalID);
 			getAPIDataStore().insert(userID.getUserInfo());
 			
 			getAPIDataStore().insert(userID);
 			
 			UserIDCredentialsDAO userIDCredentials = new UserIDCredentialsDAO();
 			userIDCredentials.setReferenceID(userID.getReferenceID());
+			userIDCredentials.setGlobalID(globalID);
 			userIDCredentials.setUserID(userID.getReferenceID());
 			userIDCredentials.setLastStatusUpdateTimestamp(System.currentTimeMillis());
 			userIDCredentials.setUserStatus(userIDstatus);
+			
 			PasswordDAO passwordDAO = CryptoUtil.hashedPassword(MDType.SHA_512, 0, 8196, password);
 			passwordDAO.setUserID(userID.getReferenceID());
 			userIDCredentials.setPassword(passwordDAO);
