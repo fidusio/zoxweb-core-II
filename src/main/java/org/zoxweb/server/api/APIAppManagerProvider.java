@@ -119,9 +119,9 @@ public class APIAppManagerProvider
             subjectAPIKey.setSubjectID(IDGeneratorUtil.UUIDSHA256Base64.generateID());
         }
 
-        if (subjectAPIKey.getAPISecret() == null) {
+        if (subjectAPIKey.getAPIKey() == null) {
             try {
-                subjectAPIKey.setAPISecret(CryptoUtil.generateKey(256, CryptoUtil.AES).getEncoded());
+                subjectAPIKey.setAPIKey(CryptoUtil.generateKey(256, CryptoUtil.AES).getEncoded());
             } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
             }
@@ -387,13 +387,13 @@ public class APIAppManagerProvider
             throws NullPointerException, IllegalArgumentException, AccessException, APIException {
     	List<SubjectAPIKey> result = getAPIDataStore().search(AppDeviceDAO.NVC_APP_DEVICE_DAO, 
     			null, 
-    			new QueryMatchString(RelationalOperator.EQUAL, subjectID, SubjectAPIKey.Param.API_KEY));
+    			new QueryMatchString(RelationalOperator.EQUAL, subjectID, SubjectAPIKey.Param.CLIENT_ID));
     	
     	if (result == null || result.size() == 0)
     	{
     		result = getAPIDataStore().search(SubjectAPIKey.NVC_SUBJECT_API_KEY, 
         			null, 
-        			new QueryMatchString(RelationalOperator.EQUAL, subjectID, SubjectAPIKey.Param.API_KEY));
+        			new QueryMatchString(RelationalOperator.EQUAL, subjectID, SubjectAPIKey.Param.CLIENT_ID));
     		
     	}
     	
@@ -453,7 +453,7 @@ public class APIAppManagerProvider
             }
         }
 
-        return JWTProvider.SINGLETON.decode(subjectAPIKey.getAPISecretAsBytes(), token);
+        return JWTProvider.SINGLETON.decode(subjectAPIKey.getAPIKeyAsBytes(), token);
     }
 
    

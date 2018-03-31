@@ -45,8 +45,8 @@ public class SubjectAPIKey
         implements GetNVConfig {
 
         //SUBJECT_ID(NVConfigManager.createNVConfig("subject_id", "Subject ID", "SubjectID", true, false, true, String.class, null)),
-        API_KEY(NVConfigManager.createNVConfig("api_key", "API Key", "APIKey", true, false, true, String.class, null)),
-        API_SECRET(NVConfigManager.createNVConfig("api_secret", "API Secret", "APISecret", true, false, false, String.class, FilterType.ENCRYPT)),
+        CLIENT_ID(NVConfigManager.createNVConfig("client_id", "Client ID", "ClientID", true, false, true, String.class, null)),
+        API_KEY(NVConfigManager.createNVConfig("api_key", "API Key", "APIKey", true, false, false, String.class, FilterType.ENCRYPT)),
         STATUS(NVConfigManager.createNVConfig("status", "Status", "Status", true, false, Status.class)),
 
         ;
@@ -88,16 +88,16 @@ public class SubjectAPIKey
 
     @Override
     public String getSubjectID() {
-        return getAPIKey();
+        return getClientID();
     }
 
     @Override
     public void setSubjectID(String id) {
-    	setAPIKey(id);
+    	setClientID(id);
     }
 
-    public String getAPIKey() {
-        return lookupValue(Param.API_KEY);
+    public String getClientID() {
+        return lookupValue(Param.CLIENT_ID);
     }
     
     
@@ -112,25 +112,25 @@ public class SubjectAPIKey
 //    	return null;
 //    }
 
-    public void setAPIKey(String apiKey) 
+    public void setClientID(String clientID) 
     {
-    	 setValue(Param.API_KEY, apiKey);
+    	 setValue(Param.CLIENT_ID, clientID);
         //setValue(Param.API_KEY, apiKey);
     }
     
     
-    public void setAPISecret(byte[] secret)
+    public void setAPIKey(byte[] secret)
     {
-    	 setValue(Param.API_SECRET, SharedBase64.encodeAsString(Base64Type.URL, secret));
+    	 setValue(Param.API_KEY, SharedBase64.encodeAsString(Base64Type.URL, secret));
     }
     
-    public String getAPISecret() {
-        return lookupValue(Param.API_SECRET);
+    public String getAPIKey() {
+        return lookupValue(Param.API_KEY);
     }
     
-    public byte[] getAPISecretAsBytes()
+    public byte[] getAPIKeyAsBytes()
     {
-    	String secret = getAPISecret();
+    	String secret = getAPIKey();
     	if (secret != null)
         {
             return SharedBase64.decode(Base64Type.URL, secret);
@@ -160,7 +160,7 @@ public class SubjectAPIKey
 
         SubjectAPIKey ret = new SubjectAPIKey();
         ret.setSubjectID(subjectAPIKey.getSubjectID());
-        ret.setAPISecret(subjectAPIKey.getAPISecretAsBytes());
+        ret.setAPIKey(subjectAPIKey.getAPIKeyAsBytes());
 
         return ret;
     }
