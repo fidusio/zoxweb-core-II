@@ -48,6 +48,10 @@ public class InetSocketAddressDAO
         } else {
             setPort(-1);
         }
+		if(params.length > 2)
+		{
+			setProxyType(params[2]);
+		}
 	}
 	
 	public InetSocketAddressDAO(String address, int port)
@@ -114,6 +118,12 @@ public class InetSocketAddressDAO
 		}
 
 		return false;
+	}
+	
+	public void setProxyType(String pType)
+	{
+		ProxyType pt = SharedUtil.lookupEnum(ProxyType.values(), pType);
+		setProxyType(pt);
 	}
 
 	@Override

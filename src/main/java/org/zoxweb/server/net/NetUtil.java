@@ -279,7 +279,7 @@ public class NetUtil
 			}
 		}
 		
-		return Proxy.Type.HTTP;
+		return Proxy.Type.DIRECT;
 	}
 	
 	

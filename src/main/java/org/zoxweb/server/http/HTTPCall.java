@@ -201,7 +201,9 @@ public class HTTPCall
 		Proxy proxy = null;
 		if (hcc.getProxyAddress() != null)
 		{
-			proxy = new Proxy(NetUtil.lookup(hcc.getProxyAddress().getProxyType()), new InetSocketAddress(hcc.getProxyAddress().getInetAddress(),  hcc.getProxyAddress().getPort()));
+			Proxy.Type pType= NetUtil.lookup(hcc.getProxyAddress().getProxyType());
+			if (pType != Proxy.Type.DIRECT)
+				proxy = new Proxy(NetUtil.lookup(hcc.getProxyAddress().getProxyType()), new InetSocketAddress(hcc.getProxyAddress().getInetAddress(),  hcc.getProxyAddress().getPort()));
 		}
 		
 		try
