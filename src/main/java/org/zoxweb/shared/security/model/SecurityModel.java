@@ -28,7 +28,7 @@ public class SecurityModel
 	public final static String TOK_APP_ID = "$$app_id$$";
 	public final static String TOK_PRIVATE = "private";
 	public final static String TOK_PUBLIC= "public";
-	public final static String TOK_REFERENCE_ID = "$$resource_id$$";
+	public final static String TOK_REFERENCE_ID = "$$reference_id$$";
 	public final static String TOK_RESOURCE_ID = "$$resource_id$$";
 	public final static String TOK_SUBJECT_ID = "$$subject_id$$";	
 	public final static String TOK_USER_ID = "$$user_id$$";

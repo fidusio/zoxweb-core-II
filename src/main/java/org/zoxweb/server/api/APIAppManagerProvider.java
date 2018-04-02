@@ -41,6 +41,8 @@ import org.zoxweb.shared.security.model.SecurityModel;
 import org.zoxweb.shared.security.model.SecurityModel.Role;
 import org.zoxweb.shared.security.shiro.ShiroAssociationRuleDAO;
 import org.zoxweb.shared.security.shiro.ShiroAssociationType;
+import org.zoxweb.shared.security.shiro.ShiroPermissionDAO;
+import org.zoxweb.shared.security.shiro.ShiroRoleDAO;
 import org.zoxweb.shared.util.Const;
 import org.zoxweb.shared.util.Const.LogicalOperator;
 import org.zoxweb.shared.util.Const.RelationalOperator;
@@ -779,7 +781,24 @@ public class APIAppManagerProvider
 //        }
 
     	if (ret != null)
+    	{
+    		// delete the APP-ID
     		delete(ret);
+    		
+    		// delete the APP-PERMISSIONS
+    		getAPIDataStore().delete(ShiroPermissionDAO.NVC_SHIRO_PERMISSION_DAO, 
+            new QueryMatch<String>(RelationalOperator.EQUAL, ret.getDomainID(), AppIDDAO.Param.DOMAIN_ID),
+            LogicalOperator.AND, new QueryMatch<String>(RelationalOperator.EQUAL, ret.getAppID(), AppIDDAO.Param.APP_ID));
+    		
+    		// delete the APP-ROLES
+    		getAPIDataStore().delete(ShiroRoleDAO.NVC_SHIRO_ROLE_DAO, 
+    	            new QueryMatch<String>(RelationalOperator.EQUAL, ret.getDomainID(), AppIDDAO.Param.DOMAIN_ID),
+    	            LogicalOperator.AND, new QueryMatch<String>(RelationalOperator.EQUAL, ret.getAppID(), AppIDDAO.Param.APP_ID));
+    		
+    		// Delelte the APP-DEVICES
+    		getAPIDataStore().delete(AppDeviceDAO.NVC_APP_DEVICE_DAO, new QueryMatch<String>(RelationalOperator.EQUAL, ret.getReferenceID(), "app_id","reference_id"));
+    		
+    	}
 
     	return ret;
     }
