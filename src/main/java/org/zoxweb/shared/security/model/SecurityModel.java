@@ -7,10 +7,21 @@ import org.zoxweb.shared.util.AppID;
 import org.zoxweb.shared.util.GetDescription;
 import org.zoxweb.shared.util.GetName;
 import org.zoxweb.shared.util.GetNameValue;
+import org.zoxweb.shared.util.GetValue;
 import org.zoxweb.shared.util.SharedUtil;
 
 public class SecurityModel
 {
+	public final static String TOK_APP_ID = "$$app_id$$";
+	public final static String TOK_PRIVATE = "private";
+	public final static String TOK_PUBLIC= "public";
+	public final static String TOK_REFERENCE_ID = "$$reference_id$$";
+	public final static String TOK_RESOURCE_ID = "$$resource_id$$";
+	public final static String TOK_SUBJECT_ID = "$$subject_id$$";	
+	public final static String TOK_USER_ID = "$$user_id$$";
+	
+	
+	
 	public final static String PERM_ADD_PERMISSION = "add:permission";
 	public final static String PERM_DELETE_PERMISSION = "delete:permission";
 	public final static String PERM_UPDATE_PERMISSION = "update:permission";
@@ -21,24 +32,23 @@ public class SecurityModel
 	public final static String PERM_DELETE_APP_ID = "delete:app:id";
 	public final static String PERM_ADD_USER = "create:user";
 	public final static String PERM_DELETE_USER = "delete:user";
+	public final static String PERM_READ_USER = "read:user";
 	public final static String PERM_UPDATE_USER = "update:user";
-	public final static String PERM_ALL_USERS = "all:users";
+	public final static String PERM_SELF = "self";
+	public final static String PERM_ADD_FILE = "create:file";
+	public final static String PERM_DELETE_FILE = "delete:file";
+	public final static String PERM_UPDATE_FILE = "update:file";
+	public final static String PERM_READ_FILE = "read:file";
 	
 	
-	public final static String TOK_APP_ID = "$$app_id$$";
-	public final static String TOK_PRIVATE = "private";
-	public final static String TOK_PUBLIC= "public";
-	public final static String TOK_REFERENCE_ID = "$$reference_id$$";
-	public final static String TOK_RESOURCE_ID = "$$resource_id$$";
-	public final static String TOK_SUBJECT_ID = "$$subject_id$$";	
-	public final static String TOK_USER_ID = "$$user_id$$";
+	
 	
 
 	
 	
 	
 	public enum PermissionToken
-		implements GetName
+		implements GetValue<String>
 	{
 		APP_ID(TOK_APP_ID),
 		PRIVATE(TOK_PRIVATE),
@@ -50,16 +60,16 @@ public class SecurityModel
 		;
 
 		
-		public final String name;
-		PermissionToken(String name)
+		private final String value;
+		PermissionToken(String value)
 		{
-			this.name = name ;
+			this.value = value ;
 		}
 		
 		@Override
-		public String getName() {
+		public String getValue() {
 			// TODO Auto-generated method stub
-			return name;
+			return value;
 		}
 		
 	}
@@ -83,33 +93,31 @@ public class SecurityModel
 		CREATE_USER("create_user", "Permission to create a user", PERM_ADD_USER),
 		DELETE_USER("delete_user", "Permission to delete a user", PERM_DELETE_USER),
 		UPDATE_USER("update_user", "Permission to update a user", PERM_UPDATE_USER),
-		CREATE_FILE("upload_file", "Permission to upload a file", "create:file", true),
-		READ_FILE("read_file", "Permission to delete a file", "read:file", true),
-		UPDATE_FILE("update_file", "Permission to update a file", "update:file", true),
-		DELETE_FILE("delete_file", "Permission to delete a file", "delete:file", true),
-		ALL_USERS("all_users", "permission granted to all users", PERM_ALL_USERS),
+		READ_USER("read_user", "Permission to update a user", PERM_UPDATE_USER),
+		CREATE_FILE("upload_file", "Permission to upload a file", PERM_ADD_FILE, TOK_APP_ID),
+		DELETE_FILE("delete_file", "Permission to delete a file", PERM_DELETE_FILE, TOK_APP_ID),
+		UPDATE_FILE("update_file", "Permission to update a file", PERM_UPDATE_FILE, TOK_APP_ID),
+		READ_FILE("read_file", "Read to delete a file", PERM_READ_FILE, TOK_APP_ID),
+		SELF("self", "permission granted to all users", PERM_SELF),
 	
 	
 		
 		;
 		private final String name;
-		private final String value;
+		private final String pattern;
 		private final String description;
-		private final boolean isAppIDSpecific;
 		
 		
-		Permission(String name, String description, String value)
-		{
-			this(name, description, value, false);
-		}
+		
+		
 			
 		
-		Permission(String name, String description, String value, boolean isAppIDSpecific)
+		Permission(String name, String description, String ...values)
 		{
 			this.name = name;
-			this.value = value;
+			this.pattern = PPEncoder.SINGLETON.encode(values);
 			this.description = description;
-			this.isAppIDSpecific = isAppIDSpecific;
+		
 		}
 	
 		
@@ -124,23 +132,22 @@ public class SecurityModel
 		}
 		public String getValue() {
 			// TODO Auto-generated method stub
-			return value;
+			return pattern();
 		}
 		
-		public boolean isAppIDSpecific()
+		public String pattern()
 		{
-			return isAppIDSpecific;
+			return pattern;
 		}
+		
+		
+		
 		
 		
 		
 		public ShiroPermissionDAO toPermission(String domainID, String appID)
 		{
-			return toPermission(domainID, appID, false);
-		}
-		public ShiroPermissionDAO toPermission(String domainID, String appID, boolean embedAppID)
-		{
-			return toPermission(domainID, appID, embedAppID, getName(), getDescription(), getValue());
+			return toPermission(domainID, appID, getName(), getDescription(), getValue());
 		}
 		
 		
@@ -149,17 +156,17 @@ public class SecurityModel
 		 * @param gnv
 		 * @return
 		 */
-		public static ShiroPermissionDAO toPermission(String domainID,  boolean embedAppID, String appID, GetNameValue<String> gnv)
+		public static ShiroPermissionDAO toPermission(String domainID,  String appID, GetNameValue<String> gnv)
 		{
-			return toPermission(domainID, appID, embedAppID, gnv.getName(),   null,  gnv.getValue());
+			return toPermission(domainID, appID, gnv.getName(), null,  gnv.getValue());
 		}
 		
-		public static ShiroPermissionDAO toPermission(String domainID, String appID, boolean embedAppID, String name, String description, String pattern)
+		public static ShiroPermissionDAO toPermission(String domainID, String appID, String name, String description, String pattern)
 		{
 			ShiroPermissionDAO ret = new ShiroPermissionDAO();
 			ret.setName(name);
 			ret.setDescription(description);
-			ret.setEmbedAppIDEnabled(embedAppID);
+			//ret.setEmbedAppIDEnabled(embedAppID);
 			ret.setDomainAppID(domainID, appID);
 			ret.setPermissionPattern(pattern);
 			return ret;

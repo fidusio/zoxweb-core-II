@@ -1,0 +1,38 @@
+package org.zoxweb.shared.security.model;
+
+
+import org.zoxweb.shared.security.model.SecurityModel.PermissionToken;
+import org.zoxweb.shared.util.DataEncoder;
+import org.zoxweb.shared.util.SharedStringUtil;
+import org.zoxweb.shared.util.SharedUtil;
+
+/**
+ * Permission pattern encoder
+ * @author javaconsigliere
+ *
+ */
+public class PPEncoder
+implements DataEncoder<String[], String>
+{
+	public static final PPEncoder SINGLETON = new PPEncoder();
+	public static final char PATTERN_SEP = ':';
+
+	
+	private PPEncoder() {}
+	
+	public String encode(String ...patterns) 
+	{
+		return SharedStringUtil.trimOrEmpty(SharedUtil.toCanonicalID(PATTERN_SEP, (Object[])patterns)).toLowerCase();
+	}
+	
+	public String petternEncoder(String pattern, String token, String value)
+	{
+		return SharedStringUtil.embedText(pattern, token, value);
+	}
+	
+	public String patternEncoder(String pattern, PermissionToken token, String value)
+	{
+		return SharedStringUtil.embedText(pattern, token.getValue(), value);
+	}
+
+}
