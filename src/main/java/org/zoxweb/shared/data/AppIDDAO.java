@@ -203,7 +203,13 @@ public class AppIDDAO
 
 	public String toCanonicalID()
 	{
-		return SharedUtil.toCanonicalID(ShiroDAO.CAN_ID_SEP, getDomainID(), getAppID());	
+		return appIDSubjectID(getDomainID(), getAppID());	
 	}
 
+	
+	
+	public static String appIDSubjectID(String domainID, String appIDName)
+	{
+		return SharedUtil.toCanonicalID(ShiroDAO.CAN_ID_SEP, FilterType.DOMAIN.validate(domainID),AppIDNameFilter.SINGLETON.validate(appIDName));
+	}
 }

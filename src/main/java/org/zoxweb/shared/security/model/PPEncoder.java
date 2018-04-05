@@ -3,6 +3,7 @@ package org.zoxweb.shared.security.model;
 
 import org.zoxweb.shared.security.model.SecurityModel.PermissionToken;
 import org.zoxweb.shared.util.DataEncoder;
+import org.zoxweb.shared.util.GetNameValue;
 import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
 
@@ -25,12 +26,18 @@ implements DataEncoder<String[], String>
 		return SharedStringUtil.trimOrEmpty(SharedUtil.toCanonicalID(PATTERN_SEP, (Object[])patterns)).toLowerCase();
 	}
 	
-	public String petternEncoder(String pattern, String token, String value)
+	
+	public String encodePattern(String pattern, GetNameValue<String> gnvs)
+	{
+		return SharedStringUtil.embedText(pattern, gnvs.getName(), gnvs.getValue());
+	}
+	
+	public String encodePattern(String pattern, String token, String value)
 	{
 		return SharedStringUtil.embedText(pattern, token, value);
 	}
 	
-	public String patternEncoder(String pattern, PermissionToken token, String value)
+	public String encodePattern(String pattern, PermissionToken token, String value)
 	{
 		return SharedStringUtil.embedText(pattern, token.getValue(), value);
 	}
