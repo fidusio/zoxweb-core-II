@@ -17,6 +17,11 @@ package org.zoxweb.shared.security.shiro;
 
 public enum ShiroAssociationType 
 {
+	
+	/**
+	 * Permission associated to a resource
+	 */
+	PERMISSION_TO_RESOURCE,
 	/**
 	 * Permission Associated to Role
 	 */
@@ -36,5 +41,9 @@ public enum ShiroAssociationType
 	/**
 	 * RoleGroup Associated to Subject
 	 */
-	ROLEGROUP_TO_SUBJECT
+	ROLEGROUP_TO_SUBJECT,
+	/**
+	 * 
+	 */
+	ROLE_TO_RESOURCE
 }

@@ -104,6 +104,23 @@ public class ShiroAssociationRuleDAO
 	}
 	
 	
+	public ShiroAssociationRuleDAO(String name, ShiroDomainDAO associate, ShiroAssociationType at, NVEntity associateTo)
+	{
+		this();
+		SharedUtil.checkIfNulls("Null parameters", name, associate, at, associateTo);
+		if(associate == associateTo || associate.equals(associateTo))
+		{
+			throw new IllegalArgumentException("Invalid association rule");
+		}
+		setName(name);
+		setAssociate(associate.getReferenceID());
+		setAssociatedTo(associateTo.getReferenceID());
+		setAssociationType(at);
+		setExpiration(null);
+		setAssociationStatus(Status.ACTIVE);
+		setAssociation(associate);
+	}
+	
 	
 	public ShiroAssociationType getAssociationType()
 	{
@@ -239,6 +256,10 @@ public class ShiroAssociationRuleDAO
 			case ROLE_TO_ROLEGROUP:
 				break;
 			case ROLE_TO_SUBJECT:
+				break;
+			case PERMISSION_TO_RESOURCE:
+				break;
+			case ROLE_TO_RESOURCE:
 				break;
 			
 			}
