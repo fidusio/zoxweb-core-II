@@ -35,10 +35,11 @@ public class SecurityModel
 	public final static String PERM_READ_USER = "read:user";
 	public final static String PERM_UPDATE_USER = "update:user";
 	public final static String PERM_SELF = "self";
-	public final static String PERM_ADD_FILE = "create:file";
-	public final static String PERM_DELETE_FILE = "delete:file";
-	public final static String PERM_UPDATE_FILE = "update:file";
-	public final static String PERM_READ_FILE = "read:file";
+	public final static String PERM_ADD_RESOURCE = "add:resource";
+	public final static String PERM_DELETE_RESOURCE = "delete:resource";
+	public final static String PERM_UPDATE_RESOURCE = "update:resource";
+	public final static String PERM_READ_RESOURCE = "read:resource";
+	
 	
 	
 	
@@ -94,10 +95,11 @@ public class SecurityModel
 		DELETE_USER("delete_user", "Permission to delete a user", PERM_DELETE_USER),
 		UPDATE_USER("update_user", "Permission to update a user", PERM_UPDATE_USER),
 		READ_USER("read_user", "Permission to update a user", PERM_UPDATE_USER),
-		CREATE_FILE("upload_file", "Permission to upload a file", PERM_ADD_FILE, TOK_APP_ID),
-		DELETE_FILE("delete_file", "Permission to delete a file", PERM_DELETE_FILE, TOK_APP_ID),
-		UPDATE_FILE("update_file", "Permission to update a file", PERM_UPDATE_FILE, TOK_APP_ID),
-		READ_FILE("read_file", "Read to delete a file", PERM_READ_FILE, TOK_APP_ID),
+		ADD_RESOURCE("add_resource", "Permission to add a resource", PERM_ADD_RESOURCE, TOK_APP_ID),
+		DELETE_RESOURCE("delete_resource", "Permission to delete a resource", PERM_DELETE_RESOURCE, TOK_APP_ID),
+		UPDATE_RESOURCE("update_resource", "Permission to update a resource", PERM_UPDATE_RESOURCE, TOK_APP_ID),
+		READ_PUBLIC_RESOURCE("read_public_resource", "Permission to read a public resource", PERM_READ_RESOURCE, TOK_PUBLIC, TOK_APP_ID, TOK_RESOURCE_ID),
+		READ_PRIVATE_RESOURCE("read_private_resource", "Permission to read  a private resource", PERM_READ_RESOURCE, TOK_PRIVATE, TOK_APP_ID, TOK_RESOURCE_ID),
 		SELF("self", "permission granted to all users", PERM_SELF),
 	
 	
