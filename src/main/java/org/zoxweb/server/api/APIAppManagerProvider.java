@@ -348,7 +348,7 @@ public class APIAppManagerProvider
 		
 		// crutial permission check
 		// of the super admin can delete user
-		getAPISecurityManager().checkPermissions(SecurityModel.Permission.DELETE_USER.getValue());
+		getAPISecurityManager().checkPermissions(SecurityModel.Permission.USER_DELETE.getValue());
 		
 		SharedUtil.checkIfNulls("subjectID null", subjectID);
 		UserIDDAO userID = lookupUserID(subjectID);
@@ -745,7 +745,7 @@ public class APIAppManagerProvider
     		throws NullPointerException, IllegalArgumentException, AccessException, APIException
     {
     	
-    	getAPISecurityManager().checkPermissions(SecurityModel.Permission.CREATE_APP_ID.getValue());
+    	getAPISecurityManager().checkPermissions(SecurityModel.Permission.APP_ID_CREATE.getValue());
     	// permission super admin only
     	AppIDDAO ret = lookupAppIDDAO(domainID, appID, false);
     	if (ret == null)
@@ -771,7 +771,7 @@ public class APIAppManagerProvider
     	throws NullPointerException, IllegalArgumentException, AccessException, APIException
     {
     	SharedUtil.checkIfNulls("Null domain or app id", domainID, appID);
-    	getAPISecurityManager().checkPermissions(SecurityModel.Permission.DELETE_APP_ID.getValue());
+    	getAPISecurityManager().checkPermissions(SecurityModel.Permission.APP_ID_DELETE.getValue());
     	AppIDDAO ret = lookupAppIDDAO(domainID, appID, true);
 //
 //        List<AppConfigDAO> list = search(AppConfigDAO.NVC_APP_CONFIG_DAO, new QueryMatchString(Const.RelationalOperator.EQUAL, ret.getReferenceID(), AppConfigDAO.Param.APP_ID.getNVConfig().getName(), MetaToken.REFERENCE_ID.getName()));

@@ -22,23 +22,24 @@ public class SecurityModel
 	
 	
 	
-	public final static String PERM_ADD_PERMISSION = "add:permission";
-	public final static String PERM_DELETE_PERMISSION = "delete:permission";
-	public final static String PERM_UPDATE_PERMISSION = "update:permission";
-	public final static String PERM_ADD_ROLE = "add:role";
-	public final static String PERM_DELETE_ROLE = "delete:role";
-	public final static String PERM_UPDATE_ROLE = "update:role";
-	public final static String PERM_CREATE_APP_ID = "create:app:id";
-	public final static String PERM_DELETE_APP_ID = "delete:app:id";
-	public final static String PERM_ADD_USER = "create:user";
-	public final static String PERM_DELETE_USER = "delete:user";
-	public final static String PERM_READ_USER = "read:user";
-	public final static String PERM_UPDATE_USER = "update:user";
+	public final static String PERM_ADD_PERMISSION = "permission:create";
+	public final static String PERM_DELETE_PERMISSION = "permission:delete";
+	public final static String PERM_UPDATE_PERMISSION = "permission:update";
+	public final static String PERM_ADD_ROLE = "role:create";
+	public final static String PERM_DELETE_ROLE = "role:delete";
+	public final static String PERM_UPDATE_ROLE = "role:update";
+	public final static String PERM_CREATE_APP_ID = "app:create";
+	public final static String PERM_DELETE_APP_ID = "app:delete";
+	public final static String PERM_UPDATE_APP_ID = "app:delete";
+	public final static String PERM_ADD_USER = "user:create";
+	public final static String PERM_DELETE_USER = "user:delete";
+	public final static String PERM_READ_USER = "user:read";
+	public final static String PERM_UPDATE_USER = "user:update";
 	public final static String PERM_SELF = "self";
-	public final static String PERM_ADD_RESOURCE = "add:resource";
-	public final static String PERM_DELETE_RESOURCE = "delete:resource";
-	public final static String PERM_UPDATE_RESOURCE = "update:resource";
-	public final static String PERM_READ_RESOURCE = "read:resource";
+	public final static String PERM_ADD_RESOURCE = "resource:add";
+	public final static String PERM_DELETE_RESOURCE = "resource:delete";
+	public final static String PERM_UPDATE_RESOURCE = "resource:update";
+	public final static String PERM_READ_RESOURCE = "resource:read";
 	
 	
 	
@@ -83,23 +84,24 @@ public class SecurityModel
 		NVE_UPDATE_ALL("nve_update_all", "Permission to read all nventities", "nventity:update:*"),
 		NVE_DELETE_ALL("nve_delete_all", "Permission to delete all nventities", "nventity:delete:*"),
 		NVE_CREAD_ALL("nve_create_all", "Permission to create all nventities", "nventity:create:*"),
-		ADD_PERMISSION("add_permission", "Permission to add a permission", PERM_ADD_PERMISSION),
-		DELETE_PERMISSION("delete_permission", "Permission to delete a permission", PERM_DELETE_PERMISSION),
-		UPTDATE_PERMISSION("update_permission", "Permission to update a permission", PERM_UPDATE_PERMISSION),
-		ADD_ROLE("add_role", "Permission to add a role", PERM_ADD_ROLE),
-		DELETE_ROLE("delete_role", "Permission to delete a role", PERM_DELETE_ROLE),
-		UPDATE_ROLE("update_role", "Permission to update a role", PERM_UPDATE_ROLE),
-		CREATE_APP_ID("create_app_id", "Permission to create an app", PERM_CREATE_APP_ID),
-		DELETE_APP_ID("delete_app_id", "Permission to delete an app", PERM_DELETE_APP_ID),
-		CREATE_USER("create_user", "Permission to create a user", PERM_ADD_USER),
-		DELETE_USER("delete_user", "Permission to delete a user", PERM_DELETE_USER),
-		UPDATE_USER("update_user", "Permission to update a user", PERM_UPDATE_USER),
-		READ_USER("read_user", "Permission to update a user", PERM_UPDATE_USER),
-		ADD_RESOURCE("add_resource", "Permission to add a resource", PERM_ADD_RESOURCE, TOK_APP_ID),
-		DELETE_RESOURCE("delete_resource", "Permission to delete a resource", PERM_DELETE_RESOURCE, TOK_APP_ID),
-		UPDATE_RESOURCE("update_resource", "Permission to update a resource", PERM_UPDATE_RESOURCE, TOK_APP_ID),
-		READ_PUBLIC_RESOURCE("read_public_resource", "Permission to read a public resource", PERM_READ_RESOURCE, TOK_PUBLIC, TOK_APP_ID, TOK_RESOURCE_ID),
-		READ_PRIVATE_RESOURCE("read_private_resource", "Permission to read  a private resource", PERM_READ_RESOURCE, TOK_PRIVATE, TOK_APP_ID, TOK_RESOURCE_ID),
+		PERMISSION_ADD("permission_add", "Permission to add a permission", PERM_ADD_PERMISSION),
+		PERMISSION_DELETE("permission_delete", "Permission to delete a permission", PERM_DELETE_PERMISSION),
+		PERMISSION_UPDATE("permission_update", "Permission to update a permission", PERM_UPDATE_PERMISSION),
+		ROLE_ADD("role_add", "Permission to add a role", PERM_ADD_ROLE),
+		ROLE_DELETE("role_delete", "Permission to delete a role", PERM_DELETE_ROLE),
+		ROLE_UPDATE("role_update", "Permission to update a role", PERM_UPDATE_ROLE),
+		APP_ID_CREATE("app_id_create", "Permission to create an app", PERM_CREATE_APP_ID),
+		APP_ID_DELETE("app_id_delete", "Permission to delete an app", PERM_DELETE_APP_ID),
+		APP_ID_UPDATE("app_id_update", "Permission to update an app", PERM_UPDATE_APP_ID),
+		USER_CREATE("user_create", "Permission to create a user", PERM_ADD_USER),
+		USER_DELETE("user_delete", "Permission to delete a user", PERM_DELETE_USER),
+		USER_UPDATE("user_update", "Permission to update a user", PERM_UPDATE_USER),
+		USER_READ("user_read", "Permission to update a user", PERM_UPDATE_USER),
+		RESOURCE_ADD("resource_add", "Permission to add a resource", PERM_ADD_RESOURCE, TOK_APP_ID),
+		RESOURCE_DELETE("resource_delete", "Permission to delete a resource", PERM_DELETE_RESOURCE, TOK_APP_ID),
+		RESOURCE_UPDATE("resource_update", "Permission to update a resource", PERM_UPDATE_RESOURCE, TOK_APP_ID),
+		RESOURCE_READ_PUBLIC("resource_read_public", "Permission to read a public resource", PERM_READ_RESOURCE, TOK_APP_ID, TOK_RESOURCE_ID, TOK_PUBLIC),
+		RESOURCE_READ_PRIVATE("resource_private", "Permission to read  a private resource", PERM_READ_RESOURCE, TOK_APP_ID, TOK_RESOURCE_ID, TOK_PRIVATE),
 		SELF("self", "permission granted to all users", PERM_SELF),
 	
 	

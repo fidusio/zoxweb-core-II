@@ -13,7 +13,7 @@ public class SecurityModelTest
 			System.out.println(perm.getValue());
 		}
 		
-		System.out.println(PPEncoder.SINGLETON.encodePattern(Permission.READ_PUBLIC_RESOURCE.pattern(), PermissionToken.APP_ID, "xlogistx.io-xlogistx"));
-		System.out.println(PPEncoder.SINGLETON.encodePattern(Permission.READ_PRIVATE_RESOURCE.pattern(), PermissionToken.APP_ID, "*"));
+		System.out.println(PPEncoder.SINGLETON.encodePattern(Permission.RESOURCE_READ_PUBLIC.pattern(), PermissionToken.APP_ID, "xlogistx.io-xlogistx"));
+		System.out.println(PPEncoder.SINGLETON.encodePattern(Permission.RESOURCE_READ_PRIVATE.pattern(), PermissionToken.APP_ID, "*"));
 	}
 }
