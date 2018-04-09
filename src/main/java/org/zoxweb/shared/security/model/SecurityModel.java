@@ -12,6 +12,8 @@ import org.zoxweb.shared.util.SharedUtil;
 
 public class SecurityModel
 {
+	
+	public final static String TOK_ALL = "*";
 	public final static String TOK_APP_ID = "$$app_id$$";
 	public final static String TOK_PRIVATE = "private";
 	public final static String TOK_PUBLIC= "public";
@@ -80,26 +82,29 @@ public class SecurityModel
 	public enum Permission
 	implements GetNameValue<String>, GetDescription
 	{
-		NVE_READ_ALL("nve_read_all", "Permission to read all nventities", "nventity:read:*"),
-		NVE_UPDATE_ALL("nve_update_all", "Permission to read all nventities", "nventity:update:*"),
-		NVE_DELETE_ALL("nve_delete_all", "Permission to delete all nventities", "nventity:delete:*"),
-		NVE_CREAD_ALL("nve_create_all", "Permission to create all nventities", "nventity:create:*"),
+		APP_ID_CREATE("app_id_create", "Permission to create an app", PERM_CREATE_APP_ID),
+		APP_ID_DELETE("app_id_delete", "Permission to delete an app", PERM_DELETE_APP_ID),
+		APP_ID_UPDATE("app_id_update", "Permission to update an app", PERM_UPDATE_APP_ID),
+		NVE_ALL("nve_all", "Permission nventities all", "nventity", TOK_ALL),
+		NVE_READ_ALL("nve_read_all", "Permission to read all nventities", "nventity:read", TOK_ALL),
+		NVE_UPDATE_ALL("nve_update_all", "Permission to read all nventities", "nventity:update", TOK_ALL),
+		NVE_DELETE_ALL("nve_delete_all", "Permission to delete all nventities", "nventity:delete", TOK_ALL),
+		NVE_CREATE_ALL("nve_create_all", "Permission to create all nventities", "nventity:create", TOK_ALL),
 		PERMISSION_ADD("permission_add", "Permission to add a permission", PERM_ADD_PERMISSION),
 		PERMISSION_DELETE("permission_delete", "Permission to delete a permission", PERM_DELETE_PERMISSION),
 		PERMISSION_UPDATE("permission_update", "Permission to update a permission", PERM_UPDATE_PERMISSION),
 		ROLE_ADD("role_add", "Permission to add a role", PERM_ADD_ROLE),
 		ROLE_DELETE("role_delete", "Permission to delete a role", PERM_DELETE_ROLE),
 		ROLE_UPDATE("role_update", "Permission to update a role", PERM_UPDATE_ROLE),
-		APP_ID_CREATE("app_id_create", "Permission to create an app", PERM_CREATE_APP_ID),
-		APP_ID_DELETE("app_id_delete", "Permission to delete an app", PERM_DELETE_APP_ID),
-		APP_ID_UPDATE("app_id_update", "Permission to update an app", PERM_UPDATE_APP_ID),
 		USER_CREATE("user_create", "Permission to create a user", PERM_ADD_USER),
 		USER_DELETE("user_delete", "Permission to delete a user", PERM_DELETE_USER),
 		USER_UPDATE("user_update", "Permission to update a user", PERM_UPDATE_USER),
 		USER_READ("user_read", "Permission to update a user", PERM_UPDATE_USER),
 		RESOURCE_ADD("resource_add", "Permission to add a resource", PERM_ADD_RESOURCE, TOK_APP_ID),
+		
 		RESOURCE_DELETE("resource_delete", "Permission to delete a resource", PERM_DELETE_RESOURCE, TOK_APP_ID),
 		RESOURCE_UPDATE("resource_update", "Permission to update a resource", PERM_UPDATE_RESOURCE, TOK_APP_ID),
+		RESOURCE_READ_ALL("resource_read_all", "Permision to read all resources", PERM_READ_RESOURCE, TOK_ALL),
 		RESOURCE_READ_PUBLIC("resource_read_public", "Permission to read a public resource", PERM_READ_RESOURCE, TOK_APP_ID, TOK_RESOURCE_ID, TOK_PUBLIC),
 		RESOURCE_READ_PRIVATE("resource_private", "Permission to read  a private resource", PERM_READ_RESOURCE, TOK_APP_ID, TOK_RESOURCE_ID, TOK_PRIVATE),
 		SELF("self", "permission granted to all users", PERM_SELF),
