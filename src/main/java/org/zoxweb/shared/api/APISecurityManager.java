@@ -83,6 +83,9 @@ public interface APISecurityManager<S>
 	 boolean isPermitted(NVEntity nve, String permission)
 			 throws NullPointerException, IllegalArgumentException;
 	 
+	 boolean isPermitted(String permission)
+			 throws NullPointerException, IllegalArgumentException;
+	 
 	 /**
 	  * Return true of subject has all the permissions
 	  * @param permission

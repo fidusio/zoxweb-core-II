@@ -15,8 +15,7 @@ public class SecurityModel
 	
 	public final static String TOK_ALL = "*";
 	public final static String TOK_APP_ID = "$$app_id$$";
-	public final static String TOK_PRIVATE = "private";
-	public final static String TOK_PUBLIC= "public";
+	
 	public final static String TOK_REFERENCE_ID = "$$reference_id$$";
 	public final static String TOK_RESOURCE_ID = "$$resource_id$$";
 	public final static String TOK_SUBJECT_ID = "$$subject_id$$";	
@@ -38,6 +37,9 @@ public class SecurityModel
 	public final static String PERM_READ_USER = "user:read";
 	public final static String PERM_UPDATE_USER = "user:update";
 	public final static String PERM_SELF = "self";
+	public final static String PERM_PRIVATE = "private";
+	public final static String PERM_PUBLIC= "public";
+	public final static String PERM_STATUS= "status";
 	public final static String PERM_ADD_RESOURCE = "resource:add";
 	public final static String PERM_DELETE_RESOURCE = "resource:delete";
 	public final static String PERM_UPDATE_RESOURCE = "resource:update";
@@ -55,8 +57,8 @@ public class SecurityModel
 		implements GetValue<String>
 	{
 		APP_ID(TOK_APP_ID),
-		PRIVATE(TOK_PRIVATE),
-		PUBLIC(TOK_PUBLIC),
+		PRIVATE(PERM_PRIVATE),
+		PUBLIC(PERM_PUBLIC),
 		REFERENCE_ID(TOK_REFERENCE_ID),
 		RESOURCE_ID(TOK_RESOURCE_ID),
 		SUBJECT_ID(TOK_SUBJECT_ID),
@@ -105,10 +107,10 @@ public class SecurityModel
 		RESOURCE_DELETE("resource_delete", "Permission to delete a resource", PERM_DELETE_RESOURCE, TOK_APP_ID),
 		RESOURCE_UPDATE("resource_update", "Permission to update a resource", PERM_UPDATE_RESOURCE, TOK_APP_ID),
 		RESOURCE_READ_ALL("resource_read_all", "Permision to read all resources", PERM_READ_RESOURCE, TOK_ALL),
-		RESOURCE_READ_PUBLIC("resource_read_public", "Permission to read a public resource", PERM_READ_RESOURCE, TOK_APP_ID, TOK_RESOURCE_ID, TOK_PUBLIC),
-		RESOURCE_READ_PRIVATE("resource_private", "Permission to read  a private resource", PERM_READ_RESOURCE, TOK_APP_ID, TOK_RESOURCE_ID, TOK_PRIVATE),
+		RESOURCE_READ_PUBLIC("resource_read_public", "Permission to read a public resource", PERM_READ_RESOURCE, TOK_APP_ID, TOK_RESOURCE_ID, PERM_PUBLIC),
+		RESOURCE_READ_PRIVATE("resource_private", "Permission to read  a private resource", PERM_READ_RESOURCE, TOK_APP_ID, TOK_RESOURCE_ID, PERM_PRIVATE),
 		SELF("self", "permission granted to all users", PERM_SELF),
-	
+		SELF_USER("self_user", "permission granted to all users", "nventity:create,read,update,delete", TOK_RESOURCE_ID, TOK_USER_ID),
 	
 		
 		;
@@ -191,6 +193,8 @@ public class SecurityModel
         APP_ADMIN("app_admin", "App admin role"),
         APP_USER("app_user", "App user role"),
         APP_SERVICE_PROVIDER("app_service_provider", "App service provider role"),
+        USER_ROLE("user_role", "This role is granted to all users"),
+        RESOURCE_ROLE("resource_role", "role granted to resources")
 		
 		;
 		private final String name;
@@ -251,5 +255,88 @@ public class SecurityModel
 	public static String toSubjectID(String domainID, String appID, String name)
 	{
 		return SharedUtil.toCanonicalID(ShiroDAO.CAN_ID_SEP, domainID, appID, name);
+	}
+	
+	public enum AppPermission
+		implements GetNameValue<String>, GetDescription
+	{
+		ORDER_CREATE("order_create", "Create order", "order:create", TOK_APP_ID, PERM_SELF),
+		ORDER_DELETE("order_delete", "Delete order", "order:delete", TOK_APP_ID, TOK_RESOURCE_ID),
+		ORDER_UPDATE("order_update", "Update order", "order:update", TOK_APP_ID, TOK_RESOURCE_ID),
+		ORDER_READ_APP("order_read_app", "Read app  order", "order:read", TOK_APP_ID),
+		ORDER_READ_USER_APP("order_read_user_app", "Read app  order", "order:read", TOK_APP_ID, TOK_RESOURCE_ID, TOK_USER_ID),
+		ORDER_UPDATE_STATUS_APP("order_update_status_app", "Read app  order", "order:update", TOK_APP_ID, TOK_RESOURCE_ID, PERM_STATUS),
+		RESOURCE_ADD("resource_add", "Add resource", "resource:add", TOK_APP_ID),
+		RESOURCE_DELETE("resource_delete", "delete resource", "resource:delete", TOK_APP_ID, TOK_RESOURCE_ID),
+		RESOURCE_READ_PRIVATE("resource_read_private", "read private resource", "resource:read", TOK_APP_ID, TOK_RESOURCE_ID, PERM_PRIVATE),
+		RESOURCE_READ_PUBLIC("resource_read_public", "read public resource", "resource:read", TOK_APP_ID, TOK_RESOURCE_ID, PERM_PUBLIC),
+		RESOURCE_UPDATE("resource_update", "update resource", "resource:read", TOK_APP_ID),
+		;
+		private final String name;
+		private final String pattern;
+		private final String description;
+		
+		
+		
+		
+			
+		
+		AppPermission(String name, String description, String ...values)
+		{
+			this.name = name;
+			this.pattern = PPEncoder.SINGLETON.encode(values);
+			this.description = description;
+		
+		}
+	
+		
+		public String getName() {
+			// TODO Auto-generated method stub
+			return name;
+		}
+		
+		public String getDescription() {
+			// TODO Auto-generated method stub
+			return description;
+		}
+		public String getValue() {
+			// TODO Auto-generated method stub
+			return pattern();
+		}
+		
+		public String pattern()
+		{
+			return pattern;
+		}
+		
+		
+		public ShiroPermissionDAO toPermission(String domainID, String appID)
+		{
+			return toPermission(domainID, appID, getName(), getDescription(), getValue());
+		}
+		
+		
+		/**
+		 * The name is the name of the permission and value is the patterm
+		 * @param gnv
+		 * @return
+		 */
+		public static ShiroPermissionDAO toPermission(String domainID,  String appID, GetNameValue<String> gnv)
+		{
+			return toPermission(domainID, appID, gnv.getName(), null,  gnv.getValue());
+		}
+		
+		public static ShiroPermissionDAO toPermission(String domainID, String appID, String name, String description, String pattern)
+		{
+			ShiroPermissionDAO ret = new ShiroPermissionDAO();
+			ret.setName(name);
+			ret.setDescription(description);
+			//ret.setEmbedAppIDEnabled(embedAppID);
+			ret.setDomainAppID(domainID, appID);
+			ret.setPermissionPattern(pattern);
+			return ret;
+			
+		}
+
 	}
 }
