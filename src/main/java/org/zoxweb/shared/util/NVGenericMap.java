@@ -68,6 +68,12 @@ public class NVGenericMap
 	}
 	
 	
+	
+	public <V> V getValue(GetName name)
+	{
+		return getValue(name.getName(), null);
+	}
+	
 	public <V> V getValue(String name)
 	{
 		return getValue(name, null);
@@ -111,6 +117,11 @@ public class NVGenericMap
 	public synchronized GetNameValue<?> add(GetNameValue<?> v)
 	{
 		return value.put(new GetNameKey(v, true), v);
+	}
+	
+	public synchronized GetNameValue<?> add(NVEntity nve)
+	{
+		return add(new NVEntityReference(nve));
 	}
 
 	

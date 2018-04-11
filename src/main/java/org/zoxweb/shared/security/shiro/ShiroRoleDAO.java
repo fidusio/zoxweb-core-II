@@ -36,7 +36,7 @@ public class ShiroRoleDAO
 		implements GetNVConfig
 	{
 		
-		PERMISSIONS(NVConfigManager.createNVConfigEntity("permissions", "The permissions associated with the role.", "Permissions", false, true, ShiroPermissionDAO.class, ArrayType.REFERENCE_ID_MAP)),
+		PERMISSIONS(NVConfigManager.createNVConfigEntity("permissions", "The permissions associated with the role.", "Permissions", false, true, ShiroPermissionDAO.class, ArrayType.GET_NAME_MAP)),
 	
 		;
 		
@@ -114,6 +114,14 @@ public class ShiroRoleDAO
 		return (ArrayValues<NVEntity>) lookup(Param.PERMISSIONS);
 	}
 	
+	
+	public void addPermissions(ShiroPermissionDAO ...permissions)
+	{
+		for (ShiroPermissionDAO p : permissions)
+		{
+			getPermissions().add(p);
+		}
+	}
 	public void setPermissions(ArrayValues<NVEntity> values)
 	{
 		getPermissions().add(values.values(), true);

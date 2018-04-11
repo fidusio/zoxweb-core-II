@@ -85,7 +85,7 @@ public class NVEntityGetNameMap
 	{
 		return  value.values().toArray( new NVEntity[0]);
 	}
-
+	
 	/**
 	 * @see org.zoxweb.shared.util.ArrayValues#clear()
 	 */
@@ -94,9 +94,9 @@ public class NVEntityGetNameMap
 	{
 		value.clear();
 	}
-
-
-
+	
+	
+	
 	/**
 	 * @see org.zoxweb.shared.util.ArrayValues#add(java.lang.Object[], boolean)
 	 */
@@ -115,9 +115,9 @@ public class NVEntityGetNameMap
 		}
 		
 	}
-
-
-
+	
+	
+	
 	/**
 	 * @see org.zoxweb.shared.util.ArrayValues#search(java.lang.String[])
 	 */
@@ -126,9 +126,9 @@ public class NVEntityGetNameMap
 		// TODO Auto-generated method stub
 		return SharedUtil.search(values(), criteria);
 	}
-
-
-
+	
+	
+	
 	/**
 	 * @see org.zoxweb.shared.util.ArrayValues#isFixed()
 	 */
@@ -138,9 +138,9 @@ public class NVEntityGetNameMap
 		// TODO Auto-generated method stub
 		return false;
 	}
-
-
-
+	
+	
+	
 	/**
 	 * @see org.zoxweb.shared.util.ArrayValues#setFixed(boolean)
 	 */
@@ -150,6 +150,6 @@ public class NVEntityGetNameMap
 		// TODO Auto-generated method stub	
 	}
 
-	
-	
+
+
 }

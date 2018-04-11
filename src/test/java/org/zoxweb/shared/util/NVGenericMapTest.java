@@ -41,7 +41,7 @@ public class NVGenericMapTest
 			address.setStateOrProvince("CA");
 			address.setCountry("USA");
 			address.setZIPOrPostalCode("90025");
-			nvgm.add(new NVEntityReference(address));
+			nvgm.add(address);
 			nvgm.add(new NVBlob("byteArrray", new byte[] {0,1,2,3,5,6,7,8}));
 			NVPairList nvp = new NVPairList("nvp", new ArrayList<NVPair>());
 			nvp.add(new NVPair("nameNVP", "valueNVP"));

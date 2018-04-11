@@ -8,6 +8,8 @@ import org.zoxweb.shared.util.GetDescription;
 import org.zoxweb.shared.util.GetName;
 import org.zoxweb.shared.util.GetNameValue;
 import org.zoxweb.shared.util.GetValue;
+import org.zoxweb.shared.util.NVPair;
+import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
 
 public class SecurityModel
@@ -156,33 +158,13 @@ public class SecurityModel
 		
 		
 		
-		public ShiroPermissionDAO toPermission(String domainID, String appID)
+		public ShiroPermissionDAO toPermission(String domainID, String appID, NVPair ...tokens)
 		{
-			return toPermission(domainID, appID, getName(), getDescription(), getValue());
+			return SecurityModel.toPermission(domainID, appID, getName(), getDescription(), getValue(), tokens);
 		}
 		
 		
-		/**
-		 * The name is the name of the permission and value is the patterm
-		 * @param gnv
-		 * @return
-		 */
-		public static ShiroPermissionDAO toPermission(String domainID,  String appID, GetNameValue<String> gnv)
-		{
-			return toPermission(domainID, appID, gnv.getName(), null,  gnv.getValue());
-		}
 		
-		public static ShiroPermissionDAO toPermission(String domainID, String appID, String name, String description, String pattern)
-		{
-			ShiroPermissionDAO ret = new ShiroPermissionDAO();
-			ret.setName(name);
-			ret.setDescription(description);
-			//ret.setEmbedAppIDEnabled(embedAppID);
-			ret.setDomainAppID(domainID, appID);
-			ret.setPermissionPattern(pattern);
-			return ret;
-			
-		}
 	}
 	
 	public enum Role
@@ -310,33 +292,43 @@ public class SecurityModel
 		}
 		
 		
-		public ShiroPermissionDAO toPermission(String domainID, String appID)
+		public ShiroPermissionDAO toPermission(String domainID, String appID, NVPair ...tokens)
 		{
-			return toPermission(domainID, appID, getName(), getDescription(), getValue());
+			return SecurityModel.toPermission(domainID, appID, getName(), getDescription(), getValue());
 		}
 		
-		
-		/**
-		 * The name is the name of the permission and value is the patterm
-		 * @param gnv
-		 * @return
-		 */
-		public static ShiroPermissionDAO toPermission(String domainID,  String appID, GetNameValue<String> gnv)
-		{
-			return toPermission(domainID, appID, gnv.getName(), null,  gnv.getValue());
-		}
-		
-		public static ShiroPermissionDAO toPermission(String domainID, String appID, String name, String description, String pattern)
-		{
-			ShiroPermissionDAO ret = new ShiroPermissionDAO();
-			ret.setName(name);
-			ret.setDescription(description);
-			//ret.setEmbedAppIDEnabled(embedAppID);
-			ret.setDomainAppID(domainID, appID);
-			ret.setPermissionPattern(pattern);
-			return ret;
-			
-		}
-
+	
 	}
+	
+	/**
+	 * The name is the name of the permission and value is the patterm
+	 * @param gnv
+	 * @return
+	 */
+	public static ShiroPermissionDAO toPermission(String domainID,  String appID, GetNameValue<String> gnv, NVPair ...tokens)
+	{
+		return toPermission(domainID, appID, gnv.getName(), null,  gnv.getValue(), tokens);
+	}
+	
+	public static ShiroPermissionDAO toPermission(String domainID, String appID, String name, String description, String pattern, NVPair ...tokens)
+	{
+		ShiroPermissionDAO ret = new ShiroPermissionDAO();
+		ret.setName(name);
+		ret.setDescription(description);
+		//ret.setEmbedAppIDEnabled(embedAppID);
+		ret.setDomainAppID(domainID, appID);
+		
+		
+		if (tokens != null && tokens.length > 0)
+		{
+			for(NVPair token : tokens)
+				pattern = SharedStringUtil.embedText(pattern, token.getName(), token.getValue());
+		}
+		
+		
+		ret.setPermissionPattern(pattern);
+		return ret;
+		
+	}
+	
 }

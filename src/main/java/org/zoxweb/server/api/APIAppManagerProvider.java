@@ -38,6 +38,7 @@ import org.zoxweb.shared.security.AccessSecurityException;
 import org.zoxweb.shared.security.JWT;
 import org.zoxweb.shared.security.SubjectAPIKey;
 import org.zoxweb.shared.security.model.SecurityModel;
+import org.zoxweb.shared.security.model.SecurityModel.AppPermission;
 import org.zoxweb.shared.security.model.SecurityModel.Role;
 import org.zoxweb.shared.security.shiro.ShiroAssociationRuleDAO;
 import org.zoxweb.shared.security.shiro.ShiroAssociationType;
@@ -52,6 +53,8 @@ import org.zoxweb.shared.util.GetValue;
 import org.zoxweb.shared.util.MetaToken;
 import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVEntity;
+import org.zoxweb.shared.util.NVGenericMap;
+import org.zoxweb.shared.util.NVPair;
 import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
 
@@ -753,9 +756,76 @@ public class APIAppManagerProvider
     		ret = new AppIDDAO(domainID, appID);
  
     		ret = getAPIDataStore().insert(ret);
-    		apiSecurityManager.addRole(SecurityModel.Role.APP_ADMIN.toRole(domainID, appID));
-    		apiSecurityManager.addRole(SecurityModel.Role.APP_USER.toRole(domainID, appID));
-    		apiSecurityManager.addRole(SecurityModel.Role.APP_SERVICE_PROVIDER.toRole(domainID, appID));
+    		NVPair appIDNVP = new NVPair(SecurityModel.TOK_APP_ID, ret.getSubjectID());
+    		
+    		NVGenericMap permissions = new NVGenericMap();
+    		for (AppPermission ap : AppPermission.values())
+    		{
+    			ShiroPermissionDAO permission = SecurityModel.toPermission(domainID, appID, ap, appIDNVP);
+    			apiSecurityManager.addPermission(permission);
+    			permissions.add(permission);
+    		}
+    		
+    		
+    		ShiroRoleDAO appAdminRole = SecurityModel.Role.APP_ADMIN.toRole(domainID, appID);
+    		AppPermission adminPermissions[] = {
+    				AppPermission.ORDER_DELETE,
+    				AppPermission.ORDER_UPDATE,
+    				AppPermission.ORDER_READ_APP,
+    				AppPermission.ORDER_UPDATE_STATUS_APP,
+    				AppPermission.RESOURCE_ADD,
+    				AppPermission.RESOURCE_DELETE,
+    				AppPermission.RESOURCE_READ_PRIVATE,
+    				AppPermission.RESOURCE_READ_PUBLIC,
+    				AppPermission.RESOURCE_UPDATE
+    		};
+    		for(AppPermission ap : adminPermissions)
+    		{
+    			appAdminRole.addPermissions(permissions.getValue(ap));
+    		}
+    		
+    		ShiroRoleDAO appUserRole = SecurityModel.Role.APP_USER.toRole(domainID, appID);
+    		AppPermission userPermissions[] = {
+    				AppPermission.ORDER_CREATE,
+    				AppPermission.ORDER_DELETE,
+    				AppPermission.ORDER_UPDATE,
+    				AppPermission.ORDER_READ_USER_APP,
+    				AppPermission.RESOURCE_READ_PUBLIC,
+    			
+    		};
+    		for(AppPermission ap : userPermissions)
+    		{
+    			appUserRole.addPermissions(permissions.getValue(ap));
+    		}
+    		
+    		ShiroRoleDAO appServiceProviderRole = SecurityModel.Role.APP_SERVICE_PROVIDER.toRole(domainID, appID);
+    		AppPermission spPermissions[] = 
+    		{
+    				AppPermission.ORDER_UPDATE_STATUS_APP,
+    				AppPermission.ORDER_READ_APP,
+    				AppPermission.RESOURCE_READ_PUBLIC,
+    			
+    		};
+    		for(AppPermission ap : spPermissions)
+    		{
+    			appServiceProviderRole.addPermissions(permissions.getValue(ap));
+    		}
+    		
+    		ShiroRoleDAO appResourceRole = SecurityModel.Role.RESOURCE_ROLE.toRole(domainID, appID);
+    		AppPermission resourcePermissions[] = {
+    				AppPermission.RESOURCE_READ_PRIVATE,
+    				AppPermission.RESOURCE_READ_PUBLIC
+    		};
+    		for(AppPermission ap : resourcePermissions)
+    		{
+    			appResourceRole.addPermissions(permissions.getValue(ap));
+    		}
+    		
+    		
+    		apiSecurityManager.addRole(appAdminRole);
+    		apiSecurityManager.addRole(appUserRole);
+    		apiSecurityManager.addRole(appServiceProviderRole);
+    		apiSecurityManager.addRole(appResourceRole);
     		getAPIDataStore().createSequence(ret.getSubjectID());
 
             AppConfigDAO appConfigDAO = new AppConfigDAO();
