@@ -781,7 +781,7 @@ public class APIAppManagerProvider
     		};
     		for(AppPermission ap : adminPermissions)
     		{
-    			appAdminRole.addPermissions(permissions.getValue(ap));
+    			appAdminRole.getPermissions().add(permissions.getValue(ap));
     		}
     		
     		ShiroRoleDAO appUserRole = SecurityModel.Role.APP_USER.toRole(domainID, appID);
@@ -795,7 +795,7 @@ public class APIAppManagerProvider
     		};
     		for(AppPermission ap : userPermissions)
     		{
-    			appUserRole.addPermissions(permissions.getValue(ap));
+    			appUserRole.getPermissions().add(permissions.getValue(ap));
     		}
     		
     		ShiroRoleDAO appServiceProviderRole = SecurityModel.Role.APP_SERVICE_PROVIDER.toRole(domainID, appID);
@@ -808,7 +808,7 @@ public class APIAppManagerProvider
     		};
     		for(AppPermission ap : spPermissions)
     		{
-    			appServiceProviderRole.addPermissions(permissions.getValue(ap));
+    			appServiceProviderRole.getPermissions().add(permissions.getValue(ap));
     		}
     		
     		ShiroRoleDAO appResourceRole = SecurityModel.Role.RESOURCE_ROLE.toRole(domainID, appID);
@@ -818,7 +818,7 @@ public class APIAppManagerProvider
     		};
     		for(AppPermission ap : resourcePermissions)
     		{
-    			appResourceRole.addPermissions(permissions.getValue(ap));
+    			appResourceRole.getPermissions().add(permissions.getValue(ap));
     		}
     		
     		

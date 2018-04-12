@@ -115,13 +115,13 @@ public class ShiroRoleDAO
 	}
 	
 	
-	public void addPermissions(ShiroPermissionDAO ...permissions)
-	{
-		for (ShiroPermissionDAO p : permissions)
-		{
-			getPermissions().add(p);
-		}
-	}
+//	public void addPermissions(ShiroPermissionDAO ...permissions)
+//	{
+//		for (ShiroPermissionDAO p : permissions)
+//		{
+//			getPermissions().add(p);
+//		}
+//	}
 	public void setPermissions(ArrayValues<NVEntity> values)
 	{
 		getPermissions().add(values.values(), true);

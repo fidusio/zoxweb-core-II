@@ -43,7 +43,7 @@ public abstract class ShiroDomainDAO
 	
 	public void setName(String name)
 	{
-		setValue(DataParam.NAME, SharedStringUtil.trimOrEmpty(SharedStringUtil.toLowerCase( name)));
+		setValue(DataParam.NAME, SharedStringUtil.trimOrEmpty(SharedStringUtil.toLowerCase(name)));
 	}
 
 	@Override
