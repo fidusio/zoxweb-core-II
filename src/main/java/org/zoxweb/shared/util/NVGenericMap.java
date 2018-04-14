@@ -119,6 +119,12 @@ public class NVGenericMap
 		return value.put(new GetNameKey(v, true), v);
 	}
 	
+	public GetNameValue<?> add(String name, String value)
+	{
+		NVPair nvp = new NVPair(name, value);
+		return add(nvp);
+	}
+	
 	public synchronized GetNameValue<?> add(NVEntity nve)
 	{
 		return add(new NVEntityReference(nve));
