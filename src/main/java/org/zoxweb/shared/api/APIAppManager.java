@@ -11,6 +11,7 @@ import org.zoxweb.shared.db.QueryMarker;
 import org.zoxweb.shared.security.AccessException;
 import org.zoxweb.shared.security.JWT;
 import org.zoxweb.shared.security.SubjectAPIKey;
+import org.zoxweb.shared.util.CRUD;
 import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVEntity;
 
@@ -105,7 +106,7 @@ public interface APIAppManager
      * @throws AccessException - only Super Admin can do lookup
      * @throws APIException
      */
-	UserIDDAO lookupUserIDDAO(String subjectID)
+	UserIDDAO lookupUserIDDAO(String subjectID, String ...params)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException;
 
 
@@ -323,4 +324,11 @@ public interface APIAppManager
     		throws NullPointerException, IllegalArgumentException, AccessException, APIException;
     <V extends NVEntity> List<V> search(NVConfigEntity nvce, List<String> fieldNames, QueryMarker ... queryCriteria) 
     		throws NullPointerException, IllegalArgumentException, AccessException, APIException;
+    
+    
+    void updateSubjectRole(String subjectID, AppIDDAO appID, String roleName, CRUD crud)
+			 throws NullPointerException, IllegalArgumentException, AccessException;
+		
+	void updateSubjectPermission(String subjectID, AppIDDAO appID, String permssionName, CRUD crud)
+			 throws NullPointerException, IllegalArgumentException, AccessException;
 }

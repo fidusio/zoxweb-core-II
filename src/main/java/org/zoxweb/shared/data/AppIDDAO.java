@@ -212,4 +212,17 @@ public class AppIDDAO
 	{
 		return SharedUtil.toCanonicalID(ShiroDAO.CAN_ID_SEP, FilterType.DOMAIN.validate(domainID),AppIDNameFilter.SINGLETON.validate(appIDName));
 	}
+	
+	public static AppIDDAO toAppID(String gid)
+	{
+		gid = SharedStringUtil.trimOrNull(gid);
+		SharedUtil.checkIfNulls("Null app global ig", gid);
+		
+		String split[] = gid.split("-");
+		if (split.length != 2)
+			throw new IllegalArgumentException("Invalid:" + gid);
+		
+		return new AppIDDAO(split[0], split[1]);
+		
+	}
 }

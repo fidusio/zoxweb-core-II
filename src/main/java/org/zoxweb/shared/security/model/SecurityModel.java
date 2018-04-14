@@ -44,9 +44,11 @@ public class SecurityModel
 	public final static String PERM_STATUS= "status";
 	public final static String PERM_ADD_RESOURCE = "resource:add";
 	public final static String PERM_DELETE_RESOURCE = "resource:delete";
-	public final static String PERM_UPDATE_RESOURCE = "resource:update";
 	public final static String PERM_READ_RESOURCE = "resource:read";
-	
+	public final static String PERM_UPDATE_RESOURCE = "resource:update";
+	public final static String PERM_ASSIGN = "assign";
+	public final static String PERM_ASSIGN_PERMISSION = "assign:permission";
+	public final static String PERM_ASSIGN_ROLE = "assign:role";
 	
 	
 	
@@ -112,7 +114,7 @@ public class SecurityModel
 		RESOURCE_READ_PUBLIC("resource_read_public", "Permission to read a public resource", PERM_READ_RESOURCE, TOK_APP_ID, TOK_RESOURCE_ID, PERM_PUBLIC),
 		RESOURCE_READ_PRIVATE("resource_private", "Permission to read  a private resource", PERM_READ_RESOURCE, TOK_APP_ID, TOK_RESOURCE_ID, PERM_PRIVATE),
 		SELF("self", "permission granted to all users", PERM_SELF),
-		SELF_USER("self_user", "permission granted to all users", "nventity:create,read,update,delete", TOK_RESOURCE_ID, TOK_USER_ID),
+		SELF_USER("self_user", "permission granted to all users", "nventity:create,read,update,delete", TOK_USER_ID, TOK_RESOURCE_ID),
 	
 		
 		;
@@ -170,13 +172,13 @@ public class SecurityModel
 	public enum Role
 	    implements GetName, GetDescription
 	{
-		SUPER_ADMIN("super_admin_role", "Super admin role"),
-		DOMAIN_ADMIN("domain_admin_role", "domain admin role"),
+		SUPER_ADMIN("super_admin", "Super admin role"),
+		DOMAIN_ADMIN("domain_admin", "domain admin role"),
         APP_ADMIN("app_admin", "App admin role"),
         APP_USER("app_user", "App user role"),
         APP_SERVICE_PROVIDER("app_service_provider", "App service provider role"),
-        USER_ROLE("user_role", "This role is granted to all users"),
-        RESOURCE_ROLE("resource_role", "role granted to resources")
+        USER("user", "This role is granted to all users"),
+        RESOURCE("resource", "role granted to resources")
 		
 		;
 		private final String name;
@@ -242,17 +244,18 @@ public class SecurityModel
 	public enum AppPermission
 		implements GetNameValue<String>, GetDescription
 	{
+		ASSIGN_ROLE_APP("assign_role_app", "Assign a role to user", PERM_ASSIGN_ROLE, TOK_APP_ID),
 		ORDER_CREATE("order_create", "Create order", "order:create", TOK_APP_ID, PERM_SELF),
 		ORDER_DELETE("order_delete", "Delete order", "order:delete", TOK_APP_ID, TOK_RESOURCE_ID),
 		ORDER_UPDATE("order_update", "Update order", "order:update", TOK_APP_ID, TOK_RESOURCE_ID),
 		ORDER_READ_APP("order_read_app", "Read app  order", "order:read", TOK_APP_ID),
 		ORDER_READ_USER_APP("order_read_user_app", "Read app  order", "order:read", TOK_APP_ID, TOK_RESOURCE_ID, TOK_USER_ID),
 		ORDER_UPDATE_STATUS_APP("order_update_status_app", "Read app  order", "order:update", TOK_APP_ID, TOK_RESOURCE_ID, PERM_STATUS),
-		RESOURCE_ADD("resource_add", "Add resource", "resource:add", TOK_APP_ID),
-		RESOURCE_DELETE("resource_delete", "delete resource", "resource:delete", TOK_APP_ID, TOK_RESOURCE_ID),
-		RESOURCE_READ_PRIVATE("resource_read_private", "read private resource", "resource:read", TOK_APP_ID, TOK_RESOURCE_ID, PERM_PRIVATE),
-		RESOURCE_READ_PUBLIC("resource_read_public", "read public resource", "resource:read", TOK_APP_ID, TOK_RESOURCE_ID, PERM_PUBLIC),
-		RESOURCE_UPDATE("resource_update", "update resource", "resource:read", TOK_APP_ID),
+		RESOURCE_ADD("resource_add", "Add resource", PERM_ADD_RESOURCE, TOK_APP_ID),
+		RESOURCE_DELETE("resource_delete", "delete resource", PERM_DELETE_RESOURCE, TOK_APP_ID, TOK_RESOURCE_ID),
+		RESOURCE_READ_PRIVATE("resource_read_private", "read private resource", PERM_READ_RESOURCE, TOK_APP_ID, TOK_RESOURCE_ID, PERM_PRIVATE),
+		RESOURCE_READ_PUBLIC("resource_read_public", "read public resource", PERM_READ_RESOURCE, TOK_APP_ID, TOK_RESOURCE_ID, PERM_PUBLIC),
+		RESOURCE_UPDATE("resource_update", "update resource", PERM_UPDATE_RESOURCE, TOK_APP_ID),
 		;
 		private final String name;
 		private final String pattern;

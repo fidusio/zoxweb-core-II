@@ -113,7 +113,6 @@ public class ShiroAssociationRuleDAO
 			throw new IllegalArgumentException("Invalid association rule");
 		}
 		setName(name);
-		setAssociate(associate.getReferenceID());
 		setAssociatedTo(associateTo.getReferenceID());
 		setAssociationType(at);
 		setExpiration(null);

@@ -24,12 +24,15 @@ import org.zoxweb.shared.db.QueryMarker;
  */
 public interface ShiroRulesManager 
 {
-	public void addShiroRule(ShiroAssociationRuleDAO sard);
+	void addShiroRule(ShiroAssociationRuleDAO sard);
 	
-	public void deleteShiroRule(ShiroAssociationRuleDAO sard);
+	void deleteShiroRule(ShiroAssociationRuleDAO sard);
 	
-	public void updateShiroRule(ShiroAssociationRuleDAO sard);
+	void updateShiroRule(ShiroAssociationRuleDAO sard);
+	
 	
 	List<ShiroAssociationRuleDAO> search(QueryMarker ...queryCriteria);
+	
+	
 
 }

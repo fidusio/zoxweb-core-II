@@ -37,6 +37,7 @@ import org.zoxweb.shared.security.AccessException;
 import org.zoxweb.shared.security.AccessSecurityException;
 import org.zoxweb.shared.security.JWT;
 import org.zoxweb.shared.security.SubjectAPIKey;
+import org.zoxweb.shared.security.model.PPEncoder;
 import org.zoxweb.shared.security.model.SecurityModel;
 import org.zoxweb.shared.security.model.SecurityModel.AppPermission;
 import org.zoxweb.shared.security.model.SecurityModel.Role;
@@ -44,6 +45,7 @@ import org.zoxweb.shared.security.shiro.ShiroAssociationRuleDAO;
 import org.zoxweb.shared.security.shiro.ShiroAssociationType;
 import org.zoxweb.shared.security.shiro.ShiroPermissionDAO;
 import org.zoxweb.shared.security.shiro.ShiroRoleDAO;
+import org.zoxweb.shared.util.CRUD;
 import org.zoxweb.shared.util.Const;
 import org.zoxweb.shared.util.Const.LogicalOperator;
 import org.zoxweb.shared.util.Const.RelationalOperator;
@@ -195,7 +197,7 @@ public class APIAppManagerProvider
     }
 
     
-    public UserIDDAO lookupUserID(String subjectID, String ...params)
+    public UserIDDAO lookupUserIDDAO(String subjectID, String ...params)
 			throws NullPointerException, IllegalArgumentException, AccessException, APIException
 	{
     	return lookupUserID(getAPIDataStore(), subjectID, params);
@@ -242,11 +244,11 @@ public class APIAppManagerProvider
 	}
     
 	
-	public UserIDDAO lookupUserID(GetValue<String> subjectID, String ...params)
+	public UserIDDAO lookupUserIDDAO(GetValue<String> subjectID, String ...params)
 			throws NullPointerException, IllegalArgumentException, AccessException
 	{
 		SharedUtil.checkIfNulls("DB or user ID null", subjectID);
-		return lookupUserID(subjectID.getValue(), params);
+		return lookupUserIDDAO(subjectID.getValue(), params);
 	}
 	
 	public UserIDDAO createUserIDDAO(UserIDDAO userID, UserStatus userIDstatus, String password)
@@ -256,7 +258,7 @@ public class APIAppManagerProvider
 		password = FilterType.PASSWORD.validate(password);
 		
 		
-		if (lookupUserID(userID.getSubjectID()) != null)
+		if (lookupUserIDDAO(userID.getSubjectID()) != null)
 		{
 			throw new APIException("User already exist");
 		}
@@ -354,7 +356,7 @@ public class APIAppManagerProvider
 		getAPISecurityManager().checkPermissions(SecurityModel.Permission.USER_DELETE.getValue());
 		
 		SharedUtil.checkIfNulls("subjectID null", subjectID);
-		UserIDDAO userID = lookupUserID(subjectID);
+		UserIDDAO userID = lookupUserIDDAO(subjectID);
 		if (userID == null)
 		{
 			throw new APIException("subjectID " + subjectID + " not found.");
@@ -517,26 +519,26 @@ public class APIAppManagerProvider
 //        return userIDDAO;
 //    }
 
-
-    public UserIDDAO lookupUserIDDAO(String subjectID)
-            throws NullPointerException, IllegalArgumentException, AccessException, APIException 
-    {
-    	subjectID = FilterType.EMAIL.validate(subjectID);
-    	
-
-        UserIDDAO ret = null;
-
-        List<UserIDDAO> result = getAPIDataStore().search(UserIDDAO.NVC_USER_ID_DAO, null,
-                new QueryMatchString(RelationalOperator.EQUAL, subjectID, UserIDDAO.Param.PRIMARY_EMAIL)
-        );
-
-        if (result != null && !result.isEmpty()) {
-            ret = result.get(0);
-        }
-
-        return ret;
-    	
-    }
+//
+//    public UserIDDAO lookupUserIDDAO(String subjectID)
+//            throws NullPointerException, IllegalArgumentException, AccessException, APIException 
+//    {
+//    	subjectID = FilterType.EMAIL.validate(subjectID);
+//    	
+//
+//        UserIDDAO ret = null;
+//
+//        List<UserIDDAO> result = getAPIDataStore().search(UserIDDAO.NVC_USER_ID_DAO, null,
+//                new QueryMatchString(RelationalOperator.EQUAL, subjectID, UserIDDAO.Param.PRIMARY_EMAIL)
+//        );
+//
+//        if (result != null && !result.isEmpty()) {
+//            ret = result.get(0);
+//        }
+//
+//        return ret;
+//    	
+//    }
 
   
     public UserPreferenceDAO lookupUserPreferenceDAO(String subjectID)
@@ -769,6 +771,7 @@ public class APIAppManagerProvider
     		
     		ShiroRoleDAO appAdminRole = SecurityModel.Role.APP_ADMIN.toRole(domainID, appID);
     		AppPermission adminPermissions[] = {
+    				AppPermission.ASSIGN_ROLE_APP,
     				AppPermission.ORDER_DELETE,
     				AppPermission.ORDER_UPDATE,
     				AppPermission.ORDER_READ_APP,
@@ -811,7 +814,7 @@ public class APIAppManagerProvider
     			appServiceProviderRole.getPermissions().add(permissions.getValue(ap));
     		}
     		
-    		ShiroRoleDAO appResourceRole = SecurityModel.Role.RESOURCE_ROLE.toRole(domainID, appID);
+    		ShiroRoleDAO appResourceRole = SecurityModel.Role.RESOURCE.toRole(domainID, appID);
     		AppPermission resourcePermissions[] = {
     				AppPermission.RESOURCE_READ_PRIVATE,
     				AppPermission.RESOURCE_READ_PUBLIC
@@ -884,6 +887,45 @@ public class APIAppManagerProvider
 	{
     	return getAPIDataStore().search(nvce, fieldNames, queryCriteria);
 	}
-			
+	
+    public void updateSubjectRole(String subjectID, AppIDDAO appID, String roleName, CRUD crud)
+			 throws NullPointerException, IllegalArgumentException, AccessException
+	{
+		String permission = PPEncoder.SINGLETON.encode(SecurityModel.PERM_ASSIGN_ROLE, appID.getAppGID());
+		getAPISecurityManager().isPermitted(permission);
+		// permission checked
+		UserIDDAO userID = lookupUserIDDAO(subjectID);
+		if (userID != null)
+		{
+			String roleSubjectID = appID.getAppGID() + "-" + roleName;
+			ShiroRoleDAO role = getAPISecurityManager().lookupRole(roleSubjectID);
+			if (role != null)
+			{
+				switch(crud)
+				{
+				case CREATE:
+					ShiroAssociationRuleDAO sard = new ShiroAssociationRuleDAO(null, role, ShiroAssociationType.ROLE_TO_SUBJECT, userID);
+//					sard.setAssociation(role);
+//					sard.setAssociatedTo(userID.getReferenceID());
+//					sard.setAssociationType(ShiroAssociationType.ROLE_TO_SUBJECT);
+//					sard.setAssociationStatus(Status.ACTIVE);
+//					sard.setExpiration(null);
+					getAPISecurityManager().addShiroRule(sard);
+					break;
+				default:
+					break;
+				
+				}
+			}
+		}
+		
+		
+	}
+		
+	public void updateSubjectPermission(String subjectID, AppIDDAO appID, String permssionName, CRUD crud)
+			 throws NullPointerException, IllegalArgumentException, AccessException
+	{
+		 
+	}
 
 }

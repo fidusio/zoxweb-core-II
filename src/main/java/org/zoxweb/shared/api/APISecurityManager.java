@@ -166,6 +166,9 @@ public interface APISecurityManager<S>
 	  * @param resouceID
 	  */
 	 void invalidateResource(String resouceID);
+	 
+	 
+	
 	
 	 
 }
