@@ -917,33 +917,44 @@ public class APIAppManagerProvider
 			 throws NullPointerException, IllegalArgumentException, AccessException
 	{
 		String permission = PPEncoder.SINGLETON.encode(SecurityModel.PERM_ASSIGN_ROLE, appID.getAppGID());
-		getAPISecurityManager().isPermitted(permission);
+		log.info("permision to check:" + permission);
+		log.info(SharedUtil.toCanonicalID(',', subjectID, roleName));
+		getAPISecurityManager().checkPermissions(permission);
 		// permission checked
 		UserIDDAO userID = lookupUserIDDAO(subjectID);
 		if (userID != null)
 		{
 			String roleSubjectID = appID.getAppGID() + "-" + roleName;
+			log.info("role:" + roleSubjectID);
+			log.info("userid:" +userID.getPrimaryEmail() + ":" + userID.getUserID());
 			ShiroRoleDAO role = getAPISecurityManager().lookupRole(roleSubjectID);
-			if (role != null)
+			if (role == null)
 			{
+				throw new APIException("Role not found");
+			}
+			else
+			{
+				
 				switch(crud)
 				{
 				case CREATE:
-					ShiroAssociationRuleDAO sard = new ShiroAssociationRuleDAO(null, role, ShiroAssociationType.ROLE_TO_SUBJECT, userID);
-//					sard.setAssociation(role);
-//					sard.setAssociatedTo(userID.getReferenceID());
-//					sard.setAssociationType(ShiroAssociationType.ROLE_TO_SUBJECT);
-//					sard.setAssociationStatus(Status.ACTIVE);
-//					sard.setExpiration(null);
+					ShiroAssociationRuleDAO sard = new ShiroAssociationRuleDAO(role.getName()+"-" +userID.getSubjectID(), role, ShiroAssociationType.ROLE_TO_SUBJECT, userID);
 					getAPISecurityManager().addShiroRule(sard);
+					getAPISecurityManager().invalidateResource(subjectID);
 					break;
 				default:
 					break;
 				
 				}
+				
+				
+				
 			}
 		}
-		
+		else
+		{
+			throw new APIException("User not found");
+		}
 		
 	}
 		
