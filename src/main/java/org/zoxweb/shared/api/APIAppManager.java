@@ -63,6 +63,9 @@ public interface APIAppManager
      */
 	SubjectAPIKey registerSubjectAPIKey(UserInfoDAO userInfoDAO, AppDeviceDAO appDeviceDAO, String username, String password)
 			throws NullPointerException, IllegalArgumentException, AccessException, APIException;
+	
+	UserInfoDAO registerSubject(String username, String password)
+			throws NullPointerException, IllegalArgumentException, AccessException, APIException;
 
     /**
      * Create a userDAO, the creation requires persistence of the following:

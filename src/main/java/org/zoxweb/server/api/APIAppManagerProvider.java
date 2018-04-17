@@ -244,14 +244,14 @@ public class APIAppManagerProvider
 	}
     
 	
-	public UserIDDAO lookupUserIDDAO(GetValue<String> subjectID, String ...params)
+	public synchronized UserIDDAO lookupUserIDDAO(GetValue<String> subjectID, String ...params)
 			throws NullPointerException, IllegalArgumentException, AccessException
 	{
 		SharedUtil.checkIfNulls("DB or user ID null", subjectID);
 		return lookupUserIDDAO(subjectID.getValue(), params);
 	}
 	
-	public UserIDDAO createUserIDDAO(UserIDDAO userID, UserStatus userIDstatus, String password)
+	public synchronized UserIDDAO createUserIDDAO(UserIDDAO userID, UserStatus userIDstatus, String password)
 			throws NullPointerException, IllegalArgumentException, AccessException, APIException
 	{
 		SharedUtil.checkIfNulls("UserIDDAO object is null.", userID, userIDstatus);
@@ -264,6 +264,7 @@ public class APIAppManagerProvider
 		}
 			
 		log.info("User Name: " + userID.getPrimaryEmail());
+		
 		log.info("First Name: " + userID.getUserInfo().getFirstName());
 		log.info("Middle Name: " + userID.getUserInfo().getMiddleName());
 		log.info("Last Name: " + userID.getUserInfo().getLastName());
@@ -676,7 +677,7 @@ public class APIAppManagerProvider
         return result.get(0);
     }
 
-    public SubjectAPIKey registerSubjectAPIKey(UserInfoDAO userInfoDAO, AppDeviceDAO appDeviceDAO, String subjectID, String password)
+    public synchronized SubjectAPIKey registerSubjectAPIKey(UserInfoDAO userInfoDAO, AppDeviceDAO appDeviceDAO, String subjectID, String password)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException {
 
         // Procedure
@@ -687,11 +688,15 @@ public class APIAppManagerProvider
         // 5. Create Credentials with password
         // 6. Create AppDeviceDAO
         // 7. Create UserPreferenceDAO
+    	
+    	
 
         SharedUtil.checkIfNulls("UserInfoDAO is null", userInfoDAO);
         SharedUtil.checkIfNulls("AppDeviceDAO is null", appDeviceDAO);
         SharedUtil.checkIfNulls("AppIDDAO is null", appDeviceDAO.getAppIDDAO());
-        
+        if (SharedStringUtil.isEmpty(subjectID) || SharedStringUtil.isEmpty(password)) {
+            throw new NullPointerException("Username and/or password is null");
+        }
         
         String domainID = appDeviceDAO.getDomainID();
         String appID = appDeviceDAO.getAppID();
@@ -700,9 +705,7 @@ public class APIAppManagerProvider
         AppIDDAO appIDDAO = lookupAppIDDAO(domainID, appID);
         
 
-        if (SharedStringUtil.isEmpty(subjectID) || SharedStringUtil.isEmpty(password)) {
-            throw new NullPointerException("Username and/or password is null");
-        }
+       
 
        
      
@@ -738,6 +741,28 @@ public class APIAppManagerProvider
 
         return appDeviceDAO;
     }
+    
+    public synchronized UserInfoDAO registerSubject(String subjectID, String password)
+			throws NullPointerException, IllegalArgumentException, AccessException, APIException 
+    {
+		// TODO Auto-generated method stub
+    	
+         if (SharedStringUtil.isEmpty(subjectID) || SharedStringUtil.isEmpty(password)) {
+             throw new NullPointerException("Username and/or password is null");
+         }
+         
+         UserIDDAO userIDDAO = lookupUserIDDAO(subjectID);
+         if (userIDDAO == null)
+         {
+         	userIDDAO = new UserIDDAO();
+         	userIDDAO.setSubjectID(subjectID);
+         	userIDDAO.setUserInfo(new UserInfoDAO());
+         	userIDDAO = createUserIDDAO(userIDDAO, UserStatus.ACTIVE, password);
+         	return userIDDAO.getUserInfo();
+         }
+         
+         throw new AccessException("Access Denied");
+	}
     
     
     
@@ -927,5 +952,10 @@ public class APIAppManagerProvider
 	{
 		 
 	}
+
+
+
+
+	
 
 }
