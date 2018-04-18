@@ -934,14 +934,19 @@ public class APIAppManagerProvider
 			}
 			else
 			{
+				ShiroAssociationRuleDAO sard = new ShiroAssociationRuleDAO(role.getName()+"-" +userID.getSubjectID(), role, ShiroAssociationType.ROLE_TO_SUBJECT, userID);
 				
 				switch(crud)
 				{
 				case CREATE:
-					ShiroAssociationRuleDAO sard = new ShiroAssociationRuleDAO(role.getName()+"-" +userID.getSubjectID(), role, ShiroAssociationType.ROLE_TO_SUBJECT, userID);
 					getAPISecurityManager().addShiroRule(sard);
+					log.info("Created");
 					getAPISecurityManager().invalidateResource(subjectID);
 					break;
+				case DELETE:
+					getAPISecurityManager().deleteShiroRule(sard);
+					log.info("Deleted");
+					getAPISecurityManager().invalidateResource(subjectID);
 				default:
 					break;
 				

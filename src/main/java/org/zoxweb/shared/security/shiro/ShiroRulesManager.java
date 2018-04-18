@@ -15,6 +15,7 @@
  */
 package org.zoxweb.shared.security.shiro;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.zoxweb.shared.db.QueryMarker;
@@ -32,6 +33,8 @@ public interface ShiroRulesManager
 	
 	
 	List<ShiroAssociationRuleDAO> search(QueryMarker ...queryCriteria);
+	
+	List<ShiroAssociationRuleDAO> search(Collection<QueryMarker> queryCriteria);
 	
 	
 
