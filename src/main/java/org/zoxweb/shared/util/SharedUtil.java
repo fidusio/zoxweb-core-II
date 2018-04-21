@@ -1201,9 +1201,9 @@ public class SharedUtil
 	 * @param params
 	 * @return create map nvbase based on the meta params
 	 */
-	public static HashMap<String, NVBase<?>> toData(List<NVConfig> params)
+	public static Map<String, NVBase<?>> toData(List<NVConfig> params)
     {
-		HashMap<String, NVBase<?>> ret = new HashMap<String, NVBase<?>>();
+		HashMap<String, NVBase<?>> ret = new LinkedHashMap<String, NVBase<?>>();
 		
 		for (NVConfig config : params)
 		{

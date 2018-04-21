@@ -16,8 +16,9 @@
 package org.zoxweb.shared.util;
 
 import java.util.Arrays;
-import java.util.HashMap;
+//import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.zoxweb.shared.filters.ValueFilter;
 
@@ -48,7 +49,7 @@ public abstract class NVEntity
 	}
 	
 	protected transient NVConfigEntity config;
-	protected HashMap<String, NVBase<?>> attributes;
+	protected Map<String, NVBase<?>> attributes;
 
 	protected NVEntity(NVConfigEntity nvce)
     {
@@ -62,7 +63,7 @@ public abstract class NVEntity
 	 * @param c
 	 * @param a
 	 */
-	protected NVEntity(NVConfigEntity c, HashMap<String, NVBase<?>>  a)
+	protected NVEntity(NVConfigEntity c, Map<String, NVBase<?>>  a)
     {
 		config = c;
 		attributes = a;
@@ -80,7 +81,7 @@ public abstract class NVEntity
 	 * Returns the attributes.
 	 * @return attributes map 
 	 */
-	public HashMap<String, NVBase<?>> getAttributes()
+	public Map<String, NVBase<?>> getAttributes()
     {
 		return attributes;
 	}
@@ -89,7 +90,7 @@ public abstract class NVEntity
 	 * Sets the attributes.
 	 * @param attr
 	 */
-	public void setAttributes(HashMap<String, NVBase<?>> attr)
+	public void setAttributes(Map<String, NVBase<?>> attr)
     {
 		attributes = attr;
 	}
