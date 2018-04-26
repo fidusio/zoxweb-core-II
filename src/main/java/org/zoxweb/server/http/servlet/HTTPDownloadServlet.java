@@ -49,6 +49,7 @@ import org.zoxweb.server.util.ApplicationConfigManager;
 import org.zoxweb.shared.data.ApplicationConfigDAO;
 import org.zoxweb.shared.data.FileInfoDAO;
 import org.zoxweb.shared.filters.FilenameFilter;
+import org.zoxweb.shared.http.HTTPMimeType;
 import org.zoxweb.shared.http.HTTPStatusCode;
 import org.zoxweb.shared.security.AccessException;
 import org.zoxweb.shared.util.GetNameValue;
@@ -106,9 +107,14 @@ public class HTTPDownloadServlet
 				throw new FileNotFoundException("File not found " + gnv.getValue());
 			}
 			
+			HTTPMimeType mt = HTTPMimeType.lookupByExtenstion(file.getName());
+			
+			
 			InputStream is = file.toURI().toURL().openStream();
 			FileInfoDAO fid = new FileInfoDAO();
-			fid.setName( gnv.getValue());
+			fid.setName(gnv.getValue());
+			if(mt!=null)
+				fid.setContentType(mt.getValue());
 			return new FileInfoStreamSource(fid, is);
 		}
 		
@@ -162,8 +168,15 @@ public class HTTPDownloadServlet
 			if ( fih != null && fih.getFileInfoDAO() != null  && fih.getSourceInputStream() != null)
 			{
 				//byte content [] = ServerJPA.SINGLETON.getFileInfoData(fi);
-				resp.setContentType("application/octet-stream");
-				resp.setHeader("Content-Disposition", "Attachment;Filename=\""+ fih.getFileInfoDAO().getName()+ "\"" );
+				if (fih.getFileInfoDAO().getContentType() != null)
+				{
+					resp.setContentType(fih.getFileInfoDAO().getContentType());
+				}
+				else
+				{
+					resp.setContentType("application/octet-stream");
+					resp.setHeader("Content-Disposition", "Attachment;Filename=\""+ fih.getFileInfoDAO().getName()+ "\"" );
+				}
 				//resp.getOutputStream().write( content);
 				try 
 				{
@@ -192,7 +205,7 @@ public class HTTPDownloadServlet
 				resp.sendError( HTTPStatusCode.BAD_REQUEST.CODE);
 			}
 		}
-		catch ( AccessException e)
+		catch (AccessException e)
 		{
 			if ( e.getURLRedirect() == null)
 				resp.sendError( HTTPStatusCode.UNAUTHORIZED.CODE, e.getMessage());
