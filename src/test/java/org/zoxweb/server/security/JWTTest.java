@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.zoxweb.server.util.GSONUtil;
 import org.zoxweb.shared.security.JWT;
+import org.zoxweb.shared.security.JWT2;
 import org.zoxweb.shared.security.JWTHeader;
 import org.zoxweb.shared.security.JWTPayload;
 import org.zoxweb.shared.security.SecurityConsts.JWTAlgorithm;
@@ -252,5 +253,18 @@ public class JWTTest {
 		payload.setAppID("xlogistx");
 		//payload.setRandom(new byte[] {0,1,2,3});
 		payload.setSubjectID("support@xlogistx.io");
+	}
+	@Test
+	public void testJWT2() throws IOException
+	{
+		JWT2 jwt = new JWT2();
+		
+		jwt.getHeader().add(new NVPair(JWTHeader.Param.ALG.getNVConfig(),""+JWTAlgorithm.HS256));
+		
+		String json = GSONUtil.toJSON(jwt, false, false, true, Base64Type.URL);
+		System.out.println(json);
+		
+		System.out.println(jwt);
+		System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
 	}
 }
