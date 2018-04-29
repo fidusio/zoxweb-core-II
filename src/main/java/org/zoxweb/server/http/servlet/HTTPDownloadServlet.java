@@ -53,6 +53,8 @@ import org.zoxweb.shared.http.HTTPMimeType;
 import org.zoxweb.shared.http.HTTPStatusCode;
 import org.zoxweb.shared.security.AccessException;
 import org.zoxweb.shared.util.GetNameValue;
+import org.zoxweb.shared.util.NVPair;
+import org.zoxweb.shared.util.SharedStringUtil;
 
 
 /**
@@ -86,7 +88,14 @@ public class HTTPDownloadServlet
 	public FileInfoStreamSource lookupFileInfoSource(HttpServletRequest request, HTTPRequestAttributes attributes)
 			throws AccessException, IOException
 	{
-		GetNameValue<String> gnv = attributes.getParameters().get("filename");
+		HTTPRequestAttributes hra = HTTPServletUtil.extractRequestAttributes(request); 
+		
+		GetNameValue<String> gnv = hra.getParameters().get("filename");
+		if (gnv == null && SharedStringUtil.trimOrNull(hra.getPathInfo()) != null)
+		{
+			log.info("pathinfo:" +  hra.getPathInfo());
+			gnv = new NVPair("filename", hra.getPathInfo());
+		}
 		
 		
 		if ( gnv != null)
@@ -114,7 +123,10 @@ public class HTTPDownloadServlet
 			FileInfoDAO fid = new FileInfoDAO();
 			fid.setName(gnv.getValue());
 			if(mt!=null)
+			{
 				fid.setContentType(mt.getValue());
+				log.info("content type:" + mt + " for file:" + file );
+			}
 			return new FileInfoStreamSource(fid, is);
 		}
 		

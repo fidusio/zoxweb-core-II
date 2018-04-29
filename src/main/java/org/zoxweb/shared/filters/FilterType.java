@@ -370,63 +370,7 @@ public enum FilterType
 		}
 	},
 	
-	/**
-	 * URL filter
-	 */
-	URL
-    {
-		public static final String REGEX = "^(https?|wss?|ftp|file)://[-a-zA-Z0-9][-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
-				//"^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
-		//"(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?"
-		//"^(?:(?:https?|ftp)://)(?:\\S+(?::\\S*)?@)?(?:(?!10(?:\\.\\d{1,3}){3})(?!127(?:\\.\\d{1,3}){3})(?!169\\.254(?:\\.\\d{1,3}){2})(?!192\\.168(?:\\.\\d{1,3}){2})(?!172\\.(?:1[6-9]|2\\d|3[0-1])(?:\\.\\d{1,3}){2})(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}(?:\\.(?:[1-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))|(?:(?:[a-z\\x{00a1}-\\x{ffff}0-9]+-?)*[a-z\\x{00a1}-\\x{ffff}0-9]+)(?:\\.(?:[a-z\\x{00a1}-\\x{ffff}0-9]+-?)*[a-z\\x{00a1}-\\x{ffff}0-9]+)*(?:\\.(?:[a-z\\x{00a1}-\\x{ffff}]{2,})))(?::\\d{2,5})?(?:/[^\\s]*)?$_iuS";
-				                         //"_^(?:(?:https?|ftp)://)(?:\\S+(?::\\S*)?@)?(?:(?!10(?:\\.\\d{1,3}){3})(?!127(?:\\.\\d{1,3}){3})(?!169\\.254(?:\\.\\d{1,3}){2})(?!192\\.168(?:\\.\\d{1,3}){2})(?!172\\.(?:1[6-9]|2\\d|3[0-1])(?:\\.\\d{1,3}){2})(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}(?:\\.(?:[1-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))|(?:(?:[a-z\\x{00a1}-\\x{ffff}0-9]+-?)*[a-z\\x{00a1}-\\x{ffff}0-9]+)(?:\\.(?:[a-z\\x{00a1}-\\x{ffff}0-9]+-?)*[a-z\\x{00a1}-\\x{ffff}0-9]+)*(?:\\.(?:[a-z\\x{00a1}-\\x{ffff}]{2,})))(?::\\d{2,5})?(?:/[^\\s]*)?$_iuS";
-		public static final int MAX_LENGTH = 4096;
-
-        /**
-         * Validates the given value.
-         * @param in value to be validated
-         * @return validated acceptable value
-         * @throws NullPointerException if in is null
-         * @throws IllegalArgumentException if in is invalid
-         */
-		public String validate(String in)
-			throws  NullPointerException, IllegalArgumentException
-        {
-            in = SharedStringUtil.trimOrNull(in);
-			SharedUtil.checkIfNulls("URL address null or empty", in);
-			
-			if (in.matches(REGEX))
-			{
-				if (in.length() > MAX_LENGTH)
-				{
-                    throw new IllegalArgumentException("URL length > max length " + in.length() + ":" + in);
-                }
-				
-				return in.toLowerCase();
-			}
-			else
-            {
-				throw new IllegalArgumentException("Invalid URL: " + in);
-			}
-		}
-
-        /**
-         * Checks if the given value is valid.
-         * @param in value to be checked
-         * @return true if valid false if not
-         */
-		public  boolean isValid(String in)
-        {
-            in = SharedStringUtil.trimOrNull(in);
-			
-			if (in != null)
-			{
-				return in.matches(REGEX) && !(in.length() > MAX_LENGTH);
-			}
-			
-			return false;
-		}
-	},
+	
 	
 	/**
 	 * Encrypt filter
@@ -625,7 +569,82 @@ public enum FilterType
 			
 			return false;
 		}
-	};
+	},
+    TEXT_NOT_EMTY
+    {
+		public String validate(String in)
+				throws  NullPointerException, IllegalArgumentException
+	    {
+			in = SharedStringUtil.trimOrNull(in);
+			if (in == null)
+			{
+				throw new NullPointerException("Null or empty");
+			}
+			return in;
+	    }
+		public boolean isValid(String in)
+		{
+			 return SharedStringUtil.trimOrNull(in) != null;
+		}
+    },
+    /**
+	 * URL filter
+	 */
+	URL
+    {
+		public static final String REGEX = "^(https?|wss?|ftp|file)://[-a-zA-Z0-9][-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
+				//"^(https?|ftp|file)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
+		//"(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?"
+		//"^(?:(?:https?|ftp)://)(?:\\S+(?::\\S*)?@)?(?:(?!10(?:\\.\\d{1,3}){3})(?!127(?:\\.\\d{1,3}){3})(?!169\\.254(?:\\.\\d{1,3}){2})(?!192\\.168(?:\\.\\d{1,3}){2})(?!172\\.(?:1[6-9]|2\\d|3[0-1])(?:\\.\\d{1,3}){2})(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}(?:\\.(?:[1-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))|(?:(?:[a-z\\x{00a1}-\\x{ffff}0-9]+-?)*[a-z\\x{00a1}-\\x{ffff}0-9]+)(?:\\.(?:[a-z\\x{00a1}-\\x{ffff}0-9]+-?)*[a-z\\x{00a1}-\\x{ffff}0-9]+)*(?:\\.(?:[a-z\\x{00a1}-\\x{ffff}]{2,})))(?::\\d{2,5})?(?:/[^\\s]*)?$_iuS";
+				                         //"_^(?:(?:https?|ftp)://)(?:\\S+(?::\\S*)?@)?(?:(?!10(?:\\.\\d{1,3}){3})(?!127(?:\\.\\d{1,3}){3})(?!169\\.254(?:\\.\\d{1,3}){2})(?!192\\.168(?:\\.\\d{1,3}){2})(?!172\\.(?:1[6-9]|2\\d|3[0-1])(?:\\.\\d{1,3}){2})(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}(?:\\.(?:[1-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))|(?:(?:[a-z\\x{00a1}-\\x{ffff}0-9]+-?)*[a-z\\x{00a1}-\\x{ffff}0-9]+)(?:\\.(?:[a-z\\x{00a1}-\\x{ffff}0-9]+-?)*[a-z\\x{00a1}-\\x{ffff}0-9]+)*(?:\\.(?:[a-z\\x{00a1}-\\x{ffff}]{2,})))(?::\\d{2,5})?(?:/[^\\s]*)?$_iuS";
+		public static final int MAX_LENGTH = 4096;
+
+        /**
+         * Validates the given value.
+         * @param in value to be validated
+         * @return validated acceptable value
+         * @throws NullPointerException if in is null
+         * @throws IllegalArgumentException if in is invalid
+         */
+		public String validate(String in)
+			throws  NullPointerException, IllegalArgumentException
+        {
+            in = SharedStringUtil.trimOrNull(in);
+			SharedUtil.checkIfNulls("URL address null or empty", in);
+			
+			if (in.matches(REGEX))
+			{
+				if (in.length() > MAX_LENGTH)
+				{
+                    throw new IllegalArgumentException("URL length > max length " + in.length() + ":" + in);
+                }
+				
+				return in.toLowerCase();
+			}
+			else
+            {
+				throw new IllegalArgumentException("Invalid URL: " + in);
+			}
+		}
+
+        /**
+         * Checks if the given value is valid.
+         * @param in value to be checked
+         * @return true if valid false if not
+         */
+		public  boolean isValid(String in)
+        {
+            in = SharedStringUtil.trimOrNull(in);
+			
+			if (in != null)
+			{
+				return in.matches(REGEX) && !(in.length() > MAX_LENGTH);
+			}
+			
+			return false;
+		}
+	},
+	;
 
 	/**
 	 * Validates the given value.
