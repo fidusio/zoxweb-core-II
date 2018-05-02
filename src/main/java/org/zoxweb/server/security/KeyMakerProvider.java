@@ -51,7 +51,7 @@ implements KeyMaker
 	public final synchronized void setMasterKey(KeyStore keystore, String alias, String aliasPassword)
 			throws NullPointerException, IllegalArgumentException, AccessException
 	{
-		SharedUtil.checkIfNulls("Null parameters", keystore, alias, aliasPassword);
+		SharedUtil.checkIfNulls("Null parameters", keystore, alias);
 		try
 		{
 			if (!keystore.containsAlias(alias))

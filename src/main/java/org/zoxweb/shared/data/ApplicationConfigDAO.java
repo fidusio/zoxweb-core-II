@@ -16,12 +16,14 @@
 package org.zoxweb.shared.data;
 
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.zoxweb.shared.util.GetName;
 import org.zoxweb.shared.util.GetNameValue;
+import org.zoxweb.shared.util.NVBoolean;
+import org.zoxweb.shared.util.NVGenericMap;
 import org.zoxweb.shared.util.SharedStringUtil;
+import org.zoxweb.shared.util.SharedUtil;
 
 /**
  * This class defines the application configuration data access object.
@@ -37,12 +39,13 @@ public class ApplicationConfigDAO
 	public final static String DEFAULT_APPLICATION_CONF_FILENAME = "ApplicationConf.json";
 	public final static String DEFAULT_APPLICATION_ENV_VAR = "APPLICATION_CONF_VAR";
 	
-	private boolean is_secure = false;
+//	private boolean is_secure = false;
 	
 	/**
 	 * The application property container
 	 */
-	private HashMap<String, String> properties = new HashMap<String, String>();
+	//private HashMap<String, String> properties = new HashMap<String, String>();
+	private volatile NVGenericMap nvgProperties = null;
 	
 	/**
 	 * This enum includes the application configuration variables.
@@ -102,10 +105,17 @@ public class ApplicationConfigDAO
 	 */
 	public ApplicationConfigDAO()
 	{
+		nvgProperties = new NVGenericMap();
 		for (ApplicationDefaultParam p : ApplicationDefaultParam.values())
 		{
-			set(p.getName(), p.getValue());
+			nvgProperties.add(p.getName(), p.getValue());
 		}
+	}
+	
+	public ApplicationConfigDAO(NVGenericMap prop)
+	{
+		SharedUtil.checkIfNulls("Null properties", prop);
+		nvgProperties = prop;
 	}
 	
 	/**
@@ -137,7 +147,11 @@ public class ApplicationConfigDAO
 	{
 		name = SharedStringUtil.toLowerCase(name);
 		if (!SharedStringUtil.isEmpty(name))
-			return properties.get(name);
+		{
+			GetNameValue<?> gnv = nvgProperties.get(name);
+			if(gnv != null && gnv.getValue() != null)
+				return "" + gnv.getValue();
+		}
 
 		return null;
 	}
@@ -147,12 +161,12 @@ public class ApplicationConfigDAO
 	 * @param name
 	 * @param value
 	 */
-	public synchronized void set(String name, String value)
-	{
-		name = SharedStringUtil.toLowerCase(name);
-		if (!SharedStringUtil.isEmpty(name))
-			properties.put( name, value);
-	}
+//	public synchronized void set(String name, String value)
+//	{
+//		name = SharedStringUtil.toLowerCase(name);
+//		if (!SharedStringUtil.isEmpty(name))
+//			nvgProperties.add(name, value);
+//	}
 	
 	/**
 	 * Sets properties.
@@ -160,11 +174,11 @@ public class ApplicationConfigDAO
 	 */
 	public synchronized void setProperties(Map<String, String> prop)
 	{
-		properties.clear();
+		nvgProperties.clear();
 		
 		for (Map.Entry<String, String> entry : prop.entrySet())
 		{
-			set(entry.getKey(), entry.getValue());
+			nvgProperties.add(entry.getKey(), entry.getValue());
 		}
 			
 		//this.properties = prop;
@@ -174,25 +188,44 @@ public class ApplicationConfigDAO
 	 * Gets properties.
 	 * @return the properties map
 	 */
-	public Map<String, String> getProperties()
+	public NVGenericMap getProperties()
 	{
-		return properties;
+		return nvgProperties;
 	}
 
 	@Override
 	public String toString()
 	{
-		return "" + properties;
+		return "" + nvgProperties;
 	}
 	
 	
 	public boolean isSecureEnabled()
 	{
-		return is_secure;
+		NVBoolean nvb = (NVBoolean) nvgProperties.get("is_secure");
+		if (nvb != null)
+		{
+			return nvb.getValue();
+		}
+		
+		return false;
 	}
 	
 	public void setSecureEnabled(boolean bool)
 	{
-		is_secure = bool;
+		//is_secure = bool;
+		NVBoolean nvb = (NVBoolean) nvgProperties.get("is_secure");
+		synchronized(nvgProperties)
+		{
+			if (nvb == null)
+			{
+				nvgProperties.add(new NVBoolean("is_secure", bool));
+			}
+			else
+			{
+				nvb.setValue(bool);
+			}
+		}
+	
 	}
 }

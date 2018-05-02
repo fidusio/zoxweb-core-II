@@ -600,7 +600,7 @@ public class CryptoUtil
 	public static KeyStore createKeyStore(String keyStoreFilename, String keyStoreType, String keyStorePass)
         throws IOException, KeyStoreException, NoSuchAlgorithmException, CertificateException
 	{
-		return createKeyStore( new File(keyStoreFilename), keyStoreType, keyStorePass, false);
+		return createKeyStore(new File(keyStoreFilename), keyStoreType, keyStorePass, false);
 	}
 
 	public static KeyStore createKeyStore(final File keyStoreFile, String keyStoreType, String keyStorePass, final boolean fileOverride)

@@ -30,6 +30,8 @@ import org.zoxweb.shared.data.ApplicationConfigDAO;
 import org.zoxweb.shared.data.ApplicationConfigDAO.ApplicationDefaultParam;
 import org.zoxweb.shared.util.Const;
 import org.zoxweb.shared.util.GetValue;
+import org.zoxweb.shared.util.NVGenericMap;
+import org.zoxweb.shared.util.SharedBase64.Base64Type;
 import org.zoxweb.shared.util.SharedUtil;
 
 public class ApplicationConfigManager
@@ -111,8 +113,16 @@ public class ApplicationConfigManager
 		{
 			System.out.println(ApplicationConfigDAO.DEFAULT_APPLICATION_ENV_VAR + "=" + getDefaultApplicationEnvVar());
 			String jsonString = IOUtil.inputStreamToString(defaultFile.toURI().toURL().openStream(), true);
-			defaultACD =  GSONUtil.create(true).fromJson(jsonString, ApplicationConfigDAO.class);
-			defaultFileLastAccess = defaultFile.lastModified();
+			try {
+				NVGenericMap props = GSONUtil.fromJSONGenericMap(jsonString, null, Base64Type.DEFAULT);
+				defaultACD = new ApplicationConfigDAO(props);//GSONUtil.create(true).fromJson(jsonString, ApplicationConfigDAO.class);
+				defaultFileLastAccess = defaultFile.lastModified();
+			} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				throw new IOException(e.getMessage());
+			}
+			
 		}
 
 		return defaultACD;
@@ -165,14 +175,14 @@ public class ApplicationConfigManager
     {
 		//File file = new File(concatAsDirName( acd, acd.lookupValue(ApplicationDefaultParam.CONF_DIR)), ApplicationConfigDAO.DEFAULT_APPLICATION_CONF_FILENAME);
 		File file = new File(SharedUtil.toCanonicalID('/', getDefaultApplicationEnvVar(), ApplicationDefaultParam.CONF_DIR.getValue()), ApplicationConfigDAO.DEFAULT_APPLICATION_CONF_FILENAME);	
-		String jsonString =  GSONUtil.create(true).toJson(acd);
+		String jsonString =  GSONUtil.toJSONGenericMap(acd.getProperties(), true, false, true, Base64Type.DEFAULT);
 		
 		FileOutputStream fos = null;
 
 		try
         {
 			fos = new FileOutputStream( file);
-			fos.write( jsonString.getBytes());
+			fos.write(jsonString.getBytes());
 		}
 		finally
         {
