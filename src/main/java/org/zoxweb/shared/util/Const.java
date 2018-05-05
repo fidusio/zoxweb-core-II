@@ -432,8 +432,64 @@ public class Const
 		public static long toMillis(String time) 
 			throws NullPointerException, IllegalArgumentException
         {
-
 			time  = SharedStringUtil.toLowerCase(time).trim();
+			String hhmmss[] = time.split(":");
+			if (hhmmss.length > 0 && hhmmss.length <= 3)
+			{
+				int millis = 0;
+				int ss = 0;
+				int mm = 0;
+				int hh = 0;
+				try
+				{
+					for (int i=0; i < hhmmss.length; i++)
+					{
+						int index = hhmmss.length - (i+1);
+						String tok = hhmmss[index];
+						switch(i)
+						{
+						case 0:
+							String millisToken[] = tok.split("\\.");
+							if (millisToken.length == 2)
+							{
+								millis =  Integer.parseInt(millisToken[1]);
+								if (millis < 0 && millis > 999)
+								{
+									throw new IllegalArgumentException("invalid millis value " + millis);
+								}
+								tok = millisToken[0];
+							}
+							
+							ss = Integer.parseInt(tok);
+							if (ss < 0 && ss > 59)
+								throw new IllegalArgumentException("invalid second value " + ss);
+							break;
+						case 1:
+							mm = Integer.parseInt(tok);
+							if (mm < 0 && mm > 59)
+								throw new IllegalArgumentException("invalid minute value " + mm);
+							break;
+						case 2:
+							hh = Integer.parseInt(tok);
+							if (hh < 0)
+								throw new IllegalArgumentException("invalid hour value " + hh);
+							break;
+						}
+					}
+					long ret = hh*HOUR.MILLIS + mm*MINUTE.MILLIS + ss*SECOND.MILLIS + millis;
+					return ret;
+				}
+				catch(NumberFormatException e)
+				{
+					//e.printStackTrace();
+				}
+			}
+				
+			
+			
+			
+
+			
 			TimeInMillis timeMatch = null;
 			String tokenMatch = null;
 			
