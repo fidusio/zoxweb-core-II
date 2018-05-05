@@ -193,6 +193,7 @@ public class ApplicationConfigManager
 	
 	public static File locateFile(String filename)
 	{
+		log.info(getDefaultApplicationEnvVar() + "/" + filename);
 		return new File(getDefaultApplicationEnvVar(), filename);
 	}
 
