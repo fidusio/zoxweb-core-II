@@ -15,14 +15,13 @@
  */
 package org.zoxweb.shared.filters;
 
-import org.junit.Assert;
 import org.junit.Test;
 
-import org.zoxweb.shared.filters.PhoneNumberFilter;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class PhoneNumberFilterTest
 {
-
 	@Test
 	public void testValidPhoneNumber() {
 
@@ -30,7 +29,7 @@ public class PhoneNumberFilterTest
                 "4155555555", "4155555555x123"};
 
 	    for (String number : numbers) {
-            Assert.assertTrue(PhoneNumberFilter.SINGLETON.isValid(number));
+            assertTrue(PhoneNumberFilter.SINGLETON.isValid(number));
         }
 	}
 	
@@ -42,7 +41,7 @@ public class PhoneNumberFilterTest
                 "(+415)5555555", "+(415)++5555555", "--(415)5555555x", "+1(415)5555555xsdfdsf"};
 
 	    for (String number : numbers) {
-            Assert.assertFalse(PhoneNumberFilter.SINGLETON.isValid(number));
+            assertFalse(PhoneNumberFilter.SINGLETON.isValid(number));
         }
 	}
 	

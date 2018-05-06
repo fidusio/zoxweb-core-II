@@ -15,20 +15,33 @@
  */
 package org.zoxweb.shared.filters;
 
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 public class NotNullOrEmptyTest {
 
-	public static void main(String[] args) {
-		String [] list = {" ", "example", null, "test"};
-		
-		System.out.println("Testing null or empty strings: ");
+    @Test
+    public void testIsValidForValidValue() {
+        assertTrue(NotNullOrEmpty.SINGLETON.isValid("example"));
+        assertTrue(NotNullOrEmpty.SINGLETON.isValid("test"));
+    }
 
-		for (int i = 0; i < list.length; i++) {
-			
-			try {
-				System.out.println("\"" + NotNullOrEmpty.SINGLETON.validate(list[i]) + "\" Valid");
-			} catch (IllegalArgumentException e) {
-				System.out.println("\"" + list[i] + "\" Invalid");
-			}
-		}
-	}
+    @Test
+    public void testIsValidForInvalidValue() {
+        assertFalse(NotNullOrEmpty.SINGLETON.isValid(null));
+        assertFalse(NotNullOrEmpty.SINGLETON.isValid(" "));
+    }
+
+    @Test
+    public void testValidateForValidValue() {
+        assertEquals("example", NotNullOrEmpty.SINGLETON.validate("example"));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testValidateForInvalidValue() {
+        NotNullOrEmpty.SINGLETON.validate(" ");
+    }
 }

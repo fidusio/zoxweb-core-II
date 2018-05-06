@@ -15,51 +15,34 @@
  */
 package org.zoxweb.shared.filters;
 
-import org.junit.Assert;
 import org.junit.Test;
 
-import org.zoxweb.shared.filters.AddressFilterType;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class AddressFilterTypeTest {
 
 	@Test
 	public void testValidUSZipCode() {
-		String zipCode = "90025";
-		boolean valid = AddressFilterType.US_ZIP_CODE.isValid(zipCode);
-		Assert.assertTrue(valid);
-
-		zipCode = "48202";
-		valid = AddressFilterType.US_ZIP_CODE.isValid(zipCode);
-		Assert.assertTrue(valid);
+		assertTrue(AddressFilterType.US_ZIP_CODE.isValid("90025"));
+		assertTrue(AddressFilterType.US_ZIP_CODE.isValid("48202"));
 	}
 	
 	@Test
 	public void testInvalidUSZipCode() {
-		String zipCode = "0";
-		boolean valid = AddressFilterType.US_ZIP_CODE.isValid(zipCode);
-		Assert.assertFalse(valid);
-
-		zipCode = "48202555";
-		valid = AddressFilterType.US_ZIP_CODE.isValid(zipCode);
-		Assert.assertFalse(valid);
+		assertFalse(AddressFilterType.US_ZIP_CODE.isValid("0"));
+		assertFalse(AddressFilterType.US_ZIP_CODE.isValid("48202555"));
 	}
 	
 	@Test
 	public void testValidCanadaPostalCode() {
-		String postalCode = "N9G2E1";
-		boolean valid = AddressFilterType.CANADA_POSTAL_CODE.isValid(postalCode);
-		Assert.assertTrue(valid);
+		assertTrue(AddressFilterType.CANADA_POSTAL_CODE.isValid("N9G2E1"));
 	}
 	
 	@Test
 	public void testInvalidCanadaPostalCode() {
-		String postalCode = "9N23G1";
-		boolean valid = AddressFilterType.CANADA_POSTAL_CODE.isValid(postalCode);
-		Assert.assertFalse(valid);
-
-		postalCode = "90066";
-		valid = AddressFilterType.CANADA_POSTAL_CODE.isValid(postalCode);
-		Assert.assertFalse(valid);
+		assertFalse(AddressFilterType.CANADA_POSTAL_CODE.isValid("9N23G1"));
+		assertFalse(AddressFilterType.CANADA_POSTAL_CODE.isValid("90066"));
 	}
 	
 }

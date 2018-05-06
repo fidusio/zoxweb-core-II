@@ -15,58 +15,45 @@
  */
 package org.zoxweb.shared.accounting;
 
+import org.junit.Test;
+
 import java.math.BigDecimal;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
-import org.zoxweb.server.util.GSONUtil;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
-public class FinancialTransactionDAOTest {
+public class FinancialTransactionDAOTest
+{
 
-	private static final DateFormat TIME_STAMP_FORMAT = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-	
-	public static void main(String[] args) {
+	@Test
+    public void testFinancialTransactionDAO()
+    {
+        FinancialTransactionDAO transaction = new FinancialTransactionDAO();
+        transaction.setAmount(new MoneyValueDAO(new BigDecimal("100"), Currency.USD));
+        transaction.setType(TransactionType.CREDIT);
+        transaction.setDescriptor(TransactionDescriptor.MONTHLY_PAYMENT.name());
+        transaction.setCreationTime(System.currentTimeMillis());
 
-		try {
-			FinancialTransactionDAO transaction = new FinancialTransactionDAO();
-			BillingAccountDAO account = new BillingAccountDAO();
-			
-			transaction.setAmount(new MoneyValueDAO(new BigDecimal("100"), Currency.USD));
-			transaction.setType(TransactionType.CREDIT);
-			transaction.setDescriptor(TransactionDescriptor.MONTHLY_PAYMENT.name());
-			transaction.setCreationTime(System.currentTimeMillis());
-			
-			account.getCurrentBalance().setCurrency(Currency.USD);
-			account.getCurrentBalance().setValue(new BigDecimal("200"));
-			account.applyTransaction(transaction);
-			
-			System.out.println("Transaction Values: ");
-			System.out.println("Currency: " + transaction.getAmount().getCurrency());
-			System.out.println("Amount: " + transaction.getAmount().getValue());
-			System.out.println("Type: " + transaction.getType());
-			System.out.println("Description: " + transaction.getDescriptor());
-			System.out.println("Time Stamp: " + TIME_STAMP_FORMAT.format(new Date(transaction.getCreationTime())));
-			
-			System.out.println(GSONUtil.toJSON(transaction, true));
-			System.out.println(GSONUtil.toJSON(account, true));
-			
-			String json = GSONUtil.toJSON(account, true);
-			System.out.println(json);
-			
-			account = GSONUtil.fromJSON(json, BillingAccountDAO.class);
-			
-			String json1 = GSONUtil.toJSON(account, true);
-			System.out.println("JSON Objects Comparison: "+ json1.equals(json));
+        BillingAccountDAO account = new BillingAccountDAO();
+        account.setCurrentBalance(new MoneyValueDAO(new BigDecimal("200"), Currency.USD));
+        assertEquals(new MoneyValueDAO(new BigDecimal("200.00"), Currency.USD), account.getCurrentBalance());
 
-			System.out.println(account.getCurrentBalance().getCurrency());
-			System.out.println(account.getCurrentBalance());
-			System.out.println(account.applyTransaction(new FinancialTransactionDAO(new MoneyValueDAO(10))));
-			System.out.println(account.applyTransaction(new FinancialTransactionDAO(new MoneyValueDAO(15))));
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
+        account.applyTransaction(transaction);
+
+        assertNotNull(transaction.getAmount());
+        assertEquals(Currency.USD, transaction.getAmount().getCurrency());
+        assertEquals(new BigDecimal("100.00"), transaction.getAmount().getValue());
+        assertEquals(TransactionType.CREDIT, transaction.getType());
+        assertEquals(TransactionDescriptor.MONTHLY_PAYMENT.name(), transaction.getDescriptor());
+
+        assertNotNull(account.getCurrentBalance());
+        assertEquals(new MoneyValueDAO(new BigDecimal("300.00"), Currency.USD), account.getCurrentBalance());
+
+        account.applyTransaction(new FinancialTransactionDAO(new MoneyValueDAO(10)));
+        assertEquals(new MoneyValueDAO(new BigDecimal("310.00"), Currency.USD), account.getCurrentBalance());
+
+        account.applyTransaction(new FinancialTransactionDAO(new MoneyValueDAO(20)));
+        assertEquals(new MoneyValueDAO(new BigDecimal("330.00"), Currency.USD), account.getCurrentBalance());
+    }
+
 }

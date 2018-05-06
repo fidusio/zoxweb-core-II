@@ -15,23 +15,24 @@
  */
 package org.zoxweb.shared.filters;
 
+import org.junit.Test;
+
 import java.math.BigDecimal;
 
-import org.junit.Assert;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 public class BigDecimalFilterTest {
 
 	@Test
 	public void testValidBigDecimal() {
 		BigDecimal value = BigDecimalFilter.SINGLETON.validate("100.00");
-		Assert.assertEquals("100.00", value.toString());
+		assertEquals("100.00", value.toString());
 
 		value = BigDecimalFilter.SINGLETON.validate("1000");
-		Assert.assertEquals("1000", value.toString());
+		assertEquals("1000", value.toString());
 
 		value = BigDecimalFilter.SINGLETON.validate(".99");
-		Assert.assertEquals("0.99", value.toString());
+		assertEquals("0.99", value.toString());
 	}
 
 	
