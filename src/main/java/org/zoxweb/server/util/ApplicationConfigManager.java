@@ -181,7 +181,7 @@ public class ApplicationConfigManager
 
 		try
         {
-			fos = new FileOutputStream( file);
+			fos = new FileOutputStream(file);
 			fos.write(jsonString.getBytes());
 		}
 		finally
@@ -193,7 +193,7 @@ public class ApplicationConfigManager
 	
 	public static File locateFile(String filename)
 	{
-		log.info(getDefaultApplicationEnvVar() + "/" + filename);
+		//log.info(getDefaultApplicationEnvVar() + "/" + filename);
 		return new File(getDefaultApplicationEnvVar(), filename);
 	}
 
