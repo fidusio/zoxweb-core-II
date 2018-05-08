@@ -12,13 +12,13 @@ public class ScheduleConfigTest {
 			int index = 0;
 			String filename = args[index++];
 			ScheduleConfigDAO config = GSONUtil.fromJSON(IOUtil.inputStreamToString(filename), ScheduleConfigDAO.class);
-			System.out.println(config.getSchedule());
+			System.out.println(config.getSchedules());
 			String json = GSONUtil.toJSON(config, true, false, false);
 			System.out.println(json);
 			config = GSONUtil.fromJSON(json, ScheduleConfigDAO.class);
-			System.out.println(config.getSchedule());
-			System.out.println(config.getSchedule().getClass());
-			System.out.println(config.getSchedule().get("oprerating_schedules").getClass());
+			System.out.println(config.getSchedules());
+			System.out.println(config.getSchedules().getClass());
+			//System.out.println(config.getSchedule().get("oprerating_schedules").getClass());
 			
 		}
 		catch(Exception e)
