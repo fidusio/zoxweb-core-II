@@ -19,6 +19,7 @@ public class ScheduleConfigTest {
 			System.out.println(config.getSchedule());
 			System.out.println(config.getSchedule().getClass());
 			System.out.println(config.getSchedule().get("oprerating_schedules").getClass());
+			
 		}
 		catch(Exception e)
 		{
