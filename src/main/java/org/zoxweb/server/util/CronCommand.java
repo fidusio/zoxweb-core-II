@@ -21,6 +21,8 @@ implements Runnable
 	private long executionCounter = 0;
 	private volatile TaskListener<CronCommand, String> taskListener;
 	
+	
+	
 	public CronCommand(TaskListener<CronCommand, String> taskListener, int repeatCount, long delay, String command)
 	{
 		SharedUtil.checkIfNulls("Command cannot be null", SharedStringUtil.trimOrNull(command), taskListener);
@@ -32,6 +34,7 @@ implements Runnable
 		this.repeatCount = repeatCount;
 		this.delay = delay;
 		this.command = command;
+		
 		this.taskListener = taskListener;
 		Appointment a = new AppointmentDefault(delay);
 		TaskUtil.getDefaultTaskScheduler().queue(a, this);
@@ -48,7 +51,7 @@ implements Runnable
 		try 
 		{
 			RuntimeResultDAO rr = RuntimeUtil.runAndFinish(command);
-			taskListener.executionResult(rr.getExitCode(), rr.getOutputData());;
+			taskListener.executionResult(rr.getExitCode(), executionCounter, System.currentTimeMillis(), rr.getOutputData());
 			
 		} 
 		catch (InterruptedException | IOException e)
@@ -60,6 +63,7 @@ implements Runnable
 		if (repeatCount == executionCounter)
 		{
 			taskListener.terminated(this);
+			return;
 		}
 		Appointment a = new AppointmentDefault(delay);
 		TaskUtil.getDefaultTaskScheduler().queue(a, this);
@@ -120,7 +124,7 @@ implements Runnable
 				}
 
 				@Override
-				public void executionResult(int status, String result) {
+				public void executionResult(int status, long counter, long timestamp,  String result) {
 					// TODO Auto-generated method stub
 					System.out.println(result);
 				}

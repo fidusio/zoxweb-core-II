@@ -1423,6 +1423,10 @@ public class SharedUtil
 			{
 				return new NVGenericMap(config.getName());
 			}
+			else if (NVGenericMapList.class.equals(c))
+			{
+				return new NVGenericMapList(config.getName());
+			}
 		}
 		
 		throw new IllegalArgumentException("Unsupported type " + config + " class:" + c);

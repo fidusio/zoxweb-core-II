@@ -23,8 +23,8 @@ import java.util.logging.Logger;
 import org.zoxweb.server.io.IOUtil;
 import org.zoxweb.server.task.RunnableTask;
 import org.zoxweb.server.task.TaskSchedulerProcessor;
-import org.zoxweb.server.task.TaskSchedulerProcessor.TaskSchedulerAppointment;
 import org.zoxweb.server.task.TaskUtil;
+import org.zoxweb.shared.util.Appointment;
 import org.zoxweb.shared.util.AppointmentDefault;
 import org.zoxweb.shared.util.Const.TimeInMillis;
 import org.zoxweb.shared.util.SharedUtil;
@@ -37,7 +37,7 @@ public class NIOChannelCleaner
 	private Set<SelectionKey> set = new HashSet<SelectionKey>();
 	private long sleepTime = -1;
 
-	private TaskSchedulerAppointment tsa = null;
+	private Appointment tsa = null;
 	private long runCall = 0;
 	
 	

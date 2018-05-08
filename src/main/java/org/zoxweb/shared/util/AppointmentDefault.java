@@ -17,6 +17,8 @@ package org.zoxweb.shared.util;
 
 import java.io.Serializable;
 
+import org.zoxweb.shared.util.Const.TimeInMillis;
+
 @SuppressWarnings("serial")
 public class AppointmentDefault
     implements Appointment, Serializable
@@ -28,6 +30,11 @@ public class AppointmentDefault
 	public AppointmentDefault()
     {
 		this(0);
+	}
+	
+	public AppointmentDefault(String time)
+	{
+		this(TimeInMillis.toMillis(time));
 	}
 	
 	public AppointmentDefault(long delayInMillis)

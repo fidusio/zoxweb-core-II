@@ -63,6 +63,8 @@ public interface NVConfig
 	
 	public boolean isTypeReferenceID();
 	
+	public boolean isStatic();
+	
 	public void setTypeReferenceID(boolean type);
 
 	/**

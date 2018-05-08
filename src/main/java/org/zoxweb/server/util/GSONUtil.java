@@ -67,6 +67,7 @@ import org.zoxweb.shared.util.NVEntityReference;
 import org.zoxweb.shared.util.NVFloat;
 import org.zoxweb.shared.util.NVFloatList;
 import org.zoxweb.shared.util.NVGenericMap;
+import org.zoxweb.shared.util.NVGenericMapList;
 import org.zoxweb.shared.util.NVInt;
 import org.zoxweb.shared.util.NVIntList;
 import org.zoxweb.shared.util.NVLong;
@@ -792,6 +793,19 @@ final public class GSONUtil
 				
 				writer.endArray();
 			}
+			else if (gnv instanceof NVGenericMapList)
+			{
+				writer.name(gnv.getName());
+				writer.beginArray();
+				List<NVGenericMap> values = (List<NVGenericMap>) gnv.getValue();
+				
+				for (NVGenericMap val : values)
+				{
+					toJSONGenericMap(writer, val, printNull, printClassType, b64Type);
+				}
+				
+				writer.endArray();
+			}
 		}
 		
 		
@@ -853,9 +867,9 @@ final public class GSONUtil
 							{
 								((NVDoubleList)nvb).getValue().add(ja.get(i).getAsDouble());
 							}
-							else if (nvb instanceof NVGenericMap)
+							else if (nvb instanceof NVGenericMapList)
 							{
-								((NVGenericMap)nvb).add(fromJSONGenericMap((JsonObject)ja.get(i), null, btype));
+								((NVGenericMapList)nvb).add(fromJSONGenericMap((JsonObject)ja.get(i), null, btype));
 							}
 						}
 					}
@@ -909,9 +923,10 @@ final public class GSONUtil
 						ret = new NVPairList(null, new ArrayList<NVPair>());
 					}
 				}
+				
 				if (jo.size()>1)
 				{
-					ret = new NVGenericMap();
+					ret = new NVGenericMapList();
 					break;
 				}
 			}

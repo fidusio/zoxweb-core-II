@@ -24,7 +24,6 @@ import org.zoxweb.server.task.TaskEvent;
 import org.zoxweb.server.task.TaskExecutor;
 import org.zoxweb.server.task.TaskProcessor;
 import org.zoxweb.server.task.TaskSchedulerProcessor;
-import org.zoxweb.server.task.TaskSchedulerProcessor.TaskSchedulerAppointment;
 import org.zoxweb.shared.util.Const;
 import org.zoxweb.shared.util.Appointment;
 import org.zoxweb.shared.util.AppointmentDefault;
@@ -108,7 +107,7 @@ public class TaskSchedulerProcessorTest {
 		TaskProcessor tp = new  TaskProcessor(50, Runtime.getRuntime().availableProcessors()*5, Thread.NORM_PRIORITY, true);
 		TaskSchedulerProcessor tsp = new TaskSchedulerProcessor(tp);
 		
-		TaskSchedulerAppointment tsa = null;
+		Appointment tsa = null;
 		
 		for(int i = 0; i < 10; i++) {
 			Appointment ts = new AppointmentDefault(Const.TimeInMillis.SECOND.MILLIS*1 + i*Const.TimeInMillis.SECOND.MILLIS);
@@ -151,9 +150,9 @@ public class TaskSchedulerProcessorTest {
 		System.out.println("TaskSchedulerProcessor AAAAA   AAAAAA :" + tsp.pendingTasks() + " TaskProcessor:" + tp.pendingTasks());
 		
 		//tsp = new TaskSchedulerProcessor( Appointment.EQUAL_MORE_COMPARATOR);
-		TaskSchedulerAppointment last = null;
+		Appointment last = null;
 		TaskExecutorImpl tei = null;
-		TaskSchedulerAppointment tsaToCancel = null;
+		Appointment tsaToCancel = null;
 
 		for (int i = 0; i < 10; i++) {
 			Appointment ts = new AppointmentDefault(Const.TimeInMillis.SECOND.MILLIS*1 + i*Const.TimeInMillis.SECOND.MILLIS);

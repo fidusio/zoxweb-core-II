@@ -72,7 +72,7 @@ public class TaskSchedulerProcessor
 	private ConcurrentSkipListSet<TaskSchedulerAppointment> queue = null;
 	
 	public TaskSchedulerProcessor() {
-		this( Appointment.EQUAL_COMPARATOR, null);
+		this(Appointment.EQUAL_COMPARATOR, null);
 	}
 
 	public TaskSchedulerProcessor(TaskProcessor tp) {
@@ -107,7 +107,7 @@ public class TaskSchedulerProcessor
 		return !live;
 	}
 	
-	public TaskSchedulerAppointment queue(Object source,  Appointment a, TaskExecutor te, Object... params) {
+	public Appointment queue(Object source,  Appointment a, TaskExecutor te, Object... params) {
 		TaskEvent tEvent = new TaskEvent(source, te, params);
 
 		if (a == null) {
@@ -117,7 +117,7 @@ public class TaskSchedulerProcessor
 		return queue(new TaskSchedulerAppointment( a, tEvent));
 	}
 
-	public TaskSchedulerAppointment queue(Appointment a, TaskEvent te) {
+	public Appointment queue(Appointment a, TaskEvent te) {
 		if (a == null) {
 			a = new AppointmentDefault();
 		}
@@ -126,7 +126,7 @@ public class TaskSchedulerProcessor
 	}
 	
 	
-	public TaskSchedulerAppointment queue(Appointment a, Runnable command)
+	public Appointment queue(Appointment a, Runnable command)
 	{
 		if (command != null)
 			return queue(a, new TaskEvent(this, new RunnableTaskContainer(command),(Object[]) null));
@@ -161,7 +161,7 @@ public class TaskSchedulerProcessor
 		}
 	}
 	
-	public boolean remove(TaskSchedulerAppointment tsa) {
+	public boolean remove(Appointment tsa) {
 		return queue.remove(tsa);
 	}
 

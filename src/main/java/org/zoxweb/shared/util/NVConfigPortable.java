@@ -53,6 +53,7 @@ public class NVConfigPortable
 	private boolean unique = false;
 	private boolean hidden = false;
 	private boolean referenceIDType = false;
+	private boolean isStatic = true;
 	
 	
 	/**
@@ -343,6 +344,16 @@ public class NVConfigPortable
 	public void setTypeReferenceID(boolean type)
 	{
 		referenceIDType = type;
+	}
+	
+	public boolean isStatic()
+	{
+		return isStatic;
+	}
+	
+	public void setStatic(boolean staticVal)
+	{
+		isStatic = staticVal;
 	}
 
 }
