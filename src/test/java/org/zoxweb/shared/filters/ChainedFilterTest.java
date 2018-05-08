@@ -17,125 +17,69 @@ package org.zoxweb.shared.filters;
 
 import org.junit.Test;
 
-import org.zoxweb.shared.filters.ChainedFilter;
-import org.zoxweb.shared.filters.CreditCardNumberFilter;
-import org.zoxweb.shared.filters.FilterType;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class ChainedFilterTest {
 
-	@SuppressWarnings("unchecked")
 	@Test
-	public void test1() {
+	public void testIsValidForValidValue()
+    {
 		ChainedFilter cf = new ChainedFilter(FilterType.CLEAR, FilterType.EMAIL);
-		
-		String input = "johnsmith@zoxweb.com";
-		
-		System.out.println("***Test 1***");
-		System.out.println("Validate: " + cf.validate(input)  + "   Valid: " + cf.isValid(input));
-	}
-	
-	@Test
-	public void test2() 
-	{
-		FilterType[] filters = new FilterType[6];
-		filters[0] = FilterType.BIG_DECIMAL;
-		filters[1] = FilterType.BINARY;
-		filters[2] = FilterType.DOUBLE;
-		filters[3] = FilterType.FLOAT;
-		filters[4] = FilterType.INTEGER;
-		filters[5] = FilterType.LONG;
-		
-		ChainedFilter cf = new ChainedFilter(filters);
-
-		System.out.println("***Test 2***");
-		System.out.println("Filter Type: " + FilterType.BOOLEAN + " Inlcuded: " + cf.isFilterSupported(FilterType.BOOLEAN));
-		System.out.println("Filter Type: " + FilterType.CLEAR + " Inlcuded: " + cf.isFilterSupported(FilterType.CLEAR));
-		System.out.println("Filter Type: " + FilterType.EMAIL + " Inlcuded: " + cf.isFilterSupported(FilterType.EMAIL));
-		System.out.println("Filter Type: " + FilterType.ENCRYPT_MASK + " Inlcuded: " + cf.isFilterSupported(FilterType.ENCRYPT_MASK));
-		
-		for (FilterType ft : filters)
-		{
-			System.out.println("Filter Type: " + ft + " Inlcuded: " + cf.isFilterSupported(ft));
-		}
+        assertTrue(cf.isValid("johnsmith@zoxweb.com"));
+        assertTrue(cf.isValid("  johnsmith@zoxweb.com  "));
+        assertTrue(cf.isValid("johnsmith@zoxweb.com    "));
 	}
 
-	@SuppressWarnings("unchecked")
+    @Test
+    public void testIsValidForInvalidValue()
+    {
+        ChainedFilter cf = new ChainedFilter(FilterType.CLEAR, FilterType.EMAIL);
+        assertFalse(cf.isValid("54545"));
+        assertFalse(cf.isValid(""));
+        assertFalse(cf.isValid(null));
+    }
+
+    @Test
+    public void testValidateForValidValue()
+    {
+        ChainedFilter cf = new ChainedFilter(FilterType.CLEAR, FilterType.EMAIL);
+        assertEquals("johnsmith@zoxweb.com", cf.validate("johnsmith@zoxweb.com"));
+        assertEquals("johnsmith@zoxweb.com", cf.validate("  johnsmith@zoxweb.com  "));
+        assertEquals("johnsmith@zoxweb.com", cf.validate("johnsmith@zoxweb.com    "));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testValidateForInvalidValue()
+    {
+        ChainedFilter cf = new ChainedFilter(FilterType.CLEAR, FilterType.EMAIL);
+        cf.validate("535355");
+    }
+	
 	@Test
-	public void test3() 
-	{
-		ChainedFilter cf = new ChainedFilter
-							(
-								FilterType.BIG_DECIMAL, 
-								FilterType.BINARY, 
-								FilterType.DOUBLE, 
-								FilterType.FLOAT, 
-								FilterType.INTEGER,
-								FilterType.LONG
-							);
-		
-		System.out.println("***Test 3***");
-		System.out.println("Canonical ID: " + cf.toCanonicalID());
+	public void testIsFilterSupported()
+    {
+        ChainedFilter cf = new ChainedFilter(
+                        FilterType.BIG_DECIMAL,
+                        FilterType.BINARY,
+                        FilterType.DOUBLE,
+                        FilterType.FLOAT,
+                        FilterType.INTEGER,
+                        FilterType.LONG
+                );
+
+        assertTrue(cf.isFilterSupported(FilterType.BIG_DECIMAL));
+        assertTrue(cf.isFilterSupported(FilterType.BINARY));
+        assertTrue(cf.isFilterSupported(FilterType.DOUBLE));
+        assertTrue(cf.isFilterSupported(FilterType.FLOAT));
+        assertTrue(cf.isFilterSupported(FilterType.INTEGER));
+        assertTrue(cf.isFilterSupported(FilterType.LONG));
+
+        assertFalse(cf.isFilterSupported(FilterType.BOOLEAN));
+		assertFalse(cf.isFilterSupported(FilterType.CLEAR));
+        assertFalse(cf.isFilterSupported(FilterType.EMAIL));
+        assertFalse(cf.isFilterSupported(FilterType.ENCRYPT_MASK));
 	}
-	
-	@SuppressWarnings("unchecked")
-	@Test
-	public void test4() 
-	{
-		ChainedFilter cf = new ChainedFilter(FilterType.CLEAR, FilterType.EMAIL);
-		
-		String[] inputs = {"mzebib@zoxweb.com", "54545", "mzebib@gmail.com", "mzebib@gmail"};
-		
-		System.out.println("***Test 4***");
-		System.out.println("Filters: " + cf.toCanonicalID());
-		
-		for (String input : inputs)
-		{
-			try
-			{
-				System.out.println("Valid:   " + cf.validate(input));
-			}
-			catch (Exception e)
-			{
-				System.out.println("Invalid: " + input);
-			}
-		}
-	}
-	
-	@SuppressWarnings("unchecked")
-	@Test
-	public void test5() 
-	{
-		ChainedFilter cf = new ChainedFilter(CreditCardNumberFilter.SINGLETON, FilterType.ENCRYPT_MASK);
-		
-		String[] inputs = {"5412 3456 7891 1234", "123", "4412 3456 7891 1234", "Hello", "34 1234 5678 9112 3"};
-		
-		System.out.println("***Test 5***");
-		System.out.println("Filters: " + cf.toCanonicalID());
-		
-		for (String input : inputs)
-		{
-			try
-			{
-				System.out.println("Valid:   " + cf.validate(input));
-			}
-			catch (Exception e)
-			{
-				System.out.println("Invalid: " + input);
-			}
-		}
-	}
-	
-	@SuppressWarnings("unchecked")
-	@Test(expected = IllegalArgumentException.class)
-	public void test6() {
-		ChainedFilter cf = new ChainedFilter(FilterType.INTEGER, FilterType.PASSWORD);
-		
-		String input = "johmsmith@zoxweb.com";
-		
-		System.out.println("***Test 6***");
-		System.out.println("Filters: " + cf.toCanonicalID());
-		System.out.println("Validate:   " + cf.validate(input));
-	}
-	
-	
+
 }

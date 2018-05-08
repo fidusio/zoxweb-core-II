@@ -38,7 +38,6 @@ public class DomainFilterTest {
 
         for (String val : values) {
             assertTrue(FilterType.DOMAIN.isValid(val));
-            System.out.println(FilterType.DOMAIN.validate(val));
         }
     }
 

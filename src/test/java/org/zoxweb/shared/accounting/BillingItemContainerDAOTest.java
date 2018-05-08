@@ -15,67 +15,92 @@
  */
 package org.zoxweb.shared.accounting;
 
+import org.junit.Test;
+
 import java.math.BigDecimal;
 
-public class BillingItemContainerDAOTest {
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
-	public static void main(String[] args) {
-		BillingItemsContainerDAO container = new BillingItemsContainerDAO();
-		
-		for (int i = 0; i < 10; i++) {
-			BillingItemDAO item = new BillingItemDAO();
-			item.setUnitCost(new BigDecimal(10));
-			item.setQuantity(new BigDecimal(1));
-			
-			container.addBillingItem(item);
-		}
-		
-		System.out.println("Number of Billing Items: " + container.getBillingItems().size() + " Total: " + container.getTotal());
-		
-		BillingItemDAO item1 = new BillingItemDAO();
-		item1.setUnitCost(new BigDecimal(10));
-		item1.setQuantity(new BigDecimal(2));
-		System.out.println("ADD Billing Item 1  [10 units x 2]");
-		container.addBillingItem(item1);
-		System.out.println("Number of Billing Items: " + container.getBillingItems().size() + " Total: " + container.getTotal());
-		
-		System.out.println("REMOVE Billing Item 1  [10 units x 1]");
-		container.removeBillingItem(item1);
-		System.out.println("Number of Billing Items: " + container.getBillingItems().size() + " Total: " + container.getTotal());
-		
-		BillingItemDAO item2 = new BillingItemDAO();
-		item2.setUnitCost(new BigDecimal(80));
-		item2.setQuantity(new BigDecimal(2));
-		System.out.println("ADD Billing Item 2  [80 units x 2]");
-		container.addBillingItem(item2);
-		System.out.println("Number of Billing Items: " + container.getBillingItems().size() + " Total: " + container.getTotal());
-		
-		BillingItemDAO item3 = new BillingItemDAO();
-		item3.setUnitCost(new BigDecimal(20));
-		item3.setQuantity(new BigDecimal(2));
-		System.out.println("ADD Billing Item 3  [20 units x 2]");
-		container.addBillingItem(item3);
-		System.out.println("Number of Billing Items: " + container.getBillingItems().size() + " Total: " + container.getTotal());
-		
-		BillingItemDAO item4 = new BillingItemDAO();
-		item4.setReferenceID("4");
-		item4.setUnitCost(new BigDecimal(50));
-		item4.setQuantity(new BigDecimal(4));
-		System.out.println("ADD Billing Item 4  [50 units]");
-		container.addBillingItem(item4);
-		System.out.println("Number of Billing Items: " + container.getBillingItems().size() + " Total: " + container.getTotal());
-		System.out.println("ADD Billing Item 4  [50 units x 4]");
-		container.addBillingItem(item4);
-		System.out.println("FAILED: Already Added!");
-		System.out.println("Number of Billing Items: " + container.getBillingItems().size() + " Total: " + container.getTotal());
-		
-		BillingItemDAO item5 = new BillingItemDAO();
-		item5.setUnitCost(new BigDecimal(100));
-		item5.setQuantity(new BigDecimal(4));
-		System.out.println("ADD Billing Item 5  [100 units x 4]");
-		container.addBillingItem(item5);
-		System.out.println("Number of Billing Items: " + container.getBillingItems().size() + " Total: " + container.getTotal());
+public class BillingItemContainerDAOTest
+{
 
-	}
-	
+    @Test
+    public void testBillingItemsContainerDAO()
+    {
+        BillingItemsContainerDAO container = new BillingItemsContainerDAO();
+
+        for (int i = 0; i < 10; i++)
+        {
+            BillingItemDAO item = new BillingItemDAO();
+            item.setUnitCost(new BigDecimal(10));
+            item.setQuantity(new BigDecimal(1));
+
+            container.addBillingItem(item);
+        }
+
+        // Items: 10  Total: 100
+        assertNotNull(container.getBillingItems());
+        assertEquals(10, container.getBillingItems().size());
+        assertEquals(new BigDecimal(100), container.getTotal());
+
+        // Add item
+        // Items: 11  Total: 120
+        BillingItemDAO item1 = new BillingItemDAO();
+        item1.setUnitCost(new BigDecimal(10));
+        item1.setQuantity(new BigDecimal(2));
+        container.addBillingItem(item1);
+        assertEquals(11, container.getBillingItems().size());
+        assertEquals(new BigDecimal(120), container.getTotal());
+
+        // Add item
+        // Items: 10  Total: 100
+        container.removeBillingItem(item1);
+        assertEquals(10, container.getBillingItems().size());
+        assertEquals(new BigDecimal(100), container.getTotal());
+
+        // Add item
+        // Items: 11  Total: 260
+        BillingItemDAO item2 = new BillingItemDAO();
+        item2.setUnitCost(new BigDecimal(80));
+        item2.setQuantity(new BigDecimal(2));
+        container.addBillingItem(item2);
+        assertEquals(11, container.getBillingItems().size());
+        assertEquals(new BigDecimal(260), container.getTotal());
+
+        // Add item
+        // Items: 12  Total: 260
+        BillingItemDAO item3 = new BillingItemDAO();
+        item3.setUnitCost(new BigDecimal(20));
+        item3.setQuantity(new BigDecimal(2));
+        container.addBillingItem(item3);
+        assertEquals(12, container.getBillingItems().size());
+        assertEquals(new BigDecimal(300), container.getTotal());
+
+        // Add item
+        // Items: 13  Total: 500
+        BillingItemDAO item4 = new BillingItemDAO();
+        item4.setReferenceID("4");
+        item4.setUnitCost(new BigDecimal(50));
+        item4.setQuantity(new BigDecimal(4));
+        container.addBillingItem(item4);
+        assertEquals(13, container.getBillingItems().size());
+        assertEquals(new BigDecimal(500), container.getTotal());
+
+        // Add existing item
+        // Items: 13  Total: 500
+        container.addBillingItem(item4);
+        assertEquals(13, container.getBillingItems().size());
+        assertEquals(new BigDecimal(500), container.getTotal());
+
+        // Add existing item
+        // Items: 14  Total: 900
+        BillingItemDAO item5 = new BillingItemDAO();
+        item5.setUnitCost(new BigDecimal(100));
+        item5.setQuantity(new BigDecimal(4));
+        container.addBillingItem(item5);
+        assertEquals(14, container.getBillingItems().size());
+        assertEquals(new BigDecimal(900), container.getTotal());
+    }
+
 }

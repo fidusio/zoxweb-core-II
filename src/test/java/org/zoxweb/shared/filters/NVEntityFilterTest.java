@@ -15,14 +15,14 @@
  */
 package org.zoxweb.shared.filters;
 
-import org.junit.Assert;
 import org.junit.Test;
-
 import org.zoxweb.shared.data.FileInfoDAO;
 import org.zoxweb.shared.data.FolderInfoDAO;
 import org.zoxweb.shared.data.FormInfoDAO;
 import org.zoxweb.shared.data.PhoneDAO;
-import org.zoxweb.shared.filters.NVEntityFilter;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class NVEntityFilterTest {
 
@@ -32,15 +32,15 @@ public class NVEntityFilterTest {
 
 		FolderInfoDAO folderInfo = new FolderInfoDAO();
         boolean valid = filter.isValid(folderInfo);
-        Assert.assertFalse(valid);
+        assertFalse(valid);
 
 		FileInfoDAO fileInfo = new FileInfoDAO();
         valid = filter.isValid(fileInfo);
-        Assert.assertFalse(valid);
+        assertFalse(valid);
 
 		FormInfoDAO formInfo = new FormInfoDAO();
         valid = filter.isValid(formInfo);
-        Assert.assertTrue(valid);
+        assertTrue(valid);
 	}
 	
 	@Test
@@ -49,15 +49,15 @@ public class NVEntityFilterTest {
 
 		FolderInfoDAO folderInfo = new FolderInfoDAO();
         boolean valid = filter.isValid(folderInfo);
-        Assert.assertTrue(valid);
+        assertTrue(valid);
 
 		FileInfoDAO fileInfo = new FileInfoDAO();
         valid = filter.isValid(fileInfo);
-        Assert.assertTrue(valid);
+        assertTrue(valid);
 
 		FormInfoDAO formInfo = new FormInfoDAO();
         valid = filter.isValid(formInfo);
-        Assert.assertTrue(valid);
+        assertTrue(valid);
 	}
 	
 	@Test
@@ -66,15 +66,15 @@ public class NVEntityFilterTest {
 
 		FolderInfoDAO folderInfo = new FolderInfoDAO();
         boolean valid = filter.isValid(folderInfo);
-        Assert.assertFalse(valid);
+        assertFalse(valid);
 
 		FileInfoDAO fileInfo = new FileInfoDAO();
         valid = filter.isValid(fileInfo);
-        Assert.assertFalse(valid);
+        assertFalse(valid);
 
 		FormInfoDAO formInfo = new FormInfoDAO();
         valid = filter.isValid(formInfo);
-        Assert.assertFalse(valid);
+        assertFalse(valid);
 	}
 	
 	@Test
@@ -83,19 +83,19 @@ public class NVEntityFilterTest {
 
 		FolderInfoDAO folderInfo = new FolderInfoDAO();
         boolean valid = filter.isValid(folderInfo);
-        Assert.assertFalse(valid);
+        assertFalse(valid);
 
 		FileInfoDAO fileInfo = new FileInfoDAO();
         valid = filter.isValid(fileInfo);
-        Assert.assertFalse(valid);
+        assertFalse(valid);
 
 		FormInfoDAO formInfo = new FormInfoDAO();
         valid = filter.isValid(formInfo);
-        Assert.assertFalse(valid);
+        assertFalse(valid);
 
 		PhoneDAO phone = new PhoneDAO();
         valid = filter.isValid(phone);
-        Assert.assertTrue(valid);
+        assertTrue(valid);
 	}
 	
 }
