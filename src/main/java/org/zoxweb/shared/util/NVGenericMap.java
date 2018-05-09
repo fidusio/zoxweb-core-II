@@ -19,6 +19,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.zoxweb.shared.filters.FilterType;
+
 /**
  *
  */
@@ -119,11 +121,24 @@ public class NVGenericMap
 		return value.put(new GetNameKey(v, true), v);
 	}
 	
-	public GetNameValue<?> add(String name, String value)
+	
+	
+	public GetNameValue<?> add(String name, String value, FilterType ft)
 	{
-		NVPair nvp = new NVPair(name, value);
+		NVPair nvp = new NVPair(name, value, ft);
 		return add(nvp);
 	}
+	
+	public GetNameValue<?> add(String name, String value)
+	{
+		return add(name, value, null);
+	}
+	public GetNameValue<?> add(GetName name, String value)
+	{
+		return add(name.getName(), value, null);
+	}
+	
+	
 	
 	public synchronized GetNameValue<?> add(NVEntity nve)
 	{

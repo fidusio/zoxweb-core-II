@@ -20,7 +20,6 @@ implements DataEncoder<String[], String>
 
 	
 	private PPEncoder() {}
-	
 	public String encode(String ...patterns) 
 	{
 		return SharedStringUtil.trimOrEmpty(SharedUtil.toCanonicalID(PATTERN_SEP, (Object[])patterns)).toLowerCase();

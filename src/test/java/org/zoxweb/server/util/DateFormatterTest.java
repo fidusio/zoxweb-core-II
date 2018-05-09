@@ -1,6 +1,7 @@
 package org.zoxweb.server.util;
 
 import java.text.SimpleDateFormat;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -87,7 +88,6 @@ public class DateFormatterTest {
 			}
 			catch(Exception e)
 			{
-				e.printStackTrace();
 				System.out.println(time + ", failed");
 			}
 		}
@@ -99,7 +99,7 @@ public class DateFormatterTest {
 		System.out.println("SECOND: " + calendar.get(Calendar.SECOND));
 		System.out.println("MILLISECOND: " + calendar.get(Calendar.MILLISECOND));
 		System.out.println(DateUtil.timeInMillisRelativeToDay(calendar.getTimeInMillis()));
-		
+		System.out.println(DateUtil.dayOfWeek(calendar.getTimeInMillis()));
 		
 		
 		

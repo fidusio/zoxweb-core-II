@@ -922,6 +922,12 @@ public final class SharedStringUtil
 		
 		return null;
 	}
+	
+	public static byte[] embedTextAsBytes(String text, String textMarker, String value)
+	{
+		String embedded = embedText(text, textMarker, value);
+		return getBytes(embedded);
+	}
 
 	/**
 	 * Replaces the textMarker inside text with value.

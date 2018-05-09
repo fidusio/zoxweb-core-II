@@ -963,6 +963,16 @@ public class Const
         {
 			return value;
 		}
+		
+		public static DayOfWeek lookup(String str)
+		{
+			return SharedUtil.lookupEnum(DayOfWeek.values(), str);
+		}
+		
+		public static DayOfWeek lookup(int val)
+		{
+			return DayOfWeek.values()[val];
+		}
 	}
 
 	/**

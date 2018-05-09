@@ -74,6 +74,7 @@ import org.zoxweb.shared.util.NVLong;
 import org.zoxweb.shared.util.NVLongList;
 import org.zoxweb.shared.util.NVPair;
 import org.zoxweb.shared.util.NVPairList;
+import org.zoxweb.shared.util.NVStringList;
 import org.zoxweb.shared.util.SharedBase64;
 import org.zoxweb.shared.util.SharedBase64.Base64Type;
 import org.zoxweb.shared.util.SharedStringUtil;
@@ -793,6 +794,19 @@ final public class GSONUtil
 				
 				writer.endArray();
 			}
+			else if (gnv instanceof NVStringList)
+			{
+				writer.name(gnv.getName());
+				writer.beginArray();
+				List<String> values = (List<String>) gnv.getValue();
+				
+				for (String val : values)
+				{
+					writer.value(val);
+				}
+				
+				writer.endArray();
+			}
 			else if (gnv instanceof NVGenericMapList)
 			{
 				writer.name(gnv.getName());
@@ -867,6 +881,10 @@ final public class GSONUtil
 							{
 								((NVDoubleList)nvb).getValue().add(ja.get(i).getAsDouble());
 							}
+							else if (nvb instanceof NVStringList)
+							{
+								((NVStringList)nvb).getValue().add(ja.get(i).getAsString());
+							}
 							else if (nvb instanceof NVGenericMapList)
 							{
 								((NVGenericMapList)nvb).add(fromJSONGenericMap((JsonObject)ja.get(i), null, btype));
@@ -936,6 +954,7 @@ final public class GSONUtil
 				{
 					// must be fixed
 					//break;
+					ret = new NVStringList();
 				}
 				
 				GNVType gnv = GNVType.toGNVType(je.getAsNumber());

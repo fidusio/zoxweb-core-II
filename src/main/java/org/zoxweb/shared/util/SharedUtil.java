@@ -1427,6 +1427,10 @@ public class SharedUtil
 			{
 				return new NVGenericMapList(config.getName());
 			}
+			else if (NVStringList.class.equals(c))
+			{
+				return new NVStringList(config.getName());
+			}
 		}
 		
 		throw new IllegalArgumentException("Unsupported type " + config + " class:" + c);
@@ -2418,6 +2422,30 @@ public class SharedUtil
 		}
 		
 		return false;
+	}
+	
+	
+	public static NVStringList toNVStringList(String name, String values[], boolean skipEmptyOrNull)
+	{
+		NVStringList ret = new NVStringList(name);
+		if (values != null)
+		{
+			for(String val : values)
+			{
+				if (skipEmptyOrNull)
+				{
+					val = SharedStringUtil.trimOrNull(val);
+					if (val  == null)
+						continue;
+				}
+				ret.getValue().add(val);
+			}
+		}
+		
+		
+		return ret;
+		
+		
 	}
 	
 	/**

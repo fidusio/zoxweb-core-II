@@ -21,7 +21,7 @@ import java.util.List;
  * This class declares NVBase as a list of long type.
  */
 @SuppressWarnings("serial")
-public class NVLongList 
+public class NVLongList
     extends NVBase<List<Long>>
 {
 	/**

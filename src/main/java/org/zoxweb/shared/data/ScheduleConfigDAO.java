@@ -1,15 +1,22 @@
 package org.zoxweb.shared.data;
 
+
+
+import java.util.List;
+
 import org.zoxweb.shared.filters.FilterType;
 import org.zoxweb.shared.util.ArrayValues;
 import org.zoxweb.shared.util.GetNVConfig;
-
+import org.zoxweb.shared.util.GetName;
 import org.zoxweb.shared.util.NVConfig;
 import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVConfigEntity.ArrayType;
 import org.zoxweb.shared.util.NVConfigEntityLocal;
 import org.zoxweb.shared.util.NVConfigManager;
 import org.zoxweb.shared.util.NVEntity;
+import org.zoxweb.shared.util.NVGenericMap;
+
+import org.zoxweb.shared.util.NVStringList;
 import org.zoxweb.shared.util.SharedUtil;
 
 
@@ -18,13 +25,30 @@ public class ScheduleConfigDAO
 	extends TimeStampDAO 
 {
 	
+	 public enum PropParam
+	 	implements GetName
+	 {
+		 URL("url"),
+		 ON_COMMANDS("on_commands"),
+		 OFF_COMMANDS("off_commands"),
+	     ;
+		 private final String name;
+			
+		 PropParam (String name) {
+	         this.name = name;
+	     }
+	
+	     
+	     public String getName() {
+	         return name;
+	     }
+	 }
+
 	 public enum Param
 	     implements GetNVConfig 
 	 {
 	
-		 URL(NVConfigManager.createNVConfig("url", "URL.", "URL", true, false, false, true, String.class, FilterType.URL)),
-		 ON_COMMAND(NVConfigManager.createNVConfig("on_command", "On command.", "OnCommand", true, false, false, true, String.class, null)),
-		 OFF_COMMAND(NVConfigManager.createNVConfig("off_command", "Off Command.", "OffCommand", true, false, false, true, String.class, null)),
+		 PROPERTIES(NVConfigManager.createNVConfig("properties", "Generic properties", "Properties", true, true, NVGenericMap.class)),
 		 SCHEDULES(NVConfigManager.createNVConfigEntity("schedules", "Schedule in cron or time fomart", "Schedule", true, true, ScheduleTypeDAO.class, ArrayType.LIST)),
 	     ;
 	
@@ -61,35 +85,46 @@ public class ScheduleConfigDAO
 		// TODO Auto-generated constructor stub
 	}
 	
-	
+	public NVGenericMap getProperties()
+	{
+		return (NVGenericMap) lookup(Param.PROPERTIES);
+	}
 	public String getURL()
 	{
-		return lookupValue(Param.URL);
+		return getProperties().getValue(PropParam.URL);
 	}
 	
 	public void setURL(String url)
 	{
-		setValue(Param.URL, url);
+		url = FilterType.URL.validate(url);
+		getProperties().add(PropParam.URL.getName(), url);
+		
 	}
 	
-	public String getOnCommand()
+	
+	
+	public String[] getOnCommands()
 	{
-		return lookupValue(Param.ON_COMMAND);
+		List<String> nvsl = getProperties().getValue(PropParam.ON_COMMANDS);
+		return nvsl.toArray(new String[nvsl.size()]);
 	}
 	
-	public void setOnCommand(String onCommand)
+	public void setOnCommands(String[] onCommands)
 	{
-		setValue(Param.ON_COMMAND, onCommand);
+		NVStringList nvsl = SharedUtil.toNVStringList(PropParam.ON_COMMANDS.getName(), onCommands, true);
+		getProperties().add(nvsl);
 	}
 	
-	public String getOffCommand()
+	public String[] getOffCommands()
 	{
-		return lookupValue(Param.OFF_COMMAND);
+		List<String> nvsl = getProperties().getValue(PropParam.OFF_COMMANDS);
+		return nvsl.toArray(new String[nvsl.size()]);
 	}
 	
-	public void setOffCommand(String offCommand)
+	public void setOffCommands(String[] offCommands)
 	{
-		setValue(Param.OFF_COMMAND, offCommand);
+		NVStringList nvsl = SharedUtil.toNVStringList(PropParam.OFF_COMMANDS.getName(), offCommands, true);
+		getProperties().add(nvsl);
 	}
 	
 	

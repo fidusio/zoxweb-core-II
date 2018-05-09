@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import org.zoxweb.shared.util.Const.DayOfWeek;
 import org.zoxweb.shared.util.Const.TimeInMillis;
 
 public class DateUtil 
@@ -87,6 +88,17 @@ public class DateUtil
 						 	calendar.get(Calendar.MILLISECOND);
 		
 		return timeInMillis;
+	}
+	
+	public static DayOfWeek dayOfWeek(Date date)
+	{
+		Calendar calendar = getCalendar(date);
+		return DayOfWeek.lookup(calendar.get(Calendar.DAY_OF_WEEK) - 1);
+	}
+	
+	public static DayOfWeek dayOfWeek(long millis)
+	{
+		return dayOfWeek(new Date(millis));
 	}
 	
 	

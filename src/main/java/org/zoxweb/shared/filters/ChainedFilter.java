@@ -29,7 +29,7 @@ public class ChainedFilter
 		
 	}
 	
-	@SuppressWarnings("unchecked")
+	@SafeVarargs
 	public ChainedFilter(ValueFilter<String, String>... vfs)
     {
 		setValueFilters(vfs);
