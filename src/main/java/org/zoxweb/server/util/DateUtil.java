@@ -90,6 +90,27 @@ public class DateUtil
 		return timeInMillis;
 	}
 	
+	public static long timeInMillisRelativeToWeek(Date date)
+	{
+		return timeInMillisRelativeToWeek(getCalendar(date));
+	}
+	
+	public static long timeInMillisRelativeToWeek(long date)
+	{
+		return timeInMillisRelativeToWeek(getCalendar(date));
+	}
+	
+	public static long timeInMillisRelativeToWeek(Calendar calendar)
+	{
+		long timeInMillis =  DayOfWeek.lookup(calendar.get(Calendar.DAY_OF_WEEK) - 1).getValue()*TimeInMillis.DAY.MILLIS+
+				 			calendar.get(Calendar.HOUR_OF_DAY)*TimeInMillis.HOUR.MILLIS + 
+						 	calendar.get(Calendar.MINUTE)*TimeInMillis.MINUTE.MILLIS +
+						 	calendar.get(Calendar.SECOND)*TimeInMillis.SECOND.MILLIS + 
+						 	calendar.get(Calendar.MILLISECOND);
+		
+		return timeInMillis;
+	}
+	
 	public static DayOfWeek dayOfWeek(Date date)
 	{
 		Calendar calendar = getCalendar(date);

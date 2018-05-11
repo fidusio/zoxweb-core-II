@@ -43,7 +43,7 @@ public class DetailedCreditCardDAO
 
 		CARD_HOLDER_NAME(NVConfigManager.createNVConfig("card_holder_name", "Name of card holder", "Cardholder Name", true, true, String.class)),
 		CARD_TYPE(NVConfigManager.createNVConfig("credit_card_type", "Type of credit card", "Credit Card Type", true, true, CreditCardType.class)),
-		@SuppressWarnings("unchecked")
+	
 		CARD_NUMBER(NVConfigManager.createNVConfig("card_number", "Credit card number", "CardNumber", true, true, false, String.class, new ChainedFilter(CreditCardNumberFilter.SINGLETON, FilterType.ENCRYPT))),
 		EXPIRATION_DATE(NVConfigManager.createNVConfig("expiration_date", "Card expiration date", "Expiration Date", true, true, Date.class)),
 		SECURITY_CODE(NVConfigManager.createNVConfig("security_code", "Card security code", "Security Code", true, true, String.class)),

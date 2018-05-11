@@ -453,7 +453,7 @@ public class Const
 							if (millisToken.length == 2)
 							{
 								millis =  Integer.parseInt(millisToken[1]);
-								if (millis < 0 && millis > 999)
+								if (millis < 0 || millis > 999)
 								{
 									throw new IllegalArgumentException("invalid millis value " + millis);
 								}
@@ -461,12 +461,12 @@ public class Const
 							}
 							
 							ss = Integer.parseInt(tok);
-							if (ss < 0 && ss > 59)
+							if (ss < 0 || ss > 59)
 								throw new IllegalArgumentException("invalid second value " + ss);
 							break;
 						case 1:
 							mm = Integer.parseInt(tok);
-							if (mm < 0 && mm > 59)
+							if (mm < 0 || mm > 59)
 								throw new IllegalArgumentException("invalid minute value " + mm);
 							break;
 						case 2:
@@ -564,6 +564,39 @@ public class Const
             throws NullPointerException, IllegalArgumentException
         {
 			return toMillis(time) * 1000;
+		}
+		
+		public static String toString(long millis)
+		{
+			if (millis <= WEEK.MILLIS)
+			{
+				long mil= millis % SECOND.MILLIS;
+				millis /= SECOND.MILLIS;
+				long sec = millis % 60;
+				millis /= 60;
+				long min = millis % 60;
+				millis /= 60;
+				long hour = millis;
+				//millis /=24;
+				
+				//long day = millis % WEEK.MILLIS;
+				
+				//hour += day*24;
+				
+				StringBuilder sb = new StringBuilder();
+				sb.append((hour < 9 ? "0" : "")  + hour);
+				sb.append(':');
+				sb.append((min < 9 ? "0" : "")  +min);
+				sb.append(':');
+				sb.append((sec < 9 ? "0" : "")  +sec);
+				sb.append('.');
+				sb.append(mil);
+				
+				
+				return sb.toString();
+			}
+			
+			throw new IllegalArgumentException("Out of range");
 		}
 	}
 	

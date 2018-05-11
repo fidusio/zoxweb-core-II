@@ -76,7 +76,10 @@ public class DateFormatterTest {
 				"01:00:00.500.500",
 				"01:00:00.500",
 				"00:00:10",
-				"00:10"
+				"00:10",
+				"48:35:59.234",
+				"48:60:59.234",
+				"48:35:60.22323",
 			};
 		
 		for(String time : tokens)
@@ -84,7 +87,9 @@ public class DateFormatterTest {
 			try
 			{
 		
+				long millis = TimeInMillis.toMillis(time);
 				System.out.println(time + "," +  TimeInMillis.toMillis(time));
+				System.out.println(TimeInMillis.toString(millis));
 			}
 			catch(Exception e)
 			{
@@ -100,6 +105,7 @@ public class DateFormatterTest {
 		System.out.println("MILLISECOND: " + calendar.get(Calendar.MILLISECOND));
 		System.out.println(DateUtil.timeInMillisRelativeToDay(calendar.getTimeInMillis()));
 		System.out.println(DateUtil.dayOfWeek(calendar.getTimeInMillis()));
+		System.out.println("Time relative to week:" + TimeInMillis.toString(DateUtil.timeInMillisRelativeToWeek(calendar)));
 		
 		
 		

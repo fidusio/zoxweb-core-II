@@ -13,7 +13,6 @@ import org.zoxweb.shared.util.Const.TimeInMillis;
 @SuppressWarnings("serial")
 public class ScheduleTypeDAO
 extends SetNameDescriptionDAO
-
 {
 
 	public enum Param
@@ -52,6 +51,9 @@ extends SetNameDescriptionDAO
 	        false,
 	        SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO
 	);
+	
+	private transient long relativeStartMillis;
+	private transient long relativeEndMillis;
 
 	public ScheduleTypeDAO()
 	{
@@ -99,6 +101,26 @@ extends SetNameDescriptionDAO
 	public long getEndInMillis()
 	{
 		return TimeInMillis.toMillis(getEnd());
+	}
+
+
+	public long getRelativeStartMillis() {
+		return relativeStartMillis;
+	}
+
+
+	public void setRelativeStartMillis(long relativeStartMillis) {
+		this.relativeStartMillis = relativeStartMillis;
+	}
+
+
+	public long getRelativeEndMillis() {
+		return relativeEndMillis;
+	}
+
+
+	public void setRelativeEndMillis(long relativeMillis) {
+		this.relativeEndMillis = relativeMillis;
 	}
 	
 	
