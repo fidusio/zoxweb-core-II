@@ -53,7 +53,7 @@ public class NVGenericMapTest
 			nvll.getValue().add((long) 2);
 			nvgm.add(nvll);
 			printValue(nvgm);
-			String json = GSONUtil.toJSONGenericMap(nvgm, true, false, false, Base64Type.URL);
+			String json = GSONUtil.toJSONGenericMap(nvgm, true, false, false);
 			System.out.println(json);
 			
 			nvgm = GSONUtil.fromJSONGenericMap(json, null, Base64Type.URL);
@@ -69,7 +69,7 @@ public class NVGenericMapTest
 			NVEntityReferenceList nvl = new NVEntityReferenceList("nves");
 			nvl.add(address);
 			nvgm.add(nvl);
-			json = GSONUtil.toJSONGenericMap(nvgm, true, false, false, Base64Type.URL);
+			json = GSONUtil.toJSONGenericMap(nvgm, true, false, false);
 			System.out.println(json);
 			//nvgm = GSONUtil.fromJSONGenericMap(json, null, Base64Type.URL);
 			

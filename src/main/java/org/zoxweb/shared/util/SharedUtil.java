@@ -29,6 +29,7 @@ import java.util.Set;
 import org.zoxweb.shared.data.ReferenceIDDAO;
 import org.zoxweb.shared.filters.GetValueFilter;
 import org.zoxweb.shared.filters.ValueFilter;
+import org.zoxweb.shared.util.Const.GNVType;
 
 /**
  * Contains shared utility methods.
@@ -1434,6 +1435,58 @@ public class SharedUtil
 		}
 		
 		throw new IllegalArgumentException("Unsupported type " + config + " class:" + c);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static <T> T parsePrimitiveValue(GNVType type, Number n)
+	{
+		switch(type)
+		{
+//		case NVBLOB:
+//			break;
+//		case NVBOOLEAN:
+//			break;
+		case NVDOUBLE:
+			return (T) new Double(n.doubleValue());
+			
+		case NVFLOAT:
+			return (T) new Float(n.floatValue());
+		case NVINT:
+			return (T) new Integer(n.intValue());
+		case NVLONG:
+			return (T) new Long(n.longValue());
+//		case NVString:
+//			break;
+		default:
+			throw new IllegalArgumentException("Invalid type " + type);
+		
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static <T> T parsePrimitiveValue(GNVType type, String v)
+	{
+		switch(type)
+		{
+//		case NVBLOB:
+//			break;
+//		case NVBOOLEAN:
+//			break;
+		case NVDOUBLE:
+			return (T) new Double(Double.parseDouble(v));
+			
+		case NVFLOAT:
+			return (T) new Float(Float.parseFloat(v));
+		case NVINT:
+			return (T) new Integer(Integer.parseInt(v));
+		case NVLONG:
+			return (T) new Long(Long.parseLong(v));
+//		case NVString:
+//			break;
+		default:
+			throw new IllegalArgumentException("Invalid type " + type);
+		
+		}
 	}
 	
 	/**

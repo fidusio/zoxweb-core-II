@@ -742,7 +742,7 @@ public class CryptoUtil
 		
 		StringBuilder sb = new StringBuilder();
 		byte[] b64Header = SharedBase64.encode(Base64Type.URL, GSONUtil.toJSON(jwt.getHeader(), false, false, false));
-		byte[] b64Payload = SharedBase64.encode(Base64Type.URL, GSONUtil.toJSONGenericMap(jwt.getPayload().getNVGenericMap(), false, false, false, Base64Type.URL));
+		byte[] b64Payload = SharedBase64.encode(Base64Type.URL, GSONUtil.toJSONGenericMap(jwt.getPayload().getNVGenericMap(), false, false, false));
 		sb.append(SharedStringUtil.toString(b64Header));
 		sb.append(".");
 		sb.append(SharedStringUtil.toString(b64Payload));

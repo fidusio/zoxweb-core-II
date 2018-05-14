@@ -624,7 +624,7 @@ final public class GSONUtil
 						writer.name(nvc.getName());
 						if (tempNVE instanceof GetNVGenericMap)
 						{
-							toJSONGenericMap(writer, ((GetNVGenericMap) tempNVE).getNVGenericMap(), printNull, printClassType, b64Type);
+							toJSONGenericMap(writer, ((GetNVGenericMap) tempNVE).getNVGenericMap(), printNull, printClassType);
 						}
 						else
 						toJSON( writer,  (Class<? extends NVEntity>) ((NVConfigEntity) nvc).getMetaType(), (NVEntity)nve.lookupValue(nvc), printNull, printClassType, b64Type);
@@ -638,7 +638,7 @@ final public class GSONUtil
 				else if (NVGenericMap.class.equals(nvc.getMetaTypeBase()))
 				{
 					writer.name(nvc.getName());
-					toJSONGenericMap(writer, (NVGenericMap)nve.lookup(nvc),  printNull, printClassType, b64Type);
+					toJSONGenericMap(writer, (NVGenericMap)nve.lookup(nvc),  printNull, printClassType);
 				}
 			}
 		}
@@ -648,7 +648,7 @@ final public class GSONUtil
 		return writer;
 	}
 	
-	public static String toJSONGenericMap(NVGenericMap nvgm, boolean indent, boolean printNull, boolean printClassType, Base64Type b64Type) throws IOException
+	public static String toJSONGenericMap(NVGenericMap nvgm, boolean indent, boolean printNull, boolean printClassType) throws IOException
 	{
 		StringWriter sw = new StringWriter();
 		JsonWriter writer = new JsonWriter(sw);
@@ -659,21 +659,21 @@ final public class GSONUtil
 		else
 			writer.setIndent("");
 		
-		toJSONGenericMap(writer, nvgm,  printNull, printClassType, b64Type);
+		toJSONGenericMap(writer, nvgm,  printNull, printClassType);
 		
 		writer.close();
 		
 		return sw.toString();
 	}
 	
-	private static JsonWriter toJSONGenericMap(JsonWriter writer, NVGenericMap nvgm,  boolean printNull, boolean printClassType, Base64Type b64Type) throws IOException
+	private static JsonWriter toJSONGenericMap(JsonWriter writer, NVGenericMap nvgm,  boolean printNull, boolean printClassType) throws IOException
 	{
 		writer.beginObject();
 		
 		GetNameValue<?> values[] = nvgm.values();
 		for (GetNameValue<?> gnv : values)
 		{
-			toJSONGenericMap(writer, gnv, printNull, printClassType, b64Type);
+			toJSONGenericMap(writer, gnv, printNull, printClassType);
 		}
 		
 		
@@ -684,7 +684,7 @@ final public class GSONUtil
 	
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private static JsonWriter toJSONGenericMap(JsonWriter writer, GetNameValue<?> gnv,  boolean printNull, boolean printClassType, Base64Type b64Type) throws IOException
+	private static JsonWriter toJSONGenericMap(JsonWriter writer, GetNameValue<?> gnv,  boolean printNull, boolean printClassType) throws IOException
 	{
 		
 		
@@ -727,13 +727,13 @@ final public class GSONUtil
 			}
 			else if (gnv instanceof NVBlob)
 			{
-				writer.name(name).value(SharedBase64.encodeAsString(b64Type, (byte[]) gnv.getValue())); 
+				writer.name(name).value(SharedBase64.encodeAsString(Base64Type.URL, (byte[]) gnv.getValue())); 
 			}
 			else if (gnv instanceof NVEntityReference)
 			{
 				
 				writer.name(name);
-				toJSON(writer, ((NVEntity)gnv.getValue()).getClass(), (NVEntity)gnv.getValue(), printNull, printClassType, b64Type);
+				toJSON(writer, ((NVEntity)gnv.getValue()).getClass(), (NVEntity)gnv.getValue(), printNull, printClassType, Base64Type.URL);
 			}
 			else if (gnv instanceof ArrayValues)
 			{
@@ -752,7 +752,7 @@ final public class GSONUtil
 						else
 						{
 							writer.beginObject();
-							toJSONGenericMap(writer, (GetNameValue<?>) localGNV, printNull, printClassType, b64Type);
+							toJSONGenericMap(writer, (GetNameValue<?>) localGNV, printNull, printClassType);
 							writer.endObject();
 						}
 					}
@@ -761,7 +761,7 @@ final public class GSONUtil
 						//writer.beginObject();
 						
 						
-						toJSON(writer,  ((NVEntity)localGNV).getClass(), (NVEntity) localGNV, printNull, printClassType, b64Type);
+						toJSON(writer,  ((NVEntity)localGNV).getClass(), (NVEntity) localGNV, printNull, printClassType, Base64Type.URL);
 						
 						//writer.endObject();
 					}
@@ -815,7 +815,7 @@ final public class GSONUtil
 				
 				for (NVGenericMap val : values)
 				{
-					toJSONGenericMap(writer, val, printNull, printClassType, b64Type);
+					toJSONGenericMap(writer, val, printNull, printClassType);
 				}
 				
 				writer.endArray();
@@ -896,7 +896,7 @@ final public class GSONUtil
 				}
 				else if (jne.isJsonPrimitive())
 				{
-					ret.add(guessPrimitive(element.getKey(), nvce != null ? nvce.lookup(element.getKey()) : null,(JsonPrimitive) jne, btype));
+					ret.add(guessPrimitive(element.getKey(), nvce != null ? nvce.lookup(element.getKey()) : null,(JsonPrimitive) jne));
 				}
 				else if (jne.isJsonObject())
 				{
@@ -930,7 +930,7 @@ final public class GSONUtil
 			
 			if (je.isJsonObject())
 			{
-				// could an NVEntity or NVPairList or NVGnericMap
+				// could an NVEntity or NVPairList or NVGenericMap
 				// nvpair
 				JsonObject jo  = je.getAsJsonObject();
 				if (jo.size() == 1)
@@ -938,14 +938,14 @@ final public class GSONUtil
 					
 					if (ret == null)
 					{
-						ret = new NVPairList(null, new ArrayList<NVPair>());
+						return new NVPairList(null, new ArrayList<NVPair>());
 					}
 				}
 				
 				if (jo.size()>1)
 				{
-					ret = new NVGenericMapList();
-					break;
+					return new NVGenericMapList();
+					
 				}
 			}
 			else if (je.isJsonPrimitive())
@@ -954,7 +954,7 @@ final public class GSONUtil
 				{
 					// must be fixed
 					//break;
-					ret = new NVStringList();
+					return  new NVStringList();
 				}
 				
 				GNVType gnv = GNVType.toGNVType(je.getAsNumber());
@@ -1026,7 +1026,7 @@ final public class GSONUtil
 	}
 	
 	
-	public static NVBase<?> guessPrimitive(String name, NVConfig nvc, JsonPrimitive jp, Base64Type btype)
+	public static NVBase<?> guessPrimitive(String name, NVConfig nvc, JsonPrimitive jp)
 	{
 		GNVType gnvType = nvc != null ? GNVType.toGNVType(nvc) : null;
 		
@@ -1047,7 +1047,7 @@ final public class GSONUtil
 			case NVBLOB:
 				try
 				{
-					byte value[] = SharedBase64.decode(btype, jp.getAsString());
+					byte value[] = SharedBase64.decode(Base64Type.URL, jp.getAsString());
 					return new NVBlob(name, value);
 				}
 				catch(Exception e)

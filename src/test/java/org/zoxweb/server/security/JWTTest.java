@@ -13,6 +13,7 @@ import org.zoxweb.shared.security.JWT2;
 import org.zoxweb.shared.security.JWTHeader;
 import org.zoxweb.shared.security.JWTPayload;
 import org.zoxweb.shared.security.SecurityConsts.JWTAlgorithm;
+import org.zoxweb.shared.util.NVBoolean;
 import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVGenericMap;
 import org.zoxweb.shared.util.NVGenericMapTest;
@@ -98,6 +99,7 @@ public class JWTTest {
 		payload.setAdmin(true);
 		payload.setNotBefore(System.currentTimeMillis());
 		payload.setNonce(index++);
+		payload.getNVGenericMap().add(new NVBoolean("bool", true));
 		
 		//payload.setRandom(new byte[] {0,1,2,3});
 		localJwt.setPayload(payload);
@@ -128,7 +130,7 @@ public class JWTTest {
 		System.out.println(tempJWTP);
 	
 		tempJWTP.getNotBefore();
-		System.out.println("genericMapToJSON:" + GSONUtil.toJSONGenericMap(tempJWTP.getNVGenericMap(), false, false, false, Base64Type.URL));
+		System.out.println("genericMapToJSON:" + GSONUtil.toJSONGenericMap(tempJWTP.getNVGenericMap(), false, false, false));
 		System.out.println( GSONUtil.toJSON(tempJWTP, false, false, true, Base64Type.URL));
 		
 		System.out.println("---------------++++++++++++++++++++----------------------------------------------------");

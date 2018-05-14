@@ -800,6 +800,7 @@ public class Const
 		NVLONG("long"),
 		NVFLOAT("float"),
 		NVDOUBLE("double"),
+//		NVString("String"),
 		//NVDATE("date"),
 		
 		;
@@ -1268,6 +1269,7 @@ public class Const
 		DYNAMIC_ENUM_MAP_LIST,
 		// this to replace NENTITY_LIST,
 		NVENTITY_ARRAY,
+		NVGENERIC_MAP,
 	}
 	
 	/**

@@ -175,7 +175,7 @@ public class ApplicationConfigManager
     {
 		//File file = new File(concatAsDirName( acd, acd.lookupValue(ApplicationDefaultParam.CONF_DIR)), ApplicationConfigDAO.DEFAULT_APPLICATION_CONF_FILENAME);
 		File file = new File(SharedUtil.toCanonicalID('/', getDefaultApplicationEnvVar(), ApplicationDefaultParam.CONF_DIR.getValue()), ApplicationConfigDAO.DEFAULT_APPLICATION_CONF_FILENAME);	
-		String jsonString =  GSONUtil.toJSONGenericMap(acd.getProperties(), true, false, true, Base64Type.DEFAULT);
+		String jsonString =  GSONUtil.toJSONGenericMap(acd.getProperties(), true, false, true);
 		
 		FileOutputStream fos = null;
 

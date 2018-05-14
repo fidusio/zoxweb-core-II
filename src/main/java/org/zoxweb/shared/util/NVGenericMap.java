@@ -144,6 +144,12 @@ public class NVGenericMap
 	{
 		return add(new NVEntityReference(nve));
 	}
+	
+	
+	public synchronized GetNameValue<?> add(String name, NVEntity nve)
+	{
+		return add(new NVEntityReference(name, nve));
+	}
 
 	
 	public synchronized GetNameValue<?> remove(String name)
