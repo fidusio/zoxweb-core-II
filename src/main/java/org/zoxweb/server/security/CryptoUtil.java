@@ -741,8 +741,10 @@ public class CryptoUtil
 
 		
 		StringBuilder sb = new StringBuilder();
-		byte[] b64Header = SharedBase64.encode(Base64Type.URL, GSONUtil.toJSON(jwt.getHeader(), false, false, false));
-		byte[] b64Payload = SharedBase64.encode(Base64Type.URL, GSONUtil.toJSONGenericMap(jwt.getPayload().getNVGenericMap(), false, false, false));
+		byte[] b64Header = SharedBase64.encode(Base64Type.URL,  GSONUtil.toJSONGenericMap(jwt.getHeader().getNVGenericMap(), false, false, false));
+		String payloadJSON =  GSONUtil.toJSONGenericMap(jwt.getPayload().getNVGenericMap(), false, false, false);
+		//System.out.println(payloadJSON);
+		byte[] b64Payload = SharedBase64.encode(Base64Type.URL, payloadJSON);
 		sb.append(SharedStringUtil.toString(b64Header));
 		sb.append(".");
 		sb.append(SharedStringUtil.toString(b64Payload));
@@ -832,9 +834,8 @@ public class CryptoUtil
 			sha256HMAC.update((byte) '.');
 			byte[] b64Hash = sha256HMAC.doFinal(SharedStringUtil.getBytes(tokens[JWTField.PAYLOAD.ordinal()]));
 			
-			
 			if (!SharedBase64.encodeAsString(Base64Type.URL, b64Hash).equals(jwt.getHash())) {
-				throw new SecurityException("Invalid token");
+				throw new SecurityException("Invalid tokens:" + SharedBase64.encodeAsString(Base64Type.URL, b64Hash) + ","  +jwt.getHash());
 			}
 			break;
 		case HS512:
@@ -872,21 +873,24 @@ public class CryptoUtil
 	{
 		SharedUtil.checkIfNulls("Null token", token);
 		String tokens[] = token.trim().split("\\.");
-		JWTHeader jwtHeader = null;
-		JWTPayload jwtPayload = null;
+		
 		if(tokens.length < 2 || tokens.length> 3)
 		{
 			throw new IllegalArgumentException("Invalid token JWT token");
 		}
 		
-		jwtHeader = GSONUtil.fromJSON(SharedBase64.decodeAsString(Base64Type.URL,tokens[JWTField.HEADER.ordinal()]), JWTHeader.class);
+		NVGenericMap nvgmHeader = GSONUtil.fromJSONGenericMap(SharedBase64.decodeAsString(Base64Type.URL,tokens[JWTField.HEADER.ordinal()]), JWTHeader.NVC_JWT_HEADER, Base64Type.URL);//GSONUtil.fromJSON(SharedBase64.decodeAsString(Base64Type.URL,tokens[JWTField.HEADER.ordinal()]), JWTHeader.class);
 		NVGenericMap nvgmPayload = GSONUtil.fromJSONGenericMap(SharedBase64.decodeAsString(Base64Type.URL,tokens[JWTField.PAYLOAD.ordinal()]), JWTPayload.NVC_JWT_PAYLOAD, Base64Type.URL);
 		if (nvgmPayload == null)
 			throw new SecurityException("Invalid JWT");
+		JWT ret = new JWT();
+		
 		
 		//jwtPayload = GSONUtil.fromJSON(SharedStringUtil.toString(SharedBase64.decode(Base64Type.URL,tokens[JWTToken.PAYLOAD.ordinal()])), JWTPayload.class);
-		jwtPayload = new JWTPayload();
+		JWTPayload jwtPayload = ret.getPayload();
 		jwtPayload.setNVGenericMap(nvgmPayload);
+		JWTHeader jwtHeader = ret.getHeader();
+		jwtHeader.setNVGenericMap(nvgmHeader);
 		if (jwtHeader == null || jwtPayload == null)
 		{
 			throw new SecurityException("Invalid JWT");
@@ -894,9 +898,9 @@ public class CryptoUtil
 		
 		
 		SharedUtil.checkIfNulls("Null jwt header or parameters", jwtHeader, jwtHeader.getJWTAlgorithm());
-		JWT ret = new JWT();
-		ret.setHeader(jwtHeader);
-		ret.setPayload(jwtPayload);
+//		JWT ret = new JWT();
+		//ret.setHeader(jwtHeader);
+		//ret.setPayload(jwtPayload);
 		switch(jwtHeader.getJWTAlgorithm())
 		{
 		case HS256:

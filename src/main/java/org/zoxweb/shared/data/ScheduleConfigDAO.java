@@ -8,6 +8,7 @@ import org.zoxweb.shared.filters.FilterType;
 import org.zoxweb.shared.util.ArrayValues;
 import org.zoxweb.shared.util.GetNVConfig;
 import org.zoxweb.shared.util.GetName;
+import org.zoxweb.shared.util.NVBoolean;
 import org.zoxweb.shared.util.NVConfig;
 import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVConfigEntity.ArrayType;
@@ -29,8 +30,10 @@ public class ScheduleConfigDAO
 	 	implements GetName
 	 {
 		 URL("url"),
+		 ENABLED("enabled"),
 		 ON_COMMANDS("on_commands"),
 		 OFF_COMMANDS("off_commands"),
+		 
 	     ;
 		 private final String name;
 			
@@ -126,7 +129,21 @@ public class ScheduleConfigDAO
 		NVStringList nvsl = SharedUtil.toNVStringList(PropParam.OFF_COMMANDS.getName(), offCommands, true);
 		getProperties().add(nvsl);
 	}
+	public void setEnabled(boolean status)
+	{
+		getProperties().add(new NVBoolean(PropParam.ENABLED.getName(), status));
+	}
 	
+	public boolean isEnabled() 
+	{
+		NVBoolean enabled = (NVBoolean) getProperties().get(PropParam.ENABLED);
+		if(enabled != null)
+		{
+			return enabled.getValue();
+		}
+		
+		return false;
+	}
 	
 	@SuppressWarnings("unchecked")
 	public ArrayValues<NVEntity> getSchedules()

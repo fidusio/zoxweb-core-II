@@ -51,17 +51,16 @@ public class APIAppManagerTest {
 	{
 
 		SubjectAPIKey sak  = aam.lookupSubjectAPIKey(subjectID, true);
-		JWTHeader header = new JWTHeader();
+		JWT jwt = new JWT();
+		JWTHeader header = jwt.getHeader();
 		
 		header.setJWTAlgorithm(JWTAlgorithm.HS256);
 		header.setTokenType("JWT");
-		JWTPayload payload = new JWTPayload();
+		
+		JWTPayload payload =jwt.getPayload();
 		payload.setDomainID(domainID);
 		payload.setAppID(appID);
 		payload.setSubjectID(subjectID);
-		JWT jwt = new JWT();
-		jwt.setHeader(header);
-		jwt.setPayload(payload);
 		
 		String token = JWTProvider.SINGLETON.encode(sak.getAPIKeyAsBytes(), jwt);
 		

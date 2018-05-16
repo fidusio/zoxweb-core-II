@@ -17,19 +17,23 @@ package org.zoxweb.shared.security;
 
 import org.zoxweb.shared.data.SetNameDescriptionDAO;
 import org.zoxweb.shared.util.GetNVConfig;
+import org.zoxweb.shared.util.GetNVGenericMap;
+import org.zoxweb.shared.util.GetName;
 import org.zoxweb.shared.util.NVConfig;
 import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVConfigEntityLocal;
 import org.zoxweb.shared.util.NVConfigManager;
+import org.zoxweb.shared.util.NVGenericMap;
 import org.zoxweb.shared.util.SharedUtil;
 import org.zoxweb.shared.security.SecurityConsts.JWTAlgorithm;
 
-@SuppressWarnings("serial")
+
 public class JWTHeader
-    extends SetNameDescriptionDAO
+implements GetNVGenericMap
+//    extends SetNameDescriptionDAO
 {
 	public enum Param
-	    implements GetNVConfig
+	    implements GetNVConfig, GetName
 	{
 		ALG(NVConfigManager.createNVConfig("alg", "Algorithm", "Alg", true, true, JWTAlgorithm.class)),
 		CTY(NVConfigManager.createNVConfig("cty", "Content Type", "ContentType", false, false, String.class)),
@@ -46,6 +50,11 @@ public class JWTHeader
 		public NVConfig getNVConfig() 
 		{
 			return nvc;
+		}
+		
+		public String getName()
+		{
+			return nvc.getName();
 		}
 	}
 	
@@ -64,43 +73,56 @@ public class JWTHeader
 																					SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO
 																				);
 
-	public JWTHeader()
+	private NVGenericMap nvgm;
+	public JWTHeader(NVGenericMap nvgm)
 	{
-		super(NVC_JWT_HEADER);
+		//super(NVC_JWT_HEADER);
+		this.nvgm = nvgm;
+		
 	}
 	
 	public JWTAlgorithm getJWTAlgorithm()
 	{
-		return lookupValue(Param.ALG);
+		return JWTAlgorithm.valueOf((String)nvgm.getValue(Param.ALG));
 	}
 	
 	public void setJWTAlgorithm(JWTAlgorithm type)
 	{
-		setValue(Param.ALG, type);
+		nvgm.add(Param.ALG, type.name());
+		
 	}
 	
 	public String getTokenType()
 	{
-		return lookupValue(Param.TYP);
+		return nvgm.getValue(Param.TYP);
 	}
 	
 	public void setTokenType(String type)
 	{
-		setValue(Param.TYP, type);
+		nvgm.add(Param.TYP, type);
 	}
 	
 	
 	public String getContentType()
 	{
-		return lookupValue(Param.CTY);
+		return nvgm.getValue(Param.CTY);
 	}
 	
 	public void setContentType(String contentType)
 	{
-		setValue(Param.CTY, contentType);
+		nvgm.add(Param.CTY, contentType);
 	}
 	
 	
+	public NVGenericMap getNVGenericMap()
+	{
+		return nvgm;	
+	}
 	
+	public void setNVGenericMap(NVGenericMap nvgm)
+	{
+		this.nvgm.clear();
+		SharedUtil.updateGetNVGenericMap(this, nvgm);
+	}
 
 }

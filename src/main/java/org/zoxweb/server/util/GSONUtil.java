@@ -1113,9 +1113,16 @@ final public class GSONUtil
 //			{
 //				
 //			}
-			if (TimestampFilter.SINGLETON.isValid(jp.getAsString()))
+			try
 			{
-				return new NVLong(name, TimestampFilter.SINGLETON.validate(jp.getAsString()));
+				Long.parseLong(jp.getAsString());
+			}
+			catch(Exception e)
+			{
+				if (TimestampFilter.SINGLETON.isValid(jp.getAsString()))
+				{
+					return new NVLong(name, TimestampFilter.SINGLETON.validate(jp.getAsString()));
+				}
 			}
 			
 			return new NVPair(name, jp.getAsString());

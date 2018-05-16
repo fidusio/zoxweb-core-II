@@ -20,25 +20,31 @@ import org.zoxweb.shared.filters.FilterType;
 import org.zoxweb.shared.util.AppID;
 import org.zoxweb.shared.util.GetNVConfig;
 import org.zoxweb.shared.util.GetNVGenericMap;
+import org.zoxweb.shared.util.GetName;
+
+import org.zoxweb.shared.util.NVBoolean;
 import org.zoxweb.shared.util.NVConfig;
 import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVConfigEntityLocal;
 import org.zoxweb.shared.util.NVConfigManager;
 import org.zoxweb.shared.util.NVGenericMap;
+import org.zoxweb.shared.util.NVLong;
+
+
 import org.zoxweb.shared.util.SharedUtil;
 import java.util.Date;
 
 
-@SuppressWarnings("serial")
+
 public class JWTPayload 
-    extends SetNameDescriptionDAO
+    //extends SetNameDescriptionDAO
     implements AppID<String>,
     		   GetNVGenericMap
 {
 	
 
 	public enum Param
-	    implements GetNVConfig
+	    implements GetNVConfig, GetName
 	{
 		
 		ISS(NVConfigManager.createNVConfig("iss", "Issuer intentifier", "Issuer", false, true, false, String.class, null)),
@@ -69,6 +75,10 @@ public class JWTPayload
 		{
 			return nvc;
 		}
+		public String getName()
+		{
+			return nvc.getName();
+		}
 	}
 	
 	public static final NVConfigEntity NVC_JWT_PAYLOAD = new NVConfigEntityLocal(  "jwt_payload", 
@@ -86,13 +96,14 @@ public class JWTPayload
 																				);
 
 	
-	private final NVGenericMap genericMap;
+	private final NVGenericMap nvgm;
 
-	public JWTPayload() 
+	public JWTPayload(NVGenericMap gnv) 
 	{
-		super(NVC_JWT_PAYLOAD);
-		
-		genericMap = SharedUtil.toNVGenricMap(this);
+		this.nvgm = gnv;
+//		super(NVC_JWT_PAYLOAD);
+//		
+//		gnv = SharedUtil.toNVGenricMap(this);
 	
 		
 		//genericMap.
@@ -101,53 +112,65 @@ public class JWTPayload
 	@Override
 	public String getDomainID() 
 	{
-		return lookupValue(Param.DOMAIN_ID);
+		return nvgm.getValue(Param.DOMAIN_ID);
 	}
 
+	public String getName()
+	{
+		return nvgm.getValue("name");
+	}
+	
+	public void setName(String name)
+	{
+		nvgm.add("name", name);
+	}
 	@Override
 	public void setDomainID(String domainID) 
 	{
-		setValue(Param.DOMAIN_ID, domainID);
+		//setValue(Param.DOMAIN_ID, domainID);
+	
+		nvgm.add(Param.DOMAIN_ID,domainID);
 	}
 
 	public String getAppID() 
 	{
-		return lookupValue(Param.APP_ID);
+		return nvgm.getValue(Param.APP_ID);
 	}
 
 	public void setAppID(String appID) 
 	{
-		setValue(Param.APP_ID, appID);
+		nvgm.add(Param.APP_ID, appID);
 	}
 	
 	public long getNonce() 
 	{
-		return lookupValue(Param.NONCE);
+		return nvgm.getValue(Param.NONCE.getName(), 0);
+		
 	}
 
 	public String getSubjectID() 
 	{
-		return lookupValue(Param.SUB);
+		return nvgm.getValue(Param.SUB);
 	}
 
 	public void setSubjectID(String sub) 
 	{
-		setValue(Param.SUB, sub);
+		nvgm.add(Param.SUB,sub);
 	}
 
 	public boolean isAdmin() 
 	{
-		return lookupValue(Param.ADMIN);
+		return nvgm.getValue(Param.ADMIN.getName(), false);
 	}
 	
 	public void setAdmin(boolean isAdmin) 
 	{
-		setValue(Param.ADMIN, isAdmin);
+		nvgm.add(new NVBoolean(Param.ADMIN.getName(), isAdmin));
 	}
 
 	public void setNonce(long nonce) 
 	{
-		setValue(Param.NONCE, nonce);
+		nvgm.add(new NVLong(Param.NONCE.getName(), nonce));
 	}
 	
 //	public void setNonce(String nonce) 
@@ -168,62 +191,63 @@ public class JWTPayload
 
 	public String getAudience() 
 	{
-		return lookupValue(Param.AUD);
+		return nvgm.getValue(Param.AUD);
 	}
 
 	public void setAudience(String aud) 
 	{
-		setValue(Param.AUD, aud);
+		nvgm.add(Param.AUD, aud);
 	}
 	
 	public long getExpirationTime() 
 	{
-		return lookupValue(Param.EXP);
+		return nvgm.getValue(Param.EXP);
 	}
 
 	public void setExpirationTime(long exp) 
 	{
-		setValue(Param.EXP, exp);
+		nvgm.add(new NVLong(Param.EXP.getName(), exp));
 	}
 
 	public long getNotBefore() 
 	{
-		return lookupValue(Param.NBF);
+		return nvgm.getValue(Param.NBF);
 	}
 
 	public void setNotBefore(long nbf) 
 	{
-		setValue(Param.NBF, nbf);
+		nvgm.add(new NVLong(Param.NBF.getName(), nbf));
 	}
 
 	public long getIssuedAt() 
 	{
-		return lookupValue(Param.IAT);
+		return nvgm.getValue(Param.IAT);
 	}
 
 	public void setIssuedAt(long iat) 
 	{
-		setValue(Param.IAT, iat);
+		nvgm.add(new NVLong(Param.IAT.getName(), iat));
 	}
 
 	public String getJWTID() 
 	{
-		return lookupValue(Param.JTI);
+		return nvgm.getValue(Param.JTI);
 	}
 
 	public void setJWTID(String jti) 
 	{
-		setValue(Param.JTI, jti);
+		nvgm.add(Param.JTI, jti);
 	}
 	
 	
 	public NVGenericMap getNVGenericMap()
 	{
-		return genericMap;	
+		return nvgm;	
 	}
 	
 	public void setNVGenericMap(NVGenericMap nvgm)
 	{
+		this.nvgm.clear();
 		SharedUtil.updateGetNVGenericMap(this, nvgm);
 	}
 

@@ -9,14 +9,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.zoxweb.server.util.GSONUtil;
 import org.zoxweb.shared.security.JWT;
-import org.zoxweb.shared.security.JWT2;
 import org.zoxweb.shared.security.JWTHeader;
 import org.zoxweb.shared.security.JWTPayload;
 import org.zoxweb.shared.security.SecurityConsts.JWTAlgorithm;
-import org.zoxweb.shared.util.NVBoolean;
-import org.zoxweb.shared.util.NVConfigEntity;
-import org.zoxweb.shared.util.NVGenericMap;
-import org.zoxweb.shared.util.NVGenericMapTest;
 import org.zoxweb.shared.util.NVPair;
 import org.zoxweb.shared.util.SharedBase64.Base64Type;
 
@@ -30,110 +25,115 @@ public class JWTTest {
 	@Before
 	public void init()
 	{
-		JWTHeader header = new JWTHeader();
+		
+		
+		jwtHS256 = new JWT();
+		JWTHeader header = jwtHS256.getHeader();
 		
 		header.setJWTAlgorithm(JWTAlgorithm.HS256);
 		header.setTokenType("JWT");
-		JWTPayload payload = new JWTPayload();
+		
+		JWTPayload payload = jwtHS256.getPayload();
 		payload.setDomainID("xlogistx.io");
 		payload.setAppID("xlogistx");
 		payload.setNonce(index++);
 		//payload.setRandom(new byte[] {0,1,2,3});
 		payload.setSubjectID("support@xlogistx.io");
-		jwtHS256 = new JWT();
-		jwtHS256.setHeader(header);
-		jwtHS256.setPayload(payload);
 		
 		
-		header = new JWTHeader();
+		
+		
+		jwtNONE = new JWT();
+		header = jwtNONE.getHeader();
 		header.setJWTAlgorithm(JWTAlgorithm.none);
-		payload = new JWTPayload();
+		
+		payload = jwtNONE.getPayload();
 		payload.setDomainID("xlogistx.io");
 		payload.setAppID("xlogistx");
 		payload.setNonce(index++);
 		//payload.setRandom(new byte[] {0,1,2,3});
 		payload.setSubjectID("none@xlogistx.io");
-		jwtNONE = new JWT();
-		jwtNONE.setHeader(header);
-		jwtNONE.setPayload(payload);
 		
+	
 		
+		jwtHS512 = new JWT();
 		
-		header = new JWTHeader();
+		header = jwtHS512.getHeader();
 			
 		header.setJWTAlgorithm(JWTAlgorithm.HS512);
 		header.setTokenType("JWT");
-		payload = new JWTPayload();
+	
+		payload =jwtHS512.getPayload();
 		payload.setDomainID("xlogistx.io");
 		payload.setAppID("xlogistx");
 		payload.setNonce(index++);
 		//payload.setRandom(new byte[] {0,1,2,3});
 		payload.setSubjectID("support@xlogistx.io");
-		jwtHS512 = new JWT();
-		jwtHS512.setHeader(header);
-		jwtHS512.setPayload(payload);
+		
+		
+		
 		
 	}
 	
 	@Test
 	public void toGSON() throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException, InvalidKeyException, NoSuchAlgorithmException
 	{
-		String json = GSONUtil.toJSON(jwtHS256, true, false, false, Base64Type.URL);
-		System.out.println(json);
-		
-		System.out.println("ToGSON:***************************************************************");
-		JWT localJwt = GSONUtil.fromJSON(json, JWT.class, Base64Type.URL);
-		json = GSONUtil.toJSON(localJwt, true, false, false, Base64Type.URL);
-		System.out.println(json);
-		
-		System.out.println(localJwt.getPayload());
-		
-		String test = CryptoUtil.encodeJWT("secret", localJwt);
-		System.out.println(test);
-		
-		JWTPayload payload = new JWTPayload();
-		payload.setDomainID("xlogistx.io");
-		payload.setAppID("xlogistx");
-		payload.setSubjectID("batata@xlogistx.io");
-		payload.setName("John Doe");
-		payload.setAdmin(true);
-		payload.setNotBefore(System.currentTimeMillis());
-		payload.setNonce(index++);
-		payload.getNVGenericMap().add(new NVBoolean("bool", true));
-		
-		//payload.setRandom(new byte[] {0,1,2,3});
-		localJwt.setPayload(payload);
-		
-		NVGenericMap nvgm = payload.getNVGenericMap();
-		NVPair nvp = (NVPair)nvgm.get("name");
-		nvp.setValue("Mario");
-		json = GSONUtil.toJSON(localJwt, true, false, false, Base64Type.URL);
-		System.out.println(json);
-		test = CryptoUtil.encodeJWT("secret", localJwt);
-		System.out.println(test);
-
-		System.out.println(CryptoUtil.decodeJWT("secret", test));
-		
-		String payloadJSON = GSONUtil.toJSON(payload, true, false, true, Base64Type.URL);
-		System.out.println("-------------------------------------------------------------------");
-		System.out.println(payloadJSON);
-	
-		
-		NVGenericMap gm = GSONUtil.fromJSONGenericMap(payloadJSON,(NVConfigEntity)payload.getNVConfig(), Base64Type.URL);
-		//System.out.println(gm);
-		NVGenericMapTest.printValue(gm);
-		
-		
-		JWTPayload tempJWTP = new  JWTPayload();
-		gm.add(new NVPair("http://toto.com", "batata"));
-		tempJWTP.setNVGenericMap(gm);
-		System.out.println(tempJWTP);
-	
-		tempJWTP.getNotBefore();
-		System.out.println("genericMapToJSON:" + GSONUtil.toJSONGenericMap(tempJWTP.getNVGenericMap(), false, false, false));
-		System.out.println( GSONUtil.toJSON(tempJWTP, false, false, true, Base64Type.URL));
-		
-		System.out.println("---------------++++++++++++++++++++----------------------------------------------------");
+//		String json = GSONUtil.toJSON(jwtHS256, true, false, false, Base64Type.URL);
+//		System.out.println(json);
+//		
+//		System.out.println("ToGSON:***************************************************************");
+//		JWT localJwt = GSONUtil.fromJSON(json, JWT.class, Base64Type.URL);
+//		json = GSONUtil.toJSON(localJwt, true, false, false, Base64Type.URL);
+//		System.out.println(json);
+//		
+//		System.out.println(localJwt.getPayload());
+//		
+//		String test = CryptoUtil.encodeJWT("secret", localJwt);
+//		System.out.println(test);
+//		
+//		JWTPayload payload = new JWTPayload();
+//		payload.setDomainID("xlogistx.io");
+//		payload.setAppID("xlogistx");
+//		payload.setSubjectID("batata@xlogistx.io");
+//		payload.setName("John Doe");
+//		payload.setAdmin(true);
+//		payload.setNotBefore(System.currentTimeMillis());
+//		payload.setNonce(index++);
+//		payload.getNVGenericMap().add(new NVBoolean("bool", true));
+//		
+//		//payload.setRandom(new byte[] {0,1,2,3});
+//		localJwt.setPayload(payload);
+//		
+//		NVGenericMap nvgm = payload.getNVGenericMap();
+//		NVPair nvp = (NVPair)nvgm.get("name");
+//		nvp.setValue("Mario");
+//		json = GSONUtil.toJSON(localJwt, true, false, false, Base64Type.URL);
+//		System.out.println(json);
+//		test = CryptoUtil.encodeJWT("secret", localJwt);
+//		System.out.println(test);
+//
+//		System.out.println(CryptoUtil.decodeJWT("secret", test));
+//		
+//		String payloadJSON = GSONUtil.toJSON(payload, true, false, true, Base64Type.URL);
+//		System.out.println("-------------------------------------------------------------------");
+//		System.out.println(payloadJSON);
+//	
+//		
+//		NVGenericMap gm = GSONUtil.fromJSONGenericMap(payloadJSON,(NVConfigEntity)payload.getNVConfig(), Base64Type.URL);
+//		//System.out.println(gm);
+//		NVGenericMapTest.printValue(gm);
+//		
+//		
+//		JWTPayload tempJWTP = new  JWTPayload();
+//		gm.add(new NVPair("http://toto.com", "batata"));
+//		tempJWTP.setNVGenericMap(gm);
+//		System.out.println(tempJWTP);
+//	
+//		tempJWTP.getNotBefore();
+//		System.out.println("genericMapToJSON:" + GSONUtil.toJSONGenericMap(tempJWTP.getNVGenericMap(), false, false, false));
+//		System.out.println( GSONUtil.toJSON(tempJWTP, false, false, true, Base64Type.URL));
+//		
+//		System.out.println("---------------++++++++++++++++++++----------------------------------------------------");
 	}
 	
 	
@@ -223,11 +223,40 @@ public class JWTTest {
 		System.out.println("--------------------------------------------------------------");
 		//"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE1MDg0NjA1MzMzNDEsImRvbWFpbiI6Inhsb2dpc3R4LmlvIiwiYXBwIjoieGxvZ2lzdHgifQ.oxqpJP18sxq51qNt8_kisYeS0oR31QL2DrP-M_wYaO0";
 		String gwtToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE1MDg0NzMyMzU0OTMsImRvbWFpbiI6Inhsb2dpc3R4LmlvIiwiYXBwIjoieGxvZ2lzdHgifQ.MrrlKa90ut2RBcfJ61lXB7ScwHikPyvkvpd_DVxPnFg";
-		JWT decoded = CryptoUtil.decodeJWT("secret", gwtToken);		
-		String test = CryptoUtil.encodeJWT("secret", decoded);
+		JWT decoded = CryptoUtil.decodeJWT("secret", gwtToken);
+				String test = CryptoUtil.encodeJWT("secret", decoded);
 		System.out.println("TESTGWT  :" + gwtToken);
 		System.out.println("local:" + test);
-		System.out.println(decoded.getPayload());
+		System.out.println(decoded.getPayload().getNVGenericMap());
+		System.out.println(GSONUtil.toJSON(decoded, false, false, false, Base64Type.URL));
+		System.out.println("Are equals:" + test.equals(gwtToken));
+		Assert.assertEquals("2 tokens equals", test, gwtToken);
+		decoded.getPayload().getNVGenericMap().add(new NVPair("mario", "taza"));
+		String json = GSONUtil.toJSON(decoded, false, false, true, Base64Type.URL);
+		System.out.println(json);
+		JWT fromJSON = GSONUtil.fromJSON(json);
+		json = GSONUtil.toJSON(fromJSON, false, false, false, Base64Type.URL);
+		System.out.println(json);
+		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+	}
+	
+	
+	
+	@Test
+	public void testJWTJohnDoe() throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException, InvalidKeyException, NoSuchAlgorithmException
+	{
+		
+		System.out.println("testJWTJohnDoe--------------------------------------------------------------");
+		//"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE1MDg0NjA1MzMzNDEsImRvbWFpbiI6Inhsb2dpc3R4LmlvIiwiYXBwIjoieGxvZ2lzdHgifQ.oxqpJP18sxq51qNt8_kisYeS0oR31QL2DrP-M_wYaO0";
+		String gwtToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o";
+		System.out.println(CryptoUtil.parseJWT(gwtToken));
+		JWT decoded = CryptoUtil.decodeJWT("secret", gwtToken);
+		System.out.println("Subject class id:" + decoded.getPayload().getNVGenericMap().get("sub").getClass().getName());
+
+		String test = CryptoUtil.encodeJWT("secret", decoded);
+		System.out.println("JOHNDOE:" + gwtToken);
+		System.out.println("local  :" + test);
+		System.out.println(decoded.getPayload().getNVGenericMap());
 		System.out.println(GSONUtil.toJSON(decoded, false, false, false, Base64Type.URL));
 		System.out.println("Are equals:" + test.equals(gwtToken));
 		Assert.assertEquals("2 tokens equals", test, gwtToken);
@@ -243,30 +272,17 @@ public class JWTTest {
 	
 	
 	
+//	@Test (expected = IllegalArgumentException.class)
+//	public void invalidDomain()
+//	{
+//
+//		
+//		JWTPayload payload = new JWTPayload();
+//		
+//		payload.setDomainID("xlogistx");
+//		payload.setAppID("xlogistx");
+//		//payload.setRandom(new byte[] {0,1,2,3});
+//		payload.setSubjectID("support@xlogistx.io");
+//	}
 	
-	@Test (expected = IllegalArgumentException.class)
-	public void invalidDomain()
-	{
-
-		
-		JWTPayload payload = new JWTPayload();
-		
-		payload.setDomainID("xlogistx");
-		payload.setAppID("xlogistx");
-		//payload.setRandom(new byte[] {0,1,2,3});
-		payload.setSubjectID("support@xlogistx.io");
-	}
-	@Test
-	public void testJWT2() throws IOException
-	{
-		JWT2 jwt = new JWT2();
-		
-		jwt.getHeader().add(new NVPair(JWTHeader.Param.ALG.getNVConfig(),""+JWTAlgorithm.HS256));
-		
-		String json = GSONUtil.toJSON(jwt, false, false, true, Base64Type.URL);
-		System.out.println(json);
-		
-		System.out.println(jwt);
-		System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
-	}
 }

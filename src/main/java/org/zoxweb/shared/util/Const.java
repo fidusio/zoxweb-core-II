@@ -589,9 +589,11 @@ public class Const
 				sb.append((min < 9 ? "0" : "")  +min);
 				sb.append(':');
 				sb.append((sec < 9 ? "0" : "")  +sec);
-				sb.append('.');
-				sb.append(mil);
-				
+				if(mil > 0)
+				{
+					sb.append('.');
+					sb.append(mil);
+				}
 				
 				return sb.toString();
 			}

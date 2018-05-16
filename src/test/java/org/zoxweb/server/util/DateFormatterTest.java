@@ -80,6 +80,8 @@ public class DateFormatterTest {
 				"48:35:59.234",
 				"48:60:59.234",
 				"48:35:60.22323",
+				"3h",
+				"03:00:00"
 			};
 		
 		for(String time : tokens)
@@ -88,8 +90,7 @@ public class DateFormatterTest {
 			{
 		
 				long millis = TimeInMillis.toMillis(time);
-				System.out.println(time + "," +  TimeInMillis.toMillis(time));
-				System.out.println(TimeInMillis.toString(millis));
+				System.out.println(time + "," +  millis+", " + TimeInMillis.toString(millis));
 			}
 			catch(Exception e)
 			{

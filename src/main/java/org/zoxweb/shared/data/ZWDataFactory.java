@@ -40,8 +40,6 @@ import org.zoxweb.shared.net.InetSocketAddressDAO;
 import org.zoxweb.shared.net.NetworkInterfaceDAO;
 import org.zoxweb.shared.security.AccessCodeDAO;
 import org.zoxweb.shared.security.IPBlockerConfig;
-import org.zoxweb.shared.security.JWTHeader;
-import org.zoxweb.shared.security.JWTPayload;
 import org.zoxweb.shared.security.LoginTokenDAO;
 import org.zoxweb.shared.security.ScanResultDAO;
 import org.zoxweb.shared.util.GetName;
@@ -1038,36 +1036,36 @@ public class ZWDataFactory
 //                return HTTPDefaultResponseDAO.NVC_HTTP_DEFAULT_RESPONSE_DAO;
 //            }
 //        },
-        JWT_HEADER(JWTHeader.class.getName())
-        {
-            @SuppressWarnings("unchecked")
-            @Override
-            public JWTHeader newInstance()
-            {
-                return new JWTHeader();
-            }
-
-            @Override
-            public NVConfigEntity getNVConfigEntity()
-            {
-                return JWTHeader.NVC_JWT_HEADER;
-            }
-        },
-        JWT_PAYLOAD(JWTPayload.class.getName())
-        {
-            @SuppressWarnings("unchecked")
-            @Override
-            public JWTPayload newInstance()
-            {
-                return new JWTPayload();
-            }
-
-            @Override
-            public NVConfigEntity getNVConfigEntity()
-            {
-                return JWTPayload.NVC_JWT_PAYLOAD;
-            }
-        },
+//        JWT_HEADER(JWTHeader.class.getName())
+//        {
+//            @SuppressWarnings("unchecked")
+//            @Override
+//            public JWTHeader newInstance()
+//            {
+//                return new JWTHeader();
+//            }
+//
+//            @Override
+//            public NVConfigEntity getNVConfigEntity()
+//            {
+//                return JWTHeader.NVC_JWT_HEADER;
+//            }
+//        },
+//        JWT_PAYLOAD(JWTPayload.class.getName())
+//        {
+//            @SuppressWarnings("unchecked")
+//            @Override
+//            public JWTPayload newInstance()
+//            {
+//                return new JWTPayload();
+//            }
+//
+//            @Override
+//            public NVConfigEntity getNVConfigEntity()
+//            {
+//                return JWTPayload.NVC_JWT_PAYLOAD;
+//            }
+//        },
         JWT(org.zoxweb.shared.security.JWT.class.getName())
         {
             @SuppressWarnings("unchecked")

@@ -25,6 +25,7 @@ import org.zoxweb.shared.util.NVConfig;
 import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVConfigEntityLocal;
 import org.zoxweb.shared.util.NVConfigManager;
+import org.zoxweb.shared.util.NVGenericMap;
 import org.zoxweb.shared.util.SharedUtil;
 import org.zoxweb.shared.security.SecurityConsts.JWTAlgorithm;
 
@@ -41,12 +42,11 @@ extends SetNameDescriptionDAO
 	}
 
 
-
 	public enum Param
 	implements GetNVConfig
 	{
-		JWT_HEADER(NVConfigManager.createNVConfigEntity("header", "Header", "Header", true, true, JWTHeader.class, null)),
-		JWT_PAYLOAD(NVConfigManager.createNVConfigEntity("payload", "Payload", "Payload", false, false, JWTPayload.class, null)),
+		JWT_HEADER(NVConfigManager.createNVConfig("header", "Header", "Header", true, true, NVGenericMap.class)),
+		JWT_PAYLOAD(NVConfigManager.createNVConfig("payload", "Payload", "Payload", false, false, NVGenericMap.class)),
 		JWT_HASH(NVConfigManager.createNVConfig("hash", "hash", "Hash", false, false, String.class)),
 		
 		;
@@ -82,33 +82,36 @@ extends SetNameDescriptionDAO
 	
 	
 	
+	private JWTPayload payload;
+	private JWTHeader header;
 	public JWT()
 	{
 		super(NVC_JWT);
+		payload = new JWTPayload((NVGenericMap) lookup(Param.JWT_PAYLOAD));
+		header = new JWTHeader((NVGenericMap) lookup(Param.JWT_HEADER));
 	}
 
+	
 	public JWT(JWTHeader header, JWTPayload payload)
 	{
 		this();
-		setHeader(header);
-		setPayload(payload);
+		this.header.setNVGenericMap(header.getNVGenericMap());
+	
+		this.payload.setNVGenericMap(payload.getNVGenericMap());
+		
 
 	}
 	public JWTHeader getHeader() {
-		return lookupValue(Param.JWT_HEADER);
+		return header;
 	}
 
-	public void setHeader(JWTHeader header) {
-		setValue(Param.JWT_HEADER, header);
-	}
+
 
 	public JWTPayload getPayload() {
-		return lookupValue(Param.JWT_PAYLOAD);
+		return payload;
 	}
 
-	public void setPayload(JWTPayload payload) {
-		setValue(Param.JWT_PAYLOAD, payload);
-	}
+
 	
 	
 	public String getHash()
@@ -127,11 +130,13 @@ extends SetNameDescriptionDAO
     }
 
 	public static JWT createJWT(JWTAlgorithm algorithm, String subjectID, String domainID, String appID) {
-        JWTHeader jwtHeader = new JWTHeader();
+		
+		JWT jwt = new JWT();
+        JWTHeader jwtHeader = jwt.getHeader();
         jwtHeader.setJWTAlgorithm(algorithm);
         jwtHeader.setTokenType("JWT");
 
-        JWTPayload jwtPayload = new JWTPayload();
+        JWTPayload jwtPayload = jwt.getPayload();
         jwtPayload.setDomainID(domainID);
         jwtPayload.setAppID(appID);
         jwtPayload.setSubjectID(subjectID);
@@ -142,9 +147,8 @@ extends SetNameDescriptionDAO
         else
         	jwtPayload.setIssuedAt(System.currentTimeMillis());
 
-        JWT jwt = new JWT();
-        jwt.setHeader(jwtHeader);
-        jwt.setPayload(jwtPayload);
+        //jwt.setHeader(jwtHeader);
+        //jwt.setPayload(jwtPayload);
 
         return jwt;
     }
