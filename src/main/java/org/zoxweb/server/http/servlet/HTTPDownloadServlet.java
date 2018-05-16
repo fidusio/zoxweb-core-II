@@ -125,7 +125,7 @@ public class HTTPDownloadServlet
 			if(mt!=null)
 			{
 				fid.setContentType(mt.getValue());
-				log.info("content type:" + mt + " for file:" + file );
+				log.info(request.getRemoteAddr() + " content type:" + mt + " for file:" + file );
 			}
 			return new FileInfoStreamSource(fid, is);
 		}
