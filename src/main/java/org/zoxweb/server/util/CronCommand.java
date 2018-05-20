@@ -50,6 +50,7 @@ implements Runnable
 		executionCounter++;
 		try 
 		{
+			System.out.println("Executing command:" + command);
 			RuntimeResultDAO rr = RuntimeUtil.runAndFinish(command);
 			taskListener.executionResult(rr.getExitCode(), executionCounter, System.currentTimeMillis(), rr.getOutputData());
 			
