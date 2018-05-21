@@ -81,24 +81,18 @@ public class FileInfoDAO
 	}
 	
 	
-	
-//	private static final NVConfigEntity NVC_FILE_INFO_DAO_ORGINAL = new NVConfigEntityLocal("file_info_dao_original", null , "FileInfoDAO", true, false, false, false, FileInfoDAO.class, SharedUtil.extractNVConfigs(Params.values()), null, false, DocumentInfoDAO.NVC_DOCUMENT_INFO_DAO);
-//	private static final NVConfigEntity REMOTE_FID = (NVConfigEntity) NVConfigManager.createNVConfigEntity("remote_file_info_doa", "The remote file info dao", "RemoteFileInfoDAO", true, false, NVC_FILE_INFO_DAO_ORGINAL);
-
-	public static final NVConfigEntity NVC_FILE_INFO_DAO = new NVConfigEntityLocal(
-																						"file_info_dao", 
-																						null, 
-																						"FileInfoDAO", 
-																						true, 
-																						false, 
-																						false, 
-																						false, 
-																						FileInfoDAO.class, 
-																						SharedUtil.extractNVConfigs(Param.values()),
-																						null, 
-																						false, 
-																						NVC_DOCUMENT_INFO_DAO
-																					);
+	public static final NVConfigEntity NVC_FILE_INFO_DAO = new NVConfigEntityLocal(	"file_info_dao", 
+																					null, 
+																					"FileInfoDAO", 
+																					true, 
+																					false, 
+																					false, 
+																					false, 
+																					FileInfoDAO.class, 
+																					SharedUtil.extractNVConfigs(Param.values()),
+																					null, 
+																					false, 
+																					NVC_DOCUMENT_INFO_DAO);
 	
 	/**
 	 * The default constructor.
@@ -163,24 +157,7 @@ public class FileInfoDAO
 		setValue(Param.LENGTH, id);
 	}
 	
-//	/**
-//	 * Get the file properties if any is available.
-//	 * @return
-//	 */
-//	public List<NVPair> getFileProperties()
-//	{
-//		return lookupValue(Params.PROPERTIES);
-//	}
-//	
-//	/**
-//	 * Set the file properties.
-//	 * @param fileProps
-//	 */
-//	public void setFileProperties(List<NVPair> fileProps)
-//	{
-//		setValue( Params.PROPERTIES, fileProps);
-//	}
-//	
+
 	/**
 	 * Gets the file type.
 	 * @return file type
@@ -233,6 +210,7 @@ public class FileInfoDAO
 	public void setFullPathName(String fullPathName) 
 	{
 		setValue(Param.FULL_PATH_NAME, fullPathName);
+		setName(fullPathName);
 	}
 	
 	

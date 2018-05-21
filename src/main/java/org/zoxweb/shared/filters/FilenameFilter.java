@@ -52,7 +52,7 @@ public class FilenameFilter
 	 */
 	public String validate(String fileName) throws NullPointerException, IllegalArgumentException
     {
-		fileName = SharedStringUtil.trimOrNull( fileName);
+		fileName = SharedStringUtil.trimOrNull(fileName);
 		SharedUtil.checkIfNulls("Null filename ", fileName);
 		int lastIndex = -1;
 		
