@@ -212,6 +212,19 @@ public interface APIAppManager
      */
 	AppIDDAO lookupAppIDDAO(String domainID, String appID)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException;
+	 /**
+     * Look up AppIDDAO based on domain ID and app ID.
+     * @param domainID
+     * @param appID
+     * @param exceptionIfNotFound
+     * @return
+     * @throws NullPointerException
+     * @throws IllegalArgumentException
+     * @throws AccessException
+     * @throws APIException
+     */
+	AppIDDAO lookupAppIDDAO(String domainID, String appID, boolean exceptionIfNotFound)
+            throws NullPointerException, IllegalArgumentException, AccessException, APIException;
 
 
     /**

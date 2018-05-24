@@ -635,7 +635,7 @@ public class APIAppManagerProvider
     }
     
     
-    private AppIDDAO lookupAppIDDAO(String domainID, String appID, boolean exceptionIfNotFound)
+    public AppIDDAO lookupAppIDDAO(String domainID, String appID, boolean exceptionIfNotFound)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException {
 //        SharedUtil.checkIfNulls("Domain ID is null", domainID);
 //        SharedUtil.checkIfNulls("App ID is null", appID);
