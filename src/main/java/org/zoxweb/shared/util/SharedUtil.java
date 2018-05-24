@@ -363,6 +363,99 @@ public class SharedUtil
 		
 		return null;
 	}
+	
+	
+	
+	public static NVBase<?> toNVBasePrimitive(String name, Object value)
+	{
+		NVBase<?> ret = null;	
+		if (value instanceof String)
+		{
+			ret = new NVPair(name, (String)value);
+		}
+		else if (value instanceof Boolean)
+		{
+			ret = new NVBoolean(name, (boolean)value);
+		}
+		else if (value instanceof Integer)
+		{
+			ret = new NVInt(name, (int)value);
+		}
+		else if (value instanceof Long)
+		{
+			ret = new NVLong(name, (long)value);
+		}
+		else if (value instanceof Float)
+		{
+			ret = new NVFloat(name, (float)value);
+		}
+		else if (value instanceof Double)
+		{
+			ret = new NVDouble(name, (double)value);
+		}
+		else if (value instanceof Enum)
+		{
+			ret = new NVEnum(name, (Enum<?>)value);
+		}
+		else if (value instanceof byte[])
+		{
+			ret = new NVBlob(name, (byte[])value);
+		}
+		else if (value instanceof BigDecimal)
+		{
+			ret = new NVBigDecimal(name, (BigDecimal)value);
+		}
+		else if (value instanceof List)
+		{
+			List<?> temp = (List<?>) value;
+			if (temp.size() > 0)
+			{
+				if (temp.get(0) instanceof String)
+				{
+					ret = new NVStringList(name);
+					for (Object v : temp)
+					{
+						((NVStringList)ret).getValue().add((String)v);
+					}
+				}
+				else if (temp.get(0) instanceof Double)
+				{
+					ret = new NVDoubleList(name);
+					for (Object v : temp)
+					{
+						((NVDoubleList)ret).getValue().add((Double)v);
+					}
+				}
+				else if (temp.get(0) instanceof Float)
+				{
+					ret = new NVFloatList(name);
+					for (Object v : temp)
+					{
+						((NVFloatList)ret).getValue().add((Float)v);
+					}
+				}
+				else if (temp.get(0) instanceof Integer)
+				{
+					ret = new NVIntList(name);
+					for (Object v : temp)
+					{
+						((NVIntList)ret).getValue().add((Integer)v);
+					}
+				}
+				else if (temp.get(0) instanceof Long)
+				{
+					ret = new NVLongList(name);
+					for (Object v : temp)
+					{
+						((NVLongList)ret).getValue().add((Long)v);
+					}
+				}
+			}
+		}
+		
+		
+		return ret;
+	}
 
 	/**
 	 * Parses a name = value String and return an NVPair object.
@@ -1462,6 +1555,8 @@ public class SharedUtil
 		
 		}
 	}
+	
+	
 	
 	@SuppressWarnings("unchecked")
 	public static <T> T parsePrimitiveValue(GNVType type, String v)

@@ -15,6 +15,7 @@
  */
 package org.zoxweb.shared.util;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,6 +31,12 @@ public class NVLongList
 	public NVLongList()
 	{
 		
+	}
+	
+	
+	public NVLongList(String name)
+	{
+		super(name, new ArrayList<Long>());
 	}
 	
 	/**

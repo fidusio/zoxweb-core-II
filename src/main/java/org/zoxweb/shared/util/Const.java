@@ -100,9 +100,13 @@ public class Const
 		ON("on", true),
 		OFF("off", false),
 		ENABLE("enable", true),
+		ENABLED("enabled", true),
 		DISABLE("disable", false),
+		DISABLED("disabled", false),
 		ACTIVE("active", true),
+		ACTIVATED("activated", true),
 		INACTIVE("incative", false),
+		DEACTIVATED("deactivated", false),
 		
 		;
 		private final boolean value;

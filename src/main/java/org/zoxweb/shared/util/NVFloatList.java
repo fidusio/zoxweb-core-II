@@ -15,6 +15,7 @@
  */
 package org.zoxweb.shared.util;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,6 +36,10 @@ public class NVFloatList
 		
 	}
 	
+	public NVFloatList(String name)
+	{
+		super(name, new ArrayList<Float>());
+	}
 	/**
 	 * This constructor instantiates NVFLoatList based on name and value.
 	 * @param name

@@ -15,6 +15,7 @@
  */
 package org.zoxweb.shared.util;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,7 +33,11 @@ public class NVDoubleList
      */
 	public NVDoubleList()
 	{
-		
+	}
+	
+	public NVDoubleList(String name)
+	{
+		super(name, new ArrayList<Double>());
 	}
 	
 	/**

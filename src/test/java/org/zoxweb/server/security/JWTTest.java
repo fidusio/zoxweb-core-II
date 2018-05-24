@@ -1,6 +1,7 @@
 package org.zoxweb.server.security;
 
 import java.io.IOException;
+
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
@@ -12,6 +13,7 @@ import org.zoxweb.shared.security.JWT;
 import org.zoxweb.shared.security.JWTHeader;
 import org.zoxweb.shared.security.JWTPayload;
 import org.zoxweb.shared.security.SecurityConsts.JWTAlgorithm;
+
 import org.zoxweb.shared.util.NVPair;
 import org.zoxweb.shared.util.SharedBase64.Base64Type;
 
@@ -32,6 +34,7 @@ public class JWTTest {
 		
 		header.setJWTAlgorithm(JWTAlgorithm.HS256);
 		header.setTokenType("JWT");
+		
 		
 		JWTPayload payload = jwtHS256.getPayload();
 		payload.setDomainID("xlogistx.io");

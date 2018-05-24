@@ -15,6 +15,7 @@
  */
 package org.zoxweb.shared.util;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,6 +33,11 @@ public class NVIntList
 	public NVIntList()
 	{
 		
+	}
+	
+	public NVIntList(String name)
+	{
+		super(name, new ArrayList<Integer>());
 	}
 	
 	/**
