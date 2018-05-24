@@ -735,6 +735,12 @@ final public class GSONUtil
 				writer.name(name);
 				toJSON(writer, ((NVEntity)gnv.getValue()).getClass(), (NVEntity)gnv.getValue(), printNull, printClassType, Base64Type.URL);
 			}
+			else if (gnv instanceof NVGenericMap)
+			{
+				
+				writer.name(name);
+				toJSONGenericMap(writer, (NVGenericMap)gnv,  printNull, printClassType);
+			}
 			else if (gnv instanceof ArrayValues)
 			{
 				writer.name(gnv.getName());
