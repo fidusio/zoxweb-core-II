@@ -375,23 +375,23 @@ public class SharedUtil
 		}
 		else if (value instanceof Boolean)
 		{
-			ret = new NVBoolean(name, (boolean)value);
+			ret = new NVBoolean(name, (Boolean)value);
 		}
 		else if (value instanceof Integer)
 		{
-			ret = new NVInt(name, (int)value);
+			ret = new NVInt(name, (Integer)value);
 		}
 		else if (value instanceof Long)
 		{
-			ret = new NVLong(name, (long)value);
+			ret = new NVLong(name, (Long)value);
 		}
 		else if (value instanceof Float)
 		{
-			ret = new NVFloat(name, (float)value);
+			ret = new NVFloat(name, (Float)value);
 		}
 		else if (value instanceof Double)
 		{
-			ret = new NVDouble(name, (double)value);
+			ret = new NVDouble(name, (Double)value);
 		}
 		else if (value instanceof Enum)
 		{
