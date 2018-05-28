@@ -86,6 +86,12 @@ public class NIOTunnel
 			return new NIOTunnel(remoteAddress);
 		}
 
+		@Override
+		public int getBacklog() {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+
 //		@Override
 //		public boolean isBlocking() {
 //			return false;

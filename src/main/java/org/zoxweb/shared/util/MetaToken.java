@@ -71,6 +71,8 @@ public enum MetaToken
 	CLASS_ID("class_id"),
 	//	Recursive
 	RECRUSIVE("recursive"),
+	// meta type
+	META_TYPE("meta_type"),
 	
 	
 	;

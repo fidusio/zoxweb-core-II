@@ -1,0 +1,113 @@
+package org.zoxweb.shared.util;
+
+import org.zoxweb.shared.data.DataConst.DataParam;
+
+public class NVConfigMeta
+{
+
+	
+	public enum Param
+	implements GetNVConfig, GetName
+	{
+		NAME(DataParam.NAME.getNVConfig()),
+		DESCRIPTON(DataParam.DESCRIPTION.getNVConfig()),
+		DEFAULT_VALUE(NVConfigManager.createNVConfig("defaul_value", "The default value of the parameter its type is defined the meta_type", "DefaulValue", false, true, String.class)),
+		DISPLAY_NAME(NVConfigManager.createNVConfig("display_name", "display name", "DisplayName", false, true, String.class)),
+		META_TYPE(NVConfigManager.createNVConfig(MetaToken.META_TYPE.getName(), "The class name of the object", "MetaType", false, true, String.class)),
+		FILTERS(NVConfigManager.createNVConfig("filters", "List of filters", "Filter", false, true, NVStringList.class)),
+		IS_HIDDEN(NVConfigManager.createNVConfig("is_hidden", "If the data is hidden", "IsHidden", false, true, Boolean.class)),
+		IS_MANDATORY(NVConfigManager.createNVConfig("is_mandatory", "display name", "IsMandatory", false, true, Boolean.class)),
+		IS_VISIBLE(NVConfigManager.createNVConfig("is_visible", "if true the item is visible", "IsVisible", false, true, Boolean.class)),
+		
+		
+		
+		;
+		private final NVConfig nvc;
+
+        Param(NVConfig nvc)
+        {
+            this.nvc = nvc;
+        }
+
+        public NVConfig getNVConfig()
+        {
+            return nvc;
+        }
+        
+        public String getName()
+        {
+        	return nvc.getName();
+        }
+	}
+	
+	private NVGenericMap metaData;
+	
+	public NVConfigMeta()
+	{
+		metaData = new NVGenericMap();	
+		metaData.add(new NVPair(Param.NAME, (String)null));
+		metaData.add(new NVPair(Param.DESCRIPTON, (String)null));
+		metaData.add(new NVPair(Param.META_TYPE, (String)null));
+		metaData.add(new NVStringList(Param.FILTERS.getName()));
+		metaData.add(new NVBoolean(Param.IS_HIDDEN.getName(), false));
+		metaData.add(new NVBoolean(Param.IS_MANDATORY.getName(), false));
+		metaData.add(new NVBoolean(Param.IS_VISIBLE.getName(), false));
+	}
+	
+	
+	public  NVConfigMeta(NVGenericMap nvgm)
+	{
+		this();
+		for(GetNameValue<?> gnv: nvgm.values())
+		{
+			metaData.add(gnv);
+		}
+	}
+	
+	public String getName()
+	{
+		return metaData.getValue(Param.NAME);
+	}
+	
+	public String getDisplayName()
+	{
+		return metaData.getValue(Param.DISPLAY_NAME);
+	}
+	
+	public String getDescription()
+	{
+		return metaData.getValue(Param.DISPLAY_NAME);
+	}
+	
+	public String getMetaType()
+	{
+		return metaData.getValue(Param.META_TYPE);
+	}
+	
+	public String[] getFilters()
+	{
+		NVStringList ret = (NVStringList) metaData.get(Param.FILTERS);
+		return ret.getValue().toArray(new String[0]);
+	}
+	
+	public boolean isHidden()
+	{
+		return metaData.getValue(Param.IS_HIDDEN);
+	}
+	
+	public boolean isMadatory()
+	{
+		return metaData.getValue(Param.IS_MANDATORY);
+	}
+	
+	public boolean isVisible()
+	{
+		return metaData.getValue(Param.IS_VISIBLE);
+	}
+	
+	
+	public <V> V getDefaultValue()
+	{
+		return metaData.getValue(Param.DEFAULT_VALUE);
+	}
+}

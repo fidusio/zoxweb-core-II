@@ -97,6 +97,11 @@ public class EchoProcessor
 					// TODO Auto-generated method stub
 					return null;
 				}
+				@Override
+				public int getBacklog() {
+					// TODO Auto-generated method stub
+					return 0;
+				}
 				
 				
 		

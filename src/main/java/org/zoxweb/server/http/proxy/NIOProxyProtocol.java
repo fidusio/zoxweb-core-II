@@ -151,6 +151,12 @@ public class NIOProxyProtocol
 			
 			return ret;
 		}
+
+		@Override
+		public int getBacklog() {
+			// TODO Auto-generated method stub
+			return 256;
+		}
 		
 	}
 	
