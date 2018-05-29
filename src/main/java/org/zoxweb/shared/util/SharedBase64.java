@@ -246,6 +246,23 @@ public class SharedBase64
 	}
 	
 	
+	public static String encodeWrappedAsString(byte[] ba)
+	{
+		return "(" +  SharedStringUtil.toString(encode(Base64Type.URL, ba)) + ")";
+	}
+	
+	public static byte[] decodeWrappedAsString(String str)
+	{
+		if (str.startsWith("(") && str.endsWith(")"))
+		{
+			return decode(Base64Type.URL, str.substring("(".length(), 
+					str.length() - ")".length()));
+		}
+		
+		throw new IllegalArgumentException("Invalid String format");
+
+	}
+	
 	public static String encodeAsString(Base64Type bt, byte[] array)
 	{
 		return SharedStringUtil.toString(encode(bt, array));

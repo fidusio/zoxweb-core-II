@@ -727,7 +727,7 @@ final public class GSONUtil
 			}
 			else if (gnv instanceof NVBlob)
 			{
-				writer.name(name).value(SharedBase64.encodeAsString(Base64Type.URL, (byte[]) gnv.getValue())); 
+				writer.name(name).value(SharedBase64.encodeWrappedAsString((byte[]) gnv.getValue())); 
 			}
 			else if (gnv instanceof NVEntityReference)
 			{
@@ -1110,15 +1110,15 @@ final public class GSONUtil
 		}
 		else if (jp.isString())
 		{
-//			try
-//			{
-//				byte value[] = SharedBase64.decode(btype, jp.getAsString());
-//				return new NVBlob(name, value);
-//			}
-//			catch(Exception e)
-//			{
-//				
-//			}
+			try
+			{
+				byte value[] = SharedBase64.decodeWrappedAsString(jp.getAsString());
+				return new NVBlob(name, value);
+			}
+			catch(Exception e)
+			{
+				
+			}
 			try
 			{
 				Long.parseLong(jp.getAsString());

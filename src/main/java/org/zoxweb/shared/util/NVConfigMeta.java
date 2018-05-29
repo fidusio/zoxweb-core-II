@@ -11,7 +11,7 @@ public class NVConfigMeta
 	{
 		NAME(DataParam.NAME.getNVConfig()),
 		DESCRIPTON(DataParam.DESCRIPTION.getNVConfig()),
-		DEFAULT_VALUE(NVConfigManager.createNVConfig("defaul_value", "The default value of the parameter its type is defined the meta_type", "DefaulValue", false, true, String.class)),
+		DEFAULT_VALUE(NVConfigManager.createNVConfig("default_value", "The default value of the parameter its type is defined the meta_type", "DefaulValue", false, true, String.class)),
 		DISPLAY_NAME(NVConfigManager.createNVConfig("display_name", "display name", "DisplayName", false, true, String.class)),
 		META_TYPE(NVConfigManager.createNVConfig(MetaToken.META_TYPE.getName(), "The class name of the object", "MetaType", false, true, String.class)),
 		FILTERS(NVConfigManager.createNVConfig("filters", "List of filters", "Filter", false, true, NVStringList.class)),
@@ -55,6 +55,9 @@ public class NVConfigMeta
 	}
 	
 	
+	
+	
+	
 	public  NVConfigMeta(NVGenericMap nvgm)
 	{
 		this();
@@ -64,6 +67,31 @@ public class NVConfigMeta
 		}
 	}
 	
+	public NVConfigMeta(String name, String displayName, String classType, boolean isHidden, boolean isMandatory, boolean isVisible, String ...filters)
+	{
+		this();
+		metaData.add(new NVPair(Param.NAME, name));
+		metaData.add(new NVPair(Param.DISPLAY_NAME, displayName));
+		metaData.add(new NVPair(Param.META_TYPE, classType));
+		//metaData.add(new NVStringList(Param.FILTERS.getName()));
+		metaData.add(new NVBoolean(Param.IS_HIDDEN.getName(), isHidden));
+		metaData.add(new NVBoolean(Param.IS_MANDATORY.getName(), isMandatory));
+		metaData.add(new NVBoolean(Param.IS_VISIBLE.getName(), isVisible));
+		if (filters != null)
+		{
+			for(String filter : filters)
+			{
+				((NVStringList)metaData.get(Param.FILTERS)).getValue().add(filter);
+			}
+		}
+		
+	}
+	
+	public String toString()
+	{
+		return "" + metaData.getValue();
+	}
+	
 	public String getName()
 	{
 		return metaData.getValue(Param.NAME);
@@ -71,12 +99,16 @@ public class NVConfigMeta
 	
 	public String getDisplayName()
 	{
-		return metaData.getValue(Param.DISPLAY_NAME);
+		String ret = metaData.getValue(Param.DISPLAY_NAME);
+		if (ret == null)
+			ret = getName();
+		
+		return ret;
 	}
 	
 	public String getDescription()
 	{
-		return metaData.getValue(Param.DISPLAY_NAME);
+		return metaData.getValue(Param.DESCRIPTON);
 	}
 	
 	public String getMetaType()
@@ -109,5 +141,10 @@ public class NVConfigMeta
 	public <V> V getDefaultValue()
 	{
 		return metaData.getValue(Param.DEFAULT_VALUE);
+	}
+	
+	public NVGenericMap getMetaConfigInfo()
+	{
+		return metaData;
 	}
 }
