@@ -47,11 +47,12 @@ public class NVConfigMeta
 		metaData = new NVGenericMap();	
 		metaData.add(new NVPair(Param.NAME, (String)null));
 		metaData.add(new NVPair(Param.DESCRIPTON, (String)null));
+		metaData.add(new NVPair(Param.DISPLAY_NAME, (String)null));
 		metaData.add(new NVPair(Param.META_TYPE, (String)null));
-		metaData.add(new NVStringList(Param.FILTERS.getName()));
 		metaData.add(new NVBoolean(Param.IS_HIDDEN.getName(), false));
 		metaData.add(new NVBoolean(Param.IS_MANDATORY.getName(), false));
 		metaData.add(new NVBoolean(Param.IS_VISIBLE.getName(), false));
+		metaData.add(new NVStringList(Param.FILTERS.getName()));
 	}
 	
 	
