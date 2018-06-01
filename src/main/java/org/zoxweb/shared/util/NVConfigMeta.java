@@ -1,10 +1,15 @@
 package org.zoxweb.shared.util;
 
+import java.util.List;
+
 import org.zoxweb.shared.data.DataConst.DataParam;
 
 public class NVConfigMeta
 {
-
+	public enum MetaAction
+	{
+		SUBMIT,
+	}
 	
 	public enum Param
 	implements GetNVConfig, GetName
@@ -18,7 +23,7 @@ public class NVConfigMeta
 		IS_HIDDEN(NVConfigManager.createNVConfig("is_hidden", "If the data is hidden", "IsHidden", false, true, Boolean.class)),
 		IS_MANDATORY(NVConfigManager.createNVConfig("is_mandatory", "display name", "IsMandatory", false, true, Boolean.class)),
 		IS_VISIBLE(NVConfigManager.createNVConfig("is_visible", "if true the item is visible", "IsVisible", false, true, Boolean.class)),
-		
+		ACTIONS(NVConfigManager.createNVConfig("actions", "Actions that could be appriled on the meta object", "IsVisible", false, true, NVStringList.class)),
 		
 		
 		;
@@ -53,6 +58,7 @@ public class NVConfigMeta
 		metaData.add(new NVBoolean(Param.IS_MANDATORY.getName(), false));
 		metaData.add(new NVBoolean(Param.IS_VISIBLE.getName(), false));
 		metaData.add(new NVStringList(Param.FILTERS.getName()));
+		metaData.add(new NVStringList(Param.ACTIONS.getName()));
 	}
 	
 	
@@ -137,7 +143,41 @@ public class NVConfigMeta
 	{
 		return metaData.getValue(Param.IS_VISIBLE);
 	}
+	public MetaAction[] getAllowedActions()
+	{
+		List<String> actions = metaData.getValue((Param.ACTIONS));
+		if (actions.size() == 0)
+		{
+			return null;
+		}
+		
+		MetaAction  ret[] = new MetaAction[actions.size()];
+		int index = 0;
+		for (String str : actions)
+		{
+			ret[index++] = SharedUtil.lookupEnum(MetaAction.values(), str);
+		}
+		
+		return ret;
+	}
 	
+	
+	public NVConfigMeta addAction(MetaAction ma)
+	{
+		List<String> actions = metaData.getValue((Param.ACTIONS));
+		actions.add(ma.name());
+		
+		return this;
+	}
+	public void setActions(MetaAction ...setActions)
+	{
+		List<String> actions = metaData.getValue((Param.ACTIONS));
+		actions.clear();
+		for (MetaAction ma : setActions)
+		{
+			actions.add("" + ma);
+		}
+	}
 	
 	public <V> V getDefaultValue()
 	{
