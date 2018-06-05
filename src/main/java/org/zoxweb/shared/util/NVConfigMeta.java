@@ -143,7 +143,7 @@ public class NVConfigMeta
 	{
 		return metaData.getValue(Param.IS_VISIBLE);
 	}
-	public MetaAction[] getAllowedActions()
+	public MetaAction[] getActions()
 	{
 		List<String> actions = metaData.getValue((Param.ACTIONS));
 		if (actions.size() == 0)
