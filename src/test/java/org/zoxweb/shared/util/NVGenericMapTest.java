@@ -1,6 +1,7 @@
 package org.zoxweb.shared.util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.zoxweb.server.util.GSONUtil;
 import org.zoxweb.shared.data.AddressDAO;
@@ -42,7 +43,7 @@ public class NVGenericMapTest
 			address.setCountry("USA");
 			address.setZIPOrPostalCode("90025");
 			nvgm.add(address);
-			nvgm.add(new NVBlob("byteArrray", new byte[] {0,1,2,3,5,6,7,8}));
+			nvgm.add(new NVBlob("byteArray", new byte[] {0,1,2,3,5,6,7,8}));
 			NVPairList nvp = new NVPairList("nvp", new ArrayList<NVPair>());
 			nvp.add(new NVPair("nameNVP", "valueNVP"));
 			nvgm.add(nvp);
@@ -53,11 +54,13 @@ public class NVGenericMapTest
 			nvll.getValue().add((long) 2);
 			nvgm.add(nvll);
 			printValue(nvgm);
-			String json = GSONUtil.toJSONGenericMap(nvgm, true, false, false);
+			String json = GSONUtil.toJSONGenericMap(nvgm, true, false, true);
 			System.out.println(json);
 			
 			nvgm = GSONUtil.fromJSONGenericMap(json, null, Base64Type.URL);
 			printValue(nvgm);
+			byte array[] = nvgm.getValue("byteArray");
+			System.out.println("byteArray" + Arrays.toString(array));
 			
 			
 			System.out.println(Float.parseFloat(""+Double.MAX_VALUE)); 

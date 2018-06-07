@@ -22,6 +22,15 @@ package org.zoxweb.shared.util;
  */
 public class SharedBase64
 {
+	/**
+	 * System defined string start token to identify base 64 encoded strings
+	 */
+	public static final String WRAP_START_TOKEN = "$(";
+	
+	/**
+	 * System defined string end token to identify base 64 encoded strings
+	 */
+	public static final String WRAP_END_TOKEN = ")$";
 	
 
 	/**
@@ -248,15 +257,15 @@ public class SharedBase64
 	
 	public static String encodeWrappedAsString(byte[] ba)
 	{
-		return "(" +  SharedStringUtil.toString(encode(Base64Type.URL, ba)) + ")";
+		return WRAP_START_TOKEN +  SharedStringUtil.toString(encode(Base64Type.URL, ba)) + WRAP_END_TOKEN;
 	}
 	
 	public static byte[] decodeWrappedAsString(String str)
 	{
-		if (str.startsWith("(") && str.endsWith(")"))
+		if (str.startsWith(WRAP_START_TOKEN) && str.endsWith(WRAP_END_TOKEN))
 		{
-			return decode(Base64Type.URL, str.substring("(".length(), 
-					str.length() - ")".length()));
+			return decode(Base64Type.URL, str.substring(WRAP_START_TOKEN.length(), 
+					str.length() - WRAP_END_TOKEN.length()));
 		}
 		
 		throw new IllegalArgumentException("Invalid String format");

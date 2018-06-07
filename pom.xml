@@ -18,7 +18,7 @@
       </license>
     </licenses>
     
-
+ 
     
     
     <scm>
@@ -44,6 +44,9 @@
    		</developer>
   </developers>
 
+
+
+	
   <!-- Version definition -->
     <properties>
        
@@ -250,7 +253,9 @@
 		  <scope>provided</scope>
 		</dependency>
 		
-      
+     
+  
+
 
 
     </dependencies>
