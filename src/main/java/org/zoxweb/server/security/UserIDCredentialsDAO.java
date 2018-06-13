@@ -19,11 +19,9 @@ import java.util.Date;
 
 import org.zoxweb.shared.crypto.PasswordDAO;
 import org.zoxweb.shared.data.SetNameDescriptionDAO;
-
-import org.zoxweb.shared.util.Const;
+import org.zoxweb.shared.security.SecurityConsts;
 import org.zoxweb.shared.util.DoNotExpose;
 import org.zoxweb.shared.util.GetNVConfig;
-import org.zoxweb.shared.util.GetValue;
 import org.zoxweb.shared.util.NVConfig;
 import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVConfigEntityLocal;
@@ -43,38 +41,6 @@ public class UserIDCredentialsDAO
 {
 
 	/**
-	 * This enum contains user status with a specified status
-	 * expiration time.
-	 */
-	public enum UserStatus
-        implements GetValue<Long>
-    {
-		// Note: 
-		//	0 = no expiration time
-		// -1 = expiration time is irrelevant
-		ACTIVE(0),
-		DEACTIVATED(0),
-		INACTIVE(-1),
-		PENDING_RESET_PASSWORD(Const.TimeInMillis.DAY.MILLIS * 2),
-		PENDING_ACCOUNT_ACTIVATION(Const.TimeInMillis.DAY.MILLIS * 2)		
-		
-		;
-
-		private final long EXPIRATION_TIME;
-		
-		UserStatus(long time)
-        {
-			EXPIRATION_TIME = time;
-		}
-
-		@Override
-		public Long getValue()
-        {
-			return EXPIRATION_TIME;
-		}
-	}
-
-	/**
 	 * This enum contains user credential variables including: 
 	 * user id, user status, last status update time stamp, pending token,
 	 * pending pin, and password.
@@ -86,7 +52,7 @@ public class UserIDCredentialsDAO
     {
 
 		//USER_ID_DAO(NVConfigManager.createNVConfigEntity("user_id_dao", "User ID data access object.", "UserIDDAO", true, true, UserIDDAO.NVC_USER_ID_DAO)),
-		USER_STATUS(NVConfigManager.createNVConfig("user_status", "User status", "UserStatus", true, true, UserStatus.class)),
+		USER_STATUS(NVConfigManager.createNVConfig("user_status", "User status", "UserStatus", true, true, SecurityConsts.UserStatus.class)),
 		LAST_STATUS_UPDATE_TIMESTAMP(NVConfigManager.createNVConfig("last_status_update_timestamp", "Timestamp of last status update", "LastStatusUpdateTimestamp", true, true, Date.class)),
 		PENDING_TOKEN(NVConfigManager.createNVConfig("pending_token", "Pending token", "PendingToken", true, true, String.class)),
 		PENDING_PIN(NVConfigManager.createNVConfig("pending_pin", "Pending pin", "PendingPin", true, true, String.class)),
@@ -137,7 +103,7 @@ public class UserIDCredentialsDAO
 	 * Returns the user status.
 	 * @return UserStatus
 	 */
-	public UserStatus getUserStatus()
+	public SecurityConsts.UserStatus getUserStatus()
     {
 		return lookupValue(UserCredentials.USER_STATUS);
 	}
@@ -146,7 +112,7 @@ public class UserIDCredentialsDAO
 	 * Sets the user status.
 	 * @param status
 	 */
-	public void setUserStatus(UserStatus status)
+	public void setUserStatus(SecurityConsts.UserStatus status)
     {
 		setValue(UserCredentials.USER_STATUS, status);
 	}

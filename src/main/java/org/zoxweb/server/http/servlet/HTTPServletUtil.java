@@ -17,12 +17,15 @@ package org.zoxweb.server.http.servlet;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.logging.Logger;
 
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -34,11 +37,13 @@ import org.zoxweb.server.http.HTTPRequestAttributes;
 import org.zoxweb.server.io.FileInfoStreamSource;
 import org.zoxweb.server.io.IOUtil;
 import org.zoxweb.server.io.UByteArrayOutputStream;
+
 import org.zoxweb.server.util.GSONUtil;
 
 import org.zoxweb.server.util.ZIPUtil;
 import org.zoxweb.shared.api.APIError;
 import org.zoxweb.shared.data.FileInfoDAO;
+
 import org.zoxweb.shared.http.HTTPHeaderName;
 import org.zoxweb.shared.http.HTTPHeaderValue;
 import org.zoxweb.shared.http.HTTPMimeType;
@@ -365,6 +370,31 @@ public class HTTPServletUtil
 		}
 		
 		return 0;
+	}
+	
+	public static String inputStreamToString(HttpServlet servlet, String resource) throws NullPointerException, IOException
+	{
+		log.info("resouce:" + resource);
+		String content = null;
+		try
+		{
+			content = (IOUtil.inputStreamToString(servlet.getClass().getResourceAsStream(resource), true));
+		}
+		catch(Exception e)
+		{
+			
+		}
+		if (content == null)
+		{
+			ServletContext context = servlet.getServletContext();
+			
+			URL url = context.getResource(resource);
+			log.info("url:" + url);
+			content = (IOUtil.inputStreamToString(context.getResourceAsStream(resource), true));
+		}
+		
+		
+		return content;
 	}
 	
 }

@@ -22,6 +22,7 @@ import org.zoxweb.shared.util.GetName;
 import org.zoxweb.shared.util.GetValue;
 import org.zoxweb.shared.util.NVConfig;
 import org.zoxweb.shared.util.NVConfigManager;
+import org.zoxweb.shared.util.Const;
 import org.zoxweb.shared.util.Const.TimeInMillis;
 
 /**
@@ -173,6 +174,38 @@ public final class SecurityConsts
 		{
 			return name;
 			
+		}
+	}
+
+	/**
+	 * This enum contains user status with a specified status
+	 * expiration time.
+	 */
+	public enum UserStatus
+	    implements GetValue<Long>
+	{
+		// Note: 
+		//	0 = no expiration time
+		// -1 = expiration time is irrelevant
+		ACTIVE(0),
+		DEACTIVATED(0),
+		INACTIVE(-1),
+		PENDING_RESET_PASSWORD(Const.TimeInMillis.DAY.MILLIS * 2),
+		PENDING_ACCOUNT_ACTIVATION(Const.TimeInMillis.DAY.MILLIS * 2)		
+		
+		;
+	
+		private final long EXPIRATION_TIME;
+		
+		UserStatus(long time)
+	    {
+			EXPIRATION_TIME = time;
+		}
+	
+		@Override
+		public Long getValue()
+	    {
+			return EXPIRATION_TIME;
 		}
 	}
 

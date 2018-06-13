@@ -12,7 +12,6 @@ import org.zoxweb.server.security.CryptoUtil;
 import org.zoxweb.server.security.JWTProvider;
 import org.zoxweb.server.security.KeyMakerProvider;
 import org.zoxweb.server.security.UserIDCredentialsDAO;
-import org.zoxweb.server.security.UserIDCredentialsDAO.UserStatus;
 import org.zoxweb.server.util.IDGeneratorUtil;
 import org.zoxweb.shared.api.APIAppManager;
 import org.zoxweb.shared.api.APIDataStore;
@@ -36,6 +35,7 @@ import org.zoxweb.shared.filters.FilterType;
 import org.zoxweb.shared.security.AccessException;
 import org.zoxweb.shared.security.AccessSecurityException;
 import org.zoxweb.shared.security.JWT;
+import org.zoxweb.shared.security.SecurityConsts;
 import org.zoxweb.shared.security.SubjectAPIKey;
 import org.zoxweb.shared.security.model.PPEncoder;
 import org.zoxweb.shared.security.model.SecurityModel;
@@ -251,7 +251,7 @@ public class APIAppManagerProvider
 		return lookupUserIDDAO(subjectID.getValue(), params);
 	}
 	
-	public synchronized UserIDDAO createUserIDDAO(UserIDDAO userID, UserStatus userIDstatus, String password)
+	public synchronized UserIDDAO createUserIDDAO(UserIDDAO userID, SecurityConsts.UserStatus userIDstatus, String password)
 			throws NullPointerException, IllegalArgumentException, AccessException, APIException
 	{
 		SharedUtil.checkIfNulls("UserIDDAO object is null.", userID, userIDstatus);
@@ -480,7 +480,7 @@ public class APIAppManagerProvider
     }
 
   
-    public UserIDDAO createUserIDDAO(String subjectID, UserStatus userIDstatus, String password)
+    public UserIDDAO createUserIDDAO(String subjectID, SecurityConsts.UserStatus userIDstatus, String password)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException
     {
 
@@ -717,7 +717,7 @@ public class APIAppManagerProvider
         	userIDDAO = new UserIDDAO();
         	userIDDAO.setSubjectID(subjectID);
         	userIDDAO.setUserInfo(userInfoDAO);
-        	userIDDAO = createUserIDDAO(userIDDAO, UserStatus.ACTIVE, password);
+        	userIDDAO = createUserIDDAO(userIDDAO, SecurityConsts.UserStatus.ACTIVE, password);
         }
 
         getAPISecurityManager().login(subjectID, password, appIDDAO.getDomainID(), appIDDAO.getAppID(), false);
@@ -757,7 +757,7 @@ public class APIAppManagerProvider
          	userIDDAO = new UserIDDAO();
          	userIDDAO.setSubjectID(subjectID);
          	userIDDAO.setUserInfo(new UserInfoDAO());
-         	userIDDAO = createUserIDDAO(userIDDAO, UserStatus.ACTIVE, password);
+         	userIDDAO = createUserIDDAO(userIDDAO, SecurityConsts.UserStatus.ACTIVE, password);
          	return userIDDAO.getUserInfo();
          }
          
