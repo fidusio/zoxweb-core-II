@@ -1089,7 +1089,9 @@ final public class GSONUtil
 			{
 				try
 				{
-					return new NVLong(name, jp.getAsLong());
+					Number number = SharedUtil.parseNumber(jp.getAsString());
+					return SharedUtil.numberToNVBase(name, number);
+					
 				}
 				catch(NumberFormatException e)
 				{

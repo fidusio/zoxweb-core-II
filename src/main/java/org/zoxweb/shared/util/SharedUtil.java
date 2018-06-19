@@ -90,6 +90,58 @@ public class SharedUtil
 		return v;
 	}
 	
+	
+	public static Number parseNumber(String number)
+	{
+		try
+		
+		{
+			
+			Long  ret = Long.valueOf(number);
+			if (ret <= Integer.MAX_VALUE && ret >= Integer.MIN_VALUE)
+			{
+				return new Integer(ret.intValue());
+			}
+			return ret;
+		}
+		catch(NumberFormatException e)
+		{
+			
+		}
+		
+		
+		Double ret = Double.valueOf(number);
+		if (ret <= Float.MAX_VALUE && ret >= Float.MIN_VALUE)
+			return new Float(ret.floatValue());
+		
+		return ret;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static <T extends NVBase<?>> T numberToNVBase(String name, Number number)
+	{
+		if (number instanceof Integer)
+		{
+			return (T) new NVInt(name, (Integer) number);
+		}
+		if (number instanceof Long)
+		{
+			return (T) new NVLong(name, (Long) number);
+		}
+		if (number instanceof Float)
+		{
+			return (T) new NVFloat(name, (Float) number);
+		}
+		
+		if (number instanceof Double)
+		{
+			return (T) new NVDouble(name, (Double) number);
+		}
+		
+		throw new IllegalArgumentException("Unsupported type " + number.getClass());
+		
+	}
+	
 	public static <V> void putUnique(Map<Long, V> map, long key, V v)
 	{
 		synchronized(map)

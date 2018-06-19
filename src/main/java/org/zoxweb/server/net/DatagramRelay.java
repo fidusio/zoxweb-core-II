@@ -1,5 +1,6 @@
 package org.zoxweb.server.net;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InterruptedIOException;
 import java.net.DatagramPacket;
@@ -8,7 +9,12 @@ import java.net.InetAddress;
 import java.util.Arrays;
 import java.util.logging.Logger;
 
+import org.zoxweb.server.io.IOUtil;
+import org.zoxweb.server.util.GSONUtil;
 import org.zoxweb.shared.util.DaemonController;
+import org.zoxweb.shared.util.GetName;
+import org.zoxweb.shared.util.NVGenericMap;
+import org.zoxweb.shared.util.SharedBase64.Base64Type;
 import org.zoxweb.shared.util.SharedUtil;
 
 /**
@@ -16,8 +22,19 @@ import org.zoxweb.shared.util.SharedUtil;
  * how to use it
  * <code>
  * DatagramRelay dr = new DatagramRelay(53, "8.8.8.8", 53, 512);
+ * // or
+ * DatagramRelay dr = DatagramRelay.ConfigParam.toDatagramRelay(jsonConfig);
  * //create a local dns relay to the google dns
  * new Thread(dr).start();
+ * </code>
+ * json config file format example for a dns relay 
+ * <code>
+ * {
+	"port" : 53,
+	"remote_host" : "8.8.8.8",
+	"remote_port" : 53,
+	"packet_size" : 512
+}
  * </code>
  * @author javaconsigliere
  *
@@ -25,6 +42,47 @@ import org.zoxweb.shared.util.SharedUtil;
 public class DatagramRelay
 implements Runnable, DaemonController
 {
+	
+	
+	public enum ConfigParam
+		implements GetName
+	{
+		
+		PORT("port"),
+		REMOTE_HOST("remote_host"),
+		REMOTE_PORT("remote_port"),
+		PACKET_SIZE("packet_size"),
+		COMMANDS("commands"),
+		;
+
+		private final String name;
+		
+		ConfigParam(String name)
+		{
+			this.name = name;
+		}
+		
+		@Override
+		public String getName() {
+			// TODO Auto-generated method stub
+			return name;
+		}
+		
+		public static DatagramRelay toDatagramRelay(String json) throws InstantiationException, IllegalAccessException, ClassNotFoundException, IOException
+		{
+			return toDatagramRelay(GSONUtil.fromJSONGenericMap(json, null, Base64Type.URL));
+		}
+		
+		public static DatagramRelay toDatagramRelay(NVGenericMap config)
+			throws IOException
+		{
+			return new DatagramRelay(config.getValue(PORT), (String)config.getValue(REMOTE_HOST), config.getValue(REMOTE_PORT), config.getValue(PACKET_SIZE));
+		}
+		
+	}
+	
+	
+	
 	private static volatile Logger log = Logger.getLogger(DatagramRelay.class.getName());
 	
 	private InetAddress remoteHost;
@@ -145,11 +203,27 @@ implements Runnable, DaemonController
 		try
 		{
 			int index = 0;
-			new Thread(new DatagramRelay(Integer.parseInt(args[index++]), args[index++], Integer.parseInt(args[index++]), Integer.parseInt(args[index++]))).start();
+			File file = null;
+			
+			
+			// maybe a json config file
+			if (args.length == 1)
+				file = new File(args[index]);
+			
+			DatagramRelay dr = null;		
+			if (file != null && file.exists())
+				dr = ConfigParam.toDatagramRelay(IOUtil.inputStreamToString(file));
+			else
+				dr = new DatagramRelay(Integer.parseInt(args[index++]), args[index++], Integer.parseInt(args[index++]), Integer.parseInt(args[index++]));
+			
+			// start the relay
+			new Thread(dr).start();
 		}
 		catch(Exception e)
 		{
-			System.err.println("usage: [localPort] [remoteHostName] [remotePort] [packet buffer size]");
+			System.err.println("usage: <localPort> <remoteHostName> <remotePort> <packet buffer size>");
+			System.err.println("or");
+			System.err.println("usage: <jsonConfigFile>");
 			e.printStackTrace();
 		}
 	}
