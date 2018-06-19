@@ -68,6 +68,16 @@ public class SharedUtil
             }
         }
 	}
+	
+	public static void illegalCondition(String message, boolean ... conditions)
+			throws IllegalArgumentException
+	{
+		for(boolean condition: conditions)
+		{
+			if (!condition)
+				throw new IllegalArgumentException(message);
+		}
+	}
 
 	@SuppressWarnings("unchecked")
 	public static <T> T getWrappedValue(T v)
