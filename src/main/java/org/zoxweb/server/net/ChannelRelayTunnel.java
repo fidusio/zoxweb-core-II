@@ -17,8 +17,7 @@ package org.zoxweb.server.net;
 
 import java.io.Closeable;
 import java.io.IOException;
-
-
+import java.nio.channels.ByteChannel;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
 import java.util.logging.Logger;
@@ -37,12 +36,12 @@ public class  ChannelRelayTunnel
 	private static final transient Logger log = Logger.getLogger(ChannelRelayTunnel.class.getName());
 	
 	
-	private SocketChannel readSource;
-	private SocketChannel writeDestination;
+	private ByteChannel readSource;
+	private ByteChannel writeDestination;
 	private SelectionKey currentSK = null;
 	@SuppressWarnings("unused")
 	private SelectionKey writeChannelSK;
-	private final boolean autoCloseDesticantion;
+	private final boolean autoCloseDestination;
 	//private ByteBuffer bBuffer = null;
 	private Closeable closeInterface = null;
 	private SourceOrigin origin = null;
@@ -50,16 +49,16 @@ public class  ChannelRelayTunnel
 	
 	
 	public ChannelRelayTunnel(SourceOrigin origin, int bufferSize, SocketChannel readSource, 
-			  				  SocketChannel writeDestination, SelectionKey writeChannelSK, boolean autoCloseDesticantion,
+			  				  SocketChannel writeDestination, SelectionKey writeChannelSK, boolean autoCloseDestination,
 			  				  SelectorController sc)
 	{
-		this(origin, bufferSize, readSource, writeDestination, writeChannelSK, autoCloseDesticantion, sc, null);
+		this(origin, bufferSize, readSource, writeDestination, writeChannelSK, autoCloseDestination, sc, null);
 	}
 	
 	
 	
 	public ChannelRelayTunnel(SourceOrigin origin, int bufferSize, SocketChannel readSource, 
-							  SocketChannel writeDestination, SelectionKey writeChannelSK,boolean autoCloseDesticantion,
+							  SocketChannel writeDestination, SelectionKey writeChannelSK,boolean autoCloseDestination,
 							  SelectorController sc, Closeable closeInterface)
 	{
 		this.origin = origin;
@@ -67,7 +66,7 @@ public class  ChannelRelayTunnel
 		this.readSource = readSource;
 		this.writeDestination = writeDestination;
 		this.writeChannelSK = writeChannelSK;
-		this.autoCloseDesticantion = autoCloseDesticantion;
+		this.autoCloseDestination = autoCloseDestination;
 		this.closeInterface = closeInterface;
 		setSelectorController(sc);
 		
@@ -105,7 +104,7 @@ public class  ChannelRelayTunnel
 			IOUtil.close(readSource);
 			getSelectorController().cancelSelectionKey(currentSK);
 			
-			if (autoCloseDesticantion)
+			if (autoCloseDestination)
 			{
 				IOUtil.close(writeDestination);
 			}
@@ -116,6 +115,7 @@ public class  ChannelRelayTunnel
 	
 	public synchronized  void readData(SelectionKey key)
 	{
+		
 		try
 		{
 			

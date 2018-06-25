@@ -95,7 +95,8 @@ public abstract class ProtocolSessionProcessor
 			
 		}
 		// very crucial be set to true after the processRead call
-		selectable = true;
+		//selectable = true;
+		setSeletectable(true);
 	}
 	
 	

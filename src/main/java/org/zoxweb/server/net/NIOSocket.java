@@ -166,7 +166,8 @@ public class NIOSocket
 
 						while(keyIterator.hasNext())
 						{	    
-						    SelectionKey key = keyIterator.next();			    
+						    SelectionKey key = keyIterator.next();
+						    keyIterator.remove();
 						    try
 						    {	    	
 						    	if (key.isValid() && SharedUtil.getWrappedValue(key.channel()).isOpen() && key.isReadable())
@@ -268,7 +269,7 @@ public class NIOSocket
 						    	e.printStackTrace();
 						    }
 						    
-						    keyIterator.remove();
+						    
 						    try
 						    {
 						    	if (!key.isValid()|| !SharedUtil.getWrappedValue(key.channel()).isOpen())

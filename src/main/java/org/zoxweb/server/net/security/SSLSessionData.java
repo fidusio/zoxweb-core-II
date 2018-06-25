@@ -18,6 +18,7 @@ package org.zoxweb.server.net.security;
 import java.io.Closeable;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.nio.channels.ByteChannel;
 import java.nio.channels.SocketChannel;
 import java.util.concurrent.Executor;
 import java.util.concurrent.locks.Lock;
@@ -238,7 +239,7 @@ public class SSLSessionData
     	return bb;
     }
 	
-	public void write(SocketChannel sc, ByteBuffer appBuffer, boolean sync) throws IOException
+	public void write(ByteChannel sc, ByteBuffer appBuffer, boolean sync) throws IOException
 	{
 		
 		try
