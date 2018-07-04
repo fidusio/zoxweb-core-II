@@ -94,7 +94,6 @@ public class SharedUtil
 	public static Number parseNumber(String number)
 	{
 		try
-		
 		{
 			
 			Long  ret = Long.valueOf(number);
