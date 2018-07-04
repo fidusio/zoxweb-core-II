@@ -155,8 +155,10 @@ implements Runnable, DaemonController
 			catch (InterruptedIOException e) {
 				continue;
 			}
-			catch(Exception e)
+			catch(IOException e)
 			{
+				e.printStackTrace();
+				log.info("Error" + dsServer.getLocalPort() +"<->" + remoteHost.getHostAddress() + ":" + remotePort + " total requests:" + requestCount) ;
 				
 			}
 		}
