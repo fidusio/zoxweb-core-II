@@ -19,6 +19,7 @@ import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
@@ -208,7 +209,35 @@ public class RuntimeUtil
         {
 	    	IOUtil.close(fis);
 	    	IOUtil.close(in);
-	    }
+	   
+        }
+	}
+	/**
+	 * Loads a native shared library. It tries the standard System.loadLibrary
+	 * method first and if it fails, it looks for the library in the current
+	 * class path. It will handle libraries packed within jar files, too.
+	 *
+	 * @param name name of the library to load
+	 * @param classLoader to be used
+	 * @throws IOException if the library cannot be extracted from a jar file
+	 * into a temporary file
+	 */
+	public static void loadSharedLibrary(String name, ClassLoader classLoader) 
+			throws IOException
+	{
+		try 
+		{
+			System.loadLibrary(name);
+		}
+		catch (UnsatisfiedLinkError e)
+		{
+			String filename = System.mapLibraryName(name);
+			int pos = filename.lastIndexOf('.');
+			File file = File.createTempFile(filename.substring(0, pos), filename.substring(pos));
+			file.deleteOnExit();
+			IOUtil.relayStreams(classLoader.getResourceAsStream(filename), new FileOutputStream(file), true);	
+			System.load(file.getAbsolutePath());
+		}
 	}
 
 	public static void main(String[] args)

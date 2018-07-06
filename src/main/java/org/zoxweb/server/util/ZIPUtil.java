@@ -83,7 +83,7 @@ public class ZIPUtil
 
 		try
         {
-			return IOUtil.inputStreamToByteArray(new GZIPInputStream( new ByteArrayInputStream(content)), false).toByteArray();
+			return IOUtil.inputStreamToByteArray(new GZIPInputStream(new ByteArrayInputStream(content)), false).toByteArray();
 		}
 		finally
         {
