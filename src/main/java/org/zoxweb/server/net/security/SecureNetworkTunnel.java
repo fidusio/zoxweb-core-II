@@ -126,7 +126,7 @@ public class SecureNetworkTunnel
 			{
 				log.info("Creating NIO Secure tunnel");
 				
-				NIOSocket nios = new NIOSocket(null, null, TaskUtil.getDefaultTaskProcessor());
+				NIOSocket nios = new NIOSocket(TaskUtil.getDefaultTaskProcessor());
 				for(; index < args.length; index++)
 				{
 					try

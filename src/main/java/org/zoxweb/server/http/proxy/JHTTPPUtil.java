@@ -228,6 +228,7 @@ public class JHTTPPUtil
 //		ipf.setNetworkMask("255.255.255.255");
 		TaskUtil.setThreadMultiplier(4);
 		int port = 8080;
+		int backlog = 256;
 		String proxyLogFile = null;
 		
 		// load the proxy rules
@@ -267,18 +268,18 @@ public class JHTTPPUtil
 				}
 			}
 			
-			String proxyPort = acd.lookupValue("proxy_port");
-			if ( !SharedStringUtil.isEmpty( proxyPort))
+			
+			try 
 			{
-				try
-				{
-					port = Integer.parseInt( proxyPort);
-				}
-				catch( NumberFormatException e)
-				{
-					e.printStackTrace();
-				}
+				port = acd.getProperties().getValue("proxy_port");
+				backlog = acd.getProperties().getValue("port_backlog");
 			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+			
+			
 			
 			proxyLogFile = acd.lookupValue("proxy_log_file");
 		}
@@ -291,7 +292,7 @@ public class JHTTPPUtil
 		factory.setIncomingInetFilterRulesManager(ifrm);
 		factory.setLogger(LoggerUtil.loggerToFile(NIOProxyProtocol.class.getName()+".proxy", proxyLogFile));
 			
-		NIOSocket nsio = new NIOSocket(factory, new InetSocketAddress(port), TaskUtil.getDefaultTaskProcessor());	
+		NIOSocket nsio = new NIOSocket(new InetSocketAddress(port), backlog, factory, TaskUtil.getDefaultTaskProcessor());	
 		
 		
 	

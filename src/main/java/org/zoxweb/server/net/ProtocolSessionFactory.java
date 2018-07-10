@@ -33,7 +33,7 @@ public interface ProtocolSessionFactory<P extends ProtocolSessionProcessor>
 	 * @return
 	 */
 	boolean isBlocking();
-	public int getBacklog();
+	//public int getBacklog();
 	
 	/**
 	 * Get the SSL session factory

@@ -97,11 +97,7 @@ public class EchoProcessor
 					// TODO Auto-generated method stub
 					return null;
 				}
-				@Override
-				public int getBacklog() {
-					// TODO Auto-generated method stub
-					return 0;
-				}
+				
 				
 				
 		
@@ -183,7 +179,7 @@ public class EchoProcessor
 	{
 		try
 		{
-			new NIOSocket(EchoProcessor.FACTORY, new InetSocketAddress(Integer.parseInt(args[0])), TaskUtil.getDefaultTaskProcessor());
+			new NIOSocket(new InetSocketAddress(Integer.parseInt(args[0])), 128, EchoProcessor.FACTORY, TaskUtil.getDefaultTaskProcessor());
 		}
 		catch(Exception e)
 		{

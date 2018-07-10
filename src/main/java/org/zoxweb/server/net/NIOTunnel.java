@@ -86,11 +86,6 @@ public class NIOTunnel
 			return new NIOTunnel(remoteAddress);
 		}
 
-		@Override
-		public int getBacklog() {
-			// TODO Auto-generated method stub
-			return 0;
-		}
 
 //		@Override
 //		public boolean isBlocking() {
@@ -215,7 +210,7 @@ public class NIOTunnel
 			TaskUtil.setThreadMultiplier(4);
 			
 			
-			new NIOSocket(new NIOTunnelFactory(remoteAddress, (SSLSessionDataFactory)null), new InetSocketAddress(port), TaskUtil.getDefaultTaskProcessor());
+			new NIOSocket(new InetSocketAddress(port), 128, new NIOTunnelFactory(remoteAddress, (SSLSessionDataFactory)null), TaskUtil.getDefaultTaskProcessor());
 		}
 		catch(Exception e)
 		{

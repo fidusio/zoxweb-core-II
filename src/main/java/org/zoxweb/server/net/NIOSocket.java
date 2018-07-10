@@ -70,29 +70,29 @@ public class NIOSocket
 	
 	public NIOSocket(Executor tsp) throws IOException
 	{
-		this(null, null, tsp);
+		this(null, 0, null, tsp);
 	}
 	
 	
 	
-	public NIOSocket(ProtocolSessionFactory<?> psf, InetSocketAddress sa, Executor tsp) throws IOException
+	public NIOSocket(InetSocketAddress sa, int backlog, ProtocolSessionFactory<?> psf, Executor tsp) throws IOException
 	{
 		//SharedUtil.checkIfNulls("Null value", psf, sa);
 		selectorController = new SelectorController(Selector.open());
 		this.tsp = tsp;
 		if (sa != null)
-			addServerSocket(sa, psf);
+			addServerSocket(sa, backlog, psf);
 		
 
 		
 		new Thread(this).start();
 	}
 	
-	public SelectionKey addServerSocket(InetSocketAddress sa, ProtocolSessionFactory<?> psf) throws IOException
+	public SelectionKey addServerSocket(InetSocketAddress sa, int backlog, ProtocolSessionFactory<?> psf) throws IOException
 	{
 		SharedUtil.checkIfNulls("Null values", sa, psf);
 		ServerSocketChannel ssc = ServerSocketChannel.open();
-		ssc.socket().bind(sa, psf.getBacklog());
+		ssc.socket().bind(sa, backlog);
 		
 		return addServerSocket(ssc, psf);
 	}
@@ -108,7 +108,7 @@ public class NIOSocket
 		return sk;
 	}
 
-	public SelectionKey addDatagramChannel(InetSocketAddress sa, ProtocolSessionFactory<?> psf) throws IOException
+	public SelectionKey addDatagramChannel(InetSocketAddress sa,  ProtocolSessionFactory<?> psf) throws IOException
 	{
 		SharedUtil.checkIfNulls("Null values", sa, psf);
 		DatagramChannel dc = DatagramChannel.open();
@@ -127,14 +127,14 @@ public class NIOSocket
 		return sk;
 	}
 	
-	public SelectionKey addSeverSocket(InetSocketAddressDAO sa, ProtocolSessionFactory<?> psf) throws IOException
+	public SelectionKey addSeverSocket(InetSocketAddressDAO sa, int backlog, ProtocolSessionFactory<?> psf) throws IOException
 	{
-		return addServerSocket(new InetSocketAddress(sa.getPort()), psf);
+		return addServerSocket(new InetSocketAddress(sa.getPort()), backlog, psf);
 	}
 	
-	public SelectionKey addSeverSocket(int port, ProtocolSessionFactory<?> psf) throws IOException
+	public SelectionKey addSeverSocket(int port, int backlog, ProtocolSessionFactory<?> psf) throws IOException
 	{
-		return addServerSocket(new InetSocketAddress(port), psf);
+		return addServerSocket(new InetSocketAddress(port), backlog, psf);
 	}
 	
 	

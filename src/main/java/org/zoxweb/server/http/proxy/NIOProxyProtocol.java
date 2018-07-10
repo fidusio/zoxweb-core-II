@@ -152,11 +152,7 @@ public class NIOProxyProtocol
 			return ret;
 		}
 
-		@Override
-		public int getBacklog() {
-			// TODO Auto-generated method stub
-			return 256;
-		}
+		
 		
 	}
 	
@@ -636,7 +632,7 @@ public class NIOProxyProtocol
 			factory.setIncomingInetFilterRulesManager(clientIFRM);
 			
 			
-			NIOSocket nios = new NIOSocket(factory, new InetSocketAddress(port), TaskUtil.getDefaultTaskProcessor());
+			NIOSocket nios = new NIOSocket(new InetSocketAddress(port), 256, factory, TaskUtil.getDefaultTaskProcessor());
 			nios.setStatLogCounter(0);
 			
 			//nios.addSeverSocket(2401, new NIOTunnelFactory(new InetSocketAddressDAO("10.0.0.1:2401")));
