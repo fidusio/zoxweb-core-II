@@ -225,7 +225,7 @@ public class RuntimeUtil
 	public static void loadSharedLibrary(String name, ClassLoader classLoader) 
 			throws IOException
 	{
-		try 
+		try
 		{
 			System.loadLibrary(name);
 		}
