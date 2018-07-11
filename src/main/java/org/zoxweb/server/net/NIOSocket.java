@@ -63,6 +63,8 @@ public class NIOSocket
 	private long dispatchCounter = 0;
 	private long selectedCountTotal = 0;
 	private long statLogCounter = 0;
+	private long attackTotalCount = 0;
+	
 	//private PrintWriter pw = null;
 	//private Logger log=logger;
 	
@@ -144,6 +146,8 @@ public class NIOSocket
 	public void run()
 	{	
 		long snapTime = System.currentTimeMillis();
+		long attackTimestamp = 0;
+		
 		
 		while(live)
 		{
@@ -204,6 +208,12 @@ public class NIOSocket
 							    	{
 							    		try
 							    		{ 	
+							    			attackTotalCount++;
+							    			if (attackTimestamp == 0)
+							    			{
+							    				attackTimestamp = System.currentTimeMillis();
+							    			}
+							    			
 							    			Logger log = psf.getLogger();
 							    			if(log == null)
 							    			{
@@ -214,8 +224,14 @@ public class NIOSocket
 							    			
 							    			
 							    			// in try block with catch exception since logger can point to file log
-							    			if (log != null)
-							    				log.info( "@ port:" + isa.getPort() + " access denied for:" + sc.getRemoteAddress());
+							    			
+							    			log.info( "@ port:" + isa.getPort() + " access denied for:" + sc.getRemoteAddress());
+							    			if (attackTotalCount % 500 == 0)
+							    			{
+							    				float rate = (float) ((500.00/(float)(System.currentTimeMillis() - attackTimestamp))*TimeInMillis.SECOND.MILLIS);
+							    				log.info("Attacks:" + rate + " a/s" + " total:" + attackTotalCount);
+							    				attackTimestamp = 0;
+							    			}
 							    		}
 							    		catch(Exception e)
 							    		{
