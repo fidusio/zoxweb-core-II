@@ -40,9 +40,10 @@ import org.zoxweb.shared.data.ConfigDAO;
 import org.zoxweb.shared.net.InetSocketAddressDAO;
 import org.zoxweb.shared.util.AppCreator;
 import org.zoxweb.shared.util.ArrayValues;
-import org.zoxweb.shared.util.GetNameValue;
+
 import org.zoxweb.shared.util.NVEntity;
-import org.zoxweb.shared.util.SharedUtil;
+import org.zoxweb.shared.util.NVStringList;
+
 
 /**
  * NIO config starts multi 
@@ -95,24 +96,36 @@ implements Closeable,
 				
 				if (config.attachment() instanceof ProtocolSessionFactory)
 				{
+					int port = ((ConfigDAO) nve).getProperties().getValue("port");
+					int backlog = 128;
+					try
+					{
+						backlog = ((ConfigDAO) nve).getProperties().getValue("backlog");
+					}
+					catch(Exception e)
+					{
+						
+					}
 					ProtocolSessionFactory<?> psf = (ProtocolSessionFactory<?>) config.attachment();
 					
 					if (psf.getIncomingSSLSessionDataFactory() != null && psf instanceof NIOTunnelFactory)
 					{
-						log.info("Creating secure network tunnel:" + config.getProperties().get("port") + "," + ((NIOTunnelFactory)psf).getRemoteAddress() );
+						log.info("Creating secure network tunnel:" + port+ "," + ((NIOTunnelFactory)psf).getRemoteAddress() );
 						// secure temporary fix since the NIO Secure Socket still not fully operational
 						services.add(new SecureNetworkTunnel(psf.getIncomingSSLSessionDataFactory().getSSLContext().getServerSocketFactory(), 
-											    Integer.parseInt(SharedUtil.lookupValue(config.getProperties().get("port"))), 
+											    port, backlog, 
 											    ((NIOTunnelFactory)psf).getRemoteAddress()));
 					}
 					else
 					{
 						ServerSocketChannel ssc = ServerSocketChannel.open();
 					
-						ssc.bind(new InetSocketAddress(Integer.parseInt(SharedUtil.lookupValue(config.getProperties().get("port")))));
+						ssc.bind(new InetSocketAddress(port), backlog);
 	
 						ret.addServerSocket(ssc, psf);
 					}
+					
+					log.info("Serice addedd " + psf.getName() +" port:" + port + " backlog:" + backlog);
 				}
 			}
 		}
@@ -144,12 +157,15 @@ implements Closeable,
 						
 						if (toAttach instanceof SSLSessionDataFactory)
 						{
-							SSLContext sslc = CryptoUtil.initSSLContext(SharedUtil.getValue(config.getProperties().get("keystore_file")), 
-																		SharedUtil.getValue(config.getProperties().get("keystore_type")), 
-																		SharedUtil.getValue(config.getProperties().get("keystore_password")).toCharArray(),  
-																		SharedUtil.getValue(config.getProperties().get("alias_password")) != null ?  SharedUtil.getValue(config.getProperties().get("alias_password")).toCharArray() : null, 
-																		SharedUtil.getValue(config.getProperties().get("trustore_file")), 
-																		SharedUtil.getValue(config.getProperties().get("trustore_password")) != null ?  SharedUtil.getValue(config.getProperties().get("trustore_password")).toCharArray() : null);
+							String ksPassword = config.getProperties().getValue("keystore_password");
+							String aliasPassword = config.getProperties().getValue("keystore_password");
+							String trustStorePassword = config.getProperties().getValue("trustore_password");
+							SSLContext sslc = CryptoUtil.initSSLContext((String)config.getProperties().getValue("keystore_file"), 
+																		(String)config.getProperties().getValue("keystore_type"), 
+																		ksPassword.toCharArray(),  
+																		aliasPassword != null ?  aliasPassword.toCharArray() : null, 
+																		(String)config.getProperties().getValue("trustore_file"), 
+																		trustStorePassword != null ?  trustStorePassword.toCharArray() : null);
 							((SSLSessionDataFactory)toAttach).setSSLContext(sslc);
 							
 							((SSLSessionDataFactory)toAttach).setExecutor(TaskUtil.getDefaultTaskProcessor());
@@ -177,8 +193,8 @@ implements Closeable,
 					NIOTunnelFactory nioTF = (NIOTunnelFactory) config.attachment();
 					try 
 					{
-						String remote_host = SharedUtil.getValue(config.getProperties().get("remote_host"));
-						String ssl_engine = SharedUtil.getValue(config.getProperties().get("ssl_engine"));
+						String remote_host = config.getProperties().getValue("remote_host");
+						String ssl_engine = config.getProperties().getValue("ssl_engine");
 						nioTF.setRemoteAddress(new InetSocketAddressDAO(remote_host));
 						if (ssl_engine != null)
 						{
@@ -201,22 +217,25 @@ implements Closeable,
 					{
 						InetFilterRulesManager incomingIFRM =  new InetFilterRulesManager();
 						InetFilterRulesManager outgoingIFRM =  new InetFilterRulesManager();
-						for (GetNameValue<String> gnv : config.getProperties().values())
+						NVStringList iRules = (NVStringList) config.getProperties().get("incoming_inet_rule");
+						NVStringList oRules = (NVStringList) config.getProperties().get("outgoing_inet_rule");
+						if (iRules != null)
 						{
-							if(gnv.getName().equals("incoming_inet_rule"))
+							for (String rule : iRules.getValue())
 							{
-								if (gnv.getValue() != null)
-								{
-									incomingIFRM.addInetFilterProp(gnv.getValue());
-								}
+								log.info("Adding Incoming rule:" + rule);
+								incomingIFRM.addInetFilterProp(rule);
+								
 							}
-							
-							if(gnv.getName().equals("outgoing_inet_rule"))
+						}
+						
+						if (oRules != null)
+						{
+							for (String rule : oRules.getValue())
 							{
-								if (gnv.getValue() != null)
-								{
-									outgoingIFRM.addInetFilterProp(gnv.getValue());
-								}
+								log.info("Adding Incoming rule:" + rule);
+								outgoingIFRM.addInetFilterProp(rule);
+								
 							}
 						}
 						
@@ -231,7 +250,7 @@ implements Closeable,
 						}
 						
 						
-						nioPPF.setLogger(LoggerUtil.loggerToFile(NIOProxyProtocol.class.getName()+".proxy", SharedUtil.lookupValue(config.getProperties().get("log_file"))));
+						nioPPF.setLogger(LoggerUtil.loggerToFile(NIOProxyProtocol.class.getName()+".proxy", config.getProperties().getValue("log_file")));
 						
 					}
 					catch(Exception e)
@@ -259,6 +278,7 @@ implements Closeable,
 		{
 			System.out.println("loading file " + args[0]);
 			ConfigDAO configDAO = GSONUtil.fromJSON(IOUtil.inputStreamToString(args[0]));
+			System.out.println(GSONUtil.toJSON(configDAO, true, false, false));
 			NIOConfig nioConfig = new NIOConfig(configDAO);
 			nioConfig.createApp();
 		}

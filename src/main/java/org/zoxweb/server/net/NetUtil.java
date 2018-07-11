@@ -80,7 +80,7 @@ public class NetUtil
 		if (ifrm != null) 	
 		{
 			ret = ifrm.lookupSecurityStatus(host);
-			if (ret != SecurityStatus.ALLOW)
+			if (sc!=null && ret != SecurityStatus.ALLOW)
 			{
 				IOUtil.close(sc);
 			}
@@ -90,14 +90,14 @@ public class NetUtil
 		return ret;
 	}
 	
-	public static SecurityStatus validateAccess(InetFilterRulesManager ifrm, InetAddress host, Closeable sc) throws IOException
+	public static SecurityStatus checkSecurityStatus(InetFilterRulesManager ifrm, InetAddress host, Closeable sc) throws IOException
 	{
 		SecurityStatus ret =  SecurityStatus.ALLOW;
 		if (ifrm != null) 
 			
 		{
 			ret = ifrm.lookupSecurityStatus(host); 
-			if (ret != SecurityStatus.ALLOW)
+			if (sc!=null && ret != SecurityStatus.ALLOW)
 			{
 				IOUtil.close(sc);
 			}

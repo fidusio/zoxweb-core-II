@@ -513,8 +513,8 @@ public class CryptoUtil
 		return ks.getKey(alias, aliasPassword != null ? aliasPassword.toCharArray() : null);
 	}
 
-	public static SSLContext initSSLContext(final String keyStoreFilename, String keyStoreType, final char[] keyStorePassword, 
-			final char[] crtPassword, final String trustStoreFilename, final char[] trustStorePassword)
+	public static SSLContext initSSLContext(String keyStoreFilename, String keyStoreType, final char[] keyStorePassword, 
+			final char[] crtPassword, String trustStoreFilename, final char[] trustStorePassword)
         throws GeneralSecurityException, IOException
 	{
 		FileInputStream ksfis = null;

@@ -92,8 +92,8 @@ public class NIOSocket
 	{
 		SharedUtil.checkIfNulls("Null values", sa, psf);
 		ServerSocketChannel ssc = ServerSocketChannel.open();
-		ssc.socket().bind(sa, backlog);
-		
+		ssc.bind(sa, backlog);
+		logger.info(ssc + " added");
 		return addServerSocket(ssc, psf);
 	}
 	
@@ -205,6 +205,10 @@ public class NIOSocket
 							    		try
 							    		{ 	
 							    			Logger log = psf.getLogger();
+							    			if(log == null)
+							    			{
+							    				log = logger;
+							    			}
 							    			InetSocketAddress isa = (InetSocketAddress) ((ServerSocketChannel)key.channel()).getLocalAddress();
 							    			
 							    			

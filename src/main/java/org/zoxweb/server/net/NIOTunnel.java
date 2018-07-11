@@ -86,6 +86,12 @@ public class NIOTunnel
 			return new NIOTunnel(remoteAddress);
 		}
 
+		@Override
+		public String getName() {
+			// TODO Auto-generated method stub
+			return "TunnelFactory";
+		}
+
 
 //		@Override
 //		public boolean isBlocking() {

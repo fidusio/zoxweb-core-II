@@ -65,9 +65,9 @@ public class SecureNetworkTunnel
 	
 	private ServerSocket ss;
 	private InetSocketAddressDAO remoteSocketAddress;
-	public SecureNetworkTunnel(SSLServerSocketFactory sslssf, int localPort, InetSocketAddressDAO remoteAddress) throws IOException
+	public SecureNetworkTunnel(SSLServerSocketFactory sslssf, int localPort, int backlog, InetSocketAddressDAO remoteAddress) throws IOException
 	{
-		ss = sslssf.createServerSocket(localPort);
+		ss = sslssf.createServerSocket(localPort, backlog);
 		remoteSocketAddress = remoteAddress;
 		new Thread(this).start();
 	}
@@ -160,7 +160,7 @@ public class SecureNetworkTunnel
 						String[] parsed = args[index].split(",");
 						int port = Integer.parseInt(parsed[0]);
 						InetSocketAddressDAO remoteAddress = new InetSocketAddressDAO(parsed[1]);
-						new SecureNetworkTunnel(sslssf, port, remoteAddress);
+						new SecureNetworkTunnel(sslssf, port, 128, remoteAddress);
 						
 					}
 					catch(Exception e)

@@ -18,10 +18,14 @@ package org.zoxweb.server.net;
 import java.util.logging.Logger;
 
 import org.zoxweb.server.net.security.SSLSessionDataFactory;
+import org.zoxweb.shared.util.GetName;
 import org.zoxweb.shared.util.NVGenericMap;
 
 public interface ProtocolSessionFactory<P extends ProtocolSessionProcessor>
+extends GetName
 {
+	
+	
 	
 	/**
 	 * Create a new instance of the undelying protocol

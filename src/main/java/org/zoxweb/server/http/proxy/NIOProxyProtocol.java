@@ -152,6 +152,12 @@ public class NIOProxyProtocol
 			return ret;
 		}
 
+		@Override
+		public String getName() {
+			// TODO Auto-generated method stub
+			return "NIOProxyFactory";
+		}
+
 		
 		
 	}
