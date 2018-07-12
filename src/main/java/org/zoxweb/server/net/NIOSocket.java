@@ -64,6 +64,7 @@ public class NIOSocket
 	private long selectedCountTotal = 0;
 	private long statLogCounter = 0;
 	private long attackTotalCount = 0;
+	private long startTime = System.currentTimeMillis();
 	
 	//private PrintWriter pw = null;
 	//private Logger log=logger;
@@ -229,7 +230,7 @@ public class NIOSocket
 							    			if (attackTotalCount % 500 == 0)
 							    			{
 							    				float rate = (float) ((500.00/(float)(System.currentTimeMillis() - attackTimestamp))*TimeInMillis.SECOND.MILLIS);
-							    				log.info("Attacks:" + rate + " a/s" + " total:" + attackTotalCount);
+							    				log.info("Attacks:" + rate + " a/s" + " total:" + attackTotalCount + " in " + TimeInMillis.toString(System.currentTimeMillis() - startTime));
 							    				attackTimestamp = 0;
 							    			}
 							    		}

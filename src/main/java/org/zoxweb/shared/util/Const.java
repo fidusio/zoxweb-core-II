@@ -581,13 +581,18 @@ public class Const
 				long min = millis % 60;
 				millis /= 60;
 				long hour = millis;
-				//millis /=24;
+				millis /=24;
 				
-				//long day = millis % WEEK.MILLIS;
+				long day = millis;
 				
 				//hour += day*24;
 				
 				StringBuilder sb = new StringBuilder();
+				if (day > 0)
+				{
+					sb.append(day + "d ");
+					hour = hour % 24;
+				}
 				sb.append((hour < 9 ? "0" : "")  + hour);
 				sb.append(':');
 				sb.append((min < 9 ? "0" : "")  +min);
