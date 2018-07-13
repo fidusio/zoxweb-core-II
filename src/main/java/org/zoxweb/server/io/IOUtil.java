@@ -250,6 +250,41 @@ public class IOUtil
 		
 		return baos;
 	}
+	
+	
+	/**
+	 * Read the all the content of an input stream and return it as a byte array
+	 * @param is to be read
+	 * @param close if true is will closed after reading
+	 * @return byte array
+	 * @throws IOException
+	 */
+	public static UByteArrayOutputStream inputStreamToByteArray(String filename, boolean close)
+        throws IOException
+	{
+		return inputStreamToByteArray(new File(filename), close);
+	}
+	/**
+	 * Read the all the content of an input stream and return it as a byte array
+	 * @param is to be read
+	 * @param close if true is will closed after reading
+	 * @return byte array
+	 * @throws IOException
+	 */
+	public static UByteArrayOutputStream inputStreamToByteArray(File file, boolean close)
+        throws IOException
+	{
+		InputStream is = null;
+		try
+		{
+			is = new FileInputStream(file);
+			return inputStreamToByteArray(is, close);
+		}
+		finally 
+		{
+			IOUtil.close(is);
+		}
+	}
 
     /**
      *

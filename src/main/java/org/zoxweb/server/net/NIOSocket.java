@@ -227,6 +227,7 @@ public class NIOSocket
 							    			// in try block with catch exception since logger can point to file log
 							    			
 							    			log.info( "@ port:" + isa.getPort() + " access denied for:" + sc.getRemoteAddress());
+							    			
 							    			if (attackTotalCount % 500 == 0)
 							    			{
 							    				float rate = (float) ((500.00/(float)(System.currentTimeMillis() - attackTimestamp))*TimeInMillis.SECOND.MILLIS);
@@ -236,7 +237,7 @@ public class NIOSocket
 							    		}
 							    		catch(Exception e)
 							    		{
-							    			
+							    			e.printStackTrace();
 							    		}
 							    		finally
 							    		{

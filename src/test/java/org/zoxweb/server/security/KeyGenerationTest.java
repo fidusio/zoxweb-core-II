@@ -1,18 +1,27 @@
 package org.zoxweb.server.security;
 
+import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.Key;
+import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
+
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
+import org.zoxweb.server.io.IOUtil;
 import org.zoxweb.shared.util.Const.TimeInMillis;
+import org.zoxweb.shared.util.SharedBase64;
+import org.zoxweb.shared.util.SharedBase64.Base64Type;
 import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
 
@@ -33,6 +42,21 @@ public class KeyGenerationTest
 	    Cipher cipher = Cipher.getInstance("RSA/ECB/OAEPWITHSHA-256ANDMGF1PADDING");   
 	    cipher.init(Cipher.DECRYPT_MODE, key);  
 	    return cipher.doFinal(ciphertext);
+	}
+	
+	
+	public static PublicKey readPublicKey(byte[] keys) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException
+	{
+	    X509EncodedKeySpec publicSpec = new X509EncodedKeySpec(keys);
+	    KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+	    return keyFactory.generatePublic(publicSpec);       
+	}
+
+	public static PrivateKey readPrivateKey(byte[] keys) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException
+	{
+	    PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(keys);
+	    KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+	    return keyFactory.generatePrivate(keySpec);     
 	}
 	
 	public static void main(String ...args)
@@ -68,6 +92,44 @@ public class KeyGenerationTest
 		catch(Exception e)
 		{
 			e.printStackTrace();
+		}
+		
+		
+		for(String filename : args)
+		{
+			try
+			{
+				String pem = IOUtil.inputStreamToString(filename);
+				String splits[] = pem.split("\n");
+				System.out.println(pem);
+				System.out.println(splits.length);
+				StringBuffer sb = new StringBuffer();
+				for (String str : splits)
+				{
+					if(!str.startsWith("-"))
+						sb.append(str);
+				}
+				System.out.println(sb.toString());
+				
+				
+				
+				
+				byte keys[] = SharedBase64.decode(sb.toString());
+				
+				
+				
+				
+				
+				//PublicKey pubKey = readPublicKey(keys);
+				PrivateKey priKey = readPrivateKey(keys);
+				System.out.println(filename);
+				//System.out.println("public  key:" +  SharedBase64.encodeAsString(Base64Type.URL, pubKey.getEncoded()));
+				System.out.println("private key:" +  SharedBase64.encodeAsString(Base64Type.DEFAULT, priKey.getEncoded()));
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
 		}
 	}
 }
