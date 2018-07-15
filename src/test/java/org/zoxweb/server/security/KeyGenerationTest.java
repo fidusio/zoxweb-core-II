@@ -18,12 +18,11 @@ import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
-import org.zoxweb.server.io.IOUtil;
+
 import org.zoxweb.shared.util.Const.TimeInMillis;
-import org.zoxweb.shared.util.SharedBase64;
-import org.zoxweb.shared.util.SharedBase64.Base64Type;
+
 import org.zoxweb.shared.util.SharedStringUtil;
-import org.zoxweb.shared.util.SharedUtil;
+
 
 
 
@@ -59,6 +58,8 @@ public class KeyGenerationTest
 	    return keyFactory.generatePrivate(keySpec);     
 	}
 	
+	
+	
 	public static void main(String ...args)
 	{
 		
@@ -70,18 +71,20 @@ public class KeyGenerationTest
 			for (int i = 0; i < 10; i++)
 			{
 				long ts = System.nanoTime();
-				KeyPair kp = CryptoUtil.generateKeyPair(2048, "rsa");
+				KeyPair kp = CryptoUtil.generateKeyPair(3072, "rsa");
 				ts = System.nanoTime() - ts;
 				System.out.println("" + kp.toString() + " it took " + TimeInMillis.nanosToString(ts));
 				kp.getPublic().getFormat();
 				PublicKey pubKey = kp.getPublic();
 				PrivateKey privKey = kp.getPrivate();
-				System.out.println(SharedUtil.toCanonicalID(':', pubKey.getAlgorithm(), pubKey.getEncoded().length, pubKey.getFormat(),SharedStringUtil.bytesToHex(pubKey.getEncoded())));
-				System.out.println(SharedUtil.toCanonicalID(':', privKey.getAlgorithm(), privKey.getEncoded().length, privKey.getFormat(), SharedStringUtil.bytesToHex(privKey.getEncoded())));
+				System.out.println(CryptoUtil.toString(pubKey));
+				System.out.println(CryptoUtil.toString(privKey));
 				
 				byte encrypted[] = encrypt(pubKey, message);
 				byte decrypted[] = decrypt(privKey, encrypted);
 				System.out.println(SharedStringUtil.toString(decrypted));
+				Key aesKey = CryptoUtil.generateKey(256, CryptoUtil.AES);
+				System.out.println(CryptoUtil.toString(aesKey));
 				
 				
 				encrypted = encrypt(pubKey, message);
@@ -99,32 +102,33 @@ public class KeyGenerationTest
 		{
 			try
 			{
-				String pem = IOUtil.inputStreamToString(filename);
-				String splits[] = pem.split("\n");
-				System.out.println(pem);
-				System.out.println(splits.length);
-				StringBuffer sb = new StringBuffer();
-				for (String str : splits)
-				{
-					if(!str.startsWith("-"))
-						sb.append(str);
-				}
-				System.out.println(sb.toString());
-				
-				
-				
-				
-				byte keys[] = SharedBase64.decode(sb.toString());
-				
-				
-				
-				
-				
-				//PublicKey pubKey = readPublicKey(keys);
-				PrivateKey priKey = readPrivateKey(keys);
-				System.out.println(filename);
-				//System.out.println("public  key:" +  SharedBase64.encodeAsString(Base64Type.URL, pubKey.getEncoded()));
-				System.out.println("private key:" +  SharedBase64.encodeAsString(Base64Type.DEFAULT, priKey.getEncoded()));
+//				String pem = IOUtil.inputStreamToString(filename);
+//				String splits[] = pem.split("\n");
+//				System.out.println(pem);
+//				System.out.println(splits.length);
+//				StringBuffer sb = new StringBuffer();
+//				for (String str : splits)
+//				{
+//					if(!str.startsWith("-"))
+//						sb.append(str);
+//				}
+//				System.out.println(sb.toString());
+//				
+//				
+//				
+//				
+//				byte keys[] = SharedBase64.decode(sb.toString());
+//				
+//				
+//				
+//				
+//				
+//				//PublicKey pubKey = readPublicKey(keys);
+//				PrivateKey priKey = readPrivateKey(keys);
+//				System.out.println(filename);
+//				//System.out.println("public  key:" +  SharedBase64.encodeAsString(Base64Type.URL, pubKey.getEncoded()));
+				PublicKey pk = CryptoUtil.getPublicKey(filename, 443);
+				System.out.println(filename + " public key:" +  CryptoUtil.toString(pk));
 			}
 			catch(Exception e)
 			{

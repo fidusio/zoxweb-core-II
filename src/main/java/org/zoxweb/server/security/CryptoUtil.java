@@ -21,6 +21,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.UnknownHostException;
 import java.security.GeneralSecurityException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
@@ -31,9 +32,11 @@ import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.PublicKey;
 import java.security.SecureRandom;
 import java.security.SignatureException;
 import java.security.UnrecoverableKeyException;
+import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -47,9 +50,13 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManagerFactory;
+
 
 import org.zoxweb.server.io.IOUtil;
 import org.zoxweb.server.io.UByteArrayOutputStream;
@@ -941,6 +948,11 @@ public class CryptoUtil
 		return kg.generateKeyPair();
 	}
 	
+	public static String toString(Key key) 
+	{
+		return SharedUtil.toCanonicalID(':', key.getAlgorithm(), key.getEncoded().length, key.getFormat(),SharedStringUtil.bytesToHex(key.getEncoded()));
+	}
+	
 	public static KeyStoreInfoDAO generateKeyStoreInfo(String keyStoreName, String alias, String keyStoreType) throws NoSuchAlgorithmException
 	{
 		KeyStoreInfoDAO ret = new KeyStoreInfoDAO();
@@ -959,6 +971,32 @@ public class CryptoUtil
 		return ret;
 	}
 	
+	/**
+	 * Connect to a remote host and extract the the 
+	 * @param host
+	 * @param port
+	 * @return
+	 * @throws UnknownHostException
+	 * @throws IOException
+	 */
+	public static PublicKey getPublicKey(String host, int port) throws IOException
+	{
+		SSLSocket socket = null;
+		try
+		{
+			SSLSocketFactory factory = HttpsURLConnection.getDefaultSSLSocketFactory();        
+			socket = (SSLSocket) factory.createSocket(host, port);
+			socket.startHandshake();
+			Certificate[] certs = socket.getSession().getPeerCertificates();
+			Certificate cert = certs[0];
+			PublicKey key = cert.getPublicKey();
+			return key;
+		}
+		finally
+		{
+			IOUtil.close(socket);
+		}
+	}
 	
 	public static void main(String ...args)
 	{
@@ -997,5 +1035,7 @@ public class CryptoUtil
 					+ "generate keystore keystoreType keyStorePassword ");
 		}
 	}
+	
+	
 
 }
