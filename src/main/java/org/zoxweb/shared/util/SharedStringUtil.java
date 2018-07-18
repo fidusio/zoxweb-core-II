@@ -1018,7 +1018,7 @@ public final class SharedStringUtil
 		
 		if (buffer != null)
 		{
-			sb = new StringBuilder(buffer.length);
+			//sb = new StringBuilder(buffer.length);
 			for (int i = offset; i < offset + len; i++)
 			{
 				if (postToken != null && sb != null)

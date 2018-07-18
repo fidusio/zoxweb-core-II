@@ -65,7 +65,7 @@ public class MACAddressFilter
 		SharedUtil.checkIfNulls("MAC is null", address);
 		if (address.length != MAC_ADDRESS_LENGTH)
 		{
-			throw new IllegalArgumentException("Invalid MAC Address length " + address.length);
+			//throw new IllegalArgumentException("Invalid MAC Address length " + address.length);
 		}
 		return SharedStringUtil.bytesToHex(null, address, 0, address.length, sep);
 	}
