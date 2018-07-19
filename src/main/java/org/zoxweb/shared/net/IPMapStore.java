@@ -16,23 +16,19 @@
 package org.zoxweb.shared.net;
 
 import java.io.IOException;
-import java.util.HashSet;
+import java.util.Set;
 
 public interface IPMapStore {
 	
-	public boolean addIPMap(String ipAddress, String macAddress);
+	public boolean map(String ipAddress, String macAddress);
 
-	public String lookupMapFromIPAddress(String ipAddress) throws IOException;
+	public String lookupMAC(String ipAddress) throws IOException;
 
-	public boolean removeIPAddress(String ipAddress);
+	public boolean removeIP(String ipAddress);
 	
 	public void clear();
 
-	public void addToIgnoreFilter(String ipOrMac);
-
-	public void removeFromIgnoreFilter(String ipOrMac);
-	
-	public HashSet<String> getIgnoreFilter();
+	public Set<String> exclusionFilter();
 	
 	public int size();
 	

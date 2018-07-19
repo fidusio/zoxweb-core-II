@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 
 import org.zoxweb.server.io.IOUtil;
 import org.zoxweb.server.net.NIOConfig;
+import org.zoxweb.server.net.NIOSocket;
 import org.zoxweb.server.net.security.IPBlockerListener;
 import org.zoxweb.shared.data.ConfigDAO;
 import org.zoxweb.shared.data.ApplicationConfigDAO;
@@ -33,6 +34,37 @@ public class ServiceManager
 	{
 		if (obj instanceof AutoCloseable)
 			IOUtil.close((AutoCloseable)obj);
+	}
+	
+	
+	public synchronized NIOSocket loadNIOSocket(ApplicationConfigDAO acd)
+	{
+		String filename = acd.lookupValue(ApplicationDefaultParam.NIO_CONFIG);
+		if (filename != null)
+		{
+			log.info("creating NIO_CONFIG");
+			if (ResourceManager.SINGLETON.lookup(NIOConfig.RESOURCE_NAME) != null)
+			{
+				close(ResourceManager.SINGLETON.lookup(NIOConfig.RESOURCE_NAME));
+			}
+			try
+			{
+				String fullFileName = ApplicationConfigManager.SINGLETON.concatWithEnvVar("conf", filename);
+				ConfigDAO configDAO = GSONUtil.fromJSON(IOUtil.inputStreamToString(fullFileName));
+				log.info("" + configDAO);
+				NIOConfig nioConfig = new NIOConfig(configDAO);
+				NIOSocket nioSocket = nioConfig.createApp();
+				ResourceManager.SINGLETON.map(NIOConfig.RESOURCE_NAME, nioConfig);
+				
+				return nioSocket;
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
+		
+		return null;
 	}
 	
 	public synchronized void loadServices() throws NullPointerException, IOException

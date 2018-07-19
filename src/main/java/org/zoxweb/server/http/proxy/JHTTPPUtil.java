@@ -226,7 +226,7 @@ public class JHTTPPUtil
 //		InetFilterDAO ipf = new InetFilterDAO();
 //		ipf.setIP("127.0.0.1");
 //		ipf.setNetworkMask("255.255.255.255");
-		TaskUtil.setThreadMultiplier(4);
+		//TaskUtil.setThreadMultiplier(4);
 		int port = 8080;
 		int backlog = 256;
 		String proxyLogFile = null;

@@ -81,7 +81,7 @@ public class TaskSchedulerProcessor
 
 	private TaskSchedulerProcessor(Comparator<Appointment> tsc, TaskProcessor tp) {
 		SharedUtil.checkIfNulls("TaskSchedulerComparator can't be null", tsc);
-		queue =  new ConcurrentSkipListSet<TaskSchedulerAppointment>( tsc);
+		queue =  new ConcurrentSkipListSet<TaskSchedulerAppointment>(tsc);
 		taskProcessor = tp;	
 		new Thread(this, "TSP-" + TSP_COUNTER.incrementAndGet()).start();
 	}
@@ -156,7 +156,7 @@ public class TaskSchedulerProcessor
 	}
 	
 	private TaskSchedulerAppointment dequeue() {
-		synchronized( queue) {
+		synchronized(queue) {
 			return queue.pollFirst();
 		}
 	}

@@ -16,31 +16,36 @@
 package org.zoxweb.shared.net;
 
 import java.io.IOException;
-import java.io.Serializable;
+
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
-@SuppressWarnings("serial")
+
 public class IPMapCache
-    implements Serializable,IPMapStore
+    implements IPMapStore
 {
 
-	private HashMap<String, String> ipMapC = new HashMap<String, String>();
-	private HashSet<String> ignoreFilter = new HashSet<String>();
+	private Map<String, String> ipMACCache = new HashMap<String, String>();
+	private Set<String> exclusionFilter = new HashSet<String>();
 	
 	public IPMapCache()
     {
 
 	}
 	
-	public synchronized boolean addIPMap(String ipAddress, String macAddress)
+	public synchronized boolean map(String ipAddress, String macAddress)
     {
 		if (ipAddress != null && macAddress != null)
 		{
-			if (!ignoreFilter.contains(ipAddress) && !ignoreFilter.contains( macAddress))
+			if (!exclusionFilter.contains(ipAddress) && !exclusionFilter.contains(macAddress))
 			{
-				ipMapC.put(ipAddress, macAddress);
-				return true;
+				synchronized(this)
+				{
+					ipMACCache.put(ipAddress, macAddress);
+					return true;
+				}
 			}
 		}
 		
@@ -49,45 +54,29 @@ public class IPMapCache
 	
 	public synchronized void clear()
     {
-		ipMapC.clear();
-		ignoreFilter.clear();
+		ipMACCache.clear();
 	}
 	
-	public synchronized String lookupMapFromIPAddress(String ipAddress)
+	public synchronized String lookupMAC(String ipAddress)
         throws IOException
     {
-		return ipMapC.get(ipAddress);
+		return ipMACCache.get(ipAddress);
 	}
 	
 	public int size()
     {
-		return ipMapC.size();
+		return ipMACCache.size();
 	}
 	
-	public int filterSize()
+	public  Set<String> exclusionFilter()
     {
-		return ignoreFilter.size();
-	}
-	
-	public synchronized void addToIgnoreFilter(String ipOrMac)
-    {
-		ignoreFilter.add(ipOrMac);
-	}
-	
-	public synchronized void removeFromIgnoreFilter(String ipOrMac)
-    {
-		ignoreFilter.remove(ipOrMac);
-	}
-	
-	public final HashSet<String> getIgnoreFilter()
-    {
-		return ignoreFilter;
+		return exclusionFilter;
 	}
 
 	@Override
-	public synchronized boolean removeIPAddress(String ipAddress)
+	public synchronized boolean removeIP(String ipAddress)
     {
-		return (ipMapC.remove(ipAddress) != null);
+		return (ipMACCache.remove(ipAddress) != null);
 	}
 
 }
