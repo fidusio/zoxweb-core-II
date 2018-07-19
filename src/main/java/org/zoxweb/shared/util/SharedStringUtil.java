@@ -1044,7 +1044,7 @@ public final class SharedStringUtil
 				}
 				if(sb == null)
 				{
-					// try to predisct the size
+					// try to predict the size
 					int size = buffer.length*(2);
 					size += preToken != null && preToken.length() > 0 ? (preToken.length()*buffer.length) : 0;
 					size += postToken != null && postToken.length() > 0 && (buffer.length - 1) > 0 ?  postToken.length()*(buffer.length - 1) : 0;
