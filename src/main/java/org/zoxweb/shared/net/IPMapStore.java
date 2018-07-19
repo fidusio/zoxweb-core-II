@@ -16,7 +16,8 @@
 package org.zoxweb.shared.net;
 
 import java.io.IOException;
-import java.util.Set;
+import java.util.Iterator;
+
 
 public interface IPMapStore {
 	
@@ -26,9 +27,11 @@ public interface IPMapStore {
 
 	public boolean removeIP(String ipAddress);
 	
-	public void clear();
+	public void clear(boolean all);
 
-	public Set<String> exclusionFilter();
+	public Iterator<String> exclusions();
+	
+	public void addExclusion(String exclusion);
 	
 	public int size();
 	

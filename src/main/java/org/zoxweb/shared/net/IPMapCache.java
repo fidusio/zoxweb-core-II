@@ -19,8 +19,11 @@ import java.io.IOException;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+
+import org.zoxweb.shared.util.SharedStringUtil;
 
 
 public class IPMapCache
@@ -37,6 +40,8 @@ public class IPMapCache
 	
 	public synchronized boolean map(String ipAddress, String macAddress)
     {
+		ipAddress = SharedStringUtil.toTrimmedLowerCase(ipAddress);
+		macAddress = SharedStringUtil.toTrimmedLowerCase(macAddress);
 		if (ipAddress != null && macAddress != null)
 		{
 			if (!exclusionFilter.contains(ipAddress) && !exclusionFilter.contains(macAddress))
@@ -52,9 +57,11 @@ public class IPMapCache
 		return false;
 	}
 	
-	public synchronized void clear()
+	public synchronized void clear(boolean all)
     {
 		ipMACCache.clear();
+		if (all)
+			exclusionFilter.clear();
 	}
 	
 	public synchronized String lookupMAC(String ipAddress)
@@ -68,9 +75,16 @@ public class IPMapCache
 		return ipMACCache.size();
 	}
 	
-	public  Set<String> exclusionFilter()
+	public  Iterator<String> exclusions()
     {
-		return exclusionFilter;
+		return exclusionFilter.iterator();
+	}
+	
+	public void addExclusion(String exclusion)
+	{
+		exclusion = SharedStringUtil.toTrimmedLowerCase(exclusion);
+		if(exclusion != null)
+			exclusionFilter.add(exclusion);
 	}
 
 	@Override
