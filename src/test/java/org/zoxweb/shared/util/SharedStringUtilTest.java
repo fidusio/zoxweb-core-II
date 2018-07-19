@@ -44,5 +44,15 @@ public class SharedStringUtilTest {
 		System.out.println("Before left:" + SharedStringUtil.valueBeforeLeftToken("john.smith.dickson", "."));
 		System.out.println("After left:" + SharedStringUtil.valueAfterLeftToken("john.smith.dickson", "."));
 	}
+	
+	@Test
+	public void testByteToHex()
+	{
+		byte [] buffer = {0,1,2,3,4,5,6,7,0,9,10,100,-1};
+		String str = SharedStringUtil.bytesToHex(buffer, "::");
+		System.out.println(str + " length:" + str.length());
+		str = SharedStringUtil.bytesToHex(buffer);
+		System.out.println(str + " length:" + str.length());
+	}
 
 }
