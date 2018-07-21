@@ -13,26 +13,31 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.zoxweb.shared.net;
+package org.zoxweb.shared.util;
 
-import java.io.IOException;
 import java.util.Iterator;
 
-
-public interface IPMapStore {
+public interface KVMapStore<K,V>
+{
 	
-	public boolean map(String ipAddress, String macAddress);
+	boolean map(K key, V value);
 
-	public String lookupMAC(String ipAddress) throws IOException;
+	V lookup(K key);
 
-	public boolean removeIP(String ipAddress);
+	boolean remove(K key);
 	
-	public void clear(boolean all);
+	void clear(boolean all);
 
-	public Iterator<String> exclusions();
+	Iterator<K> exclusions();
 	
-	public void addExclusion(String exclusion);
+	Iterator<V> values();
+	Iterator<K> keys();
 	
-	public int size();
+	
+//	void purge();
+	
+	void addExclusion(K exclusion);
+	
+	int size();
 	
 }
