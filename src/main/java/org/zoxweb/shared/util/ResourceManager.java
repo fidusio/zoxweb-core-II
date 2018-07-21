@@ -12,6 +12,7 @@ public class ResourceManager
 		API_SECURITY_MANAGER("APISecurityManager"),
 		DATA_STORE("DataStore"),
 		API_APP_MANAGER("APIAppManager"),
+		JWT_CACHE("JWTCache"),
 		
 		;
 
