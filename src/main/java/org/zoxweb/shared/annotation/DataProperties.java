@@ -14,13 +14,17 @@ import java.lang.annotation.Target;
 public @interface DataProperties 
 {
 	
-	
-	Class<?> inputFormat();
+	/**
+	 * Specify the input data format ex for json or xml it is string, for binant byte[]
+	 * @return
+	 */
+	Class<?> rawDataType() default String.class;
 	/**
 	 * Specify the class type of the data
 	 * @return
 	 */
  	Class<?> dataType();
+ 	
  	/**
  	 * If true the data is mandatory
  	 * @return
