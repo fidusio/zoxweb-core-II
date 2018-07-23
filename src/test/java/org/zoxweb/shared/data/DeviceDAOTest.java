@@ -29,7 +29,7 @@ public class DeviceDAOTest {
 		Class<?> propC1 = deviceReverse.getProperties().getClass();
 		assert propC == propC1;
 		NVGenericMap val = deviceReverse.getProperties();
-		System.out.println(propC1 + " " + val.getValue().getClass());
+		System.out.println(propC1 + " " + val.getClass());
 		
 		
 		
