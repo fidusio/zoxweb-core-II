@@ -19,7 +19,7 @@ public class DeviceDAOTest {
 		device.setName("Computer");
 		device.setDeviceID(UUID.randomUUID().toString());
 		device.getProperties().add(new NVPair("name", "value"));
-		device.getProperties().add(new NVPair("name", "value2"));
+		//device.getProperties().add(new NVPair("name", "value2"));
 		device.getProperties().add(new NVPair("AAA", "triple"));
 		String json = GSONUtil.toJSON(device, true);
 		System.out.println(json);

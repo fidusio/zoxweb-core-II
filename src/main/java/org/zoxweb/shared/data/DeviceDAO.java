@@ -1,14 +1,14 @@
 package org.zoxweb.shared.data;
 
 import org.zoxweb.shared.security.shiro.ShiroDAO;
-import org.zoxweb.shared.util.ArrayValues;
 import org.zoxweb.shared.util.DeviceID;
 import org.zoxweb.shared.util.GetNVConfig;
-import org.zoxweb.shared.util.GetNameValue;
+
 import org.zoxweb.shared.util.NVConfig;
 import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVConfigEntityLocal;
 import org.zoxweb.shared.util.NVConfigManager;
+import org.zoxweb.shared.util.NVGenericMap;
 import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
 import org.zoxweb.shared.util.SubjectID;
@@ -30,7 +30,7 @@ public class DeviceDAO
         MANUFACTURER(NVConfigManager.createNVConfig("manufacturer", "The device's manufacturer.", "Manufacturer", false, false, String.class)),
         VIRTUAL(NVConfigManager.createNVConfig("virtual", "Whether the device is running on a simulator.", "Virtual", false, false, boolean.class)),
         SERIAL_NUMBER(NVConfigManager.createNVConfig("serial_number", "The device hardware serial number.", "SerialNumber", false, false, String.class)),
-        PROPERTIES(NVConfigManager.createNVConfig("properties", "Device properties", "Properties", false, true, true, false, String[].class, null)),
+        PROPERTIES(NVConfigManager.createNVConfig("properties", "Device properties", "Properties", false, true, NVGenericMap.class)),
 		
 		;
 	
@@ -199,20 +199,19 @@ public class DeviceDAO
      * Returns additional device properties.
      * @return
      */
-    @SuppressWarnings("unchecked")
-    public ArrayValues<GetNameValue<String>> getProperties()
+    public NVGenericMap getProperties()
     {
-        return (ArrayValues<GetNameValue<String>>) lookup(Param.PROPERTIES.getNVConfig().getName());
+        return (NVGenericMap) lookup(Param.PROPERTIES.getNVConfig().getName());
     }
 
     /**
      * Sets the additional device properties.
      * @param properties
      */
-    public synchronized void setProperties(ArrayValues<GetNameValue<String>> properties)
-    {
-        getProperties().add(properties.values(), true);
-    }
+//    public synchronized void setProperties(ArrayValues<GetNameValue<String>> properties)
+//    {
+//        getProperties().add(properties.values(), true);
+//    }
 
 	@Override
 	public synchronized String getSubjectID() 
