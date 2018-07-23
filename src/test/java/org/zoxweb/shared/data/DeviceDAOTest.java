@@ -6,8 +6,9 @@ import java.util.UUID;
 
 import org.junit.Test;
 import org.zoxweb.server.util.GSONUtil;
+import org.zoxweb.shared.util.NVGenericMap;
 import org.zoxweb.shared.util.NVPair;
-import org.zoxweb.shared.util.NVPairGetNameMap;
+
 
 public class DeviceDAOTest {
 
@@ -27,7 +28,7 @@ public class DeviceDAOTest {
 		DeviceDAO deviceReverse = GSONUtil.fromJSON(json);
 		Class<?> propC1 = deviceReverse.getProperties().getClass();
 		assert propC == propC1;
-		NVPairGetNameMap val = (NVPairGetNameMap)((Object)deviceReverse.getProperties());
+		NVGenericMap val = deviceReverse.getProperties();
 		System.out.println(propC1 + " " + val.getValue().getClass());
 		
 		
