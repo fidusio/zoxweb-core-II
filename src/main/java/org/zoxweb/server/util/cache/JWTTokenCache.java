@@ -35,7 +35,7 @@ implements KVMapStore<String, JWT>
 			// TODO Auto-generated method stub
 			String hash = (String) event.getTaskExecutorParameters()[0];
 			cache.remove(hash);
-			log.info("Removed:" + hash);
+			log.info(hash + ":removed pendings:" + size());
 		}
 		
 	}
@@ -104,7 +104,7 @@ implements KVMapStore<String, JWT>
 			// register the token
 			ret = cache.map(jwtHash, jwt);
 			
-			tsp.queue(this, new AppointmentDefault(expirationPeriod), cct, jwtHash);
+			tsp.queue(this, new AppointmentDefault(expirationPeriod + delta), cct, jwtHash);
 			
 		}
 		

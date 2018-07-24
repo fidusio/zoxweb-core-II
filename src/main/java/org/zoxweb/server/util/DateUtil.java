@@ -18,9 +18,11 @@ public class DateUtil
 	public static final SimpleDateFormat DEFAULT_GMT_MILLIS = createSDF("yyyy-MM-dd'T'HH:mm:ss.SSSX", "UTC");
 	public static final SimpleDateFormat DEFAULT_GMT = createSDF("yyyy-MM-dd'T'HH:mm:ssX", "UTC");
 	
+	
 	private DateUtil()
 	{
 	}
+	
 	
 	
 	
