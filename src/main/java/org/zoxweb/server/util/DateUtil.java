@@ -1,19 +1,35 @@
 package org.zoxweb.server.util;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.TimeZone;
+
 
 import org.zoxweb.shared.util.Const.DayOfWeek;
 import org.zoxweb.shared.util.Const.TimeInMillis;
 
 public class DateUtil 
 {
+	
+	public static final SimpleDateFormat DEFAULT_DATE_FORMAT = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss_SSS");
+	public static final SimpleDateFormat DEFAULT_JAVA_FORMAT = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
+	public static final SimpleDateFormat DEFAULT_GMT_MILLIS = createSDF("yyyy-MM-dd'T'HH:mm:ss.SSSX", "UTC");
+	public static final SimpleDateFormat DEFAULT_GMT = createSDF("yyyy-MM-dd'T'HH:mm:ssX", "UTC");
+	
 	private DateUtil()
 	{
 	}
 	
 	
+	
+	public static SimpleDateFormat createSDF(String pattern, String timezone)
+	{
+		SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+		sdf.setTimeZone(TimeZone.getTimeZone(timezone));
+		return sdf;
+	}
 	/**
 	 * Return date in normal format jan=1... dec=12
 	 * @param date

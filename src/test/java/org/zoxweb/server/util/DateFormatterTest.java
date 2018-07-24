@@ -23,15 +23,15 @@ public class DateFormatterTest {
 	@Test
 	public void testFormat()
 	{
-		System.out.println(TimestampFilter.DEFAULT_DATE_FORMAT.format(new Date()));
-		System.out.println(TimestampFilter.DEFAULT_GMT_MILLIS.SDF.format(new Date()));
+		System.out.println(DateUtil.DEFAULT_DATE_FORMAT.format(new Date()));
+		System.out.println(DateUtil.DEFAULT_GMT_MILLIS.format(new Date()));
 	}
 	
 	@Test
 	public void testParseGMT()
 	{
 		Date date = new Date();
-		String strDate = TimestampFilter.DEFAULT_GMT_MILLIS.SDF.format(date);
+		String strDate = DateUtil.DEFAULT_GMT_MILLIS.format(date);
 		Date newDate = new Date(TimestampFilter.SINGLETON.validate(strDate));
 		Assert.assertEquals(date, newDate);
 	}
@@ -59,7 +59,7 @@ public class DateFormatterTest {
 		Date date = new Date();
 		
 		System.out.println(date);
-		System.out.println(TimestampFilter.DEFAULT_JAVA_FORMAT.format(date));
+		System.out.println(DateUtil.DEFAULT_JAVA_FORMAT.format(date));
 		System.out.println(new Date(TimestampFilter.SINGLETON.validate("" + new Date())));
 	}
 	

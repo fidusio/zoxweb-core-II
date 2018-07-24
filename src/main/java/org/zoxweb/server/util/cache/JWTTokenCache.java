@@ -1,5 +1,6 @@
 package org.zoxweb.server.util.cache;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -9,6 +10,7 @@ import org.zoxweb.server.task.TaskDefault;
 import org.zoxweb.server.task.TaskEvent;
 import org.zoxweb.server.task.TaskSchedulerProcessor;
 import org.zoxweb.server.task.TaskUtil;
+import org.zoxweb.server.util.DateUtil;
 import org.zoxweb.shared.security.JWT;
 import org.zoxweb.shared.security.JWTToken;
 import org.zoxweb.shared.util.Const.TimeInMillis;
@@ -86,7 +88,7 @@ implements KVMapStore<String, JWT>
 		
 		if (delta >= expirationPeriod)
 		{
-			throw new SecurityException("JWT issued at expired " + delta);
+			throw new SecurityException("Expired token issued at " + DateUtil.DEFAULT_GMT_MILLIS.format(new Date(jwt.getPayload().getIssuedAt())));
 		}
 		
 		
@@ -96,7 +98,7 @@ implements KVMapStore<String, JWT>
 			if (cache.lookup(jwtHash) != null)
 			{
 				// otp replay
-				throw new SecurityException("This is replay already used token");
+				throw new SecurityException("Token already used, replay attack.");
 			}
 			
 			// register the token

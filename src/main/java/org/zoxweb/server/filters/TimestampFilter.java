@@ -2,8 +2,9 @@ package org.zoxweb.server.filters;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.TimeZone;
 
+
+import org.zoxweb.server.util.DateUtil;
 import org.zoxweb.shared.filters.ValueFilter;
 
 /**
@@ -16,45 +17,22 @@ public class TimestampFilter
 	implements ValueFilter<String, Long>
 {
 	
-	public static class SDFBuilder extends SimpleDateFormat
-	{
-		public SDFBuilder(String pattern)
-		{
-			super(pattern);
-		}
-		
-		public SDFBuilder timeZone(TimeZone tz)
-		{
-			setTimeZone(tz);
-			return this;
-		}
-	}
-	
-	/**
-	 * Sets the default date format.
-	 */
-	public static final SimpleDateFormat DEFAULT_DATE_FORMAT = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss_SSS");
-	public static final SimpleDateFormat DEFAULT_JAVA_FORMAT = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
-	
-	public static final DateTimeValueFilter DEFAULT_GMT_MILLIS = new DateTimeValueFilter("yyyy-MM-dd'T'HH:mm:ss.SSSX", "UTC");
-	public static final DateTimeValueFilter DEFAULT_GMT = new DateTimeValueFilter("yyyy-MM-dd'T'HH:mm:ssX", "UTC");
-	
 	
 	/**
 	 * Defines an array of support date formats.
 	 */
 	private static SimpleDateFormat[] sdf = 
 		{
-			DEFAULT_GMT_MILLIS.SDF,
-			DEFAULT_GMT.SDF,
-			DEFAULT_JAVA_FORMAT,
-			new SDFBuilder("yyyy-MM-dd'T'HH:mm:ss.SSSZ").timeZone(TimeZone.getTimeZone("UTC")),
-			new SDFBuilder("yyyy-MM-dd'T'HH:mm:ssZ").timeZone(TimeZone.getTimeZone("UTC")),
-			new SDFBuilder("yyyy-MM-dd hh:mm:ss").timeZone(TimeZone.getTimeZone("UTC")),
-			new SDFBuilder("yyyy-MM-dd").timeZone(TimeZone.getTimeZone("UTC")),	
+			DateUtil.DEFAULT_GMT_MILLIS,
+			DateUtil.DEFAULT_GMT,
+			DateUtil.DEFAULT_JAVA_FORMAT,
+			DateUtil.createSDF("yyyy-MM-dd'T'HH:mm:ss.SSSZ","UTC"),
+			DateUtil.createSDF("yyyy-MM-dd'T'HH:mm:ssZ","UTC"),
+			DateUtil.createSDF("yyyy-MM-dd hh:mm:ss","UTC"),
+			DateUtil.createSDF("yyyy-MM-dd","UTC"),	
 			
-			new SDFBuilder("MM-yy").timeZone(TimeZone.getTimeZone("UTC")),
-			new SDFBuilder("MM-yyyy").timeZone(TimeZone.getTimeZone("UTC")),
+			DateUtil.createSDF("MM-yy","UTC"),
+			DateUtil.createSDF("MM-yyyy","UTC"),
 			
 		};
 	

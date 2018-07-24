@@ -17,8 +17,9 @@ package org.zoxweb.server.filters;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.TimeZone;
 
+
+import org.zoxweb.server.util.DateUtil;
 import org.zoxweb.shared.filters.ValueFilter;
 
 
@@ -38,8 +39,7 @@ public class DateTimeValueFilter
 	
 	public DateTimeValueFilter(String pattern, String timezone)
 	{
-		SDF = new SimpleDateFormat(pattern);
-		SDF.setTimeZone(TimeZone.getTimeZone(timezone));
+		SDF = DateUtil.createSDF(pattern, timezone);
 	}
 
 	/**
