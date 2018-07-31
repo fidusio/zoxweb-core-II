@@ -593,11 +593,11 @@ public class Const
 					sb.append(day + "d ");
 					hour = hour % 24;
 				}
-				sb.append((hour < 9 ? "0" : "")  + hour);
+				sb.append((hour <= 9 ? "0" : "")  + hour);
 				sb.append(':');
-				sb.append((min < 9 ? "0" : "")  +min);
+				sb.append((min <= 9 ? "0" : "")  +min);
 				sb.append(':');
-				sb.append((sec < 9 ? "0" : "")  +sec);
+				sb.append((sec <= 9 ? "0" : "")  +sec);
 				if(mil > 0)
 				{
 					sb.append('.');
