@@ -16,15 +16,13 @@
 package org.zoxweb.shared.queue;
 
 import java.io.IOException;
-
-import org.zoxweb.shared.util.GetNVGenericMap;
 import org.zoxweb.shared.util.NVGenericMap;
 
 /**
  * The queue session interface.
  */
 public interface QueueSession
-    extends AutoCloseable, GetNVGenericMap
+    extends AutoCloseable
 {
 	
 	
@@ -55,5 +53,11 @@ public interface QueueSession
 			throws NullPointerException, IllegalArgumentException, IOException;
 	
 	QueueListener<QueueEvent<?>> [] getAllListeners();
+	
+	/**
+	 * Get the connection configuration
+	 * @return
+	 */
+	NVGenericMap getConfig();
 
 }
