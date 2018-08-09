@@ -15,6 +15,7 @@
  */
 package org.zoxweb.shared.queue;
 
+import java.util.Date;
 import java.util.EventObject;
 
 import org.zoxweb.shared.util.SharedUtil;
@@ -29,21 +30,37 @@ public abstract class QueueEvent<V>
 	protected V content;
 	private boolean persistent;
 	private int priority;
+	private String correlationID;
+	private String messageID;
+	private String replyTo;
+	private Date timestamp;
     
-	public QueueEvent(Object source, boolean persistent, int priority)
-    {
-		super(source);
-		this.persistent= persistent;
-		this.priority = priority;
-	}
+	
+	
 	
 	public QueueEvent(Object source, boolean persistent, int priority, V content)
     {
-		this(source, persistent, priority);
+		this(source, persistent, priority, null, null, null, content);
+	}
+	
+	
+	public QueueEvent(Object source, boolean persistent, int priority, Date timestamp, String correlationID, String replyTo, V content)
+    {
+		this(source, persistent, priority, timestamp, correlationID, replyTo);
 		SharedUtil.checkIfNulls("Null content", content);
 		this.content = content;
 	}
 	
+	public QueueEvent(Object source, boolean persistent, int priority, Date timestamp, String correlationID, String replyTo)
+    {
+		super(source);
+		setPersistent(persistent);
+		
+		setPriority(priority);
+		setCorrelationID(correlationID);
+		setReplyTo(replyTo);
+		setTimestamp(timestamp);
+	}
 	
 	public V getContent()
 	{
@@ -54,9 +71,62 @@ public abstract class QueueEvent<V>
 	{
 		return persistent;
 	}
+	
+	public void setPersistent(boolean persistent) {
+		this.persistent = persistent;
+	}
+
+
 	public int getPriority()
 	{
 		return priority;
+	}
+	
+	public void setPriority(int priority) {
+		if (priority < 0)
+			throw new IllegalArgumentException("Invalid priority: " + priority);
+		this.priority = priority;
+	}
+
+
+	public String getCorrelationID()
+	{
+		return correlationID;
+	}
+	
+	public void setCorrelationID(String correlationID) {
+		this.correlationID = correlationID;
+	}
+
+
+	public String getReplyTo()
+	{
+		return replyTo;
+	}
+	
+	public void setReplyTo(String replyTo) {
+		this.replyTo = replyTo;
+	}
+
+
+	public Date getTimestamp()
+	{
+		return timestamp;
+	}
+
+
+	public void setTimestamp(Date timestamp) {
+		this.timestamp = timestamp;
+	}
+
+
+	public String getMessageID() {
+		return messageID;
+	}
+
+
+	public void setMessageID(String messageID) {
+		this.messageID = messageID;
 	}
 
 	

@@ -16,12 +16,14 @@
 package org.zoxweb.server.queue;
 
 import java.io.IOException;
+import java.util.Date;
 
 import org.zoxweb.server.util.GSONUtil;
 import org.zoxweb.shared.api.APIException;
 import org.zoxweb.shared.queue.QueueEvent;
 import org.zoxweb.shared.security.AccessException;
 import org.zoxweb.shared.util.NVEntity;
+import org.zoxweb.shared.util.SharedBase64.Base64Type;
 import org.zoxweb.shared.util.SharedStringUtil;
 
 @SuppressWarnings("serial")
@@ -31,12 +33,12 @@ public class NVEntityQueueEvent extends QueueEvent<NVEntity>
 	
 	public NVEntityQueueEvent(Object source, byte[] data)
 	{
-		this(source, false, 0, data);
+		this(source, false, 0, null, null, null, data);
 	}
 	
-	public NVEntityQueueEvent(Object source, boolean persistent, int priority, byte[] data) 
+	public NVEntityQueueEvent(Object source, boolean persistent, int priority, Date timestamp, String correlationID, String replyTo, byte[] data) 
 	{
-		super(source, persistent, priority);
+		super(source, persistent, priority, timestamp, correlationID, replyTo);
 		// TODO Auto-generated constructor stub
 		try {
 			content = GSONUtil.fromJSON(SharedStringUtil.toString(data));
@@ -54,11 +56,15 @@ public class NVEntityQueueEvent extends QueueEvent<NVEntity>
 	}
 
 	@Override
+	/**
+	 * Convert the object to base64 url encoded json byte array
+	 * @return the json byte array
+	 */
 	public byte[] toBytes() 
 	{
 		try 
-		{
-			return SharedStringUtil.getBytes(GSONUtil.toJSON(getContent(), false, false, true));
+		{	
+			return SharedStringUtil.getBytes(GSONUtil.toJSON(getContent(), false, false, true, Base64Type.URL));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
