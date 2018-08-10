@@ -1206,6 +1206,13 @@ final public class GSONUtil
 		return fromJSON(SharedStringUtil.toString(json), null, null);
 	}
 	
+	public static <V extends NVEntity> V fromJSON(byte[] json, Base64Type b64t) 
+	        throws  APIException
+    {
+		return fromJSON(SharedStringUtil.toString(json), null, b64t);
+	}
+	
+	
 	public static Map<String, ?> fromJSONMap(String json, Base64Type b64Type) 
         throws APIException
     {

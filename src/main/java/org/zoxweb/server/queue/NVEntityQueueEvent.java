@@ -41,7 +41,7 @@ public class NVEntityQueueEvent extends QueueEvent<NVEntity>
 		super(source, persistent, priority, timestamp, correlationID, replyTo);
 		// TODO Auto-generated constructor stub
 		try {
-			content = GSONUtil.fromJSON(SharedStringUtil.toString(data));
+			content = GSONUtil.fromJSON(data, Base64Type.URL);
 		} catch (AccessException | APIException | NullPointerException
 				| IllegalArgumentException e) {
 			// TODO Auto-generated catch block
