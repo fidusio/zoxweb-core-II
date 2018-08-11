@@ -62,9 +62,10 @@ public abstract class QueueEvent<V>
 		setTimestamp(timestamp);
 	}
 	
-	public V getContent()
+	@SuppressWarnings("unchecked")
+	public <C> C getContent()
 	{
-		return content;
+		return (C) content;
 	}
 	
 	public boolean isPersistent()
