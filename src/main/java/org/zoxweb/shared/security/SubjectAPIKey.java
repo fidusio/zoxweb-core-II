@@ -17,6 +17,8 @@
 
 
 
+import java.util.Date;
+
 import org.zoxweb.shared.data.TimeStampDAO;
 import org.zoxweb.shared.filters.FilterType;
 import org.zoxweb.shared.util.GetNVConfig;
@@ -48,6 +50,7 @@ public class SubjectAPIKey
         CLIENT_ID(NVConfigManager.createNVConfig("client_id", "Client ID", "ClientID", true, false, true, String.class, null)),
         API_KEY(NVConfigManager.createNVConfig("api_key", "API Key", "APIKey", true, false, false, String.class, FilterType.ENCRYPT)),
         STATUS(NVConfigManager.createNVConfig("status", "Status", "Status", true, false, Status.class)),
+        EXPIRY_DATE(NVConfigManager.createNVConfig("expiry_date", "The expiry timestamp", "Expired", false, false, false, true, Date.class, null)),
 
         ;
 
@@ -164,4 +167,23 @@ public class SubjectAPIKey
 
         return ret;
     }
+    
+    
+    /**
+	 * Returns the last time (in milliseconds) the file was read.
+	 * @return last time read 
+	 */
+	public long getExpiryDate() 
+	{
+		return lookupValue(Param.EXPIRY_DATE);
+	}
+	
+	/**
+	 * Sets the last time (in milliseconds) the file was read.
+	 * @param ts
+	 */
+	public void setExpiryDate(long ts) 
+	{
+		setValue(Param.EXPIRY_DATE, ts);
+	}
 }
