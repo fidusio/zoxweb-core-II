@@ -199,6 +199,10 @@ public interface APIAppManager
      */
 	void updateSubjectAPIKey(SubjectAPIKey subjectAPIKey)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException;
+	
+	<V extends SubjectAPIKey> V renewSubjectAPIKEy(V sak)
+			 throws NullPointerException, IllegalArgumentException, AccessException, APIException;
+	
 
     /**
      * Look up AppIDDAO based on domain ID and app ID.

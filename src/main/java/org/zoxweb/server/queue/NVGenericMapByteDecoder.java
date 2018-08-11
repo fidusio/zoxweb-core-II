@@ -16,7 +16,6 @@ public class NVGenericMapByteDecoder implements DataDecoder<byte[], NVGenericMap
 		try 
 		{
 			NVGenericMap content = GSONUtil.fromJSONGenericMap(SharedStringUtil.toString(input), null, Base64Type.URL);
-
 			return new NVGenericMapQueueEvent(this, content);
 		} catch (AccessException | APIException | NullPointerException
 				| IllegalArgumentException | InstantiationException | IllegalAccessException | ClassNotFoundException e) {
