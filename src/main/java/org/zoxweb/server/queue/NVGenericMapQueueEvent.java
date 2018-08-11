@@ -20,27 +20,26 @@ import java.util.Date;
 
 import org.zoxweb.server.util.GSONUtil;
 import org.zoxweb.shared.queue.QueueEvent;
-import org.zoxweb.shared.util.NVEntity;
-import org.zoxweb.shared.util.SharedBase64.Base64Type;
+import org.zoxweb.shared.util.NVGenericMap;
 import org.zoxweb.shared.util.SharedStringUtil;
 
 @SuppressWarnings("serial")
-public class NVEntityQueueEvent extends QueueEvent<NVEntity> 
+public class NVGenericMapQueueEvent extends QueueEvent<NVGenericMap> 
 {
 
 	
-	public NVEntityQueueEvent(Object source, NVEntity content)
+	public NVGenericMapQueueEvent(Object source, NVGenericMap content)
 	{
 		this(source, false, 0, null, null, null, content);
 	}
 	
-	public NVEntityQueueEvent(Object source, boolean persistent, int priority, Date timestamp, String correlationID, String replyTo, NVEntity content) 
+	public NVGenericMapQueueEvent(Object source, boolean persistent, int priority, Date timestamp, String correlationID, String replyTo, NVGenericMap content) 
 	{
 		super(source, persistent, priority, timestamp, correlationID, replyTo, content);
 		// TODO Auto-generated constructor stub
 	}
 	
-	public NVEntityQueueEvent(Object source, boolean persistent, int priority, NVEntity content) 
+	public NVGenericMapQueueEvent(Object source, boolean persistent, int priority, NVGenericMap content) 
 	{
 		super(source, persistent, priority,  content);
 		// TODO Auto-generated constructor stub
@@ -55,7 +54,7 @@ public class NVEntityQueueEvent extends QueueEvent<NVEntity>
 	{
 		try 
 		{	
-			return SharedStringUtil.getBytes(GSONUtil.toJSON(getContent(), false, false, true, Base64Type.URL));
+			return SharedStringUtil.getBytes(GSONUtil.toJSONGenericMap(getContent(), false, false, true));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

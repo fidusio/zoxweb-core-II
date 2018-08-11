@@ -26,11 +26,12 @@ import org.zoxweb.shared.util.NVPair;
 import org.zoxweb.shared.util.SharedBase64;
 import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
+import org.zoxweb.shared.util.SubjectID;
 
 @SuppressWarnings("serial")
 public class EncryptedDAO
     extends TimeStampDAO
-    implements CryptoDAO
+    implements CryptoDAO,SubjectID<String>
 {
 
 	//private String algoName;
@@ -49,6 +50,7 @@ public class EncryptedDAO
 	protected enum Param
         implements GetNVConfig
     {
+		SUBJECT_ID(NVConfigManager.createNVConfig("subject_id", "Optional subject ID", "SubjectID", false, true, String.class)),
 		SUBJECT_PORPERTIES(NVConfigManager.createNVConfig("subject_properties", "Subject properties", "SubjectPropeties", false, true, true, false, String[].class, null)),
 		ALGO_PROPERTIES(NVConfigManager.createNVConfig("algo_properties", "Algorithm properties", "AlgorithmProperties", false, true, true, false, String[].class, null)),
 		IV(NVConfigManager.createNVConfig("iv", "Initialization vector", "IV", true, true, byte[].class)),
@@ -265,5 +267,18 @@ public class EncryptedDAO
 
         return ret;
     }
+
+	@Override
+	public String getSubjectID() {
+		// TODO Auto-generated method stub
+		return lookupValue(Param.SUBJECT_ID);
+	}
+
+	@Override
+	public void setSubjectID(String subjectID) {
+		// TODO Auto-generated method stub
+		setValue(Param.SUBJECT_ID, subjectID);
+		
+	}
 	
 }
