@@ -117,9 +117,14 @@ public class APIAppManagerProvider
         return createSubjectAPIKey(appDeviceDAO);
     }
 
-  
     public SubjectAPIKey createSubjectAPIKey(SubjectAPIKey subjectAPIKey)
-            throws NullPointerException, IllegalArgumentException, AccessException, APIException {
+    		throws NullPointerException, IllegalArgumentException, AccessException, APIException
+    {
+    	return createSubjectAPIKey(subjectAPIKey, Status.ACTIVE, 0);
+    }
+    public SubjectAPIKey createSubjectAPIKey(SubjectAPIKey subjectAPIKey, Status status, long ttl)
+            throws NullPointerException, IllegalArgumentException, AccessException, APIException
+    {
         SharedUtil.checkIfNulls("Null SubjectAPIKey", subjectAPIKey);
 
         if (subjectAPIKey.getSubjectID() == null) {
@@ -134,9 +139,12 @@ public class APIAppManagerProvider
             }
         }
 
-        if (subjectAPIKey.getStatus() == null) {
-            subjectAPIKey.setStatus(Status.ACTIVE);
-        }
+        //if (subjectAPIKey.getStatus() == null) {
+            subjectAPIKey.setStatus(status);
+        //}
+        if (ttl > 0 )
+        	subjectAPIKey.setExpiryDate(System.currentTimeMillis() + ttl);
+        
         
         if (subjectAPIKey instanceof AppDeviceDAO)
         {
@@ -967,6 +975,38 @@ public class APIAppManagerProvider
 			 throws NullPointerException, IllegalArgumentException, AccessException
 	{
 		 
+	}
+
+
+
+
+	public SubjectAPIKey renewSubjectAPIKEy(String subjectID)
+			throws NullPointerException, IllegalArgumentException, AccessException, APIException 
+	{	
+		return renewSubjectAPIKEy(lookupSubjectAPIKey(subjectID, true));
+	}
+	
+	@Override
+	public SubjectAPIKey renewSubjectAPIKEy(SubjectAPIKey sak)
+			throws NullPointerException, IllegalArgumentException, AccessException, APIException {
+		// TODO Auto-generated method stub
+		SubjectAPIKey ret = null;
+		if (sak instanceof AppDeviceDAO)
+		{
+			ret = new AppDeviceDAO();
+			((AppDeviceDAO)ret).setAppIDDAO(((AppDeviceDAO) sak).getAppIDDAO());
+			((AppDeviceDAO)ret).setDevice(((AppDeviceDAO) sak).getDevice());
+		}
+		else if (sak instanceof SubjectAPIKey)
+		{
+			ret = new SubjectAPIKey();
+		}
+		
+		ret = createSubjectAPIKey(ret);
+		
+		
+		deleteSubjectAPIKey(ret);
+		return ret;
 	}
 
 

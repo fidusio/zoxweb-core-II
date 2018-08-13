@@ -14,6 +14,7 @@ import org.zoxweb.shared.security.SubjectAPIKey;
 import org.zoxweb.shared.util.CRUD;
 import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVEntity;
+import org.zoxweb.shared.util.Const.Status;
 
 import java.util.List;
 
@@ -152,6 +153,21 @@ public interface APIAppManager
      */
 	SubjectAPIKey createSubjectAPIKey(SubjectAPIKey subjectAPIKey)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException;
+	
+	/**
+	 * Create SubjectAPIKey.
+	 * @param subjectAPIKey
+	 * @param status ACTIVE
+	 * @param ttl time to live 0 forever
+	 * @return
+	 * @throws NullPointerException
+	 * @throws IllegalArgumentException
+	 * @throws AccessException
+	 * @throws APIException
+	 */
+	public SubjectAPIKey createSubjectAPIKey(SubjectAPIKey subjectAPIKey, Status status, long ttl)
+            throws NullPointerException, IllegalArgumentException, AccessException, APIException;
+
 
     /**
      * Delete SubjectAPIKey.
@@ -200,7 +216,10 @@ public interface APIAppManager
 	void updateSubjectAPIKey(SubjectAPIKey subjectAPIKey)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException;
 	
-	<V extends SubjectAPIKey> V renewSubjectAPIKEy(V sak)
+	SubjectAPIKey renewSubjectAPIKEy(String subjectID)
+			 throws NullPointerException, IllegalArgumentException, AccessException, APIException;
+	
+	SubjectAPIKey renewSubjectAPIKEy(SubjectAPIKey sak)
 			 throws NullPointerException, IllegalArgumentException, AccessException, APIException;
 	
 
