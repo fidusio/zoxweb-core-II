@@ -217,13 +217,15 @@ public class AppIDDAO
 	{
 		gid = SharedStringUtil.trimOrNull(gid);
 		SharedUtil.checkIfNulls("Null app global ig", gid);
+		int sepIndex = gid.lastIndexOf(ShiroDAO.CAN_ID_SEP);
+		if (sepIndex < 1 || sepIndex + 1 == gid.length())
+			throw new IllegalArgumentException("Illegal gid:"+ gid);
 		
-		String split[] = gid.split("-");
-		if (split.length != 2)
-			throw new IllegalArgumentException("Invalid:" + gid);
-		split[0] = FilterType.DOMAIN.validate(split[0]);
-		split[1] = AppIDNameFilter.SINGLETON.validate(split[1]);
-		return new AppIDDAO(split[0], split[1]);
+		String domainID = FilterType.DOMAIN.validate(gid.substring(0, sepIndex));
+		String appID = AppIDNameFilter.SINGLETON.validate(gid.substring(sepIndex + 1, gid.length()));
+		
+		
+		return new AppIDDAO(domainID, appID);
 		
 	}
 }
