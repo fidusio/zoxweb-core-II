@@ -157,20 +157,20 @@ public class APIAppManagerProvider
         		temp.getDevice().setGlobalID(device.getGlobalID());
         	}
 
-        	AppIDDAO appIDDAO = lookupAppIDDAO(temp.getAppIDDAO().getDomainID(), temp.getAppIDDAO().getAppID());
+        	AppIDDAO appIDDAO = lookupAppIDDAO(temp.getDomainID(), temp.getAppID());
 
         	if (appIDDAO != null) {
-        	    temp.setAppIDDAO(appIDDAO);
+        	    temp.setAppGID(appIDDAO.getAppGID());
             }
         	else 
         	{
-        		throw new APIException("APP " + new AppIDDAO(temp.getAppIDDAO().getDomainID(), temp.getAppIDDAO().getAppID()).getSubjectID() + " do not exists" );
+        		throw new APIException("APP " + new AppIDDAO(temp.getDomainID(), temp.getAppID()).getSubjectID() + " do not exists" );
         	}
         	
         	
         	ShiroAssociationRuleDAO sard = new ShiroAssociationRuleDAO();
      		sard.setAssociatedTo(getAPISecurityManager().currentUserID());
-     		sard.setAssociate(SecurityModel.toSubjectID(temp.getAppIDDAO().getDomainID(), temp.getAppIDDAO().getAppID(), Role.APP_USER));
+     		sard.setAssociate(SecurityModel.toSubjectID(temp.getDomainID(), temp.getAppID(), Role.APP_USER));
      		sard.setAssociationType(ShiroAssociationType.ROLE_TO_SUBJECT);
      		sard.setName("AppUserRule");
      		///sard.setExpiration(null);
@@ -566,7 +566,7 @@ public class APIAppManagerProvider
         List<UserPreferenceDAO> result = getAPIDataStore().search(UserPreferenceDAO.NVC_USER_PREFERENCE_DAO, null,
                 new QueryMatchString(RelationalOperator.EQUAL, userIDDAO.getReferenceID(), MetaToken.USER_ID),
                 LogicalOperator.AND,
-                new QueryMatchString(RelationalOperator.EQUAL, appIDDAO.getReferenceID(), UserPreferenceDAO.Param.APP_ID.getNVConfig(), MetaToken.REFERENCE_ID)
+                new QueryMatchString(RelationalOperator.EQUAL, appIDDAO.getAppGID(), UserPreferenceDAO.Param.APP_GID.getNVConfig())
         );
 
         if (result != null && !result.isEmpty()) {
@@ -701,7 +701,7 @@ public class APIAppManagerProvider
 
         SharedUtil.checkIfNulls("UserInfoDAO is null", userInfoDAO);
         SharedUtil.checkIfNulls("AppDeviceDAO is null", appDeviceDAO);
-        SharedUtil.checkIfNulls("AppIDDAO is null", appDeviceDAO.getAppIDDAO());
+        SharedUtil.checkIfNulls("AppIDDAO is null", appDeviceDAO.getAppGID());
         if (SharedStringUtil.isEmpty(subjectID) || SharedStringUtil.isEmpty(password)) {
             throw new NullPointerException("Username and/or password is null");
         }
@@ -717,7 +717,7 @@ public class APIAppManagerProvider
 
        
      
-        appDeviceDAO.setAppIDDAO(appIDDAO);
+        appDeviceDAO.setAppGID(appIDDAO.getAppGID());
 
         UserIDDAO userIDDAO = lookupUserIDDAO(subjectID);
         if (userIDDAO == null)
@@ -738,7 +738,7 @@ public class APIAppManagerProvider
             // Does not exist, create UserPreferenceDAO
             userPreferenceDAO = new UserPreferenceDAO();
             userPreferenceDAO.setUserID(userIDDAO.getReferenceID());
-            userPreferenceDAO.setAppIDDAO(appIDDAO);
+            userPreferenceDAO.setAppGID(appIDDAO.getAppGID());
 
             getAPIDataStore().insert(userPreferenceDAO);
         }
@@ -813,7 +813,8 @@ public class APIAppManagerProvider
     				AppPermission.RESOURCE_DELETE,
     				AppPermission.RESOURCE_READ_PRIVATE,
     				AppPermission.RESOURCE_READ_PUBLIC,
-    				AppPermission.RESOURCE_UPDATE
+    				AppPermission.RESOURCE_UPDATE,
+    				
     		};
     		for(AppPermission ap : adminPermissions)
     		{
@@ -994,7 +995,7 @@ public class APIAppManagerProvider
 		if (sak instanceof AppDeviceDAO)
 		{
 			ret = new AppDeviceDAO();
-			((AppDeviceDAO)ret).setAppIDDAO(((AppDeviceDAO) sak).getAppIDDAO());
+			((AppDeviceDAO)ret).setAppGID(((AppDeviceDAO) sak).getAppGID());
 			((AppDeviceDAO)ret).setDevice(((AppDeviceDAO) sak).getDevice());
 		}
 		else if (sak instanceof SubjectAPIKey)
@@ -1005,7 +1006,7 @@ public class APIAppManagerProvider
 		ret = createSubjectAPIKey(ret);
 		
 		
-		deleteSubjectAPIKey(ret);
+		deleteSubjectAPIKey(sak);
 		return ret;
 	}
 

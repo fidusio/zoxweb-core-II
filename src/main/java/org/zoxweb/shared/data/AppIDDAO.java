@@ -221,7 +221,8 @@ public class AppIDDAO
 		String split[] = gid.split("-");
 		if (split.length != 2)
 			throw new IllegalArgumentException("Invalid:" + gid);
-		
+		split[0] = FilterType.DOMAIN.validate(split[0]);
+		split[1] = AppIDNameFilter.SINGLETON.validate(split[1]);
 		return new AppIDDAO(split[0], split[1]);
 		
 	}

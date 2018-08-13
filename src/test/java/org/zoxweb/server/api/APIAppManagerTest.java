@@ -30,7 +30,7 @@ public class APIAppManagerTest {
 		AppIDDAO aid = new AppIDDAO();
 		aid.setDomainAppID(domainID, appID);
 		AppDeviceDAO add = new AppDeviceDAO();
-		add.setAppIDDAO(aid);
+		add.setAppGID(aid.getAppGID());
 		add.setDevice(dd);
 		add.setSubjectID(subjectID);
 		aam.createAppDeviceDAO(add);

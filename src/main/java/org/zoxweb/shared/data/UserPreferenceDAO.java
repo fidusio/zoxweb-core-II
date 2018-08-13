@@ -1,5 +1,6 @@
 package org.zoxweb.shared.data;
 
+import org.zoxweb.shared.util.AppGlobalID;
 import org.zoxweb.shared.util.GetNVConfig;
 import org.zoxweb.shared.util.NVConfig;
 import org.zoxweb.shared.util.NVConfigEntity;
@@ -14,12 +15,14 @@ import org.zoxweb.shared.data.DataConst.Language;
  */
 @SuppressWarnings("serial")
 public class UserPreferenceDAO
-        extends SetNameDescriptionDAO {
+	extends SetNameDescriptionDAO
+    implements AppGlobalID<String>    
+{
 
     public enum Param
         implements GetNVConfig {
 
-        APP_ID(NVConfigManager.createNVConfigEntity("app_id", "App ID", "AppID", true, false, AppIDDAO.NVC_APP_ID_DAO, NVConfigEntity.ArrayType.NOT_ARRAY)),
+    	APP_GID(NVConfigManager.createNVConfig("app_gid", "App GID","AddGID", true, false, String.class)),
         DEFAULT_LANGUAGE(NVConfigManager.createNVConfig("language", "Default language", "DefaultLanguage", false, true, Language.class)),
         DEFAULT_DELIVERY_ADDRESS(NVConfigManager.createNVConfigEntity("delivery_address", "Default delivery address", "DefaultDeliveryAddress", false, true, AddressDAO.NVC_ADDRESS_DAO, ArrayType.NOT_ARRAY)),
         DEFAULT_BILLING_ADDRESS(NVConfigManager.createNVConfigEntity("billing_address", "Default billing address", "DefaultBillingAddress", false, true, AddressDAO.NVC_ADDRESS_DAO, ArrayType.NOT_ARRAY)),
@@ -62,16 +65,16 @@ public class UserPreferenceDAO
      * Returns the app ID.
      * @return
      */
-    public AppIDDAO getAppIDDAO() {
-        return lookupValue(AppDeviceDAO.Param.APP_ID);
+    public String getAppGID() {
+        return lookupValue(Param.APP_GID);
     }
 
     /**
      * Sets the app ID.
      * @param appID
      */
-    public void setAppIDDAO(AppIDDAO appID) {
-        setValue(AppDeviceDAO.Param.APP_ID, appID);
+    public void setAppGID(String appGID) {
+        setValue(Param.APP_GID, appGID);
     }
 
     public Language getDefaultLanguage()

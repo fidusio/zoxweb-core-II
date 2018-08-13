@@ -15,24 +15,28 @@
  */
 package org.zoxweb.shared.data;
 
-import org.zoxweb.shared.security.SubjectAPIKey;
 
+import org.zoxweb.shared.security.SubjectAPIKey;
+import org.zoxweb.shared.util.AppGlobalID;
 import org.zoxweb.shared.util.GetNVConfig;
 import org.zoxweb.shared.util.NVConfig;
 import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVConfigEntityLocal;
 import org.zoxweb.shared.util.NVConfigManager;
+import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
 
 @SuppressWarnings("serial")
 public class AppDeviceDAO
-    extends SubjectAPIKey {
+    extends SubjectAPIKey
+    implements AppGlobalID<String>
+{
 
     public enum Param
         implements GetNVConfig
     {
 
-        APP_ID(NVConfigManager.createNVConfigEntity("app_id", "App ID", "AppID", true, false, AppIDDAO.NVC_APP_ID_DAO, NVConfigEntity.ArrayType.NOT_ARRAY)),
+        APP_GID(NVConfigManager.createNVConfig("app_gid", "App GID","AddGID", true, false, String.class)),
         DEVICE(NVConfigManager.createNVConfigEntity("device", "Device information", "Device", true, false, DeviceDAO.NVC_DEVICE_DAO, NVConfigEntity.ArrayType.NOT_ARRAY)),
         ;
 
@@ -72,7 +76,7 @@ public class AppDeviceDAO
      * @return
      */
     public String getDomainID() {
-        return (getAppIDDAO() != null ? getAppIDDAO().getDomainID() : null);
+        return (getAppGID() != null ? SharedStringUtil.valueBeforeRightToken(getAppGID(),"-") : null);
     }
 
     /**
@@ -80,23 +84,25 @@ public class AppDeviceDAO
      * @return
      */
     public String getAppID() {
-        return (getAppIDDAO() != null ? getAppIDDAO().getAppID() : null);
+        return (getAppGID() != null ? SharedStringUtil.valueAfterRightToken(getAppGID(), "-") : null);
     }
 
     /**
      * Returns the app ID.
      * @return
      */
-    public AppIDDAO getAppIDDAO() {
-        return lookupValue(Param.APP_ID);
+    public String getAppGID() {
+        return lookupValue(Param.APP_GID);
     }
 
     /**
      * Sets the app ID.
      * @param appID
      */
-    public void setAppIDDAO(AppIDDAO appID) {
-        setValue(Param.APP_ID, appID);
+    public void setAppGID(String appGID) 
+    {
+    	AppIDDAO.toAppID(appGID);
+        setValue(Param.APP_GID, appGID);
     }
 
     /**
