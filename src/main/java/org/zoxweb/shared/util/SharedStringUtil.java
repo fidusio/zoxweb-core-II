@@ -27,6 +27,7 @@ public final class SharedStringUtil
 
     public static final String UTF_8  = "UTF-8";
     public static final String UTF_16 = "UTF-16";
+    public static final String[] EMPTY_STRING_ARRAY = new String[0];
 
 	/**
 	 * The constructor is declared private to prevent instantiation.
@@ -601,11 +602,11 @@ public final class SharedStringUtil
 	 * @param filter
 	 * @return the given string based on given filters and returns the filtered string.
 	 */
-	public static String filterString(String str, CharSequence... filter)
+	public static String filterString(String str, CharSequence... filters)
     {
 		if (str != null)
 		{
-			for (CharSequence cs : filter)
+			for (CharSequence cs : filters)
 			{
 				str = str.replace(cs, "");
 			}
@@ -618,17 +619,24 @@ public final class SharedStringUtil
 	 * Parses specified string based on regex and filter.
 	 * @param str
 	 * @param regex
-	 * @param filter
+	 * @param filters
 	 * @return parsed strings
 	 */
-	public static String[] parseString(String str, String regex, CharSequence... filter)
+	public static String[] parseString(String str, String regex, CharSequence... filters)
     {
-		if (filter != null)
+		if (filters != null)
 		{
-			str = filterString (str, filter);
+			str = filterString (str, filters);
 		}
-		
 		return str.split(regex);	
+	}
+	
+	public static String[] parseStringLenient(String str, String regex, CharSequence... filters)
+	{
+		if (str != null)
+			return parseString(str, regex, filters);
+		
+		return EMPTY_STRING_ARRAY;
 	}
 
 	/**

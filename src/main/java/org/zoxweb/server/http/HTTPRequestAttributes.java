@@ -33,6 +33,7 @@ import org.zoxweb.shared.util.GetNameValue;
 import org.zoxweb.shared.util.NVGetNameValueList;
 import org.zoxweb.shared.util.NVPairGetNameMap;
 import org.zoxweb.shared.util.OutputDataDecoder;
+import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
 
 public class HTTPRequestAttributes 
@@ -269,6 +270,17 @@ public class HTTPRequestAttributes
 	    return uri;
     }
 
+	
+	public String getPathInfoTokenByIndex(int index, boolean caseInsensitive)
+	{
+		String params[] = SharedStringUtil.parseStringLenient(getPathInfo(), "/");
+		if (index < params.length)
+		{
+			return caseInsensitive ? params[index].toLowerCase() : params[index];
+		}
+		
+		return null;
+	}
 
 
 	@SuppressWarnings("unchecked")
