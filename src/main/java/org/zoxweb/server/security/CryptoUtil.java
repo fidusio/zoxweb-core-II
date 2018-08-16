@@ -275,6 +275,7 @@ public class CryptoUtil
     {
 		SharedUtil.checkIfNulls("Null values", passwordDAO, password);
 		byte genHash[] =  hashWithInterations(MessageDigest.getInstance( passwordDAO.getName()), passwordDAO.getSalt(), SharedStringUtil.getBytes(password), passwordDAO.getHashIteration(), false);
+	
 		return SharedUtil.slowEquals(genHash,  passwordDAO.getPassword());
 	}
 
@@ -390,6 +391,8 @@ public class CryptoUtil
 		hmac.update(SharedStringUtil.getBytes(ekd.getName().toLowerCase()));
 		hmac.update(SharedStringUtil.getBytes(ekd.getDescription().toLowerCase()));
 		hmac.update(SharedStringUtil.getBytes(ekd.getHMACAlgoName().toLowerCase()));
+		if(ekd.getSubjectID() != null)
+			hmac.update(SharedStringUtil.getBytes(ekd.getSubjectID()));
 
 
 		if (data == null)
@@ -476,6 +479,9 @@ public class CryptoUtil
 		hmac.update(SharedStringUtil.getBytes(ekd.getName().toLowerCase()));
 		hmac.update(SharedStringUtil.getBytes(ekd.getDescription().toLowerCase()));
 		hmac.update(SharedStringUtil.getBytes(ekd.getHMACAlgoName().toLowerCase()));
+		if (ekd.getSubjectID() != null)
+			hmac.update(SharedStringUtil.getBytes(ekd.getSubjectID()));
+			
 		hmac.update(BytesValueFilter.SINGLETON.validate(ekd.getDataLength()));
 
 		hmac.update(ekd.getEncryptedData());

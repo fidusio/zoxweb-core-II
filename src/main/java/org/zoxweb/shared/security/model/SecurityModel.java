@@ -86,7 +86,7 @@ public class SecurityModel
 
 
 	public enum Permission
-	implements GetNameValue<String>, GetDescription
+	implements PermissionModel
 	{
 		APP_ID_CREATE("app_id_create", "Permission to create an app", PERM_CREATE_APP_ID),
 		APP_ID_DELETE("app_id_delete", "Permission to delete an app", PERM_DELETE_APP_ID),
@@ -242,7 +242,7 @@ public class SecurityModel
 	}
 	
 	public enum AppPermission
-		implements GetNameValue<String>, GetDescription
+		implements PermissionModel
 	{
 		ASSIGN_ROLE_APP("assign_role_app", "Assign a role to user", PERM_ASSIGN_ROLE, TOK_APP_ID),
 		ORDER_CREATE("order_create", "Create order", "order:create", TOK_APP_ID, PERM_SELF),
@@ -256,6 +256,7 @@ public class SecurityModel
 		RESOURCE_READ_PRIVATE("resource_read_private", "read private resource", PERM_READ_RESOURCE, TOK_APP_ID, TOK_RESOURCE_ID, PERM_PRIVATE),
 		RESOURCE_READ_PUBLIC("resource_read_public", "read public resource", PERM_READ_RESOURCE, TOK_APP_ID, TOK_RESOURCE_ID, PERM_PUBLIC),
 		RESOURCE_UPDATE("resource_update", "update resource", PERM_UPDATE_RESOURCE, TOK_APP_ID),
+		SELF("self", "self", PERM_SELF),
 		;
 		private final String name;
 		private final String pattern;
@@ -295,10 +296,10 @@ public class SecurityModel
 		}
 		
 		
-		public ShiroPermissionDAO toPermission(String domainID, String appID, NVPair ...tokens)
-		{
-			return SecurityModel.toPermission(domainID, appID, getName(), getDescription(), getValue());
-		}
+//		public ShiroPermissionDAO toPermission(String domainID, String appID, NVPair ...tokens)
+//		{
+//			return SecurityModel.toPermission(domainID, appID, getName(), getDescription(), getValue());
+//		}
 		
 	
 	}

@@ -38,8 +38,10 @@ import org.zoxweb.shared.security.JWT;
 import org.zoxweb.shared.security.SecurityConsts;
 import org.zoxweb.shared.security.SubjectAPIKey;
 import org.zoxweb.shared.security.model.PPEncoder;
+import org.zoxweb.shared.security.model.PermissionModel;
 import org.zoxweb.shared.security.model.SecurityModel;
 import org.zoxweb.shared.security.model.SecurityModel.AppPermission;
+
 import org.zoxweb.shared.security.model.SecurityModel.Role;
 import org.zoxweb.shared.security.shiro.ShiroAssociationRuleDAO;
 import org.zoxweb.shared.security.shiro.ShiroAssociationType;
@@ -802,8 +804,9 @@ public class APIAppManagerProvider
     		}
     		
     		
+    		
     		ShiroRoleDAO appAdminRole = SecurityModel.Role.APP_ADMIN.toRole(domainID, appID);
-    		AppPermission adminPermissions[] = {
+    		PermissionModel adminPermissions[] = {
     				AppPermission.ASSIGN_ROLE_APP,
     				AppPermission.ORDER_DELETE,
     				AppPermission.ORDER_UPDATE,
@@ -814,46 +817,51 @@ public class APIAppManagerProvider
     				AppPermission.RESOURCE_READ_PRIVATE,
     				AppPermission.RESOURCE_READ_PUBLIC,
     				AppPermission.RESOURCE_UPDATE,
+    				AppPermission.SELF
     				
     		};
-    		for(AppPermission ap : adminPermissions)
+    		for(PermissionModel ap : adminPermissions)
     		{
+    			
+    			
     			appAdminRole.getPermissions().add(permissions.getValue(ap));
     		}
     		
     		ShiroRoleDAO appUserRole = SecurityModel.Role.APP_USER.toRole(domainID, appID);
-    		AppPermission userPermissions[] = {
+    		PermissionModel userPermissions[] = {
     				AppPermission.ORDER_CREATE,
     				AppPermission.ORDER_DELETE,
     				AppPermission.ORDER_UPDATE,
     				AppPermission.ORDER_READ_USER_APP,
     				AppPermission.RESOURCE_READ_PUBLIC,
+    				AppPermission.SELF
     			
     		};
-    		for(AppPermission ap : userPermissions)
+    		for(PermissionModel ap : userPermissions)
     		{
     			appUserRole.getPermissions().add(permissions.getValue(ap));
     		}
     		
     		ShiroRoleDAO appServiceProviderRole = SecurityModel.Role.APP_SERVICE_PROVIDER.toRole(domainID, appID);
-    		AppPermission spPermissions[] = 
+    		PermissionModel spPermissions[] = 
     		{
     				AppPermission.ORDER_UPDATE_STATUS_APP,
     				AppPermission.ORDER_READ_APP,
     				AppPermission.RESOURCE_READ_PUBLIC,
+    				AppPermission.SELF
     			
     		};
-    		for(AppPermission ap : spPermissions)
+    		for(PermissionModel ap : spPermissions)
     		{
     			appServiceProviderRole.getPermissions().add(permissions.getValue(ap));
     		}
     		
     		ShiroRoleDAO appResourceRole = SecurityModel.Role.RESOURCE.toRole(domainID, appID);
-    		AppPermission resourcePermissions[] = {
+    		PermissionModel resourcePermissions[] = {
     				AppPermission.RESOURCE_READ_PRIVATE,
     				AppPermission.RESOURCE_READ_PUBLIC
     		};
-    		for(AppPermission ap : resourcePermissions)
+    		for(PermissionModel ap : resourcePermissions)
     		{
     			appResourceRole.getPermissions().add(permissions.getValue(ap));
     		}

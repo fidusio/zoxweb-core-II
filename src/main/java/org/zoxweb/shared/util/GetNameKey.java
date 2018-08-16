@@ -103,7 +103,7 @@ public class GetNameKey
     {
 		if (getName == null || getName.getName() == null)
 		{
-			throw new NullPointerException("name null");
+			throw new NullPointerException("name "+ getName + (getName != null ? getName.getName() : ""));
 		}
 
 		this.getName = getName;

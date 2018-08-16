@@ -38,8 +38,7 @@ import org.zoxweb.server.io.FileInfoStreamSource;
 import org.zoxweb.server.io.IOUtil;
 import org.zoxweb.server.io.UByteArrayOutputStream;
 
-import org.zoxweb.server.util.GSONUtil;
-
+import org.zoxweb.server.util.GSONWrapper;
 import org.zoxweb.server.util.ZIPUtil;
 import org.zoxweb.shared.api.APIError;
 import org.zoxweb.shared.data.FileInfoDAO;
@@ -53,12 +52,14 @@ import org.zoxweb.shared.util.NVEntity;
 import org.zoxweb.shared.util.NVPair;
 import org.zoxweb.shared.util.QuickLZ;
 import org.zoxweb.shared.util.SharedBase64;
+import org.zoxweb.shared.util.SharedBase64.Base64Type;
 import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
 
 public class HTTPServletUtil
 {
 	public static final int ZIP_LIMIT = 1024;
+	public static GSONWrapper GSON_WRAPPER = new GSONWrapper(Base64Type.DEFAULT);
 	
 	private static final transient Logger log = Logger.getLogger(HTTPServletUtil.class.getName());
 
@@ -310,7 +311,7 @@ public class HTTPServletUtil
 		String json = null;
 		if (nve != null)
 		{
-			json = nve instanceof APIError ? GSONUtil.toJSON(nve, true, false, true) : GSONUtil.toJSON(nve, false, false, true);
+			json = nve instanceof APIError ? GSON_WRAPPER.toJSON(nve, true, false, true) : GSON_WRAPPER.toJSON(nve, false, false, true);
 		}
 		
 		return sendJSON(req, resp, code, json);
@@ -319,13 +320,13 @@ public class HTTPServletUtil
 	public static int sendJSON(HttpServletRequest req, HttpServletResponse resp, HTTPStatusCode code, List<? extends NVEntity> nves)
 			throws IOException
 	{	
-		return sendJSON(req, resp, code, nves != null ? GSONUtil.toJSONValues(nves.toArray(new NVEntity[0]), false, false, true, null) : null);	
+		return sendJSON(req, resp, code, nves != null ? GSON_WRAPPER.toJSONValues(nves.toArray(new NVEntity[0]), false, false, true) : null);	
 	}
 	
 	public static int sendJSON(HttpServletRequest req, HttpServletResponse resp, HTTPStatusCode code, NVEntity nves[])
 			throws IOException
 	{	
-		return sendJSON(req, resp, code, nves != null ? GSONUtil.toJSONValues(nves, false, false, true, null) : null);
+		return sendJSON(req, resp, code, nves != null ? GSON_WRAPPER.toJSONValues(nves, false, false, true) : null);
 	}
 	
 	public static int sendJSON(HttpServletRequest req, HttpServletResponse resp, HTTPStatusCode code, String json)

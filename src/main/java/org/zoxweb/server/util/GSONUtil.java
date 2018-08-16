@@ -1085,7 +1085,7 @@ final public class GSONUtil
 		else if (jp.isNumber())
 		{
 			// if there is no dots it should be a 
-			if (jp.getAsString().indexOf(".") == -1)
+			//if (jp.getAsString().indexOf(".") == -1)
 			{
 				try
 				{
@@ -1098,7 +1098,7 @@ final public class GSONUtil
 					e.printStackTrace();
 				}
 			}
-			else
+			//else
 			{
 				try
 				{
