@@ -8,7 +8,7 @@
 Project website: http://www.zoxweb.com/ <br />
 <br />
  
-Copyright (C) 2008-2017 http://www.zoxweb.com
+Copyright (C) 2015-2018 http://www.zoxweb.com
 
 ## LICENSE
  ZoxWeb.com LLC
