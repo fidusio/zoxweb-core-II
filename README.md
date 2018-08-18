@@ -2,8 +2,7 @@
  zoxweb-core :: Java utility Library
 ==========================================================================
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.zoxweb/zoxweb-core/badge.svg)]
-(https://search.maven.org/artifact/org.zoxweb/zoxweb-core/2.0.9/jar)
-#(https://maven-badges.herokuapp.com/maven-central/org.zoxweb/zoxweb-core)
+(https://maven-badges.herokuapp.com/maven-central/org.zoxweb/zoxweb-core)
 
 ## PROJECT INFORMATION
 
