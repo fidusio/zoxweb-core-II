@@ -34,7 +34,7 @@ import java.security.MessageDigest;
 import java.security.SecureRandom;
 import java.util.Arrays;
 
-import java.util.UUID;
+
 //import java.util.concurrent.locks.Lock;
 //import java.util.concurrent.locks.ReentrantLock;
 
@@ -145,11 +145,11 @@ public class AESCrypt
 	 * Generates a pseudo-random byte array.
 	 * @return pseudo-random byte array of <tt>len</tt> bytes.
 	 */
-	protected byte[] generateRandomBytes(int len) {
-		byte[] bytes = new byte[len];
-		random.nextBytes(bytes);
-		return bytes;
-	}
+//	protected byte[] generateRandomBytes(int len) {
+//		byte[] bytes = new byte[len];
+//		random.nextBytes(bytes);
+//		return bytes;
+//	}
 	
 	
 	/**
@@ -178,8 +178,8 @@ public class AESCrypt
 	 * This IV is used to crypt IV 2 and AES key 2 in the file.
 	 * @return IV.
 	 */
-	protected  byte[] generateIV1() {
-		byte[] iv = new byte[BLOCK_SIZE];
+//	protected  byte[] generateIV1() {
+//		byte[] iv = new byte[BLOCK_SIZE];
 //		long time = System.currentTimeMillis();
 //		byte[] mac = MAC_ADDRESS;
 //		
@@ -245,20 +245,20 @@ public class AESCrypt
 		
 		
 		
-		UUID uuid = UUID.randomUUID();
-		long val = uuid.getLeastSignificantBits();
-		for (int i = 0; i < 8; i++) {
-			iv[i] = (byte) (val >> (i * 8));
-		}
-		
-		val = uuid.getMostSignificantBits();
-		for (int i = 0; i < 8; i++) {
-			iv[i+8] = (byte) (val >> (i * 8));
-		}
-		//System.arraycopy(mac, 0, iv, 8, mac.length);
-		digestRandomBytes(iv, 256);
-		return iv;
-	}
+//		UUID uuid = UUID.randomUUID();
+//		long val = uuid.getLeastSignificantBits();
+//		for (int i = 0; i < 8; i++) {
+//			iv[i] = (byte) (val >> (i * 8));
+//		}
+//		
+//		val = uuid.getMostSignificantBits();
+//		for (int i = 0; i < 8; i++) {
+//			iv[i+8] = (byte) (val >> (i * 8));
+//		}
+//		//System.arraycopy(mac, 0, iv, 8, mac.length);
+//		digestRandomBytes(iv, 256);
+//		return iv;
+//	}
 	
 	
 	/**
@@ -284,11 +284,11 @@ public class AESCrypt
 	 * Generates the random IV used to crypt file contents.
 	 * @return IV 2.
 	 */
-	protected byte[] generateIV2() {
-		byte[] iv = generateRandomBytes(BLOCK_SIZE);
-		digestRandomBytes(iv, 256);
-		return iv;
-	}
+//	protected byte[] generateIV2() {
+//		byte[] iv = generateRandomBytes(BLOCK_SIZE);
+//		digestRandomBytes(iv, 256);
+//		return iv;
+//	}
 	
 	
 	/**
@@ -495,9 +495,9 @@ public class AESCrypt
 		
 		byte[] text = null;
 		try {
-			ivSpec1 = new IvParameterSpec(generateIV1());
+			ivSpec1 = new IvParameterSpec(CryptoUtil.generateKey((int)SizeInBytes.B.sizeInBits(BLOCK_SIZE),  CRYPT_ALG).getEncoded());
 			aesKey1 = new SecretKeySpec(generateAESKey1(ivSpec1.getIV(), password), CRYPT_ALG);
-			ivSpec2 = new IvParameterSpec(generateIV2());
+			ivSpec2 = new IvParameterSpec(CryptoUtil.generateKey((int)SizeInBytes.B.sizeInBits(BLOCK_SIZE),  CRYPT_ALG).getEncoded());
 			aesKey2 = new SecretKeySpec(CryptoUtil.generateKey((int)SizeInBytes.B.sizeInBits(KEY_SIZE),  CRYPT_ALG).getEncoded(), CRYPT_ALG);
 			if (debug)
 			{

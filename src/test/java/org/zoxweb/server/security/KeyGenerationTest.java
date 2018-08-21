@@ -107,12 +107,12 @@ public class KeyGenerationTest
 			long ts = System.currentTimeMillis();
 			for (int i = 0; i < loopSize; i++)
 			{
-				keys[i] = CryptoUtil.generateKey(256, CryptoUtil.AES);
+				keys[i] = CryptoUtil.generateKey(i%2 == 0 ? 256 : 128, CryptoUtil.AES);
 			}
 			ts = System.currentTimeMillis() - ts;
 			for(Key k : keys)
 			{
-				System.out.println(SharedUtil.toCanonicalID(',', k.getAlgorithm(),SharedStringUtil.bytesToHex(k.getEncoded())));
+				System.out.println(SharedUtil.toCanonicalID(',', k.getAlgorithm(),k.getEncoded().length, SharedStringUtil.bytesToHex(k.getEncoded())));
 			}
 			System.out.println("it took " + TimeInMillis.toString(ts));
 		}
