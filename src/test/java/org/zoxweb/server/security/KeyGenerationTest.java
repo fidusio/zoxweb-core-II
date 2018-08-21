@@ -22,6 +22,7 @@ import javax.crypto.NoSuchPaddingException;
 import org.zoxweb.shared.util.Const.TimeInMillis;
 
 import org.zoxweb.shared.util.SharedStringUtil;
+import org.zoxweb.shared.util.SharedUtil;
 
 
 
@@ -97,6 +98,30 @@ public class KeyGenerationTest
 			e.printStackTrace();
 		}
 		
+		
+		
+		int loopSize = 1000;
+		
+		Key keys[] = new Key[loopSize];
+		try {
+			long ts = System.currentTimeMillis();
+			for (int i = 0; i < loopSize; i++)
+			{
+				keys[i] = CryptoUtil.generateKey(256, CryptoUtil.AES);
+			}
+			ts = System.currentTimeMillis() - ts;
+			for(Key k : keys)
+			{
+				System.out.println(SharedUtil.toCanonicalID(',', k.getAlgorithm(),SharedStringUtil.bytesToHex(k.getEncoded())));
+			}
+			System.out.println("it took " + TimeInMillis.toString(ts));
+		}
+		
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+				
 		
 		for(String filename : args)
 		{

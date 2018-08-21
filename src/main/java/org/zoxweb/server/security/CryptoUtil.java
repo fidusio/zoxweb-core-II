@@ -940,8 +940,8 @@ public class CryptoUtil
 	public static SecretKey generateKey(int keySizeInBits, String algo) throws NoSuchAlgorithmException
 	{
 		KeyGenerator kg = KeyGenerator.getInstance(algo);
-		kg.init(keySizeInBits, (SecureRandom)defaultSecureRandom());
-		//kg.init(keySizeInBits);
+		//kg.init(keySizeInBits, (SecureRandom)defaultSecureRandom());
+		kg.init(keySizeInBits);
 		return kg.generateKey();
 	}
 	
@@ -950,7 +950,6 @@ public class CryptoUtil
 	{
 		KeyPairGenerator kg = KeyPairGenerator.getInstance(algo);
 		kg.initialize(keySizeInBits, (SecureRandom)defaultSecureRandom());
-		//kg.init(keySizeInBits);
 		return kg.generateKeyPair();
 	}
 	

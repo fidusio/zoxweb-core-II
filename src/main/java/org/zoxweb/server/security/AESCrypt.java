@@ -51,6 +51,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 import org.zoxweb.server.io.IOUtil;
 import org.zoxweb.server.io.UByteArrayOutputStream;
+import org.zoxweb.shared.util.Const.SizeInBytes;
 import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
 
@@ -294,11 +295,11 @@ public class AESCrypt
 	 * Generates the random AES key used to crypt file contents.
 	 * @return AES key of {@link #KEY_SIZE} bytes.
 	 */
-	protected byte[] generateAESKey2() {
-		byte[] aesKey = generateRandomBytes(KEY_SIZE);
-		digestRandomBytes(aesKey, 32);
-		return aesKey;
-	}
+//	protected byte[] generateAESKey2() {
+//		byte[] aesKey = generateRandomBytes(KEY_SIZE);
+//		digestRandomBytes(aesKey, 32);
+//		return aesKey;
+//	}
 	
 	
 	protected void readBytes(InputStream in, byte[] bytes) throws IOException {
@@ -497,7 +498,7 @@ public class AESCrypt
 			ivSpec1 = new IvParameterSpec(generateIV1());
 			aesKey1 = new SecretKeySpec(generateAESKey1(ivSpec1.getIV(), password), CRYPT_ALG);
 			ivSpec2 = new IvParameterSpec(generateIV2());
-			aesKey2 = new SecretKeySpec(generateAESKey2(), CRYPT_ALG);
+			aesKey2 = new SecretKeySpec(CryptoUtil.generateKey((int)SizeInBytes.B.sizeInBits(KEY_SIZE),  CRYPT_ALG).getEncoded(), CRYPT_ALG);
 			if (debug)
 			{
 				dbg("IV1: ", ivSpec1.getIV());

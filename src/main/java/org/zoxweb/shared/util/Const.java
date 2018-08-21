@@ -726,6 +726,7 @@ public class Const
         {
 			size = s;
 		}
+	
 
 		public static byte[] bytesToBytes(byte b)
         {
