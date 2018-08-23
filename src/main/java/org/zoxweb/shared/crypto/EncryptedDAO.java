@@ -16,13 +16,14 @@
 package org.zoxweb.shared.crypto;
 
 import org.zoxweb.shared.data.TimeStampDAO;
-import org.zoxweb.shared.util.ArrayValues;
+
 import org.zoxweb.shared.util.GetNVConfig;
 import org.zoxweb.shared.util.NVConfig;
 import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVConfigEntityLocal;
 import org.zoxweb.shared.util.NVConfigManager;
-import org.zoxweb.shared.util.NVPair;
+import org.zoxweb.shared.util.NVGenericMap;
+
 import org.zoxweb.shared.util.SharedBase64;
 import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
@@ -46,13 +47,12 @@ public class EncryptedDAO
 	//private String hmacAlgoName;
 	//private byte[] hmac;// base64
 	
-	
 	protected enum Param
         implements GetNVConfig
     {
 		SUBJECT_ID(NVConfigManager.createNVConfig("subject_id", "Optional subject ID", "SubjectID", false, true, String.class)),
-		SUBJECT_PORPERTIES(NVConfigManager.createNVConfig("subject_properties", "Subject properties", "SubjectPropeties", false, true, true, false, String[].class, null)),
-		ALGO_PROPERTIES(NVConfigManager.createNVConfig("algo_properties", "Algorithm properties", "AlgorithmProperties", false, true, true, false, String[].class, null)),
+		SUBJECT_PORPERTIES(NVConfigManager.createNVConfig("subject_properties", "Subject properties", "SubjectPropeties", false, true, NVGenericMap.class)),
+		ALGO_PROPERTIES(NVConfigManager.createNVConfig("algo_properties", "Algorithm properties", "AlgorithmProperties", false, true, NVGenericMap.class)),
 		IV(NVConfigManager.createNVConfig("iv", "Initialization vector", "IV", true, true, byte[].class)),
 		DATA_LENGTH(NVConfigManager.createNVConfig("data_length", "The original data length in bytes", "DataLength", false, true, Long.class)),
 		ENCRYPTED_DATA(NVConfigManager.createNVConfig("encrypted_data", "Encrypted data", "EncryptedData", true, true, byte[].class)),
@@ -93,41 +93,40 @@ public class EncryptedDAO
 	 * Get the list of principals
 	 * @return null or the list
 	 */
-	@SuppressWarnings("unchecked")
-	public ArrayValues<NVPair> getSubjectProperties()
+	public NVGenericMap  getSubjectProperties()
 	{
-		return (ArrayValues<NVPair>) lookup(Param.SUBJECT_PORPERTIES);
+		return (NVGenericMap) lookup(Param.SUBJECT_PORPERTIES);
 	}
 	
-	public void setSubjectProperties(ArrayValues<NVPair> subject)
+//	public void setSubjectProperties(ArrayValues<NVPair> subject)
+//    {
+//		if (subject == null)
+//		{
+//			getSubjectProperties().clear();
+//		}
+//		else
+//        {
+//			getSubjectProperties().add(subject.values(), true);
+//		}
+//	}
+
+
+	public NVGenericMap getAlgoProperties()
     {
-		if (subject == null)
-		{
-			getSubjectProperties().clear();
-		}
-		else
-        {
-			getSubjectProperties().add(subject.values(), true);
-		}
+		return (NVGenericMap) lookup(Param.ALGO_PROPERTIES);
 	}
 
-	@SuppressWarnings("unchecked")
-	public ArrayValues<NVPair>getAlgoProperties()
-    {
-		return (ArrayValues<NVPair>) lookup(Param.ALGO_PROPERTIES);
-	}
-
-	public void setAlgoProperties(ArrayValues<NVPair> algo_parameters)
-    {
-		if (algo_parameters == null)
-		{
-			getAlgoProperties().clear();
-		}
-		else
-        {
-			getAlgoProperties().add(algo_parameters.values(), true);
-		}
-	}
+//	public void setAlgoProperties(ArrayValues<NVPair> algo_parameters)
+//    {
+//		if (algo_parameters == null)
+//		{
+//			getAlgoProperties().clear();
+//		}
+//		else
+//        {
+//			getAlgoProperties().add(algo_parameters.values(), true);
+//		}
+//	}
 
 	public byte[] getIV()
     {
