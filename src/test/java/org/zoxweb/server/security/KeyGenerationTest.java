@@ -17,10 +17,11 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
-
-
+import org.zoxweb.server.util.GSONUtil;
+import org.zoxweb.shared.crypto.EncryptedDAO;
+import org.zoxweb.shared.crypto.EncryptedKeyDAO;
 import org.zoxweb.shared.util.Const.TimeInMillis;
-
+import org.zoxweb.shared.util.SharedBase64.Base64Type;
 import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
 
@@ -121,7 +122,36 @@ public class KeyGenerationTest
 		{
 			e.printStackTrace();
 		}
-				
+		
+		
+		try {
+		  
+		  int loop = 1000;
+		  long ts = System.currentTimeMillis();
+		  for (int i = 0; i < loop; i++)
+		  {
+		    CryptoUtil.encryptDAO(new EncryptedKeyDAO(), SharedStringUtil.getBytes("password"), null, 8196);
+		  }
+		  ts = System.currentTimeMillis() - ts;
+		  System.out.println("Generated " + loop + " with rehash 8196 took " + TimeInMillis.toString(ts));
+		  loop = 100000;
+		  ts = System.currentTimeMillis();
+          for (int i = 0; i < loop; i++)
+          {
+            CryptoUtil.encryptDAO(new EncryptedKeyDAO(), SharedStringUtil.getBytes("password"), null, 1);
+          }
+          ts = System.currentTimeMillis() - ts;
+          System.out.println("Generated " + loop + " with rehash 1 took " + TimeInMillis.toString(ts));
+          EncryptedDAO ed = CryptoUtil.encryptDAO(new EncryptedKeyDAO(), SharedStringUtil.getBytes("password"), null, 1);
+          String json = GSONUtil.toJSON(ed, false, false, false, Base64Type.URL);
+          System.out.println(json);
+          ed = GSONUtil.fromJSON(json, EncryptedKeyDAO.class, Base64Type.URL);
+          byte data[] = CryptoUtil.decryptEncryptedDAO(ed, SharedStringUtil.getBytes("password"), 1);
+          System.out.println(SharedStringUtil.bytesToHex(data));
+		}
+		catch(Exception e) {
+		  e.printStackTrace();
+		}
 		
 		for(String filename : args)
 		{
