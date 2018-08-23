@@ -464,9 +464,23 @@ public class CryptoUtil
                IllegalBlockSizeException,
                BadPaddingException,
                SignatureException
+                 
+    {
+        return decryptEncryptedDAO(ekd, key);
+    }
+	
+	
+	public static byte[] decryptEncryptedDAO(final EncryptedDAO ekd, final String key, int hashIteration) 
+        throws NoSuchAlgorithmException,
+               NoSuchPaddingException,
+               InvalidKeyException,
+               InvalidAlgorithmParameterException,
+               IllegalBlockSizeException,
+               BadPaddingException,
+               SignatureException
 				 
 	{
-		return decryptEncryptedDAO(ekd, SharedStringUtil.getBytes(key));
+		return decryptEncryptedDAO(ekd, SharedStringUtil.getBytes(key), hashIteration);
 	}
 	
 	
