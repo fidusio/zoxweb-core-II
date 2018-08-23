@@ -51,7 +51,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 import org.zoxweb.server.io.IOUtil;
 import org.zoxweb.server.io.UByteArrayOutputStream;
-import org.zoxweb.shared.util.Const.SizeInBytes;
+import org.zoxweb.shared.util.Const.TypeInBytes;
 import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
 
@@ -495,10 +495,10 @@ public class AESCrypt
 		
 		byte[] text = null;
 		try {
-			ivSpec1 = new IvParameterSpec(CryptoUtil.generateKey((int)SizeInBytes.B.sizeInBits(BLOCK_SIZE),  CRYPT_ALG).getEncoded());
+			ivSpec1 = new IvParameterSpec(CryptoUtil.generateKey(TypeInBytes.BYTE.sizeInBits(BLOCK_SIZE),  CRYPT_ALG).getEncoded());
 			aesKey1 = new SecretKeySpec(generateAESKey1(ivSpec1.getIV(), password), CRYPT_ALG);
-			ivSpec2 = new IvParameterSpec(CryptoUtil.generateKey((int)SizeInBytes.B.sizeInBits(BLOCK_SIZE),  CRYPT_ALG).getEncoded());
-			aesKey2 = new SecretKeySpec(CryptoUtil.generateKey((int)SizeInBytes.B.sizeInBits(KEY_SIZE),  CRYPT_ALG).getEncoded(), CRYPT_ALG);
+			ivSpec2 = new IvParameterSpec(CryptoUtil.generateKey(TypeInBytes.BYTE.sizeInBits(BLOCK_SIZE),  CRYPT_ALG).getEncoded());
+			aesKey2 = new SecretKeySpec(CryptoUtil.generateKey(TypeInBytes.BYTE.sizeInBits(KEY_SIZE),  CRYPT_ALG).getEncoded(), CRYPT_ALG);
 			if (debug)
 			{
 				dbg("IV1: ", ivSpec1.getIV());

@@ -274,7 +274,7 @@ public class CryptoUtil
 		throws NullPointerException, IllegalArgumentException, NoSuchAlgorithmException
     {
 		SharedUtil.checkIfNulls("Null values", passwordDAO, password);
-		byte genHash[] =  hashWithInterations(MessageDigest.getInstance( passwordDAO.getName()), passwordDAO.getSalt(), SharedStringUtil.getBytes(password), passwordDAO.getHashIteration(), false);
+		byte genHash[] =  hashWithInterations(MessageDigest.getInstance(passwordDAO.getName()), passwordDAO.getSalt(), SharedStringUtil.getBytes(password), passwordDAO.getHashIteration(), false);
 	
 		return SharedUtil.slowEquals(genHash,  passwordDAO.getPassword());
 	}
@@ -351,8 +351,22 @@ public class CryptoUtil
 		
 		return (EncryptedKeyDAO) encryptDAO(new EncryptedKeyDAO(), key, null);
 	}
-
+	
+	
 	public static  EncryptedDAO encryptDAO(final EncryptedDAO ekd, final byte key[], byte data[])
+	        throws NullPointerException,
+	               IllegalArgumentException,
+	               NoSuchAlgorithmException,
+	               NoSuchPaddingException,
+	               InvalidKeyException,
+	               InvalidAlgorithmParameterException,
+	               IllegalBlockSizeException,
+	               BadPaddingException
+	{
+		return encryptDAO(ekd, key, data, DEFAULT_ITERATION);
+	}
+
+	public static  EncryptedDAO encryptDAO(final EncryptedDAO ekd, final byte key[], byte data[], int hashIteration)
         throws NullPointerException,
                IllegalArgumentException,
                NoSuchAlgorithmException,
@@ -365,13 +379,13 @@ public class CryptoUtil
 	
 		SharedUtil.checkIfNulls("Null key", key, ekd);
 
-		if (key.length < MIN_KEY_BYTES)
+		if (key.length < MIN_KEY_BYTES || hashIteration < 1)
 		{
-			throw new IllegalArgumentException("Key too short " + key.length*Byte.SIZE + "(bits) min size " + Const.SizeInBytes.B.sizeInBits(MIN_KEY_BYTES) +"(bits)");
+			throw new IllegalArgumentException("Key too short " + key.length*Byte.SIZE + "(bits) min size " + Const.TypeInBytes.BYTE.sizeInBits(MIN_KEY_BYTES) +"(bits)" + " hash iteration " + hashIteration);
 		}
 
 		//EncryptedDAO ret = ekd ;
-		ekd.setName(AES + "-" + Const.SizeInBytes.B.sizeInBits(AES_256_KEY_SIZE));
+		ekd.setName(AES + "-" + Const.TypeInBytes.BYTE.sizeInBits(AES_256_KEY_SIZE));
 		ekd.setDescription(AES_ENCRYPTION_CBC_NO_PADDING);
 		ekd.setHMACAlgoName(HMAC_SHA_256);
 		
@@ -379,8 +393,8 @@ public class CryptoUtil
 		// create iv vector
 		MessageDigest digest = MessageDigest.getInstance(SHA_256);
 		//IvParameterSpec ivSpec = new IvParameterSpec(generateRandomHashedBytes(digest, AES_BLOCK_SIZE, DEFAULT_ITERATION));
-		IvParameterSpec ivSpec = new IvParameterSpec(generateKey((int) (Const.SizeInBytes.B.sizeInBits(AES_256_KEY_SIZE)/2), AES).getEncoded());
-		SecretKeySpec aesKey = new SecretKeySpec(hashWithInterations(digest, ivSpec.getIV(), key, DEFAULT_ITERATION, true), AES);
+		IvParameterSpec ivSpec = new IvParameterSpec(generateKey((Const.TypeInBytes.BYTE.sizeInBits(AES_256_KEY_SIZE)/2), AES).getEncoded());
+		SecretKeySpec aesKey = new SecretKeySpec(hashWithInterations(digest, ivSpec.getIV(), key, hashIteration, true), AES);
 		Cipher cipher = Cipher.getInstance(AES_ENCRYPTION_CBC_NO_PADDING);
 		cipher.init(Cipher.ENCRYPT_MODE, aesKey, ivSpec);
 		Mac hmac = Mac.getInstance(HMAC_SHA_256);
@@ -397,7 +411,7 @@ public class CryptoUtil
 
 		if (data == null)
 		{
-			data = generateKey((int) Const.SizeInBytes.B.sizeInBits(AES_256_KEY_SIZE), AES).getEncoded();
+			data = generateKey(Const.TypeInBytes.BYTE.sizeInBits(AES_256_KEY_SIZE), AES).getEncoded();
 		}
 		
 		ekd.setDataLength(data.length);
@@ -456,7 +470,21 @@ public class CryptoUtil
 	}
 	
 	
-	public static byte[] decryptEncryptedDAO(final EncryptedDAO ekd, final byte key[]) 
+	
+	public static byte[] decryptEncryptedDAO(final EncryptedDAO ekd, final byte key[])
+	    throws InvalidKeyException, 
+	           NoSuchAlgorithmException,
+	           NoSuchPaddingException,
+	           InvalidAlgorithmParameterException,
+	           IllegalBlockSizeException,
+	           BadPaddingException, 
+	           SignatureException
+	{
+	  return decryptEncryptedDAO(ekd, key, DEFAULT_ITERATION);
+	}
+
+	
+	public static byte[] decryptEncryptedDAO(final EncryptedDAO ekd, final byte key[], int hashIteration) 
         throws NoSuchAlgorithmException,
                NoSuchPaddingException,
                InvalidKeyException,
@@ -469,7 +497,7 @@ public class CryptoUtil
 		// create iv vector
 		MessageDigest digest = MessageDigest.getInstance(SHA_256);
 		IvParameterSpec ivSpec = new IvParameterSpec(ekd.getIV());
-		SecretKeySpec aesKey = new SecretKeySpec(hashWithInterations(digest, ivSpec.getIV(), key, DEFAULT_ITERATION, true), AES);
+		SecretKeySpec aesKey = new SecretKeySpec(hashWithInterations(digest, ivSpec.getIV(), key, hashIteration, true), AES);
 		Cipher cipher = Cipher.getInstance(AES_ENCRYPTION_CBC_NO_PADDING);
 		cipher.init(Cipher.DECRYPT_MODE, aesKey, ivSpec);
 		Mac hmac = Mac.getInstance(HMAC_SHA_256);

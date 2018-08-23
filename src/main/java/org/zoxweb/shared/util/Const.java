@@ -336,10 +336,6 @@ public class Const
 			return Long.parseLong(str)* multiplier;
 		}
 
-		public long sizeInBits(int size)
-        {
-			return LENGTH*size*Byte.SIZE;
-		}
 		
 		
 		public long sizeInBytes(long size)
@@ -720,11 +716,11 @@ public class Const
 		/**
 		 * Returns the byte size of the data type.
 		 */
-		public final int size;
+		public final int SIZE;
 		
 		TypeInBytes(int s)
         {
-			size = s;
+			SIZE = s;
 		}
 	
 
@@ -737,7 +733,7 @@ public class Const
 
 		public static byte[] shortToBytes(short val)
         {
-			byte ret[] = new byte[SHORT.size];
+			byte ret[] = new byte[SHORT.SIZE];
 			
 			for (int i = 0; i < ret.length; i++)
 			{
@@ -749,7 +745,7 @@ public class Const
 		
 		public static byte[] intToBytes(int val)
         {
-			byte ret[] = new byte[INT.size];
+			byte ret[] = new byte[INT.SIZE];
 			
 			for (int i = 0; i < ret.length; i++)
 			{
@@ -762,7 +758,7 @@ public class Const
 		public static byte[] longToBytes(long val)
         {
 
-			byte ret[] = new byte[LONG.size];
+			byte ret[] = new byte[LONG.SIZE];
 			
 			for (int i = 0; i < ret.length; i++)
 			{
@@ -770,6 +766,18 @@ public class Const
 			}
 			
 			return ret;
+		}
+		
+		
+		public int sizeInBits(int length)
+        {
+			return SIZE*length*Byte.SIZE;
+		}
+		
+		
+		public int sizeInBits()
+		{
+			return SIZE*Byte.SIZE;
 		}
 	}
 	
