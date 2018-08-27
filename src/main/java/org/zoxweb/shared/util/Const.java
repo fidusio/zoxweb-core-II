@@ -594,9 +594,16 @@ public class Const
 				sb.append((min <= 9 ? "0" : "")  +min);
 				sb.append(':');
 				sb.append((sec <= 9 ? "0" : "")  +sec);
+				
+				//sb.append(String.format("%02d:%02d:%02d", hour, min, sec));
 				if(mil > 0)
 				{
 					sb.append('.');
+					if (mil < 99)
+					  sb.append(0);
+					if (mil < 9)
+                      sb.append(0);
+					
 					sb.append(mil);
 				}
 				

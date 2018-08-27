@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import org.zoxweb.shared.data.StatCounter;
 import org.zoxweb.shared.util.SharedBase64;
+import org.zoxweb.shared.util.Const.TimeInMillis;
 import org.zoxweb.shared.util.SharedBase64.Base64Type;
 
 public class IDGeneratorUtilTest {
@@ -12,6 +13,7 @@ public class IDGeneratorUtilTest {
 	{
 		// invoke it for the first time to force class loading
 		IDGeneratorUtil.UUIDSHA256Base64.generateID();
+		IDGeneratorUtil.SHA256Base64.generateID();
 		
 		StatCounter sc = new StatCounter();
 		
@@ -19,17 +21,17 @@ public class IDGeneratorUtilTest {
 		int max = 10000;
 		for(int i = 0; i < max; i++)
 		{
-			IDGeneratorUtil.UUIDSHA256Base64.generateID();
+			IDGeneratorUtil.SHA256Base64.generateID();
 		}
 		
-		System.out.println(sc.deltaNow() + " millis for " + max);
+		System.out.println(TimeInMillis.toString(sc.deltaNow()) + " for " + max + " " + sc.deltaNow());
 		
 		max=10;
 		sc.setReferenceTime();
 		
 		for(int i = 0; i < max; i++)
 		{
-			String id = IDGeneratorUtil.UUIDSHA256Base64.generateID();
+			String id = IDGeneratorUtil.SHA256Base64.generateID();
 			System.out.println(id + " length:" + id.length());
 		}
 		

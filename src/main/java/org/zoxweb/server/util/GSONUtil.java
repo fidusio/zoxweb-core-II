@@ -1388,6 +1388,10 @@ final public class GSONUtil
 	{
 	  return fromJSON(json, null, null); 
 	}
+	public static <V extends NVEntity> V fromJSON(Reader json, Class<? extends NVEntity> clazz)
+    {
+      return fromJSON(json, clazz, null); 
+    }
 	
 	@SuppressWarnings("unchecked")
 	public static <V extends NVEntity> V fromJSON(Reader json, Class<? extends NVEntity> clazz, Base64Type b64Type) 

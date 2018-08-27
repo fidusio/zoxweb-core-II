@@ -82,7 +82,8 @@ public class DateFormatterTest {
 				"48:35:60.22323",
 				"9:9:9",
 				"3h",
-				"03:00:00"
+				"03:00:00",
+				"60millis"
 			};
 		
 		for(String time : tokens)
