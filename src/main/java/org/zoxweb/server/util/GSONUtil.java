@@ -16,6 +16,7 @@
 package org.zoxweb.server.util;
 
 import java.io.IOException;
+import java.io.Reader;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
@@ -1381,6 +1382,26 @@ final public class GSONUtil
 		
 		return null;
 	}
+	
+	
+	public static <V extends NVEntity> V fromJSON(Reader json)
+	{
+	  return fromJSON(json, null, null); 
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static <V extends NVEntity> V fromJSON(Reader json, Class<? extends NVEntity> clazz, Base64Type b64Type) 
+        throws AccessException, APIException
+    {
+        JsonElement je = new JsonParser().parse(json);
+        
+        if (je instanceof JsonObject)
+        {
+            return (V) fromJSON((JsonObject)je, clazz, b64Type);
+        }
+        
+        return null;
+    }
 	
 	@SuppressWarnings("unchecked")
 	private static NVEntity fromJSON(JsonObject jo, Class<? extends NVEntity> clazz, Base64Type b64Type)
