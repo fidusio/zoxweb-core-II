@@ -18,6 +18,7 @@ package org.zoxweb.server.http;
 
 import org.zoxweb.server.util.GSONUtil;
 import org.zoxweb.shared.http.HTTPMessageConfigInterface;
+
 import org.zoxweb.shared.http.HTTPMessageConfig;
 import org.zoxweb.shared.http.HTTPMimeType;
 
@@ -29,6 +30,21 @@ public class HTTPCallTest
 {
 	public static void main(String[] args)
     {
+	  
+	  
+//	  try 
+//      {
+//        HTTPMessageConfigInterface hmci = HTTPMessageConfig.createAndInit("http://localhost:8080", "/dog/imageby/10", HTTPMethod.GET);
+//        HTTPResponseData hrd = (new HTTPCall(hmci).sendRequest());
+//        System.out.println(hrd.getResponseHeaders());
+//        
+//      }
+//      catch(Exception e)
+//      {
+//          e.printStackTrace();
+//      }
+	  
+	  
 		HTTPMessageConfigInterface hcc = new HTTPMessageConfig();
 		//hcc.setURL("http://10.0.1.15");
 		//hcc.setURI("amds/amds/amdsconfigservice");
@@ -112,6 +128,10 @@ public class HTTPCallTest
 		
 		System.out.println(HTTPMimeType.lookup("Application/JSon ; charset=utf-8"));
 		System.out.println(multiHCC);
+		
+		
+		
+		
 	}
 
 }

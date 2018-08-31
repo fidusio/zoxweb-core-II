@@ -46,10 +46,10 @@ public class HTTPResponseData
 	{	
 	}
 	
-	public HTTPResponseData( final byte[] data, final int stat, Map<String, List<String>> rh)
+	public HTTPResponseData(final byte[] data, final int stat, Map<String, List<String>> rh)
 	{
-		setData( data);
-		setStatus( stat);
+		setData(data);
+		setStatus(stat);
 		setResponseHeaders(rh);
 	}
 
@@ -76,6 +76,7 @@ public class HTTPResponseData
 	public void setResponseHeaders(Map<String, List<String>> responseHeaders) {
 		this.responseHeaders = responseHeaders;
 	}
+	
 	
 	
 }
