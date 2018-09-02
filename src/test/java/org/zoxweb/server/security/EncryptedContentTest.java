@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.zoxweb.shared.crypto;
+package org.zoxweb.server.security;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -28,10 +28,11 @@ import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
 import java.util.concurrent.atomic.AtomicLong;
-
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
-
+import org.zoxweb.shared.crypto.EncryptedDAO;
+import org.zoxweb.shared.crypto.EncryptedKeyDAO;
+import org.zoxweb.shared.crypto.PasswordDAO;
 import org.zoxweb.shared.crypto.CryptoConst.MDType;
 import org.zoxweb.shared.crypto.CryptoConst.SecureRandomType;
 import org.zoxweb.shared.util.SharedStringUtil;

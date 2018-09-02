@@ -60,6 +60,7 @@ public class EncryptedDAO
 		HINT(NVConfigManager.createNVConfig("hint", "Hint of the encrypted message", "Hint", false, true, String.class)),
 		HMAC_ALOG_NAME(NVConfigManager.createNVConfig("hmac_algo_name", "The HMAC algorithm name", "HMACAlgoName", true, true, String.class)),
 		HMAC(NVConfigManager.createNVConfig("hmac", "The HMAC Value", "HMAC", true, true, byte[].class)),
+		HMAC_ALL(NVConfigManager.createNVConfig("hmac_all", "If true hmac will applied to global_id", "HMACAll", false, true, Boolean.class)),
 
 		;
 
@@ -278,6 +279,16 @@ public class EncryptedDAO
 		// TODO Auto-generated method stub
 		setValue(Param.SUBJECT_ID, subjectID);
 		
+	}
+	
+	public boolean isHMACAll()
+	{
+	  return lookupValue(Param.HMAC_ALL);
+	}
+	
+	public void setHMACAll(boolean hmacAll)
+	{
+	  setValue(Param.HMAC_ALL, hmacAll);
 	}
 	
 }

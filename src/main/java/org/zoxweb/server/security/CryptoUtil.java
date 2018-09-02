@@ -405,12 +405,14 @@ public class CryptoUtil
 		hmac.update(SharedStringUtil.getBytes(ekd.getName().toLowerCase()));
 		hmac.update(SharedStringUtil.getBytes(ekd.getDescription().toLowerCase()));
 		hmac.update(SharedStringUtil.getBytes(ekd.getHMACAlgoName().toLowerCase()));
-		if (!SharedStringUtil.isEmpty(ekd.getSubjectID()))
-			hmac.update(SharedStringUtil.getBytes(ekd.getSubjectID()));
-		
-		if (!SharedStringUtil.isEmpty(ekd.getGlobalID()))
-			hmac.update(SharedStringUtil.getBytes(ekd.getGlobalID().toLowerCase()));
-		
+		if (ekd.isHMACAll())
+		{
+		  if (!SharedStringUtil.isEmpty(ekd.getSubjectID()))
+		    hmac.update(SharedStringUtil.getBytes(ekd.getSubjectID()));
+    		
+    	  if (!SharedStringUtil.isEmpty(ekd.getGlobalID()))
+    	    hmac.update(SharedStringUtil.getBytes(SharedStringUtil.toTrimmedLowerCase(ekd.getGlobalID())));
+		}
 
 
 		if (data == null)
@@ -525,11 +527,14 @@ public class CryptoUtil
 		hmac.update(SharedStringUtil.getBytes(ekd.getName().toLowerCase()));
 		hmac.update(SharedStringUtil.getBytes(ekd.getDescription().toLowerCase()));
 		hmac.update(SharedStringUtil.getBytes(ekd.getHMACAlgoName().toLowerCase()));
-		if (!SharedStringUtil.isEmpty(ekd.getSubjectID()))
-			hmac.update(SharedStringUtil.getBytes(ekd.getSubjectID()));
-		
-		if (!SharedStringUtil.isEmpty(ekd.getGlobalID()))
-			hmac.update(SharedStringUtil.getBytes(ekd.getGlobalID().toLowerCase()));
+		if (ekd.isHMACAll())
+        {
+          if (!SharedStringUtil.isEmpty(ekd.getSubjectID()))
+            hmac.update(SharedStringUtil.getBytes(ekd.getSubjectID()));
+            
+          if (!SharedStringUtil.isEmpty(ekd.getGlobalID()))
+            hmac.update(SharedStringUtil.getBytes(SharedStringUtil.toTrimmedLowerCase(ekd.getGlobalID())));
+        }
 			
 		hmac.update(BytesValueFilter.SINGLETON.validate(ekd.getDataLength()));
 

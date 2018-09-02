@@ -13,10 +13,12 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.zoxweb.shared.crypto;
+package org.zoxweb.server.security;
 
 import org.zoxweb.server.io.UByteArrayOutputStream;
 import org.zoxweb.server.security.CryptoUtil;
+import org.zoxweb.shared.crypto.EncryptedDAO;
+import org.zoxweb.shared.crypto.EncryptedKeyDAO;
 import org.zoxweb.shared.util.Const;
 import org.zoxweb.shared.util.Const.SizeInBytes;
 import org.zoxweb.shared.util.SharedStringUtil;
