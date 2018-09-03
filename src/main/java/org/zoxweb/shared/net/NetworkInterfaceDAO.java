@@ -53,7 +53,7 @@ public class NetworkInterfaceDAO
 
 	public NetworkInterfaceDAO()
     {
-		super( NVC_NETWORK_INTERFACE_DAO);
+		super(NVC_NETWORK_INTERFACE_DAO);
 	}
 
 	public List<InetAddressDAO> getInetAddresses()
@@ -63,7 +63,7 @@ public class NetworkInterfaceDAO
 
 	public void setInetAddresses(List<InetAddressDAO> inetAddresses)
     {
-		setValue( INET_ADDRESSES,inetAddresses );
+		setValue(INET_ADDRESSES,inetAddresses );
 	}
 	
 	public String getMACAddress()
@@ -78,12 +78,12 @@ public class NetworkInterfaceDAO
 	
 	public String getDisplayName()
     {
-		return lookupValue( DISPLAY_NAME);
+		return lookupValue(DISPLAY_NAME);
 	}
 	
 	public void setDisplayName(String displayName)
     {
-		setValue( DISPLAY_NAME, displayName);
+		setValue(DISPLAY_NAME, displayName);
 	}
 
 	
