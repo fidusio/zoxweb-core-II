@@ -390,8 +390,12 @@ public class HTTPCall
 		finally
 		{
 			if ( con != null)
-				con.disconnect();
-			
+			{
+			    try {
+			      con.disconnect();
+			    }
+			    catch(Exception e) {}
+			}
 			
 			IOUtil.close(os);
 			IOUtil.close(is);
