@@ -243,9 +243,9 @@ public final class SharedStringUtil
 		throws NullPointerException
     {
 
-		ArrayList<CharSequence> ret = new ArrayList<CharSequence>();
-		MatchToken startToken = new MatchToken( sd);
-		MatchToken endToken = new MatchToken( ed);
+		List<CharSequence> ret = new ArrayList<CharSequence>();
+		MatchToken startToken = new MatchToken(sd);
+		MatchToken endToken = new MatchToken(ed);
 		MatchToken currentMatch = nextMatch(token, 0, startToken, endToken);
 		currentMatch.referenceIndex = currentMatch.index;
 		boolean sameToken = sd.equals(ed);
@@ -264,7 +264,7 @@ public final class SharedStringUtil
 				
 				if (includeDelimiters)
 				{
-					ret.add( token.subSequence(startToken.referenceIndex, endToken.referenceIndex));
+					ret.add(token.subSequence(startToken.referenceIndex, endToken.referenceIndex));
 				}
 				else
                 {
@@ -858,6 +858,17 @@ public final class SharedStringUtil
     {
 		return format(name, value, "=", false);
 	}
+	
+	
+	public static String tag(String leftRightTag, String str)
+	{
+	  return tag(leftRightTag, str, leftRightTag);
+	}
+	
+	public static String tag(String leftTag, String str, String rightTag)
+    {
+      return (leftTag != null ? leftTag : "") + str +  (rightTag != null ? rightTag : "");
+    }
 
 	/**
 	 * Converts a hex string into a byte array

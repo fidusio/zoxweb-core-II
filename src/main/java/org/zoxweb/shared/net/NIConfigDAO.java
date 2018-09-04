@@ -19,7 +19,7 @@ public class NIConfigDAO
     NI_NAME(NVConfigManager.createNVConfig("ni_name", "Network interface physical name", "NIName", false, true, String.class)),
     INET_PROTO(NVConfigManager.createNVConfig("inet_proto", "Inet proptocol", "Proto", false, true, InetProto.class)),
     ADDRESS(NVConfigManager.createNVConfig("address", "Address", "Address", false, true, String.class)),
-    NETMASK(NVConfigManager.createNVConfig("nemask", "Network Mask", "NetMask", false, true, String.class)),
+    NETMASK(NVConfigManager.createNVConfig("netmask", "Network Mask", "NetMask", false, true, String.class)),
     GATEWAY(NVConfigManager.createNVConfig("gateway", "Gateway", "Gateway", false, true, String.class)),
     DNS_SERVERS(NVConfigManager.createNVConfig("dns-nameservers", "DNS Name Servers", "DNSNameServers", false, true, String.class)),
     ;   
