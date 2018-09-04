@@ -27,6 +27,7 @@ public final class SharedStringUtil
 
     public static final String UTF_8  = "UTF-8";
     public static final String UTF_16 = "UTF-16";
+    public static final String TAG_ENVELOPE ="$$";
     public static final String[] EMPTY_STRING_ARRAY = new String[0];
 
 	/**
@@ -859,7 +860,10 @@ public final class SharedStringUtil
 		return format(name, value, "=", false);
 	}
 	
-	
+	public static String tag(String str)
+	{
+		return tag(TAG_ENVELOPE,str, TAG_ENVELOPE);
+	}
 	public static String tag(String leftRightTag, String str)
 	{
 	  return tag(leftRightTag, str, leftRightTag);
