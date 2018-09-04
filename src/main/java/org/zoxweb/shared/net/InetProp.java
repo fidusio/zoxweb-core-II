@@ -15,6 +15,7 @@
  */
 package org.zoxweb.shared.net;
 
+import org.zoxweb.shared.util.GetName;
 import org.zoxweb.shared.util.SharedUtil;
 
 public class InetProp
@@ -28,6 +29,7 @@ public class InetProp
 	
 	
 	public enum InetProto
+	  implements GetName
     {
 		NONE,
 		STATIC,
@@ -35,7 +37,13 @@ public class InetProp
 		
 		public String toString()
 		{
-			return name().toLowerCase();
+			return getName();
+		}
+		
+		
+		public String getName()
+		{
+		  return name().toLowerCase();
 		}
 	}
 

@@ -37,6 +37,7 @@ import org.zoxweb.shared.net.IPRangeDAO;
 import org.zoxweb.shared.net.InetAddressDAO;
 import org.zoxweb.shared.net.InetFilterDAO;
 import org.zoxweb.shared.net.InetSocketAddressDAO;
+import org.zoxweb.shared.net.NIConfigDAO;
 import org.zoxweb.shared.net.NetworkInterfaceDAO;
 import org.zoxweb.shared.security.AccessCodeDAO;
 import org.zoxweb.shared.security.IPBlockerConfig;
@@ -573,6 +574,21 @@ public class ZWDataFactory
 				return NetworkInterfaceDAO.NVC_NETWORK_INTERFACE_DAO;
 			}
 		},
+		NI_CONFIG_DAO(NIConfigDAO.class.getName())
+        {
+            @SuppressWarnings("unchecked")
+            @Override
+            public NIConfigDAO newInstance()
+            {
+                return new NIConfigDAO();
+            }
+
+            @Override
+            public NVConfigEntity getNVConfigEntity() 
+            {
+                return NIConfigDAO.NVC_NI_CONFIG_DAO;
+            }
+        },
 		NVENTITY_ACCESS_INFO(NVEntityAccessInfo.class.getName())
 		{
 			@SuppressWarnings("unchecked")
