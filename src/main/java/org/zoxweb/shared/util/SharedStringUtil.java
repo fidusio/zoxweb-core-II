@@ -663,7 +663,7 @@ public final class SharedStringUtil
 	 * @param str to be checked
 	 * @return true if str is empty
 	 */
-	public static boolean isEmpty( String str)
+	public static boolean isEmpty(String str)
     {
 		if (str != null && str.trim().length() != 0)
 		{
@@ -672,6 +672,28 @@ public final class SharedStringUtil
 		
 		return true;
 	}
+	public static boolean isComment(String line)
+	{
+	  return isComment(line, "#", "//");
+	}
+	
+	
+	public static boolean isComment(String line, String ...startTokenMarkers)
+    {
+      
+      line = trimOrNull(line);
+      if (line != null)
+      {
+        for(String token : startTokenMarkers)
+        {
+          if (line.startsWith(token))
+            return true;
+        }
+      }
+      
+      
+      return false;
+    }
 
 	/**
 	 * Concatenates s1 + sep + s2 = total, sep will not be added if s1 ends with sep or s2 starts with sep.
