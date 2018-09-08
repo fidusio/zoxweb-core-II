@@ -32,6 +32,8 @@ public class InetProp
 	  implements GetName
     {
 		NONE,
+		MANUAL,
+		LOOPBACK,
 		STATIC,
 		DHCP;
 		
