@@ -21,6 +21,7 @@ public class NIConfigDAO
     ADDRESS(NVConfigManager.createNVConfig("address", "Address", "Address", false, true, String.class)),
     NETMASK(NVConfigManager.createNVConfig("netmask", "Network Mask", "NetMask", false, true, String.class)),
     GATEWAY(NVConfigManager.createNVConfig("gateway", "Gateway", "Gateway", false, true, String.class)),
+    NETWORK(NVConfigManager.createNVConfig("network", "Network", "Network", false, true, String.class)),
     DNS_SERVERS(NVConfigManager.createNVConfig("dns-nameservers", "DNS Name Servers", "DNSNameServers", false, true, String.class)),
     ;   
   
@@ -103,6 +104,16 @@ public class NIConfigDAO
   public void setDNSServers(String dnsServers) 
   {
     setValue(Param.DNS_SERVERS, dnsServers);
+  }
+  
+  public String getNetwork()
+  {
+    return lookupValue(Param.NETWORK);
+  }
+  
+  public void setNetwork(String network) 
+  {
+    setValue(Param.NETWORK, network);
   }
   
 }

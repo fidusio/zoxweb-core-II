@@ -24,11 +24,12 @@ import java.util.List;
  */
 public final class SharedStringUtil
 {
-
+    //
     public static final String UTF_8  = "UTF-8";
     public static final String UTF_16 = "UTF-16";
     public static final String TAG_ENVELOPE ="$$";
     public static final String[] EMPTY_STRING_ARRAY = new String[0];
+    public static final String COMMENT_TAGS[] = {"#", "//"};
 
 	/**
 	 * The constructor is declared private to prevent instantiation.
@@ -674,8 +675,9 @@ public final class SharedStringUtil
 	}
 	public static boolean isComment(String line)
 	{
-	  return isComment(line, "#", "//");
+	  return isComment(line, COMMENT_TAGS);
 	}
+	
 	
 	
 	public static boolean isComment(String line, String ...startTokenMarkers)
@@ -689,11 +691,32 @@ public final class SharedStringUtil
           if (line.startsWith(token))
             return true;
         }
-      }
-      
-      
+      }  
       return false;
     }
+	
+	public static int indexOf(String str, String ...tags)
+	{
+	  int firstIndex = -1;
+	  
+	  for (String tag : tags)
+	  {
+	    int index = str.indexOf(tag);
+	    if (index != -1)
+	    {
+	      if (firstIndex == -1)
+	      {
+	        firstIndex = index;
+	      }
+	      else if (index < firstIndex)
+	      {
+	        firstIndex = index;
+	      }
+	    }
+	  }
+	  
+	  return firstIndex;
+	}
 
 	/**
 	 * Concatenates s1 + sep + s2 = total, sep will not be added if s1 ends with sep or s2 starts with sep.
