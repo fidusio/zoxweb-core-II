@@ -1645,6 +1645,46 @@ public class SharedUtil
 		}
 	}
 	
+  public static GetNameValueComment<String> parseGetNameStringComment(String line, String nvSeparator, String ...commentTags)
+  {
+	  line = SharedStringUtil.trimOrNull(line);
+	  if (line != null)
+	  {
+	    if (!SharedStringUtil.isComment(line))
+	    {
+	      if (nvSeparator != null)
+	      {
+    	      int nvSepIndex = line.indexOf(nvSeparator);
+    	      int commentIndex = SharedStringUtil.indexOf(line, commentTags);
+    	      
+    	      if (commentIndex != -1 && nvSepIndex != -1 && commentIndex <= nvSepIndex)
+    	        return null;
+    	      
+    	      String name = null;
+    	      String value = null;
+    	      String comment = null;
+    	      if (nvSepIndex != -1)
+    	      {
+    	        name = line.substring(0, nvSepIndex);
+      	        if (commentIndex != -1)
+      	        {
+      	          value = line.substring(nvSepIndex + nvSeparator.length(), commentIndex).trim();
+      	          comment = line.substring(commentIndex).trim();
+      	        }
+      	        else
+      	        {
+      	          value = line.substring(nvSepIndex + nvSeparator.length()).trim();
+      	        }
+      	      
+      	        return new GetNameValueComment<String>(new NVPair(name, value), comment);
+    	      }
+	      }
+	    }
+	  }
+	  
+	  return null;
+	}
+	
 	/**
 	 * 
 	 * @param config

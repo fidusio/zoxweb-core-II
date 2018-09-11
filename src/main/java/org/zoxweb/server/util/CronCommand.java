@@ -14,6 +14,29 @@ import org.zoxweb.shared.util.SharedStringUtil;
 public class CronCommand 
 implements Runnable
 {
+  
+  
+  public static final TaskListener<CronCommand, String> NOOP_TASK = new TaskListener<CronCommand, String>() 
+  {
+
+    @Override
+    public void started(CronCommand t) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void terminated(CronCommand t) {
+        // TODO Auto-generated method stub
+    }
+
+    @Override
+    public void executionResult(int status, long counter, long timestamp,  String result) {
+        // TODO Auto-generated method stub
+    }
+    
+  }; 
+  
 		
 	private int repeatCount;
 	private long delay;
