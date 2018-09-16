@@ -3,7 +3,7 @@ package org.zoxweb.shared.security;
 import org.zoxweb.shared.util.SharedUtil;
 
 public final class JWTEncoderData 
-{
+{  
 	private final byte[] key;
 	private final JWT jwt;
 	
