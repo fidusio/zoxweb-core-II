@@ -145,7 +145,7 @@ extends SetNameDescriptionDAO
         if (tempEncoder != null)
         	jwtPayload = tempEncoder.encode(jwtPayload);
         else
-        	jwtPayload.setIssuedAt(System.currentTimeMillis());
+        	jwtPayload.setIssuedAtInMillis(System.currentTimeMillis());
 
         //jwt.setHeader(jwtHeader);
         //jwt.setPayload(jwtPayload);

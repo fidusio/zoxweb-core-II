@@ -83,12 +83,13 @@ implements KVMapStore<String, JWT>
 		throws SecurityException
 	{
 		
-		long delta = Math.abs(System.currentTimeMillis() - jwt.getPayload().getIssuedAt());
+	    long issuedAtInMillis = jwt.getPayload().getIssuedAt() * 1000;
+		long delta = Math.abs(System.currentTimeMillis() - issuedAtInMillis);
 		
 		
 		if (delta >= expirationPeriod)
 		{
-			throw new SecurityException("Expired token issued at " + DateUtil.DEFAULT_GMT_MILLIS.format(new Date(jwt.getPayload().getIssuedAt())));
+			throw new SecurityException("Expired token issued at " + DateUtil.DEFAULT_GMT_MILLIS.format(new Date(issuedAtInMillis)));
 		}
 		
 		

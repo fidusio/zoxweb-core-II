@@ -199,6 +199,9 @@ public class JWTPayload
 		nvgm.add(Param.AUD, aud);
 	}
 	
+	/**
+     * @return the number of seconds from 1970-01-01T00:00:00Z UTC
+     */
 	public long getExpirationTime() 
 	{
 		return nvgm.getValue(Param.EXP);
@@ -208,7 +211,11 @@ public class JWTPayload
 	{
 		nvgm.add(new NVLong(Param.EXP.getName(), exp));
 	}
-
+	
+	
+	/**
+     * @return the number of seconds from 1970-01-01T00:00:00Z UTC
+     */
 	public long getNotBefore() 
 	{
 		return nvgm.getValue(Param.NBF);
@@ -218,15 +225,26 @@ public class JWTPayload
 	{
 		nvgm.add(new NVLong(Param.NBF.getName(), nbf));
 	}
-
+	
+	/**
+	 * 
+	 * @return the number of seconds from 1970-01-01T00:00:00Z UTC
+	 */
 	public long getIssuedAt() 
 	{
 		return nvgm.getValue(Param.IAT);
 	}
 
+	
 	public void setIssuedAt(long iat) 
+    {
+        nvgm.add(new NVLong(Param.IAT.getName(), iat));
+    }
+	
+	
+	public void setIssuedAtInMillis(long iat) 
 	{
-		nvgm.add(new NVLong(Param.IAT.getName(), iat));
+		setIssuedAt(iat/1000);
 	}
 
 	public String getJWTID() 

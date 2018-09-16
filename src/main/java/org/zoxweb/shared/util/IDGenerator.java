@@ -1,6 +1,6 @@
 package org.zoxweb.shared.util;
 
-public interface IDGenerator<I>
+public interface IDGenerator<I,N>
 	extends GetName
 {
 	
@@ -9,5 +9,8 @@ public interface IDGenerator<I>
 	 * @return a new ID.
 	 */
 	I generateID();
+	
+	N generateNativeID();
+	
 	
 }

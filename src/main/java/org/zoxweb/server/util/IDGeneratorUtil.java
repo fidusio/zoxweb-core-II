@@ -11,7 +11,7 @@ import org.zoxweb.shared.util.SharedBase64.Base64Type;
 
 public class IDGeneratorUtil 
 {
-	public static final IDGenerator<String> UUIDSHA256Base64 = new IDGenerator<String>()
+	public static final IDGenerator<String, byte[]> UUIDSHA256Base64 = new IDGenerator<String, byte[]>()
 	{
 		
 		@Override
@@ -43,10 +43,27 @@ public class IDGeneratorUtil
 			// TODO Auto-generated method stub
 			return "UUIDSHA256Base64";
 		}
+		
+		public byte[] generateNativeID()
+		{
+		  byte[] ret = null;
+		  
+		  do {
+		    try {
+            ret = SharedBase64.encode(Base64Type.URL, HashUtil.hashSequence("SHA-256", UUID.randomUUID().toString()));
+            } catch (NoSuchAlgorithmException e) {
+              // TODO Auto-generated catch block
+              e.printStackTrace();
+            }
+		  }while(!valide(ret));
+		  
+		  return ret;
+		  
+		}
 	};
 	
 	
-	public static final IDGenerator<String> SHA256Base64 = new IDGenerator<String>()
+	public static final IDGenerator<String, byte[]> SHA256Base64 = new IDGenerator<String, byte[]>()
     {
         
         @Override
@@ -73,9 +90,27 @@ public class IDGeneratorUtil
             // TODO Auto-generated method stub
             return "SHA256Base64";
         }
+        
+        public byte[] generateNativeID()
+        {
+          
+          byte[] ret = null;
+          
+          do {
+            try {
+              ret = SharedBase64.encode(Base64Type.URL, CryptoUtil.generateKey((Const.TypeInBytes.BYTE.sizeInBits(CryptoUtil.AES_256_KEY_SIZE)), CryptoUtil.AES).getEncoded());
+            } catch (NoSuchAlgorithmException e) {
+              // TODO Auto-generated catch block
+              e.printStackTrace();
+            }
+          }while(!valide(ret));
+          
+          return ret;
+          
+        }
     };
 	
-	public static final IDGenerator<String> UUIDBase64 = new IDGenerator<String>()
+	public static final IDGenerator<String, byte[]> UUIDBase64 = new IDGenerator<String, byte[]>()
 	{
 		
 		@Override
@@ -90,6 +125,19 @@ public class IDGeneratorUtil
 			
 			return ret;
 		}
+		
+		public byte[] generateNativeID() 
+        {
+            byte ret[];
+            
+            do 
+            {
+                ret = SharedBase64.encode(Base64Type.URL, UUID.randomUUID().toString());
+            }while(!valide(ret));
+            
+            return ret;
+        }
+
 
 		@Override
 		public String getName() 
@@ -99,7 +147,7 @@ public class IDGeneratorUtil
 		}
 	};
 	
-	public static final IDGenerator<String> UUIDV4 = new IDGenerator<String>()
+	public static final IDGenerator<String, UUID> UUIDV4 = new IDGenerator<String, UUID>()
 	{
 
 		@Override
@@ -111,8 +159,13 @@ public class IDGeneratorUtil
 		@Override
 		public String generateID() {
 			// TODO Auto-generated method stub
-			return UUID.randomUUID().toString();
+			return generateNativeID().toString();
 		}
+		
+		public UUID generateNativeID() {
+          // TODO Auto-generated method stub
+          return UUID.randomUUID();
+      }
 		
 	};
 
@@ -131,5 +184,15 @@ public class IDGeneratorUtil
 		}
 		return true;
 	}
+	
+	private static boolean valide(byte bytes[])
+    {
+      
+        if (bytes == null || bytes[0] == '_' || bytes[0] == '-')
+        {
+            return false;
+        }
+        return true;
+    }
 	
 }

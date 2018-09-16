@@ -316,7 +316,7 @@ public interface APIDataStore<ST>
 	public void deleteDynamicEnumMap(String name)
 		throws NullPointerException, IllegalArgumentException, APIException;
 	
-	public IDGenerator<String> getIDGenerator();
+	public <NID> IDGenerator<String, NID> getIDGenerator();
 	
 	
 	/**

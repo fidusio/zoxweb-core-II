@@ -3,7 +3,9 @@ package org.zoxweb.server.security;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-
+import java.util.Date;
+import java.util.UUID;
+import org.zoxweb.server.util.GSONUtil;
 import org.zoxweb.shared.security.AccessSecurityException;
 import org.zoxweb.shared.security.JWT;
 import org.zoxweb.shared.security.JWTDecoder;
@@ -62,6 +64,34 @@ implements JWTEncoder, JWTDecoder {
 			throws AccessSecurityException
 	{
 		return decode(jdd.getKey(), jdd.getToken());
+	}
+	
+	
+	public static void main(String ...args)
+	{
+	  try
+	  {
+	    
+	    for (int i=0; i<args.length; i++)
+	    {
+	      JWT jwt = CryptoUtil.parseJWT(args[i]);
+	      System.out.println(GSONUtil.toJSON(jwt, true, false, false));
+	      System.out.println(new Date(jwt.getPayload().getIssuedAt()*1000));
+	      System.out.println((jwt.getPayload().getIssuedAt()));
+	      System.out.println(System.currentTimeMillis());
+	      if (jwt.getHeader().getNVGenericMap().getValue("salt") != null)
+	      {
+	        UUID uuid = UUID.fromString(jwt.getHeader().getNVGenericMap().getValue("salt"));
+	        System.out.println(uuid);
+	      }
+	    }
+	  }
+	  catch(Exception e)
+	  {
+	    e.printStackTrace();
+	  }
+	  
+	  
 	}
 
 }
