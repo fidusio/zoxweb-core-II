@@ -20,7 +20,7 @@ import org.zoxweb.shared.http.HTTPMethod;
 import org.zoxweb.shared.util.GetNVConfig;
 import org.zoxweb.shared.util.GetName;
 import org.zoxweb.shared.util.GetValue;
-import org.zoxweb.shared.util.IDGenerator;
+
 import org.zoxweb.shared.util.NVConfig;
 import org.zoxweb.shared.util.NVConfigManager;
 import org.zoxweb.shared.util.Const;
@@ -39,29 +39,7 @@ public final class SecurityConsts
 
 	}
 	
-	 public static final IDGenerator<Long, Long> LONG_ID = new IDGenerator<Long, Long>()
-     {
-       private long currentID = 0;
-
-      @Override
-      public String getName() {
-        // TODO Auto-generated method stub
-        return "LongIDGenerator";
-      }
-
-      @Override
-      public Long generateID() {
-        // TODO Auto-generated method stub
-        return generateNativeID();
-      }
-
-      @Override
-      public synchronized Long generateNativeID() {
-        // TODO Auto-generated method stub
-        return ++currentID;
-      }
-   
-     };
+	
 	
 	
 	

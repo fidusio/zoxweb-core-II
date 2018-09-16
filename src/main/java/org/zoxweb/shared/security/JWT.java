@@ -20,6 +20,7 @@ import org.zoxweb.shared.data.SetNameDescriptionDAO;
 
 import org.zoxweb.shared.util.AppID;
 import org.zoxweb.shared.util.GetNVConfig;
+import org.zoxweb.shared.util.LongIDGenerator;
 import org.zoxweb.shared.util.NVConfig;
 import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVConfigEntityLocal;
@@ -145,7 +146,7 @@ extends SetNameDescriptionDAO
 //        	jwtPayload = tempEncoder.encode(jwtPayload);
 //        else
         jwtPayload.setIssuedAtInMillis(System.currentTimeMillis());
-        jwtPayload.setNonce(SecurityConsts.LONG_ID.generateNativeID());
+        jwtPayload.setNonce(LongIDGenerator.DEFAULT.generateNativeID());
         
 
         //jwt.setHeader(jwtHeader);
