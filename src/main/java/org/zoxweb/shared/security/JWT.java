@@ -146,7 +146,7 @@ extends SetNameDescriptionDAO
 //        	jwtPayload = tempEncoder.encode(jwtPayload);
 //        else
         jwtPayload.setIssuedAtInMillis(System.currentTimeMillis());
-        jwtPayload.setNonce(LongIDGenerator.DEFAULT.generateNativeID());
+        jwtPayload.setNonce(LongIDGenerator.DEFAULT.nextID());
         
 
         //jwt.setHeader(jwtHeader);

@@ -16,18 +16,23 @@ public class LongIDGenerator implements IDGenerator<Long, Long> {
   @Override
   public Long generateID() {
     // TODO Auto-generated method stub
-    return generateNativeID();
+    return nextID();
   }
 
   @Override
-  public synchronized Long generateNativeID() {
+  public Long generateNativeID() {
     // TODO Auto-generated method stub
-    return ++currentID;
+    return nextID();
   }
   
   public long currentID()
   {
     return currentID;
+  }
+  
+  public synchronized long nextID()
+  {
+    return ++currentID;
   }
 
 }
