@@ -51,6 +51,7 @@ public class SubjectAPIKey
         CLIENT_ID(NVConfigManager.createNVConfig("client_id", "Client ID", "ClientID", true, false, true, String.class, null)),
         API_KEY(NVConfigManager.createNVConfig("api_key", "API Key", "APIKey", true, false, false, String.class, FilterType.ENCRYPT)),
         STATUS(NVConfigManager.createNVConfig("status", "Status", "Status", true, false, Status.class)),
+        TS_REQURIED(NVConfigManager.createNVConfig("ts_required", "The timestamp is required", "TimeStampRequired", false, false, Boolean.class)),
         EXPIRY_DATE(NVConfigManager.createNVConfig("expiry_date", "The expiry timestamp", "Expired", false, false, false, true, Date.class, null)),
 
         ;
@@ -187,4 +188,15 @@ public class SubjectAPIKey
 	{
 		setValue(Param.EXPIRY_DATE, ts);
 	}
+	
+	public boolean isTimeStampRquired() 
+    {
+        return lookupValue(Param.TS_REQURIED);
+    }
+    
+    
+    public void setTimeStampRquired(boolean tsReq) 
+    {
+        setValue(Param.TS_REQURIED, tsReq);
+    }
 }

@@ -143,6 +143,7 @@ public class APIAppManagerProvider
 
         //if (subjectAPIKey.getStatus() == null) {
             subjectAPIKey.setStatus(status);
+            subjectAPIKey.setTimeStampRquired(true);
         //}
         if (ttl > 0 )
         	subjectAPIKey.setExpiryDate(System.currentTimeMillis() + ttl);
