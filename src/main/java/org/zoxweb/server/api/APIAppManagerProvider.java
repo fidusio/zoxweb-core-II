@@ -130,7 +130,7 @@ public class APIAppManagerProvider
         SharedUtil.checkIfNulls("Null SubjectAPIKey", subjectAPIKey);
 
         if (subjectAPIKey.getSubjectID() == null) {
-            subjectAPIKey.setSubjectID(IDGeneratorUtil.UUIDSHA256Base64.generateID());
+            subjectAPIKey.setSubjectID(IDGeneratorUtil.SHA256Base64.generateID());
         }
 
         if (subjectAPIKey.getAPIKey() == null) {
@@ -411,13 +411,13 @@ public class APIAppManagerProvider
             throws NullPointerException, IllegalArgumentException, AccessException, APIException {
     	List<SubjectAPIKey> result = getAPIDataStore().search(AppDeviceDAO.NVC_APP_DEVICE_DAO, 
     			null, 
-    			new QueryMatchString(RelationalOperator.EQUAL, subjectID, SubjectAPIKey.Param.CLIENT_ID));
+    			new QueryMatchString(RelationalOperator.EQUAL, subjectID, SubjectAPIKey.Param.SUBJECT_ID));
     	
     	if (result == null || result.size() == 0)
     	{
     		result = getAPIDataStore().search(SubjectAPIKey.NVC_SUBJECT_API_KEY, 
         			null, 
-        			new QueryMatchString(RelationalOperator.EQUAL, subjectID, SubjectAPIKey.Param.CLIENT_ID));
+        			new QueryMatchString(RelationalOperator.EQUAL, subjectID, SubjectAPIKey.Param.SUBJECT_ID));
     		
     	}
     	

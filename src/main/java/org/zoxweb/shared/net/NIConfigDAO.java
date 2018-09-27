@@ -2,10 +2,13 @@ package org.zoxweb.shared.net;
 
 import org.zoxweb.shared.data.SetNameDescriptionDAO;
 import org.zoxweb.shared.util.GetNVConfig;
+
+import org.zoxweb.shared.util.GetName;
 import org.zoxweb.shared.util.NVConfig;
 import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVConfigEntityLocal;
 import org.zoxweb.shared.util.NVConfigManager;
+import org.zoxweb.shared.util.NVGenericMap;
 import org.zoxweb.shared.util.SharedUtil;
 import org.zoxweb.shared.net.InetProp.InetProto;;
 
@@ -14,15 +17,18 @@ public class NIConfigDAO
   extends SetNameDescriptionDAO
 {
   public enum Param
-  implements GetNVConfig
+  implements GetNVConfig, GetName
   {
     NI_NAME(NVConfigManager.createNVConfig("ni_name", "Network interface physical name", "NIName", false, true, String.class)),
     INET_PROTO(NVConfigManager.createNVConfig("inet_proto", "Inet proptocol", "Proto", false, true, InetProto.class)),
+    PROPERTIES(NVConfigManager.createNVConfig("properties", "Properties", "Properties", false, true, NVGenericMap.class)),
     ADDRESS(NVConfigManager.createNVConfig("address", "Address", "Address", false, true, String.class)),
     NETMASK(NVConfigManager.createNVConfig("netmask", "Network Mask", "NetMask", false, true, String.class)),
     GATEWAY(NVConfigManager.createNVConfig("gateway", "Gateway", "Gateway", false, true, String.class)),
     NETWORK(NVConfigManager.createNVConfig("network", "Network", "Network", false, true, String.class)),
     DNS_SERVERS(NVConfigManager.createNVConfig("dns-nameservers", "DNS Name Servers", "DNSNameServers", false, true, String.class)),
+
+    
     ;   
   
     private final NVConfig cType;
@@ -34,10 +40,16 @@ public class NIConfigDAO
     public NVConfig getNVConfig() {
       return cType;
     }
+
+    @Override
+    public String getName() {
+      // TODO Auto-generated method stub
+      return cType.getName();
+    }
   
   }
   
-  public static final NVConfigEntity NVC_NI_CONFIG_DAO = new NVConfigEntityLocal(null, null , null, true, false, false, false, NIConfigDAO.class, SharedUtil.extractNVConfigs(Param.values()), null, false, SetNameDescriptionDAO.NVC_NAME_DAO);
+  public static final NVConfigEntity NVC_NI_CONFIG_DAO = new NVConfigEntityLocal(null, null , null, true, false, false, false, NIConfigDAO.class, SharedUtil.extractNVConfigs(Param.NI_NAME, Param.INET_PROTO, Param.PROPERTIES), null, false, SetNameDescriptionDAO.NVC_NAME_DAO);
   
   public NIConfigDAO()
   {
@@ -48,7 +60,7 @@ public class NIConfigDAO
   
   public String getNIName()
   {
-    return lookupValue(Param.NI_NAME);
+    return lookupValue(Param.NI_NAME.getName());
   }
   
   public void setNIName(String niName) 
@@ -58,7 +70,7 @@ public class NIConfigDAO
   
   public InetProto getInetProtocol()
   {
-    return lookupValue(Param.INET_PROTO);
+    return lookupValue(Param.INET_PROTO.getName());
   }
   
   public void setInteProtocol(InetProto proto)
@@ -68,52 +80,60 @@ public class NIConfigDAO
   
   public String getAddress()
   {
-    return lookupValue(Param.ADDRESS);
+    return lookupValue(Param.ADDRESS.getName());
   }
   
   public void setAddress(String address) 
   {
-    setValue(Param.ADDRESS, address);
+    getProperties().add(Param.ADDRESS, address);
   }
   
   public String getNetmask()
   {
-    return lookupValue(Param.NETMASK);
+    return getProperties().getValue(Param.NETMASK);
   }
   
   public void setNetmask(String netmask) 
   {
-    setValue(Param.NETMASK, netmask);
+    getProperties().add(Param.NETMASK, netmask);
   }
   
   public String getGateway()
   {
-    return lookupValue(Param.GATEWAY);
+    return getProperties().getValue(Param.GATEWAY);
   }
   
   public void setGateway(String gateway) 
   {
-    setValue(Param.GATEWAY, gateway);
+    getProperties().add(Param.GATEWAY, gateway);
   }
   
   public String getDNSServers()
   {
-    return lookupValue(Param.DNS_SERVERS);
+    return getProperties().getValue(Param.DNS_SERVERS);
   }
   
   public void setDNSServers(String dnsServers) 
   {
-    setValue(Param.DNS_SERVERS, dnsServers);
+    getProperties().add(Param.DNS_SERVERS, dnsServers);
   }
   
   public String getNetwork()
   {
-    return lookupValue(Param.NETWORK);
+    return getProperties().getValue(Param.NETWORK);
   }
   
   public void setNetwork(String network) 
   {
-    setValue(Param.NETWORK, network);
+    getProperties().add(Param.NETWORK, network);
+  }
+
+
+
+ 
+  public NVGenericMap getProperties() {
+    // TODO Auto-generated method stub
+    return (NVGenericMap) lookup(Param.PROPERTIES.getName());
   }
   
 }

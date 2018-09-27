@@ -23,13 +23,16 @@ import java.util.Date;
 import org.zoxweb.shared.data.TimeStampDAO;
 import org.zoxweb.shared.filters.FilterType;
 import org.zoxweb.shared.util.GetNVConfig;
+
 import org.zoxweb.shared.util.NVConfig;
 import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVConfigEntityLocal;
 import org.zoxweb.shared.util.SharedUtil;
 import org.zoxweb.shared.util.SubjectID;
+import org.zoxweb.shared.util.SystemID;
 import org.zoxweb.shared.util.Const.Status;
 import org.zoxweb.shared.util.NVConfigManager;
+import org.zoxweb.shared.util.NVGenericMap;
 import org.zoxweb.shared.util.SharedBase64;
 import org.zoxweb.shared.util.SharedBase64.Base64Type;
 
@@ -42,18 +45,18 @@ import org.zoxweb.shared.util.SharedBase64.Base64Type;
 @SuppressWarnings("serial")
 public class SubjectAPIKey
     extends TimeStampDAO
-    implements SubjectID<String> {
+    implements SubjectID<String>, SystemID<String>{
 
     public enum Param
         implements GetNVConfig {
 
-        //SUBJECT_ID(NVConfigManager.createNVConfig("subject_id", "Subject ID", "SubjectID", true, false, true, String.class, null)),
-        CLIENT_ID(NVConfigManager.createNVConfig("client_id", "Client ID", "ClientID", true, false, true, String.class, null)),
+        SUBJECT_ID(NVConfigManager.createNVConfig("subject_id", "Subject ID", "SubjectID", true, false, true, String.class, null)),
+        SYSTEM_ID(NVConfigManager.createNVConfig("system_id", "System ID", "SystemID", true, false, String.class)),
         API_KEY(NVConfigManager.createNVConfig("api_key", "API Key", "APIKey", true, false, false, String.class, FilterType.ENCRYPT)),
         STATUS(NVConfigManager.createNVConfig("status", "Status", "Status", true, false, Status.class)),
         TS_REQURIED(NVConfigManager.createNVConfig("ts_required", "The timestamp is required", "TimeStampRequired", false, false, Boolean.class)),
         EXPIRY_DATE(NVConfigManager.createNVConfig("expiry_date", "The expiry timestamp", "Expired", false, false, false, true, Date.class, null)),
-
+        PROPERTIES(NVConfigManager.createNVConfig("properties", "Properties", "Properties", false, true, NVGenericMap.class)),
         ;
 
         private final NVConfig nvc;
@@ -93,17 +96,17 @@ public class SubjectAPIKey
 
     @Override
     public String getSubjectID() {
-        return getClientID();
+        return  lookupValue(Param.SUBJECT_ID);
     }
 
     @Override
     public void setSubjectID(String id) {
-    	setClientID(id);
+      setValue(Param.SUBJECT_ID, id);
     }
 
-    public String getClientID() {
-        return lookupValue(Param.CLIENT_ID);
-    }
+//    public String getClientID() {
+//        return lookupValue(Param.CLIENT_ID);
+//    }
     
     
 //    public byte[] getAPIKeyAsBytes()
@@ -117,11 +120,11 @@ public class SubjectAPIKey
 //    	return null;
 //    }
 
-    public void setClientID(String clientID) 
-    {
-    	 setValue(Param.CLIENT_ID, clientID);
-        //setValue(Param.API_KEY, apiKey);
-    }
+//    public void setClientID(String clientID) 
+//    {
+//    	 setValue(Param.CLIENT_ID, clientID);
+//        //setValue(Param.API_KEY, apiKey);
+//    }
     
     
     public void setAPIKey(byte[] secret)
@@ -198,5 +201,23 @@ public class SubjectAPIKey
     public void setTimeStampRquired(boolean tsReq) 
     {
         setValue(Param.TS_REQURIED, tsReq);
+    }
+
+    @Override
+    public String getSystemID() {
+      // TODO Auto-generated method stub
+      return lookupValue(Param.SYSTEM_ID);
+    }
+
+    @Override
+    public void setSystemID(String systemID) {
+      // TODO Auto-generated method stub
+      setValue(Param.SYSTEM_ID, systemID);
+    }
+
+    
+    public NVGenericMap getProperties() {
+      // TODO Auto-generated method stub
+       return (NVGenericMap) lookup(Param.PROPERTIES.getNVConfig());
     }
 }
