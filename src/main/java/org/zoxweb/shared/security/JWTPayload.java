@@ -258,12 +258,15 @@ public class JWTPayload
 	}
 	
 	
-	public NVGenericMap getNVGenericMap()
-	{
-		return nvgm;	
-	}
 	
-	public void setNVGenericMap(NVGenericMap nvgm)
+	
+	
+	public NVGenericMap getProperties()
+    {
+        return nvgm;    
+    }
+	
+	public void setProperties(NVGenericMap nvgm)
 	{
 		this.nvgm.clear();
 		SharedUtil.updateGetNVGenericMap(this, nvgm);

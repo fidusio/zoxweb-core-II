@@ -1,7 +1,6 @@
 package org.zoxweb.shared.net;
 
 import org.zoxweb.shared.data.ConfigPropertiesDAO;
-import org.zoxweb.shared.data.SetNameDescriptionDAO;
 import org.zoxweb.shared.util.GetNVConfig;
 
 import org.zoxweb.shared.util.GetName;

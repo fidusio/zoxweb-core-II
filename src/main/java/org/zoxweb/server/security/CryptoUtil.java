@@ -808,8 +808,8 @@ public class CryptoUtil
 
 		
 		StringBuilder sb = new StringBuilder();
-		byte[] b64Header = SharedBase64.encode(Base64Type.URL,  GSONUtil.toJSONGenericMap(jwt.getHeader().getNVGenericMap(), false, false, false));
-		String payloadJSON =  GSONUtil.toJSONGenericMap(jwt.getPayload().getNVGenericMap(), false, false, false);
+		byte[] b64Header = SharedBase64.encode(Base64Type.URL,  GSONUtil.toJSONGenericMap(jwt.getHeader().getProperties(), false, false, false));
+		String payloadJSON =  GSONUtil.toJSONGenericMap(jwt.getPayload().getProperties(), false, false, false);
 		//System.out.println(payloadJSON);
 		byte[] b64Payload = SharedBase64.encode(Base64Type.URL, payloadJSON);
 		sb.append(SharedStringUtil.toString(b64Header));
@@ -955,9 +955,9 @@ public class CryptoUtil
 		
 		//jwtPayload = GSONUtil.fromJSON(SharedStringUtil.toString(SharedBase64.decode(Base64Type.URL,tokens[JWTToken.PAYLOAD.ordinal()])), JWTPayload.class);
 		JWTPayload jwtPayload = ret.getPayload();
-		jwtPayload.setNVGenericMap(nvgmPayload);
+		jwtPayload.setProperties(nvgmPayload);
 		JWTHeader jwtHeader = ret.getHeader();
-		jwtHeader.setNVGenericMap(nvgmHeader);
+		jwtHeader.setProperties(nvgmHeader);
 		if (jwtHeader == null || jwtPayload == null)
 		{
 			throw new SecurityException("Invalid JWT");

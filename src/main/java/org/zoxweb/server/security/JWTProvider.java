@@ -79,9 +79,9 @@ implements JWTEncoder, JWTDecoder {
 	      System.out.println(new Date(jwt.getPayload().getIssuedAt()*1000));
 	      System.out.println((jwt.getPayload().getIssuedAt()));
 	      System.out.println(System.currentTimeMillis());
-	      if (jwt.getHeader().getNVGenericMap().getValue("salt") != null)
+	      if (jwt.getHeader().getProperties().getValue("salt") != null)
 	      {
-	        UUID uuid = UUID.fromString(jwt.getHeader().getNVGenericMap().getValue("salt"));
+	        UUID uuid = UUID.fromString(jwt.getHeader().getProperties().getValue("salt"));
 	        System.out.println(uuid);
 	      }
 	    }

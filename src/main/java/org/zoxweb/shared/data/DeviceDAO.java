@@ -29,7 +29,6 @@ public class DeviceDAO
         MANUFACTURER(NVConfigManager.createNVConfig("manufacturer", "The device's manufacturer.", "Manufacturer", false, false, String.class)),
         VIRTUAL(NVConfigManager.createNVConfig("virtual", "Whether the device is running on a simulator.", "Virtual", false, false, boolean.class)),
         SERIAL_NUMBER(NVConfigManager.createNVConfig("serial_number", "The device hardware serial number.", "SerialNumber", false, false, String.class)),
-        //PROPERTIES(NVConfigManager.createNVConfig("properties", "Device properties", "Properties", false, true, NVGenericMap.class)),
 		
 		;
 	

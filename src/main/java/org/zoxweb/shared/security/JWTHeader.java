@@ -114,12 +114,12 @@ implements GetNVGenericMap
 	}
 	
 	
-	public NVGenericMap getNVGenericMap()
+	public NVGenericMap getProperties()
 	{
-		return nvgm;	
+	  return nvgm;
 	}
 	
-	public void setNVGenericMap(NVGenericMap nvgm)
+	public void setProperties(NVGenericMap nvgm)
 	{
 		this.nvgm.clear();
 		SharedUtil.updateGetNVGenericMap(this, nvgm);

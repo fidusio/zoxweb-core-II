@@ -95,9 +95,9 @@ extends SetNameDescriptionDAO
 	public JWT(JWTHeader header, JWTPayload payload)
 	{
 		this();
-		this.header.setNVGenericMap(header.getNVGenericMap());
+		this.header.setProperties(header.getProperties());
 	
-		this.payload.setNVGenericMap(payload.getNVGenericMap());
+		this.payload.setProperties(payload.getProperties());
 		
 
 	}

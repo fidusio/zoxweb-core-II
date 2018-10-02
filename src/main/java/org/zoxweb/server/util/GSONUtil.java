@@ -625,7 +625,7 @@ final public class GSONUtil
 						writer.name(nvc.getName());
 						if (tempNVE instanceof GetNVGenericMap)
 						{
-							toJSONGenericMap(writer, ((GetNVGenericMap) tempNVE).getNVGenericMap(), printNull, printClassType);
+							toJSONGenericMap(writer, ((GetNVGenericMap) tempNVE).getProperties(), printNull, printClassType);
 						}
 						else
 						toJSON( writer,  (Class<? extends NVEntity>) ((NVConfigEntity) nvc).getMetaType(), (NVEntity)nve.lookupValue(nvc), printNull, printClassType, b64Type);

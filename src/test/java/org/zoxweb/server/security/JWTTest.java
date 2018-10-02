@@ -230,11 +230,11 @@ public class JWTTest {
 				String test = CryptoUtil.encodeJWT("secret", decoded);
 		System.out.println("TESTGWT  :" + gwtToken);
 		System.out.println("local:" + test);
-		System.out.println(decoded.getPayload().getNVGenericMap());
+		System.out.println(decoded.getPayload().getProperties());
 		System.out.println(GSONUtil.toJSON(decoded, false, false, false, Base64Type.URL));
 		System.out.println("Are equals:" + test.equals(gwtToken));
 		Assert.assertEquals("2 tokens equals", test, gwtToken);
-		decoded.getPayload().getNVGenericMap().add(new NVPair("mario", "taza"));
+		decoded.getPayload().getProperties().add(new NVPair("mario", "taza"));
 		String json = GSONUtil.toJSON(decoded, false, false, true, Base64Type.URL);
 		System.out.println(json);
 		JWT fromJSON = GSONUtil.fromJSON(json);
@@ -254,16 +254,16 @@ public class JWTTest {
 		String gwtToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.XbPfbIHMI6arZ3Y922BhjWgQzWXcXNrz0ogtVhfEd2o";
 		System.out.println(CryptoUtil.parseJWT(gwtToken));
 		JWT decoded = CryptoUtil.decodeJWT("secret", gwtToken);
-		System.out.println("Subject class id:" + decoded.getPayload().getNVGenericMap().get("sub").getClass().getName());
+		System.out.println("Subject class id:" + decoded.getPayload().getProperties().get("sub").getClass().getName());
 
 		String test = CryptoUtil.encodeJWT("secret", decoded);
 		System.out.println("JOHNDOE:" + gwtToken);
 		System.out.println("local  :" + test);
-		System.out.println(decoded.getPayload().getNVGenericMap());
+		System.out.println(decoded.getPayload().getProperties());
 		System.out.println(GSONUtil.toJSON(decoded, false, false, false, Base64Type.URL));
 		System.out.println("Are equals:" + test.equals(gwtToken));
 		Assert.assertEquals("2 tokens equals", test, gwtToken);
-		decoded.getPayload().getNVGenericMap().add(new NVPair("mario", "taza"));
+		decoded.getPayload().getProperties().add(new NVPair("mario", "taza"));
 		String json = GSONUtil.toJSON(decoded, false, false, true, Base64Type.URL);
 		System.out.println(json);
 		JWT fromJSON = GSONUtil.fromJSON(json);
