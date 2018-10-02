@@ -225,21 +225,52 @@ public class ZWDataFactory
 				return AssociationDAO.NVC_ASSOCIATION_DAO;
 			}
 		},	
-		CREDIT_CARD_DAO(CreditCardDAO.class.getName())
+		CONFIG_DAO(ConfigDAO.class.getName())
 		{
 			@SuppressWarnings("unchecked")
 			@Override
-			public CreditCardDAO newInstance()
+			public ConfigDAO newInstance()
 			{
-				return new CreditCardDAO();
+				return new ConfigDAO();
 			}
 
 			@Override
 			public NVConfigEntity getNVConfigEntity()
 			{
-				return CreditCardDAO.NVC_CREDIT_CARD_DAO;
+				return ConfigDAO.NVC_CONFIG_DAO;
 			}
 		},
+		CONFIG_PROPERTIES_DAO(ConfigPropertiesDAO.class.getName())
+        {
+            @SuppressWarnings("unchecked")
+            @Override
+            public ConfigPropertiesDAO newInstance()
+            {
+                return new ConfigPropertiesDAO();
+            }
+
+            @Override
+            public NVConfigEntity getNVConfigEntity()
+            {
+                return ConfigPropertiesDAO.NVC_CONFIG_PROPERTIES_DAO;
+            }
+        },
+		CREDIT_CARD_DAO(CreditCardDAO.class.getName())
+        {
+            @SuppressWarnings("unchecked")
+            @Override
+            public CreditCardDAO newInstance()
+            {
+                return new CreditCardDAO();
+            }
+
+            @Override
+            public NVConfigEntity getNVConfigEntity()
+            {
+                return CreditCardDAO.NVC_CREDIT_CARD_DAO;
+            }
+        },
+		
 		CRUD_NVENTITY_DAO(CRUDNVEntityDAO.class.getName())
 		{
 			@SuppressWarnings("unchecked")

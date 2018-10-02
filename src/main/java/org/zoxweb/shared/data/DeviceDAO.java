@@ -8,14 +8,13 @@ import org.zoxweb.shared.util.NVConfig;
 import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVConfigEntityLocal;
 import org.zoxweb.shared.util.NVConfigManager;
-import org.zoxweb.shared.util.NVGenericMap;
 import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
 import org.zoxweb.shared.util.SubjectID;
 
 @SuppressWarnings("serial")
 public class DeviceDAO
-	extends SetNameDescriptionDAO
+	extends ConfigPropertiesDAO
 	implements DeviceID<String>, SubjectID<String>
 {
 
@@ -30,7 +29,7 @@ public class DeviceDAO
         MANUFACTURER(NVConfigManager.createNVConfig("manufacturer", "The device's manufacturer.", "Manufacturer", false, false, String.class)),
         VIRTUAL(NVConfigManager.createNVConfig("virtual", "Whether the device is running on a simulator.", "Virtual", false, false, boolean.class)),
         SERIAL_NUMBER(NVConfigManager.createNVConfig("serial_number", "The device hardware serial number.", "SerialNumber", false, false, String.class)),
-        PROPERTIES(NVConfigManager.createNVConfig("properties", "Device properties", "Properties", false, true, NVGenericMap.class)),
+        //PROPERTIES(NVConfigManager.createNVConfig("properties", "Device properties", "Properties", false, true, NVGenericMap.class)),
 		
 		;
 	
@@ -59,7 +58,7 @@ public class DeviceDAO
 											            SharedUtil.extractNVConfigs(Param.values()),
 											            null,
 											            false,
-											            SetNameDescriptionDAO.NVC_NAME_DAO);
+											            ConfigPropertiesDAO.NVC_CONFIG_PROPERTIES_DAO);
 	
 	
 	public DeviceDAO()
@@ -195,14 +194,6 @@ public class DeviceDAO
         setValue(Param.SERIAL_NUMBER, serialNumber);
     }
 
-    /**
-     * Returns additional device properties.
-     * @return
-     */
-    public NVGenericMap getProperties()
-    {
-        return (NVGenericMap) lookup(Param.PROPERTIES.getNVConfig().getName());
-    }
 
     /**
      * Sets the additional device properties.

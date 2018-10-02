@@ -18,14 +18,11 @@ package org.zoxweb.shared.data;
 import org.zoxweb.shared.util.AppConfig;
 import org.zoxweb.shared.util.ArrayValues;
 import org.zoxweb.shared.util.GetNVConfig;
-
 import org.zoxweb.shared.util.NVConfig;
 import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVConfigEntityLocal;
 import org.zoxweb.shared.util.NVConfigManager;
 import org.zoxweb.shared.util.NVEntity;
-import org.zoxweb.shared.util.NVGenericMap;
-import org.zoxweb.shared.util.SetCanonicalID;
 import org.zoxweb.shared.util.SharedUtil;
 import org.zoxweb.shared.util.NVConfigEntity.ArrayType;
 
@@ -36,8 +33,8 @@ import org.zoxweb.shared.util.NVConfigEntity.ArrayType;
  */
 @SuppressWarnings("serial")
 public class ConfigDAO 
-	extends SetNameDescriptionDAO
-	implements SetCanonicalID, AppConfig
+	extends ConfigPropertiesDAO
+	implements AppConfig
 {
 	/**
 	 * This enum contains data content variables which include:
@@ -51,9 +48,7 @@ public class ConfigDAO
 	public enum Param
 		implements GetNVConfig
 	{
-		CANONICAL_ID(NVConfigManager.createNVConfig("canonical_id", "Canonical ID", "CanonicalID", false, true, String.class)),
 		BEAN_CLASS_NAME(NVConfigManager.createNVConfig("bean_class_name", "Bean class name", "BeanClassName", false, true, String.class)),
-		PROPERTIES(NVConfigManager.createNVConfig("properties", "Configuration properties", "Properties", false, true, NVGenericMap.class)),
 		CONTENT(NVConfigManager.createNVConfigEntity("content", "Sub configuration", "Content", false, true, NVEntity[].class, ArrayType.GET_NAME_MAP)),
 		;
 
@@ -86,7 +81,7 @@ public class ConfigDAO
 																				SharedUtil.extractNVConfigs(Param.values()),
 																				null,
 																				false,
-																				SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO);
+																				ConfigPropertiesDAO.NVC_CONFIG_PROPERTIES_DAO);
 																					
 	
 	/**
@@ -104,33 +99,6 @@ public class ConfigDAO
 		setName(name);
 	}
 
-	/**
-	 * Returns string representation of this class.
-	 */
-	@Override
-	public String toCanonicalID() 
-	{
-		return getCanonicalID();
-	}
-	
-	/**
-	 *Returns canonical ID. 
-	 */
-	@Override
-	public String getCanonicalID() 
-	{
-		return lookupValue(Param.CANONICAL_ID);
-	}
-
-	/**
-	 * Sets canonical ID.
-	 */
-	@Override
-	public void setCanonicalID(String id) 
-	{
-		setValue(Param.CANONICAL_ID, id);
-	}
-	
 	/**
 	 * Returns content type.
 	 * @return the bean class name
@@ -152,12 +120,6 @@ public class ConfigDAO
 	public void setBeanClassName(String type)
 	{
 		setValue(Param.BEAN_CLASS_NAME, type);
-	}
-	
-
-	public NVGenericMap getProperties()
-	{
-		return (NVGenericMap) lookup(Param.PROPERTIES);
 	}
 	
 	

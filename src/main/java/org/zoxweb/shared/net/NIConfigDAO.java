@@ -1,5 +1,6 @@
 package org.zoxweb.shared.net;
 
+import org.zoxweb.shared.data.ConfigPropertiesDAO;
 import org.zoxweb.shared.data.SetNameDescriptionDAO;
 import org.zoxweb.shared.util.GetNVConfig;
 
@@ -8,20 +9,19 @@ import org.zoxweb.shared.util.NVConfig;
 import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVConfigEntityLocal;
 import org.zoxweb.shared.util.NVConfigManager;
-import org.zoxweb.shared.util.NVGenericMap;
+
 import org.zoxweb.shared.util.SharedUtil;
 import org.zoxweb.shared.net.InetProp.InetProto;;
 
 @SuppressWarnings("serial")
 public class NIConfigDAO
-  extends SetNameDescriptionDAO
+  extends ConfigPropertiesDAO
 {
   public enum Param
   implements GetNVConfig, GetName
   {
     NI_NAME(NVConfigManager.createNVConfig("ni_name", "Network interface physical name", "NIName", false, true, String.class)),
     INET_PROTO(NVConfigManager.createNVConfig("inet_proto", "Inet proptocol", "Proto", false, true, InetProto.class)),
-    PROPERTIES(NVConfigManager.createNVConfig("properties", "Properties", "Properties", false, true, NVGenericMap.class)),
     ADDRESS(NVConfigManager.createNVConfig("address", "Address", "Address", false, true, String.class)),
     NETMASK(NVConfigManager.createNVConfig("netmask", "Network Mask", "NetMask", false, true, String.class)),
     GATEWAY(NVConfigManager.createNVConfig("gateway", "Gateway", "Gateway", false, true, String.class)),
@@ -49,7 +49,7 @@ public class NIConfigDAO
   
   }
   
-  public static final NVConfigEntity NVC_NI_CONFIG_DAO = new NVConfigEntityLocal(null, null , null, true, false, false, false, NIConfigDAO.class, SharedUtil.extractNVConfigs(Param.NI_NAME, Param.INET_PROTO, Param.PROPERTIES), null, false, SetNameDescriptionDAO.NVC_NAME_DAO);
+  public static final NVConfigEntity NVC_NI_CONFIG_DAO = new NVConfigEntityLocal(null, null , null, true, false, false, false, NIConfigDAO.class, SharedUtil.extractNVConfigs(Param.NI_NAME, Param.INET_PROTO), null, false, ConfigPropertiesDAO.NVC_CONFIG_PROPERTIES_DAO);
   
   public NIConfigDAO()
   {
@@ -128,12 +128,5 @@ public class NIConfigDAO
     getProperties().add(Param.NETWORK, network);
   }
 
-
-
- 
-  public NVGenericMap getProperties() {
-    // TODO Auto-generated method stub
-    return (NVGenericMap) lookup(Param.PROPERTIES.getName());
-  }
   
 }
