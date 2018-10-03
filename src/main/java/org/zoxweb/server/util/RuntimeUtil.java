@@ -96,7 +96,7 @@ public class RuntimeUtil
 	    String parameters = SharedUtil.toCanonicalID(' ', (Object[])params);
 	    if(!SharedStringUtil.isEmpty(parameters))
 	    {
-	      command = SharedUtil.toCanonicalID(' ', command, parameters); 
+	      command = command + " " + parameters; 
 	    }
 	  } 
       return runAndFinish(command, ResultAttribute.OUTPUT);

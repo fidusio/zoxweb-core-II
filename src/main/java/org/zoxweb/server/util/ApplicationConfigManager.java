@@ -241,6 +241,16 @@ public class ApplicationConfigManager
 		
 		return null;
 	}
+	
+	public byte[] loadFile(ApplicationConfigDAO acd, String varName) throws NullPointerException, IOException
+	{
+	  File file = locateFile(acd, varName);
+	  if (file != null)
+	  {
+	    return IOUtil.inputStreamToByteArray(file, true).toByteArray();
+	  }
+	  return null;
+	}
 
 	public String readConfigurationContent(ApplicationConfigDAO acd, String varName)
         throws NullPointerException, IOException
