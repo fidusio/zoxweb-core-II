@@ -1886,6 +1886,18 @@ public class SharedUtil
 	}
 	
 	
+	@SuppressWarnings("unchecked")
+    public static<V> List<V> addTo(List<V> list, V ...toAdd)
+	{
+	  for(V v : toAdd)
+	  {
+	    
+	    list.add(v);
+	  }
+	  
+	  return list;
+	}
+	
 	/**
 	 * 
 	 * @param array
