@@ -295,6 +295,24 @@ public class SharedUtil
 		return null;
 	}
 	
+	
+	public static GetName lookupGetName(GetName gNames[], String name)
+	{
+	  if (name != null && gNames != null)
+	  {
+	    for(GetName gn : gNames)
+	    {
+	      if(name.equalsIgnoreCase(gn.getName()))
+	      {
+	        return gn;
+	      }
+	    }
+	  }
+	  
+	  return null;
+	}
+	
+	
 	public static<T extends Enum<?>> T lookupTypedEnum(T[] list, String str)
     {
 		if (str != null)

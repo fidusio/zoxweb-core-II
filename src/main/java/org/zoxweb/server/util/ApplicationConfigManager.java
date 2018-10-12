@@ -32,6 +32,7 @@ import org.zoxweb.shared.util.Const;
 import org.zoxweb.shared.util.GetValue;
 import org.zoxweb.shared.util.NVGenericMap;
 import org.zoxweb.shared.util.SharedBase64.Base64Type;
+import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
 
 public class ApplicationConfigManager
@@ -249,6 +250,15 @@ public class ApplicationConfigManager
 	  {
 	    return IOUtil.inputStreamToByteArray(file, true).toByteArray();
 	  }
+	  return null;
+	}
+	
+	public String loadFileAsString(ApplicationConfigDAO acd, String varName) throws NullPointerException, IOException
+	{
+	  
+	  byte[] content = loadFile(acd, varName);
+	  if(content != null)
+	    return SharedStringUtil.toString(content);
 	  return null;
 	}
 
