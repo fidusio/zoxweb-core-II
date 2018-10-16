@@ -459,7 +459,7 @@ public class NetUtil
 		InetAddress ret = null;
 		if ( mask != null)
 		{
-			ret = getNetwork( InetAddress.getByName(address), InetAddress.getByName(mask));
+			ret = getNetwork(InetAddress.getByName(address), InetAddress.getByName(mask));
 		}
 		else
 		{
