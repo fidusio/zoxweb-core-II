@@ -29,7 +29,7 @@ import java.util.logging.Logger;
 
 import org.zoxweb.shared.data.SetNameDAO;
 import org.zoxweb.shared.net.InetFilterDAO;
-
+import org.zoxweb.shared.net.SharedNetUtil;
 import org.zoxweb.shared.security.SecurityStatus;
 import org.zoxweb.shared.util.GetNVConfig;
 import org.zoxweb.shared.util.NVConfig;
@@ -364,7 +364,7 @@ public class InetFilterRulesManager
 					
 					//.info(""+ipfp);
 					ret = SecurityStatus.DENY;
-					if (NetUtil.belongsToNetwork(ipfp.getNetworkBytes(), ipfp.getNetMaskBytes(), ipAddress))
+					if (SharedNetUtil.belongsToNetwork(ipfp.getNetworkBytes(), ipfp.getNetMaskBytes(), ipAddress))
 					{
 						return SecurityStatus.ALLOW;
 					}
@@ -381,7 +381,7 @@ public class InetFilterRulesManager
 				{
 					//log.info(""+ipfp);
 					ret = SecurityStatus.ALLOW;
-					if (NetUtil.belongsToNetwork(ipfp.getNetworkBytes(), ipfp.getNetMaskBytes(), ipAddress))
+					if (SharedNetUtil.belongsToNetwork(ipfp.getNetworkBytes(), ipfp.getNetMaskBytes(), ipAddress))
 					{
 						//log.info("deny:"+ipfp);
 						return SecurityStatus.DENY;

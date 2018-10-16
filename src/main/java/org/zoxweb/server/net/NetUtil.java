@@ -42,6 +42,7 @@ import org.zoxweb.shared.net.InetProp.NIStatus;
 import org.zoxweb.shared.net.InetProp.NIType;
 import org.zoxweb.shared.net.InetSocketAddressDAO;
 import org.zoxweb.shared.net.ProxyType;
+import org.zoxweb.shared.net.SharedNetUtil;
 import org.zoxweb.shared.security.SecurityStatus;
 import org.zoxweb.shared.net.InetProp.IPVersion;
 import org.zoxweb.shared.net.InetProp.InetProto;
@@ -232,7 +233,7 @@ public class NetUtil
 		byte[] tempNetwork = null;
 		if ( networkMask != null)
 		{
-			tempNetwork = getNetwork( InetAddress.getByName(ipAddress).getAddress(), networkMask);
+			tempNetwork = SharedNetUtil.getNetwork( InetAddress.getByName(ipAddress).getAddress(), networkMask);
 		}
 		else
 		{
@@ -243,23 +244,7 @@ public class NetUtil
 	}
 	
 	
-	public static boolean belongsToNetwork(byte[] network, byte[] networkMask, byte[] ipAddress)
-			throws IOException
-	{
-		SharedUtil.checkIfNulls("Network or IP adress can't be null", network, ipAddress);
-		byte[] tempNetwork = null;
-		if ( networkMask != null)
-		{
-			tempNetwork = getNetwork(ipAddress, networkMask);
-		}
-		else
-		{
-			//log.info("networkmask: null");
-			tempNetwork = ipAddress;
-		}
-		return Arrays.equals(network, tempNetwork);
-			
-	}
+	
 	
 	
 	public static Proxy.Type lookup(ProxyType pt)
@@ -471,20 +456,10 @@ public class NetUtil
 	public static InetAddress getNetwork(InetAddress address, InetAddress mask) 
 		throws IOException
 	{
-		return InetAddress.getByAddress(getNetwork(address.getAddress(), mask.getAddress()));	
+		return InetAddress.getByAddress(SharedNetUtil.getNetwork(address.getAddress(), mask.getAddress()));	
 	}
 	
-	public static byte[] getNetwork(byte[] addressBytes, byte[] maskBytes) 
-			throws IOException
-	{
-		byte[] networkBytes = new byte[addressBytes.length];
-		
-		for (int i = 0; i < networkBytes.length; i++)
-		{
-			networkBytes[i] = (byte)(addressBytes[i] & maskBytes[i]);
-		}
-		return networkBytes;		
-	}
+	
 	
 	
 	

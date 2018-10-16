@@ -57,7 +57,7 @@ public class IPInfo
 {
 	
 	
-	private IPInfo( NetworkInterface ni, IPVersion ipv)
+	private IPInfo(NetworkInterface ni, IPVersion ipv)
 	{
 		SharedUtil.checkIfNulls("NetworkInterface or ipv can't be null", ni, ipv);
 		if ( ipv == IPVersion.V6)

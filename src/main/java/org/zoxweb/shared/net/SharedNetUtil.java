@@ -1,5 +1,9 @@
 package org.zoxweb.shared.net;
 
+import java.io.IOException;
+import java.util.Arrays;
+import org.zoxweb.shared.util.SharedUtil;
+
 public class SharedNetUtil
 {
   private SharedNetUtil() {};
@@ -22,6 +26,38 @@ public class SharedNetUtil
       ret[i] = (byte)val;
     }
     return ret;
+  }
+  
+  
+  public static byte[] getNetwork(byte[] addressBytes, byte[] maskBytes) 
+      throws IOException
+  {
+    byte[] networkBytes = new byte[addressBytes.length];
+    
+    for (int i = 0; i < networkBytes.length; i++)
+    {
+        networkBytes[i] = (byte)(addressBytes[i] & maskBytes[i]);
+    }
+    return networkBytes;        
+  }
+  
+  
+  public static boolean belongsToNetwork(byte[] network, byte[] networkMask, byte[] ipAddress)
+      throws IOException
+  {
+    SharedUtil.checkIfNulls("Network or IP adress can't be null", network, ipAddress);
+    byte[] tempNetwork = null;
+    if ( networkMask != null)
+    {
+        tempNetwork = getNetwork(ipAddress, networkMask);
+    }
+    else
+    {
+        //log.info("networkmask: null");
+        tempNetwork = ipAddress;
+    }
+    return Arrays.equals(network, tempNetwork);
+        
   }
   
 }
