@@ -9,6 +9,7 @@ public class SharedNetUtil
   private SharedNetUtil() {};
   
   public static byte[] getV4Address(String ipV4)
+          throws IOException
   {
     String bytes[] = ipV4.split("\\.");
     if (bytes.length != 4)
@@ -21,7 +22,7 @@ public class SharedNetUtil
       int val = Integer.parseInt(bytes[i]);
       if (val < 0 || val > 255)
       {
-        throw new IllegalArgumentException("Invalid ip address:" + ipV4);
+        throw new IOException("Invalid ip address:" + ipV4);
       }
       ret[i] = (byte)val;
     }
@@ -29,35 +30,34 @@ public class SharedNetUtil
   }
   
   
-  public static byte[] getNetwork(byte[] addressBytes, byte[] maskBytes) 
+  public static byte[] getNetwork(byte[] address, byte[] netmask)
       throws IOException
   {
-    byte[] networkBytes = new byte[addressBytes.length];
+    byte[] networkBytes = new byte[address.length];
     
     for (int i = 0; i < networkBytes.length; i++)
     {
-        networkBytes[i] = (byte)(addressBytes[i] & maskBytes[i]);
+        networkBytes[i] = (byte)(address[i] & netmask[i]);
     }
     return networkBytes;        
   }
   
   
-  public static boolean belongsToNetwork(byte[] network, byte[] networkMask, byte[] ipAddress)
+  public static boolean belongsToNetwork(byte[] network, byte[] netmask, byte[] address)
       throws IOException
   {
-    SharedUtil.checkIfNulls("Network or IP adress can't be null", network, ipAddress);
+    SharedUtil.checkIfNulls("Network or IP adress can't be null", network, address);
     byte[] tempNetwork = null;
-    if ( networkMask != null)
+    if ( netmask != null)
     {
-        tempNetwork = getNetwork(ipAddress, networkMask);
+        tempNetwork = getNetwork(address, netmask);
     }
     else
     {
         //log.info("networkmask: null");
-        tempNetwork = ipAddress;
+        tempNetwork = address;
     }
     return Arrays.equals(network, tempNetwork);
-        
   }
   
 }
