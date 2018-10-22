@@ -3,7 +3,6 @@ package org.zoxweb.shared.net;
 
 import java.io.IOException;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.Arrays;
 import org.junit.BeforeClass;
 import org.junit.Test;
