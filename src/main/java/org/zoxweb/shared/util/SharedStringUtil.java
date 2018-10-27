@@ -540,6 +540,14 @@ public final class SharedStringUtil
 			throw new IllegalArgumentException(e.getMessage());
 		}
 	}
+	
+	public static String toString(byte b)
+	{
+	  int ret = b;
+	  if (ret < 0)
+	    ret += 256;
+	  return Integer.toString(ret);
+	}
 
 	/**
 	 * Checks if str is not null then return lowercase version, otherwise return null.

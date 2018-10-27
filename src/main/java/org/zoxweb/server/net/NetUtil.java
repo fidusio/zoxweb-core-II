@@ -221,7 +221,7 @@ public class NetUtil
 		throws IOException
 	{
 		String tempNetwork = getNetwork( ipAddress, ipf.getNetworkMask());
-		return ( tempNetwork.equals( ipf.getNetwork()));
+		return tempNetwork.equals( ipf.getNetwork());
 	}
 	
 	

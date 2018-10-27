@@ -339,6 +339,8 @@ public class HTTPServletUtil
 		resp.setHeader("Pragma", "no-cache"); // HTTP 1.0.
 		//resp.setHeader("Access-Control-Allow-Origin", "*");
 		resp.setDateHeader("Expires", 0); // Proxies.
+		// allow cross site access
+		resp.addHeader("Access-Control-Allow-Origin", "*");
 		
 		if (json != null)
 		{

@@ -2739,5 +2739,13 @@ public class SharedUtil
     {
 		return (year % 400 == 0) || ((year % 100) != 0 && (year % 4 == 0));
 	}
+	
+	public static int toUnsignedInt(byte b)
+	{
+	  int ret = b;
+	  if (ret < 0)
+	    ret += 256;
+	  return ret;
+	}
 
 }

@@ -364,7 +364,7 @@ public class InetFilterRulesManager
 					
 					//.info(""+ipfp);
 					ret = SecurityStatus.DENY;
-					if (SharedNetUtil.belongsToNetwork(ipfp.getNetworkBytes(), ipfp.getNetMaskBytes(), ipAddress))
+					if (SharedNetUtil.belongsToNetwork(ipAddress, ipfp.getNetMaskBytes(), ipfp.getNetworkBytes()))
 					{
 						return SecurityStatus.ALLOW;
 					}
@@ -381,7 +381,7 @@ public class InetFilterRulesManager
 				{
 					//log.info(""+ipfp);
 					ret = SecurityStatus.ALLOW;
-					if (SharedNetUtil.belongsToNetwork(ipfp.getNetworkBytes(), ipfp.getNetMaskBytes(), ipAddress))
+					if (SharedNetUtil.belongsToNetwork(ipAddress, ipfp.getNetMaskBytes(), ipfp.getNetworkBytes()))
 					{
 						//log.info("deny:"+ipfp);
 						return SecurityStatus.DENY;

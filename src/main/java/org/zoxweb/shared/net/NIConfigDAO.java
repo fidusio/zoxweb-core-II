@@ -79,7 +79,7 @@ public class NIConfigDAO
   
   public String getAddress()
   {
-    return lookupValue(Param.ADDRESS.getName());
+    return getProperties().getValue(Param.ADDRESS.getName());
   }
   
   public void setAddress(String address) 
