@@ -90,6 +90,7 @@ public class APIException
 	 * Set default category to generic.
 	 */
 	private Category category = Category.GENERIC;
+	private int statusCode = -1;
 	
 	/**
 	 * Set default code to generic.
@@ -139,15 +140,29 @@ public class APIException
 	/**
 	 * This constructor instantiates APIStoreException based on given reason,
 	 * set category and set code.
-	 * @param reason
-	 * @param category 
-	 * @param code 
+	 * @param message 
+	 * @param category defined
+	 * @param code defined
 	 */
-	public APIException(String reason, Category category, Code code)
+	public APIException(String message, Category category, Code code)
+    {
+	    this(message, category, code, -1);
+    }
+	
+	/**
+	 * This constructor instantiates APIStoreException based on given message,
+     * set category and set code.
+	 * @param message
+	 * @param category
+	 * @param code
+	 * @param statusCode domain specific
+	 */
+	public APIException(String message, Category category, Code code, int statusCode)
 	{
-		super(reason);
+		super(message);
 		this.category = category;
 		this.code = code;
+		setStatusCode(statusCode);
 	}
 
 	
@@ -161,6 +176,18 @@ public class APIException
 		// TODO Auto-generated method stub
 		this.reason = reason;
 	}
+
+  @Override
+  public int getStatusCode() {
+    // TODO Auto-generated method stub
+    return statusCode;
+  }
+
+  @Override
+  public void setStatusCode(int code) {
+    // TODO Auto-generated method stub
+    statusCode = code;
+  }
 	
 	
 }

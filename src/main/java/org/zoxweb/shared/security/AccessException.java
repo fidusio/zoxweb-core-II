@@ -29,6 +29,7 @@ public class AccessException
 {
 	private String urlRedirect = null;
 	private boolean reload = false;
+	private int statusCode = -1;
 	
 	
 	
@@ -108,5 +109,17 @@ public class AccessException
 		// TODO Auto-generated method stub
 		this.reason = reason;
 	}
+
+  @Override
+  public int getStatusCode() {
+    // TODO Auto-generated method stub
+    return statusCode;
+  }
+
+  @Override
+  public void setStatusCode(int code) {
+    // TODO Auto-generated method stub
+    statusCode = code;
+  }
 	
 }

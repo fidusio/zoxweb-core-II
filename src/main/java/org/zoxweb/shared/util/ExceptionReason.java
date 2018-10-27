@@ -15,6 +15,9 @@ public interface ExceptionReason
 	Reason getReason();
 	void setReason(Reason reason);
 	
+	int getStatusCode();
+	void setStatusCode(int code);
+	
 	String getMessage();
 	
 }
