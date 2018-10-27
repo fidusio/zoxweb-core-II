@@ -60,6 +60,7 @@ public class HTTPServletUtil
 {
 	public static final int ZIP_LIMIT = 1024;
 	public static GSONWrapper GSON_WRAPPER = new GSONWrapper(Base64Type.DEFAULT);
+	public static boolean ACAO = true;
 	
 	private static final transient Logger log = Logger.getLogger(HTTPServletUtil.class.getName());
 
@@ -340,7 +341,8 @@ public class HTTPServletUtil
 		//resp.setHeader("Access-Control-Allow-Origin", "*");
 		resp.setDateHeader("Expires", 0); // Proxies.
 		// allow cross site access
-		resp.addHeader("Access-Control-Allow-Origin", "*");
+		if (ACAO)
+		  resp.addHeader("Access-Control-Allow-Origin", "*");
 		
 		if (json != null)
 		{
