@@ -128,6 +128,11 @@ public class SharedNetUtil
   public static boolean validateNIConfig(NIConfigDAO nicd) throws IOException
   {
     SharedUtil.checkIfNulls("NIConfigDAO null", nicd, nicd.getInetProtocol());
+    if(SharedStringUtil.isEmpty(nicd.getNIName()))
+    {
+     throw new IllegalArgumentException("Network Interface name invalid:" + nicd.getNIName()); 
+    }
+    
     
     switch(nicd.getInetProtocol())
     {
@@ -156,7 +161,7 @@ public class SharedNetUtil
           if (!(belongsToNetwork(address, netmask, network) && 
               belongsToNetwork(gateway, netmask, network)))
           {
-            throw new IOException("BAD Network config:" + SharedUtil.toCanonicalID(',', nicd.getAddress(), nicd.getNetmask(), nicd.getGateway()));
+            throw new IOException("BAD Network config:" + SharedUtil.toCanonicalID(',', nicd.getNIName(), nicd.getAddress(), nicd.getNetmask(), nicd.getGateway()));
           }
         }         
  

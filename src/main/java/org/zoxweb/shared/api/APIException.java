@@ -131,6 +131,14 @@ public class APIException
 	{
 		super(message);
 	}
+	
+	
+	public APIException(String message, int statusCode)
+    {
+        super(message);
+        setStatusCode(statusCode);
+    }
+	
 	public APIException(String message, Reason reason)
 	{
 		super(message);
