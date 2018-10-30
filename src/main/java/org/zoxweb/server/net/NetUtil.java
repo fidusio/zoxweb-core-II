@@ -127,7 +127,7 @@ public class NetUtil
 	
 	
 	
-	public static Inet4Address getInet4Address( String host) throws UnknownHostException
+	public static Inet4Address getInet4Address(String host) throws UnknownHostException
 	{
 		//log.info("Host:" + host);
 		InetAddress[] all = InetAddress.getAllByName(host);
@@ -387,32 +387,9 @@ public class NetUtil
 	
 	
 	
-	public static InetAddress toNetmaskIPV4( short netPrefix) throws IOException
-	{
-		
-		if ( netPrefix > 32)
-		{
-			throw new IllegalArgumentException("Invalid mask " + netPrefix+ " > 32" );
-		}
-		
-		//dbg("mask short " + netPrefix);
-		long maskLong = 0xffffffffL ;
-		
-		//dbg("mask long " + (long)maskLong);
-		maskLong = maskLong<<(32 - netPrefix );
-		//dbg("mask long " + maskLong);
-
-		
-		byte[] maskAddress = new byte[4];
-
-		for (int i=0; i < maskAddress.length; i++)
-		{
-			maskAddress[  maskAddress.length - (1+i)] = (byte)maskLong;//maskAddress[ maskAddress.length - (1+i)] ;
-			
-			maskLong = maskLong>>8;
-		}
-		
-		return InetAddress.getByAddress(maskAddress);
+	public static InetAddress toNetmaskIPV4(short netPrefix) throws IOException
+	{	
+		return InetAddress.getByAddress(SharedNetUtil.toNetmaskIPV4(netPrefix));
 	}
 	
 	public static InetAddress getNetwork(InterfaceAddress ia) throws IOException

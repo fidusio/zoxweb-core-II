@@ -125,6 +125,38 @@ public class SharedNetUtil
     return Arrays.equals(network, tempNetwork);
   }
   
+  
+  
+  
+  public static byte[] toNetmaskIPV4(short netPrefix) throws IOException
+  {
+      
+      if ( netPrefix > 32)
+      {
+          throw new IllegalArgumentException("Invalid mask " + netPrefix+ " > 32" );
+      }
+      
+      //dbg("mask short " + netPrefix);
+      long maskLong = 0xffffffffL ;
+      
+      //dbg("mask long " + (long)maskLong);
+      maskLong = maskLong<<(32 - netPrefix );
+      //dbg("mask long " + maskLong);
+
+      
+      byte[] maskAddress = new byte[4];
+
+      for (int i=0; i < maskAddress.length; i++)
+      {
+          maskAddress[  maskAddress.length - (1+i)] = (byte)maskLong;//maskAddress[ maskAddress.length - (1+i)] ;
+          
+          maskLong = maskLong>>8;
+      }
+      
+      return maskAddress;
+  }
+  
+  
   public static boolean validateNIConfig(NIConfigDAO nicd) throws IOException
   {
     SharedUtil.checkIfNulls("NIConfigDAO null", nicd, nicd.getInetProtocol());

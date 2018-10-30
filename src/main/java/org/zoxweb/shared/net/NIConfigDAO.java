@@ -25,6 +25,8 @@ public class NIConfigDAO
     NETMASK(NVConfigManager.createNVConfig("netmask", "Network Mask", "NetMask", false, true, String.class)),
     GATEWAY(NVConfigManager.createNVConfig("gateway", "Gateway", "Gateway", false, true, String.class)),
     NETWORK(NVConfigManager.createNVConfig("network", "Network", "Network", false, true, String.class)),
+    USERNAME(NVConfigManager.createNVConfig("username", "PPPoE user name", "UserName", false, true, String.class)),
+    PASSWORD(NVConfigManager.createNVConfig("password", "PPPoE passowrd", "Password", false, true, String.class)),
     DNS_SERVERS(NVConfigManager.createNVConfig("dns-nameservers", "DNS Name Servers", "DNSNameServers", false, true, String.class)),
 
     
@@ -125,6 +127,26 @@ public class NIConfigDAO
   public void setNetwork(String network) 
   {
     getProperties().add(Param.NETWORK, network);
+  }
+  
+  public String getUsername()
+  {
+    return getProperties().getValue(Param.USERNAME);
+  }
+  
+  public void setUsername(String username) 
+  {
+    getProperties().add(Param.USERNAME, username);
+  }
+  
+  public String getPassword()
+  {
+    return getProperties().getValue(Param.PASSWORD);
+  }
+  
+  public void setPassword(String password) 
+  {
+    getProperties().add(Param.PASSWORD, password);
   }
 
   

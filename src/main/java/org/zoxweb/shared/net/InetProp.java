@@ -35,7 +35,8 @@ public class InetProp
 		MANUAL,
 		LOOPBACK,
 		STATIC,
-		DHCP;
+		DHCP,
+		PPPOE;
 		
 		public String toString()
 		{

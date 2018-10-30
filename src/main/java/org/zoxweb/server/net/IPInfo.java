@@ -18,19 +18,18 @@ package org.zoxweb.server.net;
 
 
 import java.io.BufferedReader;
-import java.io.FileReader;
+
 import java.io.IOException;
+import java.io.StringReader;
 import java.net.InetAddress;
 import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
-
 import java.util.List;
-import java.util.Properties;
-
-import org.zoxweb.server.io.IOUtil;
-
+import org.zoxweb.server.util.RuntimeUtil;
+import org.zoxweb.shared.data.RuntimeResultDAO;
 import org.zoxweb.shared.net.InetProp.IPVersion;
-import org.zoxweb.shared.net.InetProp.InetProto;
+import org.zoxweb.shared.net.NIConfigDAO;
+import org.zoxweb.shared.net.SharedNetUtil;
 import org.zoxweb.shared.util.SharedUtil;
 
 
@@ -94,10 +93,10 @@ public class IPInfo
 		case V4:
 			List<InterfaceAddress> lia = ni.getInterfaceAddresses();
 			InetAddress main = getIPAddress();
-			for ( InterfaceAddress ia : lia)
+			for (InterfaceAddress ia : lia)
 			{
 			
-				if ( main.equals(ia.getAddress()))
+				if (main.equals(ia.getAddress()))
 				{
 					ret = NetUtil.toNetmaskIPV4(ia.getNetworkPrefixLength());
 					break;
@@ -178,34 +177,30 @@ public class IPInfo
 		switch( ipv)
 		{
 		case V4:
-			// go to ifcfg-ni name file 
-			// load /etc/sysconfig/network-scripts/ifcfg-niname it as Properties
-			// look for BOOTPROTO value 
-			// if static
-			// - return the GATEWAY value
-			// if dhcp
-			// - read the last entry in /var/lib/dhclient/dhclient-niname.lease of option routers ip.ip.ip.ip;
-			Properties ifcfg = new Properties();
-			FileReader fr = new FileReader(LINUX_NI_CFG_PREFIX+ni.getName());
-			ifcfg.load(fr);
-			fr.close();
-			
-			String proto = ifcfg.getProperty( LINUX_BOOTPROTO);
-			InetProto pt = InetProto.valueOf(proto.toUpperCase());
-			
-			switch( pt)
-			{
-			case STATIC:
-				String gateway = ifcfg.getProperty(LINUX_GATEWAY);
-				
-				return gateway != null ? InetAddress.getByName( ifcfg.getProperty(LINUX_GATEWAY)) : null;
-				
-			case DHCP:
-				return InetAddress.getByName(lookupRouterFromDHClientFile());
-			
-			default:
-				throw new IOException("Network " + ni.getName() + " has unsupported BOOTPROTO" + proto );
-			}
+		    
+          try {
+            RuntimeResultDAO rrd = RuntimeUtil.runAndFinish("netstat -rn");
+            BufferedReader br = new BufferedReader(new StringReader(rrd.getOutputData()));
+            String line;
+            int len = 8;
+            while((line = br.readLine()) != null)
+            {
+              String data[] = line.split("\\s+");
+              if(data.length == len)
+              {
+                if(data[len-1].equals(getNetworkInterface().getName()))
+                {
+                  return InetAddress.getByName(data[1]);
+                }
+              }
+            }
+            
+          } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+          }
+          
+          break;
 			
 		case V6:
 			break;
@@ -215,34 +210,34 @@ public class IPInfo
 	}
 	
 	
-	private String lookupRouterFromDHClientFile()
-		throws IOException
-	{
-		BufferedReader br = new BufferedReader( new FileReader(LINUX_DHCP_NI_CFG_PREFIX + ni.getName() + LINUX_DHCP_NI_CFG_POSTFIX));
-		
-		String lastRouterLine = null;
-		String line = null;
-		while ( (line = br.readLine()) != null )
-		{
-			if ( line.indexOf(LINUX_DHCP_ROUTERS) != -1 )
-			{
-				lastRouterLine = line;
-			}
-		}
-		IOUtil.close(br);
-		
-		if ( lastRouterLine != null)
-		{
-			int beginIndex = lastRouterLine.indexOf(LINUX_DHCP_ROUTERS)+ LINUX_DHCP_ROUTERS.length();
-			int endIndex = lastRouterLine.indexOf(";");
-			return lastRouterLine.substring(beginIndex, endIndex).trim();
-		}
-		
-		
-		return null;
-		
-	}
-	
+//	private String lookupRouterFromDHClientFile()
+//		throws IOException
+//	{
+//		BufferedReader br = new BufferedReader( new FileReader(LINUX_DHCP_NI_CFG_PREFIX + ni.getName() + LINUX_DHCP_NI_CFG_POSTFIX));
+//		
+//		String lastRouterLine = null;
+//		String line = null;
+//		while ( (line = br.readLine()) != null )
+//		{
+//			if ( line.indexOf(LINUX_DHCP_ROUTERS) != -1 )
+//			{
+//				lastRouterLine = line;
+//			}
+//		}
+//		IOUtil.close(br);
+//		
+//		if ( lastRouterLine != null)
+//		{
+//			int beginIndex = lastRouterLine.indexOf(LINUX_DHCP_ROUTERS)+ LINUX_DHCP_ROUTERS.length();
+//			int endIndex = lastRouterLine.indexOf(";");
+//			return lastRouterLine.substring(beginIndex, endIndex).trim();
+//		}
+//		
+//		
+//		return null;
+//		
+//	}
+//	
 	public IPVersion getIPVersion()
 	{
 		return ipv;
@@ -255,34 +250,43 @@ public class IPInfo
 	}
 	
 	
-	public String toString()
-	{
-		StringBuilder sb = new StringBuilder();
-		try
-		{
-			sb.append("NetInterf=" + ni.getName() +"\n");
-			sb.append("IPAddress=" + (getIPAddress() != null ? getIPAddress().getHostAddress() : "")+"\n");
-			sb.append("NETMask  =" + (getNetworkMask() != null ? getNetworkMask().getHostAddress() : "")+"\n");
-			sb.append("Gateway  =" + (getGateway() != null ? getGateway().getHostAddress() : "") +"\n");
-			sb.append("Network  =" + (getNetwork() != null ?  getNetwork().getHostAddress() : "")+"\n");
-			sb.append("Broadcast=" + (getBroadcast() != null ? getBroadcast().getHostAddress() : "")+"\n");
-			
-		}
-		catch( Exception e)
-		{
-			
-		}
-		
-		return sb.toString();
-	}
+//	public String toString()
+//	{
+//		StringBuilder sb = new StringBuilder();
+//		try
+//		{
+//			sb.append("NetInterf=" + ni.getName() +"\n");
+//			sb.append("IPAddress=" + (getIPAddress() != null ? getIPAddress().getHostAddress() : "")+"\n");
+//			sb.append("NETMask  =" + (getNetworkMask() != null ? getNetworkMask().getHostAddress() : "")+"\n");
+//			sb.append("Gateway  =" + (getGateway() != null ? getGateway().getHostAddress() : "") +"\n");
+//			sb.append("Network  =" + (getNetwork() != null ?  getNetwork().getHostAddress() : "")+"\n");
+//			sb.append("Broadcast=" + (getBroadcast() != null ? getBroadcast().getHostAddress() : "")+"\n");
+//			
+//		}
+//		catch( Exception e)
+//		{
+//			
+//		}
+//		
+//		return sb.toString();
+//	}
 	
 	
-	public static IPInfo getV4IPInfo( String niName) throws IOException
+	public static IPInfo getV4IPInfo(String niName) throws IOException
 	{
 		return new IPInfo(NetworkInterface.getByName(niName), IPVersion.V4);
 	}
 	
-	public static IPInfo getV4IPInfo( NetworkInterface ni)
+	public static NIConfigDAO getNIConfigInfo(NIConfigDAO nicd) throws IOException
+	{
+	  IPInfo ipi = getV4IPInfo(nicd.getNIName());
+	  nicd.setAddress(SharedNetUtil.toV4Address(ipi.getIPAddress().getAddress()));
+	  nicd.setNetmask(SharedNetUtil.toV4Address(ipi.getNetworkMask().getAddress()));
+	  nicd.setGateway(SharedNetUtil.toV4Address(ipi.getGateway().getAddress()));
+	  return nicd;
+	}
+	
+	public static IPInfo getV4IPInfo(NetworkInterface ni)
 		throws IOException
 	{
 		return new IPInfo(ni, IPVersion.V4);
