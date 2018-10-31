@@ -1,5 +1,6 @@
 package org.zoxweb.shared.net;
 
+import java.io.IOException;
 import org.zoxweb.shared.data.ConfigPropertiesDAO;
 import org.zoxweb.shared.util.GetNVConfig;
 
@@ -149,5 +150,10 @@ public class NIConfigDAO
     getProperties().add(Param.PASSWORD, password);
   }
 
+  
+  public String getAddressNetmask() throws IOException
+  {
+    return getAddress() + "/" + SharedNetUtil.toNetmaskIPV4(SharedNetUtil.getV4Address(getNetmask()));
+  }
   
 }

@@ -128,7 +128,7 @@ public class SharedNetUtil
   
   
   
-  public static byte[] toNetmaskIPV4(short netPrefix) throws IOException
+  public static byte[] toNetmaskIPV4(short netPrefix)
   {
       
       if ( netPrefix > 32)
@@ -136,14 +136,8 @@ public class SharedNetUtil
           throw new IllegalArgumentException("Invalid mask " + netPrefix+ " > 32" );
       }
       
-      //dbg("mask short " + netPrefix);
-      long maskLong = 0xffffffffL ;
-      
-      //dbg("mask long " + (long)maskLong);
+      long maskLong = 0xffffffffL;
       maskLong = maskLong<<(32 - netPrefix );
-      //dbg("mask long " + maskLong);
-
-      
       byte[] maskAddress = new byte[4];
 
       for (int i=0; i < maskAddress.length; i++)
@@ -152,8 +146,28 @@ public class SharedNetUtil
           
           maskLong = maskLong>>8;
       }
-      
       return maskAddress;
+  }
+  
+  
+  public static short toNetmaskIPV4(byte[] netmask)
+  {
+      short ret = 0;
+      byte bit = 1;
+      for(byte b: netmask)
+      {
+        for (int i=0; i < 8; i++)
+        {
+          byte res = (byte) (b&bit);
+          if(res == 1)
+            ret++;
+          b = (byte) (b >> 1);
+        }
+      }
+      
+      
+      return ret;
+      
   }
   
   

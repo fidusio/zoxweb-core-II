@@ -414,7 +414,7 @@ public class NetUtil
 	}
 	
 	
-	public static String getNetwork( String address, String mask) 
+	public static String getNetwork(String address, String mask) 
 		throws IOException
 	{
 		

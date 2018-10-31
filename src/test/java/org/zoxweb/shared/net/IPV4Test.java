@@ -148,12 +148,19 @@ public class IPV4Test {
         "128.0.0.0",
         "255.255.128.0",
         "255.255.255.255",
+        "255.255.255.252",
+        "255.255.255.248",
+        "255.255.255.240",
+        "255.255.255.224",
+        "255.255.255.192",
+        "255.255.255.128",
+        "255.255.255.0",
     };
     
     for(String mask : maskList)
     {
         byte netmask[] = SharedNetUtil.getV4Address(mask);
-        System.out.println("netmask:" + mask);
+        System.out.println("netmask:" + mask + "/" + SharedNetUtil.toNetmaskIPV4(netmask));
         assert(SharedNetUtil.validateV4Netmask(netmask));
     }
     
