@@ -150,17 +150,25 @@ public class SharedNetUtil
   }
   
   
-  public static short toNetmaskIPV4(byte[] netmask)
+  public static short toNetmaskIPV4(byte[] netmask) throws IOException
   {
+    if (!validateV4Netmask(netmask))
+      throw new IOException("Invalid netmaks");
+    
       short ret = 0;
-      byte bit = 1;
+      
       for(byte b: netmask)
       {
         for (int i=0; i < 8; i++)
         {
-          byte res = (byte) (b&bit);
+          byte res = (byte) (b & 0x01);
+          
+        
+          
           if(res == 1)
             ret++;
+          
+         
           b = (byte) (b >> 1);
         }
       }
