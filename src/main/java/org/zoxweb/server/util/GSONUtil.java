@@ -641,6 +641,16 @@ final public class GSONUtil
 					writer.name(nvc.getName());
 					toJSONGenericMap(writer, (NVGenericMap)nve.lookup(nvc),  printNull, printClassType);
 				}
+				else if (NVStringList.class.equals(nvc.getMetaTypeBase()))
+				{
+				  writer.beginArray();
+				  NVStringList tempNVSL = (NVStringList)nve.lookupValue(nvc);
+				  for (String str: tempNVSL.getValue())
+				  {
+				    writer.value(str);
+				  }
+				  writer.endArray();
+				}
 			}
 		}
 	
@@ -1632,6 +1642,16 @@ final public class GSONUtil
 						}
 					
 					}
+					else if (NVStringList.class.equals(metaType))
+                    {
+                        JsonArray jsonArray = je.getAsJsonArray();
+                        NVStringList nval = (NVStringList) nvb;
+                        
+                        for (int i = 0; i < jsonArray.size(); i++)
+                        {
+                            nval.getValue().add(jsonArray.get(i).getAsString());
+                        }   
+                    }
 					else if (nvc.isEnum())
 					{
 						if (!(je instanceof JsonNull))

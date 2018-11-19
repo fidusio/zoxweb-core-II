@@ -11,7 +11,7 @@ import org.zoxweb.shared.util.SharedUtil;
 
 
 @SuppressWarnings("serial")
-public class ConfigPropertiesDAO
+public class PropertyDAO
 extends SetNameDescriptionDAO
 implements SetCanonicalID
 {
@@ -39,25 +39,25 @@ implements SetCanonicalID
   /**
    * This NVConfigEntity type constant is set to an instantiation of a NVConfigEntityLocal object based on DataContentDAO.
    */
-  public static final NVConfigEntity NVC_CONFIG_PROPERTIES_DAO = new NVConfigEntityLocal("config_properties_dao",
+  public static final NVConfigEntity NVC_PROPERTY_DAO = new NVConfigEntityLocal("property_dao",
                                                                               null,
-                                                                              "ConfigPropertiesDAO", 
+                                                                              "PropertyDAO", 
                                                                               true,
                                                                               false,
                                                                               false,
                                                                               false,
-                                                                              ConfigPropertiesDAO.class,
+                                                                              PropertyDAO.class,
                                                                               SharedUtil.extractNVConfigs(Param.values()),
                                                                               null,
                                                                               false,
                                                                               SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO);
   
-  public ConfigPropertiesDAO()
+  public PropertyDAO()
   {
-    super(NVC_CONFIG_PROPERTIES_DAO);
+    super(NVC_PROPERTY_DAO);
   }
   
-  protected ConfigPropertiesDAO(NVConfigEntity nvce)
+  protected PropertyDAO(NVConfigEntity nvce)
   {
     super(nvce);
   }

@@ -53,6 +53,7 @@ import org.zoxweb.shared.security.shiro.ShiroNVEntityCRUDs;
 import org.zoxweb.shared.security.shiro.ShiroPermissionDAO;
 import org.zoxweb.shared.security.shiro.ShiroRoleDAO;
 import org.zoxweb.shared.security.shiro.ShiroRoleGroupDAO;
+import org.zoxweb.shared.security.shiro.ShiroSubjectData;
 
 /**
  * This NVEntity factory contains all NVEntity objects within this project.
@@ -240,19 +241,19 @@ public class ZWDataFactory
 				return ConfigDAO.NVC_CONFIG_DAO;
 			}
 		},
-		CONFIG_PROPERTIES_DAO(ConfigPropertiesDAO.class.getName())
+		CONFIG_PROPERTIES_DAO(PropertyDAO.class.getName())
         {
             @SuppressWarnings("unchecked")
             @Override
-            public ConfigPropertiesDAO newInstance()
+            public PropertyDAO newInstance()
             {
-                return new ConfigPropertiesDAO();
+                return new PropertyDAO();
             }
 
             @Override
             public NVConfigEntity getNVConfigEntity()
             {
-                return ConfigPropertiesDAO.NVC_CONFIG_PROPERTIES_DAO;
+                return PropertyDAO.NVC_PROPERTY_DAO;
             }
         },
 		CREDIT_CARD_DAO(CreditCardDAO.class.getName())
@@ -944,6 +945,21 @@ public class ZWDataFactory
 				return ShiroPermissionDAO.NVC_SHIRO_PERMISSION_DAO;
 			}
 		},
+		SHIRO_SUBJECT_ID_DATA(ShiroSubjectData.class.getName())
+        {
+            @SuppressWarnings("unchecked")
+            @Override
+            public ShiroSubjectData newInstance()
+            {
+                return new ShiroSubjectData();
+            }
+
+            @Override
+            public NVConfigEntity getNVConfigEntity() 
+            {
+                return ShiroSubjectData.NVC_SUBJECT_DATA;
+            }
+        },
 		STAT_COUNTER(StatCounter.class.getName())
 		{
 			@SuppressWarnings("unchecked")

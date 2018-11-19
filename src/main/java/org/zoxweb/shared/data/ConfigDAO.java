@@ -33,7 +33,7 @@ import org.zoxweb.shared.util.NVConfigEntity.ArrayType;
  */
 @SuppressWarnings("serial")
 public class ConfigDAO 
-	extends ConfigPropertiesDAO
+	extends PropertyDAO
 	implements AppConfig
 {
 	/**
@@ -81,7 +81,7 @@ public class ConfigDAO
 																				SharedUtil.extractNVConfigs(Param.values()),
 																				null,
 																				false,
-																				ConfigPropertiesDAO.NVC_CONFIG_PROPERTIES_DAO);
+																				PropertyDAO.NVC_PROPERTY_DAO);
 																					
 	
 	/**

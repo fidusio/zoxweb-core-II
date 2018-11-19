@@ -14,7 +14,7 @@ import org.zoxweb.shared.util.SubjectID;
 
 @SuppressWarnings("serial")
 public class DeviceDAO
-	extends ConfigPropertiesDAO
+	extends PropertyDAO
 	implements DeviceID<String>, SubjectID<String>
 {
 
@@ -57,7 +57,7 @@ public class DeviceDAO
 											            SharedUtil.extractNVConfigs(Param.values()),
 											            null,
 											            false,
-											            ConfigPropertiesDAO.NVC_CONFIG_PROPERTIES_DAO);
+											            PropertyDAO.NVC_PROPERTY_DAO);
 	
 	
 	public DeviceDAO()

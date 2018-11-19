@@ -1,7 +1,7 @@
 package org.zoxweb.shared.net;
 
 import java.io.IOException;
-import org.zoxweb.shared.data.ConfigPropertiesDAO;
+import org.zoxweb.shared.data.PropertyDAO;
 import org.zoxweb.shared.util.GetNVConfig;
 
 import org.zoxweb.shared.util.GetName;
@@ -15,7 +15,7 @@ import org.zoxweb.shared.net.InetProp.InetProto;;
 
 @SuppressWarnings("serial")
 public class NIConfigDAO
-  extends ConfigPropertiesDAO
+  extends PropertyDAO
 {
   public enum Param
   implements GetNVConfig, GetName
@@ -51,7 +51,7 @@ public class NIConfigDAO
   
   }
   
-  public static final NVConfigEntity NVC_NI_CONFIG_DAO = new NVConfigEntityLocal(null, null , null, true, false, false, false, NIConfigDAO.class, SharedUtil.extractNVConfigs(Param.NI_NAME, Param.INET_PROTO), null, false, ConfigPropertiesDAO.NVC_CONFIG_PROPERTIES_DAO);
+  public static final NVConfigEntity NVC_NI_CONFIG_DAO = new NVConfigEntityLocal(null, null , null, true, false, false, false, NIConfigDAO.class, SharedUtil.extractNVConfigs(Param.NI_NAME, Param.INET_PROTO), null, false, PropertyDAO.NVC_PROPERTY_DAO);
   
   public NIConfigDAO()
   {

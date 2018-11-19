@@ -35,7 +35,5 @@ public interface ShiroRulesManager
 	List<ShiroAssociationRuleDAO> search(QueryMarker ...queryCriteria);
 	
 	List<ShiroAssociationRuleDAO> search(Collection<QueryMarker> queryCriteria);
-	
-	
 
 }
