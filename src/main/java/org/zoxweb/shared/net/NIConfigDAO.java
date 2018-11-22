@@ -51,7 +51,7 @@ public class NIConfigDAO
   
   }
   
-  public static final NVConfigEntity NVC_NI_CONFIG_DAO = new NVConfigEntityLocal(null, null , null, true, false, false, false, NIConfigDAO.class, SharedUtil.extractNVConfigs(Param.NI_NAME, Param.INET_PROTO), null, false, PropertyDAO.NVC_PROPERTY_DAO);
+  public static final NVConfigEntity NVC_NI_CONFIG_DAO = new NVConfigEntityLocal("ni_config_dao", null , "NIConfigDAO", true, false, false, false, NIConfigDAO.class, SharedUtil.extractNVConfigs(Param.NI_NAME, Param.INET_PROTO), null, false, PropertyDAO.NVC_PROPERTY_DAO);
   
   public NIConfigDAO()
   {

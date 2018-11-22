@@ -2,7 +2,6 @@ package org.zoxweb.shared.security.shiro;
 
 import java.util.List;
 import org.zoxweb.shared.data.PropertyDAO;
-import org.zoxweb.shared.net.NIConfigDAO;
 import org.zoxweb.shared.net.InetProp.InetProto;
 import org.zoxweb.shared.util.AppGlobalID;
 import org.zoxweb.shared.util.GetNVConfig;
@@ -48,20 +47,22 @@ implements AppGlobalID<String>, SubjectID<String>
   
   }
   
-  public static final NVConfigEntity NVC_SUBJECT_DATA = new NVConfigEntityLocal(null, null , null, true, false, false, false, NIConfigDAO.class, SharedUtil.extractNVConfigs(Param.SUBJET_ID, Param.APP_GID), null, false, PropertyDAO.NVC_PROPERTY_DAO);
+  public static final NVConfigEntity NVC_SUBJECT_DATA = new NVConfigEntityLocal("shiro_subject_data", null , "ShiroSubjectData", true, false, false, false, ShiroSubjectData.class, SharedUtil.extractNVConfigs(Param.SUBJET_ID, Param.APP_GID, Param.ROLES, Param.PERMISSIONS), null, false, PropertyDAO.NVC_PROPERTY_DAO);
   public ShiroSubjectData() {
     super(NVC_SUBJECT_DATA);
-    // TODO Auto-generated constructor stub
+    // TODO Auto-generated constructor stubs
+//    getProperties().add(SharedUtil.metaConfigToNVBase(Param.ROLES.getNVConfig()));
+//    getProperties().add(SharedUtil.metaConfigToNVBase(Param.PERMISSIONS.getNVConfig()));
   }
 
   public List<String> getPermissions()
   {
-    return null;
+    return lookupValue((GetName)Param.PERMISSIONS);
   }
   
   public List<String> getRoles()
   {
-    return null;
+    return lookupValue((GetName)Param.ROLES);
   }
 
   @Override
