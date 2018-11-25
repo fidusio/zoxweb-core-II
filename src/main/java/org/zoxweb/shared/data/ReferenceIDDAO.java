@@ -41,7 +41,7 @@ public abstract class ReferenceIDDAO
 	public static final NVConfig NVC_ACCOUNT_ID = NVConfigManager.createNVConfig(MetaToken.ACCOUNT_ID.getName(), "The account id","AccountID", true, false, false, true, true, String.class, null);
 	public static final NVConfig NVC_USER_ID = NVConfigManager.createNVConfig(MetaToken.USER_ID.getName(), "The user id","UserID", true, false, false, true, true, String.class, null);
 	public static final NVConfig NVC_GLOBAL_ID = NVConfigManager.createNVConfig(MetaToken.GLOBAL_ID.getName(), "The global id of the Object","GlobalID", false, false, false, true, false, String.class, null);
-	public static final NVConfigEntity NVC_REFERENCE_ID_DAO = new NVConfigEntityLocal(null, null , null, true, false, false, false, ReferenceIDDAO.class, SharedUtil.toNVConfigList(NVC_REFERENCE_ID, NVC_ACCOUNT_ID, NVC_USER_ID, NVC_GLOBAL_ID), null, false, null);
+	public static final NVConfigEntity NVC_REFERENCE_ID_DAO = new NVConfigEntityLocal("reference_id_dao", null , "ReferenceIDDAO", true, false, false, false, ReferenceIDDAO.class, SharedUtil.toNVConfigList(NVC_REFERENCE_ID, NVC_ACCOUNT_ID, NVC_USER_ID, NVC_GLOBAL_ID), null, false, null);
 
 	protected ReferenceIDDAO(NVConfigEntity nvce)
 	{

@@ -53,7 +53,7 @@ public class ShiroRoleGroupDAO
 		}
 	}
 	
-	public static final NVConfigEntity  NVC_SHIRO_ROLE_GROUP_DAO = new NVConfigEntityLocal("shiro_rolegroup_dao", "Shiro rolegroup dao object" , 
+	public static final NVConfigEntity  NVC_SHIRO_ROLE_GROUP_DAO = new NVConfigEntityLocal("shiro_role_group_dao", "Shiro rolegroup dao object" , 
 			"ShiroRoleGroupDAO", false, true, false, false, ShiroRoleGroupDAO.class, SharedUtil.extractNVConfigs(Param.values()),
 			null, false, ShiroDomainDAO.NVC_APP_ID_DAO);
 	

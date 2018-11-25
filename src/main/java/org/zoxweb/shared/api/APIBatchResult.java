@@ -53,9 +53,9 @@ public class APIBatchResult<V extends NVEntity>
 		}
 	}
 
-	public static final NVConfigEntity NVC_API_BATCH_RESULT_DAO = new NVConfigEntityLocal("api_batch_result_dao",
+	public static final NVConfigEntity NVC_API_BATCH_RESULT = new NVConfigEntityLocal("api_batch_result",
 																						  null, 
-																						  "APIBatchResultDAO", 
+																						  "APIBatchResult", 
 																						  true, 
 																						  false,
 																						  false,
@@ -70,7 +70,7 @@ public class APIBatchResult<V extends NVEntity>
 	 * The default constructor.
 	 */
 	public APIBatchResult() {
-		super(NVC_API_BATCH_RESULT_DAO);
+		super(NVC_API_BATCH_RESULT);
 	}
 	
 	/**

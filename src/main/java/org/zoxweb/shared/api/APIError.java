@@ -54,9 +54,9 @@ public class APIError
 		}
 	}
 
-	public static final NVConfigEntity REST_ERROR = new NVConfigEntityLocal("rest_error", 
+	public static final NVConfigEntity API_ERROR = new NVConfigEntityLocal("api_error", 
 																			null, 
-																			"RESTError", 
+																			"APIError", 
 																			true, 
 																			false, 
 																			false, 
@@ -100,7 +100,7 @@ public class APIError
 	}
 
 	public APIError() {
-		super(REST_ERROR);
+		super(API_ERROR);
 	}
 	
 	public String getCode() {

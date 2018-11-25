@@ -2,7 +2,6 @@ package org.zoxweb.shared.security.shiro;
 
 import java.util.List;
 import org.zoxweb.shared.data.PropertyDAO;
-import org.zoxweb.shared.net.InetProp.InetProto;
 import org.zoxweb.shared.util.AppGlobalID;
 import org.zoxweb.shared.util.GetNVConfig;
 import org.zoxweb.shared.util.GetName;
@@ -23,7 +22,7 @@ implements AppGlobalID<String>, SubjectID<String>
   implements GetNVConfig, GetName
   {
     SUBJET_ID(NVConfigManager.createNVConfig("subject_id", "Subject ID", "SubjectID", false, true, String.class)),
-    APP_GID(NVConfigManager.createNVConfig("app_gid", "App global ID", "AppGID", false, true, InetProto.class)),
+    APP_GID(NVConfigManager.createNVConfig("app_gid", "App global ID", "AppGID", false, true, String.class)),
     ROLES(NVConfigManager.createNVConfig("roles", "Subject roles", "Roles", false, true, NVStringList.class)),
     PERMISSIONS(NVConfigManager.createNVConfig("permissions", "Subject permissions", "Permissions", false, true, NVStringList.class)),
  

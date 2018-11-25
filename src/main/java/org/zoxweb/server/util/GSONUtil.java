@@ -643,8 +643,9 @@ final public class GSONUtil
 				}
 				else if (NVStringList.class.equals(nvc.getMetaTypeBase()))
 				{
+				  writer.name(nvc.getName());
 				  writer.beginArray();
-				  NVStringList tempNVSL = (NVStringList)nve.lookupValue(nvc);
+				  NVStringList tempNVSL = (NVStringList)nve.lookup(nvc);
 				  for (String str: tempNVSL.getValue())
 				  {
 				    writer.value(str);

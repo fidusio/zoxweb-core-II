@@ -43,7 +43,7 @@ extends SetNameDescriptionDAO
 	      }
 	  }
 	
-	  public static final NVConfigEntity NVC_MOVE_FOLDER_CONTENT_OP = new NVConfigEntityLocal(
+	  public static final NVConfigEntity NVC_FOLDER_CONTENT_OP = new NVConfigEntityLocal(
 	          "folder_content_op",
 	          "FolderContentOp" ,
 	          FolderContentOp.class.getSimpleName(),
@@ -59,7 +59,7 @@ extends SetNameDescriptionDAO
 	  
 	  public FolderContentOp()
 	  {
-		  super(NVC_MOVE_FOLDER_CONTENT_OP);
+		  super(NVC_FOLDER_CONTENT_OP);
 	  }
 	  
 	  

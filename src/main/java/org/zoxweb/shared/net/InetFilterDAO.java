@@ -55,7 +55,7 @@ public class InetFilterDAO
 	
 	}
 	
-	public static final NVConfigEntity NVC_INET_FILTER_DAO = new NVConfigEntityLocal(null, null , null, true, false, false, false, InetFilterDAO.class, SharedUtil.extractNVConfigs( Params.values()), null, false, SetNameDescriptionDAO.NVC_NAME_DAO);
+	public static final NVConfigEntity NVC_INET_FILTER_DAO = new NVConfigEntityLocal("inet_filter_dao", null , "InetFilterDAO", true, false, false, false, InetFilterDAO.class, SharedUtil.extractNVConfigs( Params.values()), null, false, SetNameDescriptionDAO.NVC_NAME_DAO);
 	
 	/**
 	 * Default constructor for the bean consistency
