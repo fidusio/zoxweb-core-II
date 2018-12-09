@@ -32,7 +32,7 @@ public class ResourceManager
 	
 	public static final ResourceManager SINGLETON = new ResourceManager();
 	
-	private Map<String, Object> resources = new LinkedHashMap<String, Object>();
+	private Map<Object, Object> resources = new LinkedHashMap<Object, Object>();
 	
 	private ResourceManager()
 	{
@@ -45,6 +45,11 @@ public class ResourceManager
 		return (V) resources.get(name);
 	}
 	
+	@SuppressWarnings("unchecked")
+	public <V> V lookup(Object k)
+    {
+        return (V) resources.get(k);
+    }
 	
 	public <V> V lookup(GetName gn)
 	{
@@ -54,6 +59,12 @@ public class ResourceManager
 	public synchronized <V> void map(String name, V res)
 	{
 		resources.put(name, res);
+		
+	}
+	
+	public synchronized <V> void map(Object k, V res)
+	{
+	  resources.put(k, res);
 	}
 	
 	public synchronized <V> void map(GetName gn, V res)
@@ -64,5 +75,11 @@ public class ResourceManager
 	public synchronized Object [] resources()
 	{
 		return resources.values().toArray();
+	}
+	
+	@SuppressWarnings("unchecked")
+    public synchronized <V> V remove(Object key)
+	{
+	  return (V) resources.remove(key);
 	}
 }
