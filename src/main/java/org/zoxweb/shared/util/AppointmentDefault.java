@@ -26,6 +26,7 @@ public class AppointmentDefault
 	
 	private long delay;
 	private long expiration;
+	private long expirationInNanos;
 
 	public AppointmentDefault()
     {
@@ -39,8 +40,13 @@ public class AppointmentDefault
 	
 	public AppointmentDefault(long delayInMillis)
     {
-		setDelayInMillis(delayInMillis);
+		setDelayInNanos(delayInMillis, 0);
 	}
+	
+	public AppointmentDefault(long delayInMillis, long nanoOffset)
+    {
+        setDelayInNanos(delayInMillis, nanoOffset);
+    }
 
 	@Override
 	public long getDelayInMillis()
@@ -49,10 +55,17 @@ public class AppointmentDefault
 	}
 
 	@Override
-	public synchronized void setDelayInMillis(long delayInMillis)
-    {
-		delay = delayInMillis;
-		expiration = System.currentTimeMillis() + delay;
+	public  void setDelayInMillis(long delayInMillis)
+    {	
+	  setDelayInNanos(delayInMillis, 0);
+	}
+	
+	
+	public synchronized void setDelayInNanos(long delayInMillis, long nanoOffset)
+	{
+	  delay = delayInMillis;
+      expiration = System.currentTimeMillis() + delay;
+      expirationInNanos = expiration*1000000 + nanoOffset%1000000;
 	}
 
 	@Override
@@ -66,5 +79,12 @@ public class AppointmentDefault
     {
 		return false;
 	}
+
+    @Override
+    public synchronized long getExpirationInNanos() 
+    {
+      // TODO Auto-generated method stub
+      return expirationInNanos;
+    }
 
 }

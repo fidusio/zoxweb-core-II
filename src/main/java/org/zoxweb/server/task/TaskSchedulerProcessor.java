@@ -48,10 +48,9 @@ public class TaskSchedulerProcessor
 		}
 
 		@Override
-		public void setDelayInMillis(long delayInMillis) {
-			cancel();
-			appointment.setDelayInMillis(delayInMillis);
-			queue(this);
+		public void setDelayInMillis(long delayInMillis) 
+		{
+		  setDelayInNanos(delayInMillis, System.nanoTime());
 		}
 
 		@Override
@@ -63,6 +62,22 @@ public class TaskSchedulerProcessor
 		public boolean cancel() {
 			return remove(this);
 		}
+
+        @Override
+        public void setDelayInNanos(long delayInMillis, long nanoOffset)
+        {
+          // TODO Auto-generated method stub
+          cancel();
+          appointment.setDelayInNanos(delayInMillis, nanoOffset);
+          queue(this);
+        }
+    
+        @Override
+        public long getExpirationInNanos() 
+        {
+          // TODO Auto-generated method stub
+          return appointment.getExpirationInNanos();
+        }
 	}
 	
 	private TaskProcessor taskProcessor = null;

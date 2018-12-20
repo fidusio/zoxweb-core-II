@@ -17,7 +17,7 @@ package org.zoxweb.shared.util;
 
 import java.util.Comparator;
 
-import org.zoxweb.shared.util.Const.RelationalOperator;
+
 
 /**
  * The appointment interface.
@@ -26,30 +26,42 @@ public interface Appointment
 {
 	
 	public static final Comparator<Appointment> EQUAL_COMPARATOR = new AppointmentComparator();
-	public static final Comparator<Appointment> EQUAL_LESS_COMPARATOR = new AppointmentComparator(RelationalOperator.LT);
-	public static final Comparator<Appointment> EQUAL_MORE_COMPARATOR = new AppointmentComparator(RelationalOperator.GT);
+//	public static final Comparator<Appointment> EQUAL_LESS_COMPARATOR = new AppointmentComparator(RelationalOperator.LT);
+//	public static final Comparator<Appointment> EQUAL_MORE_COMPARATOR = new AppointmentComparator(RelationalOperator.GT);
 	
 	/**
 	 * @return the delay time in millis
 	 */
-	public long getDelayInMillis();
+	long getDelayInMillis();
 
 	/**
 	 * Set the delay time in millis
 	 * @param delayInMillis
 	 */
-	public void setDelayInMillis(long delayInMillis);
+	void setDelayInMillis(long delayInMillis);
+	/**
+	 * Set the delay in millis with nanos offset
+	 * @param delayInMillis
+	 * @param nanoOffset
+	 */
+	void setDelayInNanos(long delayInMillis, long nanoOffset);
 	
 	/**
 	 * Returns the expiration in real time.
 	 * @return the expiration in real time.
 	 */ 
-	public long getExpirationInMillis();
+	long getExpirationInMillis();
 
 	/**
 	 * Cancel operation.
 	 * @return true if canceled
 	 */
-	public boolean cancel();
+	boolean cancel();
+	
+	/**
+	 * Return the expiration in adjusted nano time
+	 * @return
+	 */
+	long getExpirationInNanos();
 	
 }

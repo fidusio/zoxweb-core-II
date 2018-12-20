@@ -133,7 +133,7 @@ public class TaskSchedulerProcessorTest {
 		tsp.queue(tsp, tsold, teiold, tsold);
 		
 		for (int i = 0; i < 20; i++) {
-			Appointment ts = new AppointmentDefault();
+			Appointment ts = new AppointmentDefault(0, System.nanoTime());
 			TaskExecutorImpl tei = new TaskExecutorImpl();
 			tsp.queue(tsp, ts, tei, ts);
 		}
@@ -201,6 +201,12 @@ public class TaskSchedulerProcessorTest {
 			tsp.queue(new AppointmentDefault(), new TaskEvent(tsp, new TaskLockTest(), index));
 		}
 		tsp.queue(new AppointmentDefault(Const.TimeInMillis.SECOND.MILLIS*21), new TaskEvent(tsp, new TaskLockTest(), index++));
+		
+		
+		for (;index < 1000; index++)
+		{
+		  tsp.queue(new AppointmentDefault(Const.TimeInMillis.SECOND.MILLIS*21, System.nanoTime()), new TaskEvent(tsp, new TaskLockTest(), index++));
+		}
 		
 
 		while( tsp.pendingTasks() != 0) {

@@ -17,23 +17,22 @@ package org.zoxweb.shared.util;
 
 import java.util.Comparator;
 
-import org.zoxweb.shared.util.Const.RelationalOperator;
 
 public class AppointmentComparator
     implements Comparator<Appointment>
 {
 
-	private RelationalOperator equality;
+	//private RelationalOperator equality;
 	
 	public AppointmentComparator()
     {
-		this(RelationalOperator.EQUAL);
+//		this(RelationalOperator.EQUAL);
 	}
 	
-	public AppointmentComparator(RelationalOperator equality)
-    {
-		this.equality = equality;
-	}
+//	public AppointmentComparator(RelationalOperator equality)
+//    {
+//		this.equality = equality;
+//	}
 
 	@Override
 	public int compare(Appointment o1, Appointment o2)
@@ -42,26 +41,26 @@ public class AppointmentComparator
 
 		if (o1 != null && o2 != null)
 		{
-			result = (int)(o1.getExpirationInMillis() - o2.getExpirationInMillis());
+			result = (int)(o1.getExpirationInNanos() - o2.getExpirationInNanos());
 
-			if (result == 0)
-			{
-				switch(equality)
-				{
-				case EQUAL:
-					break;
-				case LTE:
-				case LT:
-					result = -1;
-					break;
-				case GTE:
-				case GT:
-					result = 1;
-					break;
-				default:
-					throw new IllegalArgumentException("Operator not supported:" + equality);
-				}
-			}
+//			if (result == 0)
+//			{
+//				switch(equality)
+//				{
+//				case EQUAL:
+//					break;
+//				case LTE:
+//				case LT:
+//					result = -1;
+//					break;
+//				case GTE:
+//				case GT:
+//					result = 1;
+//					break;
+//				default:
+//					throw new IllegalArgumentException("Operator not supported:" + equality);
+//				}
+//			}
 		}
 			
 		return result;
