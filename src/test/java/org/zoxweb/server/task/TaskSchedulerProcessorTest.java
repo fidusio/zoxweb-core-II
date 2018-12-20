@@ -132,8 +132,8 @@ public class TaskSchedulerProcessorTest {
 		TaskExecutorImpl teiold = new TaskExecutorImpl();
 		tsp.queue(tsp, tsold, teiold, tsold);
 		
-		for (int i = 0; i < 20; i++) {
-			Appointment ts = new AppointmentDefault(0, System.nanoTime());
+		for (int i = 0; i < 50; i++) {
+			Appointment ts = new AppointmentDefault(-Const.TimeInMillis.SECOND.MILLIS, System.nanoTime());
 			TaskExecutorImpl tei = new TaskExecutorImpl();
 			tsp.queue(tsp, ts, tei, ts);
 		}

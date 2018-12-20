@@ -149,6 +149,14 @@ public class TaskSchedulerProcessor
 		return null;
 	}
 	
+	public Appointment queue(long delayInMillis, Runnable command)
+    {
+        if (command != null)
+            return queue(new AppointmentDefault(delayInMillis, System.nanoTime()), new TaskEvent(this, new RunnableTaskContainer(command),(Object[]) null));
+        
+        return null;
+    }
+	
 	
 	
 	
@@ -161,7 +169,7 @@ public class TaskSchedulerProcessor
 		
 		synchronized(queue) {
 			while(!queue.add(te)) {
-				te.appointment.setDelayInMillis(te.appointment.getDelayInMillis()+1);
+				te.appointment.setDelayInNanos(te.appointment.getDelayInMillis(), System.nanoTime() + 1);
 			}
 
 			queue.notify();
