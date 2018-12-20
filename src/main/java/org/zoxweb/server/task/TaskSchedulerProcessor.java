@@ -134,7 +134,7 @@ public class TaskSchedulerProcessor
 
 	public Appointment queue(Appointment a, TaskEvent te) {
 		if (a == null) {
-			a = new AppointmentDefault();
+			a = new AppointmentDefault(0, System.nanoTime());
 		}
 
 		return queue(new TaskSchedulerAppointment(a, te));
