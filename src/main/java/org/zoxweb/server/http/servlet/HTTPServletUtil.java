@@ -55,6 +55,7 @@ import org.zoxweb.shared.util.SharedBase64;
 import org.zoxweb.shared.util.SharedBase64.Base64Type;
 import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
+import com.google.gson.Gson;
 
 public class HTTPServletUtil
 {
@@ -63,6 +64,7 @@ public class HTTPServletUtil
 	public static boolean ACAO = true;
 	
 	private static final transient Logger log = Logger.getLogger(HTTPServletUtil.class.getName());
+	private static final Gson defaultGson = GSONUtil.create(false);
 
 	private HTTPServletUtil()
 	{
@@ -315,7 +317,7 @@ public class HTTPServletUtil
 	    return sendJSON( req,  resp,  code, (NVEntity) obj);
 	  }
 	  
-	  return sendJSON( req,  resp,  code, GSONUtil.create(false).toJson(obj));
+	  return sendJSON( req,  resp,  code, false, defaultGson.toJson(obj));
     }
 	
 	
@@ -343,7 +345,15 @@ public class HTTPServletUtil
 		return sendJSON(req, resp, code, nves != null ? GSON_WRAPPER.toJSONValues(nves, false, false, true) : null);
 	}
 	
+	
 	public static int sendJSON(HttpServletRequest req, HttpServletResponse resp, HTTPStatusCode code, String json)
+        throws IOException
+    {
+	  return sendJSON(req, resp, code, true, json);
+    }
+	
+	
+	public static int sendJSON(HttpServletRequest req, HttpServletResponse resp, HTTPStatusCode code, boolean zipMaybe, String json)
 			throws IOException
 	{
 		resp.setStatus(code.CODE);
@@ -359,27 +369,32 @@ public class HTTPServletUtil
 		
 		if (json != null)
 		{
-			HTTPHeaderValue zip = shouldZIPResponseContent(req, json);
-			
-			if (zip != null)
-			{
-				setZIPEncodingHeader(resp, zip);
-				byte toZip [] = SharedStringUtil.getBytes(json);
-				log.info("content will be compressed " + zip + " size " + toZip.length );
-				// compress
-				byte[] responseBytes = compress(zip.getValue(), toZip);
-				// encode base64
-				if (zip == HTTPHeaderValue.CONTENT_ENCODING_LZ)
-				{
-					responseBytes = SharedBase64.encode(responseBytes);
-				}
-				else if (zip == HTTPHeaderValue.CONTENT_ENCODING_GZIP)
-				{
-					resp.setHeader(HTTPHeaderName.CONTENT_DISPOSITION.getName(), "attachment");
-				}
-				resp.getOutputStream().write(responseBytes);
-				return responseBytes.length;	
-			}
+		  
+		  
+		    if (zipMaybe)
+		    {
+    			HTTPHeaderValue zip = shouldZIPResponseContent(req, json);
+    			
+    			if (zip != null)
+    			{
+    				setZIPEncodingHeader(resp, zip);
+    				byte toZip [] = SharedStringUtil.getBytes(json);
+    				log.info("content will be compressed " + zip + " size " + toZip.length );
+    				// compress
+    				byte[] responseBytes = compress(zip.getValue(), toZip);
+    				// encode base64
+    				if (zip == HTTPHeaderValue.CONTENT_ENCODING_LZ)
+    				{
+    					responseBytes = SharedBase64.encode(responseBytes);
+    				}
+    				else if (zip == HTTPHeaderValue.CONTENT_ENCODING_GZIP)
+    				{
+    					resp.setHeader(HTTPHeaderName.CONTENT_DISPOSITION.getName(), "attachment");
+    				}
+    				resp.getOutputStream().write(responseBytes);
+    				return responseBytes.length;	
+    			}
+		    }
 			
 			byte[] toWrite = SharedStringUtil.getBytes(json);
 			
