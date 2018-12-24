@@ -33,9 +33,6 @@ public interface KVMapStore<K,V>
 	Iterator<V> values();
 	Iterator<K> keys();
 	
-	
-//	void purge();
-	
 	void addExclusion(K exclusion);
 	
 	int size();

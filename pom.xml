@@ -59,7 +59,7 @@
         <javax-cache.version>1.1.0</javax-cache.version>
         <javax-mail.version>1.6.1</javax-mail.version>
         
-        <javax-servlet.version>3.0.1</javax-servlet.version>
+        <javax-servlet.version>4.0.1</javax-servlet.version>
         <jdk.version>1.8</jdk.version>
         <jsoup.version>1.11.3</jsoup.version>
         <junit.version>4.12</junit.version>

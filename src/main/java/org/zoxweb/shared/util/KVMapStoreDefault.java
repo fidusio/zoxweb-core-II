@@ -58,21 +58,21 @@ implements KVMapStore<K,V>
 	}
 
 	@Override
-	public Iterator<K> exclusions() 
+	public synchronized Iterator<K> exclusions() 
 	{
 		// TODO Auto-generated method stub
 		return exclusionFilter.iterator();
 	}
 
 	@Override
-	public Iterator<V> values()
+	public synchronized Iterator<V> values()
 	{
 		// TODO Auto-generated method stub
 		return mapCache.values().iterator();
 	}
 
 	@Override
-	public Iterator<K> keys()
+	public synchronized Iterator<K> keys()
 	{
 		// TODO Auto-generated method stub
 		return mapCache.keySet().iterator();

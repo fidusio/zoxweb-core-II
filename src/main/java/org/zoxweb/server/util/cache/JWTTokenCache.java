@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Logger;
 
 import org.zoxweb.server.task.TaskDefault;
@@ -14,7 +16,6 @@ import org.zoxweb.server.util.DateUtil;
 import org.zoxweb.shared.security.JWT;
 import org.zoxweb.shared.security.JWTToken;
 import org.zoxweb.shared.util.Const.TimeInMillis;
-import org.zoxweb.shared.util.AppointmentDefault;
 import org.zoxweb.shared.util.KVMapStore;
 import org.zoxweb.shared.util.KVMapStoreDefault;
 import org.zoxweb.shared.util.SharedUtil;
@@ -26,6 +27,7 @@ implements KVMapStore<String, JWT>
 	
 	
 	private static final Logger log = Logger.getLogger(JWTTokenCache.class.getName());
+	private Lock lock = new ReentrantLock();
 	private class CacheCleanerTask extends TaskDefault
 	{
 
@@ -94,8 +96,9 @@ implements KVMapStore<String, JWT>
 		
 		
 		boolean ret;
-		synchronized(this)
+		try
 		{
+		    lock.lock();
 			if (cache.lookup(jwtHash) != null)
 			{
 				// otp replay
@@ -105,8 +108,12 @@ implements KVMapStore<String, JWT>
 			// register the token
 			ret = cache.map(jwtHash, jwt);
 			
-			tsp.queue(this, new AppointmentDefault(expirationPeriod + delta), cct, jwtHash);
+			tsp.queue(this, expirationPeriod + delta, cct, jwtHash);
 			
+		}
+		finally
+		{
+		  lock.unlock();
 		}
 		
 		// TODO Auto-generated method stub

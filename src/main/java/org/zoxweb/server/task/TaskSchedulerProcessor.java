@@ -129,8 +129,16 @@ public class TaskSchedulerProcessor
 			a = new AppointmentDefault();
 		}
 
-		return queue(new TaskSchedulerAppointment( a, tEvent));
+		return queue(new TaskSchedulerAppointment(a, tEvent));
 	}
+	
+	public Appointment queue(Object source,  long timeInMillis, TaskExecutor te, Object... params) {
+      Appointment a = new AppointmentDefault(timeInMillis, System.nanoTime());
+	  TaskEvent tEvent = new TaskEvent(source, te, params);
+
+     
+      return queue(new TaskSchedulerAppointment(a, tEvent));
+  }
 
 	public Appointment queue(Appointment a, TaskEvent te) {
 		if (a == null) {

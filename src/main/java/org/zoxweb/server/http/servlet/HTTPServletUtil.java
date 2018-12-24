@@ -37,7 +37,7 @@ import org.zoxweb.server.http.HTTPRequestAttributes;
 import org.zoxweb.server.io.FileInfoStreamSource;
 import org.zoxweb.server.io.IOUtil;
 import org.zoxweb.server.io.UByteArrayOutputStream;
-
+import org.zoxweb.server.util.GSONUtil;
 import org.zoxweb.server.util.GSONWrapper;
 import org.zoxweb.server.util.ZIPUtil;
 import org.zoxweb.shared.api.APIError;
@@ -304,6 +304,19 @@ public class HTTPServletUtil
 		
 		}
 	}
+	
+	
+	
+	public static <V> int sendJSONObj(HttpServletRequest req, HttpServletResponse resp, HTTPStatusCode code, V obj)
+        throws IOException
+    {
+	  if( obj instanceof NVEntity)
+	  {
+	    return sendJSON( req,  resp,  code, (NVEntity) obj);
+	  }
+	  
+	  return sendJSON( req,  resp,  code, GSONUtil.create(false).toJson(obj));
+    }
 	
 	
 	public static int sendJSON(HttpServletRequest req, HttpServletResponse resp, HTTPStatusCode code, NVEntity nve)
