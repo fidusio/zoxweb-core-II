@@ -55,7 +55,7 @@ import org.zoxweb.shared.util.SharedBase64;
 import org.zoxweb.shared.util.SharedBase64.Base64Type;
 import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
-import com.google.gson.Gson;
+
 
 public class HTTPServletUtil
 {
@@ -64,7 +64,6 @@ public class HTTPServletUtil
 	public static boolean ACAO = true;
 	
 	private static final transient Logger log = Logger.getLogger(HTTPServletUtil.class.getName());
-	private static final Gson defaultGson = GSONUtil.create(false);
 
 	private HTTPServletUtil()
 	{
@@ -317,7 +316,7 @@ public class HTTPServletUtil
 	    return sendJSON( req,  resp,  code, (NVEntity) obj);
 	  }
 	  
-	  return sendJSON( req,  resp,  code, false, defaultGson.toJson(obj));
+	  return sendJSON( req,  resp,  code, false, GSONUtil.DEFAULT_GSON.toJson(obj));
     }
 	
 	

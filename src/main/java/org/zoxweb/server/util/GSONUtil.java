@@ -107,6 +107,8 @@ final public class GSONUtil
 	
 	private final static GSONUtil SINGLETON = new GSONUtil();
 	
+	public final static Gson DEFAULT_GSON = create(false);
+	
 	private GsonBuilder builder = null;
 	
 	private GSONUtil()
