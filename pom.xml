@@ -70,7 +70,6 @@
         <javax-servlet.version>4.0.1</javax-servlet.version>
         <jdk.version>1.8</jdk.version>
         <jsoup.version>1.11.3</jsoup.version>
-        <junit.version>4.12</junit.version>
 		
 		<maven-plugin.version>3.6.1</maven-plugin.version>
 		<maven-plugin-source.version>3.0.1</maven-plugin-source.version>
@@ -203,7 +202,6 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
