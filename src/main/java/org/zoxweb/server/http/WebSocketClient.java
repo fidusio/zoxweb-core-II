@@ -1,6 +1,6 @@
 package org.zoxweb.server.http;
 
-import java.io.Closeable;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -14,7 +14,7 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.WebSocketContainer;
 import org.zoxweb.server.io.IOUtil;
-import org.zoxweb.server.task.TaskUtil;
+
 import org.zoxweb.shared.http.HTTPMessageConfig;
 import org.zoxweb.shared.util.DataHandler;
 import org.zoxweb.shared.util.SharedStringUtil;
