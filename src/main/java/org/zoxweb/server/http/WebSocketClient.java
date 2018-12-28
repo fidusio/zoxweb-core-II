@@ -113,7 +113,7 @@ public class WebSocketClient {
         this.userSession.getAsyncRemote().sendText(message);
     }
     
-    
+    /*
     public static void main(String ...args)
     {
       
@@ -121,7 +121,8 @@ public class WebSocketClient {
       TaskUtil.getDefaultTaskProcessor();
       try
       {
-        new WebSocketClient(new URI(args[0]),
+        int index = 0;
+        WebSocketClient wsc = new WebSocketClient(new URI(args[index]),
             new DataHandler<WebSocketClient, String>()
             {
 
@@ -142,6 +143,11 @@ public class WebSocketClient {
               
             }
             );
+        
+        for (;index < args.length; index++)
+        {
+          wsc.sendMessage(args[index]);
+        }
       }
       
       catch(Exception e)
@@ -152,5 +158,5 @@ public class WebSocketClient {
       
       
     }
-
+    */
 }
