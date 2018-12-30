@@ -263,36 +263,57 @@ public class SharedUtil
 	 * @param str
 	 * @return matching enum
 	 */
-	@SuppressWarnings("unchecked")
+	@Deprecated
 	public static <V extends Enum<?>> V lookupEnum(Enum<?>[] list, String str)
     {
-		if (str != null)
-		{
-			for (Enum<?> e: list)
-			{
-				if (str.equalsIgnoreCase(e.name()))
-				{
-					return (V) e;
-				}
-				
-				if (str.equalsIgnoreCase(e.toString()))
-				{
-					return (V) e;
-				}
-				
-				if (e instanceof GetName && str.equalsIgnoreCase( ((GetName)e).getName()))
-				{
-					return (V) e;
-				}
-				
-				if (e instanceof GetValue && str.equalsIgnoreCase( "" + ((GetValue<?>)e).getValue()))
-				{
-					return (V) e;
-				}
-			}
-		}
-		
-		return null;
+		return lookupEnum(str, list);
+	}
+	
+	
+	/**
+     * This utility method look for the matching enum in case insensitive fashion.
+     * 
+     * <br>It will try different matches with the following inventory:
+     * <ol>
+     * <li> try match enum.name();
+     * <li> try match enum.toString();
+     * <li> try match enum.getName() if enum instance of GetName
+     * <li> try match enum.getValue() if enum instance of GetValue
+     * </ol> 
+     * @param str
+     * @param list
+     * @return matching enum
+     */
+	@SuppressWarnings("unchecked")
+	public static <V extends Enum<?>> V lookupEnum(String str, Enum<?> ...list)
+	{
+	  if (str != null)
+      {
+          for (Enum<?> e: list)
+          {
+              if (str.equalsIgnoreCase(e.name()))
+              {
+                  return (V) e;
+              }
+              
+              if (str.equalsIgnoreCase(e.toString()))
+              {
+                  return (V) e;
+              }
+              
+              if (e instanceof GetName && str.equalsIgnoreCase( ((GetName)e).getName()))
+              {
+                  return (V) e;
+              }
+              
+              if (e instanceof GetValue && str.equalsIgnoreCase( "" + ((GetValue<?>)e).getValue()))
+              {
+                  return (V) e;
+              }
+          }
+      }
+      
+      return null;
 	}
 	
 	
@@ -1757,7 +1778,7 @@ public class SharedUtil
 		    // Not array
 			if (c.isEnum())
 			{
-				return lookupEnum((Enum<?>[]) c.getEnumConstants(), value);
+				return lookupEnum(value, (Enum<?>[]) c.getEnumConstants());
 			}
 			else if (String.class.equals(c))
 			{

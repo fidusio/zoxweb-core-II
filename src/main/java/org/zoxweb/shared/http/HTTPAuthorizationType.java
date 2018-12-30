@@ -165,7 +165,7 @@ public enum HTTPAuthorizationType
 		
 		int index = 0;
 		String typeStr =  tokens[index++];
-		HTTPAuthorizationType type = (HTTPAuthorizationType) SharedUtil.lookupEnum(HTTPAuthorizationType.values(), typeStr);
+		HTTPAuthorizationType type = (HTTPAuthorizationType) SharedUtil.lookupEnum(typeStr, HTTPAuthorizationType.values());
 		if (type == null)
 		{
 			throw new IllegalArgumentException("Invalid authentication value " + value );

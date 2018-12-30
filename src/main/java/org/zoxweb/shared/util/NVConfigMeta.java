@@ -155,7 +155,7 @@ public class NVConfigMeta
 		int index = 0;
 		for (String str : actions)
 		{
-			ret[index++] = SharedUtil.lookupEnum(MetaAction.values(), str);
+			ret[index++] = SharedUtil.lookupEnum(str, MetaAction.values());
 		}
 		
 		return ret;

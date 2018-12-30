@@ -132,7 +132,7 @@ public class Const
 		
 		public static Bool parse(String str)
         {
-			return (Bool) SharedUtil.lookupEnum(Bool.values(), str);
+			return (Bool) SharedUtil.lookupEnum(str, Bool.values());
 		}
 		
 		public static boolean lookupValue(String str)
@@ -879,7 +879,7 @@ public class Const
 			String tokens[] = name.split("\\" + sep);
 			if (tokens.length > 1)
 			{
-				GNVType type = SharedUtil.lookupEnum(GNVType.values(), tokens[0]);
+				GNVType type = SharedUtil.lookupEnum( tokens[0], GNVType.values());
 				if (type != null)
 				{
 					return new GNVTypeName(type, tokens[1]);
@@ -1027,7 +1027,7 @@ public class Const
 		
 		public static DayOfWeek lookup(String str)
 		{
-			return SharedUtil.lookupEnum(DayOfWeek.values(), str);
+			return SharedUtil.lookupEnum(str, DayOfWeek.values());
 		}
 		
 		public static DayOfWeek lookup(int val)

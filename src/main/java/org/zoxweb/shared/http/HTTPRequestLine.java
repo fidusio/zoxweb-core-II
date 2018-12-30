@@ -54,7 +54,7 @@ extends MessageFirstLine
 	
 	public HTTPMethod getHTTPMethod()
 	{
-		return (HTTPMethod) SharedUtil.lookupEnum(HTTPMethod.values(), getMethod());
+		return (HTTPMethod) SharedUtil.lookupEnum(getMethod(), HTTPMethod.values());
 	}
 	
 }

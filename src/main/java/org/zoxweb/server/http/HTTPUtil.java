@@ -854,7 +854,7 @@ public class HTTPUtil
 				ret.setURI( formAction);
 			}
 			
-			ret.setMethod((HTTPMethod) SharedUtil.lookupEnum(HTTPMethod.values(), formMethod));
+			ret.setMethod((HTTPMethod) SharedUtil.lookupEnum(formMethod, HTTPMethod.values()));
 		
 			
 			if (reqCookie != null)

@@ -248,7 +248,7 @@ public class HTTPMessageConfig
 	{
 	
 		System.out.println(method);
-		HTTPMethod httpMethod = SharedUtil.lookupEnum(HTTPMethod.values(), method);
+		HTTPMethod httpMethod = SharedUtil.lookupEnum(method, HTTPMethod.values());
 		setMethod(httpMethod);
 		
 //		for (HTTPMethod m : HTTPMethod.values())

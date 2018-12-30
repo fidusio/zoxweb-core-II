@@ -207,7 +207,7 @@ public class InetFilterRulesManager
 			throw new IllegalArgumentException("Invalid rule " + rule + "\n format ip-netmask-[deny|allow]");
 		}
 		int index = rules.length;
-		SecurityStatus ss = (SecurityStatus) SharedUtil.lookupEnum(SecurityStatus.values(), rules[--index]);
+		SecurityStatus ss = (SecurityStatus) SharedUtil.lookupEnum(rules[--index], SecurityStatus.values());
 		if (ss == null)
 		{
 			throw new IllegalArgumentException("Invalid rule " + rule + "\n format ip-netmask-[deny|allow]");

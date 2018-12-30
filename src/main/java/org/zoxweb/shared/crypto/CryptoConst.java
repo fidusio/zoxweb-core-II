@@ -59,7 +59,7 @@ public final class CryptoConst
 		
 		public static MDType lookup(String mdName)
         {
-			return (MDType) SharedUtil.lookupEnum(MDType.values(), mdName);
+			return (MDType) SharedUtil.lookupEnum(mdName, MDType.values());
 		}
 	}
 
@@ -88,7 +88,7 @@ public final class CryptoConst
 		
 		public static MDType toMDType(String name)
         {
-			return toMDType((DataMDType)SharedUtil.lookupEnum(DataMDType.values(), name));
+			return toMDType((DataMDType)SharedUtil.lookupEnum(name, DataMDType.values()));
 		}
 		
 		public static MDType toMDType(DataMDType dmdt)
@@ -143,7 +143,7 @@ public final class CryptoConst
 		
 		public static SecureRandomType lookup(String mdName)
         {
-			return (SecureRandomType) SharedUtil.lookupEnum(SecureRandomType.values(), mdName);
+			return (SecureRandomType) SharedUtil.lookupEnum(mdName, SecureRandomType.values());
 		}
 	}
 

@@ -72,7 +72,7 @@ implements GetNameValue<String>
 	
 	public static HTTPMethod lookup(String match)
 	{
-		return SharedUtil.lookupEnum(values(), match);
+		return SharedUtil.lookupEnum(match, values());
 	}
 	
 	public static String[] toMethodNames()

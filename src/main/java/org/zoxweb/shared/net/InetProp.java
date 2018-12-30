@@ -101,7 +101,7 @@ public class InetProp
 		
 		public static BondingMode lookup(String val)
         {
-			BondingMode ret = (BondingMode) SharedUtil.lookupEnum( values(), val);
+			BondingMode ret = (BondingMode) SharedUtil.lookupEnum(val, values());
 
 			if (ret != null)
 			{

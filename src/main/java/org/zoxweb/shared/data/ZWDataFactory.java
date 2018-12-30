@@ -1253,7 +1253,7 @@ public class ZWDataFactory
 	{
 		if (!SharedStringUtil.isEmpty(canonicalID))
 		{
-			NVEntityTypeClass type = (NVEntityTypeClass) SharedUtil.lookupEnum(NVEntityTypeClass.values(), canonicalID);
+			NVEntityTypeClass type = (NVEntityTypeClass) SharedUtil.lookupEnum(canonicalID, NVEntityTypeClass.values());
 			
 			if (type == null)
 			{

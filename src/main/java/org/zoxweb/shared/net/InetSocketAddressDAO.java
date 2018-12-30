@@ -122,7 +122,7 @@ public class InetSocketAddressDAO
 	
 	public void setProxyType(String pType)
 	{
-		ProxyType pt = SharedUtil.lookupEnum(ProxyType.values(), pType);
+		ProxyType pt = SharedUtil.lookupEnum(pType, ProxyType.values());
 		setProxyType(pt);
 	}
 
