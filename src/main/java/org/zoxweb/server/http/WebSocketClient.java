@@ -33,14 +33,7 @@ public class WebSocketClient {
         throws DeploymentException, IOException, URISyntaxException
     {
       
-      this.closeHandler  = closeHandler;
-      setDataHandler(dataHandler);
-      String endpoint = SharedStringUtil.concat(hmc.getURL(), hmc.getURI(), "/");
-      WebSocketContainer container = ContainerProvider
-          .getWebSocketContainer();
-      container.connectToServer(this, new URI(endpoint));
-      
-      
+      this(new URI(SharedStringUtil.concat(hmc.getURL(), hmc.getURI(), "/")), dataHandler, closeHandler); 
     }
     
 
@@ -49,8 +42,7 @@ public class WebSocketClient {
     {    
       this.closeHandler  = closeHandler;
       setDataHandler(dataHandler);
-      WebSocketContainer container = ContainerProvider
-          .getWebSocketContainer();
+      WebSocketContainer container = ContainerProvider.getWebSocketContainer();
       container.connectToServer(this, endpointURI);
        
     }
@@ -93,6 +85,9 @@ public class WebSocketClient {
         if (dataHandler != null)
           dataHandler.handleData(this, message);
     }
+    
+    
+    
 
     /**
      * register message handler
