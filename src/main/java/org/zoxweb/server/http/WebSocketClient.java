@@ -24,28 +24,30 @@ import org.zoxweb.shared.util.SharedStringUtil;
 
 @ClientEndpoint
 public class WebSocketClient {
-    Session userSession = null;
+    private  Session userSession = null;
     private DataHandler<WebSocketClient, String> dataHandler = null;
     private AutoCloseable closeHandler;
+    private AtomicLong requestCounter= new AtomicLong(0);
+    private AtomicLong responseCounter= new AtomicLong(0);
+    private final boolean statEnabled;
+
     
-    private long reqCounter = 0;
-    private long respCounter = 0;
-    
-    public WebSocketClient(HTTPMessageConfig hmc, DataHandler<WebSocketClient, String> dataHandler, AutoCloseable closeHandler)
+    public WebSocketClient(HTTPMessageConfig hmc, DataHandler<WebSocketClient, String> dataHandler, AutoCloseable closeHandler, boolean statEnabled)
         throws DeploymentException, IOException, URISyntaxException
     {
       
-      this(new URI(SharedStringUtil.concat(hmc.getURL(), hmc.getURI(), "/")), dataHandler, closeHandler); 
+      this(new URI(SharedStringUtil.concat(hmc.getURL(), hmc.getURI(), "/")), dataHandler, closeHandler, statEnabled); 
     }
     
 
-    public WebSocketClient(URI endpointURI, DataHandler<WebSocketClient, String> dataHandler, AutoCloseable closeHandler)
+    public WebSocketClient(URI endpointURI, DataHandler<WebSocketClient, String> dataHandler, AutoCloseable closeHandler, boolean statEnabled)
         throws DeploymentException, IOException
     {    
       this.closeHandler  = closeHandler;
       setDataHandler(dataHandler);
       WebSocketContainer container = ContainerProvider.getWebSocketContainer();
       container.connectToServer(this, endpointURI);
+      this.statEnabled = statEnabled;
        
     }
 
@@ -84,20 +86,38 @@ public class WebSocketClient {
     @OnMessage
     public void onMessage(String message) {
         //respCounter.incrementAndGet();
-        respCounter++;
+        //respCounter++;
+      if (statEnabled)
+      {
+          responseCounter.incrementAndGet();
+      }
         if (dataHandler != null)
           dataHandler.handleData(this, message);
     }
 
+    /**
+     * Return the request count if stat is enabled
+     * @return
+     */
     public long requestCount()
     {
-        return reqCounter;
+      return requestCounter.get();
     }
-
+    
+    
+    public boolean isStartEnabled()
+    {
+      return statEnabled;
+    }
+    /**
+     * Return the response count if stat is enabled
+     * @return
+     */
     public long responseCount()
     {
-        return respCounter;
+      return responseCounter.get();
     }
+    
     /**
      * set the data handler
      * @param dh
@@ -114,8 +134,10 @@ public class WebSocketClient {
     public void sendMessage(String message) {
 
         userSession.getAsyncRemote().sendText(message);
-        respCounter++;
-        //reqCounter.incrementAndGet();
+        if (statEnabled)
+        {
+            requestCounter.incrementAndGet();
+        }
     }
 
 }
