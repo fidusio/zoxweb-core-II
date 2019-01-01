@@ -4,6 +4,7 @@ package org.zoxweb.server.http;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.concurrent.atomic.AtomicLong;
 import javax.websocket.ClientEndpoint;
 import javax.websocket.CloseReason;
 import javax.websocket.ContainerProvider;
@@ -27,7 +28,8 @@ public class WebSocketClient {
     private DataHandler<WebSocketClient, String> dataHandler = null;
     private AutoCloseable closeHandler;
     
-    
+    private long reqCounter = 0;
+    private long respCounter = 0;
     
     public WebSocketClient(HTTPMessageConfig hmc, DataHandler<WebSocketClient, String> dataHandler, AutoCloseable closeHandler)
         throws DeploymentException, IOException, URISyntaxException
@@ -70,7 +72,6 @@ public class WebSocketClient {
     public void onClose(Session userSession, CloseReason reason)
     {
         IOUtil.close(closeHandler);
-        //this.userSession = null;
     }
 
     /**
@@ -82,76 +83,39 @@ public class WebSocketClient {
      */
     @OnMessage
     public void onMessage(String message) {
+        //respCounter.incrementAndGet();
+        respCounter++;
         if (dataHandler != null)
           dataHandler.handleData(this, message);
     }
-    
-    
-    
 
+    public long requestCount()
+    {
+        return reqCounter;
+    }
+
+    public long responseCount()
+    {
+        return respCounter;
+    }
     /**
-     * register message handler
-     * 
-     * @param message
+     * set the data handler
+     * @param dh
      */
     public void setDataHandler(DataHandler<WebSocketClient, String> dh) {
         this.dataHandler = dh;
     }
 
+
     /**
-     * Send a message.
-     * 
-     * @param user
+     * Send a message
      * @param message
      */
     public void sendMessage(String message) {
-        this.userSession.getAsyncRemote().sendText(message);
-    }
-    
-    /*
-    public static void main(String ...args)
-    {
-      
-      
-      TaskUtil.getDefaultTaskProcessor();
-      try
-      {
-        int index = 0;
-        WebSocketClient wsc = new WebSocketClient(new URI(args[index]),
-            new DataHandler<WebSocketClient, String>()
-            {
 
-              @Override
-              public void handleData(WebSocketClient source, String data) {
-                // TODO Auto-generated method stub
-                System.out.println(data);
-              }
-          
-            },
-            new Closeable() {
-
-              @Override
-              public void close() throws IOException {
-                // TODO Auto-generated method stub
-                TaskUtil.getDefaultTaskProcessor().close();
-              }
-              
-            }
-            );
-        
-        for (;index < args.length; index++)
-        {
-          wsc.sendMessage(args[index]);
-        }
-      }
-      
-      catch(Exception e)
-      {
-        e.printStackTrace();
-        TaskUtil.getDefaultTaskProcessor().close();
-      }
-      
-      
+        userSession.getAsyncRemote().sendText(message);
+        respCounter++;
+        //reqCounter.incrementAndGet();
     }
-    */
+
 }
