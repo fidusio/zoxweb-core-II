@@ -6,6 +6,9 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Enum for java Logger level
+ */
 public enum LoggerLevel
     implements GetValue<Level>
 {
