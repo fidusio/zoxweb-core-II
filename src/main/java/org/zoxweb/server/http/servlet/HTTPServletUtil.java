@@ -47,14 +47,8 @@ import org.zoxweb.shared.http.HTTPHeaderName;
 import org.zoxweb.shared.http.HTTPHeaderValue;
 import org.zoxweb.shared.http.HTTPMimeType;
 import org.zoxweb.shared.http.HTTPStatusCode;
-import org.zoxweb.shared.util.GetNameValue;
-import org.zoxweb.shared.util.NVEntity;
-import org.zoxweb.shared.util.NVPair;
-import org.zoxweb.shared.util.QuickLZ;
-import org.zoxweb.shared.util.SharedBase64;
+import org.zoxweb.shared.util.*;
 import org.zoxweb.shared.util.SharedBase64.Base64Type;
-import org.zoxweb.shared.util.SharedStringUtil;
-import org.zoxweb.shared.util.SharedUtil;
 
 
 public class HTTPServletUtil
@@ -311,11 +305,16 @@ public class HTTPServletUtil
 	public static <V> int sendJSONObj(HttpServletRequest req, HttpServletResponse resp, HTTPStatusCode code, V obj)
         throws IOException
     {
+    	if(obj instanceof NVGenericMap)
+      	{
+			return sendJSON( req,  resp,  code, false, GSONUtil.toJSONGenericMap((NVGenericMap) obj, false, false, false));
+		}
 	  if( obj instanceof NVEntity)
 	  {
-	    return sendJSON( req,  resp,  code, (NVEntity) obj);
+		return sendJSON( req,  resp,  code, (NVEntity) obj);
 	  }
-	  
+
+
 	  return sendJSON( req,  resp,  code, false, GSONUtil.DEFAULT_GSON.toJson(obj));
     }
 	

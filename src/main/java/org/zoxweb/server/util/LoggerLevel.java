@@ -41,4 +41,21 @@ public enum LoggerLevel
             handler.setLevel(ll.getValue());
         }
     }
+
+    public static LoggerLevel currentLevel()
+    {
+        return toLoggerLevel(Logger.getLogger("").getLevel());
+    }
+
+    public static LoggerLevel toLoggerLevel(Level level)
+    {
+        for(LoggerLevel ll : LoggerLevel.values())
+        {
+            if (ll.getValue() == level)
+                return ll;
+        }
+
+        return null;
+
+    }
 }
