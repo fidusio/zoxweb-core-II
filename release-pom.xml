@@ -11,6 +11,7 @@
 	<description>Zoxweb public utilities jar</description>
 	<url>http://www.zoxweb.com</url>
 	<name>zoxweb-core</name>
+	<groupId>org.zoxweb</groupId>
     <artifactId>zoxweb-core</artifactId>
     <version>2.1.5</version>
     <packaging>jar</packaging>
@@ -72,13 +73,9 @@
 		<maven-jar-plugin.version>3.0.2</maven-jar-plugin.version>
 		<maven-javadoc.version>2.10.4</maven-javadoc.version>
 		<websocket.version>1.1</websocket.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    	<jdk.version>1.8</jdk.version>
-    	<maven-jar-plugin.version>3.0.2</maven-jar-plugin.version>
-        <maven-javadoc.version>2.10.4</maven-javadoc.version>
-        <maven-plugin.version>3.6.1</maven-plugin.version>
-        <maven-plugin-source.version>3.0.1</maven-plugin-source.version>
-        <zoxweb-core.version>2.1.4</zoxweb-core.version>
+        
+    	
+        
         <junit.version>4.12</junit.version>
         <skipTests>true</skipTests>
 
@@ -126,7 +123,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
-				<version>3.0.2</version>
+				<version>${maven-jar-plugin.version}</version>
 				<configuration>
 					<encoding>UTF-8</encoding>
 				</configuration>
@@ -205,6 +202,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
