@@ -1,6 +1,7 @@
 package org.zoxweb.server.http;
 
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -14,6 +15,7 @@ import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.WebSocketContainer;
+
 import org.zoxweb.server.io.IOUtil;
 
 import org.zoxweb.shared.http.HTTPMessageConfig;
@@ -23,7 +25,9 @@ import org.zoxweb.shared.util.SharedStringUtil;
 
 
 @ClientEndpoint
-public class WebSocketClient {
+public class WebSocketClient
+    implements Closeable
+{
     private  Session userSession = null;
     private DataHandler<WebSocketClient, String> dataHandler = null;
     private AutoCloseable closeHandler;
@@ -131,13 +135,31 @@ public class WebSocketClient {
      * Send a message
      * @param message
      */
-    public void sendMessage(String message) {
+    public void sendMessage(String message) throws IOException
+    {
+        sendMessage(message, false);
+    }
 
-        userSession.getAsyncRemote().sendText(message);
-        if (statEnabled)
-        {
-            requestCounter.incrementAndGet();
+    public void sendMessage(String message, boolean async) throws IOException {
+        if(userSession.isOpen()) {
+            if (async)
+                userSession.getAsyncRemote().sendText(message);
+            else
+                userSession.getBasicRemote().sendText(message);
+            if (statEnabled) {
+                requestCounter.incrementAndGet();
+            }
         }
+        else
+        {
+            throw new IOException("WebSocket closed");
+        }
+    }
+
+    public void close() throws IOException {
+
+        IOUtil.close(userSession);
+        IOUtil.close(closeHandler);
     }
 
 }
