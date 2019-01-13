@@ -22,6 +22,12 @@ public class NVGenericMapTest
 		
 	}
 	
+	static class TestClass
+	{
+	  String name;
+	  NVGenericMap nvgm;
+	}
+	
 	
 	public static void main(String ...args)
 	{
@@ -76,6 +82,16 @@ public class NVGenericMapTest
 			System.out.println(json);
 			//nvgm = GSONUtil.fromJSONGenericMap(json, null, Base64Type.URL);
 			
+			
+			TestClass tc = new TestClass();
+			tc.name = "not set";
+			tc.nvgm = nvgm;
+			json = GSONUtil.DEFAULT_GSON.toJson(tc);
+			System.out.println(json);
+			tc = GSONUtil.DEFAULT_GSON.fromJson(json, TestClass.class);
+			
+			json = GSONUtil.DEFAULT_GSON.toJson(tc);
+            System.out.println(json);
 			
 		}
 		catch(Exception e)

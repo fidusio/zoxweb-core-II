@@ -21,6 +21,7 @@ import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
+import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -88,11 +89,17 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
+import com.google.gson.internal.bind.JsonTreeWriter;
 import com.google.gson.stream.JsonWriter;
 
 /**
@@ -107,9 +114,39 @@ final public class GSONUtil
 	
 	private final static GSONUtil SINGLETON = new GSONUtil();
 	
-	public final static Gson DEFAULT_GSON = create(false);
+	public final static Gson DEFAULT_GSON = new GsonBuilder().registerTypeAdapter(NVGenericMap.class, new NVGenericMapSerialiser()).create();
 	
 	private GsonBuilder builder = null;
+	
+	
+	public static class NVGenericMapSerialiser implements JsonSerializer<NVGenericMap>,JsonDeserializer<NVGenericMap>
+	{
+
+      @Override
+      public JsonElement serialize(NVGenericMap src, Type typeOfSrc,
+          JsonSerializationContext context) {
+        // TODO Auto-generated method stub
+       
+        
+        JsonTreeWriter jtw = new JsonTreeWriter();
+        try {
+          toJSONGenericMap(jtw, src, false, false);
+        } catch (IOException e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
+        }
+        
+        return jtw.get();
+      }
+
+      @Override
+      public NVGenericMap deserialize(JsonElement json, Type typeOfT,
+          JsonDeserializationContext context) throws JsonParseException {
+        // TODO Auto-generated method stub
+        return fromJSONGenericMap((JsonObject)json, null, Base64Type.DEFAULT);
+      }
+	  
+	}
 	
 	private GSONUtil()
     {
