@@ -29,6 +29,7 @@ Copyright (C) 2015-2018 http://www.zoxweb.com
 ## RELEASES
 
 <ul>
+<li>2.1.6 2019-01-14
 <li>2.1.5 2019-01-04
 <li>2.1.4 2019-01-02 (defunct)
 <li>2.1.3 2018-12-02
