@@ -28,12 +28,14 @@ import org.zoxweb.shared.util.SharedStringUtil;
 public class WebSocketClient
     implements Closeable
 {
-    private  Session userSession = null;
+    private Session userSession = null;
     private DataHandler<WebSocketClient, String> dataHandler = null;
     private AutoCloseable closeHandler;
-    private AtomicLong requestCounter= new AtomicLong(0);
-    private AtomicLong responseCounter= new AtomicLong(0);
+    private AtomicLong requestCounter = new AtomicLong(0);
+    private AtomicLong responseCounter=  new AtomicLong(0);
     private final boolean statEnabled;
+    private boolean  closed = false;
+
 
     
     public WebSocketClient(HTTPMessageConfig hmc, DataHandler<WebSocketClient, String> dataHandler, AutoCloseable closeHandler, boolean statEnabled)
@@ -46,11 +48,11 @@ public class WebSocketClient
 
     public WebSocketClient(URI endpointURI, DataHandler<WebSocketClient, String> dataHandler, AutoCloseable closeHandler, boolean statEnabled)
         throws DeploymentException, IOException
-    {    
-      this.closeHandler  = closeHandler;
-      setDataHandler(dataHandler);
+    {
       WebSocketContainer container = ContainerProvider.getWebSocketContainer();
       container.connectToServer(this, endpointURI);
+      this.closeHandler  = closeHandler;
+      setDataHandler(dataHandler);
       this.statEnabled = statEnabled;
        
     }
@@ -77,7 +79,7 @@ public class WebSocketClient
     @OnClose
     public void onClose(Session userSession, CloseReason reason)
     {
-        IOUtil.close(closeHandler);
+       IOUtil.close(this);
     }
 
     /**
@@ -157,9 +159,24 @@ public class WebSocketClient
     }
 
     public void close() throws IOException {
+        boolean test = false;
+        synchronized (this)
+        {
+            if (!closed)
+            {
+                closed = true;
+                test = true;
+            }
+        }
 
-        IOUtil.close(userSession);
-        IOUtil.close(closeHandler);
+        if(test) {
+            IOUtil.close(userSession);
+            IOUtil.close(closeHandler);
+        }
+    }
+    public boolean isClosed()
+    {
+        return userSession.isOpen();
     }
 
 }

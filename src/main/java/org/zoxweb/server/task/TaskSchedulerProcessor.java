@@ -84,7 +84,7 @@ public class TaskSchedulerProcessor
 	private boolean live = true;
 	private static final long DEFAULT_TIMEOUT = Const.TimeInMillis.MILLI.MILLIS*500;
 	private static final AtomicLong TSP_COUNTER = new AtomicLong(0);
-	private ConcurrentSkipListSet<TaskSchedulerAppointment> queue = null;
+	volatile private ConcurrentSkipListSet<TaskSchedulerAppointment> queue = null;
 	
 	public TaskSchedulerProcessor() {
 		this(Appointment.EQUAL_COMPARATOR, null);
@@ -156,7 +156,13 @@ public class TaskSchedulerProcessor
 		
 		return null;
 	}
-	
+
+	/**
+	 * Execute a runnable i
+	 * @param delayInMillis
+	 * @param command
+	 * @return
+	 */
 	public Appointment queue(long delayInMillis, Runnable command)
     {
         if (command != null)
@@ -207,7 +213,7 @@ public class TaskSchedulerProcessor
 			do {
 				TaskSchedulerAppointment tSchedulerEvent = null;
 
-				synchronized( queue) {
+				synchronized(queue) {
 					long delay = waitTime();
 
 					if (delay <= 0) {
