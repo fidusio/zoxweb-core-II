@@ -58,13 +58,6 @@
   <!-- Version definition -->
     <properties>
         <common-codec.version>1.10</common-codec.version>
-        
-       
-        
-       
-        
-       
-		
 		<maven-plugin.version>3.6.1</maven-plugin.version>
 		<maven-plugin-source.version>3.0.1</maven-plugin-source.version>
 		<maven-jar-plugin.version>3.0.2</maven-jar-plugin.version>
