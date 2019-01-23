@@ -25,14 +25,20 @@ import org.zoxweb.shared.data.AddressDAO;
 import org.zoxweb.shared.data.SystemInfoDAO;
 import org.zoxweb.shared.net.InetAddressDAO;
 import org.zoxweb.shared.net.NetworkInterfaceDAO;
-import org.zoxweb.shared.util.Const;
-import org.zoxweb.shared.util.NVEntity;
+import org.zoxweb.shared.util.*;
 import org.zoxweb.shared.util.SharedBase64.Base64Type;
 
 import com.google.gson.Gson;
 
 public class JSONTest {
 
+
+
+	static class Toto
+	{
+		SystemInfoDAO sys_dao;
+		NVGenericMap nvgm;
+	}
 	private static Logger log = Logger.getLogger(Const.LOGGER_NAME);
 
 	public static void main (String[] args) {
@@ -101,6 +107,25 @@ public class JSONTest {
 			System.out.println(json);
 			List<NVEntity> nves = GSONUtil.fromJSONArray(json, Base64Type.DEFAULT);
 			System.out.println(nves);
+
+			NVGenericMap nvgm = new NVGenericMap();
+			nvgm.setName("name");
+			nvgm.add(new NVLong("longValue", 67));
+			nvgm.add(new NVDouble("doubleValue", 567.45));
+			nvgm.add(new NVBoolean("booleanValue", true));
+			nvgm.add(new NVPair("aname", "mario"));
+			Toto t = new Toto();
+			t.sys_dao = sysDAO;
+			t.nvgm = nvgm;
+
+			//System.out.println(GSONUtil.DEFAULT_GSON.toJson(sysDAO));
+			System.out.println(GSONUtil.DEFAULT_GSON.toJson(t));
+			System.out.println(GSONUtil.toJSON(sysDAO, false, false,true));
+
+
+
+
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -40,6 +40,7 @@ import java.util.logging.Logger;
 
 import org.zoxweb.server.filters.TimestampFilter;
 import org.zoxweb.shared.api.APIException;
+import org.zoxweb.shared.data.SetNameDAO;
 import org.zoxweb.shared.db.QueryMarker;
 import org.zoxweb.shared.db.QueryMatch;
 import org.zoxweb.shared.db.QueryMatchLong;
@@ -114,7 +115,10 @@ final public class GSONUtil
 	
 	private final static GSONUtil SINGLETON = new GSONUtil();
 	
-	public final static Gson DEFAULT_GSON = new GsonBuilder().registerTypeAdapter(NVGenericMap.class, new NVGenericMapSerialiser()).create();
+	public final static Gson DEFAULT_GSON = new GsonBuilder()
+											.registerTypeAdapter(NVGenericMap.class, new NVGenericMapSerialiser())
+					                        .registerTypeHierarchyAdapter(NVEntity.class, new NVEntitySerialiser())
+											.create();
 	
 	private GsonBuilder builder = null;
 	
@@ -146,6 +150,33 @@ final public class GSONUtil
         return fromJSONGenericMap((JsonObject)json, null, Base64Type.DEFAULT);
       }
 	  
+	}
+
+	public static class NVEntitySerialiser implements JsonSerializer<NVEntity>,JsonDeserializer<NVEntity>
+	{
+
+		@Override
+		public JsonElement serialize(NVEntity src, Type typeOfSrc,
+									 JsonSerializationContext context) {
+
+			JsonTreeWriter jtw = new JsonTreeWriter();
+			try {
+				toJSON(jtw, src.getClass(), src, false, true, Base64Type.DEFAULT);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			return jtw.get();
+		}
+
+		@Override
+		public NVEntity deserialize(JsonElement json, Type typeOfT,
+										JsonDeserializationContext context) throws JsonParseException {
+			// TODO Auto-generated method stub
+			return fromJSON((JsonObject)json, null, Base64Type.DEFAULT);
+		}
+
 	}
 	
 	private GSONUtil()
