@@ -116,14 +116,14 @@ final public class GSONUtil
 	private final static GSONUtil SINGLETON = new GSONUtil();
 	
 	public final static Gson DEFAULT_GSON = new GsonBuilder()
-											.registerTypeAdapter(NVGenericMap.class, new NVGenericMapSerialiser())
-					                        .registerTypeHierarchyAdapter(NVEntity.class, new NVEntitySerialiser())
+											.registerTypeAdapter(NVGenericMap.class, new NVGenericMapSerDeserialiser())
+					                        .registerTypeHierarchyAdapter(NVEntity.class, new NVEntitySerDeserialiser())
 											.create();
 	
 	private GsonBuilder builder = null;
 	
 	
-	public static class NVGenericMapSerialiser implements JsonSerializer<NVGenericMap>,JsonDeserializer<NVGenericMap>
+	public static class NVGenericMapSerDeserialiser implements JsonSerializer<NVGenericMap>,JsonDeserializer<NVGenericMap>
 	{
 
       @Override
@@ -152,7 +152,7 @@ final public class GSONUtil
 	  
 	}
 
-	public static class NVEntitySerialiser implements JsonSerializer<NVEntity>,JsonDeserializer<NVEntity>
+	public static class NVEntitySerDeserialiser implements JsonSerializer<NVEntity>,JsonDeserializer<NVEntity>
 	{
 
 		@Override

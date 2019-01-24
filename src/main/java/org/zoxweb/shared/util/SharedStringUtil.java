@@ -136,7 +136,19 @@ public final class SharedStringUtil
 
 		return ret;
 	}
-	
+
+
+
+	public static String getTokenByIndex(String path, String sep, int index, boolean caseInsensitive)
+	{
+		String params[] = SharedStringUtil.parseStringLenient(path, sep);
+		if (index < params.length)
+		{
+			return caseInsensitive ? params[index].toLowerCase() : params[index];
+		}
+
+		return null;
+	}
 	
 	public static int indexOf(String str, String strLookingFor, int startIndex, boolean ignoreCase)
     {

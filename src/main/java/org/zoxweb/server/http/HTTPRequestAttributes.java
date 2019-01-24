@@ -273,13 +273,14 @@ public class HTTPRequestAttributes
 	
 	public String getPathInfoTokenByIndex(int index, boolean caseInsensitive)
 	{
-		String params[] = SharedStringUtil.parseStringLenient(getPathInfo(), "/");
-		if (index < params.length)
-		{
-			return caseInsensitive ? params[index].toLowerCase() : params[index];
-		}
-		
-		return null;
+		return SharedStringUtil.getTokenByIndex(getPathInfo(), "/", index, caseInsensitive);
+//		String params[] = SharedStringUtil.parseStringLenient(getPathInfo(), "/");
+//		if (index < params.length)
+//		{
+//			return caseInsensitive ? params[index].toLowerCase() : params[index];
+//		}
+//
+//		return null;
 	}
 
 
