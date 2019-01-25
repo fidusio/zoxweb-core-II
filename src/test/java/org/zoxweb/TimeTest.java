@@ -15,8 +15,11 @@
  */
 package org.zoxweb;
 
+import org.zoxweb.server.util.DateUtil;
 import org.zoxweb.server.util.ServerUtil;
 import org.zoxweb.shared.util.Const;
+
+import java.util.Date;
 
 public class TimeTest {
 
@@ -42,6 +45,10 @@ public class TimeTest {
 				System.out.println(j + ":Expected Time: " + time[i] + "  Actual Time: " + Const.TimeInMillis.nanosToString(ts));
 			}
 		}
+
+		Date date = new Date();
+		System.out.println(DateUtil.DEFAULT_GMT_MILLIS.format(date));
+		System.out.println(DateUtil.DEFAULT_ZULU_MILLIS.format(date));
 	
 	}
 }
