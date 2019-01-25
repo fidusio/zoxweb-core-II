@@ -15,6 +15,7 @@
  */
 package org.zoxweb;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.Logger;
@@ -36,8 +37,10 @@ public class JSONTest {
 
 	static class Toto
 	{
+	    Date date;
 		SystemInfoDAO sys_dao;
 		NVGenericMap nvgm;
+		
 	}
 	private static Logger log = Logger.getLogger(Const.LOGGER_NAME);
 
@@ -117,6 +120,7 @@ public class JSONTest {
 			Toto t = new Toto();
 			t.sys_dao = sysDAO;
 			t.nvgm = nvgm;
+			t.date = new Date();
 
 			//System.out.println(GSONUtil.DEFAULT_GSON.toJson(sysDAO));
 			System.out.println(GSONUtil.DEFAULT_GSON.toJson(t));

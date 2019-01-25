@@ -25,6 +25,7 @@ import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 //import java.util.HashMap;
@@ -40,7 +41,6 @@ import java.util.logging.Logger;
 
 import org.zoxweb.server.filters.TimestampFilter;
 import org.zoxweb.shared.api.APIException;
-import org.zoxweb.shared.data.SetNameDAO;
 import org.zoxweb.shared.db.QueryMarker;
 import org.zoxweb.shared.db.QueryMatch;
 import org.zoxweb.shared.db.QueryMatchLong;
@@ -118,6 +118,7 @@ final public class GSONUtil
 	public final static Gson DEFAULT_GSON = new GsonBuilder()
 											.registerTypeAdapter(NVGenericMap.class, new NVGenericMapSerDeserialiser())
 					                        .registerTypeHierarchyAdapter(NVEntity.class, new NVEntitySerDeserialiser())
+					                        .registerTypeAdapter(Date.class, new DateSerDeserialiser())
 											.create();
 	
 	private GsonBuilder builder = null;
@@ -151,6 +152,40 @@ final public class GSONUtil
       }
 	  
 	}
+	
+	
+	
+	public static class DateSerDeserialiser implements JsonSerializer<Date>,JsonDeserializer<Date>
+    {
+
+      @Override
+      public JsonElement serialize(Date src, Type typeOfSrc,
+          JsonSerializationContext context) {
+        // TODO Auto-generated method stub
+       
+        
+        return new JsonPrimitive(DateUtil.DEFAULT_GMT_MILLIS.format(src));
+      }
+
+      @Override
+      public Date deserialize(JsonElement json, Type typeOfT,
+          JsonDeserializationContext context) throws JsonParseException {
+        // TODO Auto-generated method stub
+        JsonPrimitive jp = (JsonPrimitive)json;
+        if(jp.isNumber())
+          return new Date(jp.getAsLong());
+        
+        try {
+          return DateUtil.DEFAULT_GMT_MILLIS.parse(jp.getAsString());
+        } catch (ParseException e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
+        }
+        return null;
+      }
+      
+    }
+	
 
 	public static class NVEntitySerDeserialiser implements JsonSerializer<NVEntity>,JsonDeserializer<NVEntity>
 	{
