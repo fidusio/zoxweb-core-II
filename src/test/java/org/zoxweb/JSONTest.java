@@ -122,10 +122,12 @@ public class JSONTest {
 			t.nvgm = nvgm;
 			t.date = new Date();
 
-			//System.out.println(GSONUtil.DEFAULT_GSON.toJson(sysDAO));
-			System.out.println(GSONUtil.DEFAULT_GSON.toJson(t));
+			//System.out.println(GGSONUtil.DEFAULT_GSON.toJson(t)SONUtil.DEFAULT_GSON.toJson(sysDAO));
+			String ts = GSONUtil.DEFAULT_GSON.toJson(t);
+			System.out.println(ts);
 			System.out.println(GSONUtil.toJSON(sysDAO, false, false,true));
-
+			Toto t2 = GSONUtil.DEFAULT_GSON.fromJson(ts, Toto.class);
+			System.out.println(t.date.equals(t2.date));
 
 
 
