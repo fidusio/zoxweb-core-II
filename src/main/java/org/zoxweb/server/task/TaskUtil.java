@@ -28,7 +28,7 @@ public class TaskUtil
 	private static final Lock LOCK = new ReentrantLock();
 	
 	private static int maxTasks = 500;
-	private static int threadMultiplier = 8;
+	private static int threadMultiplier = 4;
 	
 	public static transient final Logger LOG = Logger.getLogger(Const.LOGGER_NAME); 
 	
