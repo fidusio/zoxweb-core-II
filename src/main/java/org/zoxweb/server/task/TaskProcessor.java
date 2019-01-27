@@ -210,10 +210,10 @@ public class TaskProcessor
 		// start the task processor
 		this.executorNotify = executorNotify;
 		thread = new Thread(this, tpID);
+
+
 		thread.start();
-		
-		
-		log.info("VM Snapshot:"+RuntimeUtil.vmSnapshot());
+		log.info("Started:" + this);
 	}
 	
 	
@@ -254,7 +254,7 @@ public class TaskProcessor
 	@Override
 	public void run() 
 	{
-		log.info("TaskProcessor[" +executorsCounter+","+ tasksQueue.getHighMark() +"," +tasksQueue.getLowMark()+"]" );
+		log.info(toString());
 		while(live)
 		{
 			TaskEvent event = null;
@@ -331,7 +331,10 @@ public class TaskProcessor
 	{
 		return tasksQueue.size();
 	}
-	
+	public String toString()
+	{
+		return "TaskProcessor[" +executorsCounter+","+ tasksQueue.getHighMark() +"," +tasksQueue.getLowMark()+"]";
+	}
 	/**
 	 * @return Return true if there is pending tasks or any worker thread is executing a task
 	 */
