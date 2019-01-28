@@ -93,4 +93,9 @@ public class TaskUtil
 		return TASK_SCHEDULER;
 	}
 	
+	public static boolean isBusy()
+	{
+	    return getDefaultTaskScheduler().pendingTasks() != 0 || getDefaultTaskProcessor().isBusy();
+	}
+	
 }

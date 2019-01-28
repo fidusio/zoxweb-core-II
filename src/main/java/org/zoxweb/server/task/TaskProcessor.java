@@ -21,7 +21,6 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Logger;
 
 import org.zoxweb.server.util.BoundedSimpleQueue;
-import org.zoxweb.server.util.RuntimeUtil;
 import org.zoxweb.shared.util.DaemonController;
 import org.zoxweb.shared.util.SimpleQueueInterface;
 import org.zoxweb.shared.util.SimpleQueue;
