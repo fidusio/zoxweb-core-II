@@ -29,6 +29,7 @@ public class NIConfigDAO
     USERNAME(NVConfigManager.createNVConfig("username", "PPPoE user name", "UserName", false, true, String.class)),
     PASSWORD(NVConfigManager.createNVConfig("password", "PPPoE passowrd", "Password", false, true, String.class)),
     DNS_SERVERS(NVConfigManager.createNVConfig("dns-nameservers", "DNS Name Servers", "DNSNameServers", false, true, String.class)),
+    WPA_CONF(NVConfigManager.createNVConfig("wpa-conf", "WAP confgiuration file", "WPA-CONF", false, true, String.class)),
 
     
     ;   
@@ -148,6 +149,16 @@ public class NIConfigDAO
   public void setPassword(String password) 
   {
     getProperties().add(Param.PASSWORD, password);
+  }
+  
+  public String getWPAConfig()
+  {
+    return getProperties().getValue(Param.WPA_CONF);
+  }
+  
+  public void setWPACondfig(String wpaConfig) 
+  {
+    getProperties().add(Param.WPA_CONF, wpaConfig);
   }
 
   

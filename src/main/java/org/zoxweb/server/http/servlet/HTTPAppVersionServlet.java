@@ -53,6 +53,7 @@ public class HTTPAppVersionServlet
 		
 		resp.setContentType(HTTPMimeType.APPLICATION_JSON.getValue());
 		resp.setCharacterEncoding(SharedStringUtil.UTF_8);
+		resp.addHeader("Access-Control-Allow-Origin", "*");
 		resp.getWriter().write(version.get());
 		
 	}
