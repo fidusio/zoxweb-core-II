@@ -20,14 +20,7 @@ import java.util.List;
 
 import org.zoxweb.shared.data.TimeStampDAO;
 import org.zoxweb.shared.security.KeyMaker;
-import org.zoxweb.shared.util.ArrayValues;
-import org.zoxweb.shared.util.GetNVConfig;
-import org.zoxweb.shared.util.NVConfig;
-import org.zoxweb.shared.util.NVConfigEntity;
-import org.zoxweb.shared.util.NVConfigEntityLocal;
-import org.zoxweb.shared.util.NVConfigManager;
-import org.zoxweb.shared.util.NVPair;
-import org.zoxweb.shared.util.SharedUtil;
+import org.zoxweb.shared.util.*;
 
 /**
  * This class implements API configuration information interface to 
@@ -57,7 +50,7 @@ public class APIConfigInfoDAO
 		VERSION(NVConfigManager.createNVConfig("api_version", "API version", "CurrentVersion", false, false, String.class)),
 		DEFAULT_LOCATION(NVConfigManager.createNVConfig("default_location", "Default storage location", "DefaultLocation", false, true, String.class)),
 		CONFIGURATION_PARAMETERS(NVConfigManager.createNVConfig("configuration_parameters", "API configuration parameters", "APIConfigurationParameters", true, true, false, String[].class, null)),
-		
+		PROPERTIES(NVConfigManager.createNVConfig("properties", "Configuration properties", "Properties", false, true, NVGenericMap.class)),
 		//API_KEY_REF_ID(NVConfigManager.createNVConfig("api_key_ref_id", "API key reference id", "APIKeyRefID", true, true, false, true, String.class, null)),
 		;
 		
@@ -193,6 +186,16 @@ public class APIConfigInfoDAO
 	public void setConfigParameters(ArrayValues<NVPair> configParams)
 	{
 		getConfigParameters().add(configParams.values(), true);
+	}
+
+	/**
+	 * Get the configuration properties
+	 * @return
+	 */
+	@Override
+	public NVGenericMap getProperties()
+	{
+		return (NVGenericMap)lookup(Params.PROPERTIES);
 	}
 
 	/**

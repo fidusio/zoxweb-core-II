@@ -18,15 +18,7 @@ package org.zoxweb.shared.api;
 import java.util.List;
 
 import org.zoxweb.shared.security.KeyMaker;
-import org.zoxweb.shared.util.AccountID;
-import org.zoxweb.shared.util.ArrayValues;
-import org.zoxweb.shared.util.CanonicalID;
-import org.zoxweb.shared.util.TimeStampInterface;
-import org.zoxweb.shared.util.UserID;
-import org.zoxweb.shared.util.NVPair;
-import org.zoxweb.shared.util.ReferenceID;
-import org.zoxweb.shared.util.SetDescription;
-import org.zoxweb.shared.util.SetName;
+import org.zoxweb.shared.util.*;
 
 /**
  * The API configuration information interface.
@@ -88,18 +80,21 @@ public interface APIConfigInfo
 	
 	/**
 	 * @return the configuration parameters.
+	 * @deprecated
 	 */
 	public ArrayValues<NVPair> getConfigParameters();
 	
 	/**
 	 * This method sets the configuration parameters.
 	 * @param configParams
+	 * @deprecated
 	 */
 	public void setConfigParameters(List<NVPair> configParams);
 	
 	/**
 	 * This method sets the configuration parameters.
 	 * @param configParams
+	 * @deprecated
 	 */
 	public void setConfigParameters(ArrayValues<NVPair> configParams);
 	
@@ -150,6 +145,13 @@ public interface APIConfigInfo
 	
 	void setAPISecurityManager(APISecurityManager<?> apiSM);
 	APISecurityManager<?> getAPISecurityManager();
+
+
+	/**
+	 * Get the native configuration parameters
+	 * @return
+	 */
+	NVGenericMap getProperties();
 	
 	
 	
