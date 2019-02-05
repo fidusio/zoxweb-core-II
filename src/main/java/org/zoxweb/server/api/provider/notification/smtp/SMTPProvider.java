@@ -105,12 +105,13 @@ public class SMTPProvider
 			APINotificationMessage notificationMessage = (APINotificationMessage) event.getTaskExecutorParameters()[index++];
 			
 			
-			final String USER_NAME = SharedUtil.lookupValue(getAPIConfigInfo().getConfigParameters().get(SMTPCreator.Param.USERNAME.getName()));
-			final String PASSWORD  = SharedUtil.lookupValue(getAPIConfigInfo().getConfigParameters().get(SMTPCreator.Param.PASSWORD.getName()));
+			final String USER_NAME = getAPIConfigInfo().getProperties().getValue(SMTPCreator.Param.USERNAME.getName());
+			final String PASSWORD  = getAPIConfigInfo().getProperties().getValue(SMTPCreator.Param.PASSWORD.getName());
 			
 			
 			Session session = smtpProvider.createSession(
-					smtpProvider.createProperties(true, true, SharedUtil.lookupValue(getAPIConfigInfo().getConfigParameters().get(SMTPCreator.Param.HOST.getName())), SharedUtil.lookupValue(getAPIConfigInfo().getConfigParameters().get(SMTPCreator.Param.PORT.getName()))),
+					smtpProvider.createProperties(true, true, getAPIConfigInfo().getProperties().getValue(SMTPCreator.Param.HOST.getName()),
+					    getAPIConfigInfo().getProperties().getValue(SMTPCreator.Param.PORT.getName())),
 					USER_NAME, PASSWORD);
 
 		      try 
