@@ -75,7 +75,7 @@ public class TransactionDAOTest {
 	}
 
 	
-	@SuppressWarnings("unlikely-arg-type")
+	//@SuppressWarnings("unlikely-arg-type")
 	@Test
 	public void testGetTransactionDescriptor() {
 		assertFalse("Transaction descriptor verification: ", TransactionDescriptor.MONTHLY_PAYMENT.equals(transaction.getDescriptor()));
