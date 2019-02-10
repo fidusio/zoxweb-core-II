@@ -23,7 +23,7 @@ public class NVConfigMeta
 		IS_HIDDEN(NVConfigManager.createNVConfig("is_hidden", "If the data is hidden", "IsHidden", false, true, Boolean.class)),
 		IS_MANDATORY(NVConfigManager.createNVConfig("is_mandatory", "display name", "IsMandatory", false, true, Boolean.class)),
 		IS_VISIBLE(NVConfigManager.createNVConfig("is_visible", "if true the item is visible", "IsVisible", false, true, Boolean.class)),
-		ACTIONS(NVConfigManager.createNVConfig("actions", "Actions that could be appriled on the meta object", "IsVisible", false, true, NVStringList.class)),
+		ACTIONS(NVConfigManager.createNVConfig("actions", "Actions that could be appriled on the meta object", "Actions", false, true, NVStringList.class)),
 		
 		
 		;
