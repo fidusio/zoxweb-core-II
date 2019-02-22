@@ -140,7 +140,7 @@ public class NIOTunnel
 		IOUtil.close(remoteChannel);
 		IOUtil.close(clientChannel);
 		postOp();
-		log.info("close ended");
+		log.info("closed:" + clientChannel.getLocalAddress() + "->" + remoteAddress);
 	}
 
 	@Override

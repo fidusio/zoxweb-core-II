@@ -56,7 +56,8 @@ implements Runnable
       String content = index < args.length ? IOUtil.inputStreamToString(args[index++]) : null;
       HTTPMessageConfigInterface hmci = HTTPMessageConfig.createAndInit(url, uri, httpMethod);
       hmci.setContentType(HTTPMimeType.APPLICATION_JSON);
-      hmci.setContent(content);
+      if (content != null)
+        hmci.setContent(content);
       long ts = System.currentTimeMillis();
       for(int i = 0; i < repeat; i++)
       {
@@ -64,10 +65,7 @@ implements Runnable
       }
       
       
-      while(TaskUtil.isBusy())
-      {
-        Thread.sleep(50);
-      }
+      TaskUtil.waitIfBusyThenClose(50);
       ts = System.currentTimeMillis() - ts;
       
       TaskUtil.getDefaultTaskScheduler().close();
