@@ -66,7 +66,7 @@ public class HTTPCallTest
 //		hcc.setURI("*");
 		
 		hcc.setMethod(args[index++]);
-		hcc.setHTTPVersion(HTTPVersion.HTTP_1_0);
+		//hcc.setHTTPVersion(HTTPVersion.HTTP_1_0);
 		hcc.setRedirectEnabled(true);
 		//hcc.setProxyAddress( new InetSocketAddressDAO("localhost", 8080));
 		
