@@ -48,10 +48,11 @@ public class VMInfoTest {
 		VMMonitorTask vmmt = new VMMonitorTask(Const.SizeInBytes.K);
 		Appointment apt = new AppointmentDefault(Const.TimeInMillis.SECOND.MILLIS*5);
 		tsp.queue( log, apt, vmmt, log, apt, tsp);
-
-		for (int i = 0; i < 50; i++) {
+		System.out.println("Stack trace:" + RuntimeUtil.stackTrace());
+		for (int i = 0; i < 10; i++) {
 			tsp.queue( log, new AppointmentDefault(Const.TimeInMillis.MILLI.MILLIS*(5+i)), new VMMonitorTask(Const.SizeInBytes.M), log);
 		}
+		
 	}
 
 }

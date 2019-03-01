@@ -250,5 +250,18 @@ public class RuntimeUtil
             }
         }
 	 }
+	
+	
+	public static String stackTrace()
+	{
+	  StackTraceElement[] elements = Thread.currentThread().getStackTrace();
+	  StringBuilder sb = new StringBuilder();
+	  for (int i = 2; i < elements.length; i++) {
+	    StackTraceElement s = elements[i];
+	    sb.append("\tat " + s.getClassName() + "." + s.getMethodName() + "(" + s.getFileName() + ":" + s.getLineNumber() + ")\n");
+	  }
+
+	  return sb.toString();
+	}
 
 }

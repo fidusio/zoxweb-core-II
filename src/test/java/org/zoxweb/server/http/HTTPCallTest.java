@@ -23,7 +23,7 @@ import org.zoxweb.shared.http.HTTPMessageConfig;
 import org.zoxweb.shared.http.HTTPMimeType;
 
 import org.zoxweb.shared.http.HTTPResponseData;
-import org.zoxweb.shared.http.HTTPVersion;
+
 
 
 public class HTTPCallTest
