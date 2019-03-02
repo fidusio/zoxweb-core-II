@@ -22,7 +22,7 @@ import java.util.logging.Logger;
 public class HTTPServerTest {
 
 
-  private final static Logger LOG = Logger.getLogger(HTTPServerTest.class.getName());
+  private final static Logger log = Logger.getLogger(HTTPServerTest.class.getName());
 
   static class  ContextHandler implements HttpHandler
   {
@@ -58,7 +58,7 @@ public class HTTPServerTest {
           server.setExecutor(TaskUtil.getDefaultTaskProcessor());
           server.start();
 
-          System.out.println("server started @ " + server.getAddress());
+          log.info("server started @ " + server.getAddress());
 
       }
       catch(Exception e)
