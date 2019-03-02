@@ -100,9 +100,9 @@ public class TaskUtil
 	}
 
 
-	public static void waitIfBusyThenClose(long millisToSleepAndCheck)
+	public static long waitIfBusyThenClose(long millisToSleepAndCheck)
 	{
-		while(isBusy())
+		do
 		{
 			try
 			{
@@ -110,9 +110,12 @@ public class TaskUtil
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-		}
+		}while(isBusy());
 
+		long timestamp = System.currentTimeMillis();
 		close();
+		
+		return timestamp;
 	}
 
 	public static void close()

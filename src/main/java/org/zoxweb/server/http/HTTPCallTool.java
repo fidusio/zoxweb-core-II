@@ -82,16 +82,12 @@ public class HTTPCallTool implements Runnable
             }
 
 
-            do
-            {
-                Thread.sleep(50);
-            }
-            while(TaskUtil.getDefaultTaskProcessor().isBusy() || TaskUtil.getDefaultTaskScheduler().pendingTasks() > 0);
+            TaskUtil.waitIfBusyThenClose(25);
+           
 
-            ts = System.currentTimeMillis() - ts;
+            ts = TaskUtil.waitIfBusyThenClose(25) - ts;
 
-            TaskUtil.getDefaultTaskScheduler().close();
-            TaskUtil.getDefaultTaskProcessor().close();
+            
             float rate = ((float)counter.get()/(float)ts)*1000;
 
             log.info("It took:" + Const.TimeInMillis.toString(ts) + " to send:" + counter.get() + " failed:" + failCounter+ " rate:" + rate);
