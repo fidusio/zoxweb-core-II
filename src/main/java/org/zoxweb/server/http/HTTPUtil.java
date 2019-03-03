@@ -41,17 +41,8 @@ import org.jsoup.select.Elements;
 
 import org.zoxweb.server.io.UByteArrayOutputStream;
 import org.zoxweb.server.util.ReflectionUtil;
-import org.zoxweb.shared.http.HTTPMessageConfig;
-import org.zoxweb.shared.http.HTTPMessageConfigInterface;
-import org.zoxweb.shared.http.HTTPHeaderName;
-import org.zoxweb.shared.http.HTTPMimeType;
-import org.zoxweb.shared.http.HTTPParameterFormatter;
-import org.zoxweb.shared.http.HTTPRequestLine;
-import org.zoxweb.shared.http.HTTPMethod;
-import org.zoxweb.shared.http.HTTPResponseData;
-import org.zoxweb.shared.http.HTTPStatusCode;
-import org.zoxweb.shared.http.HTTPVersion;
-import org.zoxweb.shared.http.URIScheme;
+import org.zoxweb.shared.http.*;
+import org.zoxweb.shared.http.HTTPEncoder;
 import org.zoxweb.shared.net.InetSocketAddressDAO;
 import org.zoxweb.shared.protocol.MessageStatus;
 import org.zoxweb.shared.protocol.ProtocolDelimiter;
@@ -284,13 +275,13 @@ public class HTTPUtil
 	
 	
 	@SuppressWarnings("unchecked")
-	public static String formatParameters(List<GetNameValue<String>> params, String charset, boolean urlEncode, HTTPParameterFormatter hpf) throws UnsupportedEncodingException
+	public static String formatParameters(List<GetNameValue<String>> params, String charset, boolean urlEncode, HTTPEncoder hpf) throws UnsupportedEncodingException
 	{
 		return formatParameters((GetNameValue<String>[])params.toArray(new GetNameValue<?>[params.size()]), charset, urlEncode, hpf);
 	}
 	
 	
-	public static String formatParameters(GetNameValue<String>[] params, String charset, boolean urlEncode, HTTPParameterFormatter hpf) throws UnsupportedEncodingException
+	public static String formatParameters(GetNameValue<String>[] params, String charset, boolean urlEncode, HTTPEncoder hpf) throws UnsupportedEncodingException
 	{
 		if (SharedStringUtil.isEmpty(charset))
 		{
@@ -310,7 +301,7 @@ public class HTTPUtil
 				
 				if (nvp != null && nvp.getName() != null)
 				{
-					if (hpf == HTTPParameterFormatter.URL_ENCODED)
+					if (hpf == HTTPEncoder.URL_ENCODED)
 					{
 						sb.append(urlEncode ? URLEncoder.encode(nvp.getName(), charset) : nvp.getName());
 						sb.append(hpf.getNameValueSep());
@@ -340,7 +331,7 @@ public class HTTPUtil
 	}
 	
 	
-	public static String formatParameters(ArrayValues<GetNameValue<String>> params, String charset, boolean urlEncode, HTTPParameterFormatter hpf) throws UnsupportedEncodingException
+	public static String formatParameters(ArrayValues<GetNameValue<String>> params, String charset, boolean urlEncode, HTTPEncoder hpf) throws UnsupportedEncodingException
 	{	
 		return formatParameters(params.values(), charset, urlEncode, hpf);
 	}

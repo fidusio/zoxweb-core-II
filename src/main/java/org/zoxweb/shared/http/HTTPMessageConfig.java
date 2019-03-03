@@ -85,7 +85,7 @@ public class HTTPMessageConfig
 		PROXY_ADDRESS(NVConfigManager.createNVConfigEntity("proxy_address", "The proxy address if not null","ProxyAddress",true, false, InetSocketAddressDAO.class, ArrayType.NOT_ARRAY)),
 		ENABLE_ENCODING(NVConfigManager.createNVConfig("enable_encoding", "The NVP will be url encoded", "EnableEncoding", false, true, Boolean.class)),
 		ENABLE_SECURE_CHECK(NVConfigManager.createNVConfig("enable_secure_check", "If the connection is secure, certificte will be valiated", "EnableSecureCheck", false, true, Boolean.class)),
-		HTTP_PARAMETER_FORMATTER(NVConfigManager.createNVConfig("http_parameter_formatter", "The NVP parameter formatter", "HTTPParameterFormatter", false, true, HTTPParameterFormatter.class)),
+		HTTP_PARAMETER_FORMATTER(NVConfigManager.createNVConfig("http_parameter_formatter", "The NVP parameter formatter", "HTTPParameterFormatter", false, true, HTTPEncoder.class)),
 		
 		CONTENT(NVConfigManager.createNVConfig("content", "The payload content", "Content", false, true, byte[].class)),
 		//CONTENT_LENGTH(NVConfigManager.createNVConfig("content_length", "The payload content length", "ContentLength", false, true, Integer.class)),
@@ -135,7 +135,7 @@ public class HTTPMessageConfig
 		setRedirectEnabled(true);
 		setURLEncodingEnabled(true);
 		setSecureCheckEnabled(true);
-		setHTTPParameterFormatter(HTTPParameterFormatter.URL_ENCODED);
+		setHTTPParameterFormatter(HTTPEncoder.URL_ENCODED);
 		// updating PARAMETERS and HEADER_PARAMETERS to NVGetNameValueMap
 		// reason to support multi-parts parameters
 		attributes.put(Params.PARAMETERS.getNVConfig().getName(), new NVGetNameValueList(Params.PARAMETERS.getNVConfig().getName(), new ArrayList<GetNameValue<String>>()));
@@ -585,7 +585,7 @@ public class HTTPMessageConfig
 	 * 
 	 */
 	@Override
-	public HTTPParameterFormatter getHTTPParameterFormatter() {
+	public HTTPEncoder getHTTPParameterFormatter() {
 		
 		return lookupValue(Params.HTTP_PARAMETER_FORMATTER);
 	}
@@ -595,7 +595,7 @@ public class HTTPMessageConfig
 	/**
 	 * 
 	 */
-	public void setHTTPParameterFormatter(HTTPParameterFormatter value) {
+	public void setHTTPParameterFormatter(HTTPEncoder value) {
 		
 		setValue(Params.HTTP_PARAMETER_FORMATTER, value);
 	}

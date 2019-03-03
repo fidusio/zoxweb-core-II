@@ -113,13 +113,13 @@ extends ReferenceID<String>, SetName, SetDescription
 	/**
 	 * @return true if url encoding is enabled
 	 */
-	HTTPParameterFormatter getHTTPParameterFormatter();
+	HTTPEncoder getHTTPParameterFormatter();
 	
 	/**
 	 * enable url encoding
 	 * @param value
 	 */
-	void setHTTPParameterFormatter(HTTPParameterFormatter value);
+	void setHTTPParameterFormatter(HTTPEncoder value);
 	
 	
 	/**

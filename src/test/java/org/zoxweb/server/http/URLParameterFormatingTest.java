@@ -3,7 +3,7 @@ package org.zoxweb.server.http;
 import org.junit.Before;
 import org.junit.Test;
 import org.zoxweb.shared.http.HTTPMessageConfig;
-import org.zoxweb.shared.http.HTTPParameterFormatter;
+import org.zoxweb.shared.http.HTTPEncoder;
 import org.zoxweb.shared.util.NVPair;
 
 public class URLParameterFormatingTest
@@ -28,7 +28,7 @@ public class URLParameterFormatingTest
 	
 		StringBuilder sb = new StringBuilder("batata&");
 	
-		System.out.println(HTTPParameterFormatter.URL_ENCODED.format(sb, hcc.getParameters().values()));
+		System.out.println(HTTPEncoder.URL_ENCODED.format(sb, hcc.getParameters().values()));
 		
 	}
 	
@@ -38,15 +38,23 @@ public class URLParameterFormatingTest
 	
 		StringBuilder sb = new StringBuilder("batata/");
 	
-		System.out.println(HTTPParameterFormatter.URI_REST_ENCODED.format(sb, hcc.getParameters().values()));
+		System.out.println(HTTPEncoder.URI_REST_ENCODED.format(sb, hcc.getParameters().values()));
 		
+	}
+
+	@Test
+	public void httpHeaders()
+	{
+		System.out.println(HTTPEncoder.HEADER.format("application/json", "charset=utf-8"));
+		System.out.println(HTTPEncoder.HEADER.format("application/json; ", "charset=utf-8", "hello-1"));
+		System.out.println(HTTPEncoder.HEADER.format("application/json; ", "charset=utf-8; ", "hello-1"));
 	}
 	
 	
 	@Test
 	public void all()
 	{
-		for(HTTPParameterFormatter hpe : HTTPParameterFormatter.values())
+		for(HTTPEncoder hpe : HTTPEncoder.values())
 		{
 			System.out.println(hpe.format(null, hcc.getParameters().values()));
 		}

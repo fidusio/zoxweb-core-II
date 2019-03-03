@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.zoxweb.server.util.GSONUtil;
 import org.zoxweb.shared.http.HTTPMessageConfig;
 import org.zoxweb.shared.http.HTTPMethod;
-import org.zoxweb.shared.http.HTTPParameterFormatter;
+import org.zoxweb.shared.http.HTTPEncoder;
 import org.zoxweb.shared.util.NVPair;
 
 import java.io.IOException;
@@ -30,7 +30,7 @@ public class AppConfigDAOTest {
 
         HTTPMessageConfig hmc = (HTTPMessageConfig) HTTPMessageConfig.createAndInit(url, uri, HTTPMethod.GET);
         hmc.setName("zipcode-api-config");
-        hmc.setHTTPParameterFormatter(HTTPParameterFormatter.URI_REST_ENCODED);
+        hmc.setHTTPParameterFormatter(HTTPEncoder.URI_REST_ENCODED);
         hmc.getParameters().add(new NVPair("zip_code", zipCode));
         hmc.getParameters().add(new NVPair("distance", distance));
         hmc.getParameters().add(new NVPair("units", units));

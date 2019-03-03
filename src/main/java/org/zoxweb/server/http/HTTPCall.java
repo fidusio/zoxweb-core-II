@@ -34,13 +34,8 @@ import org.zoxweb.server.security.SSLSocketProp;
 
 import org.zoxweb.shared.filters.ReplacementFilter;
 
-import org.zoxweb.shared.http.HTTPAuthorizationType;
-import org.zoxweb.shared.http.HTTPMessageConfigInterface;
-import org.zoxweb.shared.http.HTTPParameterFormatter;
-import org.zoxweb.shared.http.HTTPCallException;
-import org.zoxweb.shared.http.HTTPHeaderName;
-import org.zoxweb.shared.http.HTTPResponseData;
-import org.zoxweb.shared.http.HTTPStatusCode;
+import org.zoxweb.shared.http.*;
+import org.zoxweb.shared.http.HTTPEncoder;
 import org.zoxweb.shared.util.ArrayValues;
 import org.zoxweb.shared.util.GetNameValue;
 import org.zoxweb.shared.util.NVPair;
@@ -176,11 +171,11 @@ public class HTTPCall
 				// if we have a GET
 				if (!SharedStringUtil.isEmpty(encodedContentParams))
 				{
-					if (hcc.getHTTPParameterFormatter() == HTTPParameterFormatter.URL_ENCODED)
+					if (hcc.getHTTPParameterFormatter() == HTTPEncoder.URL_ENCODED)
 						urlURI += "?" + encodedContentParams;
-					else if (hcc.getHTTPParameterFormatter() == HTTPParameterFormatter.URI_REST_ENCODED)
+					else if (hcc.getHTTPParameterFormatter() == HTTPEncoder.URI_REST_ENCODED)
 					{
-						urlURI = SharedStringUtil.concat(urlURI, encodedContentParams, "" + HTTPParameterFormatter.URI_REST_ENCODED.getValue());
+						urlURI = SharedStringUtil.concat(urlURI, encodedContentParams, "" + HTTPEncoder.URI_REST_ENCODED.getValue());
 					}
 				}
 				break;

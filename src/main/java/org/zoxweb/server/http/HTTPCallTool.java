@@ -20,6 +20,7 @@ import org.zoxweb.server.task.TaskUtil;
 import org.zoxweb.server.util.GSONUtil;
 import org.zoxweb.shared.http.*;
 import org.zoxweb.shared.util.Const;
+import org.zoxweb.shared.util.ParamUtil;
 import org.zoxweb.shared.util.SharedUtil;
 
 import java.util.concurrent.atomic.AtomicLong;
@@ -34,10 +35,12 @@ public class HTTPCallTool implements Runnable
     private static AtomicLong failCounter = new AtomicLong();
 
     private HTTPMessageConfigInterface hmci;
+    private boolean printResult;
 
-    public HTTPCallTool(HTTPMessageConfigInterface hmci)
+    public HTTPCallTool(HTTPMessageConfigInterface hmci, boolean printResult)
     {
         this.hmci = hmci;
+        this.printResult = printResult;
     }
 
     public void run()
@@ -46,8 +49,8 @@ public class HTTPCallTool implements Runnable
         {
             HTTPCall hc = new HTTPCall(hmci);
             HTTPResponseData rd = hc.sendRequest();
-//            rd.getData();
-//            log.info("" + rd);
+            if(printResult)
+                log.info("" + rd);
 
         }
         catch(Exception e)
@@ -64,13 +67,17 @@ public class HTTPCallTool implements Runnable
         {
             TaskUtil.setMaxTasksQueue(2048);
             TaskUtil.setThreadMultiplier(8);
-            int index = 0;
-            int repeat = Integer.parseInt(args[index++]);
-            String url = args[index++];
-            String uri = args[index++];
-            HTTPMethod httpMethod = SharedUtil.lookupEnum(args[index++], HTTPMethod.values());
-            String content = index < args.length ? IOUtil.inputStreamToString(args[index++]) : null;
+
+            ParamUtil.ParamMap params = ParamUtil.parse(args);
+            //int index = 0;
+            int repeat = params.intValue("-r", 1);
+            String url = params.stringValue("0");
+            String uri = params.stringValue("-uri", true);
+            HTTPMethod httpMethod = HTTPMethod.lookup(params.stringValue("-m", "GET"));
+            String contentFilename = params.stringValue("-c", true);
+            String content = contentFilename != null ? IOUtil.inputStreamToString(contentFilename) : null;
             HTTPMessageConfigInterface hmci = HTTPMessageConfig.createAndInit(url, uri, httpMethod);
+            boolean printResult = params.booleanValue("-pr", true);
             hmci.setContentType(HTTPMimeType.APPLICATION_JSON);
             if(content != null)
                 hmci.setContent(content);
@@ -78,11 +85,11 @@ public class HTTPCallTool implements Runnable
             long ts = System.currentTimeMillis();
             for(int i = 0; i < repeat; i++)
             {
-                TaskUtil.getDefaultTaskScheduler().queue(0, new HTTPCallTool(hmci));
+                TaskUtil.getDefaultTaskScheduler().queue(0, new HTTPCallTool(hmci, printResult));
             }
 
 
-            TaskUtil.waitIfBusyThenClose(25);
+
            
 
             ts = TaskUtil.waitIfBusyThenClose(25) - ts;
@@ -96,6 +103,7 @@ public class HTTPCallTool implements Runnable
         catch(Exception e)
         {
             e.printStackTrace();
+            System.err.println("usage: url <-uri uri-value> <-r repeat-count> <-m http method default get> <-c content file name> <-pr true(print result)");
         }
     }
 
