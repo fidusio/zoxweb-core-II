@@ -16,10 +16,12 @@ public class ParamUtil {
     {
         private Map<String, List<String>> map = new LinkedHashMap<String, List<String>>();
         private boolean ignoreCase = false;
-        private ParamMap( boolean ignoreCase, Map<String, List<String>> map)
+        private int counter;
+        private ParamMap(boolean ignoreCase, Map<String, List<String>> map, int  length)
         {
             this.map = map;
             this.ignoreCase = ignoreCase;
+            this.counter = length;
         }
 
         public int intValue(int index)
@@ -48,6 +50,14 @@ public class ParamUtil {
            }
 
            throw new IllegalArgumentException(name + " value not found or no valid");
+        }
+
+        /**
+         * @return the number of parameters without name
+         */
+        public int namelessCount()
+        {
+            return counter;
         }
 
         public long longValue(int index)
@@ -244,7 +254,7 @@ public class ParamUtil {
 
         }
 
-        return new ParamMap(ignoreCase, retMap);
+        return new ParamMap(ignoreCase, retMap, counter);
     }
 
 
