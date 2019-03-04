@@ -9,9 +9,9 @@ public class ParamUtilTest {
     @Test
     public void parameterParsing()
     {
-        ParamUtil.ParamMap result = ParamUtil.parse("https://localhost", "-URI", "context", "-content", "hello", "5", "-uri", "/hello");
+        ParamUtil.ParamMap result = ParamUtil.parse("-", "https://localhost", "-URI", "context", "-content", "hello", "5", "-uri", "/hello");
         System.out.println(result);
-        result = ParamUtil.parse(false, "https://localhost", "-URI", "context", "-content", "hello", "5");
+        result = ParamUtil.parse("-", false, "https://localhost", "-URI", "context", "-content", "hello", "5");
         System.out.println(result);
     }
 
@@ -19,7 +19,7 @@ public class ParamUtilTest {
     @Test
     public void defaultValues()
     {
-        ParamUtil.ParamMap result = ParamUtil.parse("https://localhost", "-URI", "context", "-content", "hello", "5", "-uri", "/hello");
+        ParamUtil.ParamMap result = ParamUtil.parse("-","https://localhost", "-URI", "context", "-content", "hello", "5", "-uri", "/hello");
 
         System.out.println(result.intValue("-c", 5));
         System.out.println(result.longValue("-c", (long)5));
@@ -31,7 +31,7 @@ public class ParamUtilTest {
     @Test(expected = IllegalArgumentException.class)
     public void errorTest()
     {
-        ParamUtil.ParamMap result = ParamUtil.parse("https://localhost", "-URI", "context", "-content", "hello", "5", "-uri", "/hello");
+        ParamUtil.ParamMap result = ParamUtil.parse("-","https://localhost", "-URI", "context", "-content", "hello", "5", "-uri", "/hello");
 
         System.out.println(result.intValue("-c"));
     }

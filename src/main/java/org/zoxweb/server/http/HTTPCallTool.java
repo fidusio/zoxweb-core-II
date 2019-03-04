@@ -72,7 +72,7 @@ public class HTTPCallTool implements Runnable
             TaskUtil.setMaxTasksQueue(2048);
             TaskUtil.setThreadMultiplier(8);
 
-            ParamUtil.ParamMap params = ParamUtil.parse(args);
+            ParamUtil.ParamMap params = ParamUtil.parse("-", args);
             //int index = 0;
             int repeat = params.intValue("-r", 1);
             String url = params.stringValue("0");

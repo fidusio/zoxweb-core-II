@@ -4,6 +4,8 @@ package org.zoxweb.shared.util;
 
 
 
+import org.zoxweb.shared.data.ParamInfo;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -11,6 +13,22 @@ import java.util.Map;
 
 public class ParamUtil {
     private ParamUtil(){}
+
+    public static class ParamInfoList
+    {
+        Map<String, ParamInfo> list = new LinkedHashMap<String, ParamInfo>();
+
+        public void add(ParamInfo pi)
+        {
+            list.put(pi.getName().toLowerCase(), pi);
+        }
+        public ParamInfo lookup(String paramName)
+        {
+            return list.get(paramName.toLowerCase());
+        }
+
+
+    }
 
     public static class ParamMap
     {
@@ -203,12 +221,12 @@ public class ParamUtil {
     }
 
 
-    public static ParamMap parse(String ...args)
+    public static ParamMap parse(String nvTag, String ...args)
     {
-        return parse(true, args);
+        return parse(nvTag, true, args);
     }
 
-    public static ParamMap parse(boolean ignoreCase, String ...args)
+    public static ParamMap parse(String nvTag, boolean ignoreCase, String ...args)
     {
         Map<String, List<String>> retMap = new LinkedHashMap<String, List<String>>();
 
@@ -220,7 +238,7 @@ public class ParamUtil {
             {
                 String name = null;
                 String value = null;
-                if(args[index].startsWith("-"))
+                if(args[index].startsWith(nvTag))
                 {
                     name = args[index++];
                     if (index < args.length)
@@ -255,6 +273,59 @@ public class ParamUtil {
         }
 
         return new ParamMap(ignoreCase, retMap, counter);
+    }
+
+
+    public static ParamMap parse(ParamInfoList piList, String ...args)
+    {
+        Map<String, List<String>> retMap = new LinkedHashMap<String, List<String>>();
+
+        int index = 0;
+        int counter = 0;
+        for(; index < args.length; index++)
+        {
+            if (!SharedStringUtil.isEmpty(args[index]))
+            {
+                String name = null;
+                String value = null;
+
+
+                ParamInfo pi = piList.lookup(args[index]);
+                if(pi==null)
+                {
+                    name = "" + counter++;
+                    value = args[index];
+                }
+                else
+                {
+                    name = pi.getName();
+                    if (pi.getValueType() == ParamInfo.ValueType.NONE)
+                    {
+                        value = name;
+                    }
+
+                    else if (index < args.length)
+                    {
+                        value = args[index];
+                    }
+                    else
+                    {
+                        // error
+                    }
+
+                }
+                
+                if(retMap.get(name) == null)
+                {
+                    retMap.put(name, new ArrayList<String>());
+                }
+
+                retMap.get(name).add(value);
+            }
+
+        }
+
+        return new ParamMap(true, retMap, counter);
     }
 
 
