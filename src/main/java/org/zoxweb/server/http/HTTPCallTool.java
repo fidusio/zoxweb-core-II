@@ -101,7 +101,7 @@ public class HTTPCallTool implements Runnable
             
             float rate = ((float)counter.get()/(float)ts)*1000;
 
-            log.info("It took:" + Const.TimeInMillis.toString(ts) + " to send:" + counter.get() + " failed:" + failCounter+ " rate:" + rate);
+            log.info("It took:" + Const.TimeInMillis.toString(ts) + " to send:" + counter.get() + " failed:" + failCounter+ " rate:" + rate + " per/second");
 
         }
         catch(Exception e)
