@@ -176,7 +176,8 @@ public enum HTTPEncoder
 		return sb;
 	}
 
-	public String format(GetNameValue<String> ...nvps)
+	@SuppressWarnings("unchecked")
+    public String format(GetNameValue<String> ...nvps)
 	{
 		return format(null, nvps);
 	}
@@ -187,7 +188,8 @@ public enum HTTPEncoder
 	 * @param nvps parameters to be formated
 	 * @return the formatted parameters as string
 	 */
-	public String format(StringBuilder sb, GetNameValue<String> ...nvps)
+	@SuppressWarnings("unchecked")
+    public String format(StringBuilder sb, GetNameValue<String> ...nvps)
 	{
 		if (sb == null)
 		{

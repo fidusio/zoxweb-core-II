@@ -8,6 +8,7 @@ import org.zoxweb.shared.util.NVConfigManager;
 import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.SharedUtil;
 
+@SuppressWarnings("serial")
 public class ParamInfo
 extends SetNameDescriptionDAO
 {
