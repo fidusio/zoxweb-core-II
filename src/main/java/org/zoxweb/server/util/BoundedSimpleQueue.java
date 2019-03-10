@@ -34,6 +34,12 @@ public class BoundedSimpleQueue<O>
 	private int highMark;
 	private int lowMark;
 	private boolean boundMode = false;
+
+
+	public BoundedSimpleQueue(int highMark)
+	{
+		this(highMark/2, highMark);
+	}
 	
 	/**
 	 * Create a bounded queue based on a lowMark and highMark parameters.
@@ -120,6 +126,11 @@ public class BoundedSimpleQueue<O>
 	 */
 	public int getHighMark()
     {
+		return highMark;
+	}
+
+	public int getCapacity()
+	{
 		return highMark;
 	}
 

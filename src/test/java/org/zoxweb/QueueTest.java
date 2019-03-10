@@ -21,11 +21,12 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import org.zoxweb.server.util.BoundedSimpleQueue;
 import org.zoxweb.server.util.RuntimeUtil;
 import org.zoxweb.shared.data.VMInfoDAO;
+
 import org.zoxweb.shared.util.SimpleQueueInterface;
 import org.zoxweb.shared.util.SharedUtil;
-import org.zoxweb.shared.util.SimpleQueue;
 
 public class QueueTest {
 	
@@ -40,16 +41,17 @@ public class QueueTest {
 //	}
 
 	public static void main(String[] args) {
-		int limit = 5000;
-		SimpleQueueInterface<Object> uQueue = new SimpleQueue<Object>();
+		int limit = 10000;
+		SimpleQueueInterface<Object> uQueue = new BoundedSimpleQueue<Object>(limit, limit*2);
 		ConcurrentLinkedQueue<Object> clQueue = new ConcurrentLinkedQueue<Object>();
 		LinkedBlockingQueue<Object> lbQueue = new LinkedBlockingQueue<Object>();
 		ArrayBlockingQueue<Object> abQueue = new ArrayBlockingQueue<Object>(limit);
+
 		VMInfoDAO startVMID = RuntimeUtil.vmSnapshot();
 		Object o = new Object();
 		
 
-		for (int j = 0; j < 30; j++) {
+		for (int j = 0; j < 10; j++) {
 			ConcurrentSkipListMap<Long, String> results = new ConcurrentSkipListMap<Long, String>();
 			System.out.println("\nTest run " + j);
 			for (int i = 0; i < limit; i++) {
@@ -57,6 +59,7 @@ public class QueueTest {
 				clQueue.add(new Object());
 				lbQueue.add(new Object());
 				abQueue.add(new Object());
+
 			}
 			
 			long ts = System.nanoTime();
@@ -102,6 +105,8 @@ public class QueueTest {
 			ts = System.nanoTime() - ts;
 			message = ts + " nanos ArrayBlockingQueue took to dequeue " + limit + ":" + abQueue.size();
 			SharedUtil.putUnique(results, ts, message);
+
+
 			//System.out.println( ts + " nanos ArrayBlockingQueue took  sec to dequeue " + limit + ":" + abQueue.size());
 			
 			for(String msg : results.values())

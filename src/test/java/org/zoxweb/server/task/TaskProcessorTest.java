@@ -45,7 +45,7 @@ public class TaskProcessorTest
 		}
 
 		while (td.counter != counter) {
-			System.out.println("Available thread " + tp.availableExecutorThreads());
+			System.out.println("Available thread " + tp + " " + td.counter);
 			synchronized(td) {
 				try {
 					//System.out.println("Available thread " + te.availableExecutorThreads());

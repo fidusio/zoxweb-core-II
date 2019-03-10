@@ -64,6 +64,13 @@ public interface SimpleQueueInterface<O>
 	 * @return the total number of object dequeued
 	 */
 	public long totalDequeued();
+
+
+	/**
+	 *
+	 * @return the maximum capactity of the implementing queue, -1 unlimited
+	 */
+	public int getCapacity();
 	
 	/**
 	 * Return true if the queue contains o.

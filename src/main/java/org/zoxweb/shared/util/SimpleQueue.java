@@ -219,6 +219,15 @@ public class SimpleQueue<O>
 	{
 		return totalQueued;
 	}
+
+	/**
+	 *
+	 * @return -1 unlimited
+	 */
+	public int getCapacity()
+	{
+		return -1;
+	}
 	
 	/**
 	 * Returns the total number of objects dequeued.

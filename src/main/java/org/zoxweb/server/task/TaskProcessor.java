@@ -40,7 +40,7 @@ public class TaskProcessor
 	public static final long WAIT_TIME = TimeUnit.MILLISECONDS.toMillis(500); 
 	private Thread thread;
 	private boolean live = true;
-	private BoundedSimpleQueue<TaskEvent>  tasksQueue;
+	private SimpleQueueInterface<TaskEvent>  tasksQueue;
 
 	/**
 	 * This is the worker thread queue is used by the TaskProcessor by dequeuing it and waiting for the queue
@@ -199,7 +199,7 @@ public class TaskProcessor
 					 "[" + taskQueueMaxSize +"," +executorThreadCount+"]");
 		}
 		
-		tasksQueue = new BoundedSimpleQueue<TaskEvent>(taskQueueMaxSize/2, taskQueueMaxSize);
+		tasksQueue = new BoundedSimpleQueue<TaskEvent>(taskQueueMaxSize);
 		String tpID = "TP-"+TP_COUNTER.incrementAndGet();
 		for (int i = 0; i < executorThreadCount; i++)
 		{
@@ -332,7 +332,8 @@ public class TaskProcessor
 	}
 	public String toString()
 	{
-		return "TaskProcessor[" +executorsCounter+","+ tasksQueue.getHighMark() +"," +tasksQueue.getLowMark()+"]";
+		//return "TaskProcessor[" +executorsCounter+","+ tasksQueue.getHighMark() +"," +tasksQueue.getLowMark()+"]";
+		return "TaskProcessor[" +executorsCounter+","+ tasksQueue+"]";
 	}
 	/**
 	 * @return Return true if there is pending tasks or any worker thread is executing a task
@@ -372,7 +373,7 @@ public class TaskProcessor
 	
 	public int getQueueMaxSize()
 	{
-		return tasksQueue.getHighMark();
+		return tasksQueue.getCapacity();
 	}
 
 
