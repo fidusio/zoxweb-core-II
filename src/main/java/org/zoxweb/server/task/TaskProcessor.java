@@ -21,9 +21,10 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Logger;
 
 import org.zoxweb.server.util.BoundedSimpleQueue;
+import org.zoxweb.shared.util.ArrayQueue;
 import org.zoxweb.shared.util.DaemonController;
 import org.zoxweb.shared.util.SimpleQueueInterface;
-import org.zoxweb.shared.util.SimpleQueue;
+//import org.zoxweb.shared.util.SimpleQueue;
 import org.zoxweb.server.task.RunnableTask.RunnableTaskContainer;
 
 /**
@@ -49,7 +50,7 @@ public class TaskProcessor
 	 * The size of this queue is set by the constructor of TaskProcessor
 	 */
 	private boolean executorNotify;
-	private SimpleQueueInterface<ExecutorThread> workersQueue = new SimpleQueue<ExecutorThread>();
+	private SimpleQueueInterface<ExecutorThread> workersQueue = null;//new SimpleQueue<ExecutorThread>();
 	
 	private int executorsCounter = 0;
 	private boolean innerLive = true;
@@ -152,6 +153,7 @@ public class TaskProcessor
 					// we need to notify the TaskProcessor that
 					// we are ready for work
 					synchronized(workersQueue) {
+
 						// notify the TaskProcessor thread
 						workersQueue.notify();
 					}
@@ -201,6 +203,7 @@ public class TaskProcessor
 		
 		tasksQueue = new BoundedSimpleQueue<TaskEvent>(taskQueueMaxSize);
 		String tpID = "TP-"+TP_COUNTER.incrementAndGet();
+        workersQueue = new ArrayQueue<ExecutorThread>(executorThreadCount);
 		for (int i = 0; i < executorThreadCount; i++)
 		{
 			// create and queue the executor threads
@@ -238,7 +241,7 @@ public class TaskProcessor
 			// tasksQueue.getLowMark()
 			tasksQueue.queue(task);
 			
-			synchronized( this)
+			synchronized(this)
 			{
 				// notify the TaskProcessor
 				notifyAll();

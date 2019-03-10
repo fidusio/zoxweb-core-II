@@ -39,7 +39,7 @@ public interface SimpleQueueInterface<O>
 	 * @throws NullPointerException 
 	 * 
 	 */
-	public void queue(O toQueue) throws NullPointerException;
+	public boolean queue(O toQueue) throws NullPointerException;
 
 	/**
 	 * Contract to dequeue the first object in the queue, null if queue is empty.

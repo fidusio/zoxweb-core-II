@@ -86,7 +86,7 @@ public class BoundedSimpleQueue<O>
 	 * @param toQueue
 	 *            the object.
 	 */
-	public synchronized void queue(O toQueue)
+	public synchronized boolean queue(O toQueue)
     {
 		if (boundMode && toQueue != null)
 		{
@@ -107,6 +107,7 @@ public class BoundedSimpleQueue<O>
 		{
 			boundMode = true;
 		}
+		return true;
 
 	}
 

@@ -94,7 +94,7 @@ public class SimpleQueue<O>
 	 * @param toQueue the object to add in the queue
 	 * 
 	 */
-	public synchronized void queue(O toQueue) 
+	public synchronized boolean queue(O toQueue)
 	{
 
 		/**
@@ -129,7 +129,7 @@ public class SimpleQueue<O>
 		// increment the queue size
 		size++;
 		totalQueued++;
-
+		return true;
 	} // end queue()
 
 	/**
