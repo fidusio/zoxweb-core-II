@@ -102,6 +102,28 @@ public class TaskUtil
 
 	public static long waitIfBusyThenClose(long millisToSleepAndCheck)
 	{
+
+		return waitIfBusyThenClose(getDefaultTaskProcessor(), getDefaultTaskScheduler(), millisToSleepAndCheck);
+//		do
+//		{
+//			try
+//			{
+//				Thread.sleep(millisToSleepAndCheck);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
+//		}while(isBusy());
+//
+//		long timestamp = System.currentTimeMillis();
+//		close();
+//
+//		return timestamp;
+	}
+
+
+
+	public static long waitIfBusyThenClose(TaskProcessor tp, TaskSchedulerProcessor tsp, long millisToSleepAndCheck)
+	{
 		do
 		{
 			try
@@ -110,13 +132,19 @@ public class TaskUtil
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-		}while(isBusy());
+		}while(tsp.pendingTasks() != 0 || tp.isBusy());
 
 		long timestamp = System.currentTimeMillis();
-		close();
-		
+		tsp.close();
+		tp.close();
+
 		return timestamp;
 	}
+
+
+
+
+
 
 	public static void close()
 	{

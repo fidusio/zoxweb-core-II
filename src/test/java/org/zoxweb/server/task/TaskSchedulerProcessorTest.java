@@ -209,19 +209,23 @@ public class TaskSchedulerProcessorTest {
 		}
 		
 
-		while( tsp.pendingTasks() != 0) {
-			try {
-				Thread.sleep( Const.TimeInMillis.SECOND.MILLIS);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
+//		while( tsp.pendingTasks() != 0) {
+//			try {
+//				Thread.sleep( Const.TimeInMillis.SECOND.MILLIS);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
+//		}
+
+
+
+		TaskUtil.waitIfBusyThenClose(tp, tsp, 23);
 
 
 		System.out.println("TaskSchedulerProcessor 1 :" + tsp.pendingTasks() + " TaskProcessor:" + tp.pendingTasks());
-		tp.close();
+		//tp.close();
 		System.out.println("TaskSchedulerProcessor 2 :" + tsp.pendingTasks() + " TaskProcessor:" + tp.pendingTasks());
-		tsp.close();
+		//tsp.close();
 		System.out.println("TaskSchedulerProcessor 3 :" + tsp.pendingTasks() + " TaskProcessor:" + tp.pendingTasks());
 	}
 }
