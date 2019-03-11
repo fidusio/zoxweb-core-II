@@ -32,7 +32,7 @@ import org.zoxweb.shared.util.ArrayQueue;
 public class BoundedSimpleQueue<O>
     extends ArrayQueue<O>
 {
-	//private int highMark;
+
 	private int lowMark;
 	private boolean boundMode = false;
 
@@ -61,7 +61,7 @@ public class BoundedSimpleQueue<O>
 					+ " highMark " + highMark + " lowMark " + lowMark);
 		}
 
-		//this.highMark = highMark;
+
 		this.lowMark = lowMark;
 	}
 
@@ -85,8 +85,7 @@ public class BoundedSimpleQueue<O>
 	 * reached the calling thread will block till the size of the queue = to the
 	 * lowMark.
 	 * 
-	 * @param toQueue
-	 *            the object.
+	 * @param toQueue the object.
 	 */
 	public synchronized boolean queue(O toQueue)
     {
@@ -123,12 +122,6 @@ public class BoundedSimpleQueue<O>
 		return "Bounded queue size " + size() + " Capacity " + array.length
 				+ " LowMark " + lowMark + " bound mode " + boundMode;
 	}
-
-	/**
-	 * @return the high mark of the queue.
-	 */
-
-
 
 
 	/**
