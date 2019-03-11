@@ -45,7 +45,7 @@ public class QueueTest {
 	public static void aQueueTest(int cap)
 	{
 
-		ArrayQueue aq = new ArrayQueue(cap);
+		ArrayQueue<Integer> aq = new ArrayQueue<Integer>(cap);
 		System.out.println("Empty:" + aq);
 		int index = 0;
 		for(; index < aq.capacity(); index++)
@@ -91,7 +91,7 @@ public class QueueTest {
 		ConcurrentLinkedQueue<Object> clQueue = new ConcurrentLinkedQueue<Object>();
 		LinkedBlockingQueue<Object> lbQueue = new LinkedBlockingQueue<Object>();
 		ArrayBlockingQueue<Object> abQueue = new ArrayBlockingQueue<Object>(limit);
-		ArrayQueue aq = new ArrayQueue(limit);
+		ArrayQueue<Object> aq = new ArrayQueue<Object>(limit);
 
 		VMInfoDAO startVMID = RuntimeUtil.vmSnapshot();
 		Object o = new Object();

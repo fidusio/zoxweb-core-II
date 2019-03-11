@@ -16,7 +16,7 @@
 package org.zoxweb.server.util;
 
 import org.zoxweb.shared.util.ArrayQueue;
-import org.zoxweb.shared.util.SimpleQueue;
+
 
 /**
  * The UQueueBound class is a bounded queue with a high and low marks. The
@@ -32,7 +32,7 @@ import org.zoxweb.shared.util.SimpleQueue;
 public class BoundedSimpleQueue<O>
     extends ArrayQueue<O>
 {
-	private int highMark;
+	//private int highMark;
 	private int lowMark;
 	private boolean boundMode = false;
 
@@ -61,7 +61,7 @@ public class BoundedSimpleQueue<O>
 					+ " highMark " + highMark + " lowMark " + lowMark);
 		}
 
-		this.highMark = highMark;
+		//this.highMark = highMark;
 		this.lowMark = lowMark;
 	}
 
@@ -72,7 +72,7 @@ public class BoundedSimpleQueue<O>
 	public synchronized O dequeue()
     {
 		O ret = super.dequeue();
-		if (boundMode && size() <= lowMark)
+		if (boundMode && size <= lowMark)
 		{
 			boundMode = false;
 			notifyAll();
@@ -105,7 +105,7 @@ public class BoundedSimpleQueue<O>
 
 		super.queue(toQueue);
 
-		if (size() == highMark)
+		if (size == array.length)
 		{
 			boundMode = true;
 		}
@@ -120,7 +120,7 @@ public class BoundedSimpleQueue<O>
 	@Override
 	public String toString()
     {
-		return "Bounded queue size " + size() + " HighMark " + highMark
+		return "Bounded queue size " + size() + " Capacity " + array.length
 				+ " LowMark " + lowMark + " bound mode " + boundMode;
 	}
 
