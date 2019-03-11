@@ -224,7 +224,7 @@ public class SimpleQueue<O>
 	 *
 	 * @return -1 unlimited
 	 */
-	public int getCapacity()
+	public int capacity()
 	{
 		return -1;
 	}

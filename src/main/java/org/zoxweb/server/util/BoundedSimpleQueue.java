@@ -15,6 +15,7 @@
  */
 package org.zoxweb.server.util;
 
+import org.zoxweb.shared.util.ArrayQueue;
 import org.zoxweb.shared.util.SimpleQueue;
 
 /**
@@ -29,7 +30,7 @@ import org.zoxweb.shared.util.SimpleQueue;
  * again.
  */
 public class BoundedSimpleQueue<O>
-    extends SimpleQueue<O>
+    extends ArrayQueue<O>
 {
 	private int highMark;
 	private int lowMark;
@@ -54,6 +55,7 @@ public class BoundedSimpleQueue<O>
 	public BoundedSimpleQueue(int lowMark, int highMark)
         throws IllegalArgumentException
     {
+    	super(highMark);
 		if (highMark <= lowMark || highMark < 0 || lowMark < 0) {
 			throw new IllegalArgumentException("Invalid queue parameters "
 					+ " highMark " + highMark + " lowMark " + lowMark);
@@ -125,15 +127,9 @@ public class BoundedSimpleQueue<O>
 	/**
 	 * @return the high mark of the queue.
 	 */
-	public int getHighMark()
-    {
-		return highMark;
-	}
 
-	public int getCapacity()
-	{
-		return highMark;
-	}
+
+
 
 	/**
 	 * @return the low mark of the queue.

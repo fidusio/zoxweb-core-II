@@ -68,9 +68,9 @@ public interface SimpleQueueInterface<O>
 
 	/**
 	 *
-	 * @return the maximum capactity of the implementing queue, -1 unlimited
+	 * @return the maximum capacity of the implementing queue, -1 unlimited
 	 */
-	public int getCapacity();
+	public int capacity();
 	
 	/**
 	 * Return true if the queue contains o.

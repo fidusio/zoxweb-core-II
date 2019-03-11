@@ -2,10 +2,10 @@ package org.zoxweb.shared.util;
 
 public class ArrayQueue<O>
 implements SimpleQueueInterface<O>{
-    private Object[] array;
-    private int head = 0, end = 0;
-    private int size = 0;
-    private long totalDequeued=0, totalQueued=0;
+    protected Object[] array;
+    protected int head = 0, end = 0;
+    protected int size = 0;
+    protected long totalDequeued=0, totalQueued=0;
 
     public ArrayQueue(int capacity)
     {
@@ -14,8 +14,12 @@ implements SimpleQueueInterface<O>{
 
 
     @Override
-    public void clear() {
-
+    public synchronized void clear() {
+        head =0;
+        end = 0;
+        size = 0;
+        for(int i = 0; i < array.length; i++)
+            array[i] = null;
     }
 
     public int size()
@@ -61,7 +65,7 @@ implements SimpleQueueInterface<O>{
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return size == 0;
     }
 
     @Override
@@ -75,7 +79,7 @@ implements SimpleQueueInterface<O>{
     }
 
     @Override
-    public int getCapacity() {
+    public int capacity() {
         return array.length;
     }
 
@@ -84,10 +88,7 @@ implements SimpleQueueInterface<O>{
         return false;
     }
 
-    public int capacity()
-    {
-        return array.length;
-    }
+
 
 
     public String toString()

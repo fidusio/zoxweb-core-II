@@ -47,6 +47,8 @@ public class DateFormatterTest {
 		System.out.println(TimestampFilter.SINGLETON.validate("2017-10-14T14:33:04-07:00"));
 		
 		System.out.println(new Date(TimestampFilter.SINGLETON.validate("2017-10-14T14:33:04-07:00")));
+		System.out.println(new Date(TimestampFilter.SINGLETON.validate("2019-03-11T14:08:41+00:00")));
+		System.out.println(new Date(TimestampFilter.SINGLETON.validate("2019-03-12T01:58:35+00:00")));
 		
 	}
 	

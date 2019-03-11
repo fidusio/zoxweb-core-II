@@ -376,7 +376,7 @@ public class TaskProcessor
 	
 	public int getQueueMaxSize()
 	{
-		return tasksQueue.getCapacity();
+		return tasksQueue.capacity();
 	}
 
 
