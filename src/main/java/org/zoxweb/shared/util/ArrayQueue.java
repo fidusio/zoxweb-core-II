@@ -3,9 +3,9 @@ package org.zoxweb.shared.util;
 public class ArrayQueue<O>
 implements SimpleQueueInterface<O>{
     protected volatile Object[] array;
-    protected  int head = 0, end = 0;
-    protected  int size = 0;
-    protected  long totalDequeued=0, totalQueued=0;
+    protected int head = 0, end = 0;
+    protected int size = 0;
+    protected long totalDequeued=0, totalQueued=0;
 
     public ArrayQueue(int capacity)
     {
@@ -27,14 +27,22 @@ implements SimpleQueueInterface<O>{
         return size;
     }
 
-    public synchronized boolean queue(O o)
+    public synchronized boolean queue(O toQueue)
+    {
+        if(toQueue == null)
+            throw new NullPointerException("Can't queue a null object");
+        return int_queue(toQueue);
+    }
+
+
+    protected  boolean int_queue(O toQueue)
     {
 
         if (size != array.length) {
             if (end == array.length) {
                 end = 0;
             }
-         array[end] = o;
+         array[end] = toQueue;
          end++;
          size++;
          totalQueued++;
@@ -44,8 +52,15 @@ implements SimpleQueueInterface<O>{
         return false;
     }
 
-    @SuppressWarnings("unchecked")
+
+
+
     public synchronized O dequeue()
+    {
+        return int_dequeue();
+    }
+    @SuppressWarnings("unchecked")
+    protected O int_dequeue()
     {
         if(size != 0)
         {
@@ -63,6 +78,8 @@ implements SimpleQueueInterface<O>{
 
         return null;
     }
+
+
 
     @Override
     public boolean isEmpty() {

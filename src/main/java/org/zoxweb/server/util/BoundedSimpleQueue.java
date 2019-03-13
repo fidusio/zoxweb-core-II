@@ -71,7 +71,7 @@ public class BoundedSimpleQueue<O>
 	 */
 	public synchronized O dequeue()
     {
-		O ret = super.dequeue();
+		O ret = int_dequeue();
 		if (boundMode && size <= lowMark)
 		{
 			boundMode = false;
@@ -89,6 +89,8 @@ public class BoundedSimpleQueue<O>
 	 */
 	public synchronized boolean queue(O toQueue)
     {
+		if(toQueue == null)
+			throw new NullPointerException("Can't queue a null object");
 		if (boundMode && toQueue != null)
 		{
 			try
@@ -102,7 +104,7 @@ public class BoundedSimpleQueue<O>
 			}
 		}
 
-		super.queue(toQueue);
+		int_queue(toQueue);
 
 		if (size == array.length)
 		{
