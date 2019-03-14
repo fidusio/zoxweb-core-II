@@ -16,6 +16,7 @@
 package org.zoxweb.server.util;
 
 import org.zoxweb.shared.util.ArrayQueue;
+import org.zoxweb.shared.util.SharedUtil;
 
 
 /**
@@ -33,8 +34,8 @@ public class BoundedSimpleQueue<O>
     extends ArrayQueue<O>
 {
 
-	private int lowMark;
-	private boolean boundMode = false;
+	private int lowThreshold;
+	private boolean threasholdEnabled = false;
 
 
 	public BoundedSimpleQueue(int highMark)
@@ -52,17 +53,17 @@ public class BoundedSimpleQueue<O>
 	 * @exception IllegalArgumentException
 	 *                if the lowMark >= highMark or lowMark < 0 or highMark < 0.
 	 */
-	public BoundedSimpleQueue(int lowMark, int highMark)
+	public BoundedSimpleQueue(int lowThreshold, int capacity)
         throws IllegalArgumentException
     {
-    	super(highMark);
-		if (highMark <= lowMark || highMark < 0 || lowMark < 0) {
+    	super(capacity);
+		if (capacity <= lowThreshold || capacity < 0 || lowThreshold < 0) {
 			throw new IllegalArgumentException("Invalid queue parameters "
-					+ " highMark " + highMark + " lowMark " + lowMark);
+					+ " capacity " + capacity + " lowThreshold " + lowThreshold);
 		}
 
 
-		this.lowMark = lowMark;
+		this.lowThreshold = lowThreshold;
 	}
 
 	/**
@@ -72,9 +73,9 @@ public class BoundedSimpleQueue<O>
 	public synchronized O dequeue()
     {
 		O ret = int_dequeue();
-		if (boundMode && size <= lowMark)
+		if (threasholdEnabled && size <= lowThreshold)
 		{
-			boundMode = false;
+			threasholdEnabled = false;
 			notifyAll();
 		}
 		return ret;
@@ -91,11 +92,11 @@ public class BoundedSimpleQueue<O>
     {
 		if(toQueue == null)
 			throw new NullPointerException("Can't queue a null object");
-		if (boundMode && toQueue != null)
+		if (threasholdEnabled && toQueue != null)
 		{
 			try
             {
-				while (boundMode)
+				while (threasholdEnabled)
 					wait(300);
 			} 
 			catch (InterruptedException e) 
@@ -104,13 +105,13 @@ public class BoundedSimpleQueue<O>
 			}
 		}
 
-		int_queue(toQueue);
+		boolean ret = int_queue(toQueue);
 
 		if (size == array.length)
 		{
-			boundMode = true;
+			threasholdEnabled = true;
 		}
-		return true;
+		return ret;
 
 	}
 
@@ -121,17 +122,18 @@ public class BoundedSimpleQueue<O>
 	@Override
 	public String toString()
     {
-		return "Bounded queue size " + size() + " Capacity " + array.length
-				+ " LowMark " + lowMark + " bound mode " + boundMode;
+	  
+	  return SharedUtil.toCanonicalID(',', size(), array.length, lowThreshold, threasholdEnabled);
+	
 	}
 
 
 	/**
 	 * @return the low mark of the queue.
 	 */
-	public int getLowMark()
+	public int getLowThreshold()
     {
-		return lowMark;
+		return lowThreshold;
 	}
 	
 }
