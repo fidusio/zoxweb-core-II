@@ -30,7 +30,7 @@ import org.zoxweb.shared.util.SharedUtil;
  * <code>queuing</code> will be pending till the dequeuing process starts
  * again.
  */
-public class BoundedSimpleQueue<O>
+public class ThresholdQueue<O>
     extends ArrayQueue<O>
 {
 
@@ -38,7 +38,7 @@ public class BoundedSimpleQueue<O>
 	private boolean threasholdEnabled = false;
 
 
-	public BoundedSimpleQueue(int highMark)
+	public ThresholdQueue(int highMark)
 	{
 		this(highMark/2, highMark);
 	}
@@ -53,7 +53,7 @@ public class BoundedSimpleQueue<O>
 	 * @exception IllegalArgumentException
 	 *                if the lowMark >= highMark or lowMark < 0 or highMark < 0.
 	 */
-	public BoundedSimpleQueue(int lowThreshold, int capacity)
+	public ThresholdQueue(int lowThreshold, int capacity)
         throws IllegalArgumentException
     {
     	super(capacity);

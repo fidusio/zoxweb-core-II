@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Logger;
 
-import org.zoxweb.server.util.BoundedSimpleQueue;
+import org.zoxweb.server.util.ThresholdQueue;
 import org.zoxweb.shared.util.ArrayQueue;
 import org.zoxweb.shared.util.DaemonController;
 import org.zoxweb.shared.util.SimpleQueueInterface;
@@ -201,7 +201,7 @@ public class TaskProcessor
 					 "[" + taskQueueMaxSize +"," +executorThreadCount+"]");
 		}
 		
-		tasksQueue = new BoundedSimpleQueue<TaskEvent>(taskQueueMaxSize);
+		tasksQueue = new ThresholdQueue<TaskEvent>(taskQueueMaxSize);
 		String tpID = "TP-"+TP_COUNTER.incrementAndGet();
         workersQueue = new ArrayQueue<ExecutorThread>(executorThreadCount);
 		for (int i = 0; i < executorThreadCount; i++)

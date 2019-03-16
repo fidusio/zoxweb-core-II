@@ -21,7 +21,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import org.zoxweb.server.util.BoundedSimpleQueue;
+import org.zoxweb.server.util.ThresholdQueue;
 import org.zoxweb.server.util.RuntimeUtil;
 import org.zoxweb.shared.data.VMInfoDAO;
 
@@ -87,7 +87,7 @@ public class QueueTest {
 	public static void main(String[] args) {
 		aQueueTest(10);
 		int limit = 10000;
-		SimpleQueueInterface<Object> uQueue = new BoundedSimpleQueue<Object>(limit, limit*2);
+		SimpleQueueInterface<Object> uQueue = new ThresholdQueue<Object>(limit, limit*2);
 		ConcurrentLinkedQueue<Object> clQueue = new ConcurrentLinkedQueue<Object>();
 		LinkedBlockingQueue<Object> lbQueue = new LinkedBlockingQueue<Object>();
 		ArrayBlockingQueue<Object> abQueue = new ArrayBlockingQueue<Object>(limit);
