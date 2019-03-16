@@ -46,9 +46,9 @@ public class BoundedSimpleQueue<O>
 	/**
 	 * Create a bounded queue based on a lowMark and highMark parameters.
 	 * 
-	 * @param lowMark
+	 * @param lowThreshold
 	 *            of the queue size.
-	 * @param highMark
+	 * @param capacity
 	 *            of the queue size.
 	 * @exception IllegalArgumentException
 	 *                if the lowMark >= highMark or lowMark < 0 or highMark < 0.
@@ -105,13 +105,13 @@ public class BoundedSimpleQueue<O>
 			}
 		}
 
-		boolean ret = int_queue(toQueue);
+		int_queue(toQueue);
 
 		if (size == array.length)
 		{
 			threasholdEnabled = true;
 		}
-		return ret;
+		return true;
 
 	}
 

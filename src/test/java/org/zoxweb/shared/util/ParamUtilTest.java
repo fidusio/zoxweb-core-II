@@ -1,7 +1,7 @@
 package org.zoxweb.shared.util;
 
 import org.junit.Test;
-
+import org.zoxweb.shared.data.ParamInfo;
 
 
 public class ParamUtilTest {
@@ -25,9 +25,33 @@ public class ParamUtilTest {
         System.out.println(result.longValue("-c", (long)5));
         System.out.println(result.stringValue("-c", "hrooo"));
         System.out.println(result.stringValue(0));
+    }
+
+    @Test
+    public void paramInfos()
+    {
+        ParamUtil.ParamInfoList pil = new ParamUtil.ParamInfoList().add("uri", ParamInfo.ValueType.SINGLE, "-URI", true, false)
+                .add("content", ParamInfo.ValueType.MULTI, "-content", false, true)
+                ;
+
+
+
+        ParamUtil.ParamMap result = ParamUtil.parse(pil,"https://localhost", "-URI", "context", "-content", "hello", "5", "/hello");
+        System.out.println(pil);
+        System.out.println(result.stringValue("-URI"));
+        System.out.println(result.longValue("-c", (long)5));
+        System.out.println(result.stringValue("-c", "hrooo"));
+        System.out.println(result.stringValue(0));
 
 
     }
+
+
+
+
+
+
+
     @Test(expected = IllegalArgumentException.class)
     public void errorTest()
     {

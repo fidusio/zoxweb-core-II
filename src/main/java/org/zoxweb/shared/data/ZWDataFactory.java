@@ -149,22 +149,6 @@ public class ZWDataFactory
                 return AppDeviceDAO.NVC_APP_DEVICE_DAO;
             };
         },
-        SUBJECT_API_KEY(SubjectAPIKey.class.getName())
-        {
-            @SuppressWarnings("unchecked")
-            @Override
-            public SubjectAPIKey newInstance()
-            {
-                return new SubjectAPIKey();
-            }
-
-            @Override
-            public NVConfigEntity getNVConfigEntity()
-            {
-                return SubjectAPIKey.NVC_SUBJECT_API_KEY;
-            }
-        },
-		
 		//	org.zoxweb.shared.data
 		ADDRESS_DAO(AddressDAO.class.getName())
 		{
@@ -727,6 +711,21 @@ public class ZWDataFactory
 				return SimpleDocumentDAO.NVC_SIMPLE_DOCUMENT_DAO;
 			}
 		},
+		SUBJECT_API_KEY(SubjectAPIKey.class.getName())
+		{
+			@SuppressWarnings("unchecked")
+			@Override
+			public SubjectAPIKey newInstance()
+			{
+				return new SubjectAPIKey();
+			}
+
+			@Override
+			public NVConfigEntity getNVConfigEntity()
+			{
+				return SubjectAPIKey.NVC_SUBJECT_API_KEY;
+			}
+		},
 		SYSTEM_INFO_DAO(SystemInfoDAO.class.getName())
 		{
 			@SuppressWarnings("unchecked")
@@ -819,7 +818,13 @@ public class ZWDataFactory
 				return FolderContentOp.NVC_FOLDER_CONTENT_OP;
 			}
 		},
-		
+		PARAM_INFO(ParamInfo.class.getName())
+		{
+			public ParamInfo newInstance() {return new ParamInfo();}
+
+			public NVConfigEntity getNVConfigEntity() {return ParamInfo.NVC_PARAM_INFO;};
+
+		},
 		PAYMENT_INFO_DAO(PaymentInfoDAO.class.getName())
 		{
 			@SuppressWarnings("unchecked")

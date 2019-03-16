@@ -16,17 +16,48 @@ public class ParamUtil {
 
     public static class ParamInfoList
     {
-        Map<String, ParamInfo> list = new LinkedHashMap<String, ParamInfo>();
+        Map<String, ParamInfo> byName = new LinkedHashMap<String, ParamInfo>();
+        Map<String, ParamInfo> byParam = new LinkedHashMap<String, ParamInfo>();
 
-        public void add(ParamInfo pi)
+
+        public ParamInfoList add(String name, ParamInfo.ValueType valueType, String param, boolean manadatory, boolean caseSensitive)
         {
-            list.put(pi.getName().toLowerCase(), pi);
+
+            ParamInfo toAdd = new ParamInfo();
+            toAdd.setName(name);
+            toAdd.setValueType(valueType);
+            toAdd.setParam(param);
+            toAdd.setMandatory(manadatory);
+            toAdd.setCaseSensitive(caseSensitive);
+
+
+            return add(toAdd);
+        }
+
+
+        public ParamInfoList add(ParamInfo pi)
+        {
+            byName.put(pi.getName().toLowerCase(), pi);
+            if(pi.getParam() != null)
+            {
+                byParam.put(pi.getParam(), pi);
+            }
+            return this;
         }
         public ParamInfo lookup(String paramName)
         {
-            return list.get(paramName.toLowerCase());
+            ParamInfo ret =  byName.get(paramName.toLowerCase());
+            if(ret == null)
+                ret = byParam.get(paramName);
+
+            return ret;
         }
 
+
+        public String toString()
+        {
+            return byName+"\n" + byParam;
+        }
 
     }
 
@@ -298,7 +329,9 @@ public class ParamUtil {
                 }
                 else
                 {
-                    name = pi.getName();
+                    name = pi.getParam();
+                    if (name == null)
+                        name = pi.getName();
                     if (pi.getValueType() == ParamInfo.ValueType.NONE)
                     {
                         value = name;
