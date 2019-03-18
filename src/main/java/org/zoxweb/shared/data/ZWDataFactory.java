@@ -820,8 +820,11 @@ public class ZWDataFactory
 		},
 		PARAM_INFO(ParamInfo.class.getName())
 		{
+		    @SuppressWarnings("unchecked")
+            @Override
 			public ParamInfo newInstance() {return new ParamInfo();}
-
+		    
+		    @Override
 			public NVConfigEntity getNVConfigEntity() {return ParamInfo.NVC_PARAM_INFO;};
 
 		},
