@@ -38,6 +38,7 @@ public class ParamUtilTest {
 
         ParamUtil.ParamMap result = ParamUtil.parse(pil,"https://localhost", "-URI", "context", "-content", "hello", "5", "/hello");
         System.out.println(pil);
+        System.out.println (result);
         System.out.println(result.stringValue("-URI"));
         System.out.println(result.longValue("-c", (long)5));
         System.out.println(result.stringValue("-c", "hrooo"));

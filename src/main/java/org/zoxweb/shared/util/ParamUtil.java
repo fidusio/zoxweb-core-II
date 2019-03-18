@@ -238,7 +238,9 @@ public class ParamUtil {
             {
                 name = name.toLowerCase();
             }
+            
             return map.get(name);
+             
         }
 
         @Override
@@ -339,7 +341,7 @@ public class ParamUtil {
 
                     else if (index < args.length)
                     {
-                        value = args[index];
+                        value = args[++index];
                     }
                     else
                     {
@@ -348,12 +350,21 @@ public class ParamUtil {
 
                 }
 
-                if(retMap.get(name) == null)
+                if(retMap.get(name.toLowerCase()) == null)
                 {
-                    retMap.put(name, new ArrayList<String>());
+                    ArrayList<String> al = new ArrayList<String>();
+                    if(pi != null)
+                    {
+                      if(pi.getName() != null)
+                        retMap.put(pi.getName().toLowerCase(), al);
+                      if(pi.getParam() != null)
+                        retMap.put(pi.getParam().toLowerCase(), al);
+                    }
+                    else
+                      retMap.put(name.toLowerCase(), al);
                 }
 
-                retMap.get(name).add(value);
+                retMap.get(name.toLowerCase()).add(value);
             }
 
         }

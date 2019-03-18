@@ -34,7 +34,7 @@ public class ThresholdQueue<O>
     extends ArrayQueue<O>
 {
 
-	private int lowThreshold;
+	private int threshold;
 	private boolean threasholdEnabled = false;
 
 
@@ -46,24 +46,24 @@ public class ThresholdQueue<O>
 	/**
 	 * Create a bounded queue based on a lowMark and highMark parameters.
 	 * 
-	 * @param lowThreshold
+	 * @param threshold
 	 *            of the queue size.
 	 * @param capacity
 	 *            of the queue size.
 	 * @exception IllegalArgumentException
 	 *                if the lowMark >= highMark or lowMark < 0 or highMark < 0.
 	 */
-	public ThresholdQueue(int lowThreshold, int capacity)
+	public ThresholdQueue(int threshold, int capacity)
         throws IllegalArgumentException
     {
     	super(capacity);
-		if (capacity <= lowThreshold || capacity < 0 || lowThreshold < 0) {
+		if (capacity <= threshold || capacity < 0 || threshold < 0) {
 			throw new IllegalArgumentException("Invalid queue parameters "
-					+ " capacity " + capacity + " lowThreshold " + lowThreshold);
+					+ " capacity " + capacity + " lowThreshold " + threshold);
 		}
 
 
-		this.lowThreshold = lowThreshold;
+		this.threshold = threshold;
 	}
 
 	/**
@@ -73,7 +73,7 @@ public class ThresholdQueue<O>
 	public synchronized O dequeue()
     {
 		O ret = int_dequeue();
-		if (threasholdEnabled && size <= lowThreshold)
+		if (threasholdEnabled && size <= threshold)
 		{
 			threasholdEnabled = false;
 			notifyAll();
@@ -123,7 +123,7 @@ public class ThresholdQueue<O>
 	public String toString()
     {
 	  
-	  return SharedUtil.toCanonicalID(',', size(), array.length, lowThreshold, threasholdEnabled);
+	  return SharedUtil.toCanonicalID(',', size(), array.length, threshold, threasholdEnabled);
 	
 	}
 
@@ -131,9 +131,9 @@ public class ThresholdQueue<O>
 	/**
 	 * @return the low mark of the queue.
 	 */
-	public int getLowThreshold()
+	public int getThreshold()
     {
-		return lowThreshold;
+		return threshold;
 	}
 	
 }
