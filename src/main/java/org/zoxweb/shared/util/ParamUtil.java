@@ -40,7 +40,7 @@ public class ParamUtil {
             byName.put(pi.getName().toLowerCase(), pi);
             if(pi.getParam() != null)
             {
-                byParam.put(pi.getParam(), pi);
+                byParam.put(pi.getParam().toLowerCase(), pi);
             }
             return this;
         }
@@ -48,7 +48,7 @@ public class ParamUtil {
         {
             ParamInfo ret =  byName.get(paramName.toLowerCase());
             if(ret == null)
-                ret = byParam.get(paramName);
+                ret = byParam.get(paramName.toLowerCase());
 
             return ret;
         }
@@ -315,6 +315,7 @@ public class ParamUtil {
 
         int index = 0;
         int counter = 0;
+        ParamInfo lastMulti = null;
         for(; index < args.length; index++)
         {
             if (!SharedStringUtil.isEmpty(args[index]))
@@ -324,19 +325,43 @@ public class ParamUtil {
 
 
                 ParamInfo pi = piList.lookup(args[index]);
+
+
                 if(pi==null)
                 {
-                    name = "" + counter++;
-                    value = args[index];
+                    if (lastMulti != null)
+                    {
+                        value = args[index];
+                        pi = lastMulti;
+                        name = pi.getParam();
+                        if (name == null)
+                            name = pi.getName();
+                    }
+                    else
+                    {
+                        lastMulti = null;
+                        name = "" + counter++;
+                        value = args[index];
+                    }
                 }
                 else
                 {
+                    lastMulti = null;
                     name = pi.getParam();
                     if (name == null)
                         name = pi.getName();
+
                     if (pi.getValueType() == ParamInfo.ValueType.NONE)
                     {
                         value = name;
+                    }
+                    else if (pi.getValueType() == ParamInfo.ValueType.MULTI)
+                    {
+
+
+                        lastMulti = pi;
+                        value = args[++index];
+
                     }
 
                     else if (index < args.length)
@@ -350,27 +375,44 @@ public class ParamUtil {
 
                 }
 
-                if(retMap.get(name.toLowerCase()) == null)
+                if(lookup(name, retMap) == null)
                 {
                     ArrayList<String> al = new ArrayList<String>();
                     if(pi != null)
-                    {
-                      if(pi.getName() != null)
-                        retMap.put(pi.getName().toLowerCase(), al);
-                      if(pi.getParam() != null)
-                        retMap.put(pi.getParam().toLowerCase(), al);
-                    }
+                      put(pi, al, retMap);
                     else
-                      retMap.put(name.toLowerCase(), al);
+                      put(name, al, retMap);
+
                 }
 
-                retMap.get(name.toLowerCase()).add(value);
+
+                lookup(name, retMap).add(value);
+                //retMap.get(name.toLowerCase()).add(value);
             }
 
         }
 
         return new ParamMap(true, retMap, counter);
     }
+
+    private static List<String> lookup(String key, Map<String, List<String>> map)
+    {
+        return map.get(key.toLowerCase());
+    }
+
+    private static void put(String key, List<String> list, Map<String, List<String>> map)
+    {
+        if(key != null)
+            map.put(key.toLowerCase(), list);
+    }
+
+    private static void put(ParamInfo key, List<String> list, Map<String, List<String>> map)
+    {
+        put(key.getParam(), list, map);
+        put(key.getName(), list, map);
+    }
+
+
 
 
 }
