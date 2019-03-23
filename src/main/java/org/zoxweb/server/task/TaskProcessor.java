@@ -207,7 +207,7 @@ public class TaskProcessor
 		for (int i = 0; i < executorThreadCount; i++)
 		{
 			// create and queue the executor threads
-			workersQueue.queue( new ExecutorThread(tpID, threadPriority));
+			workersQueue.queue(new ExecutorThread(tpID, threadPriority));
 		}
 		// start the task processor
 		this.executorNotify = executorNotify;
