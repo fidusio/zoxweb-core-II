@@ -50,7 +50,7 @@ public class TaskProcessor
 	 * The size of this queue is set by the constructor of TaskProcessor
 	 */
 	private boolean executorNotify;
-	private SimpleQueueInterface<ExecutorThread> workersQueue = null;//new SimpleQueue<ExecutorThread>();
+	private SimpleQueueInterface<ExecutorThread> workersQueue = null;
 	
 	private int executorsCounter = 0;
 	private boolean innerLive = true;

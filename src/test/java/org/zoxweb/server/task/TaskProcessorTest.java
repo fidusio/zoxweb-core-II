@@ -15,6 +15,8 @@
  */
 package org.zoxweb.server.task;
 
+import org.zoxweb.shared.util.Const;
+
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class TaskProcessorTest
@@ -59,14 +61,14 @@ public class TaskProcessorTest
 
 		delta = System.currentTimeMillis() - delta;
 
-		System.out.println("It took " + delta + " millis callback " + td + " using queue " +  tp.getQueueMaxSize() + " and " + tp.availableExecutorThreads() + " executor thread");
+		System.out.println("It took " + Const.TimeInMillis.toString(delta) + " millis callback " + td + " using queue " +  tp.getQueueMaxSize() + " and " + tp.availableExecutorThreads() + " executor thread");
 		System.out.println("Available thread " + tp.availableExecutorThreads() + " total " + ((TaskProcessorTest)td).counter +":" + ((TaskProcessorTest)td).ai.get()) ;
 	}
 	
 	public static void main(String[] args) {
 
-		int taskQueueSize = 400;
-		int threadCount = 8;
+		int taskQueueSize = 800;
+		int threadCount = 16;
 		int numberOfTasks= 20_000_000;
 
 		if (args.length == 3) {
