@@ -163,7 +163,6 @@ public class APIConfigInfoDAO
 	 * @return The configuration parameters
 	 */
 	@SuppressWarnings("unchecked")
-	@Override
 	public ArrayValues<NVPair> getConfigParameters()
 	{
 		return (ArrayValues<NVPair>) lookup(Params.CONFIGURATION_PARAMETERS);
@@ -173,7 +172,6 @@ public class APIConfigInfoDAO
 	 * This method sets the service configuration parameters.
 	 * @param configParams
 	 */
-	@Override
 	public void setConfigParameters(List<NVPair> configParams) 
 	{
 		getConfigParameters().add(configParams.toArray(new NVPair[0]), true);

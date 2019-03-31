@@ -174,7 +174,7 @@ public class NIOProxyProtocol
 
 	//private int changeConnection = 0;
 	//protected Set<SelectionKey> remoteSet = null;//new HashSet<SelectionKey>();
-	private boolean ssl = false;
+	private boolean relayConnection = false;
 
 	private NIOProxyProtocol()
 	{
@@ -198,7 +198,7 @@ public class NIOProxyProtocol
 	public void close() throws IOException
 	{
 		IOUtil.close(clientChannel);
-		//if (ssl)
+		//if (relayConnection)
 		{
 			if (channelRelay != null)
 			{
@@ -232,7 +232,7 @@ public class NIOProxyProtocol
     			read = ((SocketChannel)key.channel()).read(bBuffer);
     			if (read > 0)
     			{
-    				if (ssl)
+    				if (relayConnection)
     				{
     					ByteBufferUtil.write(remoteChannel, bBuffer);
     					//System.out.println(ByteBufferUtil.toString(bBuffer));
@@ -382,13 +382,18 @@ public class NIOProxyProtocol
 		{
 			if (!isRequestValid(requestInfo, requestRawBuffer))
 			{
+				log.info("returning not continuing");
+				log.info("" + requestMCCI);
 				return;
-			}	
+			}
+
+
+
 			//InetSocketAddressDAO remoteAddress = HTTPUtil.parseHost(requestMCCI.getURI());
 			if (requestMCCI.getMethod() == HTTPMethod.CONNECT)
 			{
 
-				ssl = true;
+				relayConnection = true;
 				if (NetUtil.checkSecurityStatus(getOutgoingInetFilterRulesManager(), requestInfo.remoteAddress.getInetAddress(), remoteChannel) !=  SecurityStatus.ALLOW)
 				{
 					HTTPMessageConfigInterface hccError = createErrorMSG(403, "Access Denied", requestMCCI.getURI());
