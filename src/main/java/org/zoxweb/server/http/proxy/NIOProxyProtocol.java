@@ -35,11 +35,7 @@ import org.zoxweb.server.net.NetUtil;
 import org.zoxweb.server.net.ProtocolSessionFactoryBase;
 import org.zoxweb.server.net.ProtocolSessionProcessor;
 import org.zoxweb.server.task.TaskUtil;
-import org.zoxweb.shared.http.HTTPMessageConfig;
-import org.zoxweb.shared.http.HTTPMessageConfigInterface;
-import org.zoxweb.shared.http.HTTPHeaderName;
-import org.zoxweb.shared.http.HTTPMethod;
-import org.zoxweb.shared.http.HTTPStatusCode;
+import org.zoxweb.shared.http.*;
 import org.zoxweb.shared.net.InetSocketAddressDAO;
 import org.zoxweb.shared.protocol.ProtocolDelimiter;
 import org.zoxweb.shared.security.SecurityStatus;
@@ -235,7 +231,7 @@ public class NIOProxyProtocol
     				if (relayConnection)
     				{
     					ByteBufferUtil.write(remoteChannel, bBuffer);
-    					//System.out.println(ByteBufferUtil.toString(bBuffer));
+    					//log.info(ByteBufferUtil.toString(bBuffer));
     				}
     				else
     				{
@@ -437,8 +433,10 @@ public class NIOProxyProtocol
 				
 				
     			requestRawBuffer.reset();
-    			
+
+
     			requestRawBuffer.write(requestMCCI.getHTTPVersion().getValue() + " 200 Connection established" + ProtocolDelimiter.CRLF);
+				//requestRawBuffer.write(HTTPVersion.HTTP_1_0.getValue() + " 200 Connection established" + ProtocolDelimiter.CRLF);
     			//if (requestInfo.remoteAddress.getPort() != 80)
     				requestRawBuffer.write(HTTPHeaderName.PROXY_AGENT + ": " +getName() + ProtocolDelimiter.CRLFCRLF);
     			//else
