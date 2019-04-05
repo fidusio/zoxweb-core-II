@@ -82,7 +82,8 @@ public class TaskProcessorTest
 			}
 		}
 		
-		TaskProcessor te = new TaskProcessor(taskQueueSize,  threadCount, Thread.MIN_PRIORITY, false);
+		//TaskProcessor te = new TaskProcessor(taskQueueSize,  threadCount, Thread.MIN_PRIORITY, false);
+		TaskProcessor te = TaskUtil.getDefaultTaskProcessor();
 
 		runTest(te, new TaskProcessorTest(), numberOfTasks);
 		//runTest( te, new TaskProcessorTest(), numberOfTasks);
