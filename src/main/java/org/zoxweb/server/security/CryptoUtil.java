@@ -15,39 +15,15 @@
  */
 package org.zoxweb.server.security;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.UnknownHostException;
-import java.security.GeneralSecurityException;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.Key;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.security.PublicKey;
-import java.security.SecureRandom;
-import java.security.SignatureException;
-import java.security.UnrecoverableKeyException;
+import java.security.*;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.KeyGenerator;
-import javax.crypto.Mac;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.SecretKey;
+import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import javax.net.ssl.HttpsURLConnection;
@@ -58,9 +34,11 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManagerFactory;
 
 
+
 import org.zoxweb.server.io.IOUtil;
 import org.zoxweb.server.io.UByteArrayOutputStream;
 import org.zoxweb.server.util.GSONUtil;
+import org.zoxweb.shared.crypto.CryptoConst;
 import org.zoxweb.shared.crypto.CryptoConst.MDType;
 import org.zoxweb.shared.crypto.CryptoConst.SecureRandomType;
 import org.zoxweb.shared.crypto.EncryptedDAO;
@@ -73,12 +51,8 @@ import org.zoxweb.shared.security.JWTPayload;
 import org.zoxweb.shared.security.KeyStoreInfoDAO;
 import org.zoxweb.shared.security.JWT;
 import org.zoxweb.shared.security.JWT.JWTField;
-import org.zoxweb.shared.util.Const;
-import org.zoxweb.shared.util.NVGenericMap;
-import org.zoxweb.shared.util.SharedBase64;
+import org.zoxweb.shared.util.*;
 import org.zoxweb.shared.util.SharedBase64.Base64Type;
-import org.zoxweb.shared.util.SharedStringUtil;
-import org.zoxweb.shared.util.SharedUtil;
 
 public class CryptoUtil
 {
@@ -602,7 +576,7 @@ public class CryptoUtil
 	}
 	
 	public static SSLContext initSSLContext(final InputStream keyStoreIS, String keyStoreType, final char[] keyStorePassword, final char[] crtPassword,
-			final InputStream trustStoreIS, final char[] trustStorePassword) 
+											final InputStream trustStoreIS, final char[] trustStorePassword)
         throws GeneralSecurityException, IOException
 	{
 		KeyStore ks = CryptoUtil.loadKeyStore(keyStoreIS, keyStoreType, keyStorePassword);
@@ -1006,6 +980,69 @@ public class CryptoUtil
 		kg.initialize(keySizeInBits);//, (SecureRandom)defaultSecureRandom());
 		return kg.generateKeyPair();
 	}
+
+	public static byte[] encrypt(PublicKey receiver, PrivateKey senderToSign, byte[] data)
+			throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, IOException, ShortBufferException {
+		Cipher cipher = Cipher.getInstance("RSA");
+		cipher.init(Cipher.ENCRYPT_MODE, receiver);
+		return cipher.doFinal(data);
+
+
+//		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//		baos.write(BytesValue.INT.toBytes(data.length));
+//		CipherOutputStream cos = new CipherOutputStream(baos, cipher);
+//		int blockSize = 245;
+//		for(int i = 0; i < data.length; i+=blockSize)
+//		{
+//			int len = i + blockSize > data.length ? data.length - i : blockSize;
+//			cos.write(data, i, len);
+//			System.out.println(i + " encrypt length:" + baos.size());
+//		}
+//		cos.close();
+//		return baos.toByteArray();
+	}
+
+	public static byte[] decrypt(PrivateKey receiver, PublicKey senderToValidate, byte[] data) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, IOException {
+		Cipher cipher = Cipher.getInstance("RSA");
+		cipher.init(Cipher.DECRYPT_MODE, receiver);
+		return cipher.doFinal(data);
+
+//		ByteArrayInputStream bis = new ByteArrayInputStream(data);
+//		byte lengthArray[] = new byte[4];
+//		bis.read(lengthArray);
+//		int length = BytesValue.INT.toValue(lengthArray);
+//		System.out.println("decrypt length:" + length + " " + data.length);
+//		CipherInputStream cis = new CipherInputStream(bis, cipher);
+//		byte ret [] = new byte[length];
+//		cis.read(ret);
+//		cis.close();
+//
+//		return ret;
+	}
+
+
+	public static byte[] sign(CryptoConst.SignatureAlgo sa, PrivateKey pk, byte data[])
+			throws NoSuchAlgorithmException, InvalidKeyException, SignatureException
+	{
+		SecureRandom secureRandom = new SecureRandom();
+		Signature signature = Signature.getInstance(sa.getName());
+		signature.initSign(pk, secureRandom);
+		signature.update(data);
+		return signature.sign();
+	}
+
+	public static boolean verify(CryptoConst.SignatureAlgo sa, PublicKey pk, byte data[], byte signedData[])
+			throws NoSuchAlgorithmException, InvalidKeyException, SignatureException
+	{
+		Signature signature = Signature.getInstance(sa.getName());
+		signature.initVerify(pk);
+		signature.update(data);
+		return signature.verify(signedData);
+	}
+
+
+
+
 	
 	public static String toString(Key key) 
 	{

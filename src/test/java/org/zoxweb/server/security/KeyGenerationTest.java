@@ -1,26 +1,21 @@
 package org.zoxweb.server.security;
 
-import java.io.IOException;
-import java.security.InvalidKeyException;
+
 import java.security.Key;
-import java.security.KeyFactory;
+
 import java.security.KeyPair;
-import java.security.NoSuchAlgorithmException;
-import java.security.PrivateKey;
+
 import java.security.PublicKey;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.PKCS8EncodedKeySpec;
-import java.security.spec.X509EncodedKeySpec;
 
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
+
+
 import org.zoxweb.server.util.GSONUtil;
+import org.zoxweb.shared.crypto.CryptoConst;
 import org.zoxweb.shared.crypto.EncryptedDAO;
 import org.zoxweb.shared.crypto.EncryptedKeyDAO;
 import org.zoxweb.shared.util.Const.TimeInMillis;
+import org.zoxweb.shared.util.SharedBase64;
 import org.zoxweb.shared.util.SharedBase64.Base64Type;
 import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
@@ -31,34 +26,20 @@ import org.zoxweb.shared.util.SharedUtil;
 public class KeyGenerationTest
 {
 	
-	public static byte[] encrypt(Key key, byte[] plaintext) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException
-	{
-	    Cipher cipher = Cipher.getInstance("RSA/ECB/OAEPWITHSHA-256ANDMGF1PADDING");   
-	    cipher.init(Cipher.ENCRYPT_MODE, key);  
-	    return cipher.doFinal(plaintext);
-	}
 
-	public static byte[] decrypt(Key key, byte[] ciphertext) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException
-	{
-	    Cipher cipher = Cipher.getInstance("RSA/ECB/OAEPWITHSHA-256ANDMGF1PADDING");   
-	    cipher.init(Cipher.DECRYPT_MODE, key);  
-	    return cipher.doFinal(ciphertext);
-	}
-	
-	
-	public static PublicKey readPublicKey(byte[] keys) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException
-	{
-	    X509EncodedKeySpec publicSpec = new X509EncodedKeySpec(keys);
-	    KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-	    return keyFactory.generatePublic(publicSpec);       
-	}
-
-	public static PrivateKey readPrivateKey(byte[] keys) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException
-	{
-	    PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(keys);
-	    KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-	    return keyFactory.generatePrivate(keySpec);     
-	}
+//	public static PublicKey readPublicKey(byte[] keys) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException
+//	{
+//	    X509EncodedKeySpec publicSpec = new X509EncodedKeySpec(keys);
+//	    KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+//	    return keyFactory.generatePublic(publicSpec);
+//	}
+//
+//	public static PrivateKey readPrivateKey(byte[] keys) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException
+//	{
+//	    PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(keys);
+//	    KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+//	    return keyFactory.generatePrivate(keySpec);
+//	}
 	
 	
 	
@@ -66,32 +47,47 @@ public class KeyGenerationTest
 	{
 		
 		
-		byte[] message = SharedStringUtil.getBytes("JavaConsigliere Marwan NAEL y batata ds;fsdjjgdjglkfjdagkfd");
+		byte[] message = SharedStringUtil.getBytes("JavaConsigliere Batata, JavaConsigliere Batata, JavaConsigliere Batata, JavaConsigliere Batata, JavaConsigliere Batata, JavaConsigliere Batata, JavaConsigliere Batata, JavaConsigliere Batata, JavaConsigliere Batata.");
 		
 		try 
 		{
-			for (int i = 0; i < 10; i++)
+			for (int i = 0; i < 5; i++)
 			{
+
+				KeyPair aliceKey = CryptoUtil.generateKeyPair(2048, "rsa");
 				long ts = System.nanoTime();
-				KeyPair kp = CryptoUtil.generateKeyPair(3072, "rsa");
+				KeyPair bobKey = CryptoUtil.generateKeyPair(2048, "rsa");
 				ts = System.nanoTime() - ts;
-				System.out.println("" + kp.toString() + " it took " + TimeInMillis.nanosToString(ts));
-				kp.getPublic().getFormat();
-				PublicKey pubKey = kp.getPublic();
-				PrivateKey privKey = kp.getPrivate();
-				System.out.println(CryptoUtil.toString(pubKey));
-				System.out.println(CryptoUtil.toString(privKey));
-				
-				byte encrypted[] = encrypt(pubKey, message);
-				byte decrypted[] = decrypt(privKey, encrypted);
-				System.out.println(SharedStringUtil.toString(decrypted));
-				Key aesKey = CryptoUtil.generateKey(256, CryptoUtil.AES);
-				System.out.println(CryptoUtil.toString(aesKey));
-				
-				
-				encrypted = encrypt(pubKey, message);
-				decrypted = decrypt(privKey, encrypted);
-				System.out.println(encrypted.length + ":" + SharedStringUtil.toString(decrypted));
+				System.out.println("" + bobKey.toString() + " it took " + TimeInMillis.nanosToString(ts));
+				bobKey.getPublic().getFormat();
+
+
+
+
+				for(int j=0; j<2; j++)
+				{
+					System.out.println(CryptoUtil.toString(bobKey.getPublic()));
+					System.out.println(CryptoUtil.toString(bobKey.getPrivate()));
+					byte signature[] = CryptoUtil.sign(CryptoConst.SignatureAlgo.SHA256_RSA, bobKey.getPrivate(), message);
+					System.out.println("Signature length:" + signature.length + " : " + CryptoUtil.verify(CryptoConst.SignatureAlgo.SHA256_RSA, bobKey.getPublic(), message, signature) + " : " + SharedBase64.encodeAsString(Base64Type.URL, signature));
+					byte encrypted[] = CryptoUtil.encrypt(bobKey.getPublic(), aliceKey.getPrivate(), message);
+
+					byte decrypted[] = CryptoUtil.decrypt(bobKey.getPrivate(), aliceKey.getPublic(), encrypted);
+					System.out.println("Signature length:" + signature.length + " : " + SharedBase64.encodeAsString(Base64Type.URL, signature));
+					System.out.println("Decrypted Message:" + SharedStringUtil.toString(decrypted));
+					System.out.println("Encrypted by bob based64 [" + encrypted.length +"]:" + SharedBase64.encodeAsString(Base64Type.URL, encrypted));
+
+					Key aesKey = CryptoUtil.generateKey(256, CryptoUtil.AES);
+					System.out.println(CryptoUtil.toString(aesKey));
+
+
+					encrypted = CryptoUtil.encrypt(aliceKey.getPublic(), bobKey.getPrivate(), message);
+					decrypted = CryptoUtil.decrypt(aliceKey.getPrivate(), bobKey.getPublic(), encrypted);
+					System.out.println("Decrypted Message:" + SharedStringUtil.toString(decrypted));
+					System.out.println("Encrypted by alice based64 [" + encrypted.length +"]:" + SharedBase64.encodeAsString(Base64Type.URL, encrypted));
+					System.out.println(j);
+				}
+				System.out.println("\n\n");
 			}
 		}
 		catch(Exception e)
@@ -99,9 +95,8 @@ public class KeyGenerationTest
 			e.printStackTrace();
 		}
 		
-		
-		
-		int loopSize = 1000;
+
+		int loopSize = 500;
 		
 		Key keys[] = new Key[loopSize];
 		try {
@@ -126,7 +121,7 @@ public class KeyGenerationTest
 		
 		try {
 		  
-		  int loop = 1000;
+		  int loop = 500;
 		  long ts = System.currentTimeMillis();
 		  for (int i = 0; i < loop; i++)
 		  {

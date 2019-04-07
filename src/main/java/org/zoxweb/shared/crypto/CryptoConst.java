@@ -112,6 +112,25 @@ public final class CryptoConst
 		}
 	}
 
+	public enum SignatureAlgo
+			implements GetName
+	{
+		SHA1_DSA("SHA1withDSA"),
+		SHA1_RSA("SHA1withRSA"),
+		SHA256_RSA("SHA256withRSA"),
+		;
+		private final String name;
+		SignatureAlgo(String name)
+		{
+			this.name = name;
+		}
+
+		public String getName()
+		{
+			return name;
+		}
+	}
+
 	public enum SecureRandomType
         implements GetName
     {

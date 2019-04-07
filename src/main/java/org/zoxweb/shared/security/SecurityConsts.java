@@ -15,6 +15,7 @@
  */
 package org.zoxweb.shared.security;
 
+import com.sun.org.apache.xml.internal.security.algorithms.SignatureAlgorithm;
 import org.zoxweb.shared.filters.FilterType;
 import org.zoxweb.shared.http.HTTPMethod;
 import org.zoxweb.shared.util.GetNVConfig;
@@ -176,9 +177,10 @@ public final class SecurityConsts
 		public String getName()
 		{
 			return name;
-			
 		}
 	}
+
+
 
 	/**
 	 * This enum contains user status with a specified status
