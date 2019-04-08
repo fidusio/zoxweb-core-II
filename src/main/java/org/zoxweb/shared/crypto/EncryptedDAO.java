@@ -255,8 +255,12 @@ public class EncryptedDAO
             ret.setIV(SharedBase64.decode(tokens[index++].getBytes()));
             ret.setDataLength(Long.parseLong(tokens[index++]));
             ret.setEncryptedData(SharedBase64.decode(tokens[index++].getBytes()));
-            ret.setExpirationTime(tokens[index++]);
-            ret.setHint(tokens[index++]);
+            String temp = tokens[index++];
+            if(!SharedStringUtil.isEmpty(temp))
+            	ret.setExpirationTime(temp);
+			temp = tokens[index++];
+			if(!SharedStringUtil.isEmpty(temp))
+				ret.setHint(temp);
             ret.setHMACAlgoName(tokens[index++]);
             ret.setHMAC(SharedBase64.decode(tokens[index++].getBytes()));
 

@@ -47,18 +47,24 @@ public class KeyGenerationTest
 	{
 		
 		
-		byte[] message = SharedStringUtil.getBytes("JavaConsigliere Batata, JavaConsigliere Batata, JavaConsigliere Batata, JavaConsigliere Batata, JavaConsigliere Batata, JavaConsigliere Batata, JavaConsigliere Batata, JavaConsigliere Batata, JavaConsigliere Batata.");
+		//byte[] message = SharedStringUtil.getBytes("JavaConsigliere Batata, JavaConsigliere Batata, JavaConsigliere Batata, JavaConsigliere Batata, JavaConsigliere Batata, JavaConsigliere Batata, JavaConsigliere Batata, JavaConsigliere Batata, JavaConsigliere Batata.");
 		
 		try 
 		{
 			for (int i = 0; i < 5; i++)
 			{
 
+				EncryptedDAO ed = CryptoUtil.encryptDAO(new EncryptedKeyDAO(), SharedStringUtil.getBytes("password"), null, 1);
+				String json = GSONUtil.toJSON(ed, false, false, false, Base64Type.URL);
 				KeyPair aliceKey = CryptoUtil.generateKeyPair(2048, "rsa");
 				long ts = System.nanoTime();
 				KeyPair bobKey = CryptoUtil.generateKeyPair(2048, "rsa");
 				ts = System.nanoTime() - ts;
 				System.out.println("" + bobKey.toString() + " it took " + TimeInMillis.nanosToString(ts));
+				System.out.println("json:" + json);
+				System.out.println("canonical:" + ed.toCanonicalID() + "   length:" +  ed.toCanonicalID().length());
+				EncryptedDAO edTemp = EncryptedDAO.fromCanonicalID(ed.toCanonicalID());
+				System.out.println(GSONUtil.toJSON(edTemp, false, false, false, Base64Type.URL));
 				bobKey.getPublic().getFormat();
 
 
@@ -68,9 +74,9 @@ public class KeyGenerationTest
 				{
 					System.out.println(CryptoUtil.toString(bobKey.getPublic()));
 					System.out.println(CryptoUtil.toString(bobKey.getPrivate()));
-					byte signature[] = CryptoUtil.sign(CryptoConst.SignatureAlgo.SHA256_RSA, bobKey.getPrivate(), message);
-					System.out.println("Signature length:" + signature.length + " : " + CryptoUtil.verify(CryptoConst.SignatureAlgo.SHA256_RSA, bobKey.getPublic(), message, signature) + " : " + SharedBase64.encodeAsString(Base64Type.URL, signature));
-					byte encrypted[] = CryptoUtil.encrypt(bobKey.getPublic(), aliceKey.getPrivate(), message);
+					byte signature[] = CryptoUtil.sign(CryptoConst.SignatureAlgo.SHA256_RSA, bobKey.getPrivate(), SharedStringUtil.getBytes(json));
+					System.out.println("Signature length:" + signature.length + " : " + CryptoUtil.verify(CryptoConst.SignatureAlgo.SHA256_RSA, bobKey.getPublic(), SharedStringUtil.getBytes(json), signature) + " : " + SharedBase64.encodeAsString(Base64Type.URL, signature));
+					byte encrypted[] = CryptoUtil.encrypt(bobKey.getPublic(), aliceKey.getPrivate(), SharedStringUtil.getBytes(json));
 
 					byte decrypted[] = CryptoUtil.decrypt(bobKey.getPrivate(), aliceKey.getPublic(), encrypted);
 					System.out.println("Signature length:" + signature.length + " : " + SharedBase64.encodeAsString(Base64Type.URL, signature));
@@ -81,7 +87,7 @@ public class KeyGenerationTest
 					System.out.println(CryptoUtil.toString(aesKey));
 
 
-					encrypted = CryptoUtil.encrypt(aliceKey.getPublic(), bobKey.getPrivate(), message);
+					encrypted = CryptoUtil.encrypt(aliceKey.getPublic(), bobKey.getPrivate(), SharedStringUtil.getBytes(json));
 					decrypted = CryptoUtil.decrypt(aliceKey.getPrivate(), bobKey.getPublic(), encrypted);
 					System.out.println("Decrypted Message:" + SharedStringUtil.toString(decrypted));
 					System.out.println("Encrypted by alice based64 [" + encrypted.length +"]:" + SharedBase64.encodeAsString(Base64Type.URL, encrypted));
@@ -94,7 +100,7 @@ public class KeyGenerationTest
 		{
 			e.printStackTrace();
 		}
-		
+
 
 		int loopSize = 500;
 		
@@ -140,6 +146,7 @@ public class KeyGenerationTest
           EncryptedDAO ed = CryptoUtil.encryptDAO(new EncryptedKeyDAO(), SharedStringUtil.getBytes("password"), null, 1);
           String json = GSONUtil.toJSON(ed, false, false, false, Base64Type.URL);
           System.out.println(json);
+          System.out.println(json.length() + ":" + SharedStringUtil.getBytes(json).length);
           ed = GSONUtil.fromJSON(json, EncryptedKeyDAO.class, Base64Type.URL);
           byte data[] = CryptoUtil.decryptEncryptedDAO(ed, SharedStringUtil.getBytes("password"), 1);
           System.out.println(SharedStringUtil.bytesToHex(data));
