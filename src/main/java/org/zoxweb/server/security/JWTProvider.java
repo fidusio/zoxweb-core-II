@@ -14,84 +14,73 @@ import org.zoxweb.shared.security.JWTEncoder;
 import org.zoxweb.shared.security.JWTEncoderData;
 
 public final class JWTProvider
-implements JWTEncoder, JWTDecoder {
-	
-	public final static JWTProvider SINGLETON = new JWTProvider();
-	
-	private JWTProvider()
-	{
-		
-	}
-	
+    implements JWTEncoder, JWTDecoder {
 
-	@Override
-	public String encode(byte[] key, JWT jwt) throws AccessSecurityException {
-		// TODO Auto-generated method stub
-		try 
-		{
-			return CryptoUtil.encodeJWT(key, jwt);
-		} catch (InvalidKeyException | NoSuchAlgorithmException | SecurityException | IOException e) {
-	
-			throw new AccessSecurityException(e.getMessage());
-		}
-	}
+  public final static JWTProvider SINGLETON = new JWTProvider();
+
+  private JWTProvider() {
+
+  }
 
 
-	@Override
-	public JWT decode(byte[] key, String b64urlToken) throws AccessSecurityException {
-		// TODO Auto-generated method stub
-		try 
-		{
-			return CryptoUtil.decodeJWT(key, b64urlToken);
-		} catch (InvalidKeyException | NoSuchAlgorithmException | SecurityException | IOException e) {
+  @Override
+  public String encode(byte[] key, JWT jwt) throws AccessSecurityException {
+    // TODO Auto-generated method stub
+    try {
+      return CryptoUtil.encodeJWT(key, jwt);
+    } catch (InvalidKeyException | NoSuchAlgorithmException | SecurityException | IOException e) {
 
-			e.printStackTrace();
-			throw new AccessSecurityException(e.getMessage());
-		}
-	}
+      throw new AccessSecurityException(e.getMessage());
+    }
+  }
 
 
-	@Override
-	public String encode(JWTEncoderData jed)
-			throws AccessSecurityException
-	{
-		return encode(jed.getKey(), jed.getJWT());
-	}
+  @Override
+  public JWT decode(byte[] key, String b64urlToken) throws AccessSecurityException {
+    // TODO Auto-generated method stub
+    try {
+      return CryptoUtil.decodeJWT(key, b64urlToken);
+    } catch (InvalidKeyException | NoSuchAlgorithmException | SecurityException | IOException e) {
+
+      e.printStackTrace();
+      throw new AccessSecurityException(e.getMessage());
+    }
+  }
 
 
-	@Override
-	public JWT decode(JWTDecoderData jdd)
-			throws AccessSecurityException
-	{
-		return decode(jdd.getKey(), jdd.getToken());
-	}
-	
-	
-	public static void main(String ...args)
-	{
-	  try
-	  {
-	    
-	    for (int i=0; i<args.length; i++)
-	    {
-	      JWT jwt = CryptoUtil.parseJWT(args[i]);
-	      System.out.println(GSONUtil.toJSON(jwt, true, false, false));
-	      System.out.println(new Date(jwt.getPayload().getIssuedAt()*1000));
-	      System.out.println((jwt.getPayload().getIssuedAt()));
-	      System.out.println(System.currentTimeMillis());
-	      if (jwt.getHeader().getProperties().getValue("salt") != null)
-	      {
-	        UUID uuid = UUID.fromString(jwt.getHeader().getProperties().getValue("salt"));
-	        System.out.println(uuid);
-	      }
-	    }
-	  }
-	  catch(Exception e)
-	  {
-	    e.printStackTrace();
-	  }
-	  
-	  
-	}
+  @Override
+  public String encode(JWTEncoderData jed)
+      throws AccessSecurityException {
+    return encode(jed.getKey(), jed.getJWT());
+  }
+
+
+  @Override
+  public JWT decode(JWTDecoderData jdd)
+      throws AccessSecurityException {
+    return decode(jdd.getKey(), jdd.getToken());
+  }
+
+
+  public static void main(String... args) {
+    try {
+
+      for (int i = 0; i < args.length; i++) {
+        JWT jwt = CryptoUtil.parseJWT(args[i]);
+        System.out.println(GSONUtil.toJSON(jwt, true, false, false));
+        System.out.println(new Date(jwt.getPayload().getIssuedAt() * 1000));
+        System.out.println((jwt.getPayload().getIssuedAt()));
+        System.out.println(System.currentTimeMillis());
+        if (jwt.getHeader().getProperties().getValue("salt") != null) {
+          UUID uuid = UUID.fromString(jwt.getHeader().getProperties().getValue("salt"));
+          System.out.println(uuid);
+        }
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
+
+  }
 
 }

@@ -29,165 +29,158 @@ import org.zoxweb.shared.util.NVConfigManager;
 import org.zoxweb.shared.util.SharedUtil;
 
 /**
- * This class defines user credentials data access object used to
- * create and store user credentials.
- * @author mzebib
+ * This class defines user credentials data access object used to create and store user
+ * credentials.
  *
+ * @author mzebib
  */
 @SuppressWarnings("serial")
 public class UserIDCredentialsDAO
     extends SetNameDescriptionDAO
-    implements DoNotExpose
-{
+    implements DoNotExpose {
 
-	/**
-	 * This enum contains user credential variables including: 
-	 * user id, user status, last status update time stamp, pending token,
-	 * pending pin, and password.
-	 * @author mzebib
-	 *
-	 */
-	public enum UserCredentials
-        implements GetNVConfig
-    {
+  /**
+   * This enum contains user credential variables including: user id, user status, last status
+   * update time stamp, pending token, pending pin, and password.
+   *
+   * @author mzebib
+   */
+  public enum UserCredentials
+      implements GetNVConfig {
 
-		//USER_ID_DAO(NVConfigManager.createNVConfigEntity("user_id_dao", "User ID data access object.", "UserIDDAO", true, true, UserIDDAO.NVC_USER_ID_DAO)),
-		USER_STATUS(NVConfigManager.createNVConfig("user_status", "User status", "UserStatus", true, true, SecurityConsts.UserStatus.class)),
-		LAST_STATUS_UPDATE_TIMESTAMP(NVConfigManager.createNVConfig("last_status_update_timestamp", "Timestamp of last status update", "LastStatusUpdateTimestamp", true, true, Date.class)),
-		PENDING_TOKEN(NVConfigManager.createNVConfig("pending_token", "Pending token", "PendingToken", true, true, String.class)),
-		PENDING_PIN(NVConfigManager.createNVConfig("pending_pin", "Pending pin", "PendingPin", true, true, String.class)),
-		PASSWORD(NVConfigManager.createNVConfigEntity("password", "Password", "Password", true, true, PasswordDAO.NVCE_PASSWORD_DAO)),
-				
-		;
-		
-		private final NVConfig nvc;
+    //USER_ID_DAO(NVConfigManager.createNVConfigEntity("user_id_dao", "User ID data access object.", "UserIDDAO", true, true, UserIDDAO.NVC_USER_ID_DAO)),
+    USER_STATUS(NVConfigManager
+        .createNVConfig("user_status", "User status", "UserStatus", true, true,
+            SecurityConsts.UserStatus.class)),
+    LAST_STATUS_UPDATE_TIMESTAMP(NVConfigManager
+        .createNVConfig("last_status_update_timestamp", "Timestamp of last status update",
+            "LastStatusUpdateTimestamp", true, true, Date.class)),
+    PENDING_TOKEN(NVConfigManager
+        .createNVConfig("pending_token", "Pending token", "PendingToken", true, true,
+            String.class)),
+    PENDING_PIN(NVConfigManager
+        .createNVConfig("pending_pin", "Pending pin", "PendingPin", true, true, String.class)),
+    PASSWORD(NVConfigManager.createNVConfigEntity("password", "Password", "Password", true, true,
+        PasswordDAO.NVCE_PASSWORD_DAO)),
 
-		UserCredentials(NVConfig nvc)
-        {
-			this.nvc = nvc;
-		}
-		
-		public NVConfig getNVConfig()
-        {
-			return nvc;
-		}
-	}
-	
-	/**
-	 * This NVConfigEntity type constant is set to an instantiation of a NVConfigEntityLocal object based on UserCredentialsStatusDAO.
-	 */
-	public static final NVConfigEntity NVC_USER_ID_CREDENTIALS_DAO = new NVConfigEntityLocal(
-																								"user_id_credentials_dao", 
-																								 null,
-																								 "UserIDCredentialsDAO",
-																								 true,
-																								 false,
-																								 false, 
-																								 false,
-																								 UserIDCredentialsDAO.class, 
-																								 SharedUtil.extractNVConfigs(UserCredentials.values()),
-																								 null,
-																								 false,
-																								 SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO
-																							);
+    ;
 
-	/**
-	 * This is the default constructor.
-	 */
-	public UserIDCredentialsDAO()
-    {
-		super(NVC_USER_ID_CREDENTIALS_DAO);
-	}
+    private final NVConfig nvc;
 
-	/**
-	 * Returns the user status.
-	 * @return UserStatus
-	 */
-	public SecurityConsts.UserStatus getUserStatus()
-    {
-		return lookupValue(UserCredentials.USER_STATUS);
-	}
-	
-	/**
-	 * Sets the user status.
-	 * @param status
-	 */
-	public void setUserStatus(SecurityConsts.UserStatus status)
-    {
-		setValue(UserCredentials.USER_STATUS, status);
-	}
+    UserCredentials(NVConfig nvc) {
+      this.nvc = nvc;
+    }
 
-	/**
-	 * Returns the time stamp of the last status update.
-	 * @return in millis last status update
-	 */
-	public long getLastStatusUpdateTimestamp()
-    {
-		return lookupValue(UserCredentials.LAST_STATUS_UPDATE_TIMESTAMP);
-	}
-	
-	/**
-	 * Sets the time stamp for the last status update.
-	 * @param timestamp
-	 */
-	public void setLastStatusUpdateTimestamp(long timestamp)
-    {
-		setValue(UserCredentials.LAST_STATUS_UPDATE_TIMESTAMP, timestamp);
-	}
-	
-	/**
-	 * Returns the pending token.
-	 * @return the pending token
-	 */
-	public String getPendingToken()
-    {
-		return lookupValue(UserCredentials.PENDING_TOKEN);
-	}
-	
-	/**
-	 * Sets the pending token.
-	 * @param token
-	 */
-	public void setPendingToken(String token)
-    {
-		setValue(UserCredentials.PENDING_TOKEN, token);
-	}
-	
-	
-	/**
-	 * Returns the pending pin.
-	 * @return pending pin
-	 */
-	public String getPendingPin()
-    {
-		return lookupValue(UserCredentials.PENDING_PIN);
-	}
-	
-	/**
-	 * Sets the pending pin.
-	 * @param pin
-	 */
-	public void setPendingPin(String pin)
-    {
-	    setValue(UserCredentials.PENDING_PIN, pin);
-	}
+    public NVConfig getNVConfig() {
+      return nvc;
+    }
+  }
 
-	/**
-	 * Returns the password.
-	 * @return password dao
-	 */
-	public PasswordDAO getPassword()
-    {
-		return lookupValue(UserCredentials.PASSWORD);
-	}
-	
-	/**
-	 * Sets the password.
-	 * @param password
-	 */
-	public void setPassword(PasswordDAO password)
-    {
-		setValue(UserCredentials.PASSWORD, password);
-	}
-	
+  /**
+   * This NVConfigEntity type constant is set to an instantiation of a NVConfigEntityLocal object
+   * based on UserCredentialsStatusDAO.
+   */
+  public static final NVConfigEntity NVC_USER_ID_CREDENTIALS_DAO = new NVConfigEntityLocal(
+      "user_id_credentials_dao",
+      null,
+      "UserIDCredentialsDAO",
+      true,
+      false,
+      false,
+      false,
+      UserIDCredentialsDAO.class,
+      SharedUtil.extractNVConfigs(UserCredentials.values()),
+      null,
+      false,
+      SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO
+  );
+
+  /**
+   * This is the default constructor.
+   */
+  public UserIDCredentialsDAO() {
+    super(NVC_USER_ID_CREDENTIALS_DAO);
+  }
+
+  /**
+   * Returns the user status.
+   *
+   * @return UserStatus
+   */
+  public SecurityConsts.UserStatus getUserStatus() {
+    return lookupValue(UserCredentials.USER_STATUS);
+  }
+
+  /**
+   * Sets the user status.
+   */
+  public void setUserStatus(SecurityConsts.UserStatus status) {
+    setValue(UserCredentials.USER_STATUS, status);
+  }
+
+  /**
+   * Returns the time stamp of the last status update.
+   *
+   * @return in millis last status update
+   */
+  public long getLastStatusUpdateTimestamp() {
+    return lookupValue(UserCredentials.LAST_STATUS_UPDATE_TIMESTAMP);
+  }
+
+  /**
+   * Sets the time stamp for the last status update.
+   */
+  public void setLastStatusUpdateTimestamp(long timestamp) {
+    setValue(UserCredentials.LAST_STATUS_UPDATE_TIMESTAMP, timestamp);
+  }
+
+  /**
+   * Returns the pending token.
+   *
+   * @return the pending token
+   */
+  public String getPendingToken() {
+    return lookupValue(UserCredentials.PENDING_TOKEN);
+  }
+
+  /**
+   * Sets the pending token.
+   */
+  public void setPendingToken(String token) {
+    setValue(UserCredentials.PENDING_TOKEN, token);
+  }
+
+
+  /**
+   * Returns the pending pin.
+   *
+   * @return pending pin
+   */
+  public String getPendingPin() {
+    return lookupValue(UserCredentials.PENDING_PIN);
+  }
+
+  /**
+   * Sets the pending pin.
+   */
+  public void setPendingPin(String pin) {
+    setValue(UserCredentials.PENDING_PIN, pin);
+  }
+
+  /**
+   * Returns the password.
+   *
+   * @return password dao
+   */
+  public PasswordDAO getPassword() {
+    return lookupValue(UserCredentials.PASSWORD);
+  }
+
+  /**
+   * Sets the password.
+   */
+  public void setPassword(PasswordDAO password) {
+    setValue(UserCredentials.PASSWORD, password);
+  }
+
 }
