@@ -22,15 +22,15 @@ import org.zoxweb.server.util.ReflectionUtil;
 
 public class SimpleFormatterOverride {
 
-	public static void main(String[] args) {
+  public static void main(String[] args) {
 
-		try {
-			Class<?> simpleFormatter = SimpleFormatter.class;
-			Field field = simpleFormatter.getDeclaredField("format");
-			field.setAccessible( true);
-			System.out.println("" + field);
-			//System.out.println("" + field.get(null));
-			
+    try {
+      Class<?> simpleFormatter = SimpleFormatter.class;
+      Field field = simpleFormatter.getDeclaredField("format");
+      field.setAccessible(true);
+      System.out.println("" + field);
+      //System.out.println("" + field.get(null));
+
 //			Field modifiersField = Field.class.getDeclaredField( "modifiers" );
 //            modifiersField.setAccessible( true );
 //            int oldModifier = field.getModifiers();
@@ -39,10 +39,11 @@ public class SimpleFormatterOverride {
 //			//field.setInt( field, field.getModifiers() & ~Modifier.FINAL );
 //			field.set(null, "marwan");
 //			modifiersField.setInt( field, oldModifier);
-			
-			System.out.println("" + ReflectionUtil.updateFinalStatic(simpleFormatter, "format", "mario taza"));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+
+      System.out
+          .println("" + ReflectionUtil.updateFinalStatic(simpleFormatter, "format", "mario taza"));
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
 }

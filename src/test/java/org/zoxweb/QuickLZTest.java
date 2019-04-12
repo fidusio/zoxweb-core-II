@@ -24,38 +24,38 @@ import org.zoxweb.shared.util.SharedStringUtil;
 
 public class QuickLZTest {
 
-	public static void main(String[] args) {
+  public static void main(String[] args) {
 
-		try {
-			String str = "MarioMarioMarioMarioMarioMarioMarioMarioMarioMarioMarioMarioMarioMarioMarioMarioMarioMarioMarioMarioMarioNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAEL";
-			
-			byte compressed[] = QuickLZ.compress(str.getBytes(), 1);
-			System.out.println("size " + compressed.length + " original " + str.length());
-			byte decompress[] = QuickLZ.decompress(compressed);
-			String newStr = new String(decompress);
-			System.out.println(newStr.equals(str) + " " + newStr);
+    try {
+      String str = "MarioMarioMarioMarioMarioMarioMarioMarioMarioMarioMarioMarioMarioMarioMarioMarioMarioMarioMarioMarioMarioNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAELNAEL";
 
-			ByteArrayOutputStream output = new ByteArrayOutputStream(str.length());
-			GZIPOutputStream gzipOutputStream = new GZIPOutputStream(output);
-			gzipOutputStream.write(str.getBytes());
-			gzipOutputStream.finish();
-			gzipOutputStream.flush();
-		       
-			byte [] responseBytes = output.toByteArray();
+      byte compressed[] = QuickLZ.compress(str.getBytes(), 1);
+      System.out.println("size " + compressed.length + " original " + str.length());
+      byte decompress[] = QuickLZ.decompress(compressed);
+      String newStr = new String(decompress);
+      System.out.println(newStr.equals(str) + " " + newStr);
 
-			System.out.println("size " + responseBytes.length + " original " + str.length());
+      ByteArrayOutputStream output = new ByteArrayOutputStream(str.length());
+      GZIPOutputStream gzipOutputStream = new GZIPOutputStream(output);
+      gzipOutputStream.write(str.getBytes());
+      gzipOutputStream.finish();
+      gzipOutputStream.flush();
 
-			decompress = QuickLZ.decompress(responseBytes);
+      byte[] responseBytes = output.toByteArray();
 
-			newStr = new String(decompress);
-			System.out.println(newStr.equals(str) + " new str " + newStr);
+      System.out.println("size " + responseBytes.length + " original " + str.length());
 
-			// gzip test
-			byte zipBuffer[] = ZIPUtil.gzip(str);
-			String gunzipStr = SharedStringUtil.toString(ZIPUtil.gunzip(zipBuffer));
-			System.out.println(str.equals(gunzipStr) + " zipBuffer " + zipBuffer.length );
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
+      decompress = QuickLZ.decompress(responseBytes);
+
+      newStr = new String(decompress);
+      System.out.println(newStr.equals(str) + " new str " + newStr);
+
+      // gzip test
+      byte zipBuffer[] = ZIPUtil.gzip(str);
+      String gunzipStr = SharedStringUtil.toString(ZIPUtil.gunzip(zipBuffer));
+      System.out.println(str.equals(gunzipStr) + " zipBuffer " + zipBuffer.length);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
 }
