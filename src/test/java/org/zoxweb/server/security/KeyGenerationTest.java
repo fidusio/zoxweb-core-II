@@ -56,9 +56,9 @@ public class KeyGenerationTest
 
 				EncryptedDAO ed = CryptoUtil.encryptDAO(new EncryptedKeyDAO(), SharedStringUtil.getBytes("password"), null, 1);
 				String json = GSONUtil.toJSON(ed, false, false, false, Base64Type.URL);
-				KeyPair aliceKey = CryptoUtil.generateKeyPair(2048, "rsa");
+				KeyPair aliceKey = CryptoUtil.generateKeyPair(4096, "rsa");
 				long ts = System.nanoTime();
-				KeyPair bobKey = CryptoUtil.generateKeyPair(2048, "rsa");
+				KeyPair bobKey = CryptoUtil.generateKeyPair(4096, "rsa");
 				ts = System.nanoTime() - ts;
 				System.out.println("" + bobKey.toString() + " it took " + TimeInMillis.nanosToString(ts));
 				System.out.println("json:" + json);
