@@ -787,14 +787,7 @@ public class Const {
 
         // double or float
         String numeric = number.toString();
-        if (numeric.indexOf('.') != -1) {
-          // double or float
-          try {
-
-          } catch (Exception e) {
-
-          }
-        } else {
+        if (numeric.indexOf('.') == -1) {
           try {
             Integer.parseInt(numeric);
             return NVINT;
