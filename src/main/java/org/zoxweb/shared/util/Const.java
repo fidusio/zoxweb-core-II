@@ -1124,10 +1124,6 @@ public class Const {
           new NVPair("API_KEY_TO_CONFIG", "APIKey to APIConfig")
       );
 
-//	/**
-//	 * An Object that can be used for locking mechanism.
-//	 */
-//	public static final Object LOCK = new Object();
 
   /**
    * This character array contains the numbers and letter representations for hexadecimal values.
