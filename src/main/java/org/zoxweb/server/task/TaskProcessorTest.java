@@ -35,29 +35,12 @@ public class TaskProcessorTest
 
   public static void runTest(TaskProcessor tp, TaskProcessorTest td, int numberOfTasks) {
     long delta = System.currentTimeMillis();
-    int counter = 0;
 
     for (int i = 0; i < numberOfTasks; i++) {
-      counter++;
-      //System.out.println("Adding event " + (counter));
-      //tp.queueTask(new TaskEvent( tp, td,  (Object[])null));
       tp.execute(td);
     }
 
-    while (td.counter != counter) {
-      System.out.println("Available thread " + tp + " " + td.counter);
-      synchronized (td) {
-        try {
-          //System.out.println("Available thread " + te.availableExecutorThreads());
-          td.wait(TaskProcessor.WAIT_TIME);
-          //System.out.println("Available thread " + te.availableExecutorThreads());
-        } catch (InterruptedException e) {
-          e.printStackTrace();
-        }
-      }
-    }
-
-    delta = System.currentTimeMillis() - delta;
+    delta = TaskUtil.waitIfBusyThenClose(25) - delta;
 
     System.out.println(
         "It took " + Const.TimeInMillis.toString(delta) + " millis callback " + td + " using queue "
@@ -67,32 +50,9 @@ public class TaskProcessorTest
   }
 
   public static void main(String[] args) {
-
-    int taskQueueSize = 800;
-    int threadCount = 16;
     int numberOfTasks = 20_000_000;
-
-    if (args.length == 3) {
-      try {
-        int index = 0;
-        taskQueueSize = Integer.parseInt(args[index++]);
-        threadCount = Integer.parseInt(args[index++]);
-        numberOfTasks = Integer.parseInt(args[index++]);
-      } catch (Exception e) {
-
-      }
-    }
-
-    //TaskProcessor te = new TaskProcessor(taskQueueSize,  threadCount, Thread.MIN_PRIORITY, false);
     TaskProcessor te = TaskUtil.getDefaultTaskProcessor();
-
     runTest(te, new TaskProcessorTest(), numberOfTasks);
-    //runTest( te, new TaskProcessorTest(), numberOfTasks);
-    te.close();
-
-    //ExecutorService executor = Executors.newFixedThreadPool(5);
-
-    //UThread.sleep(20000);
   }
 
 }
