@@ -15,9 +15,8 @@
  */
 package org.zoxweb.server.task;
 
-import org.zoxweb.shared.util.Const;
-
 import java.util.concurrent.atomic.AtomicInteger;
+import org.zoxweb.shared.util.Const;
 
 public class TaskProcessorTest
 		implements Runnable {
