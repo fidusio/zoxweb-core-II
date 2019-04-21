@@ -21,19 +21,34 @@ import org.zoxweb.shared.util.Const;
 public class TaskProcessorTest
     implements Runnable {
 
-  AtomicInteger ai = new AtomicInteger();
-  int counter = 0;
+  private AtomicInteger ai = new AtomicInteger();
+  private int counter = 0;
 
   public void run() {
     ai.addAndGet(1);
     inc();
   }
 
-  protected synchronized void inc() {
+  private synchronized void inc() {
     counter++;
   }
 
-  public static void runTest(TaskProcessor tp, TaskProcessorTest td, int numberOfTasks) {
+  public static long count(int countTo)
+  {
+    long ts = System.currentTimeMillis();
+    int counter = 0;
+    for(int i=0; i < countTo; i++)
+    {
+      counter++;
+    }
+    if(counter != countTo)
+    {
+      throw new IllegalArgumentException("Invalid test " + counter + "!=" + countTo);
+    }
+    return System.currentTimeMillis() - ts;
+  }
+
+  private static void runTest(TaskProcessor tp, TaskProcessorTest td, int numberOfTasks) {
     long delta = System.currentTimeMillis();
 
     for (int i = 0; i < numberOfTasks; i++) {
@@ -46,12 +61,13 @@ public class TaskProcessorTest
         "It took " + Const.TimeInMillis.toString(delta) + " millis callback " + td + " using queue "
             + tp.getQueueMaxSize() + " and " + tp.availableExecutorThreads() + " executor thread");
     System.out.println("Available thread " + tp.availableExecutorThreads() + " total "
-        + ((TaskProcessorTest) td).counter + ":" + ((TaskProcessorTest) td).ai.get());
+        + td.counter + ":" + td.ai.get());
   }
 
   public static void main(String[] args) {
     int numberOfTasks = 20_000_000;
     TaskProcessor te = TaskUtil.getDefaultTaskProcessor();
+    System.out.println("serial inc " + numberOfTasks + " took " + Const.TimeInMillis.toString(count(numberOfTasks)));
     runTest(te, new TaskProcessorTest(), numberOfTasks);
   }
 
