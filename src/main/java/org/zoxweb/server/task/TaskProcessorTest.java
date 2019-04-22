@@ -67,6 +67,7 @@ public class TaskProcessorTest
   public static void main(String[] args) {
     int numberOfTasks = 20_000_000;
     TaskProcessor te = TaskUtil.getDefaultTaskProcessor();
+    count(numberOfTasks);
     System.out.println("serial inc " + numberOfTasks + " took " + Const.TimeInMillis.toString(count(numberOfTasks)));
     runTest(te, new TaskProcessorTest(), numberOfTasks);
   }
