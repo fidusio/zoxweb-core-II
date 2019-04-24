@@ -67,7 +67,11 @@ public class LambdaTest {
     dt = System.nanoTime() - dt;
     //stream.forEach(System.out::println);
     System.out.println(result);
-    System.out.println(TimeInMillis.nanosToString(dt));
+    System.out.println("It took: " + TimeInMillis.nanosToString(dt));
+
+    dt = System.nanoTime();
+    dt = System.nanoTime() - dt;
+    System.out.println("nano to string: " + TimeInMillis.nanosToString(dt));
 
     System.out.println(3511 ^ 3671 ^ 4153);
 
