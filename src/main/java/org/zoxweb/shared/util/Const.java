@@ -465,7 +465,7 @@ public class Const {
       long rest = nanos / 1000000;
 
       if (rest > 0) {
-        return rest + " millis";
+        return toString(rest);
       }
 
       return nanos + " nanos";
