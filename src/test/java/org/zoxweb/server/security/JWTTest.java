@@ -1,7 +1,7 @@
 package org.zoxweb.server.security;
 
 import java.io.IOException;
-
+import java.security.GeneralSecurityException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
@@ -141,7 +141,7 @@ public class JWTTest {
 	
 	
 	@Test
-	public void testJWTNone() throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException, InvalidKeyException, NoSuchAlgorithmException
+	public void testJWTNone() throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException, SecurityException, NullPointerException, IllegalArgumentException, GeneralSecurityException
 	{
 		String jsonNone = GSONUtil.toJSON(jwtNONE, true, false, false, Base64Type.URL);
 		System.out.println(jsonNone);
@@ -166,7 +166,7 @@ public class JWTTest {
 	
 	
 	@Test
-	public void testJWTHS256() throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException, InvalidKeyException, NoSuchAlgorithmException
+	public void testJWTHS256() throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException, GeneralSecurityException, NoSuchAlgorithmException
 	{
 		
 		System.out.println("--------------------------------------------------------------");
@@ -193,7 +193,7 @@ public class JWTTest {
 	
 	
 	@Test
-	public void testJWTHS512() throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException, InvalidKeyException, NoSuchAlgorithmException
+	public void testJWTHS512() throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException, GeneralSecurityException, NoSuchAlgorithmException
 	{
 		
 		System.out.println("testJWTHS512--------------------------------------------------------------");
@@ -220,7 +220,7 @@ public class JWTTest {
 	
 	
 	@Test
-	public void testJWTGWT() throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException, InvalidKeyException, NoSuchAlgorithmException
+	public void testJWTGWT() throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException, GeneralSecurityException, NoSuchAlgorithmException
 	{
 		
 		System.out.println("--------------------------------------------------------------");
@@ -246,7 +246,7 @@ public class JWTTest {
 	
 	
 	@Test
-	public void testJWTJohnDoe() throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException, InvalidKeyException, NoSuchAlgorithmException
+	public void testJWTJohnDoe() throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException, GeneralSecurityException, NoSuchAlgorithmException
 	{
 		
 		System.out.println("testJWTJohnDoe--------------------------------------------------------------");

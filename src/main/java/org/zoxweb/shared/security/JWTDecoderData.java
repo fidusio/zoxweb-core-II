@@ -2,7 +2,7 @@ package org.zoxweb.shared.security;
 
 import org.zoxweb.shared.util.SharedUtil;
 
-public final class JWTDecoderData 
+public final class JWTDecoderData
 {
 	private final byte[] key;
 	private final String jwtToken;

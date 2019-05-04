@@ -1,8 +1,7 @@
 package org.zoxweb.server.security;
 
 import java.io.IOException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
+import java.security.GeneralSecurityException;
 import java.util.Date;
 import java.util.UUID;
 import org.zoxweb.server.util.GSONUtil;
@@ -28,7 +27,7 @@ public final class JWTProvider
     // TODO Auto-generated method stub
     try {
       return CryptoUtil.encodeJWT(key, jwt);
-    } catch (InvalidKeyException | NoSuchAlgorithmException | SecurityException | IOException e) {
+    } catch (SecurityException | IOException  | GeneralSecurityException e) {
 
       throw new AccessSecurityException(e.getMessage());
     }
@@ -40,7 +39,7 @@ public final class JWTProvider
     // TODO Auto-generated method stub
     try {
       return CryptoUtil.decodeJWT(key, b64urlToken);
-    } catch (InvalidKeyException | NoSuchAlgorithmException | SecurityException | IOException e) {
+    } catch ( SecurityException | IOException | GeneralSecurityException e) {
 
       e.printStackTrace();
       throw new AccessSecurityException(e.getMessage());

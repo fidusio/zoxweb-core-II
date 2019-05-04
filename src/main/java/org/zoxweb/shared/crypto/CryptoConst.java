@@ -118,6 +118,8 @@ public final class CryptoConst
 		SHA1_DSA("SHA1withDSA"),
 		SHA1_RSA("SHA1withRSA"),
 		SHA256_RSA("SHA256withRSA"),
+		SHA384_RSA("SHA384withRSA"),
+		SHA512_RSA("SHA512withRSA"),
 		;
 		private final String name;
 		SignatureAlgo(String name)

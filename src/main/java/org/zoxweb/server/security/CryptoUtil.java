@@ -16,10 +16,14 @@
 package org.zoxweb.server.security;
 
 import java.io.*;
-import java.net.UnknownHostException;
 import java.security.*;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
+import java.security.interfaces.RSAPrivateKey;
+import java.security.interfaces.RSAPublicKey;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -40,6 +44,7 @@ import org.zoxweb.server.util.GSONUtil;
 import org.zoxweb.shared.crypto.CryptoConst;
 import org.zoxweb.shared.crypto.CryptoConst.MDType;
 import org.zoxweb.shared.crypto.CryptoConst.SecureRandomType;
+import org.zoxweb.shared.crypto.CryptoConst.SignatureAlgo;
 import org.zoxweb.shared.crypto.EncryptedDAO;
 import org.zoxweb.shared.crypto.EncryptedKeyDAO;
 import org.zoxweb.shared.crypto.PasswordDAO;
@@ -696,9 +701,23 @@ public class CryptoUtil {
 
     return bytes;
   }
+  
+  public static RSAPublicKey generateRSAPublicKey(byte[] keys) throws IOException, NoSuchAlgorithmException, GeneralSecurityException
+  {
+      X509EncodedKeySpec publicSpec = new X509EncodedKeySpec(keys);
+      KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+      return (RSAPublicKey) keyFactory.generatePublic(publicSpec);
+  }
+
+  public static RSAPrivateKey generateRSAPrivateKey(byte[] keys) throws IOException, NoSuchAlgorithmException, GeneralSecurityException
+  {
+      PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(keys);
+      KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+      return (RSAPrivateKey) keyFactory.generatePrivate(keySpec);
+  }
 
   public static String encodeJWT(String key, JWT jwt)
-      throws NoSuchAlgorithmException, InvalidKeyException, IOException {
+      throws NoSuchAlgorithmException, GeneralSecurityException, IOException, SecurityException, InvalidKeySpecException, NullPointerException, IllegalArgumentException {
     return encodeJWT(key != null ? SharedStringUtil.getBytes(key) : null, jwt);
   }
 
@@ -706,7 +725,7 @@ public class CryptoUtil {
       throws NoSuchAlgorithmException,
       InvalidKeyException,
       IOException,
-      SecurityException {
+      SecurityException, GeneralSecurityException {
     SharedUtil.checkIfNulls("Null jwt", jwt);
     SharedUtil.checkIfNulls("Null jwt header", jwt.getHeader());
     SharedUtil.checkIfNulls("Null jwt algorithm", jwt.getHeader().getJWTAlgorithm());
@@ -743,6 +762,20 @@ public class CryptoUtil {
         break;
       case none:
         break;
+      case RS256:
+        SharedUtil.checkIfNulls("Null key", key);
+        PrivateKey rs256 = CryptoUtil.generateRSAPrivateKey(key);
+        b64Hash = SharedBase64.encodeAsString(Base64Type.URL,
+            CryptoUtil.sign(SignatureAlgo.SHA256_RSA, rs256, SharedStringUtil.getBytes(sb.toString())));
+        
+        break;
+      case RS512:
+        SharedUtil.checkIfNulls("Null key", key);
+        PrivateKey rs512 = CryptoUtil.generateRSAPrivateKey(key);
+        b64Hash = SharedBase64.encodeAsString(Base64Type.URL,
+            CryptoUtil.sign(SignatureAlgo.SHA512_RSA, rs512, SharedStringUtil.getBytes(sb.toString())));
+        break;
+      
 
     }
 
@@ -756,19 +789,15 @@ public class CryptoUtil {
   }
 
   public static JWT decodeJWT(String key, String token)
-      throws NoSuchAlgorithmException,
-      InvalidKeyException,
-      IOException,
-      SecurityException {
+      throws IOException,
+      SecurityException, NullPointerException, IllegalArgumentException, GeneralSecurityException {
     return decodeJWT(key != null ? SharedStringUtil.getBytes(key) : null, token);
   }
 
 
   public static JWT decodeJWT(byte key[], String token)
-      throws NoSuchAlgorithmException,
-      InvalidKeyException,
-      IOException,
-      SecurityException {
+      throws IOException,
+      SecurityException, GeneralSecurityException {
 //		SharedUtil.checkIfNulls("Null token", token);
 //		String tokens[] = token.trim().split("\\.");
 //		JWTHeader jwtHeader = null;
@@ -831,6 +860,39 @@ public class CryptoUtil {
           throw new SecurityException("Invalid token");
         }
         break;
+      case RS256:
+        SharedUtil.checkIfNulls("Null key", key);
+        if (tokens.length != JWTField.values().length) {
+          throw new SecurityException("Invalid token");
+        }
+        PublicKey rs256PK = generateRSAPublicKey(key);
+        
+        
+        
+        if (!CryptoUtil.verify(SignatureAlgo.SHA256_RSA, rs256PK, 
+            SharedStringUtil.getBytes(tokens[JWTField.HEADER.ordinal()] + "." +tokens[JWTField.PAYLOAD.ordinal()]), 
+            SharedBase64.decode(Base64Type.URL, jwt.getHash())))
+        {
+          throw new SecurityException("Invalid token");
+        }
+        break;
+      case RS512:
+        SharedUtil.checkIfNulls("Null key", key);
+        if (tokens.length != JWTField.values().length) {
+          throw new SecurityException("Invalid token");
+        }
+        PublicKey rs512PK = generateRSAPublicKey(key);
+        
+        
+        
+        if (!CryptoUtil.verify(SignatureAlgo.SHA512_RSA, rs512PK, 
+            SharedStringUtil.getBytes(tokens[JWTField.HEADER.ordinal()] + "." +tokens[JWTField.PAYLOAD.ordinal()]), 
+            SharedBase64.decode(Base64Type.URL, jwt.getHash())))
+        {
+          throw new SecurityException("Invalid token");
+        }
+        break;
+     
 
     }
 
@@ -876,6 +938,8 @@ public class CryptoUtil {
     switch (jwtHeader.getJWTAlgorithm()) {
       case HS256:
       case HS512:
+      case RS256:
+      case RS512:
         if (tokens.length != JWTField.values().length) {
           throw new IllegalArgumentException("Invalid token JWT token length expected 3");
         }
@@ -908,7 +972,7 @@ public class CryptoUtil {
     return kg.generateKeyPair();
   }
 
-  public static byte[] encrypt(PublicKey receiver, PrivateKey senderToSign, byte[] data)
+  public static byte[] encrypt(PublicKey receiver, byte[] data)
       throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, IOException, ShortBufferException {
     Cipher cipher = Cipher.getInstance("RSA");
     cipher.init(Cipher.ENCRYPT_MODE, receiver);
@@ -928,7 +992,7 @@ public class CryptoUtil {
 //		return baos.toByteArray();
   }
 
-  public static byte[] decrypt(PrivateKey receiver, PublicKey senderToValidate, byte[] data)
+  public static byte[] decrypt(PrivateKey receiver, byte[] data)
       throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, IOException {
     Cipher cipher = Cipher.getInstance("RSA");
     cipher.init(Cipher.DECRYPT_MODE, receiver);
@@ -949,7 +1013,7 @@ public class CryptoUtil {
 
 
   public static byte[] sign(CryptoConst.SignatureAlgo sa, PrivateKey pk, byte data[])
-      throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
+      throws GeneralSecurityException {
     SecureRandom secureRandom = new SecureRandom();
     Signature signature = Signature.getInstance(sa.getName());
     signature.initSign(pk, secureRandom);
@@ -991,7 +1055,7 @@ public class CryptoUtil {
   /**
    * Connect to a remote host and extract the the
    */
-  public static PublicKey getPublicKey(String host, int port) throws IOException {
+  public static PublicKey getRemotePublicKey(String host, int port) throws IOException {
     SSLSocket socket = null;
     try {
       SSLSocketFactory factory = HttpsURLConnection.getDefaultSSLSocketFactory();

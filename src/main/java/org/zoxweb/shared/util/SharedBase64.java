@@ -221,11 +221,13 @@ public class SharedBase64
 	 */
 	public static byte[] decode(String str)
 	{
+	    str = SharedStringUtil.filterString(str, "\n");
 		return decode(SharedStringUtil.getBytes(str));
 	}
 	
 	public static byte[] decode(Base64Type bt, String str)
 	{
+	    str = SharedStringUtil.filterString(str, "\n");
 		return decode(bt, SharedStringUtil.getBytes(str));
 	}
 
