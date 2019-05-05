@@ -3,8 +3,10 @@ package org.zoxweb.server.security;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.security.InvalidKeyException;
+import java.security.KeyPair;
 import java.security.NoSuchAlgorithmException;
 
+import java.security.PublicKey;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -188,6 +190,46 @@ public class JWTTest {
 		System.out.println(test);
 
 		System.out.println(CryptoUtil.decodeJWT("secret", test));
+		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+	}
+
+	@Test
+	public void testJWTES256() throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException, GeneralSecurityException, NoSuchAlgorithmException
+	{
+
+		System.out.println("--------------------------------------------------------------");
+		JWT jwtES256 = new JWT();
+		jwtES256.getHeader().setJWTAlgorithm(JWTAlgorithm.ES256);
+		jwtES256.getHeader().setTokenType("JWT");
+
+
+
+		JWTPayload payload = jwtES256.getPayload();
+		payload.setDomainID("xlogistx.io");
+		payload.setAppID("xlogistx");
+		payload.setNonce(index++);
+		payload.setSubjectID("support@xlogistx.io");
+
+		String jsonES256 = GSONUtil.toJSON(jwtES256, false, false, false, Base64Type.URL);
+		System.out.println(jsonES256);
+		JWT localJwt = GSONUtil.fromJSON(jsonES256, JWT.class, Base64Type.URL);
+		jsonES256 = GSONUtil.toJSON(localJwt, true, false, false, Base64Type.URL);
+		System.out.println(jwtES256);
+
+		System.out.println(localJwt.getPayload());
+		KeyPair kp = CryptoUtil.generateKeyPair("EC", 256);
+
+		String test = CryptoUtil.encodeJWT(kp.getPrivate().getEncoded(), localJwt);
+		System.out.println(test);
+
+
+		jsonES256 = GSONUtil.toJSON(localJwt, false, false, false, Base64Type.URL);
+		System.out.println(jwtES256);
+		test = CryptoUtil.encodeJWT(kp.getPrivate().getEncoded(), localJwt);
+		System.out.println(test);
+
+		System.out.println(CryptoUtil.decodeJWT(kp.getPublic().getEncoded(), test));
+
 		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 	}
 	
