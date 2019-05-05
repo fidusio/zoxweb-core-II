@@ -21,7 +21,7 @@ public class TokenTest
 		
 		try 
 		{
-			Key key = CryptoUtil.generateKey(384, "HmacSHA256");
+			Key key = CryptoUtil.generateKey("HmacSHA256", 384);
 	
 			b64 = SharedBase64.encode(key.getEncoded());
 			System.out.println(SharedStringUtil.toString(b64) );

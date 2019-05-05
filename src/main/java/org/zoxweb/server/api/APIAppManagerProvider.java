@@ -135,7 +135,7 @@ public class APIAppManagerProvider
 
         if (subjectAPIKey.getAPIKey() == null) {
             try {
-                subjectAPIKey.setAPIKey(CryptoUtil.generateKey(256, CryptoUtil.AES).getEncoded());
+                subjectAPIKey.setAPIKey(CryptoUtil.generateKey(CryptoUtil.AES, 256).getEncoded());
             } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
             }

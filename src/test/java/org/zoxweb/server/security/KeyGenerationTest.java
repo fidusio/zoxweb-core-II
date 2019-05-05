@@ -46,9 +46,9 @@ public class KeyGenerationTest
 
 				EncryptedDAO ed = CryptoUtil.encryptDAO(new EncryptedKeyDAO(), SharedStringUtil.getBytes("password"), null, 1);
 				String json = GSONUtil.toJSON(ed, false, false, false, Base64Type.URL);
-				KeyPair aliceKey = CryptoUtil.generateKeyPair(2048, "rsa");
+				KeyPair aliceKey = CryptoUtil.generateKeyPair("RSA",2048);
 				long ts = System.nanoTime();
-				KeyPair bobKey = CryptoUtil.generateKeyPair(2048, "rsa");
+				KeyPair bobKey = CryptoUtil.generateKeyPair("RSA",2048);
 				ts = System.nanoTime() - ts;
 				System.out.println("" + bobKey.toString() + " it took " + TimeInMillis.nanosToString(ts));
 				System.out.println("json:" + json);
@@ -73,7 +73,7 @@ public class KeyGenerationTest
 					System.out.println("Decrypted Message:" + SharedStringUtil.toString(decrypted));
 					System.out.println("Encrypted by bob based64 [" + encrypted.length +"]:" + SharedBase64.encodeAsString(Base64Type.URL, encrypted));
 
-					Key aesKey = CryptoUtil.generateKey(256, CryptoUtil.AES);
+					Key aesKey = CryptoUtil.generateKey(CryptoUtil.AES, 256);
 					System.out.println(CryptoUtil.toString(aesKey));
 
 
@@ -99,7 +99,7 @@ public class KeyGenerationTest
 			long ts = System.currentTimeMillis();
 			for (int i = 0; i < loopSize; i++)
 			{
-				keys[i] = CryptoUtil.generateKey(i%2 == 0 ? 256 : 128, CryptoUtil.AES);
+				keys[i] = CryptoUtil.generateKey(CryptoUtil.AES, i%2 == 0 ? 256 : 128);
 			}
 			ts = System.currentTimeMillis() - ts;
 			for(Key k : keys)
@@ -174,7 +174,7 @@ public class KeyGenerationTest
 //				PrivateKey priKey = readPrivateKey(keys);
 //				System.out.println(filename);
 //				//System.out.println("public  key:" +  SharedBase64.encodeAsString(Base64Type.URL, pubKey.getEncoded()));
-				PublicKey pk = CryptoUtil.getRemotePublicKey(filename, 443);
+				PublicKey pk = CryptoUtil.getRemotePublicKey(filename);
 				System.out.println(filename + " public key:" +  CryptoUtil.toString(pk));
 			}
 			catch(Exception e)
@@ -186,18 +186,18 @@ public class KeyGenerationTest
 		
 		try
 		{
-		  KeyPair aliceKey = CryptoUtil.generateKeyPair(2048, "rsa");
+		  KeyPair aliceKey = CryptoUtil.generateKeyPair(CryptoUtil.AES,2048);
 		  PublicKey alicePubK = aliceKey.getPublic();
 		  PrivateKey alicePriK = aliceKey.getPrivate();
 		  
-		  PublicKey pubK = CryptoUtil.generateRSAPublicKey(aliceKey.getPublic().getEncoded());
-          PrivateKey priK = CryptoUtil.generateRSAPrivateKey(aliceKey.getPrivate().getEncoded());
+		  PublicKey pubK = CryptoUtil.generatePublicKey("RSA", aliceKey.getPublic().getEncoded());
+          PrivateKey priK = CryptoUtil.generatePrivateKey("RSA", aliceKey.getPrivate().getEncoded());
           System.out.println(alicePubK.equals(pubK) + "," + alicePriK.equals(priK));
           String jwtToken = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6Im1hcndhbiBuYWVsZSIsImFkbWluIjp0cnVlLCJpYXQiOjE1MTYyMzkwMjJ9.TUtOxVMqxsmhsCPMNc9BgV0BjpHqXWHLzoCDN8gRqNWvdQMP-3AwQXZP5966SDSYoPIWaCWCQuxLbgB3IRdpiMKaFP0qhrjRhI3DbAxWCg3c3qLYA7UoM70NhjvUYa4PUVGO8ngRs4hBOEuSpD1wg5-Hu3MmpSY012xwjGrdnG6gM9xx3rp_hWqaBSENXKRHPhUhV513MvQ6fafMn9aQa22PxQzAqz-Z-HDG6HjnxN9o4q9HAsfweluV1QRx5oO-KdzgrDn3Mn6N_HrsbWAgtosjFVpOYI3Q5rXTye_ueCCe5MkELSPkltuQ7R3qQCbvDbAp9bqzjLSCnJQfthYrPA";
           JWT jwt = CryptoUtil.parseJWT(jwtToken);
 		  System.out.println(GSONUtil.toJSON(jwt, true, false, false));
 		  
-		  PublicKey jwtPubKey = CryptoUtil.generateRSAPublicKey(SharedBase64.decode(Base64Type.DEFAULT,"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnzyis1ZjfNB0bBgKFMSv\n" + 
+		  PublicKey jwtPubKey = CryptoUtil.generatePublicKey("RSA", SharedBase64.decode(Base64Type.DEFAULT,"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnzyis1ZjfNB0bBgKFMSv\n" +
 		      "vkTtwlvBsaJq7S5wA+kzeVOVpVWwkWdVha4s38XM/pa/yr47av7+z3VTmvDRyAHc\n" + 
 		      "aT92whREFpLv9cj5lTeJSibyr/Mrm/YtjCZVWgaOYIhwrXwKLqPr/11inWsAkfIy\n" + 
 		      "tvHWTxZYEcXLgAXFuUuaS3uF9gEiNQwzGTU1v0FqkqTBr4B8nW3HCN47XUu0t8Y0\n" + 

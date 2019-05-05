@@ -532,8 +532,11 @@ public class HTTPUtil
 		
 		return ret;
 	}
-	
 	public static InetSocketAddressDAO parseHost(String url)
+	{
+		return parseHost(url, -1);
+	}
+	public static InetSocketAddressDAO parseHost(String url, int defaultPort)
 	{
 		int index = url.indexOf(ProtocolDelimiter.COLON_PATH_ABEMPTY.getValue());
 		int hostStart;
@@ -571,13 +574,17 @@ public class HTTPUtil
 		// detect scheme type
 		{
 			URIScheme us = URIScheme.match(url);
-			if (us == URIScheme.HTTPS)
+			if (us == URIScheme.HTTPS || us == URIScheme.WSS)
 			{
 				ret.setPort(us.getValue());
 			}
-			else if (us == URIScheme.HTTP)
+			else if (us == URIScheme.HTTP || us == URIScheme.WS)
 			{
 				ret.setPort(us.getValue());
+			}
+			else
+			{
+				ret.setPort(defaultPort);
 			}
 		}
 

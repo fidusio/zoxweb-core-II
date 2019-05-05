@@ -74,7 +74,7 @@ public class IDGeneratorUtil
             do 
             {
                 try {
-                  ret = SharedBase64.encodeAsString(Base64Type.URL, CryptoUtil.generateKey((Const.TypeInBytes.BYTE.sizeInBits(CryptoUtil.AES_256_KEY_SIZE)), CryptoUtil.AES).getEncoded());
+                  ret = SharedBase64.encodeAsString(Base64Type.URL, CryptoUtil.generateKey(CryptoUtil.AES, (Const.TypeInBytes.BYTE.sizeInBits(CryptoUtil.AES_256_KEY_SIZE))).getEncoded());
                 } catch (NoSuchAlgorithmException e) {
                   // TODO Auto-generated catch block
                   e.printStackTrace();
@@ -98,7 +98,7 @@ public class IDGeneratorUtil
           
           do {
             try {
-              ret = SharedBase64.encode(Base64Type.URL, CryptoUtil.generateKey((Const.TypeInBytes.BYTE.sizeInBits(CryptoUtil.AES_256_KEY_SIZE)), CryptoUtil.AES).getEncoded());
+              ret = SharedBase64.encode(Base64Type.URL, CryptoUtil.generateKey(CryptoUtil.AES, (Const.TypeInBytes.BYTE.sizeInBits(CryptoUtil.AES_256_KEY_SIZE))).getEncoded());
             } catch (NoSuchAlgorithmException e) {
               // TODO Auto-generated catch block
               e.printStackTrace();

@@ -19,6 +19,7 @@ import java.io.*;
 import java.security.*;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
+import java.security.cert.CertificateParsingException;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.InvalidKeySpecException;
@@ -38,6 +39,7 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManagerFactory;
 
 
+import org.zoxweb.server.http.HTTPUtil;
 import org.zoxweb.server.io.IOUtil;
 import org.zoxweb.server.io.UByteArrayOutputStream;
 import org.zoxweb.server.util.GSONUtil;
@@ -49,6 +51,7 @@ import org.zoxweb.shared.crypto.EncryptedDAO;
 import org.zoxweb.shared.crypto.EncryptedKeyDAO;
 import org.zoxweb.shared.crypto.PasswordDAO;
 import org.zoxweb.shared.filters.BytesValueFilter;
+import org.zoxweb.shared.net.InetSocketAddressDAO;
 import org.zoxweb.shared.security.AccessException;
 import org.zoxweb.shared.security.JWTHeader;
 import org.zoxweb.shared.security.JWTPayload;
@@ -345,7 +348,7 @@ public class CryptoUtil {
     MessageDigest digest = MessageDigest.getInstance(SHA_256);
     //IvParameterSpec ivSpec = new IvParameterSpec(generateRandomHashedBytes(digest, AES_BLOCK_SIZE, DEFAULT_ITERATION));
     IvParameterSpec ivSpec = new IvParameterSpec(
-        generateKey((Const.TypeInBytes.BYTE.sizeInBits(AES_256_KEY_SIZE) / 2), AES).getEncoded());
+        generateKey(AES, (Const.TypeInBytes.BYTE.sizeInBits(AES_256_KEY_SIZE) / 2)).getEncoded());
     SecretKeySpec aesKey = new SecretKeySpec(
         hashWithInterations(digest, ivSpec.getIV(), key, hashIteration, true), AES);
     Cipher cipher = Cipher.getInstance(AES_ENCRYPTION_CBC_NO_PADDING);
@@ -370,7 +373,7 @@ public class CryptoUtil {
     }
 
     if (data == null) {
-      data = generateKey(Const.TypeInBytes.BYTE.sizeInBits(AES_256_KEY_SIZE), AES).getEncoded();
+      data = generateKey(AES, Const.TypeInBytes.BYTE.sizeInBits(AES_256_KEY_SIZE)).getEncoded();
     }
 
     ekd.setDataLength(data.length);
@@ -701,19 +704,19 @@ public class CryptoUtil {
 
     return bytes;
   }
-  
-  public static RSAPublicKey generateRSAPublicKey(byte[] keys) throws IOException, NoSuchAlgorithmException, GeneralSecurityException
-  {
-      X509EncodedKeySpec publicSpec = new X509EncodedKeySpec(keys);
-      KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-      return (RSAPublicKey) keyFactory.generatePublic(publicSpec);
+
+  public static PublicKey generatePublicKey(String type, byte[] keys)
+      throws IOException, NoSuchAlgorithmException, GeneralSecurityException {
+    X509EncodedKeySpec publicSpec = new X509EncodedKeySpec(keys);
+    KeyFactory keyFactory = KeyFactory.getInstance(type);
+    return  keyFactory.generatePublic(publicSpec);
   }
 
-  public static RSAPrivateKey generateRSAPrivateKey(byte[] keys) throws IOException, NoSuchAlgorithmException, GeneralSecurityException
-  {
-      PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(keys);
-      KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-      return (RSAPrivateKey) keyFactory.generatePrivate(keySpec);
+  public static PrivateKey generatePrivateKey(String type, byte[] keys)
+      throws IOException, NoSuchAlgorithmException, GeneralSecurityException {
+    PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(keys);
+    KeyFactory keyFactory = KeyFactory.getInstance(type);
+    return  keyFactory.generatePrivate(keySpec);
   }
 
   public static String encodeJWT(String key, JWT jwt)
@@ -764,18 +767,20 @@ public class CryptoUtil {
         break;
       case RS256:
         SharedUtil.checkIfNulls("Null key", key);
-        PrivateKey rs256 = CryptoUtil.generateRSAPrivateKey(key);
+        PrivateKey rs256 = CryptoUtil.generatePrivateKey("RSA",key);
         b64Hash = SharedBase64.encodeAsString(Base64Type.URL,
-            CryptoUtil.sign(SignatureAlgo.SHA256_RSA, rs256, SharedStringUtil.getBytes(sb.toString())));
-        
+            CryptoUtil
+                .sign(SignatureAlgo.SHA256_RSA, rs256, SharedStringUtil.getBytes(sb.toString())));
+
         break;
       case RS512:
         SharedUtil.checkIfNulls("Null key", key);
-        PrivateKey rs512 = CryptoUtil.generateRSAPrivateKey(key);
+        PrivateKey rs512 = CryptoUtil.generatePrivateKey("RSA", key);
         b64Hash = SharedBase64.encodeAsString(Base64Type.URL,
-            CryptoUtil.sign(SignatureAlgo.SHA512_RSA, rs512, SharedStringUtil.getBytes(sb.toString())));
+            CryptoUtil
+                .sign(SignatureAlgo.SHA512_RSA, rs512, SharedStringUtil.getBytes(sb.toString())));
         break;
-      
+
 
     }
 
@@ -865,14 +870,12 @@ public class CryptoUtil {
         if (tokens.length != JWTField.values().length) {
           throw new SecurityException("Invalid token");
         }
-        PublicKey rs256PK = generateRSAPublicKey(key);
-        
-        
-        
-        if (!CryptoUtil.verify(SignatureAlgo.SHA256_RSA, rs256PK, 
-            SharedStringUtil.getBytes(tokens[JWTField.HEADER.ordinal()] + "." +tokens[JWTField.PAYLOAD.ordinal()]), 
-            SharedBase64.decode(Base64Type.URL, jwt.getHash())))
-        {
+        PublicKey rs256PK = generatePublicKey("RSA", key);
+
+        if (!CryptoUtil.verify(SignatureAlgo.SHA256_RSA, rs256PK,
+            SharedStringUtil.getBytes(
+                tokens[JWTField.HEADER.ordinal()] + "." + tokens[JWTField.PAYLOAD.ordinal()]),
+            SharedBase64.decode(Base64Type.URL, jwt.getHash()))) {
           throw new SecurityException("Invalid token");
         }
         break;
@@ -881,18 +884,16 @@ public class CryptoUtil {
         if (tokens.length != JWTField.values().length) {
           throw new SecurityException("Invalid token");
         }
-        PublicKey rs512PK = generateRSAPublicKey(key);
-        
-        
-        
-        if (!CryptoUtil.verify(SignatureAlgo.SHA512_RSA, rs512PK, 
-            SharedStringUtil.getBytes(tokens[JWTField.HEADER.ordinal()] + "." +tokens[JWTField.PAYLOAD.ordinal()]), 
-            SharedBase64.decode(Base64Type.URL, jwt.getHash())))
-        {
+        PublicKey rs512PK = generatePublicKey("RSA",key);
+
+        if (!CryptoUtil.verify(SignatureAlgo.SHA512_RSA, rs512PK,
+            SharedStringUtil.getBytes(
+                tokens[JWTField.HEADER.ordinal()] + "." + tokens[JWTField.PAYLOAD.ordinal()]),
+            SharedBase64.decode(Base64Type.URL, jwt.getHash()))) {
           throw new SecurityException("Invalid token");
         }
         break;
-     
+
 
     }
 
@@ -956,18 +957,18 @@ public class CryptoUtil {
   }
 
 
-  public static SecretKey generateKey(int keySizeInBits, String algo)
+  public static SecretKey generateKey(String type, int keySizeInBits)
       throws NoSuchAlgorithmException {
-    KeyGenerator kg = KeyGenerator.getInstance(algo);
+    KeyGenerator kg = KeyGenerator.getInstance(type);
     //kg.init(keySizeInBits, (SecureRandom)defaultSecureRandom());
     kg.init(keySizeInBits);
     return kg.generateKey();
   }
 
 
-  public static KeyPair generateKeyPair(int keySizeInBits, String algo)
+  public static KeyPair generateKeyPair(String type, int keySizeInBits)
       throws NoSuchAlgorithmException {
-    KeyPairGenerator kg = KeyPairGenerator.getInstance(algo);
+    KeyPairGenerator kg = KeyPairGenerator.getInstance(type);
     kg.initialize(keySizeInBits);//, (SecureRandom)defaultSecureRandom());
     return kg.generateKeyPair();
   }
@@ -1042,11 +1043,11 @@ public class CryptoUtil {
     KeyStoreInfoDAO ret = new KeyStoreInfoDAO();
     ret.setKeyStore(keyStoreName);
     ret.setAlias(alias);
-    ret.setKeyStorePassword(generateKey(AES_256_KEY_SIZE * 8, AES).getEncoded());
+    ret.setKeyStorePassword(generateKey(AES, AES_256_KEY_SIZE * 8).getEncoded());
     if (PKCS12.equalsIgnoreCase(keyStoreType)) {
       ret.setAliasPassword(ret.getKeyStorePassword());
     } else {
-      ret.setAliasPassword(generateKey(AES_256_KEY_SIZE * 8, AES).getEncoded());
+      ret.setAliasPassword(generateKey(AES, AES_256_KEY_SIZE * 8).getEncoded());
     }
     ret.setKeyStoreType(keyStoreType);
     return ret;
@@ -1055,16 +1056,22 @@ public class CryptoUtil {
   /**
    * Connect to a remote host and extract the the
    */
-  public static PublicKey getRemotePublicKey(String host, int port) throws IOException {
+  public static PublicKey getRemotePublicKey(String url)
+      throws IOException, CertificateParsingException {
+    Certificate[] certs = getRemoteCertificates(url);
+    return certs[0].getPublicKey();
+
+  }
+
+
+  public static Certificate[] getRemoteCertificates(String url) throws IOException {
     SSLSocket socket = null;
     try {
+      InetSocketAddressDAO address = HTTPUtil.parseHost(url, 443);
       SSLSocketFactory factory = HttpsURLConnection.getDefaultSSLSocketFactory();
-      socket = (SSLSocket) factory.createSocket(host, port);
+      socket = (SSLSocket) factory.createSocket(address.getInetAddress(), address.getPort());
       socket.startHandshake();
-      Certificate[] certs = socket.getSession().getPeerCertificates();
-      Certificate cert = certs[0];
-      PublicKey key = cert.getPublicKey();
-      return key;
+      return socket.getSession().getPeerCertificates();
     } finally {
       IOUtil.close(socket);
     }

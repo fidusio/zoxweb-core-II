@@ -161,7 +161,7 @@ public class EncryptedContentTest {
 
 				for (int i=0; i < 10; i++) {
 					long ts = System.nanoTime();
-					SecretKey sk = CryptoUtil.generateKey(256, "aes");
+					SecretKey sk = CryptoUtil.generateKey(CryptoUtil.AES, 256);
 					ts = System.nanoTime() - ts;
 					System.out.print("["+ts+" ns]");
 					System.out.println(sk.getAlgorithm() + "," + sk.getFormat() + "," + SharedStringUtil.bytesToHex(sk.getEncoded()));
@@ -238,7 +238,7 @@ public class EncryptedContentTest {
 			}
 
 			try {
-				SecretKey sk = CryptoUtil.generateKey(256, "aes");
+				SecretKey sk = CryptoUtil.generateKey(CryptoUtil.AES, 256);
 
 				byte data[] = "Marwan NAEL is the best of the b".getBytes("UTF-8");
 

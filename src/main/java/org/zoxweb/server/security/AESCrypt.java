@@ -465,12 +465,12 @@ public class AESCrypt {
     byte[] text = null;
     try {
       ivSpec1 = new IvParameterSpec(
-          CryptoUtil.generateKey(TypeInBytes.BYTE.sizeInBits(BLOCK_SIZE), CRYPT_ALG).getEncoded());
+          CryptoUtil.generateKey(CRYPT_ALG, TypeInBytes.BYTE.sizeInBits(BLOCK_SIZE)).getEncoded());
       aesKey1 = new SecretKeySpec(generateAESKey1(ivSpec1.getIV(), password), CRYPT_ALG);
       ivSpec2 = new IvParameterSpec(
-          CryptoUtil.generateKey(TypeInBytes.BYTE.sizeInBits(BLOCK_SIZE), CRYPT_ALG).getEncoded());
+          CryptoUtil.generateKey(CRYPT_ALG, TypeInBytes.BYTE.sizeInBits(BLOCK_SIZE)).getEncoded());
       aesKey2 = new SecretKeySpec(
-          CryptoUtil.generateKey(TypeInBytes.BYTE.sizeInBits(KEY_SIZE), CRYPT_ALG).getEncoded(),
+          CryptoUtil.generateKey(CRYPT_ALG, TypeInBytes.BYTE.sizeInBits(KEY_SIZE)).getEncoded(),
           CRYPT_ALG);
       if (debug) {
         dbg("IV1: ", ivSpec1.getIV());
