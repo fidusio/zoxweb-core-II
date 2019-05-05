@@ -154,6 +154,8 @@ public final class SecurityConsts
 		HS512("HS512"),
 		RS256("RS256"),
 		RS512("RS512"),
+		ES256("ES256"),
+        ES512("ES512"),
 		;
 		
 		private final String name;

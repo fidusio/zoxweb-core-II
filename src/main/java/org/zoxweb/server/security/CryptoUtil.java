@@ -20,8 +20,6 @@ import java.security.*;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateParsingException;
-import java.security.interfaces.RSAPrivateKey;
-import java.security.interfaces.RSAPublicKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
@@ -780,6 +778,21 @@ public class CryptoUtil {
             CryptoUtil
                 .sign(SignatureAlgo.SHA512_RSA, rs512, SharedStringUtil.getBytes(sb.toString())));
         break;
+      case ES256:
+        SharedUtil.checkIfNulls("Null key", key);
+        PrivateKey es256 = CryptoUtil.generatePrivateKey("EC",key);
+        b64Hash = SharedBase64.encodeAsString(Base64Type.URL,
+            CryptoUtil
+                .sign(SignatureAlgo.SHA256_EC, es256, SharedStringUtil.getBytes(sb.toString())));
+
+        break;
+      case ES512:
+        SharedUtil.checkIfNulls("Null key", key);
+        PrivateKey es512 = CryptoUtil.generatePrivateKey("EC", key);
+        b64Hash = SharedBase64.encodeAsString(Base64Type.URL,
+            CryptoUtil
+                .sign(SignatureAlgo.SHA512_EC, es512, SharedStringUtil.getBytes(sb.toString())));
+        break;
 
 
     }
@@ -893,7 +906,34 @@ public class CryptoUtil {
           throw new SecurityException("Invalid token");
         }
         break;
+      case ES256:
+        SharedUtil.checkIfNulls("Null key", key);
+        if (tokens.length != JWTField.values().length) {
+          throw new SecurityException("Invalid token");
+        }
+        PublicKey es256PK = generatePublicKey("EC", key);
 
+        if (!CryptoUtil.verify(SignatureAlgo.SHA256_EC, es256PK,
+            SharedStringUtil.getBytes(
+                tokens[JWTField.HEADER.ordinal()] + "." + tokens[JWTField.PAYLOAD.ordinal()]),
+            SharedBase64.decode(Base64Type.URL, jwt.getHash()))) {
+          throw new SecurityException("Invalid token");
+        }
+        break;
+      case ES512:
+        SharedUtil.checkIfNulls("Null key", key);
+        if (tokens.length != JWTField.values().length) {
+          throw new SecurityException("Invalid token");
+        }
+        PublicKey es512PK = generatePublicKey("EC",key);
+
+        if (!CryptoUtil.verify(SignatureAlgo.SHA512_EC, es512PK,
+            SharedStringUtil.getBytes(
+                tokens[JWTField.HEADER.ordinal()] + "." + tokens[JWTField.PAYLOAD.ordinal()]),
+            SharedBase64.decode(Base64Type.URL, jwt.getHash()))) {
+          throw new SecurityException("Invalid token");
+        }
+        break;
 
     }
 
@@ -941,6 +981,8 @@ public class CryptoUtil {
       case HS512:
       case RS256:
       case RS512:
+      case ES256:
+      case ES512:
         if (tokens.length != JWTField.values().length) {
           throw new IllegalArgumentException("Invalid token JWT token length expected 3");
         }

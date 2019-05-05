@@ -120,6 +120,10 @@ public final class CryptoConst
 		SHA256_RSA("SHA256withRSA"),
 		SHA384_RSA("SHA384withRSA"),
 		SHA512_RSA("SHA512withRSA"),
+		SHA256_EC("SHA256withEC"),
+        SHA384_EC("SHA384withEC"),
+        SHA512_EC("SHA512withEC"),
+		
 		;
 		private final String name;
 		SignatureAlgo(String name)
