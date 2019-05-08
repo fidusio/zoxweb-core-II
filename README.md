@@ -9,7 +9,7 @@
 Project website: http://www.zoxweb.com/ <br />
 <br />
  
-Copyright (C) 2015-2018 http://www.zoxweb.com
+Copyright (C) 2015-2019 http://www.zoxweb.com
 
 ## LICENSE
  ZoxWeb.com LLC
@@ -29,6 +29,7 @@ Copyright (C) 2015-2018 http://www.zoxweb.com
 ## RELEASES
 
 <ul> Versions
+<li>2.2.0 2019-05-08
 <li>2.1.9 2019-03-22
 <li>2.1.8 2019-02-01 
 <li>2.1.7 2019-01-26
