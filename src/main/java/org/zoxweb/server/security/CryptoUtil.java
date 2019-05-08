@@ -1017,7 +1017,7 @@ public class CryptoUtil {
 
   public static byte[] encrypt(PublicKey receiver, byte[] data)
       throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, IOException, ShortBufferException {
-    Cipher cipher = Cipher.getInstance("RSA");
+    Cipher cipher = Cipher.getInstance(receiver.getAlgorithm());
     cipher.init(Cipher.ENCRYPT_MODE, receiver);
     return cipher.doFinal(data);
 
@@ -1037,7 +1037,7 @@ public class CryptoUtil {
 
   public static byte[] decrypt(PrivateKey receiver, byte[] data)
       throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException, IOException {
-    Cipher cipher = Cipher.getInstance("RSA");
+    Cipher cipher = Cipher.getInstance(receiver.getAlgorithm());
     cipher.init(Cipher.DECRYPT_MODE, receiver);
     return cipher.doFinal(data);
 

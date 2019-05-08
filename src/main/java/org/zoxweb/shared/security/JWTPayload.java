@@ -198,6 +198,16 @@ public class JWTPayload
 	{
 		nvgm.add(Param.AUD, aud);
 	}
+
+	public String getIssuer()
+	{
+		return nvgm.getValue(Param.ISS);
+	}
+
+	public void setIssuer(String iss)
+	{
+		nvgm.add(Param.ISS, iss);
+	}
 	
 	/**
      * @return the number of seconds from 1970-01-01T00:00:00Z UTC

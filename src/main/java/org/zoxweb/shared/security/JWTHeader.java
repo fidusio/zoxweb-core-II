@@ -38,6 +38,7 @@ implements GetNVGenericMap
 		ALG(NVConfigManager.createNVConfig("alg", "Algorithm", "Alg", true, true, JWTAlgorithm.class)),
 		CTY(NVConfigManager.createNVConfig("cty", "Content Type", "ContentType", false, false, String.class)),
 		TYP(NVConfigManager.createNVConfig("typ", "Token type", "TokenType",false, false, String.class)),
+		KID(NVConfigManager.createNVConfig("kid", "Key ID", "KeyID",false, false, String.class)),
 		;
 		
 		private final NVConfig nvc;
@@ -112,7 +113,17 @@ implements GetNVGenericMap
 	{
 		nvgm.add(Param.CTY, contentType);
 	}
-	
+
+
+	public String getKeyID()
+	{
+		return nvgm.getValue(Param.KID);
+	}
+
+	public void setKeyID(String keyID)
+	{
+		nvgm.add(Param.KID, keyID);
+	}
 	
 	public NVGenericMap getProperties()
 	{

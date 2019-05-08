@@ -186,7 +186,7 @@ public class KeyGenerationTest
 		
 		try
 		{
-		  KeyPair aliceKey = CryptoUtil.generateKeyPair(CryptoUtil.AES,2048);
+		  KeyPair aliceKey = CryptoUtil.generateKeyPair("RSA",2048);
 		  PublicKey alicePubK = aliceKey.getPublic();
 		  PrivateKey alicePriK = aliceKey.getPrivate();
 		  

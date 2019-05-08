@@ -56,6 +56,8 @@ public class CertificatesTest {
         KeyPair aliceKey = CryptoUtil.generateKeyPair("RSA", 2048);
         PublicKey alicePubK = aliceKey.getPublic();
         PrivateKey alicePriK = aliceKey.getPrivate();
+      System.out.println(SharedUtil.toCanonicalID(',', aliceKey.getPublic().getAlgorithm(), aliceKey.getPublic().getFormat(),
+          SharedBase64.encodeAsString(Base64Type.URL, aliceKey.getPublic().getEncoded())));
 
         PublicKey pubK = CryptoUtil.generatePublicKey("RSA", aliceKey.getPublic().getEncoded());
         PrivateKey priK = CryptoUtil.generatePrivateKey("RSA", aliceKey.getPrivate().getEncoded());
