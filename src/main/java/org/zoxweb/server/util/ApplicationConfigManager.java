@@ -118,7 +118,7 @@ public class ApplicationConfigManager
 				NVGenericMap props = GSONUtil.fromJSONGenericMap(jsonString, null, Base64Type.DEFAULT);
 				defaultACD = new ApplicationConfigDAO(props);//GSONUtil.create(true).fromJson(jsonString, ApplicationConfigDAO.class);
 				defaultFileLastAccess = defaultFile.lastModified();
-			} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				throw new IOException(e.getMessage());

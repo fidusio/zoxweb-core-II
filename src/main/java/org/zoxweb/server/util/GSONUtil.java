@@ -265,6 +265,22 @@ final public class GSONUtil
 		
 		return ret;
 	}
+
+	public static List<NVGenericMap> fromJSONGenericMapArray(String json, Base64Type b64Type)
+	{
+		List<NVGenericMap> ret = new ArrayList<NVGenericMap>();
+		JsonElement je = new JsonParser().parse(json);
+		if (je instanceof JsonArray)
+		{
+			JsonArray ja = (JsonArray) je;
+			for (int i = 0; i < ja.size(); i++)
+			{
+				JsonObject jo = (JsonObject) ja.get(i);
+				ret.add(fromJSONGenericMap(jo, null, b64Type));
+			}
+		}
+		return ret;
+	}
 	
 	
 	public static String toJSONArray(List<NVEntity> list, boolean indent, boolean printNull, Base64Type b64Type)
@@ -951,7 +967,7 @@ final public class GSONUtil
 		return writer;
 	}
 	
-	public static NVGenericMap fromJSONGenericMap(String json, NVConfigEntity nvce, Base64Type btype) throws InstantiationException, IllegalAccessException, ClassNotFoundException
+	public static NVGenericMap fromJSONGenericMap(String json, NVConfigEntity nvce, Base64Type btype)
 	{
 		JsonElement je = new JsonParser().parse(json);
 		
