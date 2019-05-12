@@ -67,7 +67,7 @@ public class JWTTest {
   }
 
   @Test
-  public void toGSON(){
+  public void toGSON() {
 //      throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException, InvalidKeyException, NoSuchAlgorithmException {
 //		String json = GSONUtil.toJSON(jwtHS256, true, false, false, Base64Type.URL);
 //		System.out.println(json);
@@ -216,7 +216,7 @@ public class JWTTest {
 
   @Test
   public void testJWTHS512()
-      throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException, GeneralSecurityException, NoSuchAlgorithmException {
+      throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException, GeneralSecurityException {
 
     System.out
         .println("testJWTHS512--------------------------------------------------------------");
@@ -243,7 +243,7 @@ public class JWTTest {
 
   @Test
   public void testJWTGWT()
-      throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException, GeneralSecurityException, NoSuchAlgorithmException {
+      throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException, GeneralSecurityException {
 
     System.out.println("--------------------------------------------------------------");
     //"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYmYiOjE1MDg0NjA1MzMzNDEsImRvbWFpbiI6Inhsb2dpc3R4LmlvIiwiYXBwIjoieGxvZ2lzdHgifQ.oxqpJP18sxq51qNt8_kisYeS0oR31QL2DrP-M_wYaO0";
@@ -268,7 +268,7 @@ public class JWTTest {
 
   @Test
   public void testJWTJohnDoe()
-      throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException, GeneralSecurityException, NoSuchAlgorithmException {
+      throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException, GeneralSecurityException {
 
     System.out
         .println("testJWTJohnDoe--------------------------------------------------------------");
@@ -297,7 +297,7 @@ public class JWTTest {
 
   @Test
   public void testJWTKP()
-      throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException, GeneralSecurityException, NoSuchAlgorithmException {
+      throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException, GeneralSecurityException {
 
     System.out.println("--------------------------------------------------------------");
     JWT jwt = new JWT();

@@ -17,25 +17,23 @@ package org.zoxweb.server.http;
 
 import java.net.URL;
 
-import org.zoxweb.server.http.HTTPUtil;
-
 public class URLFormatter {
 
-	public static void main ( String[] args) {
+  public static void main(String[] args) {
 
-	    for (String arg : args) {
-			try {
-				System.out.println("Trying to parse: " + arg);
-				URL url = new URL(arg);
-				System.out.println( HTTPUtil.parseHostURL(url));
-				System.out.println( HTTPUtil.parseURI(url, false));
-				System.out.println( HTTPUtil.parseURI(url, true));
-				System.out.println(HTTPUtil.parseURL(url));
-				System.out.println(url.getQuery());
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-	}
+    for (String arg : args) {
+      try {
+        System.out.println("Trying to parse: " + arg);
+        URL url = new URL(arg);
+        System.out.println(HTTPUtil.parseHostURL(url));
+        System.out.println(HTTPUtil.parseURI(url, false));
+        System.out.println(HTTPUtil.parseURI(url, true));
+        System.out.println(HTTPUtil.parseURL(url));
+        System.out.println(url.getQuery());
+
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
+  }
 }
