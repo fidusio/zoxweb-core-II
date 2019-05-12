@@ -1,7 +1,6 @@
 package org.zoxweb.server.security;
 
 import java.security.KeyPair;
-import java.security.KeyPairGenerator;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.cert.Certificate;
@@ -15,6 +14,7 @@ import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
 import sun.security.x509.X500Name;
 
+@SuppressWarnings("restriction")
 public class CertificatesTest {
 
   public static void main(String ...args)

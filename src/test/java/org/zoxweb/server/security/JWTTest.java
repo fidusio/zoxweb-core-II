@@ -2,7 +2,6 @@ package org.zoxweb.server.security;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.security.InvalidKeyException;
 import java.security.KeyPair;
 import java.security.NoSuchAlgorithmException;
 import org.junit.Assert;
