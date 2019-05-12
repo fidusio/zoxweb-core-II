@@ -15,40 +15,41 @@
  */
 package org.zoxweb.server.security;
 
-import org.zoxweb.server.security.HashUtil;
 import org.zoxweb.shared.util.SharedBase64;
 import org.zoxweb.shared.util.SharedBase64.Base64Type;
 import org.zoxweb.shared.util.SharedStringUtil;
 
 public class HashTest {
 
-	public static void main(String[] args) {
-		try {
-			String alorigthm = null;
-			String seqs[] = null;
-			int index = 0;
+  public static void main(String[] args) {
+    try {
+      String alorigthm = null;
+      String[] seqs = null;
+      int index = 0;
 
-			for (int i = 0; i < args.length; i++) {
-				if (i == 0) {
-					alorigthm = args[i];
-				} else {
-					if (seqs == null) {
-						seqs = new String[args.length - 1];
-					}
+      for (int i = 0; i < args.length; i++) {
+        if (i == 0) {
+          alorigthm = args[i];
+        } else {
+          if (seqs == null) {
+            seqs = new String[args.length - 1];
+          }
 
-					seqs[index++] = args[i];
-				}
-			}
+          seqs[index++] = args[i];
+        }
+      }
 
-			System.out.println(new String(SharedBase64.encode(Base64Type.URL, CryptoUtil.hmacSHA256("secret".getBytes(), "secret".getBytes()))));
-			System.out.println(new String(SharedStringUtil.bytesToHex(CryptoUtil.hmacSHA256("secret".getBytes(), "secret".getBytes()))));
-			byte hash[] = HashUtil.hashSequence(alorigthm, seqs);
-			System.out.println(SharedStringUtil.bytesToHex(hash).toLowerCase());
-			
-			
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
+      System.out.println(new String(SharedBase64.encode(Base64Type.URL,
+          CryptoUtil.hmacSHA256("secret".getBytes(), "secret".getBytes()))));
+      System.out.println(SharedStringUtil
+          .bytesToHex(CryptoUtil.hmacSHA256("secret".getBytes(), "secret".getBytes())));
+      byte[] hash = HashUtil.hashSequence(alorigthm, seqs);
+      System.out.println(SharedStringUtil.bytesToHex(hash).toLowerCase());
 
-	}
+
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
+  }
 }

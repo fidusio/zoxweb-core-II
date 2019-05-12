@@ -17,8 +17,8 @@ package org.zoxweb.shared.util;
 
 /**
  * Define a value getter interface based on input and output type
- * @param <I>
- * @param <O>
+ * @param <DI>
+ * @param <DO>
  */
 public interface DataDecoder<DI,DO>
 	extends Codec
