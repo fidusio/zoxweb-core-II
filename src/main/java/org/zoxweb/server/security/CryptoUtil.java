@@ -806,89 +806,89 @@ public class CryptoUtil {
     return sb.toString();
   }
 
-  public static String encodeJWT(Key key, JWT jwt)
-      throws NoSuchAlgorithmException,
-      InvalidKeyException,
-      IOException,
-      SecurityException, GeneralSecurityException {
-    SharedUtil.checkIfNulls("Null jwt", jwt);
-    SharedUtil.checkIfNulls("Null jwt header", jwt.getHeader());
-    SharedUtil.checkIfNulls("Null jwt algorithm", jwt.getHeader().getJWTAlgorithm());
-
-    StringBuilder sb = new StringBuilder();
-    byte[] b64Header = SharedBase64.encode(Base64Type.URL,
-        GSONUtil.toJSONGenericMap(jwt.getHeader().getProperties(), false, false, false));
-    String payloadJSON = GSONUtil
-        .toJSONGenericMap(jwt.getPayload().getProperties(), false, false, false);
-    //System.out.println(payloadJSON);
-    byte[] b64Payload = SharedBase64.encode(Base64Type.URL, payloadJSON);
-    sb.append(SharedStringUtil.toString(b64Header));
-    sb.append(".");
-    sb.append(SharedStringUtil.toString(b64Payload));
-
-    String b64Hash = null;
-
-    switch (jwt.getHeader().getJWTAlgorithm()) {
-      case HS256:
-        SharedUtil.checkIfNulls("Null key", key);
-        Mac sha256_HMAC = Mac.getInstance(HMAC_SHA_256);
-        SecretKeySpec secret_key = new SecretKeySpec(key.getEncoded(), HMAC_SHA_256);
-        sha256_HMAC.init(secret_key);
-        b64Hash = SharedBase64.encodeAsString(Base64Type.URL,
-            sha256_HMAC.doFinal(SharedStringUtil.getBytes(sb.toString())));
-        break;
-      case HS512:
-        SharedUtil.checkIfNulls("Null key", key);
-        Mac sha512_HMAC = Mac.getInstance(HMAC_SHA_512);
-        secret_key = new SecretKeySpec(key.getEncoded(), HMAC_SHA_512);
-        sha512_HMAC.init(secret_key);
-        b64Hash = SharedBase64.encodeAsString(Base64Type.URL,
-            sha512_HMAC.doFinal(SharedStringUtil.getBytes(sb.toString())));
-        break;
-      case none:
-        break;
-      case RS256:
-        SharedUtil.checkIfNulls("Null key", key);
-        PrivateKey rs256 = (PrivateKey) key;
-        b64Hash = SharedBase64.encodeAsString(Base64Type.URL,
-            CryptoUtil
-                .sign(SignatureAlgo.SHA256_RSA, rs256, SharedStringUtil.getBytes(sb.toString())));
-
-        break;
-      case RS512:
-        SharedUtil.checkIfNulls("Null key", key);
-        PrivateKey rs512 = (PrivateKey) key;
-        b64Hash = SharedBase64.encodeAsString(Base64Type.URL,
-            CryptoUtil
-                .sign(SignatureAlgo.SHA512_RSA, rs512, SharedStringUtil.getBytes(sb.toString())));
-        break;
-      case ES256:
-        SharedUtil.checkIfNulls("Null key", key);
-        PrivateKey es256 = (PrivateKey) key;
-        b64Hash = SharedBase64.encodeAsString(Base64Type.URL,
-            CryptoUtil
-                .sign(SignatureAlgo.SHA256_EC, es256, SharedStringUtil.getBytes(sb.toString())));
-
-        break;
-      case ES512:
-        SharedUtil.checkIfNulls("Null key", key);
-        PrivateKey es512 = (PrivateKey) key;
-        b64Hash = SharedBase64.encodeAsString(Base64Type.URL,
-            CryptoUtil
-                .sign(SignatureAlgo.SHA512_EC, es512, SharedStringUtil.getBytes(sb.toString())));
-        break;
-
-
-    }
-
-    sb.append(".");
-
-    if (b64Hash != null) {
-      sb.append(b64Hash);
-    }
-
-    return sb.toString();
-  }
+//  public static String encodeJWT(Key key, JWT jwt)
+//      throws NoSuchAlgorithmException,
+//      InvalidKeyException,
+//      IOException,
+//      SecurityException, GeneralSecurityException {
+//    SharedUtil.checkIfNulls("Null jwt", jwt);
+//    SharedUtil.checkIfNulls("Null jwt header", jwt.getHeader());
+//    SharedUtil.checkIfNulls("Null jwt algorithm", jwt.getHeader().getJWTAlgorithm());
+//
+//    StringBuilder sb = new StringBuilder();
+//    byte[] b64Header = SharedBase64.encode(Base64Type.URL,
+//        GSONUtil.toJSONGenericMap(jwt.getHeader().getProperties(), false, false, false));
+//    String payloadJSON = GSONUtil
+//        .toJSONGenericMap(jwt.getPayload().getProperties(), false, false, false);
+//    //System.out.println(payloadJSON);
+//    byte[] b64Payload = SharedBase64.encode(Base64Type.URL, payloadJSON);
+//    sb.append(SharedStringUtil.toString(b64Header));
+//    sb.append(".");
+//    sb.append(SharedStringUtil.toString(b64Payload));
+//
+//    String b64Hash = null;
+//
+//    switch (jwt.getHeader().getJWTAlgorithm()) {
+//      case HS256:
+//        SharedUtil.checkIfNulls("Null key", key);
+//        Mac sha256_HMAC = Mac.getInstance(HMAC_SHA_256);
+//        SecretKeySpec secret_key = new SecretKeySpec(key.getEncoded(), HMAC_SHA_256);
+//        sha256_HMAC.init(secret_key);
+//        b64Hash = SharedBase64.encodeAsString(Base64Type.URL,
+//            sha256_HMAC.doFinal(SharedStringUtil.getBytes(sb.toString())));
+//        break;
+//      case HS512:
+//        SharedUtil.checkIfNulls("Null key", key);
+//        Mac sha512_HMAC = Mac.getInstance(HMAC_SHA_512);
+//        secret_key = new SecretKeySpec(key.getEncoded(), HMAC_SHA_512);
+//        sha512_HMAC.init(secret_key);
+//        b64Hash = SharedBase64.encodeAsString(Base64Type.URL,
+//            sha512_HMAC.doFinal(SharedStringUtil.getBytes(sb.toString())));
+//        break;
+//      case none:
+//        break;
+//      case RS256:
+//        SharedUtil.checkIfNulls("Null key", key);
+//        PrivateKey rs256 = (PrivateKey) key;
+//        b64Hash = SharedBase64.encodeAsString(Base64Type.URL,
+//            CryptoUtil
+//                .sign(SignatureAlgo.SHA256_RSA, rs256, SharedStringUtil.getBytes(sb.toString())));
+//
+//        break;
+//      case RS512:
+//        SharedUtil.checkIfNulls("Null key", key);
+//        PrivateKey rs512 = (PrivateKey) key;
+//        b64Hash = SharedBase64.encodeAsString(Base64Type.URL,
+//            CryptoUtil
+//                .sign(SignatureAlgo.SHA512_RSA, rs512, SharedStringUtil.getBytes(sb.toString())));
+//        break;
+//      case ES256:
+//        SharedUtil.checkIfNulls("Null key", key);
+//        PrivateKey es256 = (PrivateKey) key;
+//        b64Hash = SharedBase64.encodeAsString(Base64Type.URL,
+//            CryptoUtil
+//                .sign(SignatureAlgo.SHA256_EC, es256, SharedStringUtil.getBytes(sb.toString())));
+//
+//        break;
+//      case ES512:
+//        SharedUtil.checkIfNulls("Null key", key);
+//        PrivateKey es512 = (PrivateKey) key;
+//        b64Hash = SharedBase64.encodeAsString(Base64Type.URL,
+//            CryptoUtil
+//                .sign(SignatureAlgo.SHA512_EC, es512, SharedStringUtil.getBytes(sb.toString())));
+//        break;
+//
+//
+//    }
+//
+//    sb.append(".");
+//
+//    if (b64Hash != null) {
+//      sb.append(b64Hash);
+//    }
+//
+//    return sb.toString();
+//  }
 
   public static JWT decodeJWT(String key, String token)
       throws IOException,
@@ -1020,127 +1020,127 @@ public class CryptoUtil {
   }
 
 
-  public static JWT decodeJWT(Key key, String token)
-      throws IOException,
-      SecurityException, GeneralSecurityException {
-
-    JWT jwt = null;
-    try {
-      jwt = parseJWT(token);
-    } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-      throw new SecurityException();
-    }
-
-//		SharedUtil.checkIfNulls("Null jwt header or parameters", jwtHeader, jwtHeader.getJWTAlgorithm());
-
-    String tokens[] = token.trim().split("\\.");
-    switch (jwt.getHeader().getJWTAlgorithm()) {
-      case HS256:
-        SharedUtil.checkIfNulls("Null key", key);
-        if (tokens.length != JWTField.values().length) {
-          throw new SecurityException("Invalid token");
-        }
-        Mac sha256HMAC = Mac.getInstance(HMAC_SHA_256);
-        SecretKeySpec secret_key = new SecretKeySpec(key.getEncoded(), HMAC_SHA_256);
-        sha256HMAC.init(secret_key);
-        sha256HMAC.update(SharedStringUtil.getBytes(tokens[JWTField.HEADER.ordinal()]));
-
-        sha256HMAC.update((byte) '.');
-        byte[] b64Hash = sha256HMAC
-            .doFinal(SharedStringUtil.getBytes(tokens[JWTField.PAYLOAD.ordinal()]));
-
-        if (!SharedBase64.encodeAsString(Base64Type.URL, b64Hash).equals(jwt.getHash())) {
-          throw new SecurityException(
-              "Invalid tokens:" + SharedBase64.encodeAsString(Base64Type.URL, b64Hash) + "," + jwt
-                  .getHash());
-        }
-        break;
-      case HS512:
-        SharedUtil.checkIfNulls("Null key", key);
-        if (tokens.length != JWTField.values().length) {
-          throw new SecurityException("Invalid token");
-        }
-        Mac sha512HMAC = Mac.getInstance(HMAC_SHA_512);
-        secret_key = new SecretKeySpec(key.getEncoded(), HMAC_SHA_512);
-        sha512HMAC.init(secret_key);
-        sha512HMAC.update(SharedStringUtil.getBytes(tokens[JWTField.HEADER.ordinal()]));
-
-        sha512HMAC.update((byte) '.');
-        b64Hash = sha512HMAC.doFinal(SharedStringUtil.getBytes(tokens[JWTField.PAYLOAD.ordinal()]));
-
-        if (!SharedBase64.encodeAsString(Base64Type.URL, b64Hash).equals(jwt.getHash())) {
-          throw new SecurityException("Invalid token");
-        }
-        break;
-
-      case none:
-        if (tokens.length != JWTField.values().length - 1) {
-          throw new SecurityException("Invalid token");
-        }
-        break;
-      case RS256:
-        SharedUtil.checkIfNulls("Null key", key);
-        if (tokens.length != JWTField.values().length) {
-          throw new SecurityException("Invalid token");
-        }
-        PublicKey rs256PK = (PublicKey) key; //generatePublicKey("RSA", key);
-
-        if (!CryptoUtil.verify(SignatureAlgo.SHA256_RSA, rs256PK,
-            SharedStringUtil.getBytes(
-                tokens[JWTField.HEADER.ordinal()] + "." + tokens[JWTField.PAYLOAD.ordinal()]),
-            SharedBase64.decode(Base64Type.URL, jwt.getHash()))) {
-          throw new SecurityException("Invalid token");
-        }
-        break;
-      case RS512:
-        SharedUtil.checkIfNulls("Null key", key);
-        if (tokens.length != JWTField.values().length) {
-          throw new SecurityException("Invalid token");
-        }
-        PublicKey rs512PK = (PublicKey)key;
-
-        if (!CryptoUtil.verify(SignatureAlgo.SHA512_RSA, rs512PK,
-            SharedStringUtil.getBytes(
-                tokens[JWTField.HEADER.ordinal()] + "." + tokens[JWTField.PAYLOAD.ordinal()]),
-            SharedBase64.decode(Base64Type.URL, jwt.getHash()))) {
-          throw new SecurityException("Invalid token");
-        }
-        break;
-      case ES256:
-        SharedUtil.checkIfNulls("Null key", key);
-        if (tokens.length != JWTField.values().length) {
-          throw new SecurityException("Invalid token");
-        }
-        PublicKey es256PK = (PublicKey)key;
-
-        if (!CryptoUtil.verify(SignatureAlgo.SHA256_EC, es256PK,
-            SharedStringUtil.getBytes(
-                tokens[JWTField.HEADER.ordinal()] + "." + tokens[JWTField.PAYLOAD.ordinal()]),
-            SharedBase64.decode(Base64Type.URL, jwt.getHash()))) {
-          throw new SecurityException("Invalid token");
-        }
-        break;
-      case ES512:
-        SharedUtil.checkIfNulls("Null key", key);
-        if (tokens.length != JWTField.values().length) {
-          throw new SecurityException("Invalid token");
-        }
-        PublicKey es512PK = (PublicKey)key;
-
-        if (!CryptoUtil.verify(SignatureAlgo.SHA512_EC, es512PK,
-            SharedStringUtil.getBytes(
-                tokens[JWTField.HEADER.ordinal()] + "." + tokens[JWTField.PAYLOAD.ordinal()]),
-            SharedBase64.decode(Base64Type.URL, jwt.getHash()))) {
-          throw new SecurityException("Invalid token");
-        }
-        break;
-
-    }
-
-    return jwt;
-  }
+//  public static JWT decodeJWT(Key key, String token)
+//      throws IOException,
+//      SecurityException, GeneralSecurityException {
+//
+//    JWT jwt = null;
+//    try {
+//      jwt = parseJWT(token);
+//    } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+//      // TODO Auto-generated catch block
+//      e.printStackTrace();
+//      throw new SecurityException();
+//    }
+//
+////		SharedUtil.checkIfNulls("Null jwt header or parameters", jwtHeader, jwtHeader.getJWTAlgorithm());
+//
+//    String tokens[] = token.trim().split("\\.");
+//    switch (jwt.getHeader().getJWTAlgorithm()) {
+//      case HS256:
+//        SharedUtil.checkIfNulls("Null key", key);
+//        if (tokens.length != JWTField.values().length) {
+//          throw new SecurityException("Invalid token");
+//        }
+//        Mac sha256HMAC = Mac.getInstance(HMAC_SHA_256);
+//        SecretKeySpec secret_key = new SecretKeySpec(key.getEncoded(), HMAC_SHA_256);
+//        sha256HMAC.init(secret_key);
+//        sha256HMAC.update(SharedStringUtil.getBytes(tokens[JWTField.HEADER.ordinal()]));
+//
+//        sha256HMAC.update((byte) '.');
+//        byte[] b64Hash = sha256HMAC
+//            .doFinal(SharedStringUtil.getBytes(tokens[JWTField.PAYLOAD.ordinal()]));
+//
+//        if (!SharedBase64.encodeAsString(Base64Type.URL, b64Hash).equals(jwt.getHash())) {
+//          throw new SecurityException(
+//              "Invalid tokens:" + SharedBase64.encodeAsString(Base64Type.URL, b64Hash) + "," + jwt
+//                  .getHash());
+//        }
+//        break;
+//      case HS512:
+//        SharedUtil.checkIfNulls("Null key", key);
+//        if (tokens.length != JWTField.values().length) {
+//          throw new SecurityException("Invalid token");
+//        }
+//        Mac sha512HMAC = Mac.getInstance(HMAC_SHA_512);
+//        secret_key = new SecretKeySpec(key.getEncoded(), HMAC_SHA_512);
+//        sha512HMAC.init(secret_key);
+//        sha512HMAC.update(SharedStringUtil.getBytes(tokens[JWTField.HEADER.ordinal()]));
+//
+//        sha512HMAC.update((byte) '.');
+//        b64Hash = sha512HMAC.doFinal(SharedStringUtil.getBytes(tokens[JWTField.PAYLOAD.ordinal()]));
+//
+//        if (!SharedBase64.encodeAsString(Base64Type.URL, b64Hash).equals(jwt.getHash())) {
+//          throw new SecurityException("Invalid token");
+//        }
+//        break;
+//
+//      case none:
+//        if (tokens.length != JWTField.values().length - 1) {
+//          throw new SecurityException("Invalid token");
+//        }
+//        break;
+//      case RS256:
+//        SharedUtil.checkIfNulls("Null key", key);
+//        if (tokens.length != JWTField.values().length) {
+//          throw new SecurityException("Invalid token");
+//        }
+//        PublicKey rs256PK = (PublicKey) key; //generatePublicKey("RSA", key);
+//
+//        if (!CryptoUtil.verify(SignatureAlgo.SHA256_RSA, rs256PK,
+//            SharedStringUtil.getBytes(
+//                tokens[JWTField.HEADER.ordinal()] + "." + tokens[JWTField.PAYLOAD.ordinal()]),
+//            SharedBase64.decode(Base64Type.URL, jwt.getHash()))) {
+//          throw new SecurityException("Invalid token");
+//        }
+//        break;
+//      case RS512:
+//        SharedUtil.checkIfNulls("Null key", key);
+//        if (tokens.length != JWTField.values().length) {
+//          throw new SecurityException("Invalid token");
+//        }
+//        PublicKey rs512PK = (PublicKey)key;
+//
+//        if (!CryptoUtil.verify(SignatureAlgo.SHA512_RSA, rs512PK,
+//            SharedStringUtil.getBytes(
+//                tokens[JWTField.HEADER.ordinal()] + "." + tokens[JWTField.PAYLOAD.ordinal()]),
+//            SharedBase64.decode(Base64Type.URL, jwt.getHash()))) {
+//          throw new SecurityException("Invalid token");
+//        }
+//        break;
+//      case ES256:
+//        SharedUtil.checkIfNulls("Null key", key);
+//        if (tokens.length != JWTField.values().length) {
+//          throw new SecurityException("Invalid token");
+//        }
+//        PublicKey es256PK = (PublicKey)key;
+//
+//        if (!CryptoUtil.verify(SignatureAlgo.SHA256_EC, es256PK,
+//            SharedStringUtil.getBytes(
+//                tokens[JWTField.HEADER.ordinal()] + "." + tokens[JWTField.PAYLOAD.ordinal()]),
+//            SharedBase64.decode(Base64Type.URL, jwt.getHash()))) {
+//          throw new SecurityException("Invalid token");
+//        }
+//        break;
+//      case ES512:
+//        SharedUtil.checkIfNulls("Null key", key);
+//        if (tokens.length != JWTField.values().length) {
+//          throw new SecurityException("Invalid token");
+//        }
+//        PublicKey es512PK = (PublicKey)key;
+//
+//        if (!CryptoUtil.verify(SignatureAlgo.SHA512_EC, es512PK,
+//            SharedStringUtil.getBytes(
+//                tokens[JWTField.HEADER.ordinal()] + "." + tokens[JWTField.PAYLOAD.ordinal()]),
+//            SharedBase64.decode(Base64Type.URL, jwt.getHash()))) {
+//          throw new SecurityException("Invalid token");
+//        }
+//        break;
+//
+//    }
+//
+//    return jwt;
+//  }
 
 
   public static JWT parseJWT(String token)

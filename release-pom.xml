@@ -50,12 +50,10 @@
     <skipTests>true</skipTests>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <jdk.version>1.8</jdk.version>
-
     <maven-plugin.version>3.6.1</maven-plugin.version>
     <maven-plugin-source.version>3.0.1</maven-plugin-source.version>
     <maven-jar-plugin.version>3.0.2</maven-jar-plugin.version>
     <maven-javadoc.version>2.10.4</maven-javadoc.version>
-
     <common-codec.version>1.10</common-codec.version>
     <commons-fileupload.version>1.4</commons-fileupload.version>
     <ehcache-org.version>3.7.1</ehcache-org.version>
@@ -65,10 +63,7 @@
     <javax-servlet.version>4.0.1</javax-servlet.version>
     <jsoup.version>1.12.1</jsoup.version>
     <websocket.version>1.1</websocket.version>
-
     <junit.version>4.12</junit.version>
-
-
   </properties>
 
   <!-- default

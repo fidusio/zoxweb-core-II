@@ -57,11 +57,11 @@
         <junit.version>4.8.2</junit.version>
         <common-codec.version>1.10</common-codec.version>
         <rabbitmq-client.version>4.1.0</rabbitmq-client.version>
-		<ehcache.version>2.10.3</ehcache.version>
-		<maven-plugin.version>3.6.1</maven-plugin.version>
-		<maven-plugin-source.version>3.0.1</maven-plugin-source.version>
-		<maven-jar-plugin.version>3.0.2</maven-jar-plugin.version>
-		<maven-javadoc.version>2.10.4</maven-javadoc.version>
+				<ehcache.version>2.10.3</ehcache.version>
+				<maven-plugin.version>3.6.1</maven-plugin.version>
+				<maven-plugin-source.version>3.0.1</maven-plugin-source.version>
+				<maven-jar-plugin.version>3.0.2</maven-jar-plugin.version>
+				<maven-javadoc.version>2.10.4</maven-javadoc.version>
         <javaee-api.version>7.0</javaee-api.version>
         <javax-servlet.version>3.0.1</javax-servlet.version>
        
