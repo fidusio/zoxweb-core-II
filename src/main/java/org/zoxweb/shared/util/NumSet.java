@@ -33,13 +33,13 @@ public abstract class NumSet {
 
     public  String toString(long val)
     {
-      return toString(val, SETS, false, 13);
+      return toString(val, SETS, false, 13, false);
     }
 
     public  String toString(UUID uuid)
     {
-      return toString(uuid.getMostSignificantBits(), SETS, true, 13) +
-             toString(uuid.getLeastSignificantBits(), SETS, true, 13);
+      return toString(uuid.getMostSignificantBits(), SETS, true, 13, true) +
+             toString(uuid.getLeastSignificantBits(), SETS, true, 13, true);
     }
 
 
@@ -79,10 +79,10 @@ public abstract class NumSet {
 
   public abstract String toString(long val);
 
-   protected static String toString(long val, byte[][] sets, boolean addLeadingZero, int maxLength)
+  protected static String toString(long val, byte[][] sets, boolean addLeadingZero, int maxLength, boolean absoluteValue)
   {
     int radix = sets[0].length;
-    long result = Math.abs(val);;
+    long result = absoluteValue ? Math.abs(val) : val;
     long rest;
     StringBuilder ret = new StringBuilder();
     do {
