@@ -17,7 +17,6 @@ public class NumSetTest {
       String str = NumSet.BASE_30.toString(val);
       String str1 = "" + NumSet.BASE_30.getLong(str);
       System.out.println(val +", "  +  str + ", " + str1 + ", " + str1.equals(""+val) + ", converted length: " + str.length());
-
     }
   }
   
