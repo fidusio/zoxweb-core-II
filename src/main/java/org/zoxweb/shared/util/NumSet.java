@@ -4,42 +4,45 @@ import java.util.UUID;
 
 public abstract class NumSet {
 
-  public static final Base30 BASE_30 = new Base30();
+  public static final Base27 BASE_27 = new Base27();
 
 
   private NumSet() {}
-  public static class Base30
+
+
+  /**
+   * Base 27 is numbering scheme to represent long value using alphanumeric set with removed character visual collision excluded.
+   * The included set is: ABCDEFGHJKMNPQRTUVWXY3456789 with numeric values starting with A=0 and ending with 9=26
+   * The excluded set is: 0O1IL2Z5S
+   */
+  static class Base27
   extends NumSet {
 
-
-    private Base30(){}
-
-    //public static final String MAX_VALUE = BASE_30.toString(Long.MAX_VALUE);
-
+    private Base27(){}
 
     public static final byte[][] SETS = {
         {
-            //"abcdefghijkmnpqrstuvwxy3456789"
-            'a','b','c','d','e','f','g','h','i','j','k','m','n','p','q','r','s','t','u','v','w','x','y','z',
-            '2','3','4','5','6','7','8','9'
+            //"abcdefghjkmnpqrtuvwxy3456789"
+            'a','b','c','d','e','f','g','h','j','k','m','n','p','q','r','t','u','v','w','x','y',
+            '3','4','5','6','7','8','9'
         },
         {
-            //"ABCDEFGHIJKMNPQRSTUVWXY3456789"
-            'A','B','C','D','E','F','G','H','I','J','K','M','N','P','Q','R','S','T','U','V','W','X','Y','Z',
-            '2','3','4','5','6','7','8','9'
+            //"ABCDEFGHJKMNPQRTUVWXY3456789"
+            'A','B','C','D','E','F','G','H','J','K','M','N','P','Q','R','T','U','V','W','X','Y',
+            '3','4','5','6','7','8','9'
         }
     };
 
 
     public  String toString(long val)
     {
-      return toString(val, SETS, false, 13, false);
+      return toString(val, SETS, false, 14, false);
     }
 
     public  String toString(UUID uuid)
     {
-      return toString(uuid.getMostSignificantBits(), SETS, true, 13, true) +
-             toString(uuid.getLeastSignificantBits(), SETS, true, 13, true);
+      return toString(uuid.getMostSignificantBits(), SETS, true, 14, true) +
+             toString(uuid.getLeastSignificantBits(), SETS, true, 14, true);
     }
 
 
@@ -51,7 +54,7 @@ public abstract class NumSet {
   }
 
 
-  public static long getLong(String str, byte[][] sets)
+  protected static long getLong(String str, byte[][] sets)
   {
     int radix = sets[0].length;
     long ret = 0;
@@ -81,14 +84,14 @@ public abstract class NumSet {
 
   protected static String toString(long val, byte[][] sets, boolean addLeadingZero, int maxLength, boolean absoluteValue)
   {
-    int radix = sets[0].length;
+    int radix = sets[1].length;
     long result = absoluteValue ? Math.abs(val) : val;
     long rest;
     StringBuilder ret = new StringBuilder();
     do {
       rest   = result % radix;
       result = result / radix;
-      ret.insert(0, (char)sets[0][(int)rest]);
+      ret.insert(0, (char)sets[1][(int)rest]);
     }
     while(result !=0);
 
@@ -97,7 +100,7 @@ public abstract class NumSet {
     {
       while(ret.length() < maxLength)
       {
-        ret.insert(0, (char)sets[0][0]);
+        ret.insert(0, (char)sets[1][0]);
       }
     }
 

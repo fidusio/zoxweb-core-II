@@ -116,16 +116,6 @@ public interface BytesValue<V>
 	{
 		public byte[] toBytes(Integer in)
 		{
-//			int val = in.intValue();
-//			byte buffer[] = new byte[Integer.SIZE/Byte.SIZE];
-//
-//			for (int i = buffer.length; i > 0; i--)
-//			{
-//				buffer[i-1] = (byte)val;
-//				val = val >> 8;
-//			}
-//
-//			return buffer;
 			return toBytes(null, 0, in);
 		}
 		
@@ -191,8 +181,6 @@ public interface BytesValue<V>
 				retBuffer = new byte[size*ins.length];
 				retStartIndex = 0;
 			}
-			//System.out.println(retBuffer.length + " " + ins.length);
-
 			
 			for (int j=0; j < ins.length; j++)
 			{

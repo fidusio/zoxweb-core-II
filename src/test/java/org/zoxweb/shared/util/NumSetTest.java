@@ -6,7 +6,7 @@ import org.junit.Test;
 public class NumSetTest {
 
   @Test
-  public void convertToString()
+  public void base27ToString()
   {
     long[] longSet = {
         0, 10, 100, 1000, 10000, 1000000, Long.MAX_VALUE, 1, 2, 4, 8, 16, 31, 32, 64, 128, 256, 512, 1024
@@ -14,38 +14,38 @@ public class NumSetTest {
 
     for(long val : longSet)
     {
-      String str = NumSet.BASE_30.toString(val);
-      String str1 = "" + NumSet.BASE_30.getLong(str);
+      String str = NumSet.BASE_27.toString(val);
+      String str1 = "" + NumSet.BASE_27.getLong(str);
       System.out.println(val +", "  +  str + ", " + str1 + ", " + str1.equals(""+val) + ", converted length: " + str.length());
     }
   }
   
   
   @Test
-  public void convertToLong()
+  public void base27ToLong()
   {
    
     String[] stringSet = {
-      "Aaas",
-      NumSet.BASE_30.toString(Long.MAX_VALUE),
+      "Aaaab",
+      NumSet.BASE_27.toString(Long.MAX_VALUE),
     };
 
     for(String val : stringSet)
     {
      
-      System.out.println(val +", "  +  NumSet.BASE_30.getLong(val));
+      System.out.println(val +", "  +  NumSet.BASE_27.getLong(val));
 
     }
   }
 
 
   @Test
-  public void base30UUID()
+  public void base27UUID()
   {
     for (int i = 0; i < 100; i++) {
       UUID uuid = UUID.randomUUID();
       String uuidStr = uuid.toString();
-      String str = NumSet.BASE_30.toString(uuid);
+      String str = NumSet.BASE_27.toString(uuid);
       System.out.println(uuid + ", " + uuidStr.length() + ", " + str + ", " + str.length());
     }
   }

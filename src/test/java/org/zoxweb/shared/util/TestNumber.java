@@ -3,7 +3,7 @@ package org.zoxweb.shared.util;
 
 
 import org.junit.Test;
-import org.zoxweb.shared.util.SharedUtil;
+import org.zoxweb.shared.util.SharedBase64.Base64Type;
 
 public class TestNumber {
 
@@ -41,6 +41,14 @@ public class TestNumber {
 	public void testDouble()
 	{
 		assert(SharedUtil.parseNumber(maxDouble) instanceof Double);
+	}
+
+	@Test
+	public void longBase64Conversion()
+	{
+		byte[] longArray = BytesValue.LONG.toBytes(Long.MAX_VALUE);
+		String result = SharedBase64.encodeAsString(Base64Type.URL, longArray);
+		System.out.println(result + ", " + result.length());
 	}
 
 }
