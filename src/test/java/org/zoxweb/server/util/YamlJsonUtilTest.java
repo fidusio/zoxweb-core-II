@@ -22,7 +22,6 @@ public class YamlJsonUtilTest {
     String yamlString = getYamlData();
     String jsonData = YamlJsonUtil.yamlToJson(yamlString);
     System.out.println(YamlJsonUtil.jsonToYaml(jsonData));
-
   }
 
 }
