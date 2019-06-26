@@ -62,6 +62,7 @@
     <javax-mail.version>1.6.2</javax-mail.version>
     <javax-servlet.version>4.0.1</javax-servlet.version>
     <jsoup.version>1.12.1</jsoup.version>
+    <snakeyaml.verson>1.24</snakeyaml.verson>
     <websocket.version>1.1</websocket.version>
     <junit.version>4.12</junit.version>
   </properties>
@@ -244,6 +245,11 @@
       <scope>provided</scope>
     </dependency>
 
+	<dependency>
+    <groupId>org.yaml</groupId>
+    <artifactId>snakeyaml</artifactId>
+    <version>${snakeyaml.version}</version>
+	</dependency>
 
   </dependencies>
 
