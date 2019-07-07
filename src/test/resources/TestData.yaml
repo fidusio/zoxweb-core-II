@@ -1,9 +1,9 @@
-json:
+json-str:
   -
     rigid
   -
     "better for data interchange"
-yaml:
+yaml-str:
   -
     "slim and flexible"
   -

@@ -30,6 +30,7 @@ public class YamlJsonUtil {
    */
   public static String jsonToYaml(String jsonString)
   {
+    @SuppressWarnings("unchecked")
     Map<String, Object> map = new Gson().fromJson(jsonString, LinkedHashMap.class);
     return new Yaml().dump(map);
   }
