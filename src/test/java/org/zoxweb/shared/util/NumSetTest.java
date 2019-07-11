@@ -45,7 +45,7 @@ public class NumSetTest {
     for (int i = 0; i < 100; i++) {
       UUID uuid = UUID.randomUUID();
       String uuidStr = uuid.toString();
-      String str = NumSet.BASE_27.toString(uuid);
+      String str = NumSet.BASE_27.toString(uuid.getMostSignificantBits(), uuid.getLeastSignificantBits());
       System.out.println(uuid + ", " + uuidStr.length() + ", " + str + ", " + str.length());
     }
   }

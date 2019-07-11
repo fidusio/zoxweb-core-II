@@ -1,6 +1,6 @@
 package org.zoxweb.shared.util;
 
-import java.util.UUID;
+
 
 public abstract class NumSet {
 
@@ -34,15 +34,15 @@ public abstract class NumSet {
     };
 
 
-    public  String toString(long val)
-    {
-      return toString(val, SETS, false, 14, false);
-    }
 
-    public  String toString(UUID uuid)
+    public  String toString(long ...vals)
     {
-      return toString(uuid.getMostSignificantBits(), SETS, true, 14, true) +
-             toString(uuid.getLeastSignificantBits(), SETS, true, 14, true);
+      StringBuilder sb = new StringBuilder();
+      for(long l : vals)
+      {
+        sb.append(toString(l, SETS, true, 14, true));
+      }
+      return sb.toString();
     }
 
 
@@ -80,7 +80,7 @@ public abstract class NumSet {
     throw new NumberFormatException();
   }
 
-  public abstract String toString(long val);
+  public abstract String toString(long ...val);
 
   protected static String toString(long val, byte[][] sets, boolean addLeadingZero, int maxLength, boolean absoluteValue)
   {
