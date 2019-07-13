@@ -92,9 +92,11 @@ public class Const {
     DISABLE("disable", false),
     DISABLED("disabled", false),
     ACTIVE("active", true),
-    ACTIVATED("activated", true),
     INACTIVE("incative", false),
+    ACTIVATED("activated", true),
     DEACTIVATED("deactivated", false),
+    HIGH("high", true),
+    LOW("low", false),
 
     ;
     private final boolean value;
