@@ -67,21 +67,12 @@
     <junit.version>4.12</junit.version>
   </properties>
 
-  <!-- default
-  <name>Maven Quick Start Archetype</name>
-  <url>http://maven.apache.org</url>
-  -->
   <build>
     <directory>target</directory>
-    <!--
-  <outputDirectory>war/WEB-INF/classes</outputDirectory>
-  -->
+   
     <resources>
       <resource>
         <directory>src/main/java/</directory>
-      </resource>
-      <resource>
-        <directory>src/main/resources/</directory>
       </resource>
     </resources>
     <plugins>
