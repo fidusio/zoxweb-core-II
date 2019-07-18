@@ -79,9 +79,6 @@
                 	<resource>
                 	 <directory>src/main/java/</directory>
                 	</resource>
-                	<resource>
-                	 <directory>src/main/resources/</directory>
-                	</resource>
              </resources>
         <plugins>
             <plugin>
@@ -230,13 +227,13 @@
             <scope>provided</scope>
         </dependency>
         
-		<dependency>
+		<!--  <dependency>
 		      <groupId>org.ehcache</groupId>
 		      <artifactId>ehcache</artifactId>
 		      <version>${ehcache-org.version}</version>
 		       <scope>provided</scope>
 	    </dependency>
-	    
+	    -->
 	    <dependency>
 		  <groupId>javax.cache</groupId>
 		  <artifactId>cache-api</artifactId>
