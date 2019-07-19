@@ -12,6 +12,11 @@ public class YamlJsonUtilTest {
     return IOUtil.inputStreamToString(getClass().getClassLoader().getResourceAsStream("TestData.yaml"), true);
   }
 
+  public String getJsonData() throws IOException
+  {
+    return IOUtil.inputStreamToString(getClass().getClassLoader().getResourceAsStream("network-config.json"), true);
+  }
+
   @Test
   public void convertToJson() throws IOException {
     System.out.println(YamlJsonUtil.yamlToJson(getYamlData()));
@@ -23,5 +28,12 @@ public class YamlJsonUtilTest {
     String jsonData = YamlJsonUtil.yamlToJson(yamlString);
     System.out.println(YamlJsonUtil.jsonToYaml(jsonData));
   }
+
+  @Test
+  public void convertJsonToYaml() throws IOException {
+    System.out.println(YamlJsonUtil.jsonToYaml(getJsonData()));
+  }
+
+
 
 }

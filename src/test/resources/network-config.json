@@ -1,0 +1,24 @@
+{
+  "network":
+  {
+    "version": "2",
+    "renderer": "networkd",
+    "ethernets":
+        [
+          {
+            "eth0": {
+              "Addresses": [],
+              "dhcp4": true,
+              "optional": true
+            }
+          },
+          {
+            "eth1": {
+              "Addresses": [],
+              "dhcp4": true,
+              "optional": true
+            }
+          }
+        ]
+  }
+}
