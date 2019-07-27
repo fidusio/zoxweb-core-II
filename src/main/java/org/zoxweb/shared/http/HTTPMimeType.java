@@ -34,7 +34,7 @@ public enum HTTPMimeType
 	MULTIPART_FORM_DATA("multipart/form-data"),
 	TEXT_CSV("text/csv", "csv"),
 	TEXT_HTML("text/html", "htm", "html"),
-	TEXT_PLAIN("text/plain"),
+	TEXT_PLAIN("text/plain", "txt"),
 	IMAGE_BMP("image/bmp", "bmp"),
 	IMAGE_GIF("image/gif", "gif"),
 	IMAGE_JPEG("image/jpeg", "jpe", "jpeg", "jpg"),

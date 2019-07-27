@@ -8,11 +8,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
+import java.net.URI;
 import java.util.logging.Logger;
 import org.zoxweb.server.task.TaskUtil;
 import org.zoxweb.server.util.GSONUtil;
 import org.zoxweb.shared.http.HTTPHeaderName;
 import org.zoxweb.shared.http.HTTPMimeType;
+import org.zoxweb.shared.http.HTTPStatusCode;
 import org.zoxweb.shared.util.NVGenericMap;
 import org.zoxweb.shared.util.SharedStringUtil;
 
@@ -47,11 +49,29 @@ public class HTTPServerTest {
   static class FileHandler implements HttpHandler {
 
     public void handle(HttpExchange he) throws IOException {
-
+      
 
       String path = he.getHttpContext().getPath();
+      
+      URI uri = he.getRequestURI();
       log.info("path: " + path);
-      he.sendResponseHeaders(200, 0);
+      log.info("URI: " +  uri.getPath());
+      try {
+        String filename = uri.getPath().substring(path.length(), uri.getPath().length());
+        log.info("filename: " + filename);
+        HTTPMimeType mime = HTTPMimeType.lookupByExtenstion(filename);
+        log.info("mime type: " + mime);
+        
+        he.sendResponseHeaders(HTTPStatusCode.BAD_REQUEST.CODE, 0);
+        he.getResponseBody().close();
+      }
+      catch(Exception e)
+      {
+        e.printStackTrace();
+        he.sendResponseHeaders(HTTPStatusCode.BAD_REQUEST.CODE, 0);
+      }
+      
+     
 
     }
   }
@@ -65,11 +85,12 @@ public class HTTPServerTest {
       for (; index < args.length; index++) {
         server.createContext("/" + args[index], new ContextHandler());
       }
-      HttpContext hc = server.createContext("/well-known/pki-validation/*", new FileHandler());
+      HttpContext hc = server.createContext("/.well-known/pki-validation/", new FileHandler());
       server.createContext("/toto", new FileHandler());
       server.setExecutor(TaskUtil.getDefaultTaskProcessor());
 
       log.info(hc.getPath());
+      server.start();
 
       log.info("server started @ " + server.getAddress());
 
