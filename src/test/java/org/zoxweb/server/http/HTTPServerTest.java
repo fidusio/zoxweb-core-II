@@ -1,5 +1,6 @@
 package org.zoxweb.server.http;
 
+import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
@@ -42,6 +43,20 @@ public class HTTPServerTest {
     }
   }
 
+
+  static class FileHandler implements HttpHandler {
+
+    public void handle(HttpExchange he) throws IOException {
+
+
+      String path = he.getHttpContext().getPath();
+      log.info("path: " + path);
+      he.sendResponseHeaders(200, 0);
+
+    }
+  }
+
+
   public static void main(String... args) {
     try {
       int index = 0;
@@ -50,8 +65,11 @@ public class HTTPServerTest {
       for (; index < args.length; index++) {
         server.createContext("/" + args[index], new ContextHandler());
       }
+      HttpContext hc = server.createContext("/well-known/pki-validation/*", new FileHandler());
+      server.createContext("/toto", new FileHandler());
       server.setExecutor(TaskUtil.getDefaultTaskProcessor());
-      server.start();
+
+      log.info(hc.getPath());
 
       log.info("server started @ " + server.getAddress());
 
