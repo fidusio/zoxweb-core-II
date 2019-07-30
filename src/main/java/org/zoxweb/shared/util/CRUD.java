@@ -27,5 +27,6 @@ public enum CRUD
 	UPDATE,
 	DELETE,
 	MOVE,
-	SHARE
+	SHARE,
+	EXEC
 }

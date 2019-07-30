@@ -1,15 +1,20 @@
 package org.zoxweb.server.http;
 
+import com.sun.net.httpserver.Authenticator;
 import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.URI;
 import java.util.logging.Logger;
+import org.zoxweb.server.io.IOUtil;
 import org.zoxweb.server.task.TaskUtil;
 import org.zoxweb.server.util.GSONUtil;
 import org.zoxweb.shared.http.HTTPHeaderName;
@@ -48,6 +53,12 @@ public class HTTPServerTest {
 
   static class FileHandler implements HttpHandler {
 
+    private String routDir;
+    public FileHandler(String rootDir)
+    {
+      this.routDir = rootDir;
+    }
+
     public void handle(HttpExchange he) throws IOException {
       
 
@@ -61,9 +72,20 @@ public class HTTPServerTest {
         log.info("filename: " + filename);
         HTTPMimeType mime = HTTPMimeType.lookupByExtenstion(filename);
         log.info("mime type: " + mime);
-        
-        he.sendResponseHeaders(HTTPStatusCode.BAD_REQUEST.CODE, 0);
-        he.getResponseBody().close();
+
+        if(mime != null)
+        he.getResponseHeaders()
+            .add(HTTPHeaderName.CONTENT_TYPE.getName(), mime.getValue());
+
+        File file = new File(routDir, filename);
+        if (!file.exists() || !file.isFile())
+          throw new FileNotFoundException();
+
+
+        he.sendResponseHeaders(HTTPStatusCode.OK.CODE, file.length());
+
+        IOUtil.relayStreams(new FileInputStream(file), he.getResponseBody(), true);
+
       }
       catch(Exception e)
       {
@@ -85,8 +107,14 @@ public class HTTPServerTest {
       for (; index < args.length; index++) {
         server.createContext("/" + args[index], new ContextHandler());
       }
-      HttpContext hc = server.createContext("/.well-known/pki-validation/", new FileHandler());
-      server.createContext("/toto", new FileHandler());
+      HttpContext hc = server.createContext("/.well-known/pki-validation/", new FileHandler("/public"));
+      hc.setAuthenticator(new Authenticator() {
+        @Override
+        public Result authenticate(HttpExchange httpExchange) {
+          return null;
+        }
+      });
+      //server.createContext("/toto", new FileHandler());
       server.setExecutor(TaskUtil.getDefaultTaskProcessor());
 
       log.info(hc.getPath());
