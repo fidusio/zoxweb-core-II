@@ -55,7 +55,7 @@ public class ApplicationConfigDAO
 	public enum ApplicationDefaultParam
 		implements	GetNameValue<String>
 	{
-		APPLICATON_NAME("APPLICATON_NAME", ""),
+		APPLICATION_NAME("APPLICATION_NAME", ""),
 		APPLICATION_DESCRIPTION("APPLICATION_DESCRIPTION", ""),
 		APPLICATION_URL("APPLICATION_URL", ""),
 		APPLICATION_HOST("APPLICATION_HOST", ""),

@@ -28,6 +28,7 @@ import org.zoxweb.shared.api.APIBatchResult;
 import org.zoxweb.shared.api.APIConfigInfoDAO;
 import org.zoxweb.shared.api.APICredentialsDAO;
 import org.zoxweb.shared.api.APIError;
+import org.zoxweb.shared.app.AppVersionDAO;
 import org.zoxweb.shared.security.KeyStoreInfoDAO;
 import org.zoxweb.shared.util.NVEntityInstance;
 import org.zoxweb.shared.data.ticket.TicketContainerDAO;
@@ -180,19 +181,19 @@ public class ZWDataFactory
 				return AgreementDAO.NVC_AGREEMENT_DAO;
 			}
 		},	
-		APPLICATION_VERSION_DAO(ApplicationVersionDAO.class.getName())
+		APPLICATION_VERSION_DAO(AppVersionDAO.class.getName())
 		{
 			@SuppressWarnings("unchecked")
 			@Override
-			public ApplicationVersionDAO newInstance()
+			public AppVersionDAO newInstance()
 			{
-				return new ApplicationVersionDAO();
+				return new AppVersionDAO();
 			}
 
 			@Override
 			public NVConfigEntity getNVConfigEntity() 
 			{
-				return ApplicationVersionDAO.NVC_APPLICATION_VERSION_DAO;
+				return AppVersionDAO.NVC_APPLICATION_VERSION_DAO;
 			}
 		},
 		ASSOCIATION_DAO(AssociationDAO.class.getName())

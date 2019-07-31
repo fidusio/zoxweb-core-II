@@ -54,7 +54,7 @@ public class SubjectAPIKey
         SYSTEM_ID(NVConfigManager.createNVConfig("system_id", "System ID", "SystemID", true, false, String.class)),
         API_KEY(NVConfigManager.createNVConfig("api_key", "API Key", "APIKey", true, false, false, String.class, FilterType.ENCRYPT)),
         STATUS(NVConfigManager.createNVConfig("status", "Status", "Status", true, false, Status.class)),
-        TS_REQURIED(NVConfigManager.createNVConfig("ts_required", "The timestamp is required", "TimeStampRequired", false, false, Boolean.class)),
+        TS_REQUIRED(NVConfigManager.createNVConfig("ts_required", "The timestamp is required", "TimeStampRequired", false, false, Boolean.class)),
         EXPIRY_DATE(NVConfigManager.createNVConfig("expiry_date", "The expiry timestamp", "Expired", false, false, false, true, Date.class, null)),
         PROPERTIES(NVConfigManager.createNVConfig("properties", "Properties", "Properties", false, true, NVGenericMap.class)),
         ;
@@ -194,13 +194,13 @@ public class SubjectAPIKey
 	
 	public boolean isTimeStampRquired() 
     {
-        return lookupValue(Param.TS_REQURIED);
+        return lookupValue(Param.TS_REQUIRED);
     }
     
     
     public void setTimeStampRquired(boolean tsReq) 
     {
-        setValue(Param.TS_REQURIED, tsReq);
+        setValue(Param.TS_REQUIRED, tsReq);
     }
 
     @Override

@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.zoxweb.server.io.IOUtil;
-import org.zoxweb.shared.data.ApplicationVersionDAO;
+import org.zoxweb.shared.app.AppVersionDAO;
 import org.zoxweb.shared.util.NVPair;
 import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
@@ -34,26 +34,26 @@ public class ReleaseManager
 
 	public static final ReleaseManager SINGLETON = new ReleaseManager();
 
-	private HashMap<String, ApplicationVersionDAO> map = new HashMap<String, ApplicationVersionDAO>();
+	private HashMap<String, AppVersionDAO> map = new HashMap<String, AppVersionDAO>();
 
 	private ReleaseManager()
     {
 		
 	}
 	
-	public ApplicationVersionDAO load(String dir, String appName)
+	public AppVersionDAO load(String dir, String appName)
         throws IOException
     {
 		return load(ReleaseManager.class.getResourceAsStream(dir +appName + ".json"));
 	}
 	
-	public ApplicationVersionDAO load(InputStream is)
+	public AppVersionDAO load(InputStream is)
         throws IOException
     {
 		return load(IOUtil.inputStreamToString(is, true));
 	}
 	
-	public synchronized ApplicationVersionDAO load(String json)
+	public synchronized AppVersionDAO load(String json)
     {
 		String name = null;
 		String description = null;
@@ -91,7 +91,7 @@ public class ReleaseManager
 
 		if (!SharedStringUtil.isEmpty(name))
 		{
-			ApplicationVersionDAO  ret = new ApplicationVersionDAO();
+			AppVersionDAO ret = new AppVersionDAO();
 		
 			ret.setName(name);
 			ret.setDescription(description);
@@ -106,7 +106,7 @@ public class ReleaseManager
 		return null;
 	}
 	
-	public ApplicationVersionDAO lookup( String name)
+	public AppVersionDAO lookup( String name)
     {
 		name = SharedStringUtil.toLowerCase(SharedStringUtil.trimOrNull(name));
 		return map.get(name);
