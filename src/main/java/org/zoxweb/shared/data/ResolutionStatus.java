@@ -20,5 +20,5 @@ public enum ResolutionStatus
 	OPEN,
 	CLOSED,
 	ASSIGNED,
-	RESOVLED
+	RESOLVED
 }

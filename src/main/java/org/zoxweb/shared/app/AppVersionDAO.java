@@ -42,7 +42,7 @@ public class AppVersionDAO
 		MAJOR(NVConfigManager.createNVConfig("major", "The major number of the version", "Minor", false, true, int.class)),
 		MINOR(NVConfigManager.createNVConfig("minor", "The minor number of the version", "Major", true, true, int.class)),
 		NANO(NVConfigManager.createNVConfig("nano", "The nano number of the version", "Nano", true, true, int.class)),
-		RELEASE_DATE(NVConfigManager.createNVConfig("release_date", "The date when the app was released", "ReleaseDate", true, true, long.class))
+		RELEASE_DATE(NVConfigManager.createNVConfig("release_date", "Last update timestamp (in millis).", "LastUpdateTS", true, false, false, true, Date.class, null))
 		;
 
         private final NVConfig nvc;
