@@ -92,7 +92,7 @@ public class UUIDInfoDAO
 	
 	/**
 	 * Returns expiration time (in milliseconds, -1 for never expires).
-	 * @return expiratrion time
+	 * @return expiration time
 	 */
 	public long getExpirationTime() 
 	{
@@ -101,7 +101,7 @@ public class UUIDInfoDAO
 	
 	/**
 	 * Sets expiration time (in milliseconds, -1 for never expires).
-	 * @param ts
+	 * @param ts to be set
 	 */
 	public void setExpirationTime(long ts) 
 	{
@@ -119,7 +119,7 @@ public class UUIDInfoDAO
 	
 	/**
 	 * Sets the access count (in milliseconds, -1 for never expires).
-	 * @param ac
+	 * @param ac access time to be set
 	 */
 	public synchronized void setAccessCount(long ac) 
 	{
@@ -128,7 +128,7 @@ public class UUIDInfoDAO
 	
 	/**
 	 * Returns the UUID.
-	 * @return uuid
+	 * @return uuid value
 	 */
 	public String getUUID() 
 	{
@@ -137,7 +137,7 @@ public class UUIDInfoDAO
 	
 	/**
 	 * Sets the UUID.
-	 * @param uuid
+	 * @param uuid to be set
 	 */
 	public void setUUID(String uuid) 
 	{
@@ -155,7 +155,7 @@ public class UUIDInfoDAO
 	
 	/**
 	 * Sets the resource ID.
-	 * @param resourceID
+	 * @param resourceID to be set
 	 */
 	public void setResourceID(String resourceID) 
 	{
@@ -173,7 +173,7 @@ public class UUIDInfoDAO
 	
 	/**
 	 * Sets the resource canonical ID.
-	 * @param resourceID
+	 * @param resourceID to be set
 	 */
 	public void setResourceCanonicalID(String resourceID) 
 	{

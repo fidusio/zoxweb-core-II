@@ -255,8 +255,7 @@ public abstract class NVEntity
 	 * @param gnvc
 	 * @param v
 	 */
-	public <V> void setValue(GetNVConfig gnvc, V v)
-    {
+	public <V> void setValue(GetNVConfig gnvc, V v) {
 		setValue(gnvc.getNVConfig(), v);
 	}
 	

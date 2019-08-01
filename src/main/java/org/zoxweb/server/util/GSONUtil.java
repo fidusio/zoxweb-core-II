@@ -722,7 +722,12 @@ final public class GSONUtil
 				}
 				else if (nvc.getMetaTypeBase() == Date.class)
 				{
-					if ((long) nve.lookupValue(nvc) != 0)
+
+					if (nve.lookupValue(nvc) instanceof Date)
+					{
+						writer.name(nvc.getName()).value(DateUtil.DEFAULT_GMT_MILLIS.format(nve.lookupValue(nvc)));
+					}
+					else if ((long) nve.lookupValue(nvc) != 0)
 					{
 						//writer.name( nvc.getName()).value((long)nve.lookupValue(nvc));
 						writer.name(nvc.getName()).value(DateUtil.DEFAULT_GMT_MILLIS.format(new Date((long)nve.lookupValue(nvc))));
