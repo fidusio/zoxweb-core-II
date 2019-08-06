@@ -30,7 +30,7 @@ public class TaskUtil
 	
 	private static int maxTasks = 500;
 	private static int threadMultiplier = 4;
-	private static int tpThreadCount = 1;
+	private static int mintpThreadCount = 16;
 	
 	public static transient final Logger LOG = Logger.getLogger(Const.LOGGER_NAME); 
 	
@@ -70,7 +70,7 @@ public class TaskUtil
 			try {
 				LOCK.lock();
 				if (TASK_PROCESSOR == null && minThreadCount > 2) {
-					tpThreadCount = minThreadCount;
+					mintpThreadCount = minThreadCount;
 				}
 			} finally {
 				LOCK.unlock();
@@ -85,9 +85,9 @@ public class TaskUtil
 				LOCK.lock();
 				if (TASK_PROCESSOR == null) {
 					 int threadCount = Runtime.getRuntime().availableProcessors()*threadMultiplier;
-					 if (threadCount < tpThreadCount)
+					 if (threadCount < mintpThreadCount)
 					 {
-					 		threadCount = tpThreadCount;
+					 		threadCount = mintpThreadCount;
 					 }
 					 TASK_PROCESSOR = new TaskProcessor(maxTasks, threadCount, Thread.NORM_PRIORITY, true);
 				}
