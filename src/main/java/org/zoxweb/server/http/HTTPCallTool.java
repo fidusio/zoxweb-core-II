@@ -83,6 +83,7 @@ public class HTTPCallTool implements Runnable
             HTTPMessageConfigInterface hmci = HTTPMessageConfig.createAndInit(url, uri, httpMethod);
             boolean printResult = params.booleanValue("-pr", true);
             hmci.setContentType(HTTPMimeType.APPLICATION_JSON);
+            hmci.setSecureCheckEnabled(false);
             if(content != null)
                 hmci.setContent(content);
             System.out.println(GSONUtil.toJSON((HTTPMessageConfig)hmci, true, false, false));
