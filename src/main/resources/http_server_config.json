@@ -1,0 +1,89 @@
+{
+  "name" : "name of server",
+  "description" : "",
+  "back_log":250,
+  "http":
+  {
+    "ports": [80]
+  },
+  "https":
+  {
+    "ports": [
+      443
+    ],
+    "ssl_config":
+    {
+      "keystore": "filename.jks",
+      "keystore_password": "password",
+      "protocols":
+          [
+            "TLSv1",
+            "TLSv1.1",
+            "TLSv1.2"
+          ],
+      "ciphers":
+          [
+
+          ]
+    },
+    "handles":
+        [
+          {
+            "name": "ping",
+            "bean": "",
+            "methods":
+                [
+                  "get"
+                ],
+            "schemes":
+                [
+                  "http",
+                  "https"
+                ],
+            "paths": [
+              "/ping",
+              "/ping/details"
+            ],
+            "security": {
+              "authentications": [
+                "none",
+                "basic",
+                "jwt"
+              ],
+              "permissions": [
+              ],
+              "roles": [
+              ]
+            }
+          },
+          {
+            "name": "handle name",
+            "bean": "class_name",
+            "methods":
+            [
+              "get",
+              "post",
+              "patch"
+            ],
+            "schemes":
+            [
+              "http",
+              "https"
+            ],
+            "paths": [
+            ],
+            "security": {
+              "authentications": [
+                "none",
+                "basic",
+                "jwt"
+              ],
+              "permissions": [
+              ],
+              "roles": [
+              ]
+            }
+          }
+        ]
+  }
+}
