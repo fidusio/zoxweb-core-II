@@ -36,7 +36,8 @@ public class KeyStoreInfoDAO
         KEY_STORE_PASSWORD(NVConfigManager.createNVConfig("key_store_password", "Key store password", "KeyStorePassword", true, true, false, String.class, null)),
         ALIAS(NVConfigManager.createNVConfig("alias", "Alias", "Alias", true, true, false, String.class, null)),
         ALIAS_PASSWORD(NVConfigManager.createNVConfig("alias_password", "key password", "KeyPassword", true, true, false, String.class, null)),
-       
+        TRUST_STORE(NVConfigManager.createNVConfig("trust_store", "TrustStore  source", "TrustStoreSource", false, true, String.class)),
+        TRUST_STORE_PASSWORD(NVConfigManager.createNVConfig("trust_store_password", "TrustStore Password", "TrustStorePassword", false, true, String.class)),
 
         ;
 
@@ -144,4 +145,32 @@ public class KeyStoreInfoDAO
         setValue(Param.ALIAS_PASSWORD, SharedStringUtil.bytesToHex(aliasPassword));
     }
 
+    public String getTrustStore()
+    {
+        return lookupValue(Param.TRUST_STORE);
+    }
+    public void setTrustStore(String src)
+    {
+        setValue(Param.TRUST_STORE, src);
+    }
+
+
+    public String getTrustStorePassword()
+    {
+        return lookupValue(Param.TRUST_STORE_PASSWORD);
+    }
+    public void setTrustStorePassword(String tsPassword)
+    {
+        setValue(Param.TRUST_STORE_PASSWORD, tsPassword);
+    }
+
+    public void setTrustStorePassword(byte[] aliasPassword)
+    {
+        setValue(Param.TRUST_STORE_PASSWORD, SharedStringUtil.bytesToHex(aliasPassword));
+    }
+
+    public byte[] getTrustStorePasswordAsBytes()
+    {
+        return SharedStringUtil.hexToBytes(getTrustStorePassword());
+    }
 }

@@ -2,6 +2,7 @@ package org.zoxweb.shared.security;
 
 
 import org.junit.Test;
+import org.zoxweb.server.util.GSONUtil;
 
 import static org.junit.Assert.assertEquals;
 
@@ -27,4 +28,18 @@ public class KeyStoreInfoDAOTest {
         assertEquals(ALIAS_PASSWORD, new String(keyStoreInfoDAO.getAliasPasswordAsBytes()));
     }
 
+
+    @Test
+    public void testKeyStoreJSON(){
+
+        KeyStoreInfoDAO keyStoreInfoDAO = new KeyStoreInfoDAO();
+        keyStoreInfoDAO.setKeyStore(KEYSTORE);
+        keyStoreInfoDAO.setKeyStorePassword(KEYSTORE_PASSWORD.getBytes());
+        keyStoreInfoDAO.setAlias(ALIAS);
+        keyStoreInfoDAO.setAliasPassword(ALIAS_PASSWORD.getBytes());
+        keyStoreInfoDAO.setKeyStoreType("jsk");
+        keyStoreInfoDAO.setTrustStore("truststore.jsk");
+        keyStoreInfoDAO.setTrustStorePassword("tsPassword");
+        System.out.println(GSONUtil.DEFAULT_GSON.toJson(keyStoreInfoDAO));
+    }
 }
