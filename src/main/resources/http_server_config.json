@@ -6,29 +6,25 @@
   {
     "ports": [80]
   },
-  "https":
-  {
+  "https": {
     "ports": [
       443
     ],
-    "ssl_config":
-    {
+    "ssl_config": {
       "name": "SSLCONFIG",
       "key_store": "filename.jks",
       "key_store_type": "pksc12",
       "key_store_password": "password",
-      "protocols":
-          [
-            "TLSv1",
-            "TLSv1.1",
-            "TLSv1.2"
-          ],
-      "ciphers":
-          [
-
-          ]
-    },
-    "handles":
+      "protocols": [
+        "TLSv1",
+        "TLSv1.1",
+        "TLSv1.2"
+      ],
+      "ciphers": [
+      ]
+    }
+  },
+  "handles":
         [
           {
             "name": "ping",
@@ -87,5 +83,4 @@
             }
           }
         ]
-  }
 }
