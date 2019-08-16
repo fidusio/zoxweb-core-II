@@ -15,7 +15,7 @@ import org.junit.Test;
 import org.zoxweb.shared.crypto.EncryptedDAO;
 import org.zoxweb.shared.util.SharedStringUtil;
 
-public class EnryptedDAOTest {
+public class EncryptedDAOTest {
 
   public final static byte[] KEY = SharedStringUtil.getBytes("PASSWORD");
   public final static byte[] DATA = SharedStringUtil

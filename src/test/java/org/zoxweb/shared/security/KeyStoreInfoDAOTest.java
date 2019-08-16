@@ -40,6 +40,12 @@ public class KeyStoreInfoDAOTest {
         keyStoreInfoDAO.setKeyStoreType("jsk");
         keyStoreInfoDAO.setTrustStore("truststore.jsk");
         keyStoreInfoDAO.setTrustStorePassword("tsPassword");
-        System.out.println(GSONUtil.DEFAULT_GSON.toJson(keyStoreInfoDAO));
+        keyStoreInfoDAO.getProtocols().add("TLSv1");
+        String json1 = GSONUtil.DEFAULT_GSON.toJson(keyStoreInfoDAO);
+        System.out.println(json1);
+        KeyStoreInfoDAO temp = GSONUtil.fromJSON(json1, KeyStoreInfoDAO.class);
+        String json2 = GSONUtil.DEFAULT_GSON.toJson(temp);
+        System.out.println(json2);
+        assertEquals(json1, json2);
     }
 }

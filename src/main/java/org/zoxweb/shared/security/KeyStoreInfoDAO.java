@@ -15,12 +15,14 @@
  */
 package org.zoxweb.shared.security;
 
+import java.util.List;
 import org.zoxweb.shared.data.SetNameDescriptionDAO;
 import org.zoxweb.shared.util.GetNVConfig;
 import org.zoxweb.shared.util.NVConfig;
 import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVConfigEntityLocal;
 import org.zoxweb.shared.util.NVConfigManager;
+import org.zoxweb.shared.util.NVStringList;
 import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
 
@@ -38,7 +40,8 @@ public class KeyStoreInfoDAO
         ALIAS_PASSWORD(NVConfigManager.createNVConfig("alias_password", "key password", "KeyPassword", true, true, false, String.class, null)),
         TRUST_STORE(NVConfigManager.createNVConfig("trust_store", "TrustStore  source", "TrustStoreSource", false, true, String.class)),
         TRUST_STORE_PASSWORD(NVConfigManager.createNVConfig("trust_store_password", "TrustStore Password", "TrustStorePassword", false, true, String.class)),
-
+        PROTOCOLS(NVConfigManager.createNVConfig("protocols", "TrustStore Password", "TrustStorePassword", false, true, NVStringList.class)),
+        CIPHERS(NVConfigManager.createNVConfig("ciphers", "TrustStore Password", "TrustStorePassword", false, true, NVStringList.class)),
         ;
 
         private final NVConfig nvc;
@@ -172,5 +175,23 @@ public class KeyStoreInfoDAO
     public byte[] getTrustStorePasswordAsBytes()
     {
         return SharedStringUtil.hexToBytes(getTrustStorePassword());
+    }
+
+    /**
+     * Supported protocols TLSv1 ...
+     * @return
+     */
+    public List<String> getProtocols()
+    {
+        return lookupValue(Param.PROTOCOLS);
+    }
+
+    /**
+     * Supported ciphers
+     * @return
+     */
+    public List<String> getCiphers()
+    {
+        return lookupValue(Param.CIPHERS);
     }
 }
