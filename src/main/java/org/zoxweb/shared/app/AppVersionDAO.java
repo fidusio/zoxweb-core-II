@@ -169,7 +169,8 @@ public class AppVersionDAO
 
 	public Date getReleaseDate()
 	{
-		return new Date((long)lookupValue(Param.RELEASE_DATE));
+		long ts = lookupValue(Param.RELEASE_DATE);
+		return new Date(ts);
 	}
 
 	public void setReleaseDate(Date date)
