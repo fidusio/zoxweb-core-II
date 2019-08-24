@@ -34,6 +34,7 @@ import org.zoxweb.shared.util.NVEntityInstance;
 import org.zoxweb.shared.data.ticket.TicketContainerDAO;
 import org.zoxweb.shared.data.ticket.TicketIssuerDAO;
 import org.zoxweb.shared.data.ticket.TicketResolutionDAO;
+import org.zoxweb.shared.http.HTTPServerConfig;
 import org.zoxweb.shared.net.IPRangeDAO;
 import org.zoxweb.shared.net.InetAddressDAO;
 import org.zoxweb.shared.net.InetFilterDAO;
@@ -437,6 +438,21 @@ public class ZWDataFactory
 				return FormInfoDAO.NVC_FORM_INFO_DAO;
 			}
 		},
+		HTTP_SERVER_CONFIG(HTTPServerConfig.class.getName())
+        {
+            @SuppressWarnings("unchecked")
+            @Override
+            public HTTPServerConfig newInstance()
+            {
+                return new HTTPServerConfig();
+            }
+
+            @Override
+            public NVConfigEntity getNVConfigEntity() 
+            {
+                return HTTPServerConfig.NVC_HTTP_SERVER_CONFIG;
+            }
+        },
 		INET_ADDRESS_DAO(InetAddressDAO.class.getName())
 		{
 			@SuppressWarnings("unchecked")
