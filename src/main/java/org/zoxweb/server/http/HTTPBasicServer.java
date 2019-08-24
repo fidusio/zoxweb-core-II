@@ -17,8 +17,10 @@ public class HTTPBasicServer
 
   public void start()
   {
-
-    isClosed = false;
+    if (config != null)
+    {
+      isClosed = false;
+    }
   }
 
 
