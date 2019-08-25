@@ -49,4 +49,28 @@ public class NVIntList
 	{
 		super(name, value);
 	}
+
+
+
+	public int[] getValues()
+	{
+		Integer[] ret = getValue().toArray(new Integer[0]);
+		int[] retArray = new int[ret.length];
+		for(int i = 0; i < ret.length; i++)
+		{
+			retArray[i] = ret[i];
+		}
+
+		return retArray;
+	}
+
+	public void setValues(int[] vals)
+	{
+		List<Integer> values = getValue();
+		values.clear();
+		for(int i : vals)
+		{
+			values.add(i);
+		}
+	}
 }

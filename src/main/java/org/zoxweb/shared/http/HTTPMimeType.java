@@ -35,6 +35,7 @@ public enum HTTPMimeType
 	TEXT_CSV("text/csv", "csv"),
 	TEXT_HTML("text/html", "htm", "html"),
 	TEXT_PLAIN("text/plain", "txt"),
+	TEXT_YAML("text/yaml", "yaml", "yml"),
 	IMAGE_BMP("image/bmp", "bmp"),
 	IMAGE_GIF("image/gif", "gif"),
 	IMAGE_JPEG("image/jpeg", "jpe", "jpeg", "jpg"),

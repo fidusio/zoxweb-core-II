@@ -1,28 +1,21 @@
 {
   "name" : "name of server",
   "description" : "",
-  "back_log":250,
-  "http":
-  {
-    "ports": [80]
-  },
-  "https": {
-    "ports": [
-      443
+  "ports_back_log":250,
+  "http_ports": [80],
+  "https_ports": [443],
+  "ssl_config": {
+    "name": "SSLCONFIG",
+    "key_store": "filename.jks",
+    "key_store_type": "pksc12",
+    "key_store_password": "password",
+    "protocols": [
+      "TLSv1",
+      "TLSv1.1",
+      "TLSv1.2"
     ],
-    "ssl_config": {
-      "name": "SSLCONFIG",
-      "key_store": "filename.jks",
-      "key_store_type": "pksc12",
-      "key_store_password": "password",
-      "protocols": [
-        "TLSv1",
-        "TLSv1.1",
-        "TLSv1.2"
-      ],
-      "ciphers": [
-      ]
-    }
+    "ciphers": [
+    ]
   },
   "handles":
         [
