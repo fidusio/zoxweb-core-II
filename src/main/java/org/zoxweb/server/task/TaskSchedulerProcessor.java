@@ -18,6 +18,13 @@ package org.zoxweb.server.task;
 import java.util.Comparator;
 import java.util.NoSuchElementException;
 import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.concurrent.Delayed;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+import java.util.concurrent.RunnableFuture;
+import java.util.concurrent.RunnableScheduledFuture;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.zoxweb.shared.util.Const;
@@ -31,7 +38,7 @@ public class TaskSchedulerProcessor
     implements Runnable, DaemonController {
 
 	public final class TaskSchedulerAppointment
-			implements Appointment {
+			implements Appointment, RunnableFuture {
 
 		private Appointment appointment;
 		private TaskEvent taskEvent;
@@ -63,21 +70,85 @@ public class TaskSchedulerProcessor
 			return remove(this);
 		}
 
-        @Override
-        public void setDelayInNanos(long delayInMillis, long nanoOffset)
-        {
-          // TODO Auto-generated method stub
-          cancel();
-          appointment.setDelayInNanos(delayInMillis, nanoOffset);
-          queue(this);
-        }
-    
-        @Override
-        public long getExpirationInNanos() 
-        {
-          // TODO Auto-generated method stub
-          return appointment.getExpirationInNanos();
-        }
+		@Override
+		public void setDelayInNanos(long delayInMillis, long nanoOffset)
+		{
+			// TODO Auto-generated method stub
+			cancel();
+			appointment.setDelayInNanos(delayInMillis, nanoOffset);
+			queue(this);
+		}
+
+		@Override
+		public long getExpirationInNanos()
+		{
+			// TODO Auto-generated method stub
+			return appointment.getExpirationInNanos();
+		}
+
+		@Override
+		public void run() {
+
+		}
+
+		@Override
+		public boolean cancel(boolean mayInterruptIfRunning) {
+			return false;
+		}
+
+		@Override
+		public boolean isCancelled() {
+			return false;
+		}
+
+		@Override
+		public boolean isDone() {
+			return false;
+		}
+
+		@Override
+		public Object get() throws InterruptedException, ExecutionException {
+			return  taskEvent.getExecutionResult();
+		}
+
+		@Override
+		public Object get(long timeout, TimeUnit unit)
+				throws InterruptedException, ExecutionException, TimeoutException {
+			return null;
+		}
+
+
+		public boolean isPeriodic() {
+			return false;
+		}
+
+		public long getDelay(TimeUnit unit) {
+			switch(unit)
+			{
+
+				case NANOSECONDS:
+					return getExpirationInMillis();
+				case MICROSECONDS:
+					return TimeUnit.NANOSECONDS.toMicros(getExpirationInMillis());
+				case MILLISECONDS:
+					return TimeUnit.NANOSECONDS.toMillis(getExpirationInMillis());
+				case SECONDS:
+					return TimeUnit.NANOSECONDS.toSeconds(getExpirationInMillis());
+				case MINUTES:
+					return TimeUnit.NANOSECONDS.toMinutes(getExpirationInMillis());
+				case HOURS:
+					return TimeUnit.NANOSECONDS.toHours(getExpirationInMillis());
+				case DAYS:
+					return TimeUnit.NANOSECONDS.toDays (getExpirationInMillis());
+				default:
+					throw new IllegalArgumentException(unit + " not supported");
+			}
+		}
+
+
+		public int compareTo(Delayed o) {
+			return 0;
+		}
 	}
 	
 	private TaskProcessor taskProcessor = null;

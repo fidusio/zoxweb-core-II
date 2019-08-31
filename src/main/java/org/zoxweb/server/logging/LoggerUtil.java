@@ -22,23 +22,28 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.ConsoleHandler;
 import java.util.logging.FileHandler;
+import java.util.logging.LogRecord;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
+import org.zoxweb.server.util.DateUtil;
 
 /**
  * Logger utility class.
  */
 public final class LoggerUtil 
 {
-	
+	Date d;
 	public static final SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSZ");
-	//public static final String DEFAULT_FORMAT = "%1$tY-%1$tm-%1$td %1$tH:%1$tM:%1$tS %4$-6s : %2$s %5$s%6$s%n";
+	public static final String PRODUCTION_FORMAT = "%1$tY-%1$tm-%1$td %1$tH:%1$tM:%1$tS %4$-6s : %2$s %5$s%6$s%n";
 	public static final String DEFAULT_FORMAT = "%1$s %4$-6s : %2$s-%5$s%6$s%n";
+	public static final String DEFAULT_FORMAT_INTERNAL = "[%1$s][%2$s::%3$s][%4$s]: %5$s %n";
+
 
 	private LoggerUtil()
-    {
-
-    }
+	{
+	}
 	
 	public static Logger loggerToFile(String loggerName, String filename)
         throws SecurityException, IOException
@@ -93,4 +98,29 @@ public final class LoggerUtil
 		}
 	}
 
+	public static void updateLoggingFormat(String format)
+	{
+		System.setProperty("java.util.logging.SimpleFormatter.format", format);
+	}
+
+	public static void enableDefaultLogger(String loggerHeader)
+  {
+    Logger mainLogger = Logger.getLogger(loggerHeader);
+    mainLogger.setUseParentHandlers(false);
+    ConsoleHandler handler = new ConsoleHandler();
+    handler.setFormatter(new SimpleFormatter() {
+
+      @Override
+      public synchronized String format(LogRecord lr) {
+        return String.format(DEFAULT_FORMAT_INTERNAL,
+            DateUtil.DEFAULT_GMT_MILLIS.format(new Date(lr.getMillis())),
+            lr.getSourceClassName(),
+            lr.getSourceMethodName(),
+            lr.getLevel().getLocalizedName(),
+            lr.getMessage()
+        );
+      }
+    });
+    mainLogger.addHandler(handler);
+  }
 }
