@@ -23,6 +23,7 @@ import java.util.logging.Logger;
 import org.zoxweb.server.util.ThresholdQueue;
 import org.zoxweb.shared.util.ArrayQueue;
 import org.zoxweb.shared.util.DaemonController;
+import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SimpleQueueInterface;
 //import org.zoxweb.shared.util.SimpleQueue;
 import org.zoxweb.server.task.RunnableTask.RunnableTaskContainer;
@@ -173,25 +174,33 @@ public class TaskProcessor
 			throws IllegalArgumentException {
 		this(taskQueueMaxSize, Runtime.getRuntime().availableProcessors()*2, Thread.NORM_PRIORITY, true);
 	}
-	
-	
-	
-	
-	
+
+
+
+	public TaskProcessor(int taskQueueMaxSize,
+											 int executorThreadCount,
+											 int threadPriority,
+											 boolean executorNotify)
+		throws IllegalArgumentException
+	{
+		this(null, taskQueueMaxSize, executorThreadCount, threadPriority, executorNotify);
+	}
+
 	/**
 	 *  
 	 * Create a task processor
-	 * 
+	 * @param defaultPrefix thread prefix name tag
 	 * @param taskQueueMaxSize task queue max size
 	 * @param executorThreadCount number of worker threads
 	 * @param threadPriority the thread priority
 	 * @param executorNotify notify the task executor
 	 * @throws IllegalArgumentException <code>if taskQueueMaxSize < 2 or executorThreadCount < 2, or executorThreadCount > taskQueueMaxSize</code>
 	 */
-	public TaskProcessor(int taskQueueMaxSize, 
-						 int executorThreadCount,
-						 int threadPriority, 
-						 boolean executorNotify)
+	public TaskProcessor(String defaultPrefix,
+			                 int taskQueueMaxSize,
+											 int executorThreadCount,
+											 int threadPriority,
+											 boolean executorNotify)
 		throws IllegalArgumentException 
 	{
 		//super("TaskProcessor", "with", false);
@@ -202,8 +211,12 @@ public class TaskProcessor
 		}
 		
 		tasksQueue = new ThresholdQueue<TaskEvent>(taskQueueMaxSize);
-		String tpID = "TP-"+TP_COUNTER.incrementAndGet();
-        workersQueue = new ArrayQueue<ExecutorThread>(executorThreadCount);
+		if (SharedStringUtil.isEmpty(defaultPrefix))
+		{
+			defaultPrefix = "TP";
+		}
+		String tpID = defaultPrefix + "-" + TP_COUNTER.incrementAndGet();
+		workersQueue = new ArrayQueue<ExecutorThread>(executorThreadCount);
 		for (int i = 0; i < executorThreadCount; i++)
 		{
 			// create and queue the executor threads
