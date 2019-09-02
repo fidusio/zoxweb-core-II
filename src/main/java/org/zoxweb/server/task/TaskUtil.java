@@ -77,6 +77,18 @@ public class TaskUtil
 		}
 	}
 
+	public static void sleep(long millis)
+	{
+		try
+		{
+			Thread.sleep(millis);
+		}
+		catch(InterruptedException e)
+		{
+			e.printStackTrace();
+		}
+	}
+
 
 	public static TaskProcessor getDefaultTaskProcessor() {
 		if (TASK_PROCESSOR == null) {
@@ -122,22 +134,7 @@ public class TaskUtil
 
 	public static long waitIfBusyThenClose(long millisToSleepAndCheck)
 	{
-
 		return waitIfBusyThenClose(getDefaultTaskProcessor(), getDefaultTaskScheduler(), millisToSleepAndCheck);
-//		do
-//		{
-//			try
-//			{
-//				Thread.sleep(millisToSleepAndCheck);
-//			} catch (InterruptedException e) {
-//				e.printStackTrace();
-//			}
-//		}while(isBusy());
-//
-//		long timestamp = System.currentTimeMillis();
-//		close();
-//
-//		return timestamp;
 	}
 
 
