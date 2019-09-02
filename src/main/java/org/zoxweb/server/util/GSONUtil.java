@@ -51,6 +51,7 @@ import org.zoxweb.shared.filters.ValueFilter;
 import org.zoxweb.shared.security.AccessException;
 import org.zoxweb.shared.util.ArrayValues;
 import org.zoxweb.shared.util.Const;
+import org.zoxweb.shared.util.Const.TimeInMillis;
 import org.zoxweb.shared.util.DynamicEnumMap;
 import org.zoxweb.shared.util.DynamicEnumMapManager;
 import org.zoxweb.shared.util.ExceptionReason.Reason;
@@ -116,15 +117,16 @@ final public class GSONUtil
 	private final static GSONUtil SINGLETON = new GSONUtil();
 	
 	public final static Gson DEFAULT_GSON = new GsonBuilder()
-											.registerTypeAdapter(NVGenericMap.class, new NVGenericMapSerDeserialiser())
-					                        .registerTypeHierarchyAdapter(NVEntity.class, new NVEntitySerDeserialiser())
-					                        .registerTypeAdapter(Date.class, new DateSerDeserialiser())
+											.registerTypeAdapter(NVGenericMap.class, new NVGenericMapSerDeserializer())
+											.registerTypeHierarchyAdapter(NVEntity.class, new NVEntitySerDeserializer())
+					            .registerTypeAdapter(Date.class, new DateSerDeserializer())
+											//.registerTypeAdapter(Enum.class, new EnumSerDeserializer())
 											.create();
 	
 	private GsonBuilder builder = null;
 	
 	
-	public static class NVGenericMapSerDeserialiser implements JsonSerializer<NVGenericMap>,JsonDeserializer<NVGenericMap>
+	public static class NVGenericMapSerDeserializer implements JsonSerializer<NVGenericMap>,JsonDeserializer<NVGenericMap>
 	{
 
       @Override
@@ -145,8 +147,9 @@ final public class GSONUtil
       }
 
       @Override
-      public NVGenericMap deserialize(JsonElement json, Type typeOfT,
-          JsonDeserializationContext context) throws JsonParseException {
+      public NVGenericMap deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+					throws JsonParseException
+			{
         // TODO Auto-generated method stub
         return fromJSONGenericMap((JsonObject)json, null, Base64Type.DEFAULT);
       }
@@ -155,8 +158,9 @@ final public class GSONUtil
 	
 	
 	
-	public static class DateSerDeserialiser implements JsonSerializer<Date>,JsonDeserializer<Date>
-    {
+	public static class DateSerDeserializer
+			implements JsonSerializer<Date>,JsonDeserializer<Date>
+	{
 
       @Override
       public JsonElement serialize(Date src, Type typeOfSrc,
@@ -168,8 +172,9 @@ final public class GSONUtil
       }
 
       @Override
-      public Date deserialize(JsonElement json, Type typeOfT,
-          JsonDeserializationContext context) throws JsonParseException {
+      public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+					throws JsonParseException
+			{
         // TODO Auto-generated method stub
         JsonPrimitive jp = (JsonPrimitive)json;
         if(jp.isNumber())
@@ -184,18 +189,50 @@ final public class GSONUtil
         return null;
       }
       
-    }
-	
+	}
 
-	public static class NVEntitySerDeserialiser implements JsonSerializer<NVEntity>,JsonDeserializer<NVEntity>
+	public static class EnumSerDeserializer
+			implements JsonSerializer<Enum<? extends Enum>>,JsonDeserializer<Enum<? extends Enum>>
 	{
 
 		@Override
-		public JsonElement serialize(NVEntity src, Type typeOfSrc,
-									 JsonSerializationContext context) {
+		public JsonElement serialize(Enum src, Type typeOfSrc, JsonSerializationContext context) {
+			// TODO Auto-generated method stub
 
+			return new JsonPrimitive(src.name());
+		}
+
+		@Override
+		public Enum deserialize(JsonElement json, Type typeOf, JsonDeserializationContext context)
+				throws JsonParseException
+		{
+
+			// TODO Auto-generated method stub
+			JsonPrimitive jp = (JsonPrimitive)json;
+			if(jp.isString())
+			{
+				try {
+					Enum<?>[] enums = (Enum<?>[]) Class.forName(typeOf.getTypeName()).getEnumConstants();
+					return SharedUtil.lookupEnum(jp.getAsString(), enums);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			return null;
+		}
+
+	}
+	
+
+	public static class NVEntitySerDeserializer implements JsonSerializer<NVEntity>,JsonDeserializer<NVEntity>
+	{
+
+		@Override
+		public JsonElement serialize(NVEntity src, Type typeOfSrc, JsonSerializationContext context)
+		{
 			JsonTreeWriter jtw = new JsonTreeWriter();
-			try {
+			try
+			{
 				toJSON(jtw, src.getClass(), src, false, true, Base64Type.DEFAULT);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -206,8 +243,9 @@ final public class GSONUtil
 		}
 
 		@Override
-		public NVEntity deserialize(JsonElement json, Type typeOfT,
-										JsonDeserializationContext context) throws JsonParseException {
+		public NVEntity deserialize(JsonElement json, Type typeOfT,	JsonDeserializationContext context)
+				throws JsonParseException
+		{
 			// TODO Auto-generated method stub
 			return fromJSON((JsonObject)json, null, Base64Type.DEFAULT);
 		}
