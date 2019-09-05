@@ -192,7 +192,7 @@ public class SubjectAPIKey
 		setValue(Param.EXPIRY_DATE, ts);
 	}
 	
-	public boolean isTimeStampRquired() 
+	public boolean isTimeStampRequired()
     {
         return lookupValue(Param.TS_REQUIRED);
     }

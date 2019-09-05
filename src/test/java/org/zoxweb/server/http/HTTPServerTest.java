@@ -15,6 +15,7 @@ import java.net.InetSocketAddress;
 import java.net.URI;
 import java.util.logging.Logger;
 import org.zoxweb.server.io.IOUtil;
+import org.zoxweb.server.logging.LoggerUtil;
 import org.zoxweb.server.task.TaskUtil;
 import org.zoxweb.server.util.GSONUtil;
 import org.zoxweb.shared.http.HTTPHeaderName;
@@ -26,7 +27,9 @@ import org.zoxweb.shared.util.SharedStringUtil;
 @SuppressWarnings("restriction")
 public class HTTPServerTest {
 
-
+  static {
+    LoggerUtil.enableDefaultLogger("org.zoxweb");
+  }
   private final static Logger log = Logger.getLogger(HTTPServerTest.class.getName());
 
   static class ContextHandler implements HttpHandler {
@@ -67,6 +70,7 @@ public class HTTPServerTest {
       URI uri = he.getRequestURI();
       log.info("path: " + path);
       log.info("URI: " +  uri.getPath());
+      log.info("Remote IP:" + he.getRemoteAddress());
       try {
         String filename = uri.getPath().substring(path.length(), uri.getPath().length());
         log.info("filename: " + filename);
@@ -108,12 +112,12 @@ public class HTTPServerTest {
         server.createContext("/" + args[index], new ContextHandler());
       }
       HttpContext hc = server.createContext("/.well-known/pki-validation/", new FileHandler("/public"));
-      hc.setAuthenticator(new Authenticator() {
-        @Override
-        public Result authenticate(HttpExchange httpExchange) {
-          return null;
-        }
-      });
+//      hc.setAuthenticator(new Authenticator() {
+//        @Override
+//        public Result authenticate(HttpExchange httpExchange) {
+//          return null;
+//        }
+//      });
       //server.createContext("/toto", new FileHandler());
       server.setExecutor(TaskUtil.getDefaultTaskProcessor());
 
