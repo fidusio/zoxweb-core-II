@@ -9,6 +9,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import org.yaml.snakeyaml.Yaml;
 import org.zoxweb.server.io.IOUtil;
+import org.zoxweb.shared.util.NVGenericMap;
 import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
 
@@ -45,6 +46,7 @@ public class YamlJsonUtil {
   {
     @SuppressWarnings("unchecked")
     Map<String, Object> map = new Gson().fromJson(jsonString, LinkedHashMap.class);
+    NVGenericMap nvg;
     return new Yaml().dump(map);
   }
 

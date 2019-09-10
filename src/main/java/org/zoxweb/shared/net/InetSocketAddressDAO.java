@@ -29,8 +29,9 @@ public class InetSocketAddressDAO
 	
 	private static final NVConfig INET_ADDRESS = NVConfigManager.createNVConfig("inet_address", "The ip address","InetAddress",true, false, String.class);
 	private static final NVConfig PORT = NVConfigManager.createNVConfig("port", "The port number","Port", true, false, int.class);
+	private static final NVConfig BACKLOG  = NVConfigManager.createNVConfig("backlog", "","BackLog", true, false, int.class);
 	private static final NVConfig PROXY_TYPE = NVConfigManager.createNVConfig("proxy_type", "proxy type","ProxyType", false, false, ProxyType.class);
-	public static final NVConfigEntity NVC_INET_SOCKET_ADDRESS_DAO = new NVConfigEntityLocal("inet_socket_address_dao", null , "InetSocketAddressDAO", true, false, false, false, InetSocketAddressDAO.class, SharedUtil.toNVConfigList(INET_ADDRESS, PORT, PROXY_TYPE), null, false, SetNameDAO.NVC_NAME_DAO);
+	public static final NVConfigEntity NVC_INET_SOCKET_ADDRESS_DAO = new NVConfigEntityLocal("inet_socket_address_dao", null , "InetSocketAddressDAO", true, false, false, false, InetSocketAddressDAO.class, SharedUtil.toNVConfigList(INET_ADDRESS, PORT, BACKLOG, PROXY_TYPE), null, false, SetNameDAO.NVC_NAME_DAO);
 
 	public InetSocketAddressDAO()
     {
@@ -56,15 +57,20 @@ public class InetSocketAddressDAO
 	
 	public InetSocketAddressDAO(String address, int port)
     {
-		this(address, port, null);
+		this(address, port, 128,null);
 	}
-	
+
 	public InetSocketAddressDAO(String address, int port, ProxyType pt)
-    {
+	{
+		this(address, port, 128, pt);
+	}
+	public InetSocketAddressDAO(String address, int port, int backlog, ProxyType pt)
+	{
 		this();
 		setInetAddress(address);
 		setPort(port);
 		setProxyType(pt);
+		setBacklog(backlog);
 	}
 
 	public String getInetAddress()
@@ -102,6 +108,23 @@ public class InetSocketAddressDAO
 		}
 
 		setValue(PORT, port);
+	}
+
+
+	public void setBacklog(int blog)
+	{
+		if (blog < -1)
+		{
+			throw new IllegalArgumentException("Invalid backlog:" + blog + " < 0 ");
+		}
+
+		setValue(BACKLOG, blog);
+	}
+
+
+	public int getBacklog()
+	{
+		return lookupValue(BACKLOG);
 	}
 
 	public boolean equals(Object o)

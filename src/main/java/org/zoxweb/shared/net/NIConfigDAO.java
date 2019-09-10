@@ -27,9 +27,9 @@ public class NIConfigDAO
     GATEWAY(NVConfigManager.createNVConfig("gateway", "Gateway", "Gateway", false, true, String.class)),
     NETWORK(NVConfigManager.createNVConfig("network", "Network", "Network", false, true, String.class)),
     USERNAME(NVConfigManager.createNVConfig("username", "PPPoE user name", "UserName", false, true, String.class)),
-    PASSWORD(NVConfigManager.createNVConfig("password", "PPPoE passowrd", "Password", false, true, String.class)),
+    PASSWORD(NVConfigManager.createNVConfig("password", "PPPoE password", "Password", false, true, String.class)),
     DNS_SERVERS(NVConfigManager.createNVConfig("dns-nameservers", "DNS Name Servers", "DNSNameServers", false, true, String.class)),
-    WPA_CONF(NVConfigManager.createNVConfig("wpa-conf", "WAP confgiuration file", "WPA-CONF", false, true, String.class)),
+    WPA_CONF(NVConfigManager.createNVConfig("wpa-conf", "WAP configuration file", "WPA-CONF", false, true, String.class)),
 
     
     ;   
