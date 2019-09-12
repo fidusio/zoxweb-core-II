@@ -12,6 +12,7 @@ public class HTTPServerConfigTest {
   public void valueChecks() throws IOException {
     HTTPServerConfig hsc = GSONUtil.fromJSON(IOUtil.inputStreamToString(HTTPServerConfig.class.getClassLoader().getResourceAsStream(jsonConfigFile), true), HTTPServerConfig.class);
     System.out.println(hsc);
+    System.out.println(hsc.getConnectionConfigs());
   }
 
 }

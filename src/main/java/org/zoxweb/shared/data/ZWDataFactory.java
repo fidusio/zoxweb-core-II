@@ -29,6 +29,7 @@ import org.zoxweb.shared.api.APIConfigInfoDAO;
 import org.zoxweb.shared.api.APICredentialsDAO;
 import org.zoxweb.shared.api.APIError;
 import org.zoxweb.shared.app.AppVersionDAO;
+import org.zoxweb.shared.net.ConnectionConfig;
 import org.zoxweb.shared.security.KeyStoreInfoDAO;
 import org.zoxweb.shared.util.NVEntityInstance;
 import org.zoxweb.shared.data.ticket.TicketContainerDAO;
@@ -227,6 +228,21 @@ public class ZWDataFactory
 				return ConfigDAO.NVC_CONFIG_DAO;
 			}
 		},
+		CONNECTION_CONFIG(ConnectionConfig.class.getName())
+				{
+					@SuppressWarnings("unchecked")
+					@Override
+					public ConnectionConfig newInstance()
+					{
+						return new ConnectionConfig();
+					}
+
+					@Override
+					public NVConfigEntity getNVConfigEntity()
+					{
+						return ConnectionConfig.NVC_CONNECTION_CONFIG_DAO;
+					}
+				},
 		PROPERTY_DAO(PropertyDAO.class.getName())
         {
             @SuppressWarnings("unchecked")

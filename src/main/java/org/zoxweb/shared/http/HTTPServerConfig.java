@@ -2,9 +2,12 @@ package org.zoxweb.shared.http;
 
 import java.util.List;
 import org.zoxweb.shared.data.PropertyDAO;
+import org.zoxweb.shared.net.ConnectionConfig;
+import org.zoxweb.shared.util.ArrayValues;
 import org.zoxweb.shared.util.GetNVConfig;
 import org.zoxweb.shared.util.NVConfig;
 import org.zoxweb.shared.util.NVConfigEntity;
+import org.zoxweb.shared.util.NVConfigEntity.ArrayType;
 import org.zoxweb.shared.util.NVConfigEntityLocal;
 import org.zoxweb.shared.util.NVConfigManager;
 import org.zoxweb.shared.util.NVGenericMap;
@@ -19,9 +22,9 @@ extends PropertyDAO
   public enum Param
       implements GetNVConfig
   {
-    BACK_LOG(NVConfigManager.createNVConfig("ports_back_log", "Port backlog", "Backlog", false, true, int.class)),
-    HTTP_PORTS(NVConfigManager.createNVConfig("http_ports", "List of http ports", "HTTPPorts", false, true, int[].class)),
-    HTTPS_PORTS(NVConfigManager.createNVConfig("https_ports", "List of https ports", "HTTPSPorts", false, true, int[].class)),
+
+    CONNECTIONS(NVConfigManager.createNVConfigEntity("connections", "Protocol schemes", "Schemes", false, true, ConnectionConfig.class, ArrayType.GET_NAME_MAP)),
+
     ;
     private final NVConfig nvc;
 
@@ -55,38 +58,11 @@ extends PropertyDAO
   }
 
 
-  public int getPortsBacklog()
+  public ArrayValues<ConnectionConfig> getConnectionConfigs()
   {
-    return lookupValue(Param.BACK_LOG);
+    return (ArrayValues<ConnectionConfig>) lookup(Param.CONNECTIONS);
   }
 
-  public void setPortsBacklog(int backlog)
-  {
-    setValue(Param.BACK_LOG, backlog);
-  }
-
-  public int[] getHTTPPorts()
-  {
-    NVIntList ret  = (NVIntList)lookup(Param.HTTP_PORTS);
-    return ret.getValues();
-  }
-  public void setHTTPPorts(int[] ports)
-  {
-    NVIntList ret  = (NVIntList)lookup(Param.HTTP_PORTS);
-    ret.setValues(ports);
-  }
-
-  public int[] getHTTPSPorts()
-  {
-    NVIntList ret  = (NVIntList)lookup(Param.HTTPS_PORTS);
-    return ret.getValues();
-  }
-
-  public void setHTTPSPorts(int[] ports)
-  {
-    NVIntList ret  = (NVIntList)lookup(Param.HTTPS_PORTS);
-    ret.setValues(ports);
-  }
 
 
 }

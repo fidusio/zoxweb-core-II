@@ -159,12 +159,12 @@ implements Closeable,
 						{
 							String ksPassword = config.getProperties().getValue("keystore_password");
 							String aliasPassword = config.getProperties().getValue("keystore_password");
-							String trustStorePassword = config.getProperties().getValue("trustore_password");
+							String trustStorePassword = config.getProperties().getValue("truststore_password");
 							SSLContext sslc = CryptoUtil.initSSLContext((String)config.getProperties().getValue("keystore_file"), 
 																		(String)config.getProperties().getValue("keystore_type"), 
 																		ksPassword.toCharArray(),  
 																		aliasPassword != null ?  aliasPassword.toCharArray() : null, 
-																		(String)config.getProperties().getValue("trustore_file"), 
+																		(String)config.getProperties().getValue("truststore_file"),
 																		trustStorePassword != null ?  trustStorePassword.toCharArray() : null);
 							((SSLSessionDataFactory)toAttach).setSSLContext(sslc);
 							
