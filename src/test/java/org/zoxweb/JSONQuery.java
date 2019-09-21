@@ -27,7 +27,7 @@ import org.zoxweb.shared.util.Const.RelationalOperator;
 
 import com.google.gson.Gson;
 
-public class JSONQuery {
+public class JSONQuery {q
 
 	private static String test = "{\"canonical_id\":\"org.zoxweb.shared.accounting.FinancialTransactionDAO\", \"batch_size\":250, \"query\":[{\"creation_ts\":1435647600354, \"relational_operator\":\"GT\"},{\"logical_operator\":\"AND\"},{\"creation_ts\":1435710917354, \"relational_operator\":\"LT\"}]}";
 
