@@ -21,7 +21,7 @@ public class JWTTest {
   private JWT jwtHS512 = null;
   private long index = 0;
 
-  
+
   @Before
   public void init() {
 
