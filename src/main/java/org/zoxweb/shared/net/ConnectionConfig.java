@@ -1,9 +1,7 @@
 package org.zoxweb.shared.net;
 
-import com.sun.org.apache.xerces.internal.xs.StringList;
 import org.zoxweb.shared.data.SetNameDescriptionDAO;
 import org.zoxweb.shared.util.GetNVConfig;
-import org.zoxweb.shared.util.GetName;
 import org.zoxweb.shared.util.NVConfig;
 import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVConfigEntityLocal;

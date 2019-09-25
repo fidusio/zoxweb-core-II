@@ -12,7 +12,7 @@ import org.zoxweb.shared.util.SharedBase64;
 import org.zoxweb.shared.util.SharedBase64.Base64Type;
 import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
-import sun.security.x509.X500Name;
+//import sun.security.x509.X500Name;
 
 @SuppressWarnings("restriction")
 public class CertificatesTest {
@@ -25,9 +25,9 @@ public class CertificatesTest {
         for (Certificate cert : certs) {
           if (cert instanceof X509Certificate) {
             X509Certificate xCert = (X509Certificate) cert;
-            System.out.println(xCert.getSubjectX500Principal().getName("CANONICAL"));
-            X500Name xname = new X500Name(xCert.getSubjectX500Principal().getName());
-            System.out.println(xname.getCommonName());
+            System.out.println(xCert.getSubjectX500Principal().getName("RFC2253"));
+            //X500Name xname = new X500Name(xCert.getSubjectX500Principal().getName());
+            System.out.println("name: " + xCert.getSubjectX500Principal().getName());
           }
         }
       } catch (Exception e) {
