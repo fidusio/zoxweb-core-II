@@ -621,7 +621,7 @@ public final class SharedStringUtil
 	/**
 	 * Filters the given string based on given filters and returns the filtered string.
 	 * @param str
-	 * @param filter
+	 * @param filters
 	 * @return the given string based on given filters and returns the filtered string.
 	 */
 	public static String filterString(String str, CharSequence... filters)
@@ -661,6 +661,8 @@ public final class SharedStringUtil
 		return EMPTY_STRING_ARRAY;
 	}
 
+
+
 	/**
 	 * Returns a string array based on the strings str and sep.
 	 * @param str
@@ -669,7 +671,7 @@ public final class SharedStringUtil
 	 */
 	public static String[] parseNameValue(String str, String sep)
     {
-		int index = str.indexOf( sep);
+		int index = str.indexOf(sep);
 		
 		if (index != -1)
 		{

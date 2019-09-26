@@ -2129,7 +2129,23 @@ public class SharedUtil
 				ret.add(nv);
 			}
 		}
-		
+		return ret;
+	}
+
+	public static NVGenericMap toNVGenericMap(String str, String nvpSep, String regExp, boolean trim)
+	{
+		String[] pairs = SharedStringUtil.parseString(str, regExp, (CharSequence[]) null );
+		NVGenericMap ret = new NVGenericMap();
+
+		for (String p : pairs)
+		{
+			NVPair nv = toNVPair(p, nvpSep, trim);
+
+			if (nv != null)
+			{
+				ret.add(nv);
+			}
+		}
 		return ret;
 	}
 	

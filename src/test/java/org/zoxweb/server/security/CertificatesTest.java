@@ -8,6 +8,7 @@ import java.security.cert.X509Certificate;
 import org.zoxweb.server.util.GSONUtil;
 import org.zoxweb.shared.crypto.CryptoConst.SignatureAlgo;
 import org.zoxweb.shared.security.JWT;
+import org.zoxweb.shared.util.NVGenericMap;
 import org.zoxweb.shared.util.SharedBase64;
 import org.zoxweb.shared.util.SharedBase64.Base64Type;
 import org.zoxweb.shared.util.SharedStringUtil;
@@ -25,9 +26,11 @@ public class CertificatesTest {
         for (Certificate cert : certs) {
           if (cert instanceof X509Certificate) {
             X509Certificate xCert = (X509Certificate) cert;
-            System.out.println(xCert.getSubjectX500Principal().getName("RFC2253"));
+            System.out.println(xCert.getSubjectX500Principal().getName());
             //X500Name xname = new X500Name(xCert.getSubjectX500Principal().getName());
-            System.out.println("name: " + xCert.getSubjectX500Principal().getName());
+            NVGenericMap nvg = SharedUtil.toNVGenericMap(xCert.getSubjectX500Principal().getName(), "=",",", true);
+            System.out.println("CN: " + nvg.get("cn").getValue());
+            System.out.println(GSONUtil.toJSONGenericMap(nvg,false, false, false));
           }
         }
       } catch (Exception e) {
