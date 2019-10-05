@@ -9,7 +9,8 @@ public class StatInfo
     public enum Param
             implements GetNVConfig
     {
-        APP_NAME(NVConfigManager.createNVConfig("app_name", "App name", "AppName", false, true, String.class)),
+        CALL_COUNTER(NVConfigManager.createNVConfig("call_counter", "Call counter", "CallCounter", false, true, long.class)),
+        VERSION(NVConfigManager.createNVConfig("version", "App version", "Version", false, true, String.class)),
         ;
         private final NVConfig nvc;
 
@@ -48,13 +49,31 @@ public class StatInfo
         super(nvce);
     }
 
-    public String getAppName()
+    public long getCallCounter()
     {
-        return lookupValue(Param.APP_NAME);
+        return lookupValue(Param.CALL_COUNTER);
     }
 
-    public void setAppName(String appName)
+    public void setCallCounter(long counter)
     {
-        setValue(Param.APP_NAME, appName);
+        setValue(Param.CALL_COUNTER, counter);
+    }
+
+    public long incCallCounter()
+    {
+        long counter = getCallCounter();
+        counter++;
+        setCallCounter(counter);
+        return counter;
+    }
+
+    public String getVersion()
+    {
+        return lookupValue(Param.VERSION);
+    }
+
+    public void setVersion(String version)
+    {
+        setValue(Param.VERSION, version);
     }
 }
