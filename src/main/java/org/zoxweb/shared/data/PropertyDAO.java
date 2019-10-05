@@ -13,7 +13,7 @@ import org.zoxweb.shared.util.SharedUtil;
 
 @SuppressWarnings("serial")
 public class PropertyDAO
-extends SetNameDescriptionDAO
+extends TimeStampDAO
 implements SetCanonicalID, ConfigProperties
 {
   public enum Param
@@ -51,7 +51,7 @@ implements SetCanonicalID, ConfigProperties
                                                                               SharedUtil.extractNVConfigs(Param.values()),
                                                                               null,
                                                                               false,
-                                                                              SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO);
+                                                                              TimeStampDAO.NVC_TIME_STAMP_DAO);
   
   public PropertyDAO()
   {

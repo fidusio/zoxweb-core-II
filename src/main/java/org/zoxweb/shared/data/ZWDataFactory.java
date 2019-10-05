@@ -1016,6 +1016,21 @@ public class ZWDataFactory
 				return StatCounter.NVC_STAT_COUNTER_DAO;
 			}
 		},
+		STAT_INFO(StatInfo.class.getName())
+		{
+			@SuppressWarnings("unchecked")
+			@Override
+			public StatInfo newInstance()
+			{
+				return new StatInfo();
+			}
+
+			@Override
+			public NVConfigEntity getNVConfigEntity()
+			{
+				return StatInfo.NVC_STAT_INFO;
+			}
+		},
 		UUID_INFO_DAO(UUIDInfoDAO.class.getName())
 		{
 			@SuppressWarnings("unchecked")
