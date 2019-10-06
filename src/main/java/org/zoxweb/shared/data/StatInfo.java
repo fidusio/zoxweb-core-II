@@ -76,4 +76,14 @@ public class StatInfo
     {
         setValue(Param.VERSION, version);
     }
+
+    public String uptime()
+    {
+        return Const.TimeInMillis.toString(uptimeInMillis());
+    }
+
+    public long uptimeInMillis()
+    {
+        return System.currentTimeMillis() - getCreationTime();
+    }
 }
