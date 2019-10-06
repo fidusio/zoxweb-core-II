@@ -412,7 +412,7 @@ public class HTTPServletUtil
 	
 	public static String inputStreamToString(HttpServlet servlet, String resource) throws NullPointerException, IOException
 	{
-		log.info("resouce:" + resource);
+		log.info("resource:" + resource);
 		String content = null;
 		try
 		{
@@ -432,6 +432,23 @@ public class HTTPServletUtil
 		}
 		
 		
+		return content;
+	}
+
+
+	public static String inputStreamToString(Class servlet, String resource) throws NullPointerException, IOException
+	{
+		log.info("resource:" + resource);
+		String content = null;
+		try
+		{
+			content = (IOUtil.inputStreamToString(servlet.getClass().getResourceAsStream(resource), true));
+		}
+		catch(Exception e)
+		{
+
+		}
+
 		return content;
 	}
 	
