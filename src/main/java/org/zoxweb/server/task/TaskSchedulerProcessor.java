@@ -330,23 +330,21 @@ public class TaskSchedulerProcessor
 		}
 	}
 	
-	public int pendingTasks() {
-		//synchronized(queue)
-		{
-			return queue.size();
-		}
+	public int pendingTasks()
+	{
+		return queue.size();
 	}
 	
-	private long waitTime() {
+	public long waitTime()
+	{
 		long delay  = DEFAULT_TIMEOUT;
-
-		try {
+		try
+		{
 			TaskSchedulerAppointment tSchedulerEvent = queue.first();
 			delay = tSchedulerEvent.getExpirationInMillis() - System.currentTimeMillis();
 		} catch(NoSuchElementException e) {
 
 		}
-
 		return delay;
 	}
 	

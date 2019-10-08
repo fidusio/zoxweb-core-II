@@ -22,17 +22,13 @@ public class AppointmentComparator
     implements Comparator<Appointment>
 {
 
-	//private RelationalOperator equality;
+
 	
 	public AppointmentComparator()
     {
-//		this(RelationalOperator.EQUAL);
+
 	}
-	
-//	public AppointmentComparator(RelationalOperator equality)
-//    {
-//		this.equality = equality;
-//	}
+
 
 	@Override
 	public int compare(Appointment o1, Appointment o2)
@@ -41,26 +37,8 @@ public class AppointmentComparator
 
 		if (o1 != null && o2 != null)
 		{
-			result = (int)(o1.getExpirationInNanos() - o2.getExpirationInNanos());
-
-//			if (result == 0)
-//			{
-//				switch(equality)
-//				{
-//				case EQUAL:
-//					break;
-//				case LTE:
-//				case LT:
-//					result = -1;
-//					break;
-//				case GTE:
-//				case GT:
-//					result = 1;
-//					break;
-//				default:
-//					throw new IllegalArgumentException("Operator not supported:" + equality);
-//				}
-//			}
+			long res = (o1.getExpirationInNanos() - o2.getExpirationInNanos());
+			result = (int)res;
 		}
 			
 		return result;
