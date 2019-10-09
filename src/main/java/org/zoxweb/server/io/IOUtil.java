@@ -42,19 +42,18 @@ public class IOUtil
 	
 	/**
 	 * Close an AutoCloseable object if c is null the action is discarded, while closing catch any exception silently
-	 * @param c
+	 * @param acs
 	 */
-	public static void close(AutoCloseable c)
+	public static void close(AutoCloseable ...acs)
 	{
-		if (c != null)
+		if (acs != null)
 		{
-			try
-			{
-				c.close();
-			}
-			catch(Exception e)
-			{
-				
+			for (AutoCloseable c : acs) {
+				try {
+					c.close();
+				} catch (Exception e) {
+
+				}
 			}
 		}
 	}
@@ -254,7 +253,7 @@ public class IOUtil
 	
 	/**
 	 * Read the all the content of an input stream and return it as a byte array
-	 * @param is to be read
+	 * @param filename to be read
 	 * @param close if true is will closed after reading
 	 * @return byte array
 	 * @throws IOException
@@ -266,7 +265,7 @@ public class IOUtil
 	}
 	/**
 	 * Read the all the content of an input stream and return it as a byte array
-	 * @param is to be read
+	 * @param file to be read
 	 * @param close if true is will closed after reading
 	 * @return byte array
 	 * @throws IOException
