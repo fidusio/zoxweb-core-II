@@ -37,7 +37,7 @@ public class AppointmentComparator
 
 		if (o1 != null && o2 != null)
 		{
-			long res = (o1.getExpirationInNanos() - o2.getExpirationInNanos());
+			long res = (o1.getExpirationInMicros() - o2.getExpirationInMicros());
 			result = (int)res;
 		}
 			

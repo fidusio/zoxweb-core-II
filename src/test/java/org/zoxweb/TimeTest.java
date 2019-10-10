@@ -49,6 +49,17 @@ public class TimeTest {
 		Date date = new Date();
 		System.out.println(DateUtil.DEFAULT_GMT_MILLIS.format(date));
 		System.out.println(DateUtil.DEFAULT_ZULU_MILLIS.format(date));
+
+
+		long millis = System.currentTimeMillis();
+		long nanos = System.nanoTime();
+		System.out.println(millis + " millis, " + nanos + " nanos");
+		long newValue = millis *1000_000 + nanos%1000_000;
+		System.out.println(newValue);
+		newValue = millis *1000 + (nanos%1000_000)/1000;
+		System.out.println(newValue);
+		newValue = 1000 + (0%1000);
+		System.out.println(newValue);
 	
 	}
 }

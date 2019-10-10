@@ -62,6 +62,6 @@ public interface Appointment
 	 * Return the expiration in adjusted nano time
 	 * @return
 	 */
-	long getExpirationInNanos();
+	long getExpirationInMicros();
 	
 }

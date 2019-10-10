@@ -80,10 +80,10 @@ public class TaskSchedulerProcessor
 		}
 
 		@Override
-		public long getExpirationInNanos()
+		public long getExpirationInMicros()
 		{
 			// TODO Auto-generated method stub
-			return appointment.getExpirationInNanos();
+			return appointment.getExpirationInMicros();
 		}
 
 		@Override
@@ -220,13 +220,13 @@ public class TaskSchedulerProcessor
 	}
 	
 	
-	public Appointment queue(Appointment a, Runnable command)
-	{
-		if (command != null)
-			return queue(a, new TaskEvent(this, new RunnableTaskContainer(command),(Object[]) null));
-		
-		return null;
-	}
+//	public Appointment queue(Appointment a, Runnable command)
+//	{
+//		if (command != null)
+//			return queue(a, new TaskEvent(this, new RunnableTaskContainer(command),(Object[]) null));
+//
+//		return null;
+//	}
 
 	/**
 	 * Execute a runnable i
