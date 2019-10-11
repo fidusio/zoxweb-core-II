@@ -34,7 +34,7 @@ import org.zoxweb.server.util.DateUtil;
  */
 public final class LoggerUtil 
 {
-	Date d;
+	//Date d;
 	public static final SimpleDateFormat SDF = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSZ");
 	public static final String PRODUCTION_FORMAT = "%1$tY-%1$tm-%1$td %1$tH:%1$tM:%1$tS %4$-6s : %2$s %5$s%6$s%n";
 	public static final String DEFAULT_FORMAT = "%1$s %4$-6s : %2$s-%5$s%6$s%n";

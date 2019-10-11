@@ -1,4 +1,4 @@
-package org.zoxweb.server.util;
+package org.zoxweb.server.logging;
 
 import org.zoxweb.shared.util.GetValue;
 
