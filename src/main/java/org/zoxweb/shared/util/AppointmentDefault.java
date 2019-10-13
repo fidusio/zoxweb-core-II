@@ -66,7 +66,7 @@ public class AppointmentDefault
 	  delay = delayInMillis;
 	  expiration = System.currentTimeMillis() + delay;
 	  //expirationInNanos = (expiration*1000000) + (nanoOffset%1000000);
-	  expirationInMicros = (expiration*1000) + (nanoOffset%1000000)/1000;
+	  expirationInMicros = (expiration*1000) + Math.abs((nanoOffset%1000000)/1000);
 	}
 
 	@Override

@@ -47,7 +47,7 @@ public class TaskSchedulerProcessorTest {
 			    try {
 					System.out.println("["+ index +"]:" + "Will try to lock:" + Thread.currentThread());
 					lock.lock();
-					System.out.println("["+ index +"]:" + "Lock Aquired:" + Thread.currentThread());
+					System.out.println("["+ index +"]:" + "Lock Acquired:" + Thread.currentThread());
 
 					if (test == null) {
 						Object temp = new Object();
