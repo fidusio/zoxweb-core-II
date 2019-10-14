@@ -1,6 +1,6 @@
 package org.zoxweb.shared.data;
 
-import org.zoxweb.shared.util.ConfigProperties;
+import org.zoxweb.shared.util.GetNVProperties;
 import org.zoxweb.shared.util.GetNVConfig;
 import org.zoxweb.shared.util.NVConfig;
 import org.zoxweb.shared.util.NVConfigEntity;
@@ -14,7 +14,7 @@ import org.zoxweb.shared.util.SharedUtil;
 @SuppressWarnings("serial")
 public class PropertyDAO
 extends TimeStampDAO
-implements SetCanonicalID, ConfigProperties
+implements SetCanonicalID, GetNVProperties
 {
   public enum Param
   implements GetNVConfig
