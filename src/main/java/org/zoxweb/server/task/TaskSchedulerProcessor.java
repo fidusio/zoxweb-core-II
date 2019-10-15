@@ -27,18 +27,14 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicLong;
 
-import org.zoxweb.shared.util.Const;
-import org.zoxweb.shared.util.DaemonController;
-import org.zoxweb.shared.util.SharedUtil;
+import org.zoxweb.shared.util.*;
 import org.zoxweb.server.task.RunnableTask.RunnableTaskContainer;
-import org.zoxweb.shared.util.Appointment;
-import org.zoxweb.shared.util.AppointmentDefault;
 
 public class TaskSchedulerProcessor
-    implements Runnable, DaemonController {
+    implements Runnable, DaemonController, GetNVProperties {
 
 	public final class TaskSchedulerAppointment
-			implements Appointment, RunnableFuture {
+			implements Appointment {
 
 		private Appointment appointment;
 		private TaskEvent taskEvent;
@@ -86,75 +82,77 @@ public class TaskSchedulerProcessor
 			return appointment.getExpirationInMicros();
 		}
 
-		@Override
-		public void run() {
+//		@Override
+//		public void run() {
+//
+//		}
+//
+//		@Override
+//		public boolean cancel(boolean mayInterruptIfRunning) {
+//			return false;
+//		}
+//
+//		@Override
+//		public boolean isCancelled() {
+//			return false;
+//		}
+//
+//		@Override
+//		public boolean isDone() {
+//			return false;
+//		}
+//
+//		@Override
+//		public Object get() throws InterruptedException, ExecutionException {
+//			return  taskEvent.getExecutionResult();
+//		}
+//
+//		@Override
+//		public Object get(long timeout, TimeUnit unit)
+//				throws InterruptedException, ExecutionException, TimeoutException {
+//			return null;
+//		}
+//
+//
+//		public boolean isPeriodic() {
+//			return false;
+//		}
+//
+//		public long getDelay(TimeUnit unit) {
+//			switch(unit)
+//			{
+//
+//				case NANOSECONDS:
+//					return getExpirationInMillis();
+//				case MICROSECONDS:
+//					return TimeUnit.NANOSECONDS.toMicros(getExpirationInMillis());
+//				case MILLISECONDS:
+//					return TimeUnit.NANOSECONDS.toMillis(getExpirationInMillis());
+//				case SECONDS:
+//					return TimeUnit.NANOSECONDS.toSeconds(getExpirationInMillis());
+//				case MINUTES:
+//					return TimeUnit.NANOSECONDS.toMinutes(getExpirationInMillis());
+//				case HOURS:
+//					return TimeUnit.NANOSECONDS.toHours(getExpirationInMillis());
+//				case DAYS:
+//					return TimeUnit.NANOSECONDS.toDays (getExpirationInMillis());
+//				default:
+//					throw new IllegalArgumentException(unit + " not supported");
+//			}
+//		}
 
-		}
 
-		@Override
-		public boolean cancel(boolean mayInterruptIfRunning) {
-			return false;
-		}
-
-		@Override
-		public boolean isCancelled() {
-			return false;
-		}
-
-		@Override
-		public boolean isDone() {
-			return false;
-		}
-
-		@Override
-		public Object get() throws InterruptedException, ExecutionException {
-			return  taskEvent.getExecutionResult();
-		}
-
-		@Override
-		public Object get(long timeout, TimeUnit unit)
-				throws InterruptedException, ExecutionException, TimeoutException {
-			return null;
-		}
-
-
-		public boolean isPeriodic() {
-			return false;
-		}
-
-		public long getDelay(TimeUnit unit) {
-			switch(unit)
-			{
-
-				case NANOSECONDS:
-					return getExpirationInMillis();
-				case MICROSECONDS:
-					return TimeUnit.NANOSECONDS.toMicros(getExpirationInMillis());
-				case MILLISECONDS:
-					return TimeUnit.NANOSECONDS.toMillis(getExpirationInMillis());
-				case SECONDS:
-					return TimeUnit.NANOSECONDS.toSeconds(getExpirationInMillis());
-				case MINUTES:
-					return TimeUnit.NANOSECONDS.toMinutes(getExpirationInMillis());
-				case HOURS:
-					return TimeUnit.NANOSECONDS.toHours(getExpirationInMillis());
-				case DAYS:
-					return TimeUnit.NANOSECONDS.toDays (getExpirationInMillis());
-				default:
-					throw new IllegalArgumentException(unit + " not supported");
-			}
-		}
-
-
-		public int compareTo(Delayed o) {
-			return 0;
-		}
+//		public int compareTo(Delayed o) {
+//			return 0;
+//		}
 	}
 	
 	private TaskProcessor taskProcessor = null;
 	private boolean live = true;
 	private static final long DEFAULT_TIMEOUT = Const.TimeInMillis.MILLI.MILLIS*500;
 	private static final AtomicLong TSP_COUNTER = new AtomicLong(0);
+	private static final AtomicLong instanceCounter = new AtomicLong();
+	private long counterID = instanceCounter.incrementAndGet();
 	volatile private ConcurrentSkipListSet<TaskSchedulerAppointment> queue = null;
 	
 	public TaskSchedulerProcessor() {
@@ -270,7 +268,9 @@ public class TaskSchedulerProcessor
 	}
 	
 	public boolean remove(Appointment tsa) {
-		return queue.remove(tsa);
+		synchronized (queue) {
+			return queue.remove(tsa);
+		}
 	}
 
 	/**
@@ -347,5 +347,15 @@ public class TaskSchedulerProcessor
 		}
 		return delay;
 	}
-	
+
+	@Override
+	public NVGenericMap getProperties()
+	{
+		NVGenericMap ret = new NVGenericMap();
+		ret.setName("task_scheduler");
+		ret.add(new NVLong("instance_id", counterID));
+		ret.add(new NVInt("pending_tasks", queue.size()));
+		ret.add("current_wait", Const.TimeInMillis.toString(waitTime()));
+		return ret;
+	}
 }

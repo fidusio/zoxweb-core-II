@@ -484,6 +484,12 @@ public class Const {
     }
 
     public static String toString(long millis) {
+      boolean pastTime = false;
+      if(millis < 0 )
+      {
+        millis = - millis;
+        pastTime = true;
+      }
       if (millis <= WEEK.MILLIS) {
         long mil = millis % SECOND.MILLIS;
         millis /= SECOND.MILLIS;
@@ -522,7 +528,7 @@ public class Const {
           sb.append(mil);
         }
 
-        return sb.toString();
+        return pastTime ? "Neg(-) " + sb.toString() : sb.toString();
       }
 
       throw new IllegalArgumentException("Out of range");

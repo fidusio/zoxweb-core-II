@@ -90,7 +90,7 @@ public class TaskSchedulerProcessorTest {
 		public void executeTask(TaskEvent event) {
 			long ts = System.currentTimeMillis();
 			Appointment tScheduler = (Appointment) event.getTaskExecutorParameters()[0];
-			System.out.println(index+":Called at:" + ts + " exipration:" + tScheduler.getExpirationInMillis() + " delta:" + (ts-tScheduler.getExpirationInMillis()) + " delay:" +tScheduler.getDelayInMillis() + " " + Thread.currentThread().getName());
+			System.out.println(index+":Called at:" + ts + " expiration:" + tScheduler.getExpirationInMillis() + " delta:" + (ts-tScheduler.getExpirationInMillis()) + " delay:" +tScheduler.getDelayInMillis() + " " + Thread.currentThread().getName());
 			
 		}
 

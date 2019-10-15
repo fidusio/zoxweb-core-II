@@ -112,9 +112,14 @@ public class DateFormatterTest {
 		System.out.println(DateUtil.timeInMillisRelativeToDay(calendar.getTimeInMillis()));
 		System.out.println(DateUtil.dayOfWeek(calendar.getTimeInMillis()));
 		System.out.println("Time relative to week:" + TimeInMillis.toString(DateUtil.timeInMillisRelativeToWeek(calendar)));
-		
-		
-		
+	}
+
+	@Test
+	public void timeConversionTest()
+	{
+		long times[] = {TimeInMillis.toMillis("01:00:00"), 100000, -100000};
+		for(long time : times)
+		System.out.println(TimeInMillis.toString(time));
 	}
 	
 }

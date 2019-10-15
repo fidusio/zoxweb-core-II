@@ -30,7 +30,7 @@ import org.zoxweb.shared.util.Const.TimeInMillis;
 import org.zoxweb.shared.util.SharedUtil;
 
 public class NIOChannelCleaner
-	extends RunnableTask
+	implements Runnable
 {
 
 	private static final transient Logger log = Logger.getLogger(NIOChannelCleaner.class.getName());
@@ -46,7 +46,7 @@ public class NIOChannelCleaner
 	public NIOChannelCleaner(TaskSchedulerProcessor tsp, long sleepTime)
 	{
 		this.sleepTime = sleepTime;
-		tsa = tsp.queue(this, new AppointmentDefault(sleepTime), this);
+		tsa = tsp.queue(sleepTime, this);
 		log.info("started");
 	}
 	
@@ -55,7 +55,7 @@ public class NIOChannelCleaner
 	{
 		runCall++;
 		//int totalPurged = 
-				purge();
+		purge();
 		
 		// wait again
 		tsa.setDelayInMillis(sleepTime);

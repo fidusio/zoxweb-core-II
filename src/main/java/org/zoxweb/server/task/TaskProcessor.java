@@ -21,10 +21,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Logger;
 
 import org.zoxweb.server.util.ThresholdQueue;
-import org.zoxweb.shared.util.ArrayQueue;
-import org.zoxweb.shared.util.DaemonController;
-import org.zoxweb.shared.util.SharedStringUtil;
-import org.zoxweb.shared.util.SimpleQueueInterface;
+import org.zoxweb.shared.util.*;
 //import org.zoxweb.shared.util.SimpleQueue;
 import org.zoxweb.server.task.RunnableTask.RunnableTaskContainer;
 
@@ -35,14 +32,17 @@ import org.zoxweb.server.task.RunnableTask.RunnableTaskContainer;
  *
  */
 public class TaskProcessor
-		implements Runnable, DaemonController, Executor {
+		implements Runnable, DaemonController, Executor, GetNVProperties {
 
 	private static final transient Logger log = Logger.getLogger(TaskProcessor.class.getName());
 
-	public static final long WAIT_TIME = TimeUnit.MILLISECONDS.toMillis(500); 
+	public static final long WAIT_TIME = TimeUnit.MILLISECONDS.toMillis(500);
+	private static final AtomicLong instanceCounter = new AtomicLong();
+	private long counterID = instanceCounter.incrementAndGet();
 	private Thread thread;
 	private boolean live = true;
-	private SimpleQueueInterface<TaskEvent>  tasksQueue;
+	private ThresholdQueue<TaskEvent>  tasksQueue;
+
 
 	/**
 	 * This is the worker thread queue is used by the TaskProcessor by dequeuing it and waiting for the queue
@@ -56,7 +56,9 @@ public class TaskProcessor
 	private int executorsCounter = 0;
 	private boolean innerLive = true;
 	private static final AtomicLong TP_COUNTER = new AtomicLong(0);
-	
+
+
+
 	/**
 	 * This is the worker thread that will execute the TaskExecutor.executeTask
 	 */
@@ -402,7 +404,21 @@ public class TaskProcessor
 		if (command != null)
 			queueTask(new TaskEvent(this, new RunnableTaskContainer(command), (Object[])null));
 	}
-	
+
+	@Override
+	public NVGenericMap getProperties() {
+		NVGenericMap ret = new NVGenericMap();
+		ret.setName("task_processor");
+		ret.add(new NVLong("instance_id", counterID));
+		ret.add(new NVInt("workers_capacity", workersQueue.capacity()));
+		ret.add(new NVInt("workers_available", workersQueue.size()));
+		ret.add(new NVInt("tasks_capacity", tasksQueue.capacity()));
+		ret.add(new NVInt("tasks_capacity_threshold", tasksQueue.getThreshold()));
+		ret.add(new NVInt("tasks_pending", tasksQueue.size()));
+
+
+		return ret;
+	}
 	
 	/**
 	 * The tasks queue is used to add task to the task processor
