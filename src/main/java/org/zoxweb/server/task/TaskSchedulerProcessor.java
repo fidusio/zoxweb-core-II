@@ -66,6 +66,11 @@ public class TaskSchedulerProcessor
 			return remove(this);
 		}
 
+		public boolean equals(Object o)
+		{
+			return appointment.equals(o);
+		}
+
 		@Override
 		public void setDelayInNanos(long delayInMillis, long nanoOffset)
 		{
@@ -151,9 +156,8 @@ public class TaskSchedulerProcessor
 	private boolean live = true;
 	private static final long DEFAULT_TIMEOUT = Const.TimeInMillis.MILLI.MILLIS*500;
 	private static final AtomicLong TSP_COUNTER = new AtomicLong(0);
-	private static final AtomicLong instanceCounter = new AtomicLong();
-	private long counterID = instanceCounter.incrementAndGet();
-	volatile private ConcurrentSkipListSet<TaskSchedulerAppointment> queue = null;
+	private long counterID = TSP_COUNTER.incrementAndGet();
+	private volatile ConcurrentSkipListSet<TaskSchedulerAppointment> queue = null;
 	
 	public TaskSchedulerProcessor() {
 		this(Appointment.EQUAL_COMPARATOR, null);
@@ -167,7 +171,7 @@ public class TaskSchedulerProcessor
 		SharedUtil.checkIfNulls("TaskSchedulerComparator can't be null", tsc);
 		queue =  new ConcurrentSkipListSet<TaskSchedulerAppointment>(tsc);
 		taskProcessor = tp;	
-		new Thread(this, "TSP-" + TSP_COUNTER.incrementAndGet()).start();
+		new Thread(this, "TSP-" + counterID).start();
 	}
 
 	public void close() {
