@@ -24,6 +24,7 @@ public class DateFormatterTest {
 	public void testFormat()
 	{
 		System.out.println(DateUtil.DEFAULT_DATE_FORMAT.format(new Date()));
+		System.out.println(DateUtil.DEFAULT_JAVA_FORMAT.format(new Date()));
 		System.out.println("DEFAULT_GMT_MILLIS"+":" +DateUtil.DEFAULT_GMT_MILLIS.format(new Date()));
 		System.out.println("DEFAULT_ZULU_MILLIS"+":" +DateUtil.DEFAULT_ZULU_MILLIS.format(new Date()));
 	}

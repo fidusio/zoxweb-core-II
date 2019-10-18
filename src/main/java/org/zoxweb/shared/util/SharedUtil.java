@@ -892,6 +892,26 @@ public class SharedUtil
 		return ret;
 	}
 
+	public static int signum(int val)
+	{
+		if (val > 0)
+			return 1;
+		if(val < 0)
+			return -1;
+		return 0;
+	}
+
+	public static int signum(long val)
+	{
+		if (val > 0)
+			return 1;
+		if(val < 0)
+			return -1;
+		return 0;
+	}
+
+
+
 	/**
 	 * Looks up list which extends GetName based on enum.
 	 * @param list

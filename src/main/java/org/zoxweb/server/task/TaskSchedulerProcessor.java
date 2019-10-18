@@ -260,7 +260,7 @@ public class TaskSchedulerProcessor
 		
 		synchronized(queue) {
 			while(!queue.add(te)) {
-				te.appointment.setDelayInNanos(te.appointment.getDelayInMillis(), System.nanoTime() + 1);
+				te.appointment.setDelayInNanos(te.appointment.getDelayInMillis(), System.nanoTime());
 			}
 
 			queue.notify();
