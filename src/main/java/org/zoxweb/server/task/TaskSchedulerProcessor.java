@@ -18,13 +18,6 @@ package org.zoxweb.server.task;
 import java.util.Comparator;
 import java.util.NoSuchElementException;
 import java.util.concurrent.ConcurrentSkipListSet;
-import java.util.concurrent.Delayed;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
-import java.util.concurrent.RunnableFuture;
-import java.util.concurrent.RunnableScheduledFuture;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.zoxweb.shared.util.*;
@@ -41,6 +34,10 @@ public class TaskSchedulerProcessor
 
 		private TaskSchedulerAppointment(Appointment ts, TaskEvent te) {
 			SharedUtil.checkIfNulls("TaskScheduler can't be null", ts);
+			if( ts instanceof TaskSchedulerAppointment)
+            {
+                throw new IllegalArgumentException("Appointment must be different than " + TaskSchedulerAppointment.class.getName());
+            }
 			appointment = ts;
 			this.taskEvent = te;
 		}
@@ -85,6 +82,11 @@ public class TaskSchedulerProcessor
 		{
 			// TODO Auto-generated method stub
 			return appointment.getExpirationInMicros();
+		}
+
+		public int hashCode()
+		{
+			return appointment.hashCode();
 		}
 
 //		@Override
@@ -158,6 +160,8 @@ public class TaskSchedulerProcessor
 	private static final AtomicLong TSP_COUNTER = new AtomicLong(0);
 	private long counterID = TSP_COUNTER.incrementAndGet();
 	private volatile ConcurrentSkipListSet<TaskSchedulerAppointment> queue = null;
+
+	private volatile long expiryTimestamp;
 	
 	public TaskSchedulerProcessor() {
 		this(Appointment.EQUAL_COMPARATOR, null);
@@ -289,7 +293,7 @@ public class TaskSchedulerProcessor
 				TaskSchedulerAppointment tSchedulerEvent = null;
 
 				synchronized(queue) {
-					long delay = waitTime();
+					long delay = internalWaitTime();
 
 					if (delay <= 0) {
 						tSchedulerEvent = dequeue();
@@ -321,7 +325,7 @@ public class TaskSchedulerProcessor
 
 			// wait time for the wakeup
 			synchronized(queue) {
-				timeToWait = waitTime();
+				timeToWait = internalWaitTime();
 				if (live && timeToWait > 0) {
 					
 					try {
@@ -338,19 +342,30 @@ public class TaskSchedulerProcessor
 	{
 		return queue.size();
 	}
-	
-	public long waitTime()
+
+
+	/**
+	 * Made private to avoid external calling
+	 * @return time to wait in miilis
+	 */
+	private long internalWaitTime()
 	{
 		long delay  = DEFAULT_TIMEOUT;
 		try
 		{
 			TaskSchedulerAppointment tSchedulerEvent = queue.first();
-			delay = tSchedulerEvent.getExpirationInMillis() - System.currentTimeMillis();
+			expiryTimestamp = tSchedulerEvent.getExpirationInMillis();
+			delay = expiryTimestamp - System.currentTimeMillis();
 		} catch(NoSuchElementException e) {
-
+			expiryTimestamp = System.currentTimeMillis() + delay;
 		}
 		return delay;
 	}
+
+	public long waitTime(){
+		return expiryTimestamp - System.currentTimeMillis();
+	}
+
 
 	@Override
 	public NVGenericMap getProperties()

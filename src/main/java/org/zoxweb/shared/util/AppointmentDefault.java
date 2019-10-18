@@ -81,6 +81,15 @@ public class AppointmentDefault
 		return false;
 	}
 
+	public boolean equals(Object o)
+    {
+        if (o instanceof Appointment)
+        {
+            return ((Appointment) o).getDelayInMillis() == getDelayInMillis();
+        }
+        return false;
+    }
+
 	@Override
 	public synchronized long getExpirationInMicros()
 	{
