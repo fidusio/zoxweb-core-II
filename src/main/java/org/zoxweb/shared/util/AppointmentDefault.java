@@ -83,13 +83,14 @@ public class AppointmentDefault
 
 	public boolean equals(Object o)
     {
-        if (o == this)
-            return true;
-
         if (o instanceof Appointment)
         {
             return ((Appointment) o).getDelayInMillis() == getDelayInMillis();
         }
+
+		if (o == this)
+			return true;
+
         return false;
     }
 
