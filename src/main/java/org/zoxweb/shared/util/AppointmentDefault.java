@@ -48,6 +48,9 @@ public class AppointmentDefault
 			setDelayInNanos(delayInMillis, nanoOffset);
 	}
 
+	/**
+	 * @return delay in millis
+	 */
 	@Override
 	public long getDelayInMillis()
     {
@@ -59,13 +62,16 @@ public class AppointmentDefault
     {	
 	  setDelayInNanos(delayInMillis, 0);
 	}
-	
-	
+
+	/**
+	 * Set the delay in nanos and adjust the expirations in millis and micros
+	 * @param delayInMillis
+	 * @param nanoOffset
+	 */
 	public synchronized void setDelayInNanos(long delayInMillis, long nanoOffset)
 	{
 	  delay = delayInMillis;
 	  expiration = System.currentTimeMillis() + delay;
-	  //expirationInNanos = (expiration*1000000) + (nanoOffset%1000000);
 	  expirationInMicros = (expiration*1000) + Math.abs((nanoOffset%1000000)/1000);
 	}
 
@@ -81,6 +87,11 @@ public class AppointmentDefault
 		return false;
 	}
 
+	/**
+	 * Equals updated supports microseconds equality
+	 * @param o to check
+	 * @return true o = this or the getExpirationInMicros are equals
+	 */
 	public boolean equals(Object o)
     {
 		if (o == this)
@@ -90,6 +101,10 @@ public class AppointmentDefault
         return false;
     }
 
+	/**
+	 * Adjusted expiration time in micros
+	 * @return
+	 */
 	@Override
 	public synchronized long getExpirationInMicros()
 	{

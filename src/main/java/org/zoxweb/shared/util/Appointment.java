@@ -26,8 +26,6 @@ public interface Appointment
 {
 	
 	public static final Comparator<Appointment> EQUAL_COMPARATOR = new AppointmentComparator();
-//	public static final Comparator<Appointment> EQUAL_LESS_COMPARATOR = new AppointmentComparator(RelationalOperator.LT);
-//	public static final Comparator<Appointment> EQUAL_MORE_COMPARATOR = new AppointmentComparator(RelationalOperator.GT);
 	
 	/**
 	 * @return the delay time in millis
@@ -59,7 +57,7 @@ public interface Appointment
 	boolean cancel();
 	
 	/**
-	 * Return the expiration in adjusted nano time
+	 * Return the expiration in adjusted in micro seconds
 	 * @return
 	 */
 	long getExpirationInMicros();

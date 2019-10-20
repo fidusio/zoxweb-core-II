@@ -30,6 +30,14 @@ public class AppointmentComparator
 	}
 
 
+	/**
+	 * Compares in micros and return sigmun result [-1, 0 , 1]
+	 * Note: comparators should always return singnum values other wise sorting could get funky.
+	 * @param o1
+	 * @param o2
+	 * @return
+	 * @exception NullPointerException if o1 or o2 are null
+	 */
 	@Override
 	public int compare(Appointment o1, Appointment o2)
     {
