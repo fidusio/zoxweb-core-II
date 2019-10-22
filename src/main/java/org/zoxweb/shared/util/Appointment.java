@@ -57,9 +57,9 @@ public interface Appointment
 	boolean cancel();
 	
 	/**
-	 * Return the expiration in adjusted in micro seconds
+	 * Adjusted expiration to granular precision beyond millis
 	 * @return
 	 */
-	long getExpirationInMicros();
+	long getPreciseExpiration();
 	
 }

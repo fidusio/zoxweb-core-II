@@ -78,10 +78,10 @@ public class TaskSchedulerProcessor
 		}
 
 		@Override
-		public long getExpirationInMicros()
+		public long getPreciseExpiration()
 		{
 			// TODO Auto-generated method stub
-			return appointment.getExpirationInMicros();
+			return appointment.getPreciseExpiration();
 		}
 
 		public int hashCode()

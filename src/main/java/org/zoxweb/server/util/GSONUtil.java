@@ -28,7 +28,7 @@ import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
-//import java.util.HashMap;
+
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -38,6 +38,7 @@ import java.util.Set;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 
 import org.zoxweb.server.filters.TimestampFilter;
 import org.zoxweb.shared.api.APIException;
@@ -51,7 +52,7 @@ import org.zoxweb.shared.filters.ValueFilter;
 import org.zoxweb.shared.security.AccessException;
 import org.zoxweb.shared.util.ArrayValues;
 import org.zoxweb.shared.util.Const;
-import org.zoxweb.shared.util.Const.TimeInMillis;
+
 import org.zoxweb.shared.util.DynamicEnumMap;
 import org.zoxweb.shared.util.DynamicEnumMapManager;
 import org.zoxweb.shared.util.ExceptionReason.Reason;
@@ -288,7 +289,7 @@ final public class GSONUtil
 	public static List<NVEntity> fromJSONArray(String json, Base64Type b64Type)
 	{
 		List<NVEntity> ret = new ArrayList<NVEntity>();
-		JsonElement je = new JsonParser().parse(json);
+		JsonElement je = JsonParser.parseString(json);
 		
 		if (je instanceof JsonArray)
 		{
@@ -307,7 +308,7 @@ final public class GSONUtil
 	public static List<NVGenericMap> fromJSONGenericMapArray(String json, Base64Type b64Type)
 	{
 		List<NVGenericMap> ret = new ArrayList<NVGenericMap>();
-		JsonElement je = new JsonParser().parse(json);
+		JsonElement je = JsonParser.parseString(json);
 		if (je instanceof JsonArray)
 		{
 			JsonArray ja = (JsonArray) je;
@@ -419,7 +420,7 @@ final public class GSONUtil
 	
 	public static QueryRequest fromQueryRequest(String json)
     {
-		JsonElement je = new JsonParser().parse(json);
+		JsonElement je = JsonParser.parseString(json);
 		QueryRequest ret = null;
 
 		if (je instanceof JsonObject)
@@ -1012,7 +1013,7 @@ final public class GSONUtil
 	
 	public static NVGenericMap fromJSONGenericMap(String json, NVConfigEntity nvce, Base64Type btype)
 	{
-		JsonElement je = new JsonParser().parse(json);
+		JsonElement je = JsonParser.parseString(json);
 		
 		if (je instanceof JsonObject)
 		{
@@ -1394,7 +1395,7 @@ final public class GSONUtil
     {
 		Map<String, Object> ret = new LinkedHashMap<String, Object>();
 		
-		JsonElement je = new JsonParser().parse(json);
+		JsonElement je = JsonParser.parseString(json);
 		
 		log.log(Level.FINE, "JSONElement created from json (String): " + je);
 		
@@ -1548,7 +1549,7 @@ final public class GSONUtil
 	public static <V extends NVEntity> V fromJSON(String json, Class<? extends NVEntity> clazz, Base64Type b64Type) 
         throws AccessException, APIException
     {
-		JsonElement je = new JsonParser().parse(json);
+		JsonElement je = JsonParser.parseString(json);
 		
 		if (je instanceof JsonObject)
 		{
@@ -1572,7 +1573,7 @@ final public class GSONUtil
 	public static <V extends NVEntity> V fromJSON(Reader json, Class<? extends NVEntity> clazz, Base64Type b64Type) 
         throws AccessException, APIException
     {
-        JsonElement je = new JsonParser().parse(json);
+        JsonElement je = JsonParser.parseReader(json);
         
         if (je instanceof JsonObject)
         {
@@ -2005,7 +2006,7 @@ final public class GSONUtil
 	public static List<NVEntity> fromJSONValues(String json, Base64Type b64Type) 
         throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException
     {
-		JsonElement je = new JsonParser().parse(json);
+		JsonElement je = JsonParser.parseString(json);
 		
 		if (je instanceof JsonObject)
 		{
@@ -2056,7 +2057,7 @@ final public class GSONUtil
     {
 		DynamicEnumMap ret = new DynamicEnumMap();
 	
-		JsonElement je = new JsonParser().parse(json);
+		JsonElement je = JsonParser.parseString(json);
 
 		if (je instanceof JsonObject)
 		{
@@ -2178,7 +2179,7 @@ final public class GSONUtil
 	public static List<DynamicEnumMap> fromJSONDynamicEnumMapList(String json)
         throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException
     {
-		JsonElement je = new JsonParser().parse(json);
+		JsonElement je = JsonParser.parseString(json);
 		
 		if (je instanceof JsonObject)
 		{

@@ -97,16 +97,16 @@ public class AppointmentDefault
 		if (o == this)
 			return true;
         else if (o != null && o instanceof Appointment)
-        	return ((Appointment) o).getExpirationInMicros() == getExpirationInMicros();
+        	return ((Appointment) o).getPreciseExpiration() == getPreciseExpiration();
         return false;
     }
 
 	/**
-	 * Adjusted expiration time in micros
+	 * Adjusted expiration to granular precision beyond millis
 	 * @return
 	 */
 	@Override
-	public synchronized long getExpirationInMicros()
+	public synchronized long getPreciseExpiration()
 	{
 		// TODO Auto-generated method stub
 		return expirationInMicros;

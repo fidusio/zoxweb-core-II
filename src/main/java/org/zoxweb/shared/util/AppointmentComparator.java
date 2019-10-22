@@ -42,7 +42,7 @@ public class AppointmentComparator
 	public int compare(Appointment o1, Appointment o2)
     {
 		SharedUtil.checkIfNulls("Values can not be null",o1, o2);
-		return SharedUtil.signum(o1.getExpirationInMicros() - o2.getExpirationInMicros());
+		return SharedUtil.signum(o1.getPreciseExpiration() - o2.getPreciseExpiration());
 	}
 
 }
