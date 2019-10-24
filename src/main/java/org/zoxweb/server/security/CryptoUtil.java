@@ -124,6 +124,10 @@ public class CryptoUtil {
         return SecureRandom.getInstanceStrong();
       case SECURE_RANDOM_VM_DEFAULT:
         return new SecureRandom();
+      case NATIVE:
+        return SecureRandom.getInstance(SecureRandomType.NATIVE.getName());
+      case SHA1PRNG:
+        return SecureRandom.getInstance(SecureRandomType.SHA1PRNG.getName());
       default:
         return SecureRandom.getInstance(SECURE_RANDOM_ALGO.getName());
     }
