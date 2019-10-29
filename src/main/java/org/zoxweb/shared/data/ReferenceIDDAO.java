@@ -19,6 +19,7 @@ package org.zoxweb.shared.data;
 //import javax.persistence.Id;
 //import javax.persistence.MappedSuperclass;
 
+import org.zoxweb.server.util.GSONUtil;
 import org.zoxweb.shared.util.MetaToken;
 import org.zoxweb.shared.util.NVConfig;
 import org.zoxweb.shared.util.NVConfigEntity;
@@ -57,6 +58,9 @@ public abstract class ReferenceIDDAO
 	@Override
 	public String getReferenceID()
     {
+		if(GLOBAL_ID_AS_REF_ID)
+			return getGlobalID();
+
 		return lookupValue(NVC_REFERENCE_ID);
 	}
 
@@ -67,7 +71,10 @@ public abstract class ReferenceIDDAO
 	@Override
 	public void setReferenceID(String referenceID)
 	{
-		setValue(NVC_REFERENCE_ID, referenceID);
+		if(GLOBAL_ID_AS_REF_ID)
+			setGlobalID(referenceID);
+		else
+			setValue(NVC_REFERENCE_ID, referenceID);
 	}
 	
 	/**

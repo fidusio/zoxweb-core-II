@@ -47,6 +47,8 @@ public abstract class NVEntity
 			this.nvb = nvb;
 		}
 	}
+
+	public static boolean GLOBAL_ID_AS_REF_ID = false;
 	
 	protected transient NVConfigEntity config;
 	protected Map<String, NVBase<?>> attributes;
