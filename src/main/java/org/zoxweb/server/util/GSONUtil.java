@@ -105,6 +105,7 @@ import com.google.gson.JsonSerializer;
 import com.google.gson.internal.bind.JsonTreeWriter;
 import com.google.gson.stream.JsonWriter;
 
+
 /**
  * This utility class convert NVEnity Object to json and a json object to an NVEntity.
  * It uses Gson from google 
@@ -824,7 +825,49 @@ final public class GSONUtil
 		
 		return writer;
 	}
-	
+
+
+//	public static String toJSONNVStringList(NVStringList nvsl) throws IOException {
+//
+//		StringWriter sw = new StringWriter();
+//		JsonWriter writer = new JsonWriter(sw);
+//		writer.setSerializeNulls(true);
+//		writer.setHtmlSafe(true);
+//		writer.beginObject();
+//		writer.name(nvsl.getName());
+//		writer.beginArray();
+//
+//		for (String str : nvsl.getValue()) {
+//			writer.value(str);
+//		}
+//		writer.endArray();
+//		writer.endObject();
+//		writer.close();
+//		return sw.toString();
+//	}
+//	public static NVStringList fromJSONNVStringList(String json)
+//	{
+//
+//		JsonElement je = JsonParser.parseString(json);
+//
+//		Iterator<Map.Entry<String, JsonElement>> iterator = je.getAsJsonObject().entrySet().iterator();
+//		if (iterator.hasNext())
+//		{
+//			Map.Entry<String, JsonElement> array = iterator.next();
+//			String name = array.getKey();
+//			JsonArray jsonArray = array.getValue().getAsJsonArray();
+//
+//			NVStringList nval = new NVStringList(name);
+//
+//			for (int i = 0; i < jsonArray.size(); i++)
+//			{
+//				nval.getValue().add(jsonArray.get(i).getAsString());
+//			}
+//
+//			return nval;
+//		}
+//		throw new IllegalArgumentException("Not a json array");
+//	}
 	public static String toJSONGenericMap(NVGenericMap nvgm, boolean indent, boolean printNull, boolean printClassType) throws IOException
 	{
 		StringWriter sw = new StringWriter();
@@ -1027,7 +1070,7 @@ final public class GSONUtil
 			throws APIException, AccessException
 	{
 			NVGenericMap ret = new NVGenericMap();
-			Iterator<Map.Entry<String, JsonElement>> iterator = ((JsonObject) je).entrySet().iterator();
+			Iterator<Map.Entry<String, JsonElement>> iterator = je.entrySet().iterator();
 			while(iterator.hasNext())
 			{
 				Map.Entry<String, JsonElement> element = iterator.next();

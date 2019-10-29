@@ -144,6 +144,17 @@ public class JSONTest {
 			System.out.println(testET);
 
 
+			NVStringList nvsl = new NVStringList("tataName");
+			nvsl.setValues("toto", "titi", "tata");
+			nvgm = new NVGenericMap();
+			nvgm.add(nvsl);
+			String jsonNVSL = GSONUtil.toJSONGenericMap(nvgm, false, false, false);
+			System.out.println(jsonNVSL);
+			nvsl = (NVStringList) GSONUtil.fromJSONGenericMap(jsonNVSL, null, null).get("tataName");
+			System.out.println(nvsl);
+
+
+
 
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -1,6 +1,7 @@
 package org.zoxweb.shared.util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @SuppressWarnings("serial")
@@ -36,5 +37,16 @@ extends NVBase<List<String>>
 		super(name, new ArrayList<String>());
 	}
 
+
+	public void setValues(String ... vals)
+	{
+		value.clear();
+		value.addAll(Arrays.asList(vals));
+	}
+
+	public String[] getValues()
+	{
+		return value.toArray(new String[value.size()]);
+	}
 	  
 }
