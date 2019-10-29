@@ -40,7 +40,7 @@ public class Const {
     VER_1_8("1.8", 52, 0),
     VER_1_9("1.9", 53, 0),
     VER_11("11", 55, 0),
-    VER_UNKOWN("UNKOWN", 0, 0);
+    VER_UNKNOWN("UNKNOWN", 0, 0);
 
     private final String version;
     private final int major;
@@ -64,7 +64,7 @@ public class Const {
         }
       }
 
-      return VER_UNKOWN;
+      return VER_UNKNOWN;
     }
 
     public static JavaClassVersion lookup(String version) {
@@ -76,7 +76,7 @@ public class Const {
         }
       }
 
-      return VER_UNKOWN;
+      return VER_UNKNOWN;
     }
   }
 
@@ -805,6 +805,23 @@ public class Const {
           try {
             Long.parseLong(numeric);
             return NVLONG;
+          } catch (NumberFormatException e) {
+          }
+        }
+        else
+        {
+          try {
+            float f = Float.parseFloat(numeric);
+            String sf = Float.toString(f);
+            if (sf.equals(numeric))
+            return NVFLOAT;
+          } catch (NumberFormatException e) {
+            e.printStackTrace();
+          }
+
+          try {
+            Double.parseDouble(numeric);
+            return NVDOUBLE;
           } catch (NumberFormatException e) {
           }
         }

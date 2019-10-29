@@ -24,16 +24,17 @@ import org.zoxweb.shared.util.TimeStampInterface;
 
 public class MetaUtil
 {
-	public static final MetaUtil SINGLETON = new MetaUtil();
+	//public static final MetaUtil SINGLETON = new MetaUtil();
 
-	private HashMap<String, NVConfigEntity> classNameToNVCE = new HashMap<String, NVConfigEntity>();
+	private static HashMap<String, NVConfigEntity> classNameToNVCE = new HashMap<String, NVConfigEntity>();
+	private static MetaUtil tempObj = new MetaUtil();
 
 	private MetaUtil()
     {
 
 	}
 	
-	public synchronized  NVConfigEntity fromClass(String className)
+	public static synchronized  NVConfigEntity fromClass(String className)
 			throws ClassNotFoundException,
 				   InstantiationException,
 				   IllegalAccessException,
@@ -46,14 +47,14 @@ public class MetaUtil
 
 		if (nvce == null)
 		{
-			nvce = fromClass(Class.forName(className));
+			nvce = tempObj.fromClass(Class.forName(className));
 			classNameToNVCE.put(className, nvce);
 		}
 		
 		return nvce;
 	}
 
-	public NVConfigEntity fromClass(Class<?> clazz) 
+	public static NVConfigEntity fromClass(Class<?> clazz)
         throws InstantiationException, IllegalAccessException, NullPointerException, IllegalArgumentException,  NoSuchMethodException, SecurityException
     {
 		SharedUtil.checkIfNulls("Null class name", clazz);
@@ -129,4 +130,15 @@ public class MetaUtil
 		}		
 	}
 
+	public static boolean isPrimitiveArray(NVBase<?>  nvb)
+	{
+		if (nvb instanceof NVStringList || nvb instanceof NVIntList ||
+			nvb instanceof NVLongList || nvb instanceof NVFloatList ||
+			nvb instanceof NVDoubleList || nvb instanceof NVEnumList)
+		{
+			return true;
+		}
+
+		return false;
+	}
 }

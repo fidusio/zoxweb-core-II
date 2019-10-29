@@ -878,27 +878,20 @@ final public class GSONUtil
 			writer.setIndent("  ");
 		else
 			writer.setIndent("");
-		
 		toJSONGenericMap(writer, nvgm,  printNull, printClassType);
-		
 		writer.close();
-		
 		return sw.toString();
 	}
 	
 	private static JsonWriter toJSONGenericMap(JsonWriter writer, NVGenericMap nvgm,  boolean printNull, boolean printClassType) throws IOException
 	{
 		writer.beginObject();
-		
 		GetNameValue<?> values[] = nvgm.values();
 		for (GetNameValue<?> gnv : values)
 		{
 			toJSONGenericMap(writer, gnv, printNull, printClassType);
 		}
-		
-		
 		writer.endObject();
-		
 		return writer;
 	}
 	
@@ -906,147 +899,146 @@ final public class GSONUtil
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private static JsonWriter toJSONGenericMap(JsonWriter writer, GetNameValue<?> gnv,  boolean printNull, boolean printClassType) throws IOException
 	{
-		
-		
-//		GetNameValue<?> values[] = nvgm.values();
-//		for (GetNameValue<?> gnv : values)
+
+		if (gnv.getValue() == null && !printNull)
 		{
-		
-			if (gnv.getValue() == null && !printNull)
-			{
-				return writer;
-			}
-			String name = null;
-			
+			return writer;
+		}
+		String name = null;
+
 //			if (printClassType)
 //				name = GNVType.toName(gnv, ':');
 //			else
-				name = gnv.getName();
-			
-			if (gnv instanceof NVBoolean)
+		name = gnv.getName();
+
+		if (gnv instanceof NVBoolean)
+		{
+			if (!printNull && !(Boolean)gnv.getValue())
 			{
-				if (!printNull && !(Boolean)gnv.getValue())
+				return writer;
+			}
+			writer.name(name).value((Boolean)gnv.getValue());
+		}
+		else if (gnv instanceof  NVInt || gnv instanceof NVLong || gnv instanceof NVFloat || gnv instanceof NVDouble)
+		{
+			Number value = (Number) gnv.getValue();
+			if (!printNull && value.longValue()==0)
+			{
+				return writer;
+			}
+			writer.name(name).value((Number)gnv.getValue());
+		}
+		else if (gnv.getValue() instanceof String)
+		{
+			writer.name(name).value((String)gnv.getValue());
+		}
+		else if (gnv instanceof NVBlob)
+		{
+			writer.name(name).value(SharedBase64.encodeWrappedAsString((byte[]) gnv.getValue()));
+		}
+		else if (gnv instanceof NVEntityReference)
+		{
+			writer.name(name);
+			toJSON(writer, ((NVEntity)gnv.getValue()).getClass(), (NVEntity)gnv.getValue(), printNull, printClassType, Base64Type.URL);
+		}
+		else if (gnv instanceof NVGenericMap)
+		{
+			writer.name(name);
+			toJSONGenericMap(writer, (NVGenericMap)gnv,  printNull, printClassType);
+		}
+		else if (gnv instanceof ArrayValues)
+		{
+			writer.name(gnv.getName());
+			writer.beginArray();
+			ArrayValues<?> av = (ArrayValues<?>) gnv;
+			for (Object localGNV : av.values())
+			{
+				if(localGNV instanceof GetNameValue)
 				{
-					return writer;
-				}
-				writer.name(name).value((Boolean)gnv.getValue()); 
-			}
-			else if (gnv instanceof  NVInt || gnv instanceof NVLong || gnv instanceof NVFloat || gnv instanceof NVDouble)
-			{
-				Number value = (Number) gnv.getValue();
-				if (!printNull && value.longValue()==0)
-				{
-					return writer;
-				}
-				
-				writer.name(name).value((Number)gnv.getValue()); 
-			}
-			else if (gnv.getValue() instanceof String)
-			{
-				writer.name(name).value((String)gnv.getValue()); 
-			}
-			else if (gnv instanceof NVBlob)
-			{
-				writer.name(name).value(SharedBase64.encodeWrappedAsString((byte[]) gnv.getValue())); 
-			}
-			else if (gnv instanceof NVEntityReference)
-			{
-				
-				writer.name(name);
-				toJSON(writer, ((NVEntity)gnv.getValue()).getClass(), (NVEntity)gnv.getValue(), printNull, printClassType, Base64Type.URL);
-			}
-			else if (gnv instanceof NVGenericMap)
-			{
-				
-				writer.name(name);
-				toJSONGenericMap(writer, (NVGenericMap)gnv,  printNull, printClassType);
-			}
-			else if (gnv instanceof ArrayValues)
-			{
-				writer.name(gnv.getName());
-				writer.beginArray();
-				ArrayValues<?> av = (ArrayValues<?>) gnv;
-				for (Object localGNV : av.values())
-				{
-					if(localGNV instanceof GetNameValue)
+
+					if (((GetNameValue) localGNV).getValue() instanceof String)
 					{
-						
-						if (((GetNameValue) localGNV).getValue() instanceof String)
-						{
-							toJSON(writer, (GetNameValue<String>)localGNV, true, printNull);
-						}
-						else
-						{
-							writer.beginObject();
-							toJSONGenericMap(writer, (GetNameValue<?>) localGNV, printNull, printClassType);
-							writer.endObject();
-						}
-					}
-					if (localGNV instanceof NVEntity)
-					{
-						//writer.beginObject();
-						
-						
-						toJSON(writer,  ((NVEntity)localGNV).getClass(), (NVEntity) localGNV, printNull, printClassType, Base64Type.URL);
-						
-						//writer.endObject();
+						toJSON(writer, (GetNameValue<String>)localGNV, true, printNull);
 					}
 					else
 					{
-						if (localGNV instanceof Number)
-						{
-							writer.value((Number)localGNV);
-						}
-						else if (localGNV instanceof Boolean)
-						{
-							writer.value((Boolean) localGNV);
-						}
-						
-						//writer.value(localGNV);
+						writer.beginObject();
+						toJSONGenericMap(writer, (GetNameValue<?>) localGNV, printNull, printClassType);
+						writer.endObject();
 					}
 				}
-				writer.endArray();
-			}
-			else if (gnv instanceof NVIntList || gnv instanceof NVLongList || gnv instanceof NVFloatList || gnv instanceof NVDoubleList)
-			{
-				writer.name(gnv.getName());
-				writer.beginArray();
-				List<?> values = (List<?>) gnv.getValue();
-				
-				for (Object val : values)
+				if (localGNV instanceof NVEntity)
 				{
-					writer.value((Number)val);
+					//writer.beginObject();
+
+
+					toJSON(writer,  ((NVEntity)localGNV).getClass(), (NVEntity) localGNV, printNull, printClassType, Base64Type.URL);
+
+					//writer.endObject();
 				}
-				
-				writer.endArray();
-			}
-			else if (gnv instanceof NVStringList)
-			{
-				writer.name(gnv.getName());
-				writer.beginArray();
-				List<String> values = (List<String>) gnv.getValue();
-				
-				for (String val : values)
+				else
 				{
-					writer.value(val);
+					if (localGNV instanceof Number)
+					{
+						writer.value((Number)localGNV);
+					}
+					else if (localGNV instanceof Boolean)
+					{
+						writer.value((Boolean) localGNV);
+					}
+
+					//writer.value(localGNV);
 				}
-				
-				writer.endArray();
 			}
-			else if (gnv instanceof NVGenericMapList)
-			{
-				writer.name(gnv.getName());
-				writer.beginArray();
-				List<NVGenericMap> values = (List<NVGenericMap>) gnv.getValue();
-				
-				for (NVGenericMap val : values)
-				{
-					toJSONGenericMap(writer, val, printNull, printClassType);
-				}
-				
-				writer.endArray();
-			}
+			writer.endArray();
 		}
+		//else if (gnv instanceof NVIntList || gnv instanceof NVLongList || gnv instanceof NVFloatList || gnv instanceof NVDoubleList)
+		else if (MetaUtil.isPrimitiveArray((NVBase<?>) gnv))
+		{
+			writer.name(gnv.getName());
+			writer.beginArray();
+			List<?> values = (List<?>) gnv.getValue();
+			for (Object val : values)
+			{
+				if (val != null) {
+					if (val instanceof Number)
+						writer.value((Number) val);
+					else if (val instanceof Enum) {
+						writer.value(((Enum) val).name());
+					}
+					else if (val instanceof String)
+						writer.value((String) val);
+				}
+			}
+			writer.endArray();
+		}
+//		else if (gnv instanceof NVStringList)
+//		{
+//			writer.name(gnv.getName());
+//			writer.beginArray();
+//			List<String> values = (List<String>) gnv.getValue();
+//
+//			for (String val : values)
+//			{
+//				writer.value(val);
+//			}
+//
+//			writer.endArray();
+//		}
+		else if (gnv instanceof NVGenericMapList)
+		{
+			writer.name(gnv.getName());
+			writer.beginArray();
+			List<NVGenericMap> values = (List<NVGenericMap>) gnv.getValue();
+
+			for (NVGenericMap val : values)
+			{
+				toJSONGenericMap(writer, val, printNull, printClassType);
+			}
+
+			writer.endArray();
+		}
+
 		
 		
 	
@@ -1117,6 +1109,10 @@ final public class GSONUtil
 							}
 						}
 					}
+					else
+                    {
+                        log.info("Array guess failed " + jne);
+                    }
 					
 					
 				}
