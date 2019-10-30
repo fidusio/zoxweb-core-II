@@ -130,15 +130,5 @@ public class MetaUtil
 		}		
 	}
 
-	public static boolean isPrimitiveArray(NVBase<?>  nvb)
-	{
-		if (nvb instanceof NVStringList || nvb instanceof NVIntList ||
-			nvb instanceof NVLongList || nvb instanceof NVFloatList ||
-			nvb instanceof NVDoubleList || nvb instanceof NVEnumList)
-		{
-			return true;
-		}
 
-		return false;
-	}
 }

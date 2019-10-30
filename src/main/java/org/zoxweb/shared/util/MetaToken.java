@@ -90,4 +90,26 @@ public enum MetaToken
 		return name;
 	}
 
+
+	public static boolean isPrimitiveArray(NVBase<?> nvb)
+	{
+		if (nvb instanceof NVStringList || nvb instanceof NVIntList ||
+			nvb instanceof NVLongList || nvb instanceof NVFloatList ||
+			nvb instanceof NVDoubleList || nvb instanceof NVEnumList)
+		{
+			return true;
+		}
+		return false;
+	}
+
+	public static boolean isNVEntityArray(NVBase<?> nvb)
+	{
+		if (nvb instanceof NVEntityReferenceList || nvb instanceof NVEntityGetNameMap || nvb instanceof NVEntityReferenceList )
+		{
+			return true;
+		}
+
+		return false;
+	}
+
 }

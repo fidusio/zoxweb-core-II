@@ -121,7 +121,7 @@ final public class GSONUtil
 	public final static Gson DEFAULT_GSON = new GsonBuilder()
 											.registerTypeAdapter(NVGenericMap.class, new NVGenericMapSerDeserializer())
 											.registerTypeHierarchyAdapter(NVEntity.class, new NVEntitySerDeserializer())
-					            .registerTypeAdapter(Date.class, new DateSerDeserializer())
+					                        .registerTypeAdapter(Date.class, new DateSerDeserializer())
 											//.registerTypeAdapter(Enum.class, new EnumSerDeserializer())
 											.create();
 	
@@ -993,7 +993,7 @@ final public class GSONUtil
 			writer.endArray();
 		}
 		//else if (gnv instanceof NVIntList || gnv instanceof NVLongList || gnv instanceof NVFloatList || gnv instanceof NVDoubleList)
-		else if (MetaUtil.isPrimitiveArray((NVBase<?>) gnv))
+		else if (MetaToken.isPrimitiveArray((NVBase<?>) gnv))
 		{
 			writer.name(gnv.getName());
 			writer.beginArray();
