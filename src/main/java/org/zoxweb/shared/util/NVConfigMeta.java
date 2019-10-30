@@ -15,7 +15,7 @@ public class NVConfigMeta
 	implements GetNVConfig, GetName
 	{
 		NAME(DataParam.NAME.getNVConfig()),
-		DESCRIPTON(DataParam.DESCRIPTION.getNVConfig()),
+		DESCRIPTION(DataParam.DESCRIPTION.getNVConfig()),
 		DEFAULT_VALUE(NVConfigManager.createNVConfig("default_value", "The default value of the parameter its type is defined the meta_type", "DefaulValue", false, true, String.class)),
 		DISPLAY_NAME(NVConfigManager.createNVConfig("display_name", "display name", "DisplayName", false, true, String.class)),
 		META_TYPE(NVConfigManager.createNVConfig(MetaToken.META_TYPE.getName(), "The class name of the object", "MetaType", false, true, String.class)),
@@ -51,7 +51,7 @@ public class NVConfigMeta
 	{
 		metaData = new NVGenericMap();	
 		metaData.add(new NVPair(Param.NAME, (String)null));
-		metaData.add(new NVPair(Param.DESCRIPTON, (String)null));
+		metaData.add(new NVPair(Param.DESCRIPTION, (String)null));
 		metaData.add(new NVPair(Param.DISPLAY_NAME, (String)null));
 		metaData.add(new NVPair(Param.META_TYPE, (String)null));
 		metaData.add(new NVBoolean(Param.IS_HIDDEN.getName(), false));
@@ -115,7 +115,7 @@ public class NVConfigMeta
 	
 	public String getDescription()
 	{
-		return metaData.getValue(Param.DESCRIPTON);
+		return metaData.getValue(Param.DESCRIPTION);
 	}
 	
 	public String getMetaType()
@@ -134,7 +134,7 @@ public class NVConfigMeta
 		return metaData.getValue(Param.IS_HIDDEN);
 	}
 	
-	public boolean isMadatory()
+	public boolean isMandatory()
 	{
 		return metaData.getValue(Param.IS_MANDATORY);
 	}

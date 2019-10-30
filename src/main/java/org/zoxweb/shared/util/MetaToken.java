@@ -112,4 +112,14 @@ public enum MetaToken
 		return false;
 	}
 
+	public static boolean isArrayValuesString(NVBase<?> nvb)
+	{
+		if (nvb instanceof NVPairList || nvb instanceof NVPairGetNameMap || nvb instanceof NVGetNameValueList)
+		{
+			return true;
+		}
+
+		return false;
+	}
+
 }
