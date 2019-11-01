@@ -194,18 +194,18 @@ final public class GSONUtil
 	}
 
 	public static class EnumSerDeserializer
-			implements JsonSerializer<Enum<? extends Enum>>,JsonDeserializer<Enum<? extends Enum>>
+			implements JsonSerializer<Enum<? extends Enum<?>>>,JsonDeserializer<Enum<? extends Enum<?>>>
 	{
 
 		@Override
-		public JsonElement serialize(Enum src, Type typeOfSrc, JsonSerializationContext context) {
+		public JsonElement serialize(Enum <?>src, Type typeOfSrc, JsonSerializationContext context) {
 			// TODO Auto-generated method stub
 
 			return new JsonPrimitive(src.name());
 		}
 
 		@Override
-		public Enum deserialize(JsonElement json, Type typeOf, JsonDeserializationContext context)
+		public Enum<?> deserialize(JsonElement json, Type typeOf, JsonDeserializationContext context)
 				throws JsonParseException
 		{
 

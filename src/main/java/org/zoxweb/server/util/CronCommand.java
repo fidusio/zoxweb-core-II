@@ -4,8 +4,6 @@ import java.io.IOException;
 
 import org.zoxweb.server.task.TaskUtil;
 import org.zoxweb.shared.data.RuntimeResultDAO;
-import org.zoxweb.shared.util.Appointment;
-import org.zoxweb.shared.util.AppointmentDefault;
 import org.zoxweb.shared.util.SharedUtil;
 import org.zoxweb.shared.util.TaskListener;
 import org.zoxweb.shared.util.Const.TimeInMillis;

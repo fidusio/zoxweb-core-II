@@ -1,6 +1,6 @@
 package org.zoxweb.shared.http;
 
-import java.util.List;
+
 import org.zoxweb.shared.data.PropertyDAO;
 import org.zoxweb.shared.net.ConnectionConfig;
 import org.zoxweb.shared.util.ArrayValues;
@@ -10,8 +10,6 @@ import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVConfigEntity.ArrayType;
 import org.zoxweb.shared.util.NVConfigEntityLocal;
 import org.zoxweb.shared.util.NVConfigManager;
-import org.zoxweb.shared.util.NVGenericMap;
-import org.zoxweb.shared.util.NVIntList;
 import org.zoxweb.shared.util.SharedUtil;
 
 
@@ -58,6 +56,7 @@ extends PropertyDAO
   }
 
 
+  @SuppressWarnings("unchecked")
   public ArrayValues<ConnectionConfig> getConnectionConfigs()
   {
     return (ArrayValues<ConnectionConfig>) lookup(Param.CONNECTIONS);

@@ -27,7 +27,7 @@ public class MetaUtil
 	//public static final MetaUtil SINGLETON = new MetaUtil();
 
 	private static HashMap<String, NVConfigEntity> classNameToNVCE = new HashMap<String, NVConfigEntity>();
-	private static MetaUtil tempObj = new MetaUtil();
+	//private static MetaUtil tempObj = new MetaUtil();
 
 	private MetaUtil()
     {
@@ -47,7 +47,7 @@ public class MetaUtil
 
 		if (nvce == null)
 		{
-			nvce = tempObj.fromClass(Class.forName(className));
+			nvce = fromClass(Class.forName(className));
 			classNameToNVCE.put(className, nvce);
 		}
 		
