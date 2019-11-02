@@ -15,11 +15,7 @@
  */
 package org.zoxweb.shared.data;
 
-//import javax.persistence.Column;
-//import javax.persistence.Id;
-//import javax.persistence.MappedSuperclass;
 
-import org.zoxweb.server.util.GSONUtil;
 import org.zoxweb.shared.util.MetaToken;
 import org.zoxweb.shared.util.NVConfig;
 import org.zoxweb.shared.util.NVConfigEntity;

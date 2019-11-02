@@ -33,7 +33,7 @@ public class CryptoPerf {
     public static Result generateRandomNumber(CryptoConst.SecureRandomType randomType, int byteSize, int count) throws NoSuchAlgorithmException {
         SecureRandom sr = CryptoUtil.newSecureRandom(randomType);
         byte buffer[] = new byte[byteSize];
-        HashSet<Object> set = new HashSet<>();
+        //HashSet<Object> set = new HashSet<>();
 
         long ts = System.currentTimeMillis();
 
@@ -129,7 +129,7 @@ public class CryptoPerf {
         {
             System.err.println(e.getMessage());
             System.err.println("Usage: command ...");
-            System.err.println("generate random: gen-rnds [" + SharedUtil.toCanonicalID(',', CryptoConst.SecureRandomType.values()) + "] size-in-bytes count repeat");
+            System.err.println("generate random: gen-rnds [" + SharedUtil.toCanonicalID(',', (Object[])CryptoConst.SecureRandomType.values()) + "] size-in-bytes count repeat");
             System.err.println("generate random: gen-keys [aes,des,rsa,ec]  key-size-in-bits count repeat");
         }
     }

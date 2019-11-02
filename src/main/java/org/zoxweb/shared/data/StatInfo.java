@@ -2,6 +2,7 @@ package org.zoxweb.shared.data;
 
 import org.zoxweb.shared.util.*;
 
+@SuppressWarnings("serial")
 public class StatInfo
     extends PropertyDAO
 {

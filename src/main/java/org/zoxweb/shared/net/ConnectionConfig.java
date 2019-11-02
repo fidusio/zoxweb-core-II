@@ -10,6 +10,7 @@ import org.zoxweb.shared.util.NVGenericMap;
 import org.zoxweb.shared.util.NVStringList;
 import org.zoxweb.shared.util.SharedUtil;
 
+@SuppressWarnings("serial")
 public class ConnectionConfig
   extends SetNameDescriptionDAO{
 
