@@ -104,7 +104,7 @@ public enum MetaToken
 
 	public static boolean isNVEntityArray(NVBase<?> nvb)
 	{
-		if (nvb instanceof NVEntityReferenceList || nvb instanceof NVEntityGetNameMap || nvb instanceof NVEntityReferenceList )
+		if (nvb instanceof NVEntityReferenceList || nvb instanceof NVEntityGetNameMap || nvb instanceof NVEntityReferenceIDMap )
 		{
 			return true;
 		}
