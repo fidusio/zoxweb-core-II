@@ -32,7 +32,6 @@ public class NVEntityGetNameMap
 	
 	public NVEntityGetNameMap()
 	{
-		//super((String)null, new HashMap<GetName, NVEntity>());
 	}
 	
 	public NVEntityGetNameMap(String name)
