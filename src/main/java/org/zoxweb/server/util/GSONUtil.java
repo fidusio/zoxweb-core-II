@@ -50,41 +50,10 @@ import org.zoxweb.shared.db.QueryRequest;
 import org.zoxweb.shared.filters.FilterType;
 import org.zoxweb.shared.filters.ValueFilter;
 import org.zoxweb.shared.security.AccessException;
-import org.zoxweb.shared.util.ArrayValues;
-import org.zoxweb.shared.util.Const;
+import org.zoxweb.shared.util.*;
 
-import org.zoxweb.shared.util.DynamicEnumMap;
-import org.zoxweb.shared.util.DynamicEnumMapManager;
 import org.zoxweb.shared.util.ExceptionReason.Reason;
-import org.zoxweb.shared.util.GNVTypeName;
-import org.zoxweb.shared.util.GetNVGenericMap;
-import org.zoxweb.shared.util.GetNameValue;
-import org.zoxweb.shared.util.MetaToken;
-import org.zoxweb.shared.util.NVBase;
-import org.zoxweb.shared.util.NVBlob;
-import org.zoxweb.shared.util.NVBoolean;
-import org.zoxweb.shared.util.NVConfig;
-import org.zoxweb.shared.util.NVConfigEntity;
-import org.zoxweb.shared.util.NVDouble;
-import org.zoxweb.shared.util.NVDoubleList;
-import org.zoxweb.shared.util.NVEntity;
-import org.zoxweb.shared.util.NVEntityReference;
-import org.zoxweb.shared.util.NVFloat;
-import org.zoxweb.shared.util.NVFloatList;
-import org.zoxweb.shared.util.NVGenericMap;
-import org.zoxweb.shared.util.NVGenericMapList;
-import org.zoxweb.shared.util.NVInt;
-import org.zoxweb.shared.util.NVIntList;
-import org.zoxweb.shared.util.NVLong;
-import org.zoxweb.shared.util.NVLongList;
-import org.zoxweb.shared.util.NVPair;
-import org.zoxweb.shared.util.NVPairList;
-import org.zoxweb.shared.util.NVStringList;
-import org.zoxweb.shared.util.SharedBase64;
 import org.zoxweb.shared.util.SharedBase64.Base64Type;
-import org.zoxweb.shared.util.SharedStringUtil;
-import org.zoxweb.shared.util.SharedUtil;
-import org.zoxweb.shared.util.SubjectID;
 import org.zoxweb.shared.util.Const.GNVType;
 import org.zoxweb.shared.util.Const.LogicalOperator;
 
@@ -918,6 +887,10 @@ final public class GSONUtil
 				return writer;
 			}
 			writer.name(name).value((Boolean)gnv.getValue());
+		}
+		if (gnv instanceof NVEnum)
+		{
+			writer.name(name).value(((Enum<?>)gnv.getValue()).name());
 		}
 		else if (gnv instanceof  NVInt || gnv instanceof NVLong || gnv instanceof NVFloat || gnv instanceof NVDouble)
 		{
