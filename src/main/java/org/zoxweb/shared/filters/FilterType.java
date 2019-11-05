@@ -516,6 +516,22 @@ public enum FilterType
 			return true;
 		}
 	},
+	LOWERCASE
+	{
+		public String validate(String in)
+				throws NullPointerException, IllegalArgumentException {
+			return in.toLowerCase();
+		}
+		public boolean isValid(String in)
+		{
+			for(char c : in.toCharArray())
+			{
+				if(!Character.isLowerCase(c))
+					return false;
+			}
+			return true;
+		}
+	},
 	/**
 	 * Password filter
 	 */
@@ -587,6 +603,22 @@ public enum FilterType
 			 return SharedStringUtil.trimOrNull(in) != null;
 		}
     },
+	UPPERCASE
+			{
+				public String validate(String in)
+						throws NullPointerException, IllegalArgumentException {
+					return in.toUpperCase();
+				}
+				public boolean isValid(String in)
+				{
+					for(char c : in.toCharArray())
+					{
+						if(!Character.isUpperCase(c))
+							return false;
+					}
+					return true;
+				}
+			},
     /**
 	 * URL filter
 	 */
