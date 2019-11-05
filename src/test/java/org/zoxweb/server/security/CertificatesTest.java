@@ -15,7 +15,6 @@ import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
 //import sun.security.x509.X500Name;
 
-@SuppressWarnings("restriction")
 public class CertificatesTest {
 
   public static void main(String... args) {

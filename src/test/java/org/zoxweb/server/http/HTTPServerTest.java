@@ -1,6 +1,6 @@
 package org.zoxweb.server.http;
 
-import com.sun.net.httpserver.Authenticator;
+
 import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
