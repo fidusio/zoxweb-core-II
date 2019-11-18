@@ -136,6 +136,7 @@ public class HTTPCall
 		// format the payload first
 		String encodedContentParams = HTTPUtil.formatParameters(hcc.getParameters(), hcc.getCharset(), hcc.isURLEncodingEnabled(), hcc.getHTTPParameterFormatter());
 		String urlURI = fullURL();
+
 		boolean embedPostPutParamsInURI = false;
 		GetNameValue<String> contentType = hcc.getParameters().get(HTTPHeaderName.CONTENT_TYPE.getName());
 		if (contentType != null && contentType.getValue() != null && contentType.getValue().toLowerCase().indexOf("x-www-form-urlencoded") == -1)
@@ -185,10 +186,7 @@ public class HTTPCall
 					
 			}
 		}
-		
 		URL url = new URL(urlURI);
-		
-		
 		OutputStream os = null;
 		InputStream is = null;
 		InputStream isError = null;
