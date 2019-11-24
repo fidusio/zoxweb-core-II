@@ -399,10 +399,11 @@ public class APIAppManagerProvider
     public void deleteSubjectAPIKey(SubjectAPIKey subjectAPIKey)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException
     {
-    	if (subjectAPIKey != null)
-    		getAPISecurityManager().invalidateResource(subjectAPIKey.getSubjectID());
-    	
-        delete(subjectAPIKey);
+    	if (subjectAPIKey != null) {
+			getAPISecurityManager().invalidateResource(subjectAPIKey.getSubjectID());
+			log.info("" + subjectAPIKey.getClass().getName());
+			delete(subjectAPIKey, subjectAPIKey instanceof AppDeviceDAO);
+		}
     }
 
     
@@ -635,9 +636,16 @@ public class APIAppManagerProvider
     public <V extends NVEntity> boolean delete(V nve)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException 
     {
-    	return getAPIDataStore().delete(nve, false);
+    	return delete(nve, false);
         
     }
+
+	public <V extends NVEntity> boolean delete(V nve, boolean withReference)
+			throws NullPointerException, IllegalArgumentException, AccessException, APIException
+	{
+		return getAPIDataStore().delete(nve, withReference);
+
+	}
 
    
     public AppIDDAO lookupAppIDDAO(String domainID, String appID)

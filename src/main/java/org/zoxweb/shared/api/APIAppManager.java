@@ -343,7 +343,6 @@ public interface APIAppManager
     /**
      * Delete NVEntity object.
      * @param nve
-     * @param <V>
      * @return
      * @throws NullPointerException
      * @throws IllegalArgumentException
@@ -353,6 +352,19 @@ public interface APIAppManager
     <V extends NVEntity> boolean delete(V nve)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException;
 
+	/**
+	 *
+	 * @param nve
+	 * @param withReference any referenced object
+	 * @param <V>
+	 * @return
+	 * @throws NullPointerException
+	 * @throws IllegalArgumentException
+	 * @throws AccessException
+	 * @throws APIException
+	 */
+	<V extends NVEntity> boolean delete(V nve, boolean withReference)
+			throws NullPointerException, IllegalArgumentException, AccessException, APIException;
 
     
     AppIDDAO createAppIDDAO(String domainID, String appID);

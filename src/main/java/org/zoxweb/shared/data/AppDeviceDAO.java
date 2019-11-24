@@ -97,7 +97,7 @@ public class AppDeviceDAO
 
     /**
      * Sets the app ID.
-     * @param appID
+     * @param appGID
      */
     public void setAppGID(String appGID) 
     {
