@@ -554,9 +554,11 @@ public class APIAppManagerProvider
 //    }
 
   
-    public UserPreferenceDAO lookupUserPreferenceDAO(String subjectID)
+    public UserPreferenceDAO lookupUserPreferenceDAO(AppIDDAO appIDDAO,String subjectID)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException {
-        return null;
+    	UserIDDAO userIDDAO = lookupUserIDDAO(subjectID);
+
+        return lookupUserPreferenceDAO(appIDDAO, userIDDAO);
     }
 
   

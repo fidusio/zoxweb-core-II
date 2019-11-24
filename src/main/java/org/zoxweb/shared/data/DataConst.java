@@ -57,6 +57,15 @@ public class DataConst
 		;
 		
 	}
+
+	public enum DataOP
+	{
+		CREATE,
+		DELETE,
+		PATCH,
+		READ,
+		UPDATE,
+	}
 	
 	public enum ContextAccess
 	{

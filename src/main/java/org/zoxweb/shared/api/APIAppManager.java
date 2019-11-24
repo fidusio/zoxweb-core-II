@@ -123,7 +123,7 @@ public interface APIAppManager
      * @throws AccessException
      * @throws APIException
      */
-	UserPreferenceDAO lookupUserPreferenceDAO(String subjectID)
+	UserPreferenceDAO lookupUserPreferenceDAO(AppIDDAO appIDDAO, String subjectID)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException;
 
 

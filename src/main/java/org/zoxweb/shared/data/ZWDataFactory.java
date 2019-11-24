@@ -24,10 +24,7 @@ import org.zoxweb.shared.accounting.FinancialTransactionDAO;
 import org.zoxweb.shared.accounting.BillingAccountDAO;
 import org.zoxweb.shared.accounting.BillingItemsContainerDAO;
 import org.zoxweb.shared.accounting.BillingItemDAO;
-import org.zoxweb.shared.api.APIBatchResult;
-import org.zoxweb.shared.api.APIConfigInfoDAO;
-import org.zoxweb.shared.api.APICredentialsDAO;
-import org.zoxweb.shared.api.APIError;
+import org.zoxweb.shared.api.*;
 import org.zoxweb.shared.app.AppVersionDAO;
 import org.zoxweb.shared.net.ConnectionConfig;
 import org.zoxweb.shared.security.KeyStoreInfoDAO;
@@ -87,7 +84,22 @@ public class ZWDataFactory
 			}
 			
 		},
-		
+		API_BATCH_RESULT(APIBatchResult.class.getName())
+		{
+			@SuppressWarnings("unchecked")
+			@Override
+			public APIBatchResult<NVEntity> newInstance()
+			{
+				return new APIBatchResult<>();
+			}
+
+			@Override
+			public NVConfigEntity getNVConfigEntity()
+			{
+				return APIBatchResult.NVC_API_BATCH_RESULT;
+			}
+
+		},
 		//	org.zoxweb.shared.api
 		API_CONFIG_INFO_DAO(APIConfigInfoDAO.class.getName())
 		{
@@ -102,22 +114,6 @@ public class ZWDataFactory
 			public NVConfigEntity getNVConfigEntity()
 			{
 				return APIConfigInfoDAO.NVC_API_CONFIG_INFO_DAO;
-			}
-			
-		},
-		API_BATCH_RESULT(APIBatchResult.class.getName())
-		{
-			@SuppressWarnings("unchecked")
-			@Override
-			public APIBatchResult<NVEntity> newInstance()
-			{
-				return new APIBatchResult<>();
-			}
-
-			@Override
-			public NVConfigEntity getNVConfigEntity()
-			{
-				return APIBatchResult.NVC_API_BATCH_RESULT;
 			}
 			
 		},
@@ -137,6 +133,23 @@ public class ZWDataFactory
 				return APICredentialsDAO.NVC_CREDENTIALS_DAO;
 			}
 			
+		},
+		API_DATA_OP(APIDataOP.class.getName())
+		{
+
+			@SuppressWarnings("unchecked")
+			@Override
+			public APIDataOP newInstance()
+			{
+				return new APIDataOP();
+			}
+
+			@Override
+			public NVConfigEntity getNVConfigEntity()
+			{
+				return APIDataOP.NVC_API_DATA_OP;
+			}
+
 		},
 	   APP_DEVICE_DAO(AppDeviceDAO.class.getName())
         {

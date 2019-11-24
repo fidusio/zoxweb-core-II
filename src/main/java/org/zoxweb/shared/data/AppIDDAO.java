@@ -228,4 +228,9 @@ public class AppIDDAO
 		return new AppIDDAO(domainID, appID);
 		
 	}
+
+    public static AppIDDAO toAppID(String domainID, String appID)
+    {
+        return new AppIDDAO(domainID, appID);
+    }
 }
