@@ -259,7 +259,7 @@ final public class GSONUtil
 	public static List<NVEntity> fromJSONArray(String json, Base64Type b64Type)
 	{
 		List<NVEntity> ret = new ArrayList<NVEntity>();
-		JsonElement je = JsonParser.parseString(json);
+		JsonElement je = new JsonParser().parse(json);
 		
 		if (je instanceof JsonArray)
 		{
@@ -278,7 +278,7 @@ final public class GSONUtil
 	public static List<NVGenericMap> fromJSONGenericMapArray(String json, Base64Type b64Type)
 	{
 		List<NVGenericMap> ret = new ArrayList<NVGenericMap>();
-		JsonElement je = JsonParser.parseString(json);
+		JsonElement je = new JsonParser().parse(json);
 		if (je instanceof JsonArray)
 		{
 			JsonArray ja = (JsonArray) je;
@@ -390,7 +390,7 @@ final public class GSONUtil
 	
 	public static QueryRequest fromQueryRequest(String json)
     {
-		JsonElement je = JsonParser.parseString(json);
+		JsonElement je = new JsonParser().parse(json);
 		QueryRequest ret = null;
 
 		if (je instanceof JsonObject)
@@ -1021,7 +1021,7 @@ final public class GSONUtil
 	
 	public static NVGenericMap fromJSONGenericMap(String json, NVConfigEntity nvce, Base64Type btype)
 	{
-		JsonElement je = JsonParser.parseString(json);
+		JsonElement je = new JsonParser().parse(json);
 		
 		if (je instanceof JsonObject)
 		{
@@ -1407,7 +1407,7 @@ final public class GSONUtil
     {
 		Map<String, Object> ret = new LinkedHashMap<String, Object>();
 		
-		JsonElement je = JsonParser.parseString(json);
+		JsonElement je = new JsonParser().parse(json);
 		
 		log.log(Level.FINE, "JSONElement created from json (String): " + je);
 		
@@ -1561,7 +1561,7 @@ final public class GSONUtil
 	public static <V extends NVEntity> V fromJSON(String json, Class<? extends NVEntity> clazz, Base64Type b64Type) 
         throws AccessException, APIException
     {
-		JsonElement je = JsonParser.parseString(json);
+		JsonElement je = new JsonParser().parse(json);
 		
 		if (je instanceof JsonObject)
 		{
@@ -1585,7 +1585,7 @@ final public class GSONUtil
 	public static <V extends NVEntity> V fromJSON(Reader json, Class<? extends NVEntity> clazz, Base64Type b64Type) 
         throws AccessException, APIException
     {
-        JsonElement je = JsonParser.parseReader(json);
+        JsonElement je = new JsonParser().parse(json);
         
         if (je instanceof JsonObject)
         {
@@ -2018,7 +2018,7 @@ final public class GSONUtil
 	public static List<NVEntity> fromJSONValues(String json, Base64Type b64Type) 
         throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException
     {
-		JsonElement je = JsonParser.parseString(json);
+		JsonElement je = new JsonParser().parse(json);
 		
 		if (je instanceof JsonObject)
 		{
@@ -2069,7 +2069,7 @@ final public class GSONUtil
     {
 		DynamicEnumMap ret = new DynamicEnumMap();
 	
-		JsonElement je = JsonParser.parseString(json);
+		JsonElement je = new JsonParser().parse(json);
 
 		if (je instanceof JsonObject)
 		{
@@ -2191,7 +2191,7 @@ final public class GSONUtil
 	public static List<DynamicEnumMap> fromJSONDynamicEnumMapList(String json)
         throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException
     {
-		JsonElement je = JsonParser.parseString(json);
+		JsonElement je = new JsonParser().parse(json);
 		
 		if (je instanceof JsonObject)
 		{
