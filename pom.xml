@@ -52,6 +52,8 @@
     <jdk.version>1.8</jdk.version>
     <maven-plugin.version>3.6.1</maven-plugin.version>
     <maven-plugin-source.version>3.0.1</maven-plugin-source.version>
+    <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
+    <maven-surefile-plugin.version>3.0.0-M1</maven-surefile-plugin.version>
     <maven-jar-plugin.version>3.0.2</maven-jar-plugin.version>
     <maven-javadoc.version>2.10.4</maven-javadoc.version>
     <common-codec.version>1.10</common-codec.version>
@@ -91,7 +93,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.12.4</version>
+        <version>${maven-surefile-plugin.version}</version>
         <configuration>
           <skipTests>${skipTests}</skipTests>
         </configuration>
@@ -100,7 +102,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-resources-plugin</artifactId>
-        <version>3.0.2</version>
+        <version>${maven-resources-plugin.version}</version>
         <configuration>
           <encoding>UTF-8</encoding>
         </configuration>
