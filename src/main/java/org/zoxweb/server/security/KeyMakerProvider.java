@@ -34,7 +34,7 @@ public final class KeyMakerProvider
     implements KeyMaker {
 
   public final static KeyMakerProvider SINGLETON = new KeyMakerProvider();
-  private static final transient Logger log = Logger.getLogger("KeyMakerProvider");
+  private static final transient Logger log = Logger.getLogger(KeyMakerProvider.class.getSimpleName());
 
   private volatile SecretKey masterKey = null;
   private HashMap<String, EncryptedKeyDAO> keyMap = new HashMap<String, EncryptedKeyDAO>();
