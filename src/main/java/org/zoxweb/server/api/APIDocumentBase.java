@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.util.concurrent.locks.Lock;
 
 import org.zoxweb.server.util.LockQueue;
+import org.zoxweb.shared.api.APIDocumentStore;
 import org.zoxweb.shared.api.APIException;
 
 import org.zoxweb.shared.api.APIFileInfoMap;
