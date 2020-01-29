@@ -26,7 +26,7 @@ public final class JWTProvider
   public String encode(byte[] key, JWT jwt) throws AccessSecurityException {
     // TODO Auto-generated method stub
     try {
-      return CryptoUtil.encodeJWT(key, jwt);
+      return CryptoUtil.encodeJWT(key, jwt,false);
     } catch (SecurityException | IOException  | GeneralSecurityException e) {
 
       throw new AccessSecurityException(e.getMessage());

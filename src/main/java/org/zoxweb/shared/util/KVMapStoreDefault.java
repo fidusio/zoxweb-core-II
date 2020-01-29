@@ -91,4 +91,9 @@ implements KVMapStore<K,V>
 		return mapCache.size();
 	}
 
+	@Override
+	public long defaultExpirationPeriod() {
+		return 0;
+	}
+
 }

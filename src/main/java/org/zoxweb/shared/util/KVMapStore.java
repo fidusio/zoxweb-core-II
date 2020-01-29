@@ -36,5 +36,7 @@ public interface KVMapStore<K,V>
 	void addExclusion(K exclusion);
 	
 	int size();
+
+	long defaultExpirationPeriod();
 	
 }

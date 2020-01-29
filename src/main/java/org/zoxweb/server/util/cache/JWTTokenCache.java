@@ -37,7 +37,7 @@ implements KVMapStore<String, JWT>
 			// TODO Auto-generated method stub
 			String hash = (String) event.getTaskExecutorParameters()[0];
 			cache.remove(hash);
-			log.info( "pending tokens: " + size());
+			//log.info(Thread.currentThread() + " pending tokens: " + size());
 		}
 		
 	}
@@ -167,6 +167,11 @@ implements KVMapStore<String, JWT>
 		// TODO Auto-generated method stub
 		return cache.size();
 	}
-	
+
+
+	public long defaultExpirationPeriod()
+	{
+		return expirationPeriod;
+	}
 	
 }

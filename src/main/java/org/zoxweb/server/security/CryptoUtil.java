@@ -721,12 +721,22 @@ public class CryptoUtil {
     return  keyFactory.generatePrivate(keySpec);
   }
 
+
   public static String encodeJWT(String key, JWT jwt)
+          throws NoSuchAlgorithmException, GeneralSecurityException, IOException, SecurityException, InvalidKeySpecException, NullPointerException, IllegalArgumentException {
+    return encodeJWT(key, jwt, false);
+  }
+
+  public static String encodeJWT(String key, JWT jwt, boolean setHash)
       throws NoSuchAlgorithmException, GeneralSecurityException, IOException, SecurityException, InvalidKeySpecException, NullPointerException, IllegalArgumentException {
-    return encodeJWT(key != null ? SharedStringUtil.getBytes(key) : null, jwt);
+    return encodeJWT(key != null ? SharedStringUtil.getBytes(key) : null, jwt, setHash);
   }
 
   public static String encodeJWT(byte key[], JWT jwt)
+          throws NoSuchAlgorithmException, GeneralSecurityException, IOException, SecurityException, InvalidKeySpecException, NullPointerException, IllegalArgumentException {
+    return encodeJWT(key, jwt, false);
+  }
+  public static String encodeJWT(byte key[], JWT jwt, boolean setHash)
       throws NoSuchAlgorithmException,
       InvalidKeyException,
       IOException,
@@ -805,6 +815,8 @@ public class CryptoUtil {
 
     if (b64Hash != null) {
       sb.append(b64Hash);
+      if(setHash)
+        jwt.setHash(b64Hash);
     }
 
     return sb.toString();
