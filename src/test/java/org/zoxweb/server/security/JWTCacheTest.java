@@ -2,6 +2,7 @@ package org.zoxweb.server.security;
 
 import org.zoxweb.server.logging.LoggerUtil;
 import org.zoxweb.server.task.TaskUtil;
+import org.zoxweb.server.util.GSONUtil;
 import org.zoxweb.server.util.cache.JWTTokenCache;
 import org.zoxweb.shared.security.JWT;
 import org.zoxweb.shared.security.SecurityConsts;
@@ -25,9 +26,10 @@ public class JWTCacheTest {
             JWTTokenCache cache = new JWTTokenCache(ttl, TaskUtil.getDefaultTaskScheduler());
             long sizeOfAllTockens = 0;
             long ts = System.currentTimeMillis();
+            JWT jwt = null;
             for(int i=0; i < count; i++)
             {
-                JWT jwt = JWT.createJWT(SecurityConsts.JWTAlgorithm.HS256, subject, "xlogistx.io", "test");
+                jwt = JWT.createJWT(SecurityConsts.JWTAlgorithm.HS256, subject, "xlogistx.io", "test");
                 sizeOfAllTockens += CryptoUtil.encodeJWT(password, jwt, true).length();
                 cache.map(jwt);
             }
@@ -39,6 +41,7 @@ public class JWTCacheTest {
             System.out.println("It took " + Const.TimeInMillis.toString(creationTS) + " to create " + actualSize + " JWT token");
             System.out.println("It took " + Const.TimeInMillis.toString(System.currentTimeMillis()-ts) + " to finish " + actualSize + " JWT token cache size " + cache.size() +
                                " average size " + (sizeOfAllTockens/actualSize) + " total size: " + sizeOfAllTockens + " default expiration: " + Const.TimeInMillis.toString(cache.defaultExpirationPeriod()));
+            System.out.println(GSONUtil.toJSON(jwt, true, false, false));
 
 
         }
