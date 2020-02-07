@@ -1,4 +1,3 @@
-package org.zoxweb.server.http.handler;
 /*
  * Copyright (c) 2012-2020 ZoxWeb.com LLC.
  *
@@ -14,6 +13,7 @@ package org.zoxweb.server.http.handler;
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+package org.zoxweb.server.http.handler;
 
 import java.io.File;
 import java.io.FileInputStream;
