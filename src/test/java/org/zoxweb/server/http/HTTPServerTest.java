@@ -35,10 +35,8 @@ public class HTTPServerTest {
   static class ContextHandler implements HttpHandler {
 
     public void handle(HttpExchange he) throws IOException {
-      log.info("user agent:" +  he.getRequestHeaders().entrySet());
       InputStream is = he.getRequestBody();
       is.close();
-
       NVGenericMap nvgm = new NVGenericMap();
       nvgm.add("context", he.getHttpContext().getPath());
       String json = GSONUtil.DEFAULT_GSON.toJson(nvgm);
