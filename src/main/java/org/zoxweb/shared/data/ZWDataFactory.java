@@ -757,6 +757,36 @@ public class ZWDataFactory
 				return SimpleDocumentDAO.NVC_SIMPLE_DOCUMENT_DAO;
 			}
 		},
+		SIMPLE_MESSAGE(SimpleMessage.class.getName())
+        {
+            @SuppressWarnings("unchecked")
+            @Override
+            public SimpleMessage newInstance()
+            {
+                return new SimpleMessage();
+            }
+
+            @Override
+            public NVConfigEntity getNVConfigEntity() 
+            {
+                return SimpleMessage.NVC_SIMPLE_MESSAGE;
+            }
+        },
+        SIMPLE_ERROR_MESSAGE(SimpleErrorMessage.class.getName())
+        {
+            @SuppressWarnings("unchecked")
+            @Override
+            public SimpleErrorMessage newInstance()
+            {
+                return new SimpleErrorMessage();
+            }
+
+            @Override
+            public NVConfigEntity getNVConfigEntity() 
+            {
+                return SimpleErrorMessage.NVC_SIMPLE_ERROR_MESSAGE;
+            }
+        },
 		SUBJECT_API_KEY(SubjectAPIKey.class.getName())
 		{
 			@SuppressWarnings("unchecked")

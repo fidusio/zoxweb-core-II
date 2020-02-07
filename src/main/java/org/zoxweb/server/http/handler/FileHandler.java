@@ -26,8 +26,6 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 import org.zoxweb.server.io.IOUtil;
-import org.zoxweb.server.util.GSONUtil;
-import org.zoxweb.shared.data.SimpleDocumentDAO;
 import org.zoxweb.shared.http.HTTPHeaderName;
 import org.zoxweb.shared.http.HTTPMimeType;
 import org.zoxweb.shared.http.HTTPStatusCode;
@@ -79,18 +77,15 @@ public class FileHandler implements HttpHandler {
             he.sendResponseHeaders(HTTPStatusCode.OK.CODE, file.length());
             IOUtil.relayStreams(new FileInputStream(file), he.getResponseBody(), true);
         }
+        catch(FileNotFoundException e)
+        {
+          HTTPHandlerUtil.sendErrorMessage(he, HTTPStatusCode.NOT_FOUND, "Resource NOT FOUND");
+        }
         catch(Exception e)
         {
-            e.printStackTrace();
-            HTTPStatusCode hsc= HTTPStatusCode.BAD_REQUEST;
-            SimpleDocumentDAO sdd = new SimpleDocumentDAO();
-            sdd.setContent(hsc.CODE + ", " + hsc.REASON + ", not found.");
-            String message = GSONUtil.toJSON(sdd, false, false, false);
-            byte buffer[] = SharedStringUtil.getBytes(message);
-            he.getResponseHeaders()
-                    .add(HTTPHeaderName.CONTENT_TYPE.getName(), HTTPMimeType.APPLICATION_JSON.getValue());
-            he.sendResponseHeaders(hsc.CODE, buffer.length);
-            he.getResponseBody().write(buffer);
+            e.printStackTrace();            
+            HTTPHandlerUtil.sendErrorMessage(he, HTTPStatusCode.BAD_REQUEST, "System error");
+
         }
     }
 }
