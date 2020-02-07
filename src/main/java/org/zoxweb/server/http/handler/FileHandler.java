@@ -62,7 +62,7 @@ public class FileHandler implements HttpHandler {
         log.info("path: " + path);
         log.info("URI: " +  uri.getPath());
         log.info("Remote IP: " + he.getRemoteAddress());
-        log.info("Thread: " + Thread.currentThread());
+        //log.info("Thread: " + Thread.currentThread());
         try {
             String filename = uri.getPath().substring(path.length(), uri.getPath().length());
             log.info("filename: " + filename);
