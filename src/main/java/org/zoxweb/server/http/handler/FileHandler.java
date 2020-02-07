@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.logging.Logger;
 
+@SuppressWarnings("restriction")
 public class FileHandler implements HttpHandler {
     private final static Logger log = Logger.getLogger(FileHandler.class.getName());
 
