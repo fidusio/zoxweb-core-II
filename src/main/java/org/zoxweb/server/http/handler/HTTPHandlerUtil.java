@@ -20,7 +20,9 @@ public class HTTPHandlerUtil {
   
   public static void sendErrorMessage(HttpExchange he, HTTPStatusCode hsc, String msg) throws IOException
   {
-    sendSimpleMessage(he, hsc, new SimpleErrorMessage(msg, hsc.CODE, hsc.REASON));
+    SimpleErrorMessage sem = new SimpleErrorMessage(msg, hsc.CODE, hsc.REASON);
+    sem.setCreationTime(System.currentTimeMillis());
+    sendSimpleMessage(he, hsc, sem);
   }
   
   public static void sendSimpleMessage(HttpExchange he, HTTPStatusCode hsc, SimpleMessage simpleMessage) throws IOException
