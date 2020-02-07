@@ -35,7 +35,7 @@ public class HTTPServerTest {
   static class ContextHandler implements HttpHandler {
 
     public void handle(HttpExchange he) throws IOException {
-
+      log.info("user agent:" +  he.getRequestHeaders().entrySet());
       InputStream is = he.getRequestBody();
       is.close();
 
@@ -68,6 +68,7 @@ public class HTTPServerTest {
       String path = he.getHttpContext().getPath();
       
       URI uri = he.getRequestURI();
+      log.info("user agent:" +  he.getRequestHeaders());
       log.info("path: " + path);
       log.info("URI: " +  uri.getPath());
       log.info("Remote IP:" + he.getRemoteAddress());
