@@ -59,6 +59,7 @@ public class HTTPServerTest {
       int index = 0;
       int port = Integer.parseInt(args[index++]);
       HttpServer server = HttpServer.create(new InetSocketAddress(port), 250);
+      String baseFolder = args[index++];
       for (; index < args.length; index++) {
         server.createContext("/" + args[index], new ContextHandler());
       }
@@ -72,7 +73,7 @@ public class HTTPServerTest {
       //server.createContext("/toto", new FileHandler());
       server.setExecutor(TaskUtil.getDefaultTaskProcessor());
 
-      HttpContext hc = server.createContext("/", new FileHandler("/temp"));
+      HttpContext hc = server.createContext("/", new FileHandler(baseFolder));
 
       log.info(hc.getPath());
       server.start();

@@ -42,16 +42,16 @@ import org.zoxweb.shared.util.SharedUtil;
 public class FileHandler implements HttpHandler {
     private final static Logger log = Logger.getLogger(FileHandler.class.getName());
 
-    public final String baseDir;
-    public FileHandler(String baseDir)
+    public final String baseFolder;
+    public FileHandler(String baseFolder)
             throws IOException
     {
-        baseDir = SharedStringUtil.trimOrNull(baseDir);
-        SharedUtil.checkIfNulls("Null baseDir ", baseDir);
-        File folder = new File(baseDir);
+        baseFolder = SharedStringUtil.trimOrNull(baseFolder);
+        SharedUtil.checkIfNulls("Null baseDir ", baseFolder);
+        File folder = new File(baseFolder);
         if (!folder.exists() || !folder.isDirectory() || !folder.canRead())
-            throw new IOException("Invalid folder: " + baseDir);
-        this.baseDir = baseDir;
+            throw new IOException("Invalid folder: " + baseFolder);
+        this.baseFolder = baseFolder;
     }
 
     public void handle(HttpExchange he) throws IOException {
@@ -70,7 +70,7 @@ public class FileHandler implements HttpHandler {
             if(mime != null)
                 he.getResponseHeaders()
                         .add(HTTPHeaderName.CONTENT_TYPE.getName(), mime.getValue());
-            File file = new File(baseDir, filename);
+            File file = new File(baseFolder, filename);
             if (!file.exists() || !file.isFile() || !file.canRead())
                 throw new FileNotFoundException();
 
