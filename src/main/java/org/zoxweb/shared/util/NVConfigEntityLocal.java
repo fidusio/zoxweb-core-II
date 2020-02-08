@@ -419,7 +419,32 @@ public class NVConfigEntityLocal
 		
 		return null;
 	}
-	
+
+/*
+
+// do NOT DELETE
+	public boolean equals(Object o)
+	{
+		if (o == this)
+			return true;
+		else if(o instanceof NVConfigEntity)
+		{
+			NVConfigEntity oNCE = (NVConfigEntity)o;
+			if (toCanonicalID().equals(oNCE.toCanonicalID()) &&
+				getMetaType().equals(oNCE.getMetaType()) &&
+				isArray() == oNCE.isArray() &&
+			    getArrayType() == oNCE.getArrayType())
+			{
+				return true;
+			}
+
+		}
+		return false;
+	}
+
+ */
+
+
 //	/**
 //	 * This method checks if meta initialization is complete.
 //	 * 

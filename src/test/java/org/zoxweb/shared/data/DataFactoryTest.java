@@ -1,12 +1,16 @@
 package org.zoxweb.shared.data;
 
+import org.junit.Test;
+import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVEntity;
 import org.zoxweb.shared.util.NVEntityInstance;
 
-public class DataFactoryTest {
+import java.util.HashSet;
+import java.util.Set;
 
-  
-  public static void testDataFactory()
+public class DataFactoryTest {
+  @Test
+  public void testDataFactory()
   {
       DataFactory.SINGLETON.registerFactory(ZWDataFactory.SINGLETON, ZWDataFactory.NVEntityTypeClass.values());
       long zwDelta;
@@ -59,10 +63,23 @@ public class DataFactoryTest {
       
       System.out.println("Total:" +  ZWDataFactory.NVEntityTypeClass.values().length + " slow:" + negCounter +  " result:"+(totalData + totalZW));
   }
-  
-  public static void main(String ...args)
+  @Test
+  public  void testSize()
   {
-    testDataFactory();
+      Set<String> nameSet = new HashSet<String>();
+      Set<NVConfigEntity> nvceSet = new HashSet<NVConfigEntity>();
+      Set<NVEntity> nveSet = new HashSet<NVEntity>();
+      for (ZWDataFactory.NVEntityTypeClass nvetc : ZWDataFactory.NVEntityTypeClass.values())
+      {
+          nameSet.add(nvetc.getName());
+          nvceSet.add(nvetc.getNVConfigEntity());
+          nveSet.add(ZWDataFactory.SINGLETON.createNVEntity(nvetc.getName()));
+      }
+      assert(ZWDataFactory.NVEntityTypeClass.values().length == (nameSet.size() & nvceSet.size() & nveSet.size()));
+      System.out.println(ZWDataFactory.NVEntityTypeClass.values().length + " " + nameSet.size() + " " + nvceSet.size() + " " + nveSet.size());
+
   }
+  
+
   
 }
