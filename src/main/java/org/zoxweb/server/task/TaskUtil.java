@@ -26,6 +26,7 @@ public class TaskUtil
 {
 	private static TaskProcessor TASK_PROCESSOR = null;
 	private static TaskSchedulerProcessor TASK_SCHEDULER = null;
+	private static TaskSchedulerProcessor TASK_SIMPLE_SCHEDULER = null;
 	private static final Lock LOCK = new ReentrantLock();
 	
 	private static int maxTasks = 500;
@@ -125,6 +126,26 @@ public class TaskUtil
 		
 		return TASK_SCHEDULER;
 	}
+
+	/**
+	 * Return the default single threaded task scheduler
+	 * @return
+	 */
+	public static TaskSchedulerProcessor getSimpleTaskScheduler() {
+		if (TASK_SIMPLE_SCHEDULER == null) {
+			try {
+				LOCK.lock();
+
+				if (TASK_SIMPLE_SCHEDULER == null) {
+					TASK_SIMPLE_SCHEDULER = new TaskSchedulerProcessor();
+				}
+			} finally {
+				LOCK.unlock();
+			}
+		}
+
+		return TASK_SIMPLE_SCHEDULER;
+	}
 	
 	public static boolean isBusy()
 	{
@@ -134,6 +155,16 @@ public class TaskUtil
 
 	public static long waitIfBusyThenClose(long millisToSleepAndCheck)
 	{
+		if (TASK_SIMPLE_SCHEDULER != null)
+		{
+			do {
+				try {
+					Thread.sleep(millisToSleepAndCheck);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			} while (TASK_SIMPLE_SCHEDULER.pendingTasks() != 0 );
+		}
 		return waitIfBusyThenClose(getDefaultTaskProcessor(), getDefaultTaskScheduler(), millisToSleepAndCheck);
 	}
 
@@ -154,6 +185,7 @@ public class TaskUtil
 		long timestamp = System.currentTimeMillis();
 		tsp.close();
 		tp.close();
+
 
 		return timestamp;
 	}
