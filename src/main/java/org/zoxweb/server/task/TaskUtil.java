@@ -164,6 +164,7 @@ public class TaskUtil
 					e.printStackTrace();
 				}
 			} while (TASK_SIMPLE_SCHEDULER.pendingTasks() != 0 );
+			TASK_SIMPLE_SCHEDULER.close();
 		}
 		return waitIfBusyThenClose(getDefaultTaskProcessor(), getDefaultTaskScheduler(), millisToSleepAndCheck);
 	}

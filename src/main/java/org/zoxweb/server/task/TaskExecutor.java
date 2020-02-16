@@ -32,12 +32,12 @@ public interface TaskExecutor
 	 * the TaskEvent.setExecutionResult() can be used 
 	 * @param event task event to be executed
 	 */
-	public void executeTask(TaskEvent event);
+	void executeTask(TaskEvent event);
 	
 	/**
 	 * Called after returning from TaskExecutor.executeTask();
 	 * @param event
 	 */
-	public void finishTask(TaskEvent event);
+	void finishTask(TaskEvent event);
 
 }
