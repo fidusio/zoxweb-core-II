@@ -155,6 +155,8 @@ public class TaskUtil
 
 	public static long waitIfBusyThenClose(long millisToSleepAndCheck)
 	{
+		if(millisToSleepAndCheck < 1)
+			throw new IllegalArgumentException("wait time must be greater than 0 second.");
 		if (TASK_SIMPLE_SCHEDULER != null)
 		{
 			do {
@@ -173,6 +175,8 @@ public class TaskUtil
 
 	public static long waitIfBusyThenClose(TaskProcessor tp, TaskSchedulerProcessor tsp, long millisToSleepAndCheck)
 	{
+		if(millisToSleepAndCheck < 1)
+			throw new IllegalArgumentException("wait time must be greater than 0 second.");
 		do
 		{
 			try
@@ -200,6 +204,7 @@ public class TaskUtil
 	{
 		getDefaultTaskScheduler().close();
 		getDefaultTaskProcessor().close();
+		getSimpleTaskScheduler().close();
 	}
 	
 }

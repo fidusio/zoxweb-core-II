@@ -18,6 +18,9 @@ package org.zoxweb.server.task;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
+import java.util.logging.Logger;
 
 import org.zoxweb.server.task.TaskDefault;
 import org.zoxweb.server.task.TaskEvent;
@@ -30,6 +33,8 @@ import org.zoxweb.shared.util.AppointmentDefault;
 
 public class TaskSchedulerProcessorTest {
 
+
+	private static final Logger log = Logger.getLogger(TaskSchedulerProcessorTest.class.getName());
 	private static final Lock lock = new ReentrantLock();
 	private static Object test = null;
 
@@ -180,7 +185,7 @@ public class TaskSchedulerProcessorTest {
 
 		while( tsp.pendingTasks() != 0) {
 			try {
-				Thread.sleep( Const.TimeInMillis.SECOND.MILLIS);
+				Thread.sleep(Const.TimeInMillis.SECOND.MILLIS);
 				if (last != null)
 				{
 					System.out.println( last.cancel() + " " + tei.index);
@@ -226,8 +231,30 @@ public class TaskSchedulerProcessorTest {
 //			}
 //		});
 
-		TaskUtil.waitIfBusyThenClose(tp, tsp, 23);
 
+		TaskUtil.getSimpleTaskScheduler().queue(0, new Supplier<String>()
+				{
+					String str;
+					Supplier<String> init(String str)
+					{
+						this.str = str;
+						return this;
+					}
+					public String get(){
+					return str;
+				}}.init("Kara"),
+				new Consumer<String>() {
+				@Override
+				public void accept(String s) {
+					log.info(Thread.currentThread() + " " + s);
+				}
+		}
+		);
+
+
+
+		TaskUtil.waitIfBusyThenClose(tp, tsp, 23);
+		TaskUtil.waitIfBusyThenClose(25);
 
 		System.out.println("TaskSchedulerProcessor 1 :" + tsp.pendingTasks() + " TaskProcessor:" + tp.pendingTasks());
 		//tp.close();

@@ -18,6 +18,8 @@ package org.zoxweb.server.task;
 import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 import java.util.logging.Logger;
 
 import org.zoxweb.server.util.ThresholdQueue;
@@ -403,6 +405,12 @@ public class TaskProcessor
 	{
 		if (command != null)
 			queueTask(new TaskEvent(this, new RunnableTaskContainer(command), (Object[])null));
+	}
+
+	public <T> void execute(Supplier<T> supplier, Consumer<T> consumer)
+	{
+		if(consumer != null)
+			queueTask(new TaskEvent(this, new SupplierConsumerTask<>(), supplier, consumer));
 	}
 
 	@Override

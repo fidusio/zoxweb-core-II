@@ -19,6 +19,8 @@ import java.util.Comparator;
 import java.util.NoSuchElementException;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 import org.zoxweb.shared.util.*;
 import org.zoxweb.server.task.RunnableTask.RunnableTaskContainer;
@@ -247,7 +249,13 @@ public class TaskSchedulerProcessor
         
         return null;
     }
-	
+	public <T> Appointment queue(long delayInMillis, Supplier<T> supplier, Consumer<T> consumer)
+	{
+		if (supplier != null && consumer != null)
+			return queue(new AppointmentDefault(delayInMillis, System.nanoTime()), new TaskEvent(this, new SupplierConsumerTask<>(), supplier, consumer));
+
+		return null;
+	}
 	
 	
 	
