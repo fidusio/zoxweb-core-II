@@ -32,9 +32,7 @@ import java.util.logging.Logger;
 
 public class HTTPCallTool implements Runnable
 {
-
     private static Logger log = Logger.getLogger(HTTPCallTool.class.getName());
-
     private static AtomicLong counter = new AtomicLong();
     private static AtomicLong failCounter = new AtomicLong();
 
