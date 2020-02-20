@@ -6,8 +6,8 @@ import org.zoxweb.server.task.TaskUtil;
 import java.util.concurrent.atomic.AtomicLong;
 
 
-public abstract class DefaultFlowProcessor
-    implements FlowProcessor
+public abstract class DefaultFlowProcessor<F>
+    implements FlowProcessor<F>
 {
 
 
@@ -25,7 +25,7 @@ public abstract class DefaultFlowProcessor
         this.tsp = tsp;
     }
 
-    public void publish(FlowEvent event)
+    public void publish(FlowEvent<F> event)
     {
         event.setSequence(sequence.getAndIncrement());
         tsp.queue(0, event, this);
