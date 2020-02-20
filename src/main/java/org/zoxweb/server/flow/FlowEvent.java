@@ -11,7 +11,6 @@ public class FlowEvent<T>
     private long timestamp;
     protected T flowType;
     private long sequence;
-    private Runnable runnable;
 
 
     public FlowEvent(T type)
@@ -32,12 +31,10 @@ public class FlowEvent<T>
         return flowType;
     }
 
-
     public long getTimestamp()
     {
         return timestamp;
     }
-
 
     protected void setSequence(long sequence)
     {
@@ -48,12 +45,9 @@ public class FlowEvent<T>
         return sequence;
     }
 
-
     public FlowEvent<T> get()
     {
         return this;
     }
-
-
 
 }

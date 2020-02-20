@@ -15,12 +15,7 @@ public abstract class DefaultFlowProcessor<F>
     protected TaskSchedulerProcessor tsp;
     protected AtomicLong sequence = new AtomicLong(0);
 
-    public DefaultFlowProcessor()
-    {
-        this(TaskUtil.getSimpleTaskScheduler());
-    }
-
-    public DefaultFlowProcessor(TaskSchedulerProcessor tsp)
+    protected DefaultFlowProcessor(TaskSchedulerProcessor tsp)
     {
         this.tsp = tsp;
     }
