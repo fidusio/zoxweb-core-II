@@ -63,7 +63,7 @@
     <javax-cache.version>1.1.1</javax-cache.version>
     <javax-mail.version>1.6.4</javax-mail.version>
     <javax-servlet.version>4.0.1</javax-servlet.version>
-    <jsoup.version>1.12.1</jsoup.version>
+    <jsoup.version>1.12.2</jsoup.version>
     <snakeyaml.version>1.24</snakeyaml.version>
     <websocket.version>1.1</websocket.version>
     <junit.version>4.12</junit.version>
