@@ -236,7 +236,7 @@ public class Range<T extends Comparable<T>>
      * range.getStart() >= intoOtherRange.getStart() and <br/>
      * range.getEnd() <= intoOtherRange.getEnd()
      * It does not guarantee into.contains(range)==true which depends also on
-     * {@link Range#inclusive}
+
      * @param range
      * @param into
      * <br>Both not null safe
@@ -261,7 +261,6 @@ public class Range<T extends Comparable<T>>
      * range.getStart() <= intoOtherRange.getStart() and <br/>
      * range.getEnd() >= intoOtherRange.getEnd() <br/>
      * It does not guarantee range.contains(toContain)==true which depends also on
-     * {@link Range#inclusive}
      * @param range
      * @param toContain
      * <br>Both not null safe
@@ -381,12 +380,12 @@ public class Range<T extends Comparable<T>>
     // ///////////////////////////////////////////////////////////
 
     /**
-     * Get {@link #start}
+     * @return the start value
      */
     public T getStart() { return lookupValue(Param.START); }
 
     /**
-     * Set {@link #start}
+     * Set the start value
      * <br/>Not null safe
      * <br/>If {@link #isAutoSwitch} is set to true, and  start > end
      * they are switched
@@ -406,12 +405,12 @@ public class Range<T extends Comparable<T>>
     }
 
     /**
-     * Get {@link #end}
+     * @return  the end value
      */
     public T getEnd() {  return lookupValue(Param.END);  }
 
     /**
-     * Set {@link #end}
+     * Set the end value
      * <br/>Not null safe
      * <br/>If {@link #isAutoSwitch} is set to true, and  start > end
      * they are switched
@@ -431,12 +430,12 @@ public class Range<T extends Comparable<T>>
     }
 
     /**
-     * Get {@link #inclusive}
+     * @return the inclusive type
      */
     public Inclusive getInclusive() { return lookupValue(Param.INCLUSIVE); }
 
     /**
-     * Set {@link #inclusive}
+     * Set the inclusive type
      * @param inclusive
      *<br/>If null {@link Inclusive#START} used
      */
