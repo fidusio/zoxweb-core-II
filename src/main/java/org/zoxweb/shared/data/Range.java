@@ -310,10 +310,70 @@ public class Range<T extends Comparable<T>>
      * @see java.lang.Object#toString()
      */
     @Override
-    public String toString () {
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        switch (getInclusive())
+        {
 
-        return "Range<"+ getStart().getClass().getSimpleName()
-                + "> "+ getStart() +"-" +getEnd();
+            case START:
+                sb.append('[');
+                sb.append(getStart());
+                sb.append(", ");
+                sb.append(getEnd());
+                sb.append(')');
+                break;
+            case END:
+                sb.append('(');
+                sb.append(getStart());
+                sb.append(", ");
+                sb.append(getEnd());
+                sb.append(']');
+                break;
+            case BOTH:
+                sb.append('[');
+                sb.append(getStart());
+                sb.append(", ");
+                sb.append(getEnd());
+                sb.append(']');
+                break;
+            case NONE:
+                sb.append('(');
+                sb.append(getStart());
+                sb.append(", ");
+                sb.append(getEnd());
+                sb.append(')');
+                break;
+        }
+
+//        if (getStart() != null) {
+//            if (getStart().isExclusive()
+//                    || getStart().getLimitType() == LimitValueDAO.LimitType.OPEN_VALUE) {
+//                sb.append("(");
+//            } else {
+//                sb.append("[");
+//            }
+//
+//            if (getStart().getValue() > 0) {
+//                sb.append(getStart().getValue());
+//            }
+//        }
+//
+//        if (getEnd() != null) {
+//            sb.append(", ");
+//
+//            if (getEnd().getValue() > 0) {
+//                sb.append(getEnd().getValue());
+//            }
+//
+//            if (getEnd().isExclusive()
+//                    || getEnd().getLimitType() == LimitValueDAO.LimitType.OPEN_VALUE) {
+//                sb.append(")");
+//            } else {
+//                sb.append("]");
+//            }
+//        }
+
+        return sb.toString();
     }
 
     // ///////////////////////////////////////////////////////////
@@ -382,7 +442,7 @@ public class Range<T extends Comparable<T>>
      */
     public  Range<T> setInclusive(Inclusive inclusive) {
 
-        inclusive = (inclusive == null) ? Inclusive.START : inclusive;
+        inclusive = (inclusive == null) ? Inclusive.BOTH : inclusive;
         setValue(Param.INCLUSIVE, inclusive);
         return this;
     }

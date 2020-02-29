@@ -19,7 +19,9 @@ public class RangeTest {
         assert(!intRange.contains(500));
         assert(!intRange.contains(0));
         assert(intRange.contains(50));
-        assert(intRange.contains(100));
+        assert(intRange.contains(99));
         assert(intRange.contains(1));
+
+        System.out.println(intRange);
     }
 }
