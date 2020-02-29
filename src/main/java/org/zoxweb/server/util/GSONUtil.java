@@ -749,6 +749,13 @@ final public class GSONUtil
 						writer.name(nvc.getName()).value((BigDecimal) nve.lookupValue(nvc));
 					}
 				}
+				else if (nvc.getMetaTypeBase() == Number.class)
+				{
+					if ((Number) nve.lookupValue(nvc) != null)
+					{
+						writer.name(nvc.getName()).value((Number) nve.lookupValue(nvc));
+					}
+				}
 				else if (nvc instanceof NVConfigEntity)
 				{
 					NVEntity tempNVE = (NVEntity)nve.lookupValue(nvc);
@@ -1892,6 +1899,13 @@ final public class GSONUtil
 					else if (BigDecimal.class.equals(metaType))
 					{
 						((NVBase<BigDecimal>) nvb).setValue(je.getAsBigDecimal());
+					}
+					else if (Number.class.equals(metaType))
+					{
+						NVBase<?> nv = guessPrimitive(nvb.getName(), null, je.getAsJsonPrimitive());
+						((NVBase<Number>) nvb).setValue((Number)nv.getValue());
+
+
 					}
 					
 				}

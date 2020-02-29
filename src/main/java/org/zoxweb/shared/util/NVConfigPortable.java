@@ -207,7 +207,7 @@ public class NVConfigPortable
 	 */
 	public void setMetaType(Class<?> metaType) 
 	{
-		this.metaType = Const.wrap( metaType);
+		this.metaType = Const.wrap(metaType);
 	}
 	
 	/**

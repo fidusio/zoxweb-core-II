@@ -1588,7 +1588,7 @@ public class SharedUtil
 			{
 				return new NVEntityReference(config);
 			}
-			
+
 			if (config.isEnum())
 			{
 				
@@ -1632,6 +1632,10 @@ public class SharedUtil
 			else if (BigDecimal.class.equals(c))
 			{
 				return new NVBigDecimal(config.getName(), new BigDecimal(0));
+			}
+			else if (Number.class.equals(c))
+			{
+				return new NVNumber(config.getName(), null);
 			}
 			else if (NVGenericMap.class.equals(c))
 			{

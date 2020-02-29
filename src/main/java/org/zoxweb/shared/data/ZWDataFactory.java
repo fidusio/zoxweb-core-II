@@ -84,6 +84,22 @@ public class ZWDataFactory
 			}
 			
 		},
+		//	org.zoxweb.shared.accounting
+		AMOUNT_DAO(AmountDAO.class.getName())
+		{
+			@SuppressWarnings("unchecked")
+			@Override
+			public AmountDAO newInstance()
+			{
+				return new AmountDAO();
+			}
+
+			@Override
+			public NVConfigEntity getNVConfigEntity()
+			{
+				return AmountDAO.NVC_AMOUNT_DAO;
+			}
+		},
 		API_BATCH_RESULT(APIBatchResult.class.getName())
 		{
 			@SuppressWarnings("unchecked")
@@ -195,7 +211,7 @@ public class ZWDataFactory
 			{
 				return AgreementDAO.NVC_AGREEMENT_DAO;
 			}
-		},	
+		},
 		APPLICATION_VERSION_DAO(AppVersionDAO.class.getName())
 		{
 			@SuppressWarnings("unchecked")
@@ -711,7 +727,23 @@ public class ZWDataFactory
 			{
 				return APIError.API_ERROR;
 			}
-		},	
+		},
+		//	org.zoxweb.shared.accounting
+		RANGE(Range.class.getName())
+		{
+			@SuppressWarnings("unchecked")
+			@Override
+			public Range newInstance()
+			{
+				return new Range();
+			}
+
+			@Override
+			public NVConfigEntity getNVConfigEntity()
+			{
+				return Range.NVC_RANGE;
+			}
+		},
 		RUNTIME_RESULT_DAO(RuntimeResultDAO.class.getName())
 		{
 			@SuppressWarnings("unchecked")
@@ -860,23 +892,6 @@ public class ZWDataFactory
 			public NVConfigEntity getNVConfigEntity()
 			{
 				return VMInfoDAO.NVC_VMINFO_DAO;
-			}
-		},	
-		
-		//	org.zoxweb.shared.accounting
-		AMOUNT_DAO(AmountDAO.class.getName())
-		{
-			@SuppressWarnings("unchecked")
-			@Override
-			public AmountDAO newInstance()
-			{
-				return new AmountDAO();
-			}
-
-			@Override
-			public NVConfigEntity getNVConfigEntity() 
-			{
-				return AmountDAO.NVC_AMOUNT_DAO;
 			}
 		},
 		FOLDER_CONTENT_OP(FolderContentOp.class.getName())
