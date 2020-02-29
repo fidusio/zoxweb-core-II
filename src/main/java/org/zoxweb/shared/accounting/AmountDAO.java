@@ -64,10 +64,10 @@ public class AmountDAO
 
 	}
 	
-	public static final NVConfigEntity NVC_MONEY_VALUE_DAO = new NVConfigEntityLocal(
-																						"money_value_dao", 
+	public static final NVConfigEntity NVC_AMOUNT_DAO = new NVConfigEntityLocal(
+																						"amount_dao", 
 																						null, 
-																						"MoneyValueDAO", 
+																						"AmountDAO", 
 																						true, 
 																						false, 
 																						false, 
@@ -85,7 +85,7 @@ public class AmountDAO
 	 */
 	public AmountDAO()
 	{
-		super(NVC_MONEY_VALUE_DAO);
+		super(NVC_AMOUNT_DAO);
 		setCurrency(DEFAULT_CURRENCY);
 	}
 	

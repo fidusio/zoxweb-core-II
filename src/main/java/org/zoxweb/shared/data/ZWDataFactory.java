@@ -864,7 +864,7 @@ public class ZWDataFactory
 		},	
 		
 		//	org.zoxweb.shared.accounting
-		MONEY_VALUE_DAO(AmountDAO.class.getName())
+		AMOUNT_DAO(AmountDAO.class.getName())
 		{
 			@SuppressWarnings("unchecked")
 			@Override
@@ -876,7 +876,7 @@ public class ZWDataFactory
 			@Override
 			public NVConfigEntity getNVConfigEntity() 
 			{
-				return AmountDAO.NVC_MONEY_VALUE_DAO;
+				return AmountDAO.NVC_AMOUNT_DAO;
 			}
 		},
 		FOLDER_CONTENT_OP(FolderContentOp.class.getName())
