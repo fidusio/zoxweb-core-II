@@ -15,7 +15,7 @@ public @interface DataProperties
 {
 	
 	/**
-	 * Specify the input data format ex for json or xml it is string, for binant byte[]
+	 * Specify the input data format ex for json or xml it is string, for binary byte[]
 	 * @return
 	 */
 	Class<?> rawDataType() default String.class;
