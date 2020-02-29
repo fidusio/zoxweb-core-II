@@ -19,7 +19,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 /**
- * @author javaconsigliere@gmail.com 
+ * @author javaconsigliere@gmail.com
  *
  */
 //This is the annotation to be processed
