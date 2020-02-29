@@ -31,7 +31,7 @@ import org.zoxweb.shared.util.SharedUtil;
  *
  */
 @SuppressWarnings("serial")
-public class MoneyValueDAO
+public class AmountDAO
 	extends SetNameDescriptionDAO
 	implements RenderableValue<String>
 {
@@ -45,7 +45,7 @@ public class MoneyValueDAO
 		implements GetNVConfig
 	{
 		CURRENCY(NVConfigManager.createNVConfig("currency", "Currency", "Currency", true, true, Currency.class)),
-		VALUE(NVConfigManager.createNVConfig("money_value", "Value", "Value", true, true, BigDecimal.class)),
+		AMOUNT(NVConfigManager.createNVConfig("amount", "Amount", "Amount", true, true, BigDecimal.class)),
 		
 		;
 		
@@ -72,7 +72,7 @@ public class MoneyValueDAO
 																						false, 
 																						false, 
 																						false, 
-																						MoneyValueDAO.class, 
+																						AmountDAO.class, 
 																						SharedUtil.extractNVConfigs(Params.values()), 
 																						null, 
 																						true, 
@@ -83,7 +83,7 @@ public class MoneyValueDAO
 	/**
 	 * The default constructor.
 	 */
-	public MoneyValueDAO()
+	public AmountDAO()
 	{
 		super(NVC_MONEY_VALUE_DAO);
 		setCurrency(DEFAULT_CURRENCY);
@@ -94,16 +94,16 @@ public class MoneyValueDAO
 	 * @param amount
 	 * @param currency
 	 */
-	public MoneyValueDAO(BigDecimal amount, Currency currency)
+	public AmountDAO(BigDecimal amount, Currency currency)
 	{
 		this();
-		setValue(amount);
+		setAmount(amount);
 		if (currency != null) {
             setCurrency(currency);
         }
 	}
 
-    public MoneyValueDAO(BigDecimal amount) {
+    public AmountDAO(BigDecimal amount) {
         this(amount, null);
     }
 	
@@ -112,7 +112,7 @@ public class MoneyValueDAO
 	 * The default currency is applied.
 	 * @param amount
 	 */
-	public MoneyValueDAO(String amount)
+	public AmountDAO(String amount)
 	{
 		this(new BigDecimal(amount), null);
 	}
@@ -122,7 +122,7 @@ public class MoneyValueDAO
 	 * The default currency is applied.
 	 * @param amount
 	 */
-	public MoneyValueDAO(long amount)
+	public AmountDAO(long amount)
 	{
 		this(new BigDecimal(amount), null);
 	}
@@ -132,7 +132,7 @@ public class MoneyValueDAO
 	 * The default currency is applied.
 	 * @param amount
 	 */
-	public MoneyValueDAO(float amount)
+	public AmountDAO(float amount)
 	{
 		this(BigDecimal.valueOf(amount), null);
 	}
@@ -141,7 +141,7 @@ public class MoneyValueDAO
 	 * This constructor instantiates MoneyValueDAO based on given currency (Currency).
 	 * @param currency
 	 */
-	public MoneyValueDAO(Currency currency)
+	public AmountDAO(Currency currency)
 	{
 		this(null, currency);
 	}
@@ -161,10 +161,10 @@ public class MoneyValueDAO
 		if (obj != null)
 		{
 			
-			if (obj instanceof MoneyValueDAO)
+			if (obj instanceof AmountDAO)
 			{
-				MoneyValueDAO mvd = (MoneyValueDAO) obj;
-				if (mvd.getCurrency() == getCurrency() && mvd.getValue().equals(getValue()))
+				AmountDAO mvd = (AmountDAO) obj;
+				if (mvd.getCurrency() == getCurrency() && mvd.getAmount().equals(getAmount()))
 				{
 					return true;
 				}
@@ -172,7 +172,7 @@ public class MoneyValueDAO
 			}
 			else if (obj instanceof BigDecimal)
 			{
-				return getValue().equals(obj);
+				return getAmount().equals(obj);
 			}
 			
 		}
@@ -192,9 +192,9 @@ public class MoneyValueDAO
 	 * Returns the value.
 	 * @return value
 	 */
-	public BigDecimal getValue()
+	public BigDecimal getAmount()
 	{
-		BigDecimal ret = lookupValue(Params.VALUE);
+		BigDecimal ret = lookupValue(Params.AMOUNT);
 		if (ret != null)
 		{
 		    ret = ret.setScale(2);
@@ -207,9 +207,9 @@ public class MoneyValueDAO
 	 * Sets the value.
 	 * @param value
 	 */
-	public void setValue(BigDecimal value)
+	public void setAmount(BigDecimal value)
 	{
-		setValue(Params.VALUE, value);
+		setValue(Params.AMOUNT, value);
 	}
 	
 	/**
@@ -232,16 +232,16 @@ public class MoneyValueDAO
     {
         String ret = null;
 
-        if (getValue() != null && getCurrency() != null)
+        if (getAmount() != null && getCurrency() != null)
         {
 
-            if (getValue().signum() < 0)
+            if (getAmount().signum() < 0)
             {
-                ret = "-" + getCurrency().getValue() + getValue().abs();
+                ret = "-" + getCurrency().getValue() + getAmount().abs();
             }
             else
             {
-                ret = getCurrency().getValue() + getValue();
+                ret = getCurrency().getValue() + getAmount();
             }
         }
 

@@ -18,7 +18,7 @@ package org.zoxweb.shared.data;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.zoxweb.shared.accounting.MoneyValueDAO;
+import org.zoxweb.shared.accounting.AmountDAO;
 import org.zoxweb.shared.accounting.PaymentInfoDAO;
 import org.zoxweb.shared.accounting.FinancialTransactionDAO;
 import org.zoxweb.shared.accounting.BillingAccountDAO;
@@ -864,19 +864,19 @@ public class ZWDataFactory
 		},	
 		
 		//	org.zoxweb.shared.accounting
-		MONEY_VALUE_DAO(MoneyValueDAO.class.getName())
+		MONEY_VALUE_DAO(AmountDAO.class.getName())
 		{
 			@SuppressWarnings("unchecked")
 			@Override
-			public MoneyValueDAO newInstance()
+			public AmountDAO newInstance()
 			{
-				return new MoneyValueDAO();
+				return new AmountDAO();
 			}
 
 			@Override
 			public NVConfigEntity getNVConfigEntity() 
 			{
-				return MoneyValueDAO.NVC_MONEY_VALUE_DAO;
+				return AmountDAO.NVC_MONEY_VALUE_DAO;
 			}
 		},
 		FOLDER_CONTENT_OP(FolderContentOp.class.getName())

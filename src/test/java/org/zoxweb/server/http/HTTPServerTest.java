@@ -24,7 +24,7 @@ import org.zoxweb.shared.http.HTTPMimeType;
 import org.zoxweb.shared.util.NVGenericMap;
 import org.zoxweb.shared.util.SharedStringUtil;
 
-@SuppressWarnings("restriction")
+
 public class HTTPServerTest {
 
   static {

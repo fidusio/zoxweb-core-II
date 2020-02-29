@@ -22,7 +22,7 @@ import java.util.List;
 
 import org.zoxweb.shared.accounting.Currency;
 import org.zoxweb.shared.accounting.FinancialTransactionDAO;
-import org.zoxweb.shared.accounting.MoneyValueDAO;
+import org.zoxweb.shared.accounting.AmountDAO;
 import org.zoxweb.shared.data.CreditCardDAO;
 import org.zoxweb.shared.data.FormInfoDAO;
 import org.zoxweb.shared.util.NVEntityComparator;
@@ -70,15 +70,15 @@ public class NVEntityComparatorTest {
 		List<FinancialTransactionDAO> list = new ArrayList<FinancialTransactionDAO>();
 		
 		FinancialTransactionDAO transaction1 = new FinancialTransactionDAO();
-		transaction1.setAmount(new MoneyValueDAO(new BigDecimal("100.00"), Currency.USD));
+		transaction1.setAmount(new AmountDAO(new BigDecimal("100.00"), Currency.USD));
 		list.add(transaction1);
 		
 		FinancialTransactionDAO transaction2 = new FinancialTransactionDAO();
-		transaction2.setAmount(new MoneyValueDAO(new BigDecimal("10.00"), Currency.USD));
+		transaction2.setAmount(new AmountDAO(new BigDecimal("10.00"), Currency.USD));
 		list.add(transaction2);
 		
 		FinancialTransactionDAO transaction3 = new FinancialTransactionDAO();
-		transaction3.setAmount(new MoneyValueDAO(new BigDecimal("1000.00"), Currency.USD));
+		transaction3.setAmount(new AmountDAO(new BigDecimal("1000.00"), Currency.USD));
 		list.add(transaction3);
 		
 		System.out.println("UNSORTED LIST");

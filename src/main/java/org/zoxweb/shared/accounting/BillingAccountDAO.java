@@ -40,7 +40,7 @@ public class BillingAccountDAO
 	public enum Params
         implements GetNVConfig
 	{
-		CURRENT_BALANCE(NVConfigManager.createNVConfigEntity("current_balance", "Current balance", "CurrentBalance", true, true, MoneyValueDAO.class, ArrayType.NOT_ARRAY)),
+		CURRENT_BALANCE(NVConfigManager.createNVConfigEntity("current_balance", "Current balance", "CurrentBalance", true, true, AmountDAO.class, ArrayType.NOT_ARRAY)),
 		PAYMENT_INFO(NVConfigManager.createNVConfigEntity("payment_info", "Payment info", "PaymentInfo", false, true, PaymentInfoDAO.class, ArrayType.NOT_ARRAY)),
 		
 		;
@@ -95,7 +95,7 @@ public class BillingAccountDAO
 	 * Returns the current balance.
 	 * @return MoneyValueDAO
 	 */
-	public MoneyValueDAO getCurrentBalance() 
+	public AmountDAO getCurrentBalance() 
 	{
 		return lookupValue(Params.CURRENT_BALANCE);
 	}
@@ -104,7 +104,7 @@ public class BillingAccountDAO
 	 * Sets the current balance.
 	 * @param balance
 	 */
-	public synchronized void setCurrentBalance(MoneyValueDAO balance)
+	public synchronized void setCurrentBalance(AmountDAO balance)
 	{
 		setValue(Params.CURRENT_BALANCE, balance);
 	}
@@ -142,14 +142,14 @@ public class BillingAccountDAO
 		switch(transaction.getType())
 		{
 		case CREDIT:
-			getCurrentBalance().setValue((getCurrentBalance().getValue().add(transaction.getAmount().getValue())));
+			getCurrentBalance().setAmount((getCurrentBalance().getAmount().add(transaction.getAmount().getAmount())));
 			break;
 		case DEBIT:
-			getCurrentBalance().setValue((getCurrentBalance().getValue().subtract(transaction.getAmount().getValue())));
+			getCurrentBalance().setAmount((getCurrentBalance().getAmount().subtract(transaction.getAmount().getAmount())));
 			break;
 		}
 		
-		return getCurrentBalance().getValue();	
+		return getCurrentBalance().getAmount();	
 	}
 	
 }

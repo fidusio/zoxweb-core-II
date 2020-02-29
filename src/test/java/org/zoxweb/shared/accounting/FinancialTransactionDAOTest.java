@@ -29,31 +29,31 @@ public class FinancialTransactionDAOTest
     public void testFinancialTransactionDAO()
     {
         FinancialTransactionDAO transaction = new FinancialTransactionDAO();
-        transaction.setAmount(new MoneyValueDAO(new BigDecimal("100"), Currency.USD));
+        transaction.setAmount(new AmountDAO(new BigDecimal("100"), Currency.USD));
         transaction.setType(TransactionType.CREDIT);
         transaction.setDescriptor(TransactionDescriptor.MONTHLY_PAYMENT.name());
         transaction.setCreationTime(System.currentTimeMillis());
 
         BillingAccountDAO account = new BillingAccountDAO();
-        account.setCurrentBalance(new MoneyValueDAO(new BigDecimal("200"), Currency.USD));
-        assertEquals(new MoneyValueDAO(new BigDecimal("200.00"), Currency.USD), account.getCurrentBalance());
+        account.setCurrentBalance(new AmountDAO(new BigDecimal("200"), Currency.USD));
+        assertEquals(new AmountDAO(new BigDecimal("200.00"), Currency.USD), account.getCurrentBalance());
 
         account.applyTransaction(transaction);
 
         assertNotNull(transaction.getAmount());
         assertEquals(Currency.USD, transaction.getAmount().getCurrency());
-        assertEquals(new BigDecimal("100.00"), transaction.getAmount().getValue());
+        assertEquals(new BigDecimal("100.00"), transaction.getAmount().getAmount());
         assertEquals(TransactionType.CREDIT, transaction.getType());
         assertEquals(TransactionDescriptor.MONTHLY_PAYMENT.name(), transaction.getDescriptor());
 
         assertNotNull(account.getCurrentBalance());
-        assertEquals(new MoneyValueDAO(new BigDecimal("300.00"), Currency.USD), account.getCurrentBalance());
+        assertEquals(new AmountDAO(new BigDecimal("300.00"), Currency.USD), account.getCurrentBalance());
 
-        account.applyTransaction(new FinancialTransactionDAO(new MoneyValueDAO(10)));
-        assertEquals(new MoneyValueDAO(new BigDecimal("310.00"), Currency.USD), account.getCurrentBalance());
+        account.applyTransaction(new FinancialTransactionDAO(new AmountDAO(10)));
+        assertEquals(new AmountDAO(new BigDecimal("310.00"), Currency.USD), account.getCurrentBalance());
 
-        account.applyTransaction(new FinancialTransactionDAO(new MoneyValueDAO(20)));
-        assertEquals(new MoneyValueDAO(new BigDecimal("330.00"), Currency.USD), account.getCurrentBalance());
+        account.applyTransaction(new FinancialTransactionDAO(new AmountDAO(20)));
+        assertEquals(new AmountDAO(new BigDecimal("330.00"), Currency.USD), account.getCurrentBalance());
     }
 
 }

@@ -4,6 +4,8 @@ package org.zoxweb.server.flow;
 import java.util.EventObject;
 import java.util.function.Supplier;
 
+
+@SuppressWarnings("serial")
 public class FlowEvent<T>
     extends EventObject
     implements Supplier<FlowEvent<T>>

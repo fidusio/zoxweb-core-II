@@ -49,7 +49,7 @@ public class FinancialTransactionDAO
         CREATION_TS(NVConfigManager.createNVConfig("creation_ts", "Time in millis when the transaction was created","CreationTS", true, false, false, false, Date.class, null)),
 		EXTERNAL_REFERENCE(NVConfigManager.createNVConfig("external_reference", "External reference", "ExternalReference", false, true, String.class)),
 		REFERENCED_NVE(NVConfigManager.createNVConfigEntity("referenced_nve", "Referenced NVEntity", "ReferencedNVEntity", false, false, NVEntity.class, ArrayType.NOT_ARRAY)),
-		TRANSACTION_AMOUNT(NVConfigManager.createNVConfigEntity("transaction_amount", "Transaction amount", "TransactionAmount", true, true, MoneyValueDAO.NVC_MONEY_VALUE_DAO)),		
+		TRANSACTION_AMOUNT(NVConfigManager.createNVConfigEntity("transaction_amount", "Transaction amount", "TransactionAmount", true, true, AmountDAO.NVC_MONEY_VALUE_DAO)),		
 		TRANSACTION_TYPE(NVConfigManager.createNVConfig("transaction_type", "Type of transaction either credit or debit", "TransactionType", false, true, TransactionType.class)),
 		TRANSACTION_DESCRIPTOR(NVConfigManager.createNVConfig("transaction_descriptor", "Description of transaction", "TransactionDescriptor", false, true, String.class)),
 		
@@ -97,7 +97,7 @@ public class FinancialTransactionDAO
 	 * This constructor instantiates FinancialTransactionDAO based on given MoneyValueDAO.
 	 * @param amount
 	 */
-	public FinancialTransactionDAO(MoneyValueDAO amount)
+	public FinancialTransactionDAO(AmountDAO amount)
 	{
 		this(amount, DEFAULT_TT);
 	}
@@ -108,7 +108,7 @@ public class FinancialTransactionDAO
 	 * @param amount
 	 * @param type
 	 */
-	public FinancialTransactionDAO(MoneyValueDAO amount, TransactionType type)
+	public FinancialTransactionDAO(AmountDAO amount, TransactionType type)
 	{
 		this(amount, type, null);
 	}
@@ -119,7 +119,7 @@ public class FinancialTransactionDAO
 	 * @param type
 	 * @param descriptor
 	 */
-	public FinancialTransactionDAO(MoneyValueDAO amount, TransactionType type, String descriptor)
+	public FinancialTransactionDAO(AmountDAO amount, TransactionType type, String descriptor)
 	{
 		this();
 		setAmount(amount);
@@ -183,7 +183,7 @@ public class FinancialTransactionDAO
 	 * Returns the transaction amount.
 	 * @return money value 
 	 */
-	public MoneyValueDAO getAmount() 
+	public AmountDAO getAmount() 
 	{
 		return lookupValue(Params.TRANSACTION_AMOUNT);
 	}
@@ -192,7 +192,7 @@ public class FinancialTransactionDAO
 	 * Sets the transaction amount.
 	 * @param amount
 	 */
-	public void setAmount(MoneyValueDAO amount)
+	public void setAmount(AmountDAO amount)
 	{
 		setValue(Params.TRANSACTION_AMOUNT, amount);
 	}

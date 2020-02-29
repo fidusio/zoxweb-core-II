@@ -19,7 +19,7 @@ import java.math.BigDecimal;
 
 import org.zoxweb.shared.accounting.Currency;
 import org.zoxweb.shared.accounting.FinancialTransactionDAO;
-import org.zoxweb.shared.accounting.MoneyValueDAO;
+import org.zoxweb.shared.accounting.AmountDAO;
 import org.zoxweb.shared.accounting.TransactionDescriptor;
 import org.zoxweb.shared.accounting.TransactionType;
 
@@ -35,7 +35,7 @@ public class TransactionDAOTest {
 
 	@Before
 	public void setUp() throws Exception {
-		transaction = new FinancialTransactionDAO(new MoneyValueDAO("100.00"));
+		transaction = new FinancialTransactionDAO(new AmountDAO("100.00"));
 	}
 
 	@After
