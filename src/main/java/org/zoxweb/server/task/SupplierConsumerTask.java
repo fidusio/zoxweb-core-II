@@ -8,6 +8,7 @@ public class SupplierConsumerTask<T>
 {
     public SupplierConsumerTask(){}
 
+    @SuppressWarnings("unchecked")
     @Override
     public void executeTask(TaskEvent event) {
         Supplier<T> s = (Supplier<T>) event.getTaskExecutorParameters()[0];

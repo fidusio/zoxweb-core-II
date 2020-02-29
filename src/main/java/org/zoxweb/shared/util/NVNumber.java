@@ -1,5 +1,6 @@
 package org.zoxweb.shared.util;
 
+@SuppressWarnings("serial")
 public class NVNumber
     extends NVBase<Number>
 {
