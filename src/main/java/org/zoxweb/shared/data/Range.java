@@ -4,7 +4,7 @@ package org.zoxweb.shared.data;
 import org.zoxweb.shared.util.*;
 
 public class Range<T extends Comparable<T>>
-    extends SetNameDescriptionDAO
+    extends CanonicalIDDAO
 {
 
     /**
@@ -37,8 +37,8 @@ public class Range<T extends Comparable<T>>
 
     public enum Param
             implements GetNVConfig {
-        START(NVConfigManager.createNVConfig("start", "Start range", "Start", true, true, Number.class)),
-        END(NVConfigManager.createNVConfig("end", "End range", "End", true, true, Number.class)),
+        START(NVConfigManager.createNVConfig("r_start", "Start range", "Start", true, true, Number.class)),
+        END(NVConfigManager.createNVConfig("r_end", "End range", "End", true, true, Number.class)),
         INCLUSIVE(NVConfigManager
                 .createNVConfig("inclusive", "Inclusive (default) or exclusive", "inclusive", false, true,
                         Inclusive.class)),
@@ -69,7 +69,7 @@ public class Range<T extends Comparable<T>>
             SharedUtil.extractNVConfigs(Range.Param.values()),
             null,
             false,
-            SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO
+            CanonicalIDDAO.NVC_CANONICAL_ID_DAO
     );
 
 
