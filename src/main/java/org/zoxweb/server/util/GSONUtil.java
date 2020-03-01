@@ -1902,12 +1902,8 @@ final public class GSONUtil
 					}
 					else if (Number.class.equals(metaType))
 					{
-						NVBase<?> nv = guessPrimitive(nvb.getName(), null, je.getAsJsonPrimitive());
-						((NVBase<Number>) nvb).setValue((Number)nv.getValue());
-
-
+						((NVBase<Number>) nvb).setValue(SharedUtil.parseNumber(je.getAsString()));
 					}
-					
 				}
 			}
 				
