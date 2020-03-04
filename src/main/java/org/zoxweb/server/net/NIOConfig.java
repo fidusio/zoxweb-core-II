@@ -38,11 +38,7 @@ import org.zoxweb.server.task.TaskUtil;
 import org.zoxweb.server.util.GSONUtil;
 import org.zoxweb.shared.data.ConfigDAO;
 import org.zoxweb.shared.net.InetSocketAddressDAO;
-import org.zoxweb.shared.util.AppCreator;
-import org.zoxweb.shared.util.ArrayValues;
-
-import org.zoxweb.shared.util.NVEntity;
-import org.zoxweb.shared.util.NVStringList;
+import org.zoxweb.shared.util.*;
 
 
 /**
@@ -125,7 +121,7 @@ implements Closeable,
 						ret.addServerSocket(ssc, psf);
 					}
 					
-					log.info("Serice addedd " + psf.getName() +" port:" + port + " backlog:" + backlog);
+					log.info("Service added " + psf.getName() +" port:" + port + " backlog:" + backlog);
 				}
 			}
 		}
@@ -202,6 +198,9 @@ implements Closeable,
 							if (factory != null)
 								nioTF.setIncomingSSLSessionDataFactory((SSLSessionDataFactory) factory.attachment());
 						}
+
+						if(!SharedStringUtil.isEmpty(config.getProperties().getValue("log_file")))
+							nioTF.setLogger(LoggerUtil.loggerToFile(NIOTunnel.class.getName()+".proxy", config.getProperties().getValue("log_file")));
 						
 						
 					}
@@ -248,9 +247,9 @@ implements Closeable,
 						{
 							nioPPF.setOutgoingInetFilterRulesManager(outgoingIFRM);
 						}
-						
-						
-						nioPPF.setLogger(LoggerUtil.loggerToFile(NIOProxyProtocol.class.getName()+".proxy", config.getProperties().getValue("log_file")));
+
+						if(!SharedStringUtil.isEmpty(config.getProperties().getValue("log_file")))
+							nioPPF.setLogger(LoggerUtil.loggerToFile(NIOProxyProtocol.class.getName()+".proxy", config.getProperties().getValue("log_file")));
 						
 					}
 					catch(Exception e)

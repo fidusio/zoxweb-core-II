@@ -165,7 +165,7 @@ public class  ChannelRelayTunnel
 	public synchronized void waitThenStopReading()
 	{
 		
-		while(!isSeletectable())
+		while(!isSelectable())
 		{
 			try 
 			{

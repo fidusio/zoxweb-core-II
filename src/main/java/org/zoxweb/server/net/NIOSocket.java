@@ -178,10 +178,10 @@ public class NIOSocket
 						    	if (key.isValid() && SharedUtil.getWrappedValue(key.channel()).isOpen() && key.isReadable())
 							    {
 							    	ProtocolSessionProcessor currentPSP = (ProtocolSessionProcessor)key.attachment();
-							    	if (currentPSP != null && currentPSP.isSeletectable())
+							    	if (currentPSP != null && currentPSP.isSelectable())
 							    	{
 							    		// very very crucial setup prior to processing
-							    		currentPSP.setSeletectable(false);
+							    		currentPSP.setSelectable(false);
 							    		currentPSP.attach(key);
 							    		// a channel is ready for reading
 								    	if (tsp != null)

@@ -171,7 +171,7 @@ public class EchoProcessor
     		IOUtil.close(key.channel());
     	}
     	
-    	setSeletectable(true);
+    	setSelectable(true);
 		
 	}
 	

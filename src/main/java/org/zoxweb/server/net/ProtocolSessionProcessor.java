@@ -38,7 +38,7 @@ public abstract class ProtocolSessionProcessor
 	protected volatile ByteBuffer bBuffer = null;
 	private volatile SSLSessionData outputSSLSessionData;
 	private volatile SSLSessionData inputSSLSessionData;
-	private volatile SelectionKey attachement;
+	private volatile SelectionKey attachment;
 	private volatile NVGenericMap properties = null;
 	
 	protected ProtocolSessionProcessor()
@@ -58,13 +58,13 @@ public abstract class ProtocolSessionProcessor
 		defaultReadBufferSize = size;
 	}
 	
-	public boolean isSeletectable()
+	public boolean isSelectable()
 	{
 		return selectable;
 	}
 	
 	
-	protected void setSeletectable(boolean stat)
+	protected void setSelectable(boolean stat)
 	{
 		selectable = stat;
 	}
@@ -74,13 +74,13 @@ public abstract class ProtocolSessionProcessor
 	
 	public synchronized void attach(SelectionKey sk)
 	{
-		attachement = sk;
+		attachment = sk;
 	}
 	
 	protected synchronized SelectionKey detach()
 	{
-		SelectionKey ret = attachement;
-		attachement = null;
+		SelectionKey ret = attachment;
+		attachment = null;
 		return ret;
 	}
 	
@@ -96,7 +96,7 @@ public abstract class ProtocolSessionProcessor
 		}
 		// very crucial be set to true after the processRead call
 		//selectable = true;
-		setSeletectable(true);
+		setSelectable(true);
 	}
 	
 	
