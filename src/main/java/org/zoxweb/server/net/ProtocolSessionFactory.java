@@ -21,7 +21,7 @@ import org.zoxweb.server.net.security.SSLSessionDataFactory;
 import org.zoxweb.shared.util.GetName;
 import org.zoxweb.shared.util.NVGenericMap;
 
-public interface ProtocolSessionFactory<P extends ProtocolSessionProcessor>
+public interface  ProtocolSessionFactory<P extends ProtocolSessionProcessor>
 extends GetName
 {
 	
