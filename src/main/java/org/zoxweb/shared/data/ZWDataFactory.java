@@ -731,9 +731,9 @@ public class ZWDataFactory
 		//	org.zoxweb.shared.accounting
 		RANGE(Range.class.getName())
 		{
-			@SuppressWarnings("unchecked")
+			@SuppressWarnings({"unchecked", "rawtypes"})
 			@Override
-			public Range newInstance()
+			public Range<?> newInstance()
 			{
 				return new Range();
 			}

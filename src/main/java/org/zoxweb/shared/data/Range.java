@@ -1,8 +1,13 @@
 package org.zoxweb.shared.data;
 
+import org.zoxweb.shared.util.GetNVConfig;
+import org.zoxweb.shared.util.NVConfig;
+import org.zoxweb.shared.util.NVConfigEntity;
+import org.zoxweb.shared.util.NVConfigManager;
+import org.zoxweb.shared.util.NVConfigEntityLocal;
+import org.zoxweb.shared.util.SharedUtil;
 
-import org.zoxweb.shared.util.*;
-
+@SuppressWarnings("serial")
 public class Range<T extends Comparable<T>>
     extends CanonicalIDDAO
 {
