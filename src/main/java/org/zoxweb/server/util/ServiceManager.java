@@ -74,7 +74,7 @@ public class ServiceManager
 		{
 			ResourceManager.SINGLETON.map(ApplicationConfigDAO.RESOURCE_NAME, acd);
 		}
-		
+
 		String filename = acd.lookupValue(ApplicationDefaultParam.NIO_CONFIG);
 		if (filename != null)
 		{

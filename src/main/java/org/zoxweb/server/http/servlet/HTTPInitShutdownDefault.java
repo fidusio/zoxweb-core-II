@@ -42,7 +42,7 @@ public class HTTPInitShutdownDefault
 	{
 		try
 		{
-			log.info("" + ApplicationConfigManager.SINGLETON.loadDefault().getProperties());
+			//log.info("" + ApplicationConfigManager.SINGLETON.loadDefault().getProperties());
 			ServiceManager.SINGLETON.loadServices();
 //			String filename = ApplicationConfigManager.SINGLETON.loadDefault().lookupValue(ApplicationDefaultParam.NIO_CONFIG);
 //			if (filename != null)
