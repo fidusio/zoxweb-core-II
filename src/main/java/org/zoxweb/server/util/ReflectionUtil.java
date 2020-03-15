@@ -65,7 +65,7 @@ public class ReflectionUtil
 	
 	
 	
-	public static <T extends Annotation> T getAnnotionFromMethod(Method m, Class<T> t)
+	public static <T extends Annotation> T getAnnotationFromMethod(Method m, Class<T> t)
 	{
 		return m.getAnnotation(t);
 	}
