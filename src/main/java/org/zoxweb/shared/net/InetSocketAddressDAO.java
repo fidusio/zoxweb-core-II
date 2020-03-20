@@ -139,9 +139,16 @@ public class InetSocketAddressDAO
 				}
 			}
 		}
-
 		return false;
 	}
+
+	public int hashCode()
+	{
+		String val = "InetSocketAddressDAO:" + getInetAddress() + getPort();
+		return val.hashCode();
+	}
+
+
 	
 	public void setProxyType(String pType)
 	{

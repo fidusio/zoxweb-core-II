@@ -15,6 +15,8 @@
  */
 package org.zoxweb.shared.data.events;
 
+import org.zoxweb.shared.net.InetAddressDAO;
+
 import java.util.EventObject;
 
 /**
@@ -27,12 +29,14 @@ public class StringTokenEvent
 	private final String token;
 	private final long timeStamp;
 
+
 	public StringTokenEvent(Object source, String token)
 	{
 		super(source);
 		this.token = token;
 		timeStamp = System.currentTimeMillis();
 	}
+
 
     /**
      * Returns the token.
@@ -46,9 +50,11 @@ public class StringTokenEvent
 	/**
 	 * @return the timestamp in millis when the event was created
 	 */
-	public final long getTimeStamp()
+	public long getTimeStamp()
 	{
 		return timeStamp;
 	}
+
+
 	
 }

@@ -11,6 +11,7 @@ import org.zoxweb.server.io.IOUtil;
 import org.zoxweb.server.net.NIOConfig;
 import org.zoxweb.server.net.NIOSocket;
 import org.zoxweb.server.net.security.IPBlockerListener;
+import org.zoxweb.server.task.TaskUtil;
 import org.zoxweb.shared.data.ConfigDAO;
 import org.zoxweb.shared.data.ApplicationConfigDAO;
 import org.zoxweb.shared.data.ApplicationConfigDAO.ApplicationDefaultParam;
@@ -75,32 +76,8 @@ public class ServiceManager
 			ResourceManager.SINGLETON.map(ApplicationConfigDAO.RESOURCE_NAME, acd);
 		}
 
-		String filename = acd.lookupValue(ApplicationDefaultParam.NIO_CONFIG);
-		if (filename != null)
-		{
-			log.info("creating NIO_CONFIG");
-			if (ResourceManager.SINGLETON.lookup(NIOConfig.RESOURCE_NAME) != null)
-			{
-				close(ResourceManager.SINGLETON.lookup(NIOConfig.RESOURCE_NAME));
-			}
-			try
-			{
-				File file = ApplicationConfigManager.SINGLETON.locateFile(acd, filename);
-				ConfigDAO configDAO = GSONUtil.fromJSON(IOUtil.inputStreamToString(new FileInputStream(file), true));
-				log.info("" + configDAO);
-				NIOConfig nioConfig = new NIOConfig(configDAO);
-				nioConfig.createApp();
-				ResourceManager.SINGLETON.map(NIOConfig.RESOURCE_NAME, nioConfig);
-			}
-			catch(Exception e)
-			{
-				e.printStackTrace();
-			}
-		}
-		
-		
-		
-		filename = acd.lookupValue("ip_blocker_config");
+		IPBlockerListener ipBlocker = null;
+		String filename = acd.lookupValue("ip_blocker_config");
 		if (filename != null)
 		{
 			log.info("creating IP_BLOCKER");
@@ -115,7 +92,7 @@ public class ServiceManager
 				IPBlockerListener.Creator c = new IPBlockerListener.Creator();
 				//log.info("\n" + GSONUtil.toJSON(appConfig, true, false, false));
 				c.setAppConfig(appConfig);
-				IPBlockerListener ipBlocker = c.createApp();
+				ipBlocker = c.createApp();
 				ResourceManager.SINGLETON.map(IPBlockerListener.RESOURCE_NAME, ipBlocker);
 			}
 			catch(Exception e)
@@ -123,6 +100,35 @@ public class ServiceManager
 				e.printStackTrace();
 			}
 		}
+
+		filename = acd.lookupValue(ApplicationDefaultParam.NIO_CONFIG);
+		if (filename != null)
+		{
+			log.info("creating NIO_CONFIG");
+			if (ResourceManager.SINGLETON.lookup(NIOConfig.RESOURCE_NAME) != null)
+			{
+				close(ResourceManager.SINGLETON.lookup(NIOConfig.RESOURCE_NAME));
+			}
+			try
+			{
+				File file = ApplicationConfigManager.SINGLETON.locateFile(acd, filename);
+				ConfigDAO configDAO = GSONUtil.fromJSON(IOUtil.inputStreamToString(new FileInputStream(file), true));
+				log.info("" + configDAO);
+				NIOConfig nioConfig = new NIOConfig(configDAO);
+				NIOSocket nioSocket = nioConfig.createApp();
+				if(ipBlocker != null)
+					nioSocket.setEventManager(TaskUtil.getDefaultEventManager());
+				ResourceManager.SINGLETON.map(NIOConfig.RESOURCE_NAME, nioConfig);
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
+		
+		
+		
+
 		
 		
 		log.info("Finished");

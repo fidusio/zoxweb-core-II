@@ -24,6 +24,7 @@ import java.io.FileNotFoundException;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.EventObject;
 import java.util.logging.Logger;
 
 import org.zoxweb.server.task.RunnableTask;
@@ -47,16 +48,16 @@ public class FileMonitor extends RunnableTask
 	private long creationTime;
 	private boolean autoRun;
 	private boolean device;
-	private EventListenerManager<?, StringTokenEvent> elm;
+	private EventListenerManager<EventObject, ?> elm;
 	
 
-	public FileMonitor(String logToMonitor, EventListenerManager<?, StringTokenEvent> elm, boolean autoRun)
+	public FileMonitor(String logToMonitor, EventListenerManager<EventObject, ?> elm, boolean autoRun)
 			throws NullPointerException, IllegalArgumentException, IOException
 	{
 		this(logToMonitor, elm, autoRun, false);
 	}
 	
-	public FileMonitor(String logToMonitor, EventListenerManager<?, StringTokenEvent> elm, boolean autoRun, boolean device)
+	public FileMonitor(String logToMonitor, EventListenerManager<EventObject, ?> elm, boolean autoRun, boolean device)
 		throws NullPointerException, IllegalArgumentException, IOException
 	{
 		SharedUtil.checkIfNulls("Null variable", logToMonitor);
@@ -132,7 +133,7 @@ public class FileMonitor extends RunnableTask
 						
 						if (elm != null)
 						{
-							elm.dispatch(new StringTokenEvent(this, line));
+							elm.dispatch(new StringTokenEvent(this, line), true);
 						}
 						else if(!line.trim().isEmpty())
 						{

@@ -17,33 +17,35 @@ package org.zoxweb.server.net.security;
 
 import java.io.Closeable;
 import java.io.IOException;
+import java.util.EventObject;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Logger;
 
 import org.zoxweb.server.io.FileMonitor;
 import org.zoxweb.server.io.IOUtil;
-import org.zoxweb.server.task.TaskEvent;
-import org.zoxweb.server.task.TaskExecutor;
 import org.zoxweb.server.task.TaskSchedulerProcessor;
 import org.zoxweb.server.task.TaskUtil;
 import org.zoxweb.server.util.RuntimeUtil;
-import org.zoxweb.shared.data.events.StringTokenEvent;
-import org.zoxweb.shared.data.events.StringTokenListener;
-import org.zoxweb.shared.data.events.TokenListenerManager;
+import org.zoxweb.shared.data.events.*;
+import org.zoxweb.shared.net.InetSocketAddressDAO;
 import org.zoxweb.shared.security.IPBlockerConfig;
 import org.zoxweb.shared.util.Const.TimeInMillis;
 import org.zoxweb.shared.util.AppCreator;
-import org.zoxweb.shared.util.AppointmentDefault;
 import org.zoxweb.shared.util.NVPair;
 import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
 
 public class IPBlockerListener
-        implements StringTokenListener, TaskExecutor, Closeable
+        implements EventHandlerListener, Closeable
 {
 	public static final String RESOURCE_NAME = "IP_BLOCKER";
+
+
+
 	class RemoteIPInfo
 	{
 		@Override
@@ -52,7 +54,7 @@ public class IPBlockerListener
 					+ ", lastTimeDetected=" + lastTimeDetected + ", attackCount=" + attackCount + ", blocked=" + blocked
 					+ ", attackRate=" + attackRate + " per min]";
 		}
-		String remoteHost = null;
+		InetSocketAddressDAO remoteHost = null;
 		long detectionStartTime = 0;
 		long lastTimeDetected = 0;
 		long attackCount = 0;
@@ -85,12 +87,20 @@ public class IPBlockerListener
 		
 		public IPBlockerListener createApp() throws NullPointerException, IllegalArgumentException, IOException {
 			// TODO Auto-generated method stub
-			TokenListenerManager tlm = new TokenListenerManager();
+			EventListenerManager tlm = TaskUtil.getDefaultEventManager();
 			
 			IPBlockerListener ipbl = new IPBlockerListener(ipBlockerConfig, TaskUtil.getDefaultTaskScheduler());
 			tlm.addEventListener(ipbl);
 			ipbl.fileMonitor = new FileMonitor(ipBlockerConfig.getAuthFile(), tlm, true);
-			TaskUtil.getDefaultTaskScheduler().queue(ipbl.fileMonitor, new AppointmentDefault(TimeInMillis.MINUTE.MILLIS), ipbl);
+			TaskUtil.getDefaultTaskScheduler().queue(TimeInMillis.MINUTE.MILLIS, new Runnable(){
+				public void run()
+				{
+
+					// Every one minute clear the timeout list
+					ipbl.clearTimeouts();
+					ipbl.getScheduler().queue(TimeInMillis.MINUTE.MILLIS, this);
+				}
+			});
 			return ipbl;
 		}
 		
@@ -101,9 +111,9 @@ public class IPBlockerListener
 	
 	private TaskSchedulerProcessor tsp = null;
 	protected transient volatile FileMonitor fileMonitor = null;	
-	private Map<String, RemoteIPInfo> ripiMap = new LinkedHashMap<String, RemoteIPInfo>();
-	
+	private Map<InetSocketAddressDAO, RemoteIPInfo> ripiMap = new LinkedHashMap<InetSocketAddressDAO, RemoteIPInfo>();
 	private IPBlockerConfig ipbc;
+	private Lock lock = new ReentrantLock();
 	public IPBlockerListener(IPBlockerConfig ipbc,TaskSchedulerProcessor tsp)
 	{
 		this.ipbc = ipbc;
@@ -132,8 +142,8 @@ public class IPBlockerListener
 		}
 	}
 	
-	@Override
-	public void processStringTokenEvent(StringTokenEvent ste) 
+
+	private void processStringTokenEvent(StringTokenEvent ste)
 	{
 		String token = ste.getToken();
 		long timeStamp = ste.getTimeStamp();
@@ -147,75 +157,144 @@ public class IPBlockerListener
 			if (!SharedStringUtil.isEmpty(value))
 			{
 				value = value.toLowerCase();
+				reportBadAddress(new InetSocketAddressEvent(ste.getSource(), new InetSocketAddressDAO(value, 22)));
 				//log.info(timeStamp + " we have a match:" + value );
-				RemoteIPInfo ripi = ripiMap.get(value);
-				if (ripi == null)
-				{
-					ripi = new RemoteIPInfo();
-					ripi.remoteHost = value;
-					ripi.detectionStartTime = timeStamp;
-					ripiMap.put(value, ripi);
-				}
-				ripi.lastTimeDetected = timeStamp;
-				ripi.attackCount++;
-				
-				
-				ripi.attackRate = ripi.lastTimeDetected > ripi.detectionStartTime ? ((ripi.attackCount*TimeInMillis.MINUTE.MILLIS) / ((ripi.lastTimeDetected - ripi.detectionStartTime))) : 0;
-				
-				log.info(ripi + " minCount: " + ipbc.getTriggerCounter() + " rate: " + ipbc.getRate());
-				
-				if (ripi.attackCount >= ipbc.getTriggerCounter() && ripi.attackRate >= ipbc.getRate())
-				{
-					log.info("we must block:" + ripi);
-					String command = SharedStringUtil.embedText(ipbc.getCommand(), ipbc.getCommandToken(), value);
-					log.info("we will execute:" + command);
-					try 
-					{
-						synchronized(this)
-						{
-							if (!ripi.blocked)
-							{
-								RuntimeUtil.runAndFinish(command);
-								ripi.blocked = true;
-							}
-						}
-					} 
-					catch (Exception e)
-					{
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} 
-				}
+//				RemoteIPInfo ripi = ripiMap.get(value);
+//				if (ripi == null)
+//				{
+//					ripi = new RemoteIPInfo();
+//					ripi.remoteHost = value;
+//					ripi.detectionStartTime = timeStamp;
+//					ripiMap.put(value, ripi);
+//				}
+//				ripi.lastTimeDetected = timeStamp;
+//				ripi.attackCount++;
+//
+//
+//				ripi.attackRate = ripi.lastTimeDetected > ripi.detectionStartTime ? ((ripi.attackCount*TimeInMillis.MINUTE.MILLIS) / ((ripi.lastTimeDetected - ripi.detectionStartTime))) : 0;
+//
+//				log.info(ripi + " minCount: " + ipbc.getTriggerCounter() + " rate: " + ipbc.getRate());
+//
+//				if (ripi.attackCount >= ipbc.getTriggerCounter() && ripi.attackRate >= ipbc.getRate())
+//				{
+//					log.info("we must block:" + ripi);
+//					String command = SharedStringUtil.embedText(ipbc.getCommand(), ipbc.getCommandToken(), value);
+//					log.info("we will execute:" + command);
+//					try
+//					{
+//						synchronized(this)
+//						{
+//							if (!ripi.blocked)
+//							{
+//								RuntimeUtil.runAndFinish(command);
+//								ripi.blocked = true;
+//							}
+//						}
+//					}
+//					catch (Exception e)
+//					{
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+//				}
 				
 				
 			}
 		}
 
 	}
-	
-	
 
-	
+
+	private void reportBadAddress(InetSocketAddressEvent isae) {
+		if(isae != null)
+		{
+			long timeStamp = isae.getTimeStamp();
+			InetSocketAddressDAO isad = isae.getAddressDAO();
+			if(isad != null)
+			{
+				RemoteIPInfo ripi = ripiMap.get(isad);
+				if (ripi == null)
+				{
+					ripi = new RemoteIPInfo();
+					ripi.remoteHost = isad;
+					ripi.detectionStartTime = timeStamp;
+					ripiMap.put(isad, ripi);
+				}
+				ripi.lastTimeDetected = timeStamp;
+				ripi.attackCount++;
+
+
+				ripi.attackRate = ripi.lastTimeDetected > ripi.detectionStartTime ? ((ripi.attackCount * TimeInMillis.MINUTE.MILLIS) / ((ripi.lastTimeDetected - ripi.detectionStartTime))) : 0;
+
+				log.info(ripi + " minCount: " + ipbc.getTriggerCounter() + " rate: " + ipbc.getRate());
+
+				if (ripi.attackCount >= ipbc.getTriggerCounter() && ripi.attackRate >= ipbc.getRate()) {
+					log.info("we must block:" + ripi);
+					String command = SharedStringUtil.embedText(ipbc.getCommand(), ipbc.getCommandToken(), isad.getInetAddress());
+					if (!SharedStringUtil.isEmpty(ipbc.getPortToken()) && isad.getPort() > 0)
+					{
+						command = SharedStringUtil.embedText(command, ipbc.getPortToken(), ""+isad.getPort());
+					}
+					log.info("we will execute:" + command);
+					try {
+
+						lock.lock();
+						if (!ripi.blocked) {
+							RuntimeUtil.runAndFinish(command);
+							ripi.blocked = true;
+						}
+						log.info(ripi.remoteHost + " blocked count of pending ips " + ripiMap.size());
+
+					}
+					catch (Exception e)
+					{
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					finally
+					{
+						lock.lock();
+					}
+				}
+			}
+		}
+	}
+
+	@Override
+	public void handleEvent(EventObject event) {
+		if(event instanceof InetSocketAddressEvent)
+		{
+			reportBadAddress((InetSocketAddressEvent) event);
+		}
+		else if (event instanceof StringTokenEvent)
+		{
+			processStringTokenEvent((StringTokenEvent) event);
+		}
+	}
+
+
 	public IPBlockerConfig getIPBlockerConfig()
 	{
 		return ipbc;
 	}
 
-	@Override
-	public void executeTask(TaskEvent event) 
-	{
-		// TODO Auto-generated method stub
-		clearTimeouts();
-		getScheduler().queue(new AppointmentDefault(TimeInMillis.MINUTE.MILLIS), event);
-		
-	}
 
 
-	@Override
-	public void finishTask(TaskEvent event) {
-		// TODO Auto-generated method stub
-		
-	}
+//	@Override
+//	public void executeTask(TaskEvent event)
+//	{
+//		// TODO Auto-generated method stub
+//		clearTimeouts();
+//		getScheduler().queue(new AppointmentDefault(TimeInMillis.MINUTE.MILLIS), event);
+//
+//	}
+//
+//
+//	@Override
+//	public void finishTask(TaskEvent event) {
+//		// TODO Auto-generated method stub
+//
+//	}
 	
 	@Override
 	public void close() throws IOException {

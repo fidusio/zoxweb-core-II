@@ -15,6 +15,8 @@
  */
 package org.zoxweb.shared.data.events;
 
+import org.zoxweb.shared.net.InetSocketAddressDAO;
+
 import java.util.EventListener;
 
 /**
@@ -27,6 +29,12 @@ public interface StringTokenListener
      * Process given StringTokenEvent.
      * @param ste
      */
-	public void processStringTokenEvent(StringTokenEvent ste);
+	 void processStringTokenEvent(StringTokenEvent ste);
+
+    /**
+     * Report bad ip address
+     * @param isae
+     */
+	 void reportBadAddress(InetSocketAddressEvent isae);
 
 }

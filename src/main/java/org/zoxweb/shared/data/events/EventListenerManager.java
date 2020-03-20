@@ -20,11 +20,10 @@ import java.util.EventObject;
 import java.util.HashSet;
 import java.util.Set;
 
-public abstract class EventListenerManager<L extends EventListener, E extends EventObject>
+public abstract  class EventListenerManager<E extends EventObject, L extends EventHandlerListener<E>>
 {
 	protected Set<L> set = new HashSet<L>();
-	
-	
+
 	public synchronized void addEventListener(L listener)
 	{
 		if (listener != null)
@@ -32,8 +31,7 @@ public abstract class EventListenerManager<L extends EventListener, E extends Ev
             set.add(listener);
         }
 	}
-	
-	
+
 	public synchronized void removeEventListener(L listener)
 	{
 		if (listener != null)
@@ -47,6 +45,14 @@ public abstract class EventListenerManager<L extends EventListener, E extends Ev
 		return set.toArray(new EventListener[0]);
 	}
 	
-	public abstract void dispatch(E event);
+	public abstract void dispatch(E event, boolean async);
+//	{
+//		EventListener[] all = getAllListeners();
+//
+//		for (EventListener el : all)
+//		{
+//			((EventHandlerListener)el).handleEvent(event);
+//		}
+//	}
 
 }

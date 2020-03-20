@@ -31,6 +31,7 @@ import org.zoxweb.server.http.proxy.NIOProxyProtocol.NIOProxyProtocolFactory;
 import org.zoxweb.server.io.IOUtil;
 import org.zoxweb.server.logging.LoggerUtil;
 import org.zoxweb.server.net.NIOTunnel.NIOTunnelFactory;
+import org.zoxweb.server.net.security.IPBlockerListener;
 import org.zoxweb.server.net.security.SSLSessionDataFactory;
 import org.zoxweb.server.net.security.SecureNetworkTunnel;
 import org.zoxweb.server.security.CryptoUtil;
@@ -38,6 +39,7 @@ import org.zoxweb.server.task.TaskUtil;
 import org.zoxweb.server.util.GSONUtil;
 import org.zoxweb.shared.data.ConfigDAO;
 import org.zoxweb.shared.net.InetSocketAddressDAO;
+import org.zoxweb.shared.security.IPBlockerConfig;
 import org.zoxweb.shared.util.*;
 
 
@@ -275,11 +277,21 @@ implements Closeable,
 	{
 		try
 		{
-			System.out.println("loading file " + args[0]);
-			ConfigDAO configDAO = GSONUtil.fromJSON(IOUtil.inputStreamToString(args[0]));
+			int index = 0;
+			System.out.println("loading file " + args[index]);
+			ConfigDAO configDAO = GSONUtil.fromJSON(IOUtil.inputStreamToString(args[index++]));
 			System.out.println(GSONUtil.toJSON(configDAO, true, false, false));
 			NIOConfig nioConfig = new NIOConfig(configDAO);
-			nioConfig.createApp();
+			NIOSocket nioSocket = nioConfig.createApp();
+			if (args.length > index) {
+				IPBlockerConfig ipBlockerConfig = GSONUtil.fromJSON(IOUtil.inputStreamToString(args[index++]), IPBlockerConfig.class);
+				IPBlockerListener.Creator c = new IPBlockerListener.Creator();
+				//log.info("\n" + GSONUtil.toJSON(appConfig, true, false, false));
+				c.setAppConfig(ipBlockerConfig);
+				IPBlockerListener ipBlocker = c.createApp();
+				nioSocket.setEventManager(TaskUtil.getDefaultEventManager());
+
+			}
 		}
 		catch(Exception e)
 		{

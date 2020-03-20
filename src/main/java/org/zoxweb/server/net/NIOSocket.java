@@ -17,6 +17,8 @@ package org.zoxweb.server.net;
 
 import java.io.Closeable;
 import java.io.IOException;
+import java.net.Inet4Address;
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.nio.channels.DatagramChannel;
 import java.nio.channels.SelectionKey;
@@ -34,11 +36,15 @@ import java.util.logging.Logger;
 
 import org.zoxweb.server.io.IOUtil;
 
+import org.zoxweb.server.net.security.IPBlockerListener;
 import org.zoxweb.server.net.security.SSLSessionDataFactory;
 
 
 import org.zoxweb.server.task.TaskUtil;
+import org.zoxweb.shared.data.events.EventListenerManager;
+import org.zoxweb.shared.data.events.InetSocketAddressEvent;
 import org.zoxweb.shared.net.InetSocketAddressDAO;
+import org.zoxweb.shared.net.SharedNetUtil;
 import org.zoxweb.shared.security.SecurityStatus;
 import org.zoxweb.shared.util.Const.TimeInMillis;
 import org.zoxweb.shared.util.DaemonController;
@@ -63,8 +69,9 @@ public class NIOSocket
 	private long dispatchCounter = 0;
 	private long selectedCountTotal = 0;
 	private long statLogCounter = 0;
-	private long attackTotalCount = 0;
-	private long startTime = System.currentTimeMillis();
+	private AtomicLong attackTotalCount = new AtomicLong();
+	private final long startTime = System.currentTimeMillis();
+	private EventListenerManager eventListenerManager = null;
 	
 	//private PrintWriter pw = null;
 	//private Logger log=logger;
@@ -140,7 +147,15 @@ public class NIOSocket
 		return addServerSocket(new InetSocketAddress(port), backlog, psf);
 	}
 	
-	
+	public void setEventManager(EventListenerManager eventListenerManager)
+	{
+		this.eventListenerManager = eventListenerManager;
+	}
+
+	public EventListenerManager getEventManager()
+	{
+		return eventListenerManager;
+	}
 	
 
 	@Override
@@ -209,7 +224,7 @@ public class NIOSocket
 							    	{
 							    		try
 							    		{ 	
-							    			attackTotalCount++;
+							    			long currentAttackCount = attackTotalCount.incrementAndGet();
 							    			if (attackTimestamp == 0)
 							    			{
 							    				attackTimestamp = System.currentTimeMillis();
@@ -227,11 +242,24 @@ public class NIOSocket
 							    			// in try block with catch exception since logger can point to file log
 							    			
 							    			log.info( "@ port:" + isa.getPort() + " access denied for:" + sc.getRemoteAddress());
+							    			if(eventListenerManager != null)
+											{
+												if (sc.getRemoteAddress() instanceof InetSocketAddress)
+												{
+													InetSocketAddress remoteISA = (InetSocketAddress) sc.getRemoteAddress();
+													if(remoteISA.getAddress() instanceof Inet4Address) {
+														String remoteIPAddress = SharedNetUtil.toV4Address(remoteISA.getAddress().getAddress());
+														InetSocketAddressEvent event = new InetSocketAddressEvent(this, new InetSocketAddressDAO(remoteIPAddress, isa.getPort()));
+														eventListenerManager.dispatch(event, true);
+													}
+												}
+											}
 							    			
-							    			if (attackTotalCount % 500 == 0)
+							    			if (currentAttackCount % 500 == 0)
 							    			{
-							    				float rate = (float) ((500.00/(float)(System.currentTimeMillis() - attackTimestamp))*TimeInMillis.SECOND.MILLIS);
-							    				log.info("Attacks:" + rate + " a/s" + " total:" + attackTotalCount + " in " + TimeInMillis.toString(System.currentTimeMillis() - startTime));
+							    				float burstRate = (float) ((500.00/(float)(System.currentTimeMillis() - attackTimestamp))*TimeInMillis.SECOND.MILLIS);
+							    				float overAllRate = (float)((float)currentAttackCount/(float)(System.currentTimeMillis() - startTime))*TimeInMillis.SECOND.MILLIS;
+							    				log.info(" Burst Attacks:" + burstRate+ " a/s" + " Total Attacks:" + overAllRate + " a/s" + " total:" + attackTotalCount + " in " + TimeInMillis.toString(System.currentTimeMillis() - startTime));
 							    				attackTimestamp = 0;
 							    			}
 							    		}

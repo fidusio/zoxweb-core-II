@@ -20,6 +20,8 @@ import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Logger;
 
 
+import org.zoxweb.server.util.DefaultEvenManager;
+import org.zoxweb.shared.data.events.EventListenerManager;
 import org.zoxweb.shared.util.Const;
 
 public class TaskUtil
@@ -27,6 +29,7 @@ public class TaskUtil
 	private static TaskProcessor TASK_PROCESSOR = null;
 	private static TaskSchedulerProcessor TASK_SCHEDULER = null;
 	private static TaskSchedulerProcessor TASK_SIMPLE_SCHEDULER = null;
+	private static EventListenerManager EV_MANAGER = null;
 	private static final Lock LOCK = new ReentrantLock();
 	
 	private static int maxTasks = 500;
@@ -125,6 +128,23 @@ public class TaskUtil
 		}
 		
 		return TASK_SCHEDULER;
+	}
+
+	public static EventListenerManager getDefaultEventManager()
+	{
+		if (EV_MANAGER == null) {
+			try {
+				LOCK.lock();
+
+				if (EV_MANAGER == null) {
+					EV_MANAGER = new DefaultEvenManager();
+				}
+			} finally {
+				LOCK.unlock();
+			}
+		}
+
+		return EV_MANAGER;
 	}
 
 	/**
