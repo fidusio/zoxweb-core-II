@@ -28,7 +28,7 @@ extends SetNameDescriptionDAO
         NAME(NVConfigManager.createNVConfig("name", "Name", "Name", true, true, String.class)),
         PARAM(NVConfigManager.createNVConfig("param", "Parameter", "Param", false, true, String.class)),
         VALUE_TYPE(NVConfigManager.createNVConfig("value_type", "The value type", "ValueType", true, true, ValueType.class)),
-        MANDATORY(NVConfigManager.createNVConfig("mandatory", "Mandatoty", "Mandatory", true, true, Boolean.class)),
+        MANDATORY(NVConfigManager.createNVConfig("mandatory", "Mandatory", "Mandatory", true, true, Boolean.class)),
         CASE_SENSITIVE(NVConfigManager.createNVConfig("case_sensitive", "Case Sensitive", "CaseSensitive", true, true, Boolean.class)),
 
         ;

@@ -36,6 +36,10 @@ public class SimpleMessage
 		implements GetNVConfig
 	{
 		MESSAGE(NVConfigManager.createNVConfig("message", "Content of the message", "Message", false, true, false, false, String.class, FilterType.CLEAR)),
+		ERROR(NVConfigManager.createNVConfig("error", "Error message if available", "ErrorMessage", false, true, false, false, String.class, FilterType.CLEAR)),
+		CATEGORY(NVConfigManager.createNVConfig("category", "Message category", "Category", false, true, false, false, String.class, FilterType.CLEAR)),
+		TYPE(NVConfigManager.createNVConfig("type", "Message type", "Type", false, true, false, false, String.class, FilterType.CLEAR)),
+		CODE(NVConfigManager.createNVConfig("code", "Message code", "Code", false, true, int.class)),
 		;
 		
 		private final NVConfig nvc;
@@ -73,6 +77,13 @@ public class SimpleMessage
 	{
 		super(NVC_SIMPLE_MESSAGE);
 	}
+	public SimpleMessage(String message, int code, String error)
+	{
+		this();
+		setMessage(message);
+		setCode(code);
+		setError(error);
+	}
 	
 	/**
 	 * This constructor instantiates SimpleDocumentDAO based on given NVConfigEntity parameter.
@@ -99,6 +110,61 @@ public class SimpleMessage
 	public void setMessage(String message)
 	{
 		setValue(Param.MESSAGE, message);
+	}
+
+
+	/**
+	 * Returns error message.
+	 * @return error
+	 */
+	public String getError()
+	{
+		return lookupValue(Param.ERROR);
+	}
+
+	/**
+	 * Sets error message.
+	 * @param error
+	 */
+	public void setError(String error)
+	{
+		setValue(Param.ERROR, error);
+	}
+
+
+	/**
+	 * Returns message code.
+	 * @return code.
+	 */
+	public int getCode()
+	{
+		return lookupValue(Param.CODE);
+	}
+
+	/**
+	 * Sets message code
+	 * @param errorCode
+	 */
+	public void setCode(int errorCode) { setValue(Param.CODE, errorCode); }
+
+
+	public String getCategory()
+	{
+		return lookupValue(Param.CATEGORY);
+	}
+
+	public void setCategory(String category)
+	{
+		setValue(Param.CATEGORY, category);
+	}
+	public String getType()
+	{
+		return lookupValue(Param.TYPE);
+	}
+
+	public void setType(String type)
+	{
+		setValue(Param.TYPE, type);
 	}
 	
 }

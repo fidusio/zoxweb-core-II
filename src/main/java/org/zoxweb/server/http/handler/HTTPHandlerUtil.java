@@ -2,7 +2,6 @@ package org.zoxweb.server.http.handler;
 
 import com.sun.net.httpserver.HttpExchange;
 import org.zoxweb.server.util.GSONUtil;
-import org.zoxweb.shared.data.SimpleErrorMessage;
 import org.zoxweb.shared.data.SimpleMessage;
 import org.zoxweb.shared.http.HTTPHeaderName;
 import org.zoxweb.shared.http.HTTPMimeType;
@@ -21,7 +20,7 @@ public class HTTPHandlerUtil {
   
   public static void sendErrorMessage(HttpExchange he, HTTPStatusCode hsc, String msg) throws IOException
   {
-    SimpleErrorMessage sem = new SimpleErrorMessage(msg, hsc.CODE, hsc.REASON);
+    SimpleMessage sem = new SimpleMessage(msg, hsc.CODE, hsc.REASON);
     sem.setCreationTime(System.currentTimeMillis());
     sendSimpleMessage(he, hsc, sem);
   }

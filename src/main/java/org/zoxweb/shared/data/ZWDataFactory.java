@@ -804,21 +804,6 @@ public class ZWDataFactory
                 return SimpleMessage.NVC_SIMPLE_MESSAGE;
             }
         },
-        SIMPLE_ERROR_MESSAGE(SimpleErrorMessage.class.getName())
-        {
-            @SuppressWarnings("unchecked")
-            @Override
-            public SimpleErrorMessage newInstance()
-            {
-                return new SimpleErrorMessage();
-            }
-
-            @Override
-            public NVConfigEntity getNVConfigEntity() 
-            {
-                return SimpleErrorMessage.NVC_SIMPLE_ERROR_MESSAGE;
-            }
-        },
 		SUBJECT_API_KEY(SubjectAPIKey.class.getName())
 		{
 			@SuppressWarnings("unchecked")
