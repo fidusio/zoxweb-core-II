@@ -24,12 +24,12 @@ import java.io.FileNotFoundException;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.util.EventObject;
 import java.util.logging.Logger;
 
 import org.zoxweb.server.task.RunnableTask;
 import org.zoxweb.shared.util.DaemonController;
 import org.zoxweb.shared.util.SharedUtil;
+import org.zoxweb.shared.data.events.BaseEventObject;
 import org.zoxweb.shared.data.events.EventListenerManager;
 import org.zoxweb.shared.data.events.StringTokenEvent;
 import org.zoxweb.shared.util.Const.TimeInMillis;
@@ -48,16 +48,16 @@ public class FileMonitor extends RunnableTask
 	private long creationTime;
 	private boolean autoRun;
 	private boolean device;
-	private EventListenerManager<EventObject, ?> elm;
+	private EventListenerManager<BaseEventObject<?>, ?> elm;
 	
 
-	public FileMonitor(String logToMonitor, EventListenerManager<EventObject, ?> elm, boolean autoRun)
+	public FileMonitor(String logToMonitor, EventListenerManager<BaseEventObject<?>, ?> elm, boolean autoRun)
 			throws NullPointerException, IllegalArgumentException, IOException
 	{
 		this(logToMonitor, elm, autoRun, false);
 	}
 	
-	public FileMonitor(String logToMonitor, EventListenerManager<EventObject, ?> elm, boolean autoRun, boolean device)
+	public FileMonitor(String logToMonitor, EventListenerManager<BaseEventObject<?>, ?> elm, boolean autoRun, boolean device)
 		throws NullPointerException, IllegalArgumentException, IOException
 	{
 		SharedUtil.checkIfNulls("Null variable", logToMonitor);

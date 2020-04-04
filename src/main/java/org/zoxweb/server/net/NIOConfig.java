@@ -288,7 +288,7 @@ implements Closeable,
 				IPBlockerListener.Creator c = new IPBlockerListener.Creator();
 				//log.info("\n" + GSONUtil.toJSON(appConfig, true, false, false));
 				c.setAppConfig(ipBlockerConfig);
-				IPBlockerListener ipBlocker = c.createApp();
+				c.createApp();
 				nioSocket.setEventManager(TaskUtil.getDefaultEventManager());
 
 			}

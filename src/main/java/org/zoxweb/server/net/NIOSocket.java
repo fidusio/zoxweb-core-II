@@ -18,14 +18,12 @@ package org.zoxweb.server.net;
 import java.io.Closeable;
 import java.io.IOException;
 import java.net.Inet4Address;
-import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.nio.channels.DatagramChannel;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
-
 import java.util.Iterator;
 import java.util.Set;
 import java.util.concurrent.Executor;
@@ -36,11 +34,12 @@ import java.util.logging.Logger;
 
 import org.zoxweb.server.io.IOUtil;
 
-import org.zoxweb.server.net.security.IPBlockerListener;
+
 import org.zoxweb.server.net.security.SSLSessionDataFactory;
 
 
 import org.zoxweb.server.task.TaskUtil;
+import org.zoxweb.shared.data.events.BaseEventObject;
 import org.zoxweb.shared.data.events.EventListenerManager;
 import org.zoxweb.shared.data.events.InetSocketAddressEvent;
 import org.zoxweb.shared.net.InetSocketAddressDAO;
@@ -71,7 +70,7 @@ public class NIOSocket
 	private long statLogCounter = 0;
 	private AtomicLong attackTotalCount = new AtomicLong();
 	private final long startTime = System.currentTimeMillis();
-	private EventListenerManager eventListenerManager = null;
+	private EventListenerManager<BaseEventObject<?>,?> eventListenerManager = null;
 	
 	//private PrintWriter pw = null;
 	//private Logger log=logger;
@@ -147,12 +146,12 @@ public class NIOSocket
 		return addServerSocket(new InetSocketAddress(port), backlog, psf);
 	}
 	
-	public void setEventManager(EventListenerManager eventListenerManager)
+	public void setEventManager(EventListenerManager<BaseEventObject<?>, ?> eventListenerManager)
 	{
 		this.eventListenerManager = eventListenerManager;
 	}
 
-	public EventListenerManager getEventManager()
+	public EventListenerManager<BaseEventObject<?>, ?> getEventManager()
 	{
 		return eventListenerManager;
 	}

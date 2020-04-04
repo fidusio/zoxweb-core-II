@@ -15,12 +15,13 @@
  */
 package org.zoxweb.shared.data.events;
 
+
 import java.util.EventListener;
-import java.util.EventObject;
 import java.util.HashSet;
 import java.util.Set;
 
-public abstract  class EventListenerManager<E extends EventObject, L extends EventHandlerListener<E>>
+public abstract class EventListenerManager<E extends BaseEventObject<?>, L extends EventHandlerListener<E>>
+implements AutoCloseable
 {
 	protected Set<L> set = new HashSet<L>();
 
@@ -54,5 +55,7 @@ public abstract  class EventListenerManager<E extends EventObject, L extends Eve
 //			((EventHandlerListener)el).handleEvent(event);
 //		}
 //	}
+	
+	public abstract void close();
 
 }

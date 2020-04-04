@@ -15,46 +15,19 @@
  */
 package org.zoxweb.shared.data.events;
 
-import org.zoxweb.shared.net.InetAddressDAO;
-
-import java.util.EventObject;
 
 /**
  *
  */
 @SuppressWarnings("serial")
 public class StringTokenEvent 
-    extends EventObject
+    extends BaseEventObject<String>
 {
-	private final String token;
-	private final long timeStamp;
-
-
+	
 	public StringTokenEvent(Object source, String token)
 	{
-		super(source);
-		this.token = token;
-		timeStamp = System.currentTimeMillis();
+		super(source, token);
 	}
-
-
-    /**
-     * Returns the token.
-     * @return
-     */
-	public String getToken()
-	{
-		return token;
-	}
-
-	/**
-	 * @return the timestamp in millis when the event was created
-	 */
-	public long getTimeStamp()
-	{
-		return timeStamp;
-	}
-
 
 	
 }

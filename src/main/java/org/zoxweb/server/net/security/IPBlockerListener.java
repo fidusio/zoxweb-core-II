@@ -17,7 +17,6 @@ package org.zoxweb.server.net.security;
 
 import java.io.Closeable;
 import java.io.IOException;
-import java.util.EventObject;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,7 +39,7 @@ import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
 
 public class IPBlockerListener
-        implements EventHandlerListener, Closeable
+        implements EventHandlerListener<BaseEventObject<?>>, Closeable
 {
 	public static final String RESOURCE_NAME = "IP_BLOCKER";
 
@@ -83,8 +82,8 @@ public class IPBlockerListener
 			return ipBlockerConfig;
 		}
 
+		@SuppressWarnings("rawtypes")
 		@Override
-		
 		public IPBlockerListener createApp() throws NullPointerException, IllegalArgumentException, IOException {
 			// TODO Auto-generated method stub
 			EventListenerManager tlm = TaskUtil.getDefaultEventManager();
@@ -145,8 +144,8 @@ public class IPBlockerListener
 
 	private void processStringTokenEvent(StringTokenEvent ste)
 	{
-		String token = ste.getToken();
-		long timeStamp = ste.getTimeStamp();
+		String token = ste.getData();
+		//long timeStamp = ste.getTimeStamp();
 		
 		
 		if (SharedStringUtil.contains(token, ipbc.getAuthToken(), true))
@@ -209,7 +208,7 @@ public class IPBlockerListener
 		if(isae != null)
 		{
 			long timeStamp = isae.getTimeStamp();
-			InetSocketAddressDAO isad = isae.getAddressDAO();
+			InetSocketAddressDAO isad = isae.getData();
 			if(isad != null)
 			{
 				RemoteIPInfo ripi = ripiMap.get(isad);
@@ -261,7 +260,7 @@ public class IPBlockerListener
 	}
 
 	@Override
-	public void handleEvent(EventObject event) {
+	public void handleEvent(BaseEventObject<?> event) {
 		if(event instanceof InetSocketAddressEvent)
 		{
 			reportBadAddress((InetSocketAddressEvent) event);

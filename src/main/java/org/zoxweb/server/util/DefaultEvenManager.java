@@ -2,14 +2,14 @@ package org.zoxweb.server.util;
 
 import org.zoxweb.server.task.TaskSchedulerProcessor;
 import org.zoxweb.server.task.TaskUtil;
+import org.zoxweb.shared.data.events.BaseEventObject;
 import org.zoxweb.shared.data.events.EventHandlerListener;
 import org.zoxweb.shared.data.events.EventListenerManager;
 
 import java.util.EventListener;
-import java.util.EventObject;
 
 public class DefaultEvenManager
-extends EventListenerManager
+extends EventListenerManager<BaseEventObject<?>, EventHandlerListener<BaseEventObject<?>>>
 {
 
     protected final TaskSchedulerProcessor tsp;
@@ -23,7 +23,7 @@ extends EventListenerManager
         this.tsp = tsp;
     }
     @Override
-    public void dispatch(EventObject event, boolean async)
+    public void dispatch(BaseEventObject<?> event, boolean async)
     {
 		EventListener[] all = getAllListeners();
 
@@ -34,14 +34,18 @@ extends EventListenerManager
                 tsp.queue(0, new Runnable() {
                     @Override
                     public void run() {
-                        ((EventHandlerListener) el).handleEvent(event);
+                        ((EventHandlerListener<BaseEventObject<?>>) el).handleEvent(event);
                     }
                 });
             }
 		    else
             {
-                ((EventHandlerListener) el).handleEvent(event);
+                ((EventHandlerListener<BaseEventObject<?>>) el).handleEvent(event);
             }
 		}
 	}
+    @Override
+    public void close() {
+      
+    }
 }

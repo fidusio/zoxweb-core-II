@@ -21,6 +21,7 @@ import java.util.logging.Logger;
 
 
 import org.zoxweb.server.util.DefaultEvenManager;
+import org.zoxweb.shared.data.events.BaseEventObject;
 import org.zoxweb.shared.data.events.EventListenerManager;
 import org.zoxweb.shared.util.Const;
 
@@ -29,7 +30,7 @@ public class TaskUtil
 	private static TaskProcessor TASK_PROCESSOR = null;
 	private static TaskSchedulerProcessor TASK_SCHEDULER = null;
 	private static TaskSchedulerProcessor TASK_SIMPLE_SCHEDULER = null;
-	private static EventListenerManager EV_MANAGER = null;
+	private static EventListenerManager<BaseEventObject<?>,?> EV_MANAGER = null;
 	private static final Lock LOCK = new ReentrantLock();
 	
 	private static int maxTasks = 500;
@@ -130,7 +131,7 @@ public class TaskUtil
 		return TASK_SCHEDULER;
 	}
 
-	public static EventListenerManager getDefaultEventManager()
+	public static EventListenerManager<BaseEventObject<?>,?> getDefaultEventManager()
 	{
 		if (EV_MANAGER == null) {
 			try {
@@ -225,6 +226,7 @@ public class TaskUtil
 		getDefaultTaskScheduler().close();
 		getDefaultTaskProcessor().close();
 		getSimpleTaskScheduler().close();
+		getDefaultEventManager().close();
 	}
 	
 }
