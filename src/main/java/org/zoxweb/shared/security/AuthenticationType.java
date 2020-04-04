@@ -1,7 +1,7 @@
 package org.zoxweb.shared.security;
 
 public enum AuthenticationType {
-    NONE,
+    ALL,
     BASIC,
     TOKEN,
     JWT

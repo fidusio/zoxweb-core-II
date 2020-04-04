@@ -43,19 +43,14 @@ public @interface EndPointProp {
      * a good practice
      * @return comma separated uris
      */
-    String urisSimplified() default "";
+    String uris();
 
-    /**
-     * List of uris as string array
-     * @return list of uris
-     */
-    String[] uris() default {};
 
     /**
      * List of HTTPMethod to be called GET=HTTPMethod.GET, POST=HTTPMethod.POST ...
      * @return list of HTTPMethod
      */
-    HTTPMethod[] methods();
+    HTTPMethod[] methods() default {};
 
     /**
      * Name of the handler or servlet depending on the server used
