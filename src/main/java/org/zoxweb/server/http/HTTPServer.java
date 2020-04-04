@@ -2,21 +2,18 @@ package org.zoxweb.server.http;
 
 
 import com.sun.net.httpserver.*;
-import org.zoxweb.server.http.handler.HTTPFileHandler;
 import org.zoxweb.server.io.IOUtil;
-import org.zoxweb.server.task.TaskUtil;
 import org.zoxweb.server.util.GSONUtil;
 import org.zoxweb.shared.http.HTTPHeaderName;
 import org.zoxweb.shared.http.HTTPMimeType;
 import org.zoxweb.shared.http.HTTPServerConfig;
 import org.zoxweb.shared.util.NVGenericMap;
 import org.zoxweb.shared.util.SharedStringUtil;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.InetSocketAddress;
+
 import java.util.logging.Logger;
 
 
@@ -84,7 +81,6 @@ public class HTTPServer {
 //      server.start();
 //
 //      log.info("server started @ " + server.getAddress());
-      Filter filter;
     } catch (Exception e) {
       e.printStackTrace();
       System.err.println("Usage: HTTPServer server-config.json");

@@ -82,7 +82,7 @@ public class IPBlockerListener
 			return ipBlockerConfig;
 		}
 
-		@SuppressWarnings("rawtypes")
+		@SuppressWarnings({"rawtypes", "unchecked"})
 		@Override
 		public IPBlockerListener createApp() throws NullPointerException, IllegalArgumentException, IOException {
 			// TODO Auto-generated method stub
