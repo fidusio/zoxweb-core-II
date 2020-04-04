@@ -41,9 +41,10 @@ implements AutoCloseable
         }
 	}
 	
-	public synchronized EventListener[] getAllListeners()
+	@SuppressWarnings("unchecked")
+	public synchronized L[] getAllListeners()
 	{
-		return set.toArray(new EventListener[0]);
+		return (L[]) set.toArray(new EventListener[0]);
 	}
 	
 	public abstract void dispatch(E event, boolean async);
