@@ -1,18 +1,18 @@
 package org.zoxweb.server.http;
 
 
-import com.sun.net.httpserver.HttpContext;
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
-import com.sun.net.httpserver.HttpServer;
+import com.sun.net.httpserver.*;
 import org.zoxweb.server.http.handler.HTTPFileHandler;
+import org.zoxweb.server.io.IOUtil;
 import org.zoxweb.server.task.TaskUtil;
 import org.zoxweb.server.util.GSONUtil;
 import org.zoxweb.shared.http.HTTPHeaderName;
 import org.zoxweb.shared.http.HTTPMimeType;
+import org.zoxweb.shared.http.HTTPServerConfig;
 import org.zoxweb.shared.util.NVGenericMap;
 import org.zoxweb.shared.util.SharedStringUtil;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -50,12 +50,24 @@ public class HTTPServer {
   public static void main(String... args) {
     try {
       int index = 0;
-      int port = Integer.parseInt(args[index++]);
-      HttpServer server = HttpServer.create(new InetSocketAddress(port), 250);
-      String baseFolder = args[index++];
-      for (; index < args.length; index++) {
-        server.createContext("/" + args[index], new ContextHandler());
-      }
+
+
+      String filename = args[index++];
+      File file = IOUtil.locateFile(filename);
+      HTTPServerConfig hsc = null;
+
+      if(file != null)
+        hsc = GSONUtil.fromJSON(IOUtil.inputStreamToString(file), HTTPServerConfig.class);
+
+      log.info("" + hsc);
+      log.info("" + hsc.getConnectionConfigs());
+
+//      int port = Integer.parseInt(args[index++]);
+//      HttpServer server = HttpServer.create(new InetSocketAddress(port), 250);
+//      String baseFolder = args[index++];
+//      for (; index < args.length; index++) {
+//        server.createContext("/" + args[index], new ContextHandler());
+//      }
 //      HttpContext hc = server.createContext("/.well-known/pki-validation/", new FileHandler("/public"));
 //      hc.setAuthenticator(new Authenticator() {
 //        @Override
@@ -63,18 +75,19 @@ public class HTTPServer {
 //          return null;
 //        }
 //      });
-      //server.createContext("/toto", new FileHandler());
-      server.setExecutor(TaskUtil.getDefaultTaskProcessor());
-
-      HttpContext hc = server.createContext("/", new HTTPFileHandler(baseFolder));
-
-      log.info(hc.getPath());
-      server.start();
-
-      log.info("server started @ " + server.getAddress());
-
+//      server.createContext("/toto", new FileHandler());
+//      server.setExecutor(TaskUtil.getDefaultTaskProcessor());
+//
+//      HttpContext hc = server.createContext("/", new HTTPFileHandler(baseFolder));
+//
+//      log.info(hc.getPath());
+//      server.start();
+//
+//      log.info("server started @ " + server.getAddress());
+      Filter filter;
     } catch (Exception e) {
       e.printStackTrace();
+      System.err.println("Usage: HTTPServer server-config.json");
     }
   }
 }

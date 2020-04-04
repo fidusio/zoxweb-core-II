@@ -37,10 +37,10 @@ public @interface WebEndPoint {
      * This represent a list of 2 uris:
      * <ol>
      *     <li>/system/info</li>
-     *     <li>/syste,/info/detailed</li>
+     *     <li>/system/info/detailed</li>
      * </ol>
      * Note: There a limitation here which is the exclusion of comma from the uri definition which is actually
-     * a good practive
+     * a good practice
      * @return comma separated uris
      */
     String urisSimplified() default "";
@@ -61,6 +61,6 @@ public @interface WebEndPoint {
      * Name of the handler or servlet depending on the server used
      * @return
      */
-    String name() default "";
+    String name();
 
 }

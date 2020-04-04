@@ -34,11 +34,14 @@ import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.concurrent.TimeUnit;
 import org.zoxweb.shared.util.SharedStringUtil;
+import org.zoxweb.shared.util.SharedUtil;
 
 public class IOUtil 
 {
 	
 	//public static final SimpleDateFormat SDF = new SimpleDateFormat("[yyyy-MM-dd HH:mm:ss.SSS] ");
+
+	private IOUtil(){}
 	
 	/**
 	 * Close an AutoCloseable object if c is null the action is discarded, while closing catch any exception silently
@@ -56,6 +59,20 @@ public class IOUtil
 				}
 			}
 		}
+	}
+
+	public static File findFile(String filename)
+	{
+		filename = SharedStringUtil.trimOrNull(filename);
+		SharedUtil.checkIfNulls("Filename can't be null.", filename);
+
+		return findFile(new File(filename));
+	}
+
+	public static File findFile(File file)
+	{
+		SharedUtil.checkIfNulls("File can't be null.", file);
+		return (file.exists() && file.isFile()) ? file : null;
 	}
 	
 	
@@ -108,15 +125,10 @@ public class IOUtil
 	
 	public static File locateFile(String filename)
 	{
-		
+		File ret = findFile(filename);
+		if (ret != null)
+			return ret;
 		return locateFile(ClassLoader.getSystemClassLoader(), filename);
-//		File ret = new File(filename);
-//		if (!ret.exists() || !ret.isFile())
-//		{
-//			ret = new File(ClassLoader.getSystemClassLoader().getResource(filename).getFile());
-//		}
-//		
-//		return ret;
 	}
 	
 	
