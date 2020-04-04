@@ -17,7 +17,7 @@ package org.zoxweb.shared.security;
 
 import org.zoxweb.shared.data.SetNameDescriptionDAO;
 import org.zoxweb.shared.util.GetNVConfig;
-import org.zoxweb.shared.util.GetNVGenericMap;
+import org.zoxweb.shared.util.GetNVProperties;
 import org.zoxweb.shared.util.GetName;
 import org.zoxweb.shared.util.NVConfig;
 import org.zoxweb.shared.util.NVConfigEntity;
@@ -29,7 +29,7 @@ import org.zoxweb.shared.security.SecurityConsts.JWTAlgorithm;
 
 
 public class JWTHeader
-implements GetNVGenericMap
+implements GetNVProperties
 //    extends SetNameDescriptionDAO
 {
 	public enum Param

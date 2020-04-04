@@ -201,14 +201,14 @@ public class JWTTest {
     KeyPair kp = CryptoUtil.generateKeyPair("EC", 256);
 
     String test = CryptoUtil.encodeJWT(kp.getPrivate().getEncoded(), localJwt);
-    System.out.println(test);
+    System.out.println("Encoded: " + test);
 
     jsonES256 = GSONUtil.toJSON(localJwt, false, false, false, Base64Type.URL);
     System.out.println(jwtES256);
     test = CryptoUtil.encodeJWT(kp.getPrivate().getEncoded(), localJwt);
     System.out.println(test);
 
-    System.out.println(CryptoUtil.decodeJWT(kp.getPublic().getEncoded(), test));
+    System.out.println("Decoded: " + CryptoUtil.decodeJWT(kp.getPublic().getEncoded(), test));
 
     System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
   }

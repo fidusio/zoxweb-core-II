@@ -19,7 +19,7 @@ import org.zoxweb.shared.data.SetNameDescriptionDAO;
 import org.zoxweb.shared.filters.FilterType;
 import org.zoxweb.shared.util.AppID;
 import org.zoxweb.shared.util.GetNVConfig;
-import org.zoxweb.shared.util.GetNVGenericMap;
+import org.zoxweb.shared.util.GetNVProperties;
 import org.zoxweb.shared.util.GetName;
 
 import org.zoxweb.shared.util.NVBoolean;
@@ -39,7 +39,7 @@ import java.util.Date;
 public class JWTPayload 
     //extends SetNameDescriptionDAO
     implements AppID<String>,
-    		   GetNVGenericMap
+    		   GetNVProperties
 {
 	
 

@@ -1922,7 +1922,7 @@ public class SharedUtil
 	}
 	
 	
-	public static NVGenericMap updateGetNVGenericMap(GetNVGenericMap toUpdate, NVGenericMap value)
+	public static NVGenericMap updateGetNVGenericMap(GetNVProperties toUpdate, NVGenericMap value)
 	{
 		return updateNVGenericMap(toUpdate.getProperties(), value);
 	}

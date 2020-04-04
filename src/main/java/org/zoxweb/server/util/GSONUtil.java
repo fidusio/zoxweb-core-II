@@ -765,11 +765,11 @@ final public class GSONUtil
 					if (tempNVE != null)
 					{
 						writer.name(nvc.getName());
-						if (tempNVE instanceof GetNVGenericMap)
-						{
-							toJSONGenericMap(writer, ((GetNVGenericMap) tempNVE).getProperties(), printNull, printClassType);
-						}
-						else
+//						if (tempNVE instanceof GetNVGenericMap)
+//						{
+//							toJSONGenericMap(writer, ((GetNVGenericMap) tempNVE).getProperties(), printNull, printClassType);
+//						}
+//						else
 						toJSON( writer,  (Class<? extends NVEntity>) ((NVConfigEntity) nvc).getMetaType(), (NVEntity)nve.lookupValue(nvc), printNull, printClassType, b64Type);
 					}
 					else if (printNull)
