@@ -30,7 +30,7 @@ import java.lang.annotation.Target;
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface WebEndPoint {
+public @interface EndPointProp {
     /**
      * This is simplified way to represent a list of usr as one string comma separated
      * Ex: "/system/info,/system/info/detailed"
@@ -47,19 +47,19 @@ public @interface WebEndPoint {
 
     /**
      * List of uris as string array
-     * @return
+     * @return list of uris
      */
     String[] uris() default {};
 
     /**
      * List of HTTPMethod to be called GET=HTTPMethod.GET, POST=HTTPMethod.POST ...
-     * @return
+     * @return list of HTTPMethod
      */
     HTTPMethod[] methods();
 
     /**
      * Name of the handler or servlet depending on the server used
-     * @return
+     * @return of the handle
      */
     String name();
 
