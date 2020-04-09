@@ -26,6 +26,7 @@ import org.zoxweb.shared.accounting.BillingItemsContainerDAO;
 import org.zoxweb.shared.accounting.BillingItemDAO;
 import org.zoxweb.shared.api.*;
 import org.zoxweb.shared.app.AppVersionDAO;
+import org.zoxweb.shared.http.HTTPEndPoint;
 import org.zoxweb.shared.net.ConnectionConfig;
 import org.zoxweb.shared.security.KeyStoreInfoDAO;
 import org.zoxweb.shared.util.NVEntityInstance;
@@ -481,6 +482,21 @@ public class ZWDataFactory
 			public NVConfigEntity getNVConfigEntity() 
 			{
 				return FormInfoDAO.NVC_FORM_INFO_DAO;
+			}
+		},
+		HTTP_END_POINT(HTTPEndPoint.class.getName())
+		{
+			@SuppressWarnings("unchecked")
+			@Override
+			public HTTPEndPoint newInstance()
+			{
+				return new HTTPEndPoint();
+			}
+
+			@Override
+			public NVConfigEntity getNVConfigEntity()
+			{
+				return HTTPEndPoint.NVC_HTTP_END_POINT;
 			}
 		},
 		HTTP_SERVER_CONFIG(HTTPServerConfig.class.getName())
