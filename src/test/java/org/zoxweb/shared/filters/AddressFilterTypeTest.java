@@ -15,34 +15,35 @@
  */
 package org.zoxweb.shared.filters;
 
-import org.junit.Test;
+//import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+
 
 public class AddressFilterTypeTest {
 
 	@Test
 	public void testValidUSZipCode() {
-		assertTrue(AddressFilterType.US_ZIP_CODE.isValid("90025"));
-		assertTrue(AddressFilterType.US_ZIP_CODE.isValid("48202"));
+		Assertions.assertTrue(AddressFilterType.US_ZIP_CODE.isValid("90025"));
+		Assertions.assertTrue(AddressFilterType.US_ZIP_CODE.isValid("48202"));
 	}
 	
 	@Test
 	public void testInvalidUSZipCode() {
-		assertFalse(AddressFilterType.US_ZIP_CODE.isValid("0"));
-		assertFalse(AddressFilterType.US_ZIP_CODE.isValid("48202555"));
+		Assertions.assertFalse(AddressFilterType.US_ZIP_CODE.isValid("0"));
+		Assertions.assertFalse(AddressFilterType.US_ZIP_CODE.isValid("48202555"));
 	}
 	
 	@Test
 	public void testValidCanadaPostalCode() {
-		assertTrue(AddressFilterType.CANADA_POSTAL_CODE.isValid("N9G2E1"));
+		Assertions.assertTrue(AddressFilterType.CANADA_POSTAL_CODE.isValid("N9G2E1"));
 	}
 	
 	@Test
 	public void testInvalidCanadaPostalCode() {
-		assertFalse(AddressFilterType.CANADA_POSTAL_CODE.isValid("9N23G1"));
-		assertFalse(AddressFilterType.CANADA_POSTAL_CODE.isValid("90066"));
+		Assertions.assertFalse(AddressFilterType.CANADA_POSTAL_CODE.isValid("9N23G1"));
+		Assertions.assertFalse(AddressFilterType.CANADA_POSTAL_CODE.isValid("90066"));
 	}
 	
 }

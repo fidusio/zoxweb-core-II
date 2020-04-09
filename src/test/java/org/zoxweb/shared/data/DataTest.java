@@ -2,8 +2,9 @@ package org.zoxweb.shared.data;
 
 
 import java.io.IOException;
-import org.junit.BeforeClass;
-import org.junit.Test;
+//import org.junit.BeforeClass;
+//import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.zoxweb.server.util.GSONUtil;
 import org.zoxweb.shared.data.ZWDataFactory.NVEntityTypeClass;
 import org.zoxweb.shared.security.shiro.ShiroSubjectData;
@@ -12,13 +13,9 @@ import org.zoxweb.shared.util.NVEntityInstance;
 
 public class DataTest {
 
-  @BeforeClass
-  public static void setUpBeforeClass() throws Exception {}
 
-//  @Test
-//  public void test() {
-//    fail("Not yet implemented");
-//  }
+
+
   
   @Test
   public void dataFactoryTest()

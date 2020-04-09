@@ -18,9 +18,11 @@ package org.zoxweb.server.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Assert;
-import org.junit.Test;
+//import org.junit.Assert;
+//import org.junit.Test;
 
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.zoxweb.shared.data.AddressDAO;
 import org.zoxweb.shared.data.PhoneDAO;
 import org.zoxweb.shared.util.NVEntity;
@@ -33,25 +35,25 @@ public class ServerUtilTest {
 		list1.add(new PhoneDAO());
 		list1.add(new AddressDAO());
 
-		Assert.assertTrue(ServerUtil.areAllInstancesMatchingType(list1, NVEntity.class));
-		Assert.assertFalse(ServerUtil.areAllInstancesMatchingType(list1, AddressDAO.class));
+		Assertions.assertTrue(ServerUtil.areAllInstancesMatchingType(list1, NVEntity.class));
+		Assertions.assertFalse(ServerUtil.areAllInstancesMatchingType(list1, AddressDAO.class));
 
 		List<Object> list2 = new ArrayList<Object>();
 		list2.add(new PhoneDAO());
 		list2.add(new AddressDAO());
 		list2.add("Hello");
 
-		Assert.assertFalse(ServerUtil.areAllInstancesMatchingType(list2, NVEntity.class));
-		Assert.assertTrue(ServerUtil.areAllInstancesMatchingType(list2, Object.class));
+		Assertions.assertFalse(ServerUtil.areAllInstancesMatchingType(list2, NVEntity.class));
+		Assertions.assertTrue(ServerUtil.areAllInstancesMatchingType(list2, Object.class));
 
 		List<Object> list3 = new ArrayList<Object>();
 		list3.add("1");
 		list3.add("2");
 		list3.add("3");
 
-		Assert.assertFalse(ServerUtil.areAllInstancesMatchingType(list3, NVEntity.class));
-		Assert.assertTrue( ServerUtil.areAllInstancesMatchingType(list3, Object.class));
-		Assert.assertTrue(ServerUtil.areAllInstancesMatchingType(list3, String.class));
+		Assertions.assertFalse(ServerUtil.areAllInstancesMatchingType(list3, NVEntity.class));
+		Assertions.assertTrue( ServerUtil.areAllInstancesMatchingType(list3, Object.class));
+		Assertions.assertTrue(ServerUtil.areAllInstancesMatchingType(list3, String.class));
 
 		List<Object> list4 = new ArrayList<Object>();
 		list4.add("1");
@@ -59,10 +61,10 @@ public class ServerUtilTest {
 		list4.add("3");
 		list4.add(new PhoneDAO());
 
-		Assert.assertFalse(ServerUtil.areAllInstancesMatchingType(list4, NVEntity.class));
-		Assert.assertTrue(ServerUtil.areAllInstancesMatchingType(list4, Object.class));
-		Assert.assertFalse(ServerUtil.areAllInstancesMatchingType(list4, String.class));
-		Assert.assertFalse(ServerUtil.areAllInstancesMatchingType(list4, PhoneDAO.class));
+		Assertions.assertFalse(ServerUtil.areAllInstancesMatchingType(list4, NVEntity.class));
+		Assertions.assertTrue(ServerUtil.areAllInstancesMatchingType(list4, Object.class));
+		Assertions.assertFalse(ServerUtil.areAllInstancesMatchingType(list4, String.class));
+		Assertions.assertFalse(ServerUtil.areAllInstancesMatchingType(list4, PhoneDAO.class));
 	}
 
 }

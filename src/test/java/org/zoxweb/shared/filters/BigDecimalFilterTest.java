@@ -15,11 +15,15 @@
  */
 package org.zoxweb.shared.filters;
 
-import org.junit.Test;
+
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 
-import static org.junit.Assert.assertEquals;
+//import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BigDecimalFilterTest {
 
@@ -36,19 +40,19 @@ public class BigDecimalFilterTest {
 	}
 
 	
-	@Test (expected = IllegalArgumentException.class)
+	@Test //(expected = IllegalArgumentException.class)
 	public void testInvalidBigDecimal() {
-		BigDecimalFilter.SINGLETON.validate("John");
+		Assertions.assertThrows(IllegalArgumentException.class, ()->BigDecimalFilter.SINGLETON.validate("John"));
 	}
 	
-	@Test (expected = IllegalArgumentException.class)
+	@Test
 	public void testEmptyBigDecimal() {
-		BigDecimalFilter.SINGLETON.validate("");
+		Assertions.assertThrows(IllegalArgumentException.class, ()->BigDecimalFilter.SINGLETON.validate(""));
 	}
 	
-	@Test (expected = NullPointerException.class)
+	@Test
 	public void testNullBigDecimal() {
-		BigDecimalFilter.SINGLETON.validate(null);
+		Assertions.assertThrows(IllegalArgumentException.class, ()->BigDecimalFilter.SINGLETON.validate(null));
 	}
 
 }

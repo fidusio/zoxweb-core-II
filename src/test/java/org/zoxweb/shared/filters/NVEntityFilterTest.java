@@ -15,14 +15,14 @@
  */
 package org.zoxweb.shared.filters;
 
-import org.junit.Test;
+
 import org.zoxweb.shared.data.FileInfoDAO;
 import org.zoxweb.shared.data.FolderInfoDAO;
 import org.zoxweb.shared.data.FormInfoDAO;
 import org.zoxweb.shared.data.PhoneDAO;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class NVEntityFilterTest {
 

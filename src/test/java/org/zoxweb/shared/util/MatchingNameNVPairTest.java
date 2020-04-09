@@ -15,11 +15,13 @@
  */
 package org.zoxweb.shared.util;
 
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Assert;
-import org.junit.Test;
+
 
 public class MatchingNameNVPairTest {
 
@@ -32,10 +34,10 @@ public class MatchingNameNVPairTest {
 		list.add(new NVPair("GBR", "United Kingdom"));
 		list.add(new NVPair("FRA", "France"));
 
-        Assert.assertTrue(SharedUtil.doesNameExistNVList(list, "USA"));
-        Assert.assertFalse(SharedUtil.doesNameExistNVList(list, "CHN"));
-        Assert.assertTrue(SharedUtil.doesNameExistNVList(list, "FRA"));
-        Assert.assertFalse(SharedUtil.doesNameExistNVList(list, "JPN"));
+        Assertions.assertTrue(SharedUtil.doesNameExistNVList(list, "USA"));
+        Assertions.assertFalse(SharedUtil.doesNameExistNVList(list, "CHN"));
+        Assertions.assertTrue(SharedUtil.doesNameExistNVList(list, "FRA"));
+        Assertions.assertFalse(SharedUtil.doesNameExistNVList(list, "JPN"));
 	}
 
 }

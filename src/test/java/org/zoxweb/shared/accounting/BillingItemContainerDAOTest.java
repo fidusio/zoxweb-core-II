@@ -15,12 +15,15 @@
  */
 package org.zoxweb.shared.accounting;
 
-import org.junit.Test;
+//import org.junit.Test;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+//import static org.junit.Assert.assertEquals;
+//import static org.junit.Assert.assertNotNull;
 
 public class BillingItemContainerDAOTest
 {
@@ -40,9 +43,9 @@ public class BillingItemContainerDAOTest
         }
 
         // Items: 10  Total: 100
-        assertNotNull(container.getBillingItems());
-        assertEquals(10, container.getBillingItems().size());
-        assertEquals(new BigDecimal(100), container.getTotal());
+        Assertions.assertNotNull(container.getBillingItems());
+        Assertions.assertEquals(10, container.getBillingItems().size());
+        Assertions.assertEquals(new BigDecimal(100), container.getTotal());
 
         // Add item
         // Items: 11  Total: 120
@@ -50,14 +53,14 @@ public class BillingItemContainerDAOTest
         item1.setUnitCost(new BigDecimal(10));
         item1.setQuantity(new BigDecimal(2));
         container.addBillingItem(item1);
-        assertEquals(11, container.getBillingItems().size());
-        assertEquals(new BigDecimal(120), container.getTotal());
+        Assertions.assertEquals(11, container.getBillingItems().size());
+        Assertions.assertEquals(new BigDecimal(120), container.getTotal());
 
         // Add item
         // Items: 10  Total: 100
         container.removeBillingItem(item1);
-        assertEquals(10, container.getBillingItems().size());
-        assertEquals(new BigDecimal(100), container.getTotal());
+        Assertions.assertEquals(10, container.getBillingItems().size());
+        Assertions.assertEquals(new BigDecimal(100), container.getTotal());
 
         // Add item
         // Items: 11  Total: 260
@@ -65,8 +68,8 @@ public class BillingItemContainerDAOTest
         item2.setUnitCost(new BigDecimal(80));
         item2.setQuantity(new BigDecimal(2));
         container.addBillingItem(item2);
-        assertEquals(11, container.getBillingItems().size());
-        assertEquals(new BigDecimal(260), container.getTotal());
+        Assertions.assertEquals(11, container.getBillingItems().size());
+        Assertions.assertEquals(new BigDecimal(260), container.getTotal());
 
         // Add item
         // Items: 12  Total: 260
@@ -74,8 +77,8 @@ public class BillingItemContainerDAOTest
         item3.setUnitCost(new BigDecimal(20));
         item3.setQuantity(new BigDecimal(2));
         container.addBillingItem(item3);
-        assertEquals(12, container.getBillingItems().size());
-        assertEquals(new BigDecimal(300), container.getTotal());
+        Assertions.assertEquals(12, container.getBillingItems().size());
+        Assertions.assertEquals(new BigDecimal(300), container.getTotal());
 
         // Add item
         // Items: 13  Total: 500
@@ -84,14 +87,14 @@ public class BillingItemContainerDAOTest
         item4.setUnitCost(new BigDecimal(50));
         item4.setQuantity(new BigDecimal(4));
         container.addBillingItem(item4);
-        assertEquals(13, container.getBillingItems().size());
-        assertEquals(new BigDecimal(500), container.getTotal());
+        Assertions.assertEquals(13, container.getBillingItems().size());
+        Assertions.assertEquals(new BigDecimal(500), container.getTotal());
 
         // Add existing item
         // Items: 13  Total: 500
         container.addBillingItem(item4);
-        assertEquals(13, container.getBillingItems().size());
-        assertEquals(new BigDecimal(500), container.getTotal());
+        Assertions.assertEquals(13, container.getBillingItems().size());
+        Assertions.assertEquals(new BigDecimal(500), container.getTotal());
 
         // Add existing item
         // Items: 14  Total: 900
@@ -99,8 +102,8 @@ public class BillingItemContainerDAOTest
         item5.setUnitCost(new BigDecimal(100));
         item5.setQuantity(new BigDecimal(4));
         container.addBillingItem(item5);
-        assertEquals(14, container.getBillingItems().size());
-        assertEquals(new BigDecimal(900), container.getTotal());
+        Assertions.assertEquals(14, container.getBillingItems().size());
+        Assertions.assertEquals(new BigDecimal(900), container.getTotal());
     }
 
 }

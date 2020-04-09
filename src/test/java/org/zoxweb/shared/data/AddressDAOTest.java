@@ -17,12 +17,14 @@ package org.zoxweb.shared.data;
 
 import java.io.IOException;
 
-import org.junit.Test;
+//import org.junit.Test;
 
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.zoxweb.server.util.GSONUtil;
 import org.zoxweb.shared.api.APIException;
-import org.zoxweb.shared.data.AddressDAO;
-import org.zoxweb.shared.data.UserInfoDAO;
+//import org.zoxweb.shared.data.AddressDAO;
+//import org.zoxweb.shared.data.UserInfoDAO;
 import org.zoxweb.shared.security.AccessException;
 import org.zoxweb.shared.util.SharedUtil;
 
@@ -60,10 +62,10 @@ public class AddressDAOTest {
 		address.setCountry("Canada");
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test //(expected = IllegalArgumentException.class)
 	public void testA4() {
 		AddressDAO address = new AddressDAO();
-		address.setCountry("UK");
+		Assertions.assertThrows(IllegalArgumentException.class, ()->address.setCountry("UK"));
 	}
 	
 	public void testA5() {

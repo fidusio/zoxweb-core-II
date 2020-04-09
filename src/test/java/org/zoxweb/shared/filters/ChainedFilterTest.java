@@ -15,11 +15,9 @@
  */
 package org.zoxweb.shared.filters;
 
-import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 public class ChainedFilterTest {
 
@@ -50,11 +48,11 @@ public class ChainedFilterTest {
         assertEquals("johnsmith@zoxweb.com", cf.validate("johnsmith@zoxweb.com    "));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testValidateForInvalidValue()
     {
         ChainedFilter cf = new ChainedFilter(FilterType.CLEAR, FilterType.EMAIL);
-        cf.validate("535355");
+        assertThrows(IllegalArgumentException.class, ()->cf.validate("535355"));
     }
 	
 	@Test

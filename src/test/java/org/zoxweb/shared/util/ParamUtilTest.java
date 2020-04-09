@@ -1,6 +1,8 @@
 package org.zoxweb.shared.util;
 
-import org.junit.Test;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.zoxweb.shared.data.ParamInfo;
 
 
@@ -58,11 +60,11 @@ public class ParamUtilTest {
 
 
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test//(expected = IllegalArgumentException.class)
     public void errorTest()
     {
         ParamUtil.ParamMap result = ParamUtil.parse("-","https://localhost", "-URI", "context", "-content", "hello", "5", "-uri", "/hello");
 
-        System.out.println(result.intValue("-c"));
+        Assertions.assertThrows(IllegalArgumentException.class, ()->System.out.println(result.intValue("-c")));
     }
 }

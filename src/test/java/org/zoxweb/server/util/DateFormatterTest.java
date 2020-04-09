@@ -6,19 +6,17 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+//import org.junit.Assert;
+//import org.junit.Before;
+//import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.zoxweb.server.filters.TimestampFilter;
 import org.zoxweb.shared.util.Const.TimeInMillis;
 
 public class DateFormatterTest {
 
-	@Before
-	public void init()
-	{
-		
-	}
+
 	
 	@Test
 	public void testFormat()
@@ -35,7 +33,7 @@ public class DateFormatterTest {
 		Date date = new Date();
 		String strDate = DateUtil.DEFAULT_GMT_MILLIS.format(date);
 		Date newDate = new Date(TimestampFilter.SINGLETON.validate(strDate));
-		Assert.assertEquals(date, newDate);
+		Assertions.assertEquals(date, newDate);
 	}
 	
 	@Test

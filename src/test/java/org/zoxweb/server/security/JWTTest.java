@@ -3,9 +3,12 @@ package org.zoxweb.server.security;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.security.KeyPair;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+//import org.junit.Assert;
+//import org.junit.Before;
+//import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.zoxweb.server.util.GSONUtil;
 import org.zoxweb.shared.security.JWT;
 import org.zoxweb.shared.security.JWTHeader;
@@ -22,7 +25,7 @@ public class JWTTest {
   private long index = 0;
 
 
-  @Before
+  @BeforeAll
   public void init() {
 
     jwtHS256 = new JWT();
@@ -255,7 +258,7 @@ public class JWTTest {
     System.out.println(decoded.getPayload().getProperties());
     System.out.println(GSONUtil.toJSON(decoded, false, false, false, Base64Type.URL));
     System.out.println("Are equals:" + test.equals(gwtToken));
-    Assert.assertEquals("2 tokens equals", test, gwtToken);
+    Assertions.assertEquals("2 tokens equals", test, gwtToken);
     decoded.getPayload().getProperties().add(new NVPair("mario", "taza"));
     String json = GSONUtil.toJSON(decoded, false, false, true, Base64Type.URL);
     System.out.println(json);
@@ -285,7 +288,7 @@ public class JWTTest {
     System.out.println(decoded.getPayload().getProperties());
     System.out.println(GSONUtil.toJSON(decoded, false, false, false, Base64Type.URL));
     System.out.println("Are equals:" + test.equals(gwtToken));
-    Assert.assertEquals("2 tokens equals", test, gwtToken);
+    Assertions.assertEquals("2 tokens equals", test, gwtToken);
     decoded.getPayload().getProperties().add(new NVPair("mario", "taza"));
     String json = GSONUtil.toJSON(decoded, false, false, true, Base64Type.URL);
     System.out.println(json);

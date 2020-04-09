@@ -1,7 +1,7 @@
 package org.zoxweb.shared.util;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class AppIDURITest
 {
@@ -10,6 +10,6 @@ public class AppIDURITest
 	{
 		AppIDURI aiu = AppIDURI.parse("///zoxweb.com/zoxweb/batata");
 		System.out.println(aiu.getAppIDDAO().getSubjectID());
-		Assert.assertTrue("batata".equals(aiu.getRest()[0]));
+		assertTrue("batata".equals(aiu.getRest()[0]));
 	}
 }

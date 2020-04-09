@@ -18,12 +18,12 @@ package org.zoxweb.shared.util;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-import org.junit.Assert;
-import org.junit.Test;
 
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.zoxweb.shared.data.CreditCardDAO;
 import org.zoxweb.shared.data.CreditCardType;
-import org.zoxweb.shared.util.NVConfigMapUtil;
+
 
 public class StringMappingUtilTest {
 
@@ -39,12 +39,12 @@ public class StringMappingUtilTest {
 		card.setSecurityCode("999");
 		card.setExpirationDate(DEFAULT_DATE_FORMAT.parse("06-2015").getTime());
 	
-		Assert.assertNotNull(card);
+		Assertions.assertNotNull(card);
 
 		card = new CreditCardDAO();
-		Assert.assertEquals("0", NVConfigMapUtil.toString(card, null));
+		Assertions.assertEquals("0", NVConfigMapUtil.toString(card, null));
 
-		Assert.assertNull(NVConfigMapUtil.toString(null, null));
+		Assertions.assertNull(NVConfigMapUtil.toString(null, null));
 	}
 	
 }

@@ -22,6 +22,7 @@ extends PropertyDAO
   {
 
     CONNECTIONS(NVConfigManager.createNVConfigEntity("connections", "Protocol schemes", "Schemes", false, true, ConnectionConfig.class, ArrayType.GET_NAME_MAP)),
+    ENDPOINTS(NVConfigManager.createNVConfigEntity("endpoints", "Endpoints", "Endpoints", false, true, HTTPEndPoint.class, ArrayType.GET_NAME_MAP)),
 
     ;
     private final NVConfig nvc;
@@ -60,6 +61,11 @@ extends PropertyDAO
   public ArrayValues<ConnectionConfig> getConnectionConfigs()
   {
     return (ArrayValues<ConnectionConfig>) lookup(Param.CONNECTIONS);
+  }
+
+  public ArrayValues<HTTPEndPoint> getEndPoints()
+  {
+    return (ArrayValues<HTTPEndPoint>) lookup(Param.ENDPOINTS);
   }
 
 

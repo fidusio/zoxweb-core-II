@@ -2,8 +2,10 @@ package org.zoxweb.server.api;
 
 import java.io.IOException;
 
-import org.junit.Before;
-import org.junit.Test;
+//import org.junit.Before;
+//import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.zoxweb.server.security.JWTProvider;
 import org.zoxweb.server.util.GSONUtil;
 import org.zoxweb.shared.api.APIAppManager;
@@ -23,7 +25,7 @@ public class APIAppManagerTest {
 	private String appID = "xlogistx";
 	private String subjectID = "xlogistx@xlogistx.io";
 	APIAppManager aam = new APIAppManagerProvider();
-	@Before
+	@BeforeAll
 	public void init()
 	{
 		DeviceDAO dd = new DeviceDAO();

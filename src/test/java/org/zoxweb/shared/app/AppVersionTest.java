@@ -1,7 +1,8 @@
 package org.zoxweb.shared.app;
 
 import java.util.Date;
-import org.junit.Test;
+//import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.zoxweb.server.util.GSONUtil;
 
 public class AppVersionTest {

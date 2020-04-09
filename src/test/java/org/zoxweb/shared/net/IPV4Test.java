@@ -4,14 +4,13 @@ package org.zoxweb.shared.net;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.util.Arrays;
-import org.junit.BeforeClass;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 import org.zoxweb.server.util.GSONUtil;
 
 public class IPV4Test {
 
-  @BeforeClass
-  public static void setUpBeforeClass() throws Exception {}
+
 
   @Test
   public void validIPS() throws IOException {

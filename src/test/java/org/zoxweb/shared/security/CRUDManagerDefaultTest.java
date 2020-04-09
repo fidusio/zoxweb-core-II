@@ -15,8 +15,8 @@
  */
 package org.zoxweb.shared.security;
 
-import org.junit.Test;
 
+import org.junit.jupiter.api.Test;
 import org.zoxweb.shared.util.CRUD;
 
 public class CRUDManagerDefaultTest {

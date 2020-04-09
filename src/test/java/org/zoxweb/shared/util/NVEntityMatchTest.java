@@ -15,11 +15,12 @@
  */
 package org.zoxweb.shared.util;
 
-import org.junit.Assert;
-import org.junit.Test;
 
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.zoxweb.shared.data.UserInfoDAO;
-import org.zoxweb.shared.util.SharedUtil;
+
 
 public class NVEntityMatchTest {
 
@@ -42,10 +43,10 @@ public class NVEntityMatchTest {
 
 		UserInfoDAO user4 = null;
 
-		Assert.assertTrue(SharedUtil.equals(user1, user2));
-		Assert.assertFalse(SharedUtil.equals(user1, user3));
-		Assert.assertFalse(SharedUtil.equals(user2, user3));
-		Assert.assertFalse(SharedUtil.equals(user3, user4));
+		Assertions.assertTrue(SharedUtil.equals(user1, user2));
+		Assertions.assertFalse(SharedUtil.equals(user1, user3));
+		Assertions.assertFalse(SharedUtil.equals(user2, user3));
+		Assertions.assertFalse(SharedUtil.equals(user3, user4));
 	}
 
 }

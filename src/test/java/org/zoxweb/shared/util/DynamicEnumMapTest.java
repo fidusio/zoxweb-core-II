@@ -18,12 +18,11 @@ package org.zoxweb.shared.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
 
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.zoxweb.shared.accounting.Currency;
-import org.zoxweb.shared.util.DynamicEnumMap;
-import org.zoxweb.shared.util.DynamicEnumMapManager;
-import org.zoxweb.shared.util.NVPair;
+
 
 public class DynamicEnumMapTest {
 
@@ -140,13 +139,13 @@ public class DynamicEnumMapTest {
 		}
 	}
 	
-	@Test (expected = NullPointerException.class)
+	@Test //(expected = NullPointerException.class)
 	public void testNull() {
 		DynamicEnumMap test = new DynamicEnumMap("Test");
-		test.addEnumValue(new NVPair(null));	
+		Assertions.assertThrows(NullPointerException.class, ()->test.addEnumValue(new NVPair(null)));
 	}
 
-	@Test (expected = IllegalArgumentException.class)
+	@Test //(expected = IllegalArgumentException.class)
 	public void testInvalidStates() {
 		DynamicEnumMap dem = new DynamicEnumMap("States");
 		
@@ -156,7 +155,7 @@ public class DynamicEnumMapTest {
 
 		dem.setValue(list);
 		
-		DynamicEnumMapManager.validateDynamicEnumMap(dem);
+		Assertions.assertThrows(IllegalArgumentException.class, ()->DynamicEnumMapManager.validateDynamicEnumMap(dem));
 	}
 	
 }

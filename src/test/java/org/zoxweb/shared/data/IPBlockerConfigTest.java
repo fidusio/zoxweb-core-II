@@ -2,8 +2,9 @@ package org.zoxweb.shared.data;
 
 import java.io.IOException;
 
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.zoxweb.server.util.GSONUtil;
 import org.zoxweb.shared.security.IPBlockerConfig;
 
@@ -15,7 +16,7 @@ public class IPBlockerConfigTest {
 	IPBlockerConfig ipbc;
 	
 	
-	@Before
+	@BeforeAll
 	public void init()
 	{
 		ipbc = new IPBlockerConfig();

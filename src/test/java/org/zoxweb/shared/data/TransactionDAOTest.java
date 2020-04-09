@@ -17,56 +17,60 @@ package org.zoxweb.shared.data;
 
 import java.math.BigDecimal;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.zoxweb.shared.accounting.Currency;
 import org.zoxweb.shared.accounting.FinancialTransactionDAO;
 import org.zoxweb.shared.accounting.AmountDAO;
 import org.zoxweb.shared.accounting.TransactionDescriptor;
 import org.zoxweb.shared.accounting.TransactionType;
 
-import static org.junit.Assert.*;
+//import static org.junit.Assert.*;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+//import org.junit.After;
+//import org.junit.Before;
+//import org.junit.Test;
 
 public class TransactionDAOTest {
 	
 	private FinancialTransactionDAO transaction;
 
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception {
 		transaction = new FinancialTransactionDAO(new AmountDAO("100.00"));
 	}
 
-	@After
+	@AfterEach
 	public void tearDown() throws Exception {
 		transaction = null;
 	}
 	
 	@Test
 	public void testGetCurrency() {
-		assertTrue("Currency verification: ", Currency.USD.equals(transaction.getAmount().getCurrency()));  
+		Assertions.assertTrue(Currency.USD.equals(transaction.getAmount().getCurrency()));
 	}
 
-	@Test(expected = NullPointerException.class)
+	@Test//(expected = NullPointerException.class)
 	public void testSetCurrency() {
-		transaction.getAmount().setCurrency(null);
+		Assertions.assertThrows(NullPointerException.class, ()->transaction.getAmount().setCurrency(null));
 	}
 
 	
 	@Test
 	public void testGetTransactionAmount() {
-		assertEquals("Amount verification: ", transaction.getAmount(), new BigDecimal("100.00"));
+		Assertions.assertEquals(transaction.getAmount(), new BigDecimal("100.00"));
 	}
 	
-	@Test(expected = NullPointerException.class)
+	@Test//(expected = NullPointerException.class)
 	public void testSetTransactionAmount() {
-		transaction.setAmount(null);
+		Assertions.assertThrows(NullPointerException.class, ()->transaction.setAmount(null));
 	}
 
 	@Test
 	public void testGetTransactionType() {
-		assertTrue("Transaction type verification: ", TransactionType.CREDIT.equals(transaction.getType()));
+		Assertions.assertTrue(TransactionType.CREDIT.equals(transaction.getType()));
 	}
 
 	@Test
@@ -78,7 +82,7 @@ public class TransactionDAOTest {
 	//@SuppressWarnings("unlikely-arg-type")
 	@Test
 	public void testGetTransactionDescriptor() {
-		assertFalse("Transaction descriptor verification: ", TransactionDescriptor.MONTHLY_PAYMENT.equals(transaction.getDescriptor()));
+		Assertions.assertFalse(TransactionDescriptor.MONTHLY_PAYMENT.equals(transaction.getDescriptor()));
 	}
 
 	@Test

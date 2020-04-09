@@ -18,10 +18,11 @@ package org.zoxweb.shared.data;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.zoxweb.shared.accounting.PaymentInfoDAO;
 
 public class PaymentInfoDAOTest {
@@ -30,12 +31,12 @@ public class PaymentInfoDAOTest {
 
 	public static final SimpleDateFormat DEFAULT_DATE_FORMAT = new SimpleDateFormat("MM-yyyy");
 
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception {
 		paymentInfo = new PaymentInfoDAO();
 	}
 
-	@After
+	@AfterEach
 	public void tearDown() throws Exception {
 		paymentInfo = null;
 	}
@@ -56,14 +57,14 @@ public class PaymentInfoDAOTest {
 		
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test//(expected = IllegalArgumentException.class)
 	public void testSetCreditCard() throws ParseException {
 		CreditCardDAO card = new CreditCardDAO();
 		card.setCardType(CreditCardType.VISA);
         card.setFirstName("John");
         card.setLastName("Smith");
 		card.setCardNumber("4400-0000-1111-2222");
-		card.setSecurityCode(null);
+		Assertions.assertThrows(IllegalArgumentException.class, ()->card.setSecurityCode(null));
 		card.setExpirationDate(DEFAULT_DATE_FORMAT.parse("06-2015").getTime());
 
 		paymentInfo.setCreditCard(card);

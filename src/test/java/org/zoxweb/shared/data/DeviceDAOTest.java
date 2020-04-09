@@ -4,7 +4,8 @@ package org.zoxweb.shared.data;
 import java.io.IOException;
 import java.util.UUID;
 
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 import org.zoxweb.server.util.GSONUtil;
 import org.zoxweb.shared.util.NVGenericMap;
 import org.zoxweb.shared.util.NVPair;

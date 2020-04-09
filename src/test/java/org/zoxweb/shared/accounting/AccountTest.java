@@ -15,11 +15,14 @@
  */
 package org.zoxweb.shared.accounting;
 
-import org.junit.Test;
+//import org.junit.Test;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 
-import static org.junit.Assert.assertEquals;
+//import static org.junit.Assert.assertEquals;
 
 public class AccountTest {
 
@@ -28,19 +31,19 @@ public class AccountTest {
 	@Test
 	public void testDebitAndCredit() {
         System.out.format("Current Balance: $ %s\t", balance);
-        assertEquals(new BigDecimal("0.00"), balance);
+        Assertions.assertEquals(new BigDecimal("0.00"), balance);
 
         System.out.println("Credit: $" + credit("100.00"));
         System.out.format("Current Balance: $ %s\t", balance);
-        assertEquals(new BigDecimal("100.00"), balance);
+        Assertions.assertEquals(new BigDecimal("100.00"), balance);
 
         System.out.println("Credit: $" + credit("400.55"));
         System.out.format("Current Balance: $ %s\t", balance);
-        assertEquals(new BigDecimal("500.55"), balance);
+        Assertions.assertEquals(new BigDecimal("500.55"), balance);
 
         System.out.println("Debit:  ($" + debit("100.35888") + ")");
         System.out.format("Current Balance: $ %s\t", balance);
-        assertEquals(new BigDecimal("400.19"), balance);
+        Assertions.assertEquals(new BigDecimal("400.19"), balance);
     }
 
     private static BigDecimal credit(String amount) {

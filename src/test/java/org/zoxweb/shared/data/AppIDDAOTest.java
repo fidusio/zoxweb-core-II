@@ -1,6 +1,8 @@
 package org.zoxweb.shared.data;
 
-import org.junit.Test;
+//import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.zoxweb.server.util.GSONUtil;
 import org.zoxweb.shared.util.SharedBase64.Base64Type;
 
@@ -8,8 +10,8 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Created on 7/3/17
@@ -25,24 +27,24 @@ public class AppIDDAOTest {
 
 
     @SuppressWarnings("deprecation")
-	@Test (expected = UnsupportedOperationException.class)
+	@Test //(expected = UnsupportedOperationException.class)
     public void testInvalidSetAppID() {
         AppIDDAO appIDDAO1 = new AppIDDAO();
-        appIDDAO1.setAppID("zoxweb.org");
+        Assertions.assertThrows(UnsupportedOperationException.class, ()->appIDDAO1.setAppID("zoxweb.org"));
     }
 
     @SuppressWarnings("deprecation")
-	@Test (expected = UnsupportedOperationException.class)
+    @Test //(expected = UnsupportedOperationException.class)
     public void testInvalidSetDomainID() {
         AppIDDAO appIDDAO1 = new AppIDDAO();
-        appIDDAO1.setDomainID("zoxweb");
+        Assertions.assertThrows(UnsupportedOperationException.class, ()->appIDDAO1.setDomainID("zoxweb"));
     }
 
     @SuppressWarnings("deprecation")
-	@Test (expected = UnsupportedOperationException.class)
+	@Test //(expected = UnsupportedOperationException.class)
     public void testInvalidSetSubjectID() {
         AppIDDAO appIDDAO1 = new AppIDDAO();
-        appIDDAO1.setSubjectID("zoxweb");
+        Assertions.assertThrows(UnsupportedOperationException.class, ()->appIDDAO1.setSubjectID("zoxweb"));
     }
 
     @Test

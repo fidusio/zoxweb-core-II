@@ -1,7 +1,8 @@
 package org.zoxweb.server.util;
 
 import java.util.logging.Logger;
-import org.junit.Test;
+//import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.zoxweb.server.logging.LoggerUtil;
 
 public class LoggingTest {

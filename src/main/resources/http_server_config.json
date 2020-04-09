@@ -28,15 +28,24 @@
             "key_store_type": "pksc12",
             "key_store_password": "password",
             "protocols": [
-              "TLSv1",
-              "TLSv1.1",
-              "TLSv1.2"
+              "TLSv1.2",
+              "TLSv1.3"
             ],
             "ciphers": [
             ]
           }
         }
       ],
+  "endpoints":
+          [
+            {"bean": "org.server.Handle",
+              "methods":
+              [ "GET", "POST"],
+              "properties": {
+                "public_dir": "/temp/public"
+              }
+            }
+          ],
   "handles":
         [
           {

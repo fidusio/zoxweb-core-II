@@ -2,7 +2,8 @@ package org.zoxweb.shared.util;
 
 
 
-import org.junit.Test;
+//import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.zoxweb.shared.util.SharedBase64.Base64Type;
 
 public class TestNumber {

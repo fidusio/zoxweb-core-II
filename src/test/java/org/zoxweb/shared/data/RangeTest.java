@@ -1,6 +1,7 @@
 package org.zoxweb.shared.data;
 
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 import org.zoxweb.server.util.GSONUtil;
 
 import java.io.IOException;

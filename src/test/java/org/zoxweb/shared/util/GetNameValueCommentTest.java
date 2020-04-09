@@ -1,13 +1,11 @@
 package org.zoxweb.shared.util;
 
 
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class GetNameValueCommentTest {
 
-  @BeforeClass
-  public static void setUpBeforeClass() throws Exception {}
+
 
   @Test
   public void testPositiveParse() {

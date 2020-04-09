@@ -15,24 +15,27 @@
  */
 package org.zoxweb.shared.data;
 
-import static org.junit.Assert.*;
+
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+
 
 public class MerchantDAOTest {
 
 	private MerchantDAO merchant;
 
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception {
 		merchant = new MerchantDAO();
 	}
 
-	@After
+	@AfterEach
 	public void tearDown() throws Exception {
 		merchant = null;
 	}
@@ -40,25 +43,25 @@ public class MerchantDAOTest {
 	@Test
 	public void testMerchantDAO() {
 		MerchantDAO merchant1 = new MerchantDAO();
-		assertFalse(merchant.equals(merchant1));
+		Assertions.assertFalse(merchant.equals(merchant1));
 	}
 
 	@Test
 	public void testGetDomainName() {
 		merchant.setName("Google");
-		assertEquals("Name check: ", "Google", merchant.getName());
+		Assertions.assertEquals("Name check: ", "Google", merchant.getName());
 	}
 
 
-	@Test(expected = NullPointerException.class)
+	@Test//(expected = NullPointerException.class)
 	public void testSetDomainName() {
-		merchant.setName(null);
+		Assertions.assertThrows(NullPointerException.class, ()->merchant.setName(null));
 	}
 
 	@Test
 	public void testGetDomainID() {
 		merchant.setAccountID("www.google.com");
-		assertEquals("Domain ID: ", "www.google.com", merchant.getAccountID());
+		Assertions.assertEquals("Domain ID: ", "www.google.com", merchant.getAccountID());
 	}
 
 	@Test
@@ -66,10 +69,10 @@ public class MerchantDAOTest {
 		merchant.setAccountID("www.yahoo.com");
 	}
 
-	@Test(expected = Error.class)
+	@Test
 	public void testGetCompanyType() {
 		merchant.setCompanyType("computer software");
-		assertEquals("CompanyType: ", "internet", "computer software");
+		Assertions.assertNotEquals("CompanyType: ", "internet", "computer software");
 	}
 
 	@Test
@@ -89,7 +92,7 @@ public class MerchantDAOTest {
 		addresslist.add(address);
 		merchant.setListOfAddresses(addresslist);
 
-		assertNotNull(merchant.getListOfAddresses());
+		Assertions.assertNotNull(merchant.getListOfAddresses());
 	}
 
 	@Test
@@ -102,8 +105,8 @@ public class MerchantDAOTest {
 		phone.setNumber("5551234");
 		phonelist.add(phone);
 		merchant.setListOfPhones(phonelist);
-		
-		assertNotNull(merchant.getListOfPhones());
+
+		Assertions.assertNotNull(merchant.getListOfPhones());
 	}
 
 
@@ -112,20 +115,7 @@ public class MerchantDAOTest {
 		merchant.setListOfDomainEmails(null);
 	}
 
-	@Test(expected = Error.class)
-	public void testGetListOfPaymentInfos() {
-		assertEquals(0, merchant.getListOfPaymentInfos());
-	}
 
-	@Test
-	public void testSetListOfPaymentInfos() {
-		merchant.setListOfPaymentInfos(null);
-	}
-
-	@Test(expected = Error.class)
-	public void testGetAdditonalInfo() {
-		assertEquals(null, merchant.getAdditonalInfos());
-	}
 
 	@Test
 	public void testSetAdditionalInfo() {

@@ -15,12 +15,15 @@
  */
 package org.zoxweb.shared.accounting;
 
-import org.junit.Test;
+//import org.junit.Test;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+//import static org.junit.Assert.assertEquals;
+//import static org.junit.Assert.assertNotNull;
 
 public class FinancialTransactionDAOTest
 {
@@ -36,24 +39,24 @@ public class FinancialTransactionDAOTest
 
         BillingAccountDAO account = new BillingAccountDAO();
         account.setCurrentBalance(new AmountDAO(new BigDecimal("200"), Currency.USD));
-        assertEquals(new AmountDAO(new BigDecimal("200.00"), Currency.USD), account.getCurrentBalance());
+        Assertions.assertEquals(new AmountDAO(new BigDecimal("200.00"), Currency.USD), account.getCurrentBalance());
 
         account.applyTransaction(transaction);
 
-        assertNotNull(transaction.getAmount());
-        assertEquals(Currency.USD, transaction.getAmount().getCurrency());
-        assertEquals(new BigDecimal("100.00"), transaction.getAmount().getAmount());
-        assertEquals(TransactionType.CREDIT, transaction.getType());
-        assertEquals(TransactionDescriptor.MONTHLY_PAYMENT.name(), transaction.getDescriptor());
+        Assertions.assertNotNull(transaction.getAmount());
+        Assertions.assertEquals(Currency.USD, transaction.getAmount().getCurrency());
+        Assertions.assertEquals(new BigDecimal("100.00"), transaction.getAmount().getAmount());
+        Assertions.assertEquals(TransactionType.CREDIT, transaction.getType());
+        Assertions.assertEquals(TransactionDescriptor.MONTHLY_PAYMENT.name(), transaction.getDescriptor());
 
-        assertNotNull(account.getCurrentBalance());
-        assertEquals(new AmountDAO(new BigDecimal("300.00"), Currency.USD), account.getCurrentBalance());
+        Assertions.assertNotNull(account.getCurrentBalance());
+        Assertions.assertEquals(new AmountDAO(new BigDecimal("300.00"), Currency.USD), account.getCurrentBalance());
 
         account.applyTransaction(new FinancialTransactionDAO(new AmountDAO(10)));
-        assertEquals(new AmountDAO(new BigDecimal("310.00"), Currency.USD), account.getCurrentBalance());
+        Assertions.assertEquals(new AmountDAO(new BigDecimal("310.00"), Currency.USD), account.getCurrentBalance());
 
         account.applyTransaction(new FinancialTransactionDAO(new AmountDAO(20)));
-        assertEquals(new AmountDAO(new BigDecimal("330.00"), Currency.USD), account.getCurrentBalance());
+        Assertions.assertEquals(new AmountDAO(new BigDecimal("330.00"), Currency.USD), account.getCurrentBalance());
     }
 
 }

@@ -1,6 +1,7 @@
 package org.zoxweb.shared.util;
 
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 import org.zoxweb.shared.util.Const.TimeInMillis;
 
 public class EnumTypeTest {

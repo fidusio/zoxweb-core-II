@@ -1,7 +1,9 @@
 package org.zoxweb.server.http;
 
-import org.junit.Before;
-import org.junit.Test;
+//import org.junit.Before;
+//import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.zoxweb.shared.http.HTTPEncoder;
 import org.zoxweb.shared.http.HTTPMessageConfig;
 import org.zoxweb.shared.util.NVPair;
@@ -10,7 +12,7 @@ public class URLParameterFormatingTest {
 
   HTTPMessageConfig hcc = new HTTPMessageConfig();
 
-  @Before
+  @BeforeAll
   public void setUp() {
     hcc.getParameters().add(new NVPair("address", "www.yahoo.com"));
     hcc.getParameters().add(new NVPair("port", "343"));

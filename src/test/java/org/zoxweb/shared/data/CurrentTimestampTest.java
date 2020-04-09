@@ -2,11 +2,13 @@ package org.zoxweb.shared.data;
 
 
 
-import static org.junit.Assert.assertEquals;
+
 
 import java.io.IOException;
 
-import org.junit.Test;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.zoxweb.server.util.GSONUtil;
 import org.zoxweb.shared.util.Const.TimeUnitType;
 
@@ -22,7 +24,7 @@ public class CurrentTimestampTest
 		CurrentTimestamp newCT = GSONUtil.fromJSON(json, CurrentTimestamp.class);
 		String newJson= GSONUtil.toJSON(newCT, true, false, false);
 		System.out.println(newJson);
-		assertEquals(json, newJson);
+		Assertions.assertEquals(json, newJson);
 		
 		
 		ct = new CurrentTimestamp(System.currentTimeMillis(), TimeUnitType.MILLIS, "localhost");
@@ -31,7 +33,7 @@ public class CurrentTimestampTest
 		newCT = GSONUtil.fromJSON(json, CurrentTimestamp.class);
 		newJson= GSONUtil.toJSON(newCT, true, false, true);
 		System.out.println(newJson);
-		assertEquals(json, newJson);
+		Assertions.assertEquals(json, newJson);
 	}
 	
 	
@@ -44,7 +46,7 @@ public class CurrentTimestampTest
 		CurrentTimestamp newCT = GSONUtil.fromJSON(json, CurrentTimestamp.class);
 		String newJson= GSONUtil.toJSON(newCT, true, false, false);
 		System.out.println(newJson);
-		assertEquals(json, newJson);
+		Assertions.assertEquals(json, newJson);
 		
 		
 		ct = new CurrentTimestamp(System.nanoTime(), TimeUnitType.NANOS, "localhost");
@@ -53,7 +55,7 @@ public class CurrentTimestampTest
 		newCT = GSONUtil.fromJSON(json, CurrentTimestamp.class);
 		newJson= GSONUtil.toJSON(newCT, true, false, true);
 		System.out.println(newJson);
-		assertEquals(json, newJson);
+		Assertions.assertEquals(json, newJson);
 	}
 
 }

@@ -1,7 +1,7 @@
 package org.zoxweb.shared.filters;
 
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class FilenameFilterTest {
 

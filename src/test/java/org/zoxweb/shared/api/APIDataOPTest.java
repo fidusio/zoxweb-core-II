@@ -1,6 +1,7 @@
 package org.zoxweb.shared.api;
 
-import org.junit.Test;
+//import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.zoxweb.server.util.GSONUtil;
 import org.zoxweb.shared.data.AddressDAO;
 import org.zoxweb.shared.data.DataConst;

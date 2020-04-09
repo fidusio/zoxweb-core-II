@@ -15,8 +15,8 @@
  */
 package org.zoxweb.shared.util;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SharedStringUtilTest {
 
@@ -24,16 +24,16 @@ public class SharedStringUtilTest {
 	public void testTruncate() {
 		String str = "Hello, my name is John Smith.";
 		String result = SharedStringUtil.truncate(str, str.length());
-		Assert.assertNotNull(result);
-		Assert.assertEquals("Hello, my name is John Smith.", result);
+		assertNotNull(result);
+		assertEquals("Hello, my name is John Smith.", result);
 
 		str = "Hello, my name is John Smith.";
 		result = SharedStringUtil.truncate(str, 5);
-		Assert.assertNotNull(result);
-		Assert.assertEquals("Hello", result);
+		assertNotNull(result);
+		assertEquals("Hello", result);
 
 		result = SharedStringUtil.truncate(null, 0);
-		Assert.assertNull(result);
+		assertNull(result);
 	}
 	
 	@Test
