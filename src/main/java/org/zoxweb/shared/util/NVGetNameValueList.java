@@ -75,6 +75,7 @@ public class NVGetNameValueList
 	{
 		return value.toArray( new GetNameValue[0]);
 	}
+	public GetNameValue<String>[] values(GetNameValue[] t) {return values();}
 
 	/**
 	 * @see org.zoxweb.shared.util.ArrayValues#add(java.lang.Object)

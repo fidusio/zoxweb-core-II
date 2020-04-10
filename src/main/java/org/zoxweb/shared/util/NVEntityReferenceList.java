@@ -92,6 +92,9 @@ public class NVEntityReferenceList
 		return value.toArray( new NVEntity[0]);
 	}
 
+
+	public NVEntity[] values(NVEntity[] t) {return value.toArray(t);}
+
 	/**
 	 * @see org.zoxweb.shared.util.ArrayValues#add(java.lang.Object)
 	 */

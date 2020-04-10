@@ -97,6 +97,7 @@ public class NVPairGetNameMap
 	{
 		return  value.values().toArray(new NVPair[0]);
 	}
+	public GetNameValue<String>[] values(GetNameValue<String>[] t) {return values();}
 
 	/**
 	 * @see org.zoxweb.shared.util.ArrayValues#clear()
