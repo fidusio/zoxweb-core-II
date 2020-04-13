@@ -38,7 +38,8 @@
       ],
   "endpoints":
           [
-            {"bean": "org.server.Handle",
+            { "name": "ping",
+              "bean": "org.server.Handle",
               "methods":
               [ "GET", "POST"],
               "properties": {

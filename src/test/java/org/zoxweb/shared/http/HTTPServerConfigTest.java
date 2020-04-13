@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.zoxweb.server.io.IOUtil;
 import org.zoxweb.server.util.GSONUtil;
 import org.zoxweb.shared.util.ArrayValues;
+import org.zoxweb.shared.util.SharedUtil;
 
 public class HTTPServerConfigTest {
 
@@ -27,10 +28,12 @@ public class HTTPServerConfigTest {
     System.out.println(hsc);
     System.out.println(hsc.getConnectionConfigs());
 
-    ArrayValues<HTTPEndPoint> endPoints = hsc.getEndPoints();
-    for (HTTPEndPoint ep : endPoints.values(new HTTPEndPoint[0]))
+
+    for (HTTPEndPoint ep : hsc.getEndPoints())
     {
       System.out.println(ep.getMethods().getClass() + " " + Arrays.toString(ep.getMethods()));
+      System.out.println(SharedUtil.toCanonicalID(',', ep.getName(), ep.getBean()));
+      System.out.println(ep);
     }
 
   }

@@ -3,14 +3,11 @@ package org.zoxweb.shared.http;
 
 import org.zoxweb.shared.data.PropertyDAO;
 import org.zoxweb.shared.net.ConnectionConfig;
-import org.zoxweb.shared.util.ArrayValues;
-import org.zoxweb.shared.util.GetNVConfig;
-import org.zoxweb.shared.util.NVConfig;
-import org.zoxweb.shared.util.NVConfigEntity;
+import org.zoxweb.shared.util.*;
 import org.zoxweb.shared.util.NVConfigEntity.ArrayType;
-import org.zoxweb.shared.util.NVConfigEntityLocal;
-import org.zoxweb.shared.util.NVConfigManager;
-import org.zoxweb.shared.util.SharedUtil;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 
 @SuppressWarnings("serial")
@@ -51,6 +48,9 @@ extends PropertyDAO
       false,
       PropertyDAO.NVC_PROPERTY_DAO);
 
+
+  NVEntityGetNameMap con;
+
   public HTTPServerConfig()
   {
     super(NVC_HTTP_SERVER_CONFIG);
@@ -58,14 +58,16 @@ extends PropertyDAO
 
 
   @SuppressWarnings("unchecked")
-  public ArrayValues<ConnectionConfig> getConnectionConfigs()
+  public ConnectionConfig[] getConnectionConfigs()
   {
-    return (ArrayValues<ConnectionConfig>) lookup(Param.CONNECTIONS);
+    ArrayValues<NVEntity> av = (ArrayValues<NVEntity>) lookup(Param.CONNECTIONS);
+    return (ConnectionConfig[])av.values(new ConnectionConfig[0]);
   }
 
-  public ArrayValues<HTTPEndPoint> getEndPoints()
+  public HTTPEndPoint[] getEndPoints()
   {
-    return (ArrayValues<HTTPEndPoint>) lookup(Param.ENDPOINTS);
+    ArrayValues<NVEntity> av = (ArrayValues<NVEntity>) lookup(Param.ENDPOINTS);
+    return (HTTPEndPoint[])av.values(new HTTPEndPoint[0]);
   }
 
 
