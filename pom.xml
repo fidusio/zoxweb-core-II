@@ -50,10 +50,11 @@
     <skipTests>true</skipTests>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <jdk.version>1.8</jdk.version>
-    <maven-plugin.version>3.6.2</maven-plugin.version>
+    <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
     <maven-plugin-source.version>3.0.1</maven-plugin-source.version>
     <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
-    <maven-surefile-plugin.version>3.0.0-M3</maven-surefile-plugin.version>
+    <maven-surefile-plugin.version>3.0.0-M4</maven-surefile-plugin.version>
+    <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
     <maven-jar-plugin.version>3.0.2</maven-jar-plugin.version>
     <maven-javadoc.version>2.10.4</maven-javadoc.version>
     <common-codec.version>1.10</common-codec.version>
@@ -82,7 +83,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>${maven-plugin.version}</version>
+        <version>${maven-compiler-plugin.version}</version>
         <configuration>
 
           <source>${jdk.version}</source>
