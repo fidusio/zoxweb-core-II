@@ -9,7 +9,7 @@ import org.zoxweb.shared.util.NVGenericMap;
 import org.zoxweb.shared.util.SharedBase64.Base64Type;
 import org.zoxweb.shared.util.SharedStringUtil;
 
-public abstract class HTTPDecoder {
+public final class HTTPDecoder {
 
   private HTTPDecoder() {
   }

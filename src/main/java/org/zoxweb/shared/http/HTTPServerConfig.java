@@ -17,8 +17,8 @@ extends PropertyDAO
   public enum Param
       implements GetNVConfig
   {
-
-    CONNECTIONS(NVConfigManager.createNVConfigEntity("connections", "Protocol schemes", "Schemes", false, true, ConnectionConfig.class, ArrayType.GET_NAME_MAP)),
+    APPLICATION_CONFIG_VAR(NVConfigManager.createNVConfig("application_conf_var", "Application Config Variable", "ApplicationConfVar", false, true, String.class)),
+    CONNECTIONS(NVConfigManager.createNVConfigEntity("connections", "Connections configurations", "Connections", false, true, ConnectionConfig.class, ArrayType.GET_NAME_MAP)),
     ENDPOINTS(NVConfigManager.createNVConfigEntity("endpoints", "Endpoints", "Endpoints", false, true, HTTPEndPoint.class, ArrayType.GET_NAME_MAP)),
 
     ;
@@ -69,6 +69,18 @@ extends PropertyDAO
     ArrayValues<NVEntity> av = (ArrayValues<NVEntity>) lookup(Param.ENDPOINTS);
     return (HTTPEndPoint[])av.values(new HTTPEndPoint[0]);
   }
+
+  public String getApplicationConfVar()
+  {
+    return lookupValue(Param.APPLICATION_CONFIG_VAR);
+  }
+
+
+  public void setApplicationConfVar(String appConVar)
+  {
+    setValue(Param.APPLICATION_CONFIG_VAR, appConVar);
+  }
+
 
 
 
