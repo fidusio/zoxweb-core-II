@@ -29,11 +29,13 @@ public enum HTTPMimeType
 {
 	APPLICATION_WWW_URL_ENC("application/x-www-form-urlencoded"),
 	APPLICATION_JSON("application/json", "json"),
-	APPLICATION_JAVA_SCRIPT("application/x-javascript", "js"),
+	//APPLICATION_JAVA_SCRIPT("application/x-javascript", "js"),
 	APPLICATION_OCTET_STREAM("application/octet-stream"),
 	MULTIPART_FORM_DATA("multipart/form-data"),
 	TEXT_CSV("text/csv", "csv"),
+	TEXT_CSS("text/css", "css"),
 	TEXT_HTML("text/html", "htm", "html"),
+	TEXT_JAVASCRIPT("text/javascript", "js"),
 	TEXT_PLAIN("text/plain", "txt"),
 	TEXT_YAML("text/yaml", "yaml", "yml"),
 	IMAGE_BMP("image/bmp", "bmp"),
@@ -43,10 +45,6 @@ public enum HTTPMimeType
 	IMAGE_SVG("image/svg+xml", "svg"),
 	IMAGE_ICON("image/x-icon", "ico"),
 	IMAGE_TIF("image/tiff", "tiff", "tif");
-	
-	
-
-	
 	;
 
 	private final String value;
