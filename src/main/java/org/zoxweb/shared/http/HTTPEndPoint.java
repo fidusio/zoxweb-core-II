@@ -1,22 +1,19 @@
 package org.zoxweb.shared.http;
 
 import org.zoxweb.shared.data.DataConst;
-import org.zoxweb.shared.data.PropertyDAO;
-import org.zoxweb.shared.data.TimeStampDAO;
+import org.zoxweb.shared.security.SecurityProfile;
 import org.zoxweb.shared.util.*;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class HTTPEndPoint
-extends PropertyDAO
+extends SecurityProfile
 {
     public enum Param
             implements GetNVConfig
     {
         BEAN(NVConfigManager.createNVConfig("bean", "Bean class name", "Bean", false, true, String.class)),
-        PERMISSIONS(NVConfigManager.createNVConfig("permissions", "Permission tokens", "Permissions", false, true, NVStringList.class)),
-        ROLES(NVConfigManager.createNVConfig("roles", "Role tokens", "Roles", false, true, NVStringList.class)),
         PATHS(NVConfigManager.createNVConfig("paths", "Paths", "Paths", false, true, NVStringList.class)),
         METHODS(NVConfigManager.createNVConfig("methods", "HTTP Methods", "Methods", false, true, HTTPMethod[].class)),
         ;
@@ -49,7 +46,7 @@ extends PropertyDAO
             SharedUtil.extractNVConfigs(Param.values()),
             null,
             false,
-            PropertyDAO.NVC_PROPERTY_DAO);
+            SecurityProfile.NVC_SECURITY_PROFILE);
 
 
     public HTTPEndPoint()
@@ -75,25 +72,6 @@ extends PropertyDAO
         setValue(Param.BEAN, beanClassName);
     }
 
-    public String[] getPermissions()
-    {
-        return ((NVStringList)lookup(Param.PERMISSIONS)).getValues();
-    }
-
-    public void setPermissions(String ...permissions)
-    {
-        ((NVStringList)lookup(Param.PERMISSIONS)).setValues(permissions);
-    }
-
-    public String[] getRoles()
-    {
-        return ((NVStringList)lookup(Param.ROLES)).getValues();
-    }
-
-    public void setRoles(String ...roles)
-    {
-        ((NVStringList)lookup(Param.ROLES)).setValues(roles);
-    }
 
 
     public String[] getPaths()
@@ -108,15 +86,12 @@ extends PropertyDAO
 
     public HTTPMethod[] getMethods()
     {
-        List<Enum<?>> value =(List<Enum<?>>)lookup(Param.METHODS).getValue();
+        return ((NVEnumList)lookup(Param.METHODS)).getValues(new HTTPMethod[0]);
 
-        return (HTTPMethod[]) value.toArray(new HTTPMethod[0]);
     }
 
     public void setMethods(HTTPMethod ...methods)
     {
-        List<Enum<?>> value =(List<Enum<?>>)lookup(Param.METHODS).getValue();
-        value.clear();
-        value.addAll(Arrays.asList(methods));
+        ((NVEnumList)lookup(Param.METHODS)).setValues(methods);
     }
 }

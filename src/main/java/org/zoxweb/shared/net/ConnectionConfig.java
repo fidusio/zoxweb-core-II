@@ -46,9 +46,14 @@ public class ConnectionConfig
   }
 
 
-  public NVStringList getSchemes()
+  public String[] getSchemes()
   {
-    return (NVStringList) lookup(Param.SCHEMES);
+    return ((NVStringList) lookup(Param.SCHEMES)).getValues();
+  }
+
+  public void setSchemes(String ... schemes)
+  {
+    ((NVStringList) lookup(Param.SCHEMES)).setValues(schemes);
   }
 
 

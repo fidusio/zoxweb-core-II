@@ -28,7 +28,7 @@ import org.zoxweb.shared.api.*;
 import org.zoxweb.shared.app.AppVersionDAO;
 import org.zoxweb.shared.http.HTTPEndPoint;
 import org.zoxweb.shared.net.ConnectionConfig;
-import org.zoxweb.shared.security.KeyStoreInfoDAO;
+import org.zoxweb.shared.security.*;
 import org.zoxweb.shared.util.NVEntityInstance;
 import org.zoxweb.shared.data.ticket.TicketContainerDAO;
 import org.zoxweb.shared.data.ticket.TicketIssuerDAO;
@@ -40,16 +40,11 @@ import org.zoxweb.shared.net.InetFilterDAO;
 import org.zoxweb.shared.net.InetSocketAddressDAO;
 import org.zoxweb.shared.net.NIConfigDAO;
 import org.zoxweb.shared.net.NetworkInterfaceDAO;
-import org.zoxweb.shared.security.AccessCodeDAO;
-import org.zoxweb.shared.security.IPBlockerConfig;
-import org.zoxweb.shared.security.LoginTokenDAO;
-import org.zoxweb.shared.security.ScanResultDAO;
 import org.zoxweb.shared.util.GetName;
 import org.zoxweb.shared.util.NVConfigEntity;
 import org.zoxweb.shared.util.NVEntity;
 import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
-import org.zoxweb.shared.security.SubjectAPIKey;
 import org.zoxweb.shared.security.shiro.ShiroNVEntityCRUDs;
 import org.zoxweb.shared.security.shiro.ShiroPermissionDAO;
 import org.zoxweb.shared.security.shiro.ShiroRoleDAO;
@@ -981,6 +976,21 @@ public class ZWDataFactory
 			}
 			
 		},
+		SECURITY_PROFILE(SecurityProfile.class.getName())
+		{
+			@SuppressWarnings("unchecked")
+			@Override
+			public SecurityProfile newInstance()
+			{
+				return new SecurityProfile();
+			}
+
+			@Override
+			public NVConfigEntity getNVConfigEntity()
+			{
+				return SecurityProfile.NVC_SECURITY_PROFILE;
+			}
+		},
 
 		//	org.zoxweb.shared.data.shiro
 		SHIRO_NVENTITY_CRUDS(ShiroNVEntityCRUDs.class.getName())
@@ -997,9 +1007,6 @@ public class ZWDataFactory
 				return ShiroNVEntityCRUDs.NVC_SHIRO_NVENTITY_CRUDS;
 			}
 		},
-		
-		
-		
 		SHIRO_ROLE_DAO(ShiroRoleDAO.class.getName())
 		{
 			@SuppressWarnings("unchecked")

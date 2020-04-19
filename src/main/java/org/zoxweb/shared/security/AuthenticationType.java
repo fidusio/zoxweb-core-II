@@ -4,5 +4,7 @@ public enum AuthenticationType {
     ALL,
     BASIC,
     TOKEN,
-    JWT
+    JWT,
+    LDAP,
+    DOMAIN
 }

@@ -6,9 +6,6 @@ import org.zoxweb.shared.net.ConnectionConfig;
 import org.zoxweb.shared.util.*;
 import org.zoxweb.shared.util.NVConfigEntity.ArrayType;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 
 @SuppressWarnings("serial")
 public class HTTPServerConfig
@@ -18,6 +15,7 @@ extends PropertyDAO
       implements GetNVConfig
   {
     APPLICATION_CONFIG_VAR(NVConfigManager.createNVConfig("application_conf_var", "Application Config Variable", "ApplicationConfVar", false, true, String.class)),
+    THREAD_POOL_SIZE(NVConfigManager.createNVConfig("thread_pool_size", "Thread pool size", "TreadPoolSize", false, true, int.class)),
     CONNECTIONS(NVConfigManager.createNVConfigEntity("connections", "Connections configurations", "Connections", false, true, ConnectionConfig.class, ArrayType.GET_NAME_MAP)),
     ENDPOINTS(NVConfigManager.createNVConfigEntity("endpoints", "Endpoints", "Endpoints", false, true, HTTPEndPoint.class, ArrayType.GET_NAME_MAP)),
 
@@ -75,12 +73,24 @@ extends PropertyDAO
     return lookupValue(Param.APPLICATION_CONFIG_VAR);
   }
 
-
   public void setApplicationConfVar(String appConVar)
   {
     setValue(Param.APPLICATION_CONFIG_VAR, appConVar);
   }
 
+  public int getThreadPoolSize()
+  {
+    return lookupValue(Param.THREAD_POOL_SIZE);
+  }
+
+  public void setThreadPoolSize(int poolSize)
+  {
+    if(poolSize < 0 || poolSize > 384)
+    {
+      throw new IllegalArgumentException("Invalid pool size " + poolSize);
+    }
+    setValue(Param.THREAD_POOL_SIZE, poolSize);
+  }
 
 
 

@@ -15,6 +15,7 @@
  */
 package org.zoxweb.shared.util;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -41,5 +42,17 @@ public class NVEnumList
 	public NVEnumList(String name, List<Enum<?>> v)
 	{
 		super(name, v);
+	}
+
+
+	public <V extends Enum> V[] getValues(V[] t)
+	{
+		return getValue().toArray(t);
+	}
+
+	public synchronized void setValues(Enum<?> ...enums)
+	{
+		getValue().clear();
+		getValue().addAll(Arrays.asList(enums));
 	}
 }	
