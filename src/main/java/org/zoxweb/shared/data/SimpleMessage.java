@@ -30,7 +30,7 @@ import org.zoxweb.shared.util.SharedUtil;
  */
 @SuppressWarnings("serial")
 public class SimpleMessage
-	extends TimeStampDAO
+	extends PropertyDAO
 {
 	public enum Param
 		implements GetNVConfig
@@ -39,7 +39,7 @@ public class SimpleMessage
 		ERROR(NVConfigManager.createNVConfig("error", "Error message if available", "ErrorMessage", false, true, false, false, String.class, FilterType.CLEAR)),
 		CATEGORY(NVConfigManager.createNVConfig("category", "Message category", "Category", false, true, false, false, String.class, FilterType.CLEAR)),
 		TYPE(NVConfigManager.createNVConfig("type", "Message type", "Type", false, true, false, false, String.class, FilterType.CLEAR)),
-		CODE(NVConfigManager.createNVConfig("code", "Message code", "Code", false, true, int.class)),
+		STATUS(NVConfigManager.createNVConfig("status", "Message status code", "Status", false, true, int.class)),
 		;
 		
 		private final NVConfig nvc;
@@ -64,10 +64,10 @@ public class SimpleMessage
             false,
             false,
             SimpleMessage.class,
-            SharedUtil.extractNVConfigs(Param.values()),
+            SharedUtil.extractNVConfigs(Param.MESSAGE,Param.ERROR,Param.CATEGORY,Param.TYPE, Param.STATUS, PropertyDAO.Param.PROPERTIES),
             null,
             false,
-            TimeStampDAO.NVC_TIME_STAMP_DAO
+            PropertyDAO.NVC_PROPERTY_DAO
     );
 	
 	/**
@@ -78,15 +78,15 @@ public class SimpleMessage
 		super(NVC_SIMPLE_MESSAGE);
 	}
 
-	public SimpleMessage(String message, int code)
+	public SimpleMessage(String message, int status)
 	{
-		this(message, code, null);
+		this(message, status, null);
 	}
-	public SimpleMessage(String message, int code, String error)
+	public SimpleMessage(String message, int status, String error)
 	{
 		this();
 		setMessage(message);
-		setCode(code);
+		setStatus(status);
 		setError(error);
 	}
 	
@@ -141,16 +141,16 @@ public class SimpleMessage
 	 * Returns message code.
 	 * @return code.
 	 */
-	public int getCode()
+	public int getStatus()
 	{
-		return lookupValue(Param.CODE);
+		return lookupValue(Param.STATUS);
 	}
 
 	/**
 	 * Sets message code
-	 * @param errorCode
+	 * @param status
 	 */
-	public void setCode(int errorCode) { setValue(Param.CODE, errorCode); }
+	public void setStatus(int status) { setValue(Param.STATUS, status); }
 
 
 	public String getCategory()

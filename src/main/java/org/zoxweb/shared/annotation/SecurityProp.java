@@ -32,4 +32,10 @@ public @interface SecurityProp {
     String roles() default "";
     Const.LogicalOperator roleOperator() default Const.LogicalOperator.AND;
 
+    /**
+     * List of custom restrictions such as localhost
+     * @return list of restrictions
+     */
+    String[] restrictions() default {};
+
 }
