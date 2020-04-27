@@ -77,6 +77,11 @@ public class SimpleMessage
 	{
 		super(NVC_SIMPLE_MESSAGE);
 	}
+
+	public SimpleMessage(String message, int code)
+	{
+		this(message, code, null);
+	}
 	public SimpleMessage(String message, int code, String error)
 	{
 		this();
