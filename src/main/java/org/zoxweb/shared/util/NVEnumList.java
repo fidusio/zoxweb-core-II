@@ -53,6 +53,12 @@ public class NVEnumList
 	public synchronized void setValues(Enum<?> ...enums)
 	{
 		getValue().clear();
-		getValue().addAll(Arrays.asList(enums));
+		if(enums != null && enums.length > 0)
+			getValue().addAll(Arrays.asList(enums));
+	}
+
+	public boolean contains(Enum<?> e)
+	{
+		return getValue().contains(e);
 	}
 }	

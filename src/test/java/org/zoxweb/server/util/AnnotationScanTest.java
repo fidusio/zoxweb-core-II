@@ -8,11 +8,11 @@ import org.zoxweb.shared.security.AuthenticationType;
 
 public class AnnotationScanTest {
 
-    @SecurityProp(authentication = {AuthenticationType.DOMAIN}, roles = "admin")
+    @SecurityProp(authentications = {AuthenticationType.DOMAIN}, roles = "admin")
     public static class ToBeTested
     {
         @EndPointProp(uris = "/profile/{profileId}", name = "profileReader", methods = {HTTPMethod.GET})
-        @SecurityProp(authentication = {AuthenticationType.ALL})
+        @SecurityProp(authentications = {AuthenticationType.ALL})
         public String getProfile(String profileId)
         {
             return "str";
@@ -24,7 +24,7 @@ public class AnnotationScanTest {
 
 
         @EndPointProp(uris = "/check-user/{user}", name = "CheckUser", methods = {HTTPMethod.POST})
-        @SecurityProp(authentication = {AuthenticationType.ALL}, permissions= "self, admin")
+        @SecurityProp(authentications = {AuthenticationType.ALL}, permissions= "self, admin")
         public static boolean checkStatus(String user)
         {
             return true;

@@ -5,7 +5,7 @@ import org.zoxweb.shared.security.AuthenticationType;
 
 public class AnnotationTest {
 
-    @SecurityProp(permissions = "p1,p2", roles = "r1,r2", authentication = {AuthenticationType.ALL})
+    @SecurityProp(permissions = "p1,p2", roles = "r1,r2", authentications = {AuthenticationType.ALL})
     @EndPointProp(name = "batata", uris="/", methods = {HTTPMethod.POST})
     public void securityTest()
     {

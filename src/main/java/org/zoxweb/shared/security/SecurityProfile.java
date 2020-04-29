@@ -17,6 +17,7 @@ extends PropertyDAO
         AUTHENTICATIONS(NVConfigManager.createNVConfig("authentications", "Authentication types", "Authentications", false, true, AuthenticationType[].class)),
         PERMISSIONS(NVConfigManager.createNVConfig("permissions", "Permission tokens", "Permissions", false, true, NVStringList.class)),
         ROLES(NVConfigManager.createNVConfig("roles", "Role tokens", "Roles", false, true, NVStringList.class)),
+        RESTRICTIONS(NVConfigManager.createNVConfig("restrictions", "Restrictions", "Restrictions", false, true, NVStringList.class)),
 
         ;
         private final NVConfig nvc;
@@ -79,6 +80,16 @@ extends PropertyDAO
     public void setRoles(String ...roles)
     {
         ((NVStringList)lookup(Param.ROLES)).setValues(roles);
+    }
+
+    public String[] getRestrictions()
+    {
+        return ((NVStringList)lookup(Param.RESTRICTIONS)).getValues();
+    }
+
+    public void setRestrictions(String ...restrictions)
+    {
+        ((NVStringList)lookup(Param.RESTRICTIONS)).setValues(restrictions);
     }
 
     public AuthenticationType[] getAuthenticationTypes()

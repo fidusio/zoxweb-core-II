@@ -445,15 +445,15 @@ public class SharedUtil
 			if (enumClass.isEnum())
 			{
 				Enum<?>[] all = (Enum<?>[]) enumClass.getEnumConstants();
-				
-				for (int i=0; i < all.length; i++)
-				{
-					//Enum<?> e = (Enum<?>) all[i];
-					if (all[i].name().equals(value))
-					{
-						return all[i];
-					}
-				}
+				return lookupEnum(value, all);
+//				for (int i=0; i < all.length; i++)
+//				{
+//					//Enum<?> e = (Enum<?>) all[i];
+//					if (all[i].name().equals(value))
+//					{
+//						return all[i];
+//					}
+//				}
 			}
 			else
 			    {

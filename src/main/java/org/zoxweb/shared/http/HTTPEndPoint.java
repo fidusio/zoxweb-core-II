@@ -84,10 +84,23 @@ extends SecurityProfile
         ((NVStringList)lookup(Param.PATHS)).setValues(paths);
     }
 
+    public boolean isPathSupported(String path)
+    {
+        return ((NVStringList)lookup(Param.PATHS)).contains(path);
+    }
+
     public HTTPMethod[] getMethods()
     {
         return ((NVEnumList)lookup(Param.METHODS)).getValues(new HTTPMethod[0]);
+    }
 
+    public boolean isMethodSupported(String httpMethod)
+    {
+        return isMethodSupported(SharedUtil.lookupEnum(httpMethod, HTTPMethod.values()));
+    }
+    public boolean isMethodSupported(HTTPMethod httpMethod)
+    {
+        return ((NVEnumList)lookup(Param.METHODS)).contains(httpMethod);
     }
 
     public void setMethods(HTTPMethod ...methods)

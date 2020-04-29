@@ -20,6 +20,8 @@ import org.zoxweb.shared.http.HTTPHeaderValue;
 import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
 
+import java.util.Arrays;
+
 public class StringFormatTest {
 
 	public static void main(String[] args) {
@@ -52,6 +54,8 @@ public class StringFormatTest {
 				System.out.println(SharedUtil.toNVPair(str, ":", true));
 				System.out.println(SharedUtil.toNVPair(str, ":", false));
 			}
+			String roles = "role-1, role-2, role-3,   role-4       ";
+			System.out.println(Arrays.toString(SharedStringUtil.parseString(roles, ",",  " ")));
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

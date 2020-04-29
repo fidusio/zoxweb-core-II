@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface SecurityProp {
-    AuthenticationType[] authentication();
+    AuthenticationType[] authentications();
 
     /**
      * List of permissions to be applied to the current function

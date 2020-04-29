@@ -41,12 +41,18 @@ extends NVBase<List<String>>
 	public void setValues(String ... vals)
 	{
 		value.clear();
-		value.addAll(Arrays.asList(vals));
+		if(vals != null && vals.length > 0)
+			value.addAll(Arrays.asList(vals));
 	}
 
 	public String[] getValues()
 	{
 		return value.toArray(new String[value.size()]);
+	}
+
+	public boolean contains(String val)
+	{
+		return getValue().contains(val);
 	}
 	  
 }
