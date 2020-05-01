@@ -100,7 +100,8 @@ extends SecurityProfile
     }
     public boolean isMethodSupported(HTTPMethod httpMethod)
     {
-        return ((NVEnumList)lookup(Param.METHODS)).contains(httpMethod);
+        NVEnumList methodList = (NVEnumList)lookup(Param.METHODS);
+        return methodList.getValue().size() > 0 ? methodList.contains(httpMethod) : true;
     }
 
     public void setMethods(HTTPMethod ...methods)

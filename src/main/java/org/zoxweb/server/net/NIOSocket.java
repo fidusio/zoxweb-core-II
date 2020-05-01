@@ -30,14 +30,8 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Logger;
 
-
-
 import org.zoxweb.server.io.IOUtil;
-
-
 import org.zoxweb.server.net.security.SSLSessionDataFactory;
-
-
 import org.zoxweb.server.task.TaskUtil;
 import org.zoxweb.shared.data.events.BaseEventObject;
 import org.zoxweb.shared.data.events.EventListenerManager;
@@ -229,18 +223,18 @@ public class NIOSocket
 							    				attackTimestamp = System.currentTimeMillis();
 							    			}
 							    			
-							    			Logger log = psf.getLogger();
-							    			if(log == null)
-							    			{
-							    				log = logger;
-							    			}
+//							    			Logger log = psf.getLogger();
+//							    			if(log == null)
+//							    			{
+//							    				log = logger;
+//							    			}
 							    			InetSocketAddress isa = (InetSocketAddress) ((ServerSocketChannel)key.channel()).getLocalAddress();
 							    			
 							    			
 							    			
 							    			// in try block with catch exception since logger can point to file log
 							    			
-							    			log.info( "@ port:" + isa.getPort() + " access denied for:" + sc.getRemoteAddress());
+							    			logger.info( "@ port:" + isa.getPort() + " access denied for:" + sc.getRemoteAddress());
 							    			if(eventListenerManager != null)
 											{
 												if (sc.getRemoteAddress() instanceof InetSocketAddress)
@@ -258,7 +252,7 @@ public class NIOSocket
 							    			{
 							    				float burstRate = (float) ((500.00/(float)(System.currentTimeMillis() - attackTimestamp))*TimeInMillis.SECOND.MILLIS);
 							    				float overAllRate = (float)((float)currentAttackCount/(float)(System.currentTimeMillis() - startTime))*TimeInMillis.SECOND.MILLIS;
-							    				log.info(" Burst Attacks:" + burstRate+ " a/s" + " Total Attacks:" + overAllRate + " a/s" + " total:" + attackTotalCount + " in " + TimeInMillis.toString(System.currentTimeMillis() - startTime));
+							    				logger.info(" Burst Attacks:" + burstRate+ " a/s" + " Total Attacks:" + overAllRate + " a/s" + " total:" + attackTotalCount + " in " + TimeInMillis.toString(System.currentTimeMillis() - startTime));
 							    				attackTimestamp = 0;
 							    			}
 							    		}

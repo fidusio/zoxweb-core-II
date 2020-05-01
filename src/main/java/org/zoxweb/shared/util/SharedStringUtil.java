@@ -261,6 +261,8 @@ public final class SharedStringUtil
 		MatchToken startToken = new MatchToken(sd);
 		MatchToken endToken = new MatchToken(ed);
 		MatchToken currentMatch = nextMatch(token, 0, startToken, endToken);
+		if(currentMatch == null)
+			return ret;
 		currentMatch.referenceIndex = currentMatch.index;
 		boolean sameToken = sd.equals(ed);
 		

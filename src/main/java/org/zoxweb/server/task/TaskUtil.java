@@ -36,6 +36,7 @@ public class TaskUtil
 	private static int maxTasks = 500;
 	private static int threadMultiplier = 4;
 	private static int minTPThreadCount = 16;
+	public static final long START_TIME_MILLIS = System.currentTimeMillis();
 	
 	public static transient final Logger LOG = Logger.getLogger(Const.LOGGER_NAME); 
 	

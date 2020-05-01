@@ -16,6 +16,7 @@
 package org.zoxweb.server.util;
 
 
+import org.zoxweb.shared.security.IPBlockerConfig;
 import org.zoxweb.shared.util.MetaToken;
 import org.zoxweb.shared.util.SharedUtil;
 
@@ -23,6 +24,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.lang.reflect.Parameter;
 import java.util.*;
 
 
@@ -34,12 +36,30 @@ import java.util.*;
 public class ReflectionUtil
 {
 
+	public static class MethodAnnotations
+	{
+		public final Annotation[] methodAnnotations;
+		public final Map<Parameter, List<Annotation>> parametersAnnotations;
+		public final Method method;
+		public MethodAnnotations(Method method, Annotation[] methodAnnotations, Map<Parameter, List<Annotation>> parametersAnnotations)
+		{
+			this.method = method;
+			this.methodAnnotations = methodAnnotations;
+			this.parametersAnnotations = parametersAnnotations;
+		}
+
+		public String toString()
+		{
+			return "ma:" + Arrays.toString(methodAnnotations) + " pa:" + parametersAnnotations;
+		}
+	}
+
 	public static class AnnotationMap
 	{
 
 		private final Class<?> clazz;
 		private Annotation[] classAnnotations;
-		private Map<Method, Annotation[]> methodsAnnotations = new LinkedHashMap<Method, Annotation[]>();
+		private Map<Method, MethodAnnotations> methodsAnnotations = new LinkedHashMap<Method, MethodAnnotations>();
 
 		public AnnotationMap(Class<?> c)
 		{
@@ -57,7 +77,7 @@ public class ReflectionUtil
 			return classAnnotations;
 		}
 
-		public Map<Method, Annotation[]> getMethodsAnnotations()
+		public Map<Method, MethodAnnotations> getMethodsAnnotations()
 		{
 			return methodsAnnotations;
 		}
@@ -92,10 +112,11 @@ public class ReflectionUtil
 		public boolean isMethodAnnotatedBy(Method m, Class<? extends Annotation> c)
 		{
 			SharedUtil.checkIfNulls("Method or class can't be null", m,c);
-			Annotation[] annotations = methodsAnnotations.get(m);
-			if(annotations != null)
+			MethodAnnotations methodAnnotations = methodsAnnotations.get(m);
+
+			if(methodAnnotations != null)
 			{
-				for (Annotation a : annotations) {
+				for (Annotation a : methodAnnotations.methodAnnotations) {
 					if (a.annotationType().equals(c))
 						return true;
 				}
@@ -185,8 +206,12 @@ public class ReflectionUtil
 		{
 			if(Modifier.isPublic(method.getModifiers())) {
 				Annotation[] methodAnnotations = matchAnnotations(method.getDeclaredAnnotations(), annotationTypes);
-				if(methodAnnotations != null)
-					ret.methodsAnnotations.put(method, methodAnnotations);
+				Map<Parameter, List<Annotation>> parametersAnnotations = matchAnnotations(method.getParameters(), annotationTypes);
+
+				if(methodAnnotations != null) {
+					MethodAnnotations ma = new MethodAnnotations(method, methodAnnotations, parametersAnnotations);
+					ret.methodsAnnotations.put(method, ma);
+				}
 			}
 		}
 
@@ -212,6 +237,31 @@ public class ReflectionUtil
 		}
 		if(match.size() > 0)
 			return match.toArray(new Annotation[0]);
+		return null;
+	}
+
+	public static Map<Parameter, List<Annotation>> matchAnnotations(Parameter[] parameters, Class<? extends Annotation>...annotationTypes)
+	{
+		Map<Parameter, List<Annotation>> match = new LinkedHashMap<Parameter, List<Annotation>>();
+		if (parameters != null && parameters.length > 0) {
+			for (Parameter p : parameters) {
+				List<Annotation> paAnnotations = new ArrayList<Annotation>();
+				for (Annotation pa : p.getAnnotations()) {
+					for (Class<?> c : annotationTypes) {
+						if (pa.annotationType().equals(c)) {
+							paAnnotations.add(pa);
+							break;
+						}
+					}
+				}
+				if (paAnnotations.size() > 0)
+				{
+					match.put(p, paAnnotations);
+				}
+			}
+			if (match.size() > 0)
+				return match;
+		}
 		return null;
 	}
 
