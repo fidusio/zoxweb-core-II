@@ -46,12 +46,7 @@ import org.zoxweb.shared.http.HTTPEncoder;
 import org.zoxweb.shared.net.InetSocketAddressDAO;
 import org.zoxweb.shared.protocol.MessageStatus;
 import org.zoxweb.shared.protocol.ProtocolDelimiter;
-import org.zoxweb.shared.util.ArrayValues;
-import org.zoxweb.shared.util.GetCharset;
-import org.zoxweb.shared.util.GetNameValue;
-import org.zoxweb.shared.util.NVPair;
-import org.zoxweb.shared.util.SharedStringUtil;
-import org.zoxweb.shared.util.SharedUtil;
+import org.zoxweb.shared.util.*;
 
 /**
  * Contains HTTP utitlty methods.
@@ -468,6 +463,62 @@ public class HTTPUtil
 		}
 		
 		return ret;
+	}
+
+	/**
+	 * Return path value
+	 * @param path
+	 * @return
+	 */
+	public static String basePath(String path, boolean excludeLastPathSep)
+	{
+		if(path != null)
+		{
+			int index = path.indexOf('{');
+			if (index != -1)
+			{
+				String ret = path.substring(0, index);
+				if (excludeLastPathSep && ret.length() > 0 && ret.endsWith("/"))
+					ret = ret.substring(0, ret.length() -1);
+				return ret;
+			}
+		}
+		return path;
+	}
+
+	/**
+	 * Return path parameters base on the meta path and the value path
+	 * <ul>
+	 * <li>pathWithMetas: /start/abc/{id}/{info}</li>
+	 * <li>pathWithValues:/start/abc/12345/batata</li>
+	 * <ul></ul>
+	 * <br>
+	 *     NVGenericMap will return NVLong("id", 12345), NVPair("info","batata")
+	 * @param pathWithMetas
+	 * @param pathWithValues
+	 * @return
+	 */
+	public static NVGenericMap parsePathParameters(String pathWithMetas, String pathWithValues)
+	{
+		NVGenericMap nvgm = new NVGenericMap();
+		String[] paramNames = pathWithMetas.split("/");
+		String[] paramValues = pathWithValues.split("/");
+		for(int i = 0; i < paramNames.length; i++)
+		{
+			List<CharSequence> ch = SharedStringUtil.parseGroup(paramNames[i], "{","}", false);
+			if(ch.size() == 1)
+			{
+				String value = i < paramValues.length ? paramValues[i] : null;
+				if(value != null)
+				{
+
+				}
+				nvgm.add(ch.get(0).toString(), value);
+			}
+		}
+
+
+		return nvgm;
 	}
 
 	

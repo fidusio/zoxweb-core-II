@@ -45,8 +45,7 @@ public class URLParameterFormatingTest {
   public void httpHeaders() {
     System.out.println(HTTPEncoder.HEADER.format("application/json", "charset=utf-8"));
     System.out.println(HTTPEncoder.HEADER.format("application/json; ", "charset=utf-8", "hello-1"));
-    System.out
-        .println(HTTPEncoder.HEADER.format("application/json; ", "charset=utf-8; ", "hello-1"));
+    System.out.println(HTTPEncoder.HEADER.format("application/json; ", "charset=utf-8; ", "hello-1"));
   }
 
 
