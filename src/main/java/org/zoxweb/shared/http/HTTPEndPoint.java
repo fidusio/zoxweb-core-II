@@ -4,8 +4,6 @@ import org.zoxweb.shared.data.DataConst;
 import org.zoxweb.shared.security.SecurityProfile;
 import org.zoxweb.shared.util.*;
 
-import java.util.Arrays;
-import java.util.List;
 
 public class HTTPEndPoint
 extends SecurityProfile
@@ -96,7 +94,7 @@ extends SecurityProfile
 
     public boolean isMethodSupported(String httpMethod)
     {
-        return isMethodSupported(SharedUtil.lookupEnum(httpMethod, HTTPMethod.values()));
+        return isMethodSupported((HTTPMethod)SharedUtil.lookupEnum(httpMethod, HTTPMethod.values()));
     }
     public boolean isMethodSupported(HTTPMethod httpMethod)
     {
