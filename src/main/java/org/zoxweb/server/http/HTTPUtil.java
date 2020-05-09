@@ -490,7 +490,7 @@ public class HTTPUtil
 	 * Return path parameters base on the meta path and the value path
 	 * <ul>
 	 * <li>pathWithMetas: /start/abc/{id}/{info}</li>
-	 * <li>pathWithValues:/start/abc/12345/batata</li>
+	 * <li>pathWithValues:/start/abc/12345/postPath</li>
 	 * <ul></ul>
 	 * <br>
 	 *     NVGenericMap will return NVLong("id", 12345), NVPair("info","batata")
@@ -520,6 +520,32 @@ public class HTTPUtil
 
 		return nvgm;
 	}
+
+//	public static NVGenericMap parsePathParameters(String pathWithMetas, String pathWithValues, ReflectionUtil.MethodAnnotations metaData)
+//	{
+//		NVGenericMap nvgm = new NVGenericMap();
+//		String[] paramNames = pathWithMetas.split("/");
+//		String[] paramValues = pathWithValues.split("/");
+//		int paramCounter = 0;
+//		for(int i = 0; i < paramNames.length; i++)
+//		{
+//			List<CharSequence> ch = SharedStringUtil.parseGroup(paramNames[i], "{","}", false);
+//
+//			if(ch.size() == 1)
+//			{
+//				String value = i < paramValues.length ? paramValues[i] : null;
+//				Parameter
+//				if(value != null)
+//				{
+//
+//				}
+//				nvgm.add(ch.get(0).toString(), value);
+//			}
+//		}
+//
+//
+//		return nvgm;
+//	}
 
 	
 	public static String parseHostURL(URL url)

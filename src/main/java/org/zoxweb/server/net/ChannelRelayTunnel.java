@@ -170,7 +170,7 @@ public class  ChannelRelayTunnel
 			try 
 			{
 				wait(100);
-				log.info("after wait");
+				if(debug) log.info("after wait");
 			} 
 			catch (InterruptedException e)
 			{

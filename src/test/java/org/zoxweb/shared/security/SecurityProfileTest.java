@@ -10,7 +10,7 @@ public class SecurityProfileTest {
     @Test
     public void securityProp() throws IOException {
         SecurityProfile sc = new SecurityProfile();
-        sc.setAuthenticationTypes(AuthenticationType.values());
+        sc.setAuthenticationTypes(SecurityConsts.AuthenticationType.values());
         sc.setPermissions("perm1", "perm2");
         sc.setRoles("role1", "role2");
         String json = GSONUtil.toJSON(sc, false, false, false);

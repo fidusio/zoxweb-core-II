@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.zoxweb.shared.annotation.EndPointProp;
 import org.zoxweb.shared.annotation.SecurityProp;
 import org.zoxweb.shared.http.HTTPMethod;
-import org.zoxweb.shared.security.AuthenticationType;
+import org.zoxweb.shared.security.SecurityConsts.AuthenticationType;
 
 public class AnnotationScanTest {
 

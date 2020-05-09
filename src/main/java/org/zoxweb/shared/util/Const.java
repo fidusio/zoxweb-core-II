@@ -155,6 +155,22 @@ public class Const {
     NVENTITY
   }
 
+  public enum ParamType
+  {
+    /**
+     * In the path
+     */
+    PATH,
+    /**
+     * In the payload od the request
+     */
+    PAYLOAD,
+    /**
+     * Query type
+     */
+    QUERY
+  }
+
   public enum Unit
       implements GetName {
 

@@ -1,5 +1,6 @@
 package org.zoxweb.shared.annotation;
-import org.zoxweb.shared.security.AuthenticationType;
+import org.zoxweb.shared.security.SecurityConsts;
+import org.zoxweb.shared.security.SecurityConsts.*;
 import org.zoxweb.shared.util.Const;
 
 import java.lang.annotation.ElementType;
@@ -12,7 +13,8 @@ import java.lang.annotation.Target;
  */
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface SecurityProp {
+public @interface SecurityProp
+{
     AuthenticationType[] authentications();
 
     /**

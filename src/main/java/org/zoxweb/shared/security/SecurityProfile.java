@@ -3,8 +3,8 @@ package org.zoxweb.shared.security;
 
 import org.zoxweb.shared.data.PropertyDAO;
 import org.zoxweb.shared.util.*;
+import org.zoxweb.shared.security.SecurityConsts.AuthenticationType;
 
-import java.util.Arrays;
 import java.util.List;
 
 
