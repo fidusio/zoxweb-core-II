@@ -155,7 +155,7 @@ public class Const {
     NVENTITY
   }
 
-  public enum ParamType
+  public enum ParamSource
   {
     /**
      * In the path

@@ -114,6 +114,18 @@ public class NVGenericMap
 
 	public GetNameValue<?>[] values(GetNameValue<?>[] t) {return values();}
 
+
+	public Object[] nvValues()
+	{
+		GetNameValue<?>[] allGNV = values();
+		Object[] ret = new Object[allGNV.length];
+		for (int i = 0; i < ret.length; i++)
+		{
+			ret[i] = allGNV[i].getValue();
+		}
+		return ret;
+	}
+
 	/**
 	 * @see org.zoxweb.shared.util.ArrayValues#add(java.lang.Object)
 	 */

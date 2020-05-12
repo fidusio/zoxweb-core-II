@@ -1653,6 +1653,150 @@ public class SharedUtil
 		
 		throw new IllegalArgumentException("Unsupported type " + config + " class:" + c);
 	}
+
+	public static NVBase<?> classToNVBase(Class<?> c, String name)
+	{
+
+		c = Const.wrap(c);
+//		if (c.isArray())
+//		{
+//			if (config instanceof NVConfigEntity)
+//			{
+//				NVConfigEntity nvce = (NVConfigEntity) config;
+//				//System.out.println(""+config);
+//
+//				switch (nvce.getArrayType())
+//				{
+//					case GET_NAME_MAP:
+//						return new NVEntityGetNameMap (config.getName());
+//					case LIST:
+//						return new NVEntityReferenceList(config.getName());
+//					case NOT_ARRAY:
+//						break;
+//					case REFERENCE_ID_MAP:
+//						return new NVEntityReferenceIDMap (config.getName());
+//					default:
+//						break;
+//
+//				}
+//
+//				//return new NVEntityReferenceList(config.getName());
+//			}
+
+			// enum must be checked first
+//			if (config.isEnum())
+//			{
+//				return (new NVEnumList(config.getName(), new ArrayList<Enum<?>>()));
+//			}
+//			else if (String[].class.equals(c))
+//			{
+//				if (config.isUnique())
+//				{
+//					return (new NVPairGetNameMap (config.getName(), new LinkedHashMap<GetName, GetNameValue<String>>()));
+//				}
+//
+//				return (new NVPairList (config.getName(), new ArrayList<NVPair>()));
+//			}
+//			else if (Long[].class.equals(c))
+//			{
+//				return (new NVLongList(config.getName(), new ArrayList<Long>()));
+//			}
+//			else if (byte[].class.equals(c))
+//			{
+//				return (new NVBlob(config.getName(), null));
+//			}
+//			else if (Integer[].class.equals(c))
+//			{
+//				return (new NVIntList(config.getName(), new ArrayList<Integer>()));
+//			}
+//			else if (Float[].class.equals(c))
+//			{
+//				return (new NVFloatList( config.getName(), new ArrayList<Float>()));
+//			}
+//			else if (Double[].class.equals( c))
+//			{
+//				return (new NVDoubleList(config.getName(), new ArrayList<Double>()));
+//			}
+//			else if (Date[].class.equals(c))
+//			{
+//				return (new NVLongList( config.getName(), new ArrayList<Long>()));
+//			}
+//			else if (BigDecimal[].class.equals(c))
+//			{
+//				return (new NVBigDecimalList( config.getName(), new ArrayList<BigDecimal>()));
+//			}
+//		}
+//		else
+		{
+			// Not array
+//			if (config instanceof NVConfigEntity)
+//			{
+//				return new NVEntityReference(config);
+//			}
+
+			if (c.isEnum())
+			{
+
+//				if ( DynamicEnumMap.class.equals( config.getMetaType()))
+//				{
+//					return new NVDynamicEnum(config.getName(), null, (DynamicEnumMap) config.getValueFilter());
+//				}
+
+				return (new NVEnum(name, null));
+			}
+			else if (String.class.equals(c))
+			{
+				NVPair nvp = new NVPair(name, (String)null);
+				return nvp;
+			}
+			else if (Long.class.equals(c))
+			{
+				return new NVLong(name, 0);
+			}
+			else if (Integer.class.equals(c))
+			{
+				return new NVInt(name, 0);
+			}
+			else if (Boolean.class.equals(c))
+			{
+				return (new NVBoolean(name, false));
+			}
+			else if (Float.class.equals(c))
+			{
+				return new NVFloat(name, 0);
+			}
+			else if (Double.class.equals(c))
+			{
+				return new NVDouble(name, 0);
+			}
+			else if (Date.class.equals(c))
+			{
+				return new NVLong(name, 0);
+			}
+			else if (BigDecimal.class.equals(c))
+			{
+				return new NVBigDecimal(name, new BigDecimal(0));
+			}
+			else if (Number.class.equals(c))
+			{
+				return new NVNumber(name, null);
+			}
+//			else if (NVGenericMap.class.equals(c))
+//			{
+//				return new NVGenericMap(name);
+//			}
+//			else if (NVGenericMapList.class.equals(c))
+//			{
+//				return new NVGenericMapList(name);
+//			}
+//			else if (NVStringList.class.equals(c))
+//			{
+//				return new NVStringList(config.getName());
+//			}
+		}
+
+		throw new IllegalArgumentException("Unsupported class:" + c);
+	}
 	
 	@SuppressWarnings("unchecked")
 	public static <T> T parsePrimitiveValue(GNVType type, Number n)

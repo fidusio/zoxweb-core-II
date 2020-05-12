@@ -39,9 +39,9 @@ public class ReflectionUtil
 	public static class MethodAnnotations
 	{
 		public final Annotation[] methodAnnotations;
-		public final Map<Parameter, List<Annotation>> parametersAnnotations;
+		public final Map<Parameter, Annotation> parametersAnnotations;
 		public final Method method;
-		public MethodAnnotations(Method method, Annotation[] methodAnnotations, Map<Parameter, List<Annotation>> parametersAnnotations)
+		public MethodAnnotations(Method method, Annotation[] methodAnnotations, Map<Parameter, Annotation> parametersAnnotations)
 		{
 			this.method = method;
 			this.methodAnnotations = methodAnnotations;
@@ -206,7 +206,7 @@ public class ReflectionUtil
 		{
 			if(Modifier.isPublic(method.getModifiers())) {
 				Annotation[] methodAnnotations = matchAnnotations(method.getDeclaredAnnotations(), annotationTypes);
-				Map<Parameter, List<Annotation>> parametersAnnotations = matchAnnotations(method.getParameters(), annotationTypes);
+				Map<Parameter, Annotation> parametersAnnotations = matchAnnotations(method.getParameters(), annotationTypes);
 
 				if(methodAnnotations != null) {
 					MethodAnnotations ma = new MethodAnnotations(method, methodAnnotations, parametersAnnotations);
@@ -240,9 +240,9 @@ public class ReflectionUtil
 		return null;
 	}
 
-	public static Map<Parameter, List<Annotation>> matchAnnotations(Parameter[] parameters, Class<? extends Annotation>...annotationTypes)
+	public static Map<Parameter, Annotation> matchAnnotations(Parameter[] parameters, Class<? extends Annotation>...annotationTypes)
 	{
-		Map<Parameter, List<Annotation>> match = new LinkedHashMap<Parameter, List<Annotation>>();
+		Map<Parameter, Annotation> match = new LinkedHashMap<Parameter, Annotation>();
 		if (parameters != null && parameters.length > 0) {
 			for (Parameter p : parameters) {
 				List<Annotation> paAnnotations = new ArrayList<Annotation>();
@@ -256,7 +256,7 @@ public class ReflectionUtil
 				}
 				if (paAnnotations.size() > 0)
 				{
-					match.put(p, paAnnotations);
+					match.put(p, paAnnotations.get(0));
 				}
 			}
 			if (match.size() > 0)

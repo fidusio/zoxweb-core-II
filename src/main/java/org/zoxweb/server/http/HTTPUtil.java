@@ -496,9 +496,10 @@ public class HTTPUtil
 	 *     NVGenericMap will return NVLong("id", 12345), NVPair("info","batata")
 	 * @param pathWithMetas
 	 * @param pathWithValues
+	 * @param addMissing
 	 * @return
 	 */
-	public static NVGenericMap parsePathParameters(String pathWithMetas, String pathWithValues)
+	public static NVGenericMap parsePathParameters(String pathWithMetas, String pathWithValues, boolean addMissing)
 	{
 		NVGenericMap nvgm = new NVGenericMap();
 		String[] paramNames = pathWithMetas.split("/");
@@ -508,16 +509,13 @@ public class HTTPUtil
 			List<CharSequence> ch = SharedStringUtil.parseGroup(paramNames[i], "{","}", false);
 			if(ch.size() == 1)
 			{
+				String name = ch.get(0).toString();
 				String value = i < paramValues.length ? paramValues[i] : null;
-				if(value != null)
-				{
-
-				}
-				nvgm.add(ch.get(0).toString(), value);
+				//we will only add found values
+				if(value != null || addMissing)
+					nvgm.add(name, value);
 			}
 		}
-
-
 		return nvgm;
 	}
 
