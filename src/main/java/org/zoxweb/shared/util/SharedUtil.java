@@ -1654,9 +1654,9 @@ public class SharedUtil
 		throw new IllegalArgumentException("Unsupported type " + config + " class:" + c);
 	}
 
-	public static NVBase<?> classToNVBase(Class<?> c, String name)
+	public static NVBase<?> classToNVBase(Class<?> c, String name, String value)
 	{
-
+		checkIfNulls("Class or name can't be null", c, name);
 		c = Const.wrap(c);
 //		if (c.isArray())
 //		{
@@ -1742,32 +1742,37 @@ public class SharedUtil
 //					return new NVDynamicEnum(config.getName(), null, (DynamicEnumMap) config.getValueFilter());
 //				}
 
-				return (new NVEnum(name, null));
+
+				return (new NVEnum(name, value != null ? lookupEnum(value, (Enum<?>[])c.getEnumConstants()) : null));
 			}
 			else if (String.class.equals(c))
 			{
-				NVPair nvp = new NVPair(name, (String)null);
+				NVPair nvp = new NVPair(name, value);
 				return nvp;
 			}
 			else if (Long.class.equals(c))
 			{
-				return new NVLong(name, 0);
+				return new NVLong(name, value != null ? Long.parseLong(value) : 0);
 			}
 			else if (Integer.class.equals(c))
 			{
-				return new NVInt(name, 0);
+				return new NVInt(name, value != null ? Integer.parseInt(value) : 0);
 			}
 			else if (Boolean.class.equals(c))
 			{
-				return (new NVBoolean(name, false));
+				if(name.equalsIgnoreCase(value)) {
+					return new NVBoolean(name, true);
+				}
+
+				return new NVBoolean(name, value != null ? Const.Bool.lookupValue(value) : false);
 			}
 			else if (Float.class.equals(c))
 			{
-				return new NVFloat(name, 0);
+				return new NVFloat(name, value != null ? Float.parseFloat(value) : 0);
 			}
 			else if (Double.class.equals(c))
 			{
-				return new NVDouble(name, 0);
+				return new NVDouble(name, value != null ? Double.parseDouble(value) : 0);
 			}
 			else if (Date.class.equals(c))
 			{
@@ -1775,7 +1780,7 @@ public class SharedUtil
 			}
 			else if (BigDecimal.class.equals(c))
 			{
-				return new NVBigDecimal(name, new BigDecimal(0));
+				return new NVBigDecimal(name, new BigDecimal(value));
 			}
 			else if (Number.class.equals(c))
 			{
