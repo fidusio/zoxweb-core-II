@@ -218,7 +218,7 @@ final public class GSONUtil
 				throws JsonParseException
 		{
 			// TODO Auto-generated method stub
-			return fromJSON((JsonObject)json, null, Base64Type.DEFAULT);
+			return fromJSON((JsonObject)json, typeOfT, Base64Type.DEFAULT);
 		}
 
 	}
@@ -1601,7 +1601,23 @@ final public class GSONUtil
         
         return null;
     }
-	
+
+
+	private static NVEntity fromJSON(JsonObject jo, Type typeOf, Base64Type b64Type)
+			throws AccessException, APIException
+	{
+		Class<? extends NVEntity> clazz = null;
+		try
+		{
+			clazz = (Class<? extends NVEntity>) Class.forName(typeOf.getTypeName());
+		}
+		catch(Exception e)
+		{}
+
+		return fromJSON(jo, clazz, b64Type);
+
+	}
+
 	@SuppressWarnings("unchecked")
 	private static NVEntity fromJSON(JsonObject jo, Class<? extends NVEntity> clazz, Base64Type b64Type)
         throws AccessException, APIException
