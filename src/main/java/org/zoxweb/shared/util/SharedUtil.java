@@ -1741,9 +1741,15 @@ public class SharedUtil
 //				{
 //					return new NVDynamicEnum(config.getName(), null, (DynamicEnumMap) config.getValueFilter());
 //				}
+				Enum<?> enumValue = null;
+				if (value != null)
+				{
+					enumValue =  lookupEnum(value, (Enum<?>[])c.getEnumConstants());
+					if(enumValue == null)
+						throw new IllegalArgumentException(value + " is not a valid enum");
+				}
 
-
-				return (new NVEnum(name, value != null ? lookupEnum(value, (Enum<?>[])c.getEnumConstants()) : null));
+				return new NVEnum(name, enumValue);
 			}
 			else if (String.class.equals(c))
 			{

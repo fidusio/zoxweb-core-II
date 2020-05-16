@@ -23,12 +23,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -458,7 +453,7 @@ public class HTTPUtil
 			NVPair nvp = SharedUtil.toNVPair(param);
 			if (nvp != null && !SharedStringUtil.isEmpty(nvp.getName()))
 			{
-				ret.add( nvp);
+				ret.add(nvp);
 			}
 		}
 		
@@ -499,9 +494,9 @@ public class HTTPUtil
 	 * @param addMissing
 	 * @return
 	 */
-	public static NVGenericMap parsePathParameters(String pathWithMetas, String pathWithValues, boolean addMissing)
+	public static Map<String, Object> parsePathParameters(String pathWithMetas, String pathWithValues, boolean addMissing)
 	{
-		NVGenericMap nvgm = new NVGenericMap();
+		Map<String, Object> ret = new LinkedHashMap<String, Object>();
 		String[] paramNames = pathWithMetas.split("/");
 		String[] paramValues = pathWithValues.split("/");
 		for(int i = 0; i < paramNames.length; i++)
@@ -513,10 +508,10 @@ public class HTTPUtil
 				String value = i < paramValues.length ? paramValues[i] : null;
 				//we will only add found values
 				if(value != null || addMissing)
-					nvgm.add(name, value);
+					ret.put(name, value);
 			}
 		}
-		return nvgm;
+		return ret;
 	}
 
 //	public static NVGenericMap parsePathParameters(String pathWithMetas, String pathWithValues, ReflectionUtil.MethodAnnotations metaData)

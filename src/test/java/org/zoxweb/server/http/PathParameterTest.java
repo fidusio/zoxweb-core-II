@@ -1,7 +1,9 @@
 package org.zoxweb.server.http;
 
 import org.junit.jupiter.api.Test;
-import org.zoxweb.shared.util.NVGenericMap;
+
+
+import java.util.Map;
 
 public class PathParameterTest {
     @Test
@@ -25,7 +27,7 @@ public class PathParameterTest {
 
         for(String dp : dataPaths)
         {
-            NVGenericMap result = HTTPUtil.parsePathParameters(metaPath, dp, false);
+            Map<String, Object> result = HTTPUtil.parsePathParameters(metaPath, dp, false);
             System.out.println(result);
             result = HTTPUtil.parsePathParameters(metaPath, dp, true);
             System.out.println(result);
