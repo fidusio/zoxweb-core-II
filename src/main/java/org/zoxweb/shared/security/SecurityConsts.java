@@ -34,42 +34,47 @@ public final class SecurityConsts
 	}
 
 
-	public enum AuthenticationType
-	{
-		ALL,
-		BASIC,
-		TOKEN,
-		JWT,
-		LDAP,
-		DOMAIN,
-		OATH,
-		NONE
-	}
-	
-	
-//	public enum AuthType
-//	implements GetName
+//	public enum AuthenticationType
 //	{
-//		BASIC("Basic"),
-//		BEARER("Bearer"),
-//		DIGEST("Digest"),
-//		HOBA("HOBA"),
-//		OAUTH("OAuth"),
-//		NONE("None");
-//
-//		private final String name;
-//		AuthType(String val)
-//		{
-//			name = val;
-//		}
-//
-//		@Override
-//		public String getName()
-//		{
-//			// TODO Auto-generated method stub
-//			return name;
-//		}
+//		ALL,
+//		BASIC,
+//		TOKEN,
+//		JWT,
+//		LDAP,
+//		DOMAIN,
+//		OATH,
+//		NONE
 //	}
+	
+	
+	public enum AuthenticationType
+	implements GetName
+	{
+		ALL("All"),
+		BASIC("Basic"),
+		BEARER("Bearer"),
+		DIGEST("Digest"),
+		DOMAIN("Domain"),
+		JWT("JWT"),
+		LDAP("LDAP"),
+		HOBA("HOBA"),
+		NONE("None"),
+		OAUTH("OAuth"),
+		;
+
+		private final String name;
+		AuthenticationType(String val)
+		{
+			name = val;
+		}
+
+		@Override
+		public String getName()
+		{
+			// TODO Auto-generated method stub
+			return name;
+		}
+	}
 	
 	public enum OAuthParam
 		implements GetName,GetNVConfig
