@@ -222,12 +222,10 @@ public class InetFilterRulesManager
 			if (i+1 != index)
 				sbIP.append('-');
 		}
-		
-	
-		
+
 		InetFilterDAO ifd = new InetFilterDAO(sbIP.toString(), netMask);
-		
 		addInetFilterProp(new InetFilterRule(ifd, ss));
+
 	}
 	
 	

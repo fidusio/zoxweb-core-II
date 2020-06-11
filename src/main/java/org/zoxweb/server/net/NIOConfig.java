@@ -225,7 +225,20 @@ implements Closeable,
 							for (String rule : iRules.getValue())
 							{
 								log.info("Adding Incoming rule:" + rule);
-								incomingIFRM.addInetFilterProp(rule);
+								try {
+									incomingIFRM.addInetFilterProp(rule);
+								}
+								catch(Exception e)
+								{
+									e.printStackTrace();
+									try {
+										incomingIFRM.addInetFilterProp(rule);
+									}
+									catch(Exception e1)
+									{
+										e.printStackTrace();
+									}
+								}
 								
 							}
 						}
@@ -235,7 +248,20 @@ implements Closeable,
 							for (String rule : oRules.getValue())
 							{
 								log.info("Adding Incoming rule:" + rule);
-								outgoingIFRM.addInetFilterProp(rule);
+								try {
+									outgoingIFRM.addInetFilterProp(rule);
+								}
+								catch(Exception e)
+								{
+									e.printStackTrace();
+									try {
+										outgoingIFRM.addInetFilterProp(rule);
+									}
+									catch(Exception e1)
+									{
+										e.printStackTrace();
+									}
+								}
 								
 							}
 						}
