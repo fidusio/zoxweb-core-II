@@ -1,6 +1,7 @@
 package org.zoxweb.server.util;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 import org.zoxweb.server.task.TaskUtil;
 import org.zoxweb.shared.data.RuntimeResultDAO;
@@ -12,8 +13,8 @@ import org.zoxweb.shared.util.SharedStringUtil;
 public class CronCommand 
 implements Runnable
 {
-  
-  
+
+  private static final transient Logger log = Logger.getLogger(CronCommand.class.getName());
   public static final TaskListener<CronCommand, String> NOOP_TASK = new TaskListener<CronCommand, String>() 
   {
 
@@ -70,7 +71,7 @@ implements Runnable
 		executionCounter++;
 		try 
 		{
-			System.out.println("Executing command:" + command);
+			log.info("Executing command:" + command);
 			RuntimeResultDAO rr = RuntimeUtil.runAndFinish(command);
 			taskListener.executionResult(rr.getExitCode(), executionCounter, System.currentTimeMillis(), rr.getOutputData());
 			

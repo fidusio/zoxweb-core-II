@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 
 import org.zoxweb.server.util.DateUtil;
 import org.zoxweb.shared.filters.ValueFilter;
+import org.zoxweb.shared.util.Const;
 
 /**
  * The date filter validates date formats.
@@ -77,6 +78,16 @@ public class TimestampFilter
 				
 			}
 		}
+
+		try
+		{
+			return Const.TimeInMillis.toMillis(in);
+		}
+		catch (IllegalArgumentException e)
+		{
+
+		}
+
 	
 		try
 		{
@@ -86,6 +97,8 @@ public class TimestampFilter
 		{
 			
 		}
+
+
 		
 		throw new IllegalArgumentException("Invalid format: " + in);
 	}
