@@ -103,7 +103,7 @@ public class SMTPCreator
 		List<NVPair> list = (List<NVPair>) SharedUtil.toNVPairs(Param.values());
 		configInfo.setAPITypeName(API_NAME);
 		configInfo.setDescription("SMTP (Simple Mail Transfer Protocol) configuration is used for email set up to send and receive emails.");
-		configInfo.setVersion("2008");
+		configInfo.setVersion("2020");
 		configInfo.setConfigParameters(list);
 		
 		APIServiceType[] types = {APIServiceType.EMAIL_NOTIFICATION};
@@ -138,7 +138,6 @@ public class SMTPCreator
 		APIServiceProvider<Void> serviceProvider = new SMTPProvider();
 		serviceProvider.setAPIConfigInfo(apiConfig);
 		serviceProvider.setAPIExceptionHandler(SMTPExceptionHandler.SINGLETON);
-		
 		return serviceProvider;
 	}
 
