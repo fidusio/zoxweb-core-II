@@ -61,6 +61,15 @@ public class IOUtil
 		}
 	}
 
+
+	public static String resourceToString(String resourceID) throws IOException {
+		return resourceToString(IOUtil.class, resourceID);
+	}
+
+	public static String resourceToString(Class<?> clazz, String resourceID) throws IOException {
+		return inputStreamToString(clazz.getResourceAsStream(resourceID), true);
+	}
+
 	public static File findFile(String filename)
 	{
 		filename = SharedStringUtil.trimOrNull(filename);
