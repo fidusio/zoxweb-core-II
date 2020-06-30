@@ -410,13 +410,13 @@ public class HTTPServletUtil
 		return 0;
 	}
 	
-	public static String inputStreamToString(HttpServlet servlet, String resource) throws NullPointerException, IOException
+	public static String inputStreamToString(ServletContext context, String resource) throws NullPointerException, IOException
 	{
 		log.info("resource:" + resource);
 		String content = null;
 		try
 		{
-			content = (IOUtil.inputStreamToString(servlet.getClass().getResourceAsStream(resource), true));
+			content = (IOUtil.inputStreamToString(context.getClass().getResourceAsStream(resource), true));
 		}
 		catch(Exception e)
 		{
@@ -424,16 +424,25 @@ public class HTTPServletUtil
 		}
 		if (content == null)
 		{
-			ServletContext context = servlet.getServletContext();
-			
+
 			URL url = context.getResource(resource);
 			log.info("url:" + url);
+			//content = inputStreamToString(context, resource);
 			content = (IOUtil.inputStreamToString(context.getResourceAsStream(resource), true));
 		}
 		
 		
 		return content;
 	}
+
+
+//	public static String inputStreamToString(ServletContext context, String resource) throws NullPointerException, IOException
+//	{
+//		log.info("resource:" + resource);
+//		URL url = context.getResource(resource);
+//		log.info("url:" + url);
+//		return (IOUtil.inputStreamToString(context.getResourceAsStream(resource), true));
+//	}
 
 
 	public static String inputStreamToString(Class<?> servlet, String resource) throws NullPointerException, IOException

@@ -45,7 +45,7 @@ public class HTTPAppVersionServlet
 			log.info("version is null");
 			String jsonResource = ApplicationConfigManager.SINGLETON.loadDefault().lookupValue(ApplicationDefaultParam.APPLICATION_VERSION_RESOURCE);
 			log.info(jsonResource);
-			String json = HTTPServletUtil.inputStreamToString(this, jsonResource);
+			String json = HTTPServletUtil.inputStreamToString(getServletContext(), jsonResource);
 			version.set(json);
 		}
 		
