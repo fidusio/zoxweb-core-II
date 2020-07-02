@@ -15,6 +15,7 @@ extends PropertyDAO
       implements GetNVConfig
   {
     APPLICATION_CONFIG_VAR(NVConfigManager.createNVConfig("application_conf_var", "Application Config Variable", "ApplicationConfVar", false, true, String.class)),
+    BASE_URI(NVConfigManager.createNVConfig("base_uri", "Base pre uri token", "BaseURI", false, true, String.class)),
     THREAD_POOL_SIZE(NVConfigManager.createNVConfig("thread_pool_size", "Thread pool size", "TreadPoolSize", false, true, int.class)),
     CONNECTIONS(NVConfigManager.createNVConfigEntity("connections", "Connections configurations", "Connections", false, true, ConnectionConfig.class, ArrayType.GET_NAME_MAP)),
     ENDPOINTS(NVConfigManager.createNVConfigEntity("endpoints", "Endpoints", "Endpoints", false, true, HTTPEndPoint.class, ArrayType.GET_NAME_MAP)),
@@ -76,6 +77,16 @@ extends PropertyDAO
   public void setApplicationConfVar(String appConVar)
   {
     setValue(Param.APPLICATION_CONFIG_VAR, appConVar);
+  }
+
+  public String getBaseURI()
+  {
+    return lookupValue(Param.BASE_URI);
+  }
+
+  public void setBaseURI(String baseURI)
+  {
+    setValue(Param.BASE_URI, baseURI);
   }
 
   public int getThreadPoolSize()
