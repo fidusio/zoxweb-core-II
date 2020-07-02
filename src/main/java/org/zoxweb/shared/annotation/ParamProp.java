@@ -26,5 +26,5 @@ public @interface ParamProp {
      * Parameter input source
      * @return
      */
-    Const.ParamSource paramSource() default Const.ParamSource.PATH;
+    Const.ParamSource source() default Const.ParamSource.PATH;
 }

@@ -222,6 +222,78 @@ public class ReflectionUtil
 		return null;
 	}
 
+
+	public static boolean isMethodAnnotatedAs(Method m, Class<? extends Annotation>...annotationTypes)
+	{
+		if(annotationTypes != null && annotationTypes.length > 0)
+		{
+			for(Class<? extends Annotation> c : annotationTypes)
+			{
+				if(!isTypeMatchingAnyAnnotation(c, m.getAnnotations()))
+				{
+					return  false;
+				}
+			}
+			return true;
+		}
+		return false;
+	}
+
+	public static boolean isClassAnnotatedAs(Class<?> clazz, Class<? extends Annotation>...annotationTypes)
+	{
+		if(annotationTypes != null && annotationTypes.length > 0)
+		{
+
+			for(Class<? extends Annotation> c : annotationTypes)
+			{
+				if(!isTypeMatchingAnyAnnotation(c, clazz.getAnnotations()))
+				{
+					return  false;
+				}
+			}
+			return true;
+		}
+		return false;
+	}
+
+	public static boolean isParameterAnnotatedAs(Parameter p, Class<? extends Annotation>...annotationTypes)
+	{
+		if(annotationTypes != null && annotationTypes.length > 0)
+		{
+			for(Class<? extends Annotation> c : annotationTypes)
+			{
+				if(!isTypeMatchingAnyAnnotation(c, p.getAnnotations()))
+				{
+					return  false;
+				}
+			}
+			return true;
+		}
+		return false;
+	}
+
+	public static boolean areAllMethodParametersAnnotatedAs(Method m, Class<? extends Annotation>...annotationTypes)
+	{
+		if(annotationTypes != null && annotationTypes.length > 0)
+		{
+			Parameter[] parameters = m.getParameters();
+			if(parameters!= null && parameters.length > 0)
+			{
+				for(Parameter p : parameters)
+				{
+					if(!isParameterAnnotatedAs(p, annotationTypes))
+					{
+						return false;
+					}
+				}
+				return true;
+			}
+		}
+
+
+		return false;
+	}
+
 	public static Annotation[] matchAnnotations(Annotation[] annotations, Class<? extends Annotation>...annotationTypes)
 	{
 		Set<Annotation> match = new HashSet<Annotation>();
@@ -239,6 +311,28 @@ public class ReflectionUtil
 			return match.toArray(new Annotation[0]);
 		return null;
 	}
+
+	public static boolean isAnnotationMatchingAnyType(Annotation a, Class<? extends Annotation>...annotationTypes)
+	{
+		for(Class<?> c : annotationTypes)
+		{
+			if(c.isAssignableFrom(a.annotationType()))
+				return true;
+		}
+
+		return false;
+	}
+
+	public static boolean isTypeMatchingAnyAnnotation(Class<? extends Annotation> aType, Annotation[] annotations)
+	{
+		for(Annotation a : annotations)
+		{
+			if(aType.isAssignableFrom(a.annotationType()))
+				return true;
+		}
+		return false;
+	}
+
 
 	public static Map<Parameter, Annotation> matchAnnotations(Parameter[] parameters, Class<? extends Annotation>...annotationTypes)
 	{
