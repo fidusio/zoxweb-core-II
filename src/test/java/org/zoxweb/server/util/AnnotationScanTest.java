@@ -9,7 +9,6 @@ import org.zoxweb.shared.security.SecurityConsts.AuthenticationType;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
-import java.util.concurrent.RunnableFuture;
 
 public class AnnotationScanTest {
 
