@@ -393,6 +393,14 @@ public class Const {
     public static long toMillis(String time)
         throws NullPointerException, IllegalArgumentException {
       time = SharedStringUtil.toLowerCase(time).trim();
+      try
+      {
+        return Long.parseLong(time);
+      }
+      catch(NumberFormatException e)
+      {
+
+      }
       String hhmmss[] = time.split(":");
       if (hhmmss.length > 0 && hhmmss.length <= 3) {
         int millis = 0;
