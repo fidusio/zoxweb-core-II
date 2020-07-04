@@ -22,7 +22,7 @@ import java.util.Map;
 import org.zoxweb.shared.filters.FilterType;
 
 /**
- *
+ * NVGenericMap is a data generic container the jack of all trades.
  */
 @SuppressWarnings("serial")
 public class NVGenericMap
