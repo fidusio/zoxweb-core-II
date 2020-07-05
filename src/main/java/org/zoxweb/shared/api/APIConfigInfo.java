@@ -47,98 +47,98 @@ public interface APIConfigInfo
 	/**
 	 * @return returns the API type name.
 	 */
-	public String getAPITypeName();
+	String getAPITypeName();
 
 	
 	/**
 	 * This method sets the API type name.
 	 * @param name
 	 */
-	public void setAPITypeName(String name);
+	void setAPITypeName(String name);
 	
 	/**
 	 * @return service types.
 	 */
-	public APIServiceType[] getServiceTypes();
+	APIServiceType[] getServiceTypes();
 	
 	/**
 	 * This method sets service types.
 	 * @param serviceType
 	 */
-	public void setServiceTypes(APIServiceType[] serviceType);
+	void setServiceTypes(APIServiceType[] serviceType);
 
 	/**
 	 * @return the version.
 	 */
-	public String getVersion();
+	String getVersion();
 	
 	/**
 	 * This method sets the version.
 	 * @param version
 	 */
-	public void setVersion(String version);
+	void setVersion(String version);
 	
 	/**
 	 * @return the configuration parameters.
 	 * @deprecated
 	 */
-	public ArrayValues<NVPair> getConfigParameters();
+	ArrayValues<NVPair> getConfigParameters();
 	
 	/**
 	 * This method sets the configuration parameters.
 	 * @param configParams
 	 * @deprecated
 	 */
-	public void setConfigParameters(List<NVPair> configParams);
+	void setConfigParameters(List<NVPair> configParams);
 	
 	/**
 	 * This method sets the configuration parameters.
 	 * @param configParams
 	 * @deprecated
 	 */
-	public void setConfigParameters(ArrayValues<NVPair> configParams);
+	void setConfigParameters(ArrayValues<NVPair> configParams);
 	
 	/**
 	 * The default location where to store or get information, this parameter is optional and depend on the  
 	 * the API 
 	 * @return the default location
 	 */
-	public String getDefaultLocation();
+	String getDefaultLocation();
 	/**
 	 * Set the default location
 	 * 
 	 * @param location
 	 */
-	public void setDefaultLocation(String location);
+	void setDefaultLocation(String location);
 	
 	/**
 	 * This method checks if the specified service type is supported.
 	 * @param type
 	 * @return true is the type is supported.
 	 */
-	public boolean isServiceTypeSupported(APIServiceType type);
+	boolean isServiceTypeSupported(APIServiceType type);
 	
 	/**
 	 * @return status
 	 */
-	public APIConfigStatus getStatus();
+	APIConfigStatus getStatus();
 	
 	/**
 	 * Set the current status.
 	 * @param status
 	 */
-	public void setStatus(APIConfigStatus status);
+	void setStatus(APIConfigStatus status);
 	
 	/**
 	 * @return the oauth version
 	 */
-	public OAuthVersion getOAuthVersion();
+	OAuthVersion getOAuthVersion();
 	
 	/**
 	 * Set the oauth version
 	 * @param version
 	 */
-	public void setOAuthVersion(OAuthVersion version);
+	void setOAuthVersion(OAuthVersion version);
 	
 	void setKeyMaker(KeyMaker keyMaker);
 	KeyMaker getKeyMaker();

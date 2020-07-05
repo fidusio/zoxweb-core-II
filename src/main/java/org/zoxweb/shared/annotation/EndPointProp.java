@@ -54,8 +54,14 @@ public @interface EndPointProp {
 
     /**
      * Name of the handler or servlet depending on the server used
-     * @return of the handle
+     * @return name of the handle
      */
     String name();
+
+    /**
+     * Describe the handler
+     * @return description of the handle
+     */
+    String description() default "";
 
 }
