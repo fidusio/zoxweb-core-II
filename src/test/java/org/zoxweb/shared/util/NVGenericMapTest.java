@@ -1,10 +1,14 @@
 package org.zoxweb.shared.util;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import org.junit.jupiter.api.Test;
+import org.zoxweb.server.io.IOUtil;
 import org.zoxweb.server.util.GSONUtil;
 import org.zoxweb.shared.data.AddressDAO;
+import org.zoxweb.shared.http.HTTPEndPoint;
 import org.zoxweb.shared.util.SharedBase64.Base64Type;
 
 public class NVGenericMapTest
@@ -27,9 +31,36 @@ public class NVGenericMapTest
 	  String name;
 	  NVGenericMap nvgm;
 	}
-	
-	
-	public static void main(String ...args)
+
+	@Test
+	public void readConfiguration() throws IOException {
+		try {
+			String json = IOUtil.inputStreamToString(NVGenericMapTest.class.getResourceAsStream("/NVGenericMap.json"), true);
+			HTTPEndPoint hep = GSONUtil.fromJSON(json, HTTPEndPoint.class);
+
+			System.out.println("" + hep + " " + hep.getClass());
+			NVGenericMap nvgm = hep.getProperties();
+			System.out.println("" + nvgm + " " + nvgm.getClass());
+			nvgm = (NVGenericMap) nvgm.get("gpios-map");
+			System.out.println("" + nvgm + " " + nvgm.getClass());
+			nvgm = (NVGenericMap) hep.getProperties().get("gpios-init");
+			System.out.println("" + nvgm + " " + nvgm.getClass());
+			for (GetNameValue<?> nvGenericMap : nvgm.values()) {
+				System.out.println("Inner value:" + nvGenericMap + " " + nvGenericMap.getClass());
+			}
+			nvgm = (NVGenericMap) nvgm.get("modem");
+			System.out.println("" + nvgm);
+			System.out.println("state:" + nvgm.getValue("state"));
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+
+
+	@Test
+	public void test()
 	{
 		try
 		{
