@@ -16,6 +16,9 @@
 package org.zoxweb.shared.util;
 
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class SharedStringUtilTest {
@@ -53,6 +56,19 @@ public class SharedStringUtilTest {
 		System.out.println(str + " length:" + str.length());
 		str = SharedStringUtil.bytesToHex(buffer);
 		System.out.println(str + " length:" + str.length());
+	}
+
+	@Test void parseStrings()
+	{
+		String[] values = {
+			"name=v1",
+			"name2=v2",
+			"name3=v3"
+		};
+
+		List<GetNameValue<String>> parsed = SharedStringUtil.parseStrings('=', values);
+		assert(parsed.size() == values.length);
+		System.out.println(parsed);
 	}
 
 }

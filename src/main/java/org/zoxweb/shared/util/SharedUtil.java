@@ -2311,6 +2311,7 @@ public class SharedUtil
 		return ret;
 	}
 
+
 	public static NVGenericMap toNVGenericMap(String str, String nvpSep, String regExp, boolean trim)
 	{
 		String[] pairs = SharedStringUtil.parseString(str, regExp, (CharSequence[]) null );

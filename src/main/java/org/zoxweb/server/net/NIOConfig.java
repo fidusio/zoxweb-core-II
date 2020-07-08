@@ -52,7 +52,7 @@ public class NIOConfig
 implements Closeable,
 		   AppCreator<NIOSocket, ConfigDAO>
 {
-	public static final String RESOURCE_NAME = "NIO_CONFIG";
+	public static final String RESOURCE_NAME = "NIOConfig";
 	
 	private ConfigDAO configDAO;
 	private static final transient Logger log = Logger.getLogger(NIOConfig.class.getName());
@@ -60,7 +60,7 @@ implements Closeable,
 
 	public String getName()
 	{
-		return "NIOConfig";
+		return RESOURCE_NAME;
 	}
 	
 	public NIOConfig(String configDAOFile) throws InstantiationException, IllegalAccessException, ClassNotFoundException, IOException

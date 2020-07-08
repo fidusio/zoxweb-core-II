@@ -664,6 +664,21 @@ public final class SharedStringUtil
 	}
 
 
+	public static List<GetNameValue<String>> parseStrings(char sep, String ...tokens)
+	{
+		List<GetNameValue<String>> ret = new ArrayList<GetNameValue<String>>();
+		String stringSep = "" + sep;
+		for(String token : tokens)
+		{
+			String[] toks = token.split(stringSep);
+			if(toks.length == 2)
+			{
+				ret.add(new NVPair(toks[0], toks[1]));
+			}
+		}
+		return ret;
+	}
+
 
 	/**
 	 * Returns a string array based on the strings str and sep.

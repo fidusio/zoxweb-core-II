@@ -69,6 +69,6 @@ public class ConnectionConfig
 
   public NVGenericMap getSSLConfig()
   {
-    return lookupValue(Param.SSL_CONFIG);
+    return (NVGenericMap) lookup(Param.SSL_CONFIG);
   }
 }
