@@ -19,6 +19,7 @@ extends PropertyDAO
         ROLES(NVConfigManager.createNVConfig("roles", "Role tokens", "Roles", false, true, NVStringList.class)),
         RESTRICTIONS(NVConfigManager.createNVConfig("restrictions", "Restrictions", "Restrictions", false, true, NVStringList.class)),
 
+
         ;
         private final NVConfig nvc;
 

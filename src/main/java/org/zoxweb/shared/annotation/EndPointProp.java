@@ -18,6 +18,7 @@ package org.zoxweb.shared.annotation;
 
 
 import org.zoxweb.shared.http.HTTPMethod;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -51,6 +52,8 @@ public @interface EndPointProp {
      * @return list of HTTPMethod
      */
     HTTPMethod[] methods() default {};
+
+
 
     /**
      * Name of the handler or servlet depending on the server used

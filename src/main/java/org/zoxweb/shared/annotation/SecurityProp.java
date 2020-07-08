@@ -1,4 +1,5 @@
 package org.zoxweb.shared.annotation;
+import org.zoxweb.shared.http.URIScheme;
 import org.zoxweb.shared.security.SecurityConsts;
 import org.zoxweb.shared.security.SecurityConsts.*;
 import org.zoxweb.shared.util.Const;
@@ -39,5 +40,12 @@ public @interface SecurityProp
      * @return list of restrictions
      */
     String[] restrictions() default {};
+
+
+    /**
+     * List of NetProtocols to be assigned HTTPS, NetProtocol.HTTP ...
+     * @return list of HTTPMethod
+     */
+    URIScheme[] protocols() default {};
 
 }

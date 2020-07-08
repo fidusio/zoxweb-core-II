@@ -14,6 +14,7 @@ extends SecurityProfile
         BEAN(NVConfigManager.createNVConfig("bean", "Bean class name", "Bean", false, true, String.class)),
         PATHS(NVConfigManager.createNVConfig("paths", "Paths", "Paths", false, true, NVStringList.class)),
         METHODS(NVConfigManager.createNVConfig("methods", "HTTP Methods", "Methods", false, true, HTTPMethod[].class)),
+        PROTOCOLS(NVConfigManager.createNVConfig("protocols", "Http, Https...", "Protocols", false, true, URIScheme[].class)),
         ;
         private final NVConfig nvc;
 
@@ -105,5 +106,27 @@ extends SecurityProfile
     public void setMethods(HTTPMethod ...methods)
     {
         ((NVEnumList)lookup(Param.METHODS)).setValues(methods);
+    }
+
+
+
+    public URIScheme[] getProtocols()
+    {
+        return ((NVEnumList)lookup(Param.PROTOCOLS)).getValues(new URIScheme[0]);
+    }
+
+    public boolean isProtocolSupported(String protocol)
+    {
+        return isProtocolSupported((URIScheme)SharedUtil.lookupEnum(protocol, URIScheme.values()));
+    }
+    public boolean isProtocolSupported(URIScheme protocol)
+    {
+        NVEnumList protocolList = (NVEnumList)lookup(Param.PROTOCOLS);
+        return protocolList.getValue().size() > 0 ? protocolList.contains(protocol) : true;
+    }
+
+    public void setProtocols(URIScheme ...protocols)
+    {
+        ((NVEnumList)lookup(Param.PROTOCOLS)).setValues(protocols);
     }
 }
