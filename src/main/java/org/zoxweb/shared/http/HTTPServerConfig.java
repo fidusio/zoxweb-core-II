@@ -10,6 +10,7 @@ import org.zoxweb.shared.util.NVConfigEntity.ArrayType;
 @SuppressWarnings("serial")
 public class HTTPServerConfig
 extends PropertyDAO
+implements AppConfig
 {
   public enum Param
       implements GetNVConfig

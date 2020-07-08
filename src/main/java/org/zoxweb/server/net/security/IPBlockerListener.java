@@ -68,8 +68,14 @@ public class IPBlockerListener
 	public static class Creator
 		implements AppCreator<IPBlockerListener, IPBlockerConfig>
 	{
+
 		private IPBlockerConfig ipBlockerConfig = null;
-		
+
+		@Override
+		public String getName() {
+			return "IPBlocker";
+		}
+
 		@Override
 		public void setAppConfig(IPBlockerConfig appConfig) {
 			// TODO Auto-generated method stub

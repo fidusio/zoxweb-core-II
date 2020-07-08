@@ -58,7 +58,10 @@ implements Closeable,
 	private static final transient Logger log = Logger.getLogger(NIOConfig.class.getName());
 	private List<Closeable> services = new ArrayList<Closeable>();
 
-	
+	public String getName()
+	{
+		return "NIOConfig";
+	}
 	
 	public NIOConfig(String configDAOFile) throws InstantiationException, IllegalAccessException, ClassNotFoundException, IOException
 	{
