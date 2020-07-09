@@ -17,21 +17,9 @@ package org.zoxweb.shared.security;
 
 import org.zoxweb.shared.data.SetNameDescriptionDAO;
 import org.zoxweb.shared.filters.FilterType;
-import org.zoxweb.shared.util.AppID;
-import org.zoxweb.shared.util.GetNVConfig;
-import org.zoxweb.shared.util.GetNVProperties;
-import org.zoxweb.shared.util.GetName;
-
-import org.zoxweb.shared.util.NVBoolean;
-import org.zoxweb.shared.util.NVConfig;
-import org.zoxweb.shared.util.NVConfigEntity;
-import org.zoxweb.shared.util.NVConfigEntityLocal;
-import org.zoxweb.shared.util.NVConfigManager;
-import org.zoxweb.shared.util.NVGenericMap;
-import org.zoxweb.shared.util.NVLong;
+import org.zoxweb.shared.util.*;
 
 
-import org.zoxweb.shared.util.SharedUtil;
 import java.util.Date;
 
 
@@ -221,6 +209,10 @@ public class JWTPayload
 	{
 		nvgm.add(new NVLong(Param.EXP.getName(), exp));
 	}
+	public void setExpirationTime(Date exp)
+	{
+		nvgm.add(new NVLong(Param.EXP.getName(), Const.TimeInMillis.SECOND.convertTo(exp)));
+	}
 	
 	
 	/**
@@ -234,6 +226,10 @@ public class JWTPayload
 	public void setNotBefore(long nbf) 
 	{
 		nvgm.add(new NVLong(Param.NBF.getName(), nbf));
+	}
+	public void setNotBefore(Date nbf)
+	{
+		nvgm.add(new NVLong(Param.NBF.getName(), Const.TimeInMillis.SECOND.convertTo(nbf)));
 	}
 	
 	/**
@@ -250,12 +246,12 @@ public class JWTPayload
     {
         nvgm.add(new NVLong(Param.IAT.getName(), iat));
     }
-	
-	
-	public void setIssuedAtInMillis(long iat) 
+	public void setIssuedAt(Date iat)
 	{
-		setIssuedAt(iat/1000);
+		nvgm.add(new NVLong(Param.IAT.getName(), Const.TimeInMillis.SECOND.convertTo(iat)));
 	}
+	
+
 
 	public String getJWTID() 
 	{

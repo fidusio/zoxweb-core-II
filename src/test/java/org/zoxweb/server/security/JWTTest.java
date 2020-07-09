@@ -19,14 +19,14 @@ import org.zoxweb.shared.util.SharedBase64.Base64Type;
 
 public class JWTTest {
 
-  private JWT jwtHS256 = null;
-  private JWT jwtNONE = null;
-  private JWT jwtHS512 = null;
-  private long index = 0;
+  private static JWT jwtHS256 = null;
+  private static JWT jwtNONE = null;
+  private static JWT jwtHS512 = null;
+  private static long index = 0;
 
 
   @BeforeAll
-  public void init() {
+  public static void init() {
 
     jwtHS256 = new JWT();
     JWTHeader header = jwtHS256.getHeader();
@@ -258,7 +258,7 @@ public class JWTTest {
     System.out.println(decoded.getPayload().getProperties());
     System.out.println(GSONUtil.toJSON(decoded, false, false, false, Base64Type.URL));
     System.out.println("Are equals:" + test.equals(gwtToken));
-    Assertions.assertEquals("2 tokens equals", test, gwtToken);
+    Assertions.assertEquals(test, gwtToken);
     decoded.getPayload().getProperties().add(new NVPair("mario", "taza"));
     String json = GSONUtil.toJSON(decoded, false, false, true, Base64Type.URL);
     System.out.println(json);
@@ -288,7 +288,7 @@ public class JWTTest {
     System.out.println(decoded.getPayload().getProperties());
     System.out.println(GSONUtil.toJSON(decoded, false, false, false, Base64Type.URL));
     System.out.println("Are equals:" + test.equals(gwtToken));
-    Assertions.assertEquals("2 tokens equals", test, gwtToken);
+    Assertions.assertEquals(test, gwtToken);
     decoded.getPayload().getProperties().add(new NVPair("mario", "taza"));
     String json = GSONUtil.toJSON(decoded, false, false, true, Base64Type.URL);
     System.out.println(json);
@@ -312,6 +312,7 @@ public class JWTTest {
     payload.setAppID("xlogistx");
     payload.setNonce(index++);
     payload.setSubjectID("support@xlogistx.io");
+
 
     KeyPair ecKP = CryptoUtil.generateKeyPair("EC", 521);
     KeyPair rsaKP = CryptoUtil.generateKeyPair("RSA", 2048);

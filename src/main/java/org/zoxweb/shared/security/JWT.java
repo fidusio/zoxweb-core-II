@@ -29,6 +29,8 @@ import org.zoxweb.shared.util.NVGenericMap;
 import org.zoxweb.shared.util.SharedUtil;
 import org.zoxweb.shared.security.SecurityConsts.JWTAlgorithm;
 
+import java.util.Date;
+
 @SuppressWarnings("serial")
 public class JWT
 extends SetNameDescriptionDAO
@@ -145,7 +147,7 @@ extends SetNameDescriptionDAO
 //        if (tempEncoder != null)
 //        	jwtPayload = tempEncoder.encode(jwtPayload);
 //        else
-        jwtPayload.setIssuedAtInMillis(System.currentTimeMillis());
+        jwtPayload.setIssuedAt(new Date());
         jwtPayload.setNonce(LongIDGenerator.DEFAULT.nextID());
         
 

@@ -17,6 +17,8 @@ package org.zoxweb.shared.util;
 
 import org.zoxweb.shared.db.QueryMarker;
 
+import java.util.Date;
+
 /**
  * Contains constants and enums.
  *
@@ -499,6 +501,16 @@ public class Const {
       return nanos + " nanos";
     }
 
+    public  long convertTo(Date date)
+    {
+      return convertTo(date.getTime());
+    }
+
+
+    public long convertTo(long timeInMillis)
+    {
+      return timeInMillis/MILLIS;
+    }
     /**
      * Converts the time to micro second value (10 power -6 second)
      *
