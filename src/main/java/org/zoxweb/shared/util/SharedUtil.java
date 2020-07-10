@@ -16,15 +16,7 @@
 package org.zoxweb.shared.util;
 
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import org.zoxweb.shared.data.ReferenceIDDAO;
 import org.zoxweb.shared.filters.GetValueFilter;
@@ -95,25 +87,76 @@ public class SharedUtil
 	{
 		try
 		{
-			
 			Long  ret = Long.valueOf(number);
 			if (ret <= Integer.MAX_VALUE && ret >= Integer.MIN_VALUE)
 			{
-				return new Integer(ret.intValue());
+				return Integer.valueOf(ret.intValue());
 			}
 			return ret;
 		}
 		catch(NumberFormatException e)
 		{
-			
 		}
-		
-		
+
 		Double ret = Double.valueOf(number);
-		if (ret <= Float.MAX_VALUE && ret >= Float.MIN_VALUE)
-			return new Float(ret.floatValue());
-		
+		if (ret <= Float.MAX_VALUE && ret >= -Float.MAX_VALUE) {
+			// missing check for Float,MIN_VALUE
+			return Float.valueOf(ret.floatValue());
+		}
 		return ret;
+	}
+
+	public static Number[] normilizeNumbers(Number ... numbers)
+	{
+		Class<?>[] classPriority =
+				{
+					Integer.class,
+					Long.class,
+					Float.class,
+					Double.class
+				};
+		int priorityMatch = -1;
+		Class<?> type = null;
+		for (Number num : numbers)
+		{
+			int classIndex = -1;
+			for(int i = 0; i < classPriority.length; i++)
+			{
+				if(classPriority[i] == num.getClass())
+				{
+					classIndex = i;
+					break;
+				}
+			}
+			if(classIndex == -1)
+			{
+				throw new IllegalArgumentException("Numbers can't be normilized " + Arrays.toString(numbers));
+			}
+			if (classIndex > priorityMatch) {
+				priorityMatch = classIndex;
+				type = classPriority[priorityMatch];
+			}
+		}
+
+		Number[] retVals = new Number[numbers.length];
+
+		for(int i = 0; i < retVals.length; i++)
+		{
+			if(type == Integer.class) {
+				retVals[i] = Integer.valueOf(numbers[i].intValue());
+			}
+			else if(type == Long.class) {
+				retVals[i] = Long.valueOf(numbers[i].longValue());
+			}
+			else if(type == Float.class) {
+				retVals[i] = Float.valueOf(numbers[i].floatValue());
+			}
+			else if(type == Double.class) {
+				retVals[i] = Double.valueOf(numbers[i].doubleValue());
+			}
+		}
+
+		return retVals;
 	}
 	
 	@SuppressWarnings("unchecked")

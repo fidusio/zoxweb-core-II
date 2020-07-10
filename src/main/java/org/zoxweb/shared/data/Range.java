@@ -1,16 +1,14 @@
 package org.zoxweb.shared.data;
 
-import org.zoxweb.shared.util.GetNVConfig;
-import org.zoxweb.shared.util.NVConfig;
-import org.zoxweb.shared.util.NVConfigEntity;
-import org.zoxweb.shared.util.NVConfigManager;
-import org.zoxweb.shared.util.NVConfigEntityLocal;
-import org.zoxweb.shared.util.SharedUtil;
+
+import org.zoxweb.shared.util.*;
 
 @SuppressWarnings("serial")
 public class Range<T extends Comparable<T>>
     extends CanonicalIDDAO
 {
+
+    public static final String NUMBER_PATTERN= "[-]?[0-9]*\\.?[0-9]+";
 
     /**
      * Include start, end in {@link Range}
@@ -20,22 +18,50 @@ public class Range<T extends Comparable<T>>
         /**
          * {@link Range} inclusive of start, exclusive of end
          */
-        START,
+        START("[", ")"),
 
         /**
          * {@link Range} inclusive of end, exclusive of start
          */
-        END,
+        END("(", "]"),
 
         /**
          * {@link Range} inclusive of start and end
          */
-        BOTH,
+        BOTH("[", "]"),
 
         /**
          * {@link Range} exclusive of start and end
          */
-        NONE
+        NONE("(", ")")
+
+        ;
+
+        public final String START_TOKEN;
+        public final String END_TOKEN;
+        public final String PATTERN;
+        Inclusive(String startToken, String endToken)
+        {
+            START_TOKEN = startToken;
+            END_TOKEN = endToken;
+            PATTERN = "^\\" + START_TOKEN + NUMBER_PATTERN + "," + NUMBER_PATTERN +"\\" + END_TOKEN + "$";
+        }
+
+
+        public static Inclusive match(String token)
+        {
+            token = token.replaceAll("\\s+", "");
+            for(Inclusive i : Inclusive.values())
+            {
+                if(token.matches(i.PATTERN))
+                {
+                    return i;
+                }
+            }
+            return null;
+        }
+
+
     }
 
 
@@ -315,69 +341,7 @@ public class Range<T extends Comparable<T>>
      */
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        switch (getInclusive())
-        {
-
-            case START:
-                sb.append('[');
-                sb.append(getStart());
-                sb.append(", ");
-                sb.append(getEnd());
-                sb.append(')');
-                break;
-            case END:
-                sb.append('(');
-                sb.append(getStart());
-                sb.append(", ");
-                sb.append(getEnd());
-                sb.append(']');
-                break;
-            case BOTH:
-                sb.append('[');
-                sb.append(getStart());
-                sb.append(", ");
-                sb.append(getEnd());
-                sb.append(']');
-                break;
-            case NONE:
-                sb.append('(');
-                sb.append(getStart());
-                sb.append(", ");
-                sb.append(getEnd());
-                sb.append(')');
-                break;
-        }
-
-//        if (getStart() != null) {
-//            if (getStart().isExclusive()
-//                    || getStart().getLimitType() == LimitValueDAO.LimitType.OPEN_VALUE) {
-//                sb.append("(");
-//            } else {
-//                sb.append("[");
-//            }
-//
-//            if (getStart().getValue() > 0) {
-//                sb.append(getStart().getValue());
-//            }
-//        }
-//
-//        if (getEnd() != null) {
-//            sb.append(", ");
-//
-//            if (getEnd().getValue() > 0) {
-//                sb.append(getEnd().getValue());
-//            }
-//
-//            if (getEnd().isExclusive()
-//                    || getEnd().getLimitType() == LimitValueDAO.LimitType.OPEN_VALUE) {
-//                sb.append(")");
-//            } else {
-//                sb.append("]");
-//            }
-//        }
-
-        return sb.toString();
+        return  getInclusive().START_TOKEN + getStart() + ", " + getEnd() + getInclusive().END_TOKEN;
     }
 
     // ///////////////////////////////////////////////////////////
@@ -463,5 +427,54 @@ public class Range<T extends Comparable<T>>
 
         this.isAutoSwitch = isAutoSwitch;
         return this;
+    }
+
+
+
+
+    public static Range toRange(String token)
+    {
+        return toRange(token, null);
+    }
+
+
+    public static Range toRange(String token, Class<? extends Number> override)
+    {
+        token = token.replaceAll("\\s+", "");
+        Inclusive type = Inclusive.match(token);
+        if(type == null)
+            throw new IllegalArgumentException("Invalid range type:" + token);
+
+        String[] tokens = SharedStringUtil.parseString(token, ",", type.START_TOKEN, type.END_TOKEN);
+
+        if(tokens.length != 2)
+        {
+            throw new IllegalArgumentException("Invalid range:" + token);
+        }
+        Number start = SharedUtil.parseNumber(tokens[0]);
+        Number end = SharedUtil.parseNumber(tokens[1]);
+        Number[] vals = SharedUtil.normilizeNumbers(start, end);
+
+        if(override == null)
+            override = vals[0].getClass();
+
+        if (override == Integer.class)
+        {
+            return new Range<Integer>(vals[0].intValue(), vals[1].intValue(), type);
+        }
+        if (override == Long.class)
+        {
+            return new Range<Long>(vals[0].longValue(), vals[1].longValue(), type);
+        }
+        if (override == Float.class)
+        {
+            return new Range<Float>(vals[0].floatValue(), vals[1].floatValue(), type);
+        }
+        if (override == Double.class)
+        {
+            return new Range<Double>(vals[0].doubleValue(), vals[1].doubleValue(), type);
+        }
+
+        return null;
     }
 }

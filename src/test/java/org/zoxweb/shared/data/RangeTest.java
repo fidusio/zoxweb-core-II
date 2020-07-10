@@ -6,6 +6,8 @@ import org.zoxweb.server.util.GSONUtil;
 
 import java.io.IOException;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public class RangeTest {
     @Test
     public void simpleRange() throws IOException {
@@ -24,5 +26,60 @@ public class RangeTest {
         assert(intRange.contains(1));
 
         System.out.println(intRange);
+    }
+
+    @Test
+    public void rangeMatch()
+    {
+        String[] values =
+                {
+                  "(1,2)",
+                  "[3,4]",
+                  "(-5,6]",
+                  "[ 10,    20.45  )  "
+                };
+
+
+        for (String value : values)
+        {
+            Range r = Range.toRange(value);
+            Range rr = Range.toRange(r.toString());
+            System.out.println(value+":" + Range.Inclusive.match(value) + " " + r +","  + rr);
+
+        }
+    }
+
+    @Test
+    public void rangeFail()
+    {
+
+        String[] values =
+                {
+                        "((1,2)",
+                        "3,4",
+                        "(toto,6]",
+                        "[true, false]"
+                };
+
+        for(String val: values)
+            assertThrows(IllegalArgumentException.class, ()->Range.toRange(val));
+    }
+
+    @Test
+    public void testTypes()
+    {
+        Range<Integer> intRange = Range.toRange("[4, 4]");
+        assert(intRange.getStart().getClass() == Integer.class);
+        Range<Long> longRange = Range.toRange("(1, 5000000000)");
+        assert(longRange.getStart().getClass() == Long.class);
+        Range<Float> floatRange = Range.toRange("(1, 50.45)");
+        assert(floatRange.getStart().getClass() == Float.class);
+
+        floatRange = Range.toRange("[10, -50.10]");
+        assert(floatRange.getStart().getClass() == Float.class);
+
+        intRange = Range.toRange("[4.6, 4.5]", Integer.class);
+        assert(intRange.getStart().getClass() == Integer.class);
+
     }
 }
