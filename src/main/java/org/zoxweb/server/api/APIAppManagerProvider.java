@@ -20,13 +20,7 @@ import org.zoxweb.shared.api.APISecurityManager;
 import org.zoxweb.shared.crypto.EncryptedKeyDAO;
 import org.zoxweb.shared.crypto.PasswordDAO;
 import org.zoxweb.shared.crypto.CryptoConst.MDType;
-import org.zoxweb.shared.data.AppConfigDAO;
-import org.zoxweb.shared.data.AppDeviceDAO;
-import org.zoxweb.shared.data.AppIDDAO;
-import org.zoxweb.shared.data.DeviceDAO;
-import org.zoxweb.shared.data.UserIDDAO;
-import org.zoxweb.shared.data.UserInfoDAO;
-import org.zoxweb.shared.data.UserPreferenceDAO;
+import org.zoxweb.shared.data.*;
 import org.zoxweb.shared.db.QueryMarker;
 import org.zoxweb.shared.db.QueryMatch;
 import org.zoxweb.shared.db.QueryMatchString;
@@ -70,6 +64,20 @@ public class APIAppManagerProvider
 
     //private HashMap<String, SubjectAPIKey> cache = new HashMap<String, SubjectAPIKey>();
 	private static final transient Logger log = Logger.getLogger(APIAppManagerProvider.class.getName());
+	private static final NVConfigEntity USER_NVCs[] =
+		{
+			UserIDCredentialsDAO.NVC_USER_ID_CREDENTIALS_DAO,
+			UserPreferenceDAO.NVC_USER_PREFERENCE_DAO,
+			AppDeviceDAO.NVC_APP_DEVICE_DAO,
+			EncryptedKeyDAO.NVCE_ENCRYPTED_KEY_DAO,
+			ShiroAssociationRuleDAO.NVC_SHIRO_ASSOCIATION_RULE_DAO,
+			ShiroPermissionDAO.NVC_SHIRO_PERMISSION_DAO,
+			ShiroRoleDAO.NVC_SHIRO_ROLE_DAO,
+			AddressDAO.NVC_ADDRESS_DAO,
+			CreditCardDAO.NVC_CREDIT_CARD_DAO,
+			DeviceDAO.NVC_DEVICE_DAO,
+			PhoneDAO.NVC_PHONE_DAO,
+		};
     
 
 
@@ -350,7 +358,7 @@ public class APIAppManagerProvider
 	}
 	
 	
-	public void deleteUser(String subjectID)
+	public synchronized void deleteUser(String subjectID)
 		throws NullPointerException, IllegalArgumentException, AccessException, APIException
 	{
 		
@@ -366,10 +374,16 @@ public class APIAppManagerProvider
 		}
 		// delete a user requires the following
 		// delete the associated UserInfoDOA, UserIDCredentialsDAO and the encrypted key dao associated with the user id
+		getAPISecurityManager().invalidateResource(subjectID);
 		getAPIDataStore().delete(userID, true);
-		getAPIDataStore().delete(UserIDCredentialsDAO.NVC_USER_ID_CREDENTIALS_DAO,  new QueryMatch<String>(RelationalOperator.EQUAL, userID.getReferenceID(), MetaToken.REFERENCE_ID));
-		getAPIDataStore().delete(EncryptedKeyDAO.NVCE_ENCRYPTED_KEY_DAO,  new QueryMatch<String>(RelationalOperator.EQUAL, userID.getReferenceID(), MetaToken.REFERENCE_ID));
-		getAPIDataStore().delete(AppDeviceDAO.NVC_APP_DEVICE_DAO, new QueryMatch<String>(RelationalOperator.EQUAL, userID.getReferenceID(), MetaToken.USER_ID));
+		for(NVConfigEntity nvce : USER_NVCs)
+		{
+			getAPIDataStore().delete(nvce, new QueryMatch<String>(RelationalOperator.EQUAL, userID.getReferenceID(), MetaToken.USER_ID));
+		}
+//		getAPIDataStore().delete(UserIDCredentialsDAO.NVC_USER_ID_CREDENTIALS_DAO,  new QueryMatch<String>(RelationalOperator.EQUAL, userID.getReferenceID(), MetaToken.REFERENCE_ID));
+//		getAPIDataStore().delete(AppDeviceDAO.NVC_APP_DEVICE_DAO, new QueryMatch<String>(RelationalOperator.EQUAL, userID.getReferenceID(), MetaToken.USER_ID));
+//		getAPIDataStore().delete(EncryptedKeyDAO.NVCE_ENCRYPTED_KEY_DAO,  new QueryMatch<String>(RelationalOperator.EQUAL, userID.getReferenceID(), MetaToken.USER_ID));
+
 		
 		// TODO check if a user is logged in and invalidate his current session
 		
@@ -388,7 +402,7 @@ public class APIAppManagerProvider
     }
 
    
-    public void deleteSubjectAPIKey(SubjectAPIKey subjectAPIKey)
+    public synchronized void deleteSubjectAPIKey(SubjectAPIKey subjectAPIKey)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException
     {
     	if (subjectAPIKey != null) {
@@ -728,8 +742,12 @@ public class APIAppManagerProvider
         if (userIDDAO == null)
         {
         	userIDDAO = new UserIDDAO();
+        	// 1.
+			userIDDAO.setUserInfo(userInfoDAO);
+			// 2.
         	userIDDAO.setSubjectID(subjectID);
-        	userIDDAO.setUserInfo(userInfoDAO);
+
+
         	userIDDAO = createUserIDDAO(userIDDAO, SecurityConsts.UserStatus.ACTIVE, password);
         }
 
@@ -768,8 +786,11 @@ public class APIAppManagerProvider
          if (userIDDAO == null)
          {
          	userIDDAO = new UserIDDAO();
-         	userIDDAO.setSubjectID(subjectID);
-         	userIDDAO.setUserInfo(new UserInfoDAO());
+			 // 1.
+			 userIDDAO.setUserInfo(new UserInfoDAO());
+			 // 2.
+			 userIDDAO.setSubjectID(subjectID);
+
          	userIDDAO = createUserIDDAO(userIDDAO, SecurityConsts.UserStatus.ACTIVE, password);
          	return userIDDAO.getUserInfo();
          }

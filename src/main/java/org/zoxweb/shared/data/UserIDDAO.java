@@ -100,10 +100,11 @@ public class UserIDDAO
 	 * Sets the primary email.
 	 * @param email
 	 */
-	public void setPrimaryEmail(String email)
+	public synchronized void setPrimaryEmail(String email)
 	{
 		setValue(Param.PRIMARY_EMAIL, email);
-		getUserInfo().setCanonicalID(email);
+		if (getUserInfo()!= null)
+			getUserInfo().setCanonicalID(email);
 	}
 	
 	/**

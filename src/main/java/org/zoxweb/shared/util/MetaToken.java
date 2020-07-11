@@ -69,8 +69,10 @@ public enum MetaToken
 	STATIC("static"),
 	//	Class ID
 	CLASS_ID("class_id"),
+	// SubjectID token
+	SUBJECT_ID("subject_id"),
 	//	Recursive
-	RECRUSIVE("recursive"),
+	RECURSIVE("recursive"),
 	// meta type
 	META_TYPE("meta_type"),
 	

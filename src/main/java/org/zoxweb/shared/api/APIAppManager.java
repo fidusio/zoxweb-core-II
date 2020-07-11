@@ -101,6 +101,24 @@ public interface APIAppManager
     UserIDDAO createUserIDDAO(String subjectID, SecurityConsts.UserStatus userIDstatus, String password)
             throws NullPointerException, IllegalArgumentException, AccessException, APIException;
 
+	/**
+	 * Delete a user based on his subjectID like email, this method can only be called by a super admin
+	 * @param subjectID
+	 */
+
+
+	/**
+	 * Delete a user based on his subjectID like email, this method can only be called by a super admin
+	 * @param subjectID
+	 * @throws NullPointerException
+	 * @throws IllegalArgumentException
+	 * @throws AccessException
+	 * @throws APIException
+	 */
+	void deleteUser(String subjectID)
+		 throws NullPointerException, IllegalArgumentException, AccessException, APIException;
+
+
     /**
      * Look up UserIDDAO based on subject ID.
      * @param subjectID
