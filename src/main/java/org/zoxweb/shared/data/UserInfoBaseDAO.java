@@ -23,20 +23,14 @@ import org.zoxweb.shared.data.DataConst;
 import org.zoxweb.shared.data.PhoneDAO;
 import org.zoxweb.shared.data.SetNameDescriptionDAO;
 import org.zoxweb.shared.filters.FilterType;
-import org.zoxweb.shared.util.ArrayValues;
-import org.zoxweb.shared.util.GetNVConfig;
-import org.zoxweb.shared.util.NVConfig;
-import org.zoxweb.shared.util.NVConfigEntity;
+import org.zoxweb.shared.util.*;
 import org.zoxweb.shared.util.NVConfigEntity.ArrayType;
-import org.zoxweb.shared.util.NVConfigEntityLocal;
-import org.zoxweb.shared.util.NVConfigManager;
-import org.zoxweb.shared.util.NVEntity;
-import org.zoxweb.shared.util.NVPair;
-import org.zoxweb.shared.util.SharedUtil;
 
 @SuppressWarnings("serial")
 public abstract class UserInfoBaseDAO 
 	extends SetNameDescriptionDAO
+	implements GetNVProperties,
+		       SetCanonicalID
 {
 	
 	public enum Param
@@ -50,7 +44,8 @@ public abstract class UserInfoBaseDAO
 		LIST_OF_ADDRESSES(NVConfigManager.createNVConfigEntity("list_of_addresses", "List of addresses", "ListOfAddresses", false, true, AddressDAO.NVC_ADDRESS_DAO, ArrayType.LIST)),
 		LIST_OF_PHONES(NVConfigManager.createNVConfigEntity("list_of_phones", "List of phones", "ListOfPhones", false, true, PhoneDAO.NVC_PHONE_DAO, ArrayType.LIST)),
 		LIST_OF_EMAILS(NVConfigManager.createNVConfig("list_of_emails", "List of emails", "ListOfEmails", false, true, false, String[].class, FilterType.EMAIL)),
-		ADDITIONAL_INFO(NVConfigManager.createNVConfig("additional_info", "Additional information", "AdditionalInfo", false, true, String[].class)),
+		CANONICAL_ID(NVConfigManager.createNVConfig("canonical_id", "CanonicalID map", "CanonicalID", true, false, String.class)),
+		PROPERTIES(NVConfigManager.createNVConfig("additional_info", "Additional information", "AdditionalInfo", false, true, NVGenericMap.class)),
 		
 		;
 
@@ -253,22 +248,25 @@ public abstract class UserInfoBaseDAO
 	{
 		setValue(Param.LIST_OF_EMAILS, list);
 	}
-	
-	/**
-	 * Gets additional information.
-	 * @return additional infos
-	 */
-	public List<NVPair> getAdditonalInfo() 
+
+
+	public NVGenericMap getProperties()
 	{
-		return lookupValue(Param.ADDITIONAL_INFO);
+		return (NVGenericMap) lookup(Param.PROPERTIES);
 	}
-	
-	/**
-	 * Sets additional information.
-	 * @param info
-	 */
-	public void setAdditionalInfo(List<NVPair> info)
+
+	public String toCanonicalID()
 	{
-		setValue(Param.ADDITIONAL_INFO, info);
+		return getCanonicalID();
+	}
+
+	public String getCanonicalID()
+	{
+		return lookupValue(Param.CANONICAL_ID);
+	}
+
+	public void setCanonicalID(String canonicalID)
+	{
+		setValue(Param.CANONICAL_ID, canonicalID);
 	}
 }

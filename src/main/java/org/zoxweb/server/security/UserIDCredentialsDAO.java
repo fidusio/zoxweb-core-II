@@ -20,13 +20,7 @@ import java.util.Date;
 import org.zoxweb.shared.crypto.PasswordDAO;
 import org.zoxweb.shared.data.SetNameDescriptionDAO;
 import org.zoxweb.shared.security.SecurityConsts;
-import org.zoxweb.shared.util.DoNotExpose;
-import org.zoxweb.shared.util.GetNVConfig;
-import org.zoxweb.shared.util.NVConfig;
-import org.zoxweb.shared.util.NVConfigEntity;
-import org.zoxweb.shared.util.NVConfigEntityLocal;
-import org.zoxweb.shared.util.NVConfigManager;
-import org.zoxweb.shared.util.SharedUtil;
+import org.zoxweb.shared.util.*;
 
 /**
  * This class defines user credentials data access object used to create and store user
@@ -37,7 +31,10 @@ import org.zoxweb.shared.util.SharedUtil;
 @SuppressWarnings("serial")
 public class UserIDCredentialsDAO
     extends SetNameDescriptionDAO
-    implements DoNotExpose {
+    implements DoNotExpose, SetCanonicalID
+{
+
+
 
   /**
    * This enum contains user credential variables including: user id, user status, last status
@@ -62,6 +59,7 @@ public class UserIDCredentialsDAO
         .createNVConfig("pending_pin", "Pending pin", "PendingPin", true, true, String.class)),
     PASSWORD(NVConfigManager.createNVConfigEntity("password", "Password", "Password", true, true,
         PasswordDAO.NVCE_PASSWORD_DAO)),
+    CANONICAL_ID(NVConfigManager.createNVConfig("canonical_id", "CanonicalID map", "CanonicalID", true, false, String.class)),
 
     ;
 
@@ -183,4 +181,18 @@ public class UserIDCredentialsDAO
     setValue(UserCredentials.PASSWORD, password);
   }
 
+  @Override
+  public String getCanonicalID() {
+    return lookupValue(UserCredentials.CANONICAL_ID);
+  }
+
+  @Override
+  public void setCanonicalID(String canonicalID) {
+    setValue(UserCredentials.CANONICAL_ID, canonicalID);
+  }
+
+  @Override
+  public String toCanonicalID() {
+    return getCanonicalID();
+  }
 }

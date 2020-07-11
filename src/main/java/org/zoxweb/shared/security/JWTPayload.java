@@ -205,6 +205,10 @@ public class JWTPayload
 		return nvgm.getValue(Param.EXP);
 	}
 
+	/**
+	 * Set expiration in seconds
+	 * @param exp
+	 */
 	public void setExpirationTime(long exp) 
 	{
 		nvgm.add(new NVLong(Param.EXP.getName(), exp));
@@ -241,7 +245,10 @@ public class JWTPayload
 		return nvgm.getValue(Param.IAT);
 	}
 
-	
+	/**
+	 * Set time in seconds NOT Millis
+	 * @param iat
+	 */
 	public void setIssuedAt(long iat) 
     {
         nvgm.add(new NVLong(Param.IAT.getName(), iat));

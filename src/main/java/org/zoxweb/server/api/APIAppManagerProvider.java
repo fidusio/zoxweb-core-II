@@ -262,20 +262,21 @@ public class APIAppManagerProvider
 		return lookupUserIDDAO(subjectID.getValue(), params);
 	}
 	
-	public synchronized UserIDDAO createUserIDDAO(UserIDDAO userID, SecurityConsts.UserStatus userIDstatus, String password)
+	public synchronized UserIDDAO createUserIDDAO(UserIDDAO userID, SecurityConsts.UserStatus userIDStatus, String password)
 			throws NullPointerException, IllegalArgumentException, AccessException, APIException
 	{
-		SharedUtil.checkIfNulls("UserIDDAO object is null.", userID, userIDstatus);
+		SharedUtil.checkIfNulls("UserIDDAO object is null.", userID, userIDStatus);
+
+		// validate the password
 		password = FilterType.PASSWORD.validate(password);
-		
-		
+
+		/// check if the user exists
 		if (lookupUserIDDAO(userID.getSubjectID()) != null)
 		{
 			throw new APIException("User already exist");
 		}
-			
-		log.info("User Name: " + userID.getPrimaryEmail());
-		
+
+		log.info("SubjectID: " + userID.getSubjectID());
 		log.info("First Name: " + userID.getUserInfo().getFirstName());
 		log.info("Middle Name: " + userID.getUserInfo().getMiddleName());
 		log.info("Last Name: " + userID.getUserInfo().getLastName());
@@ -283,15 +284,8 @@ public class APIAppManagerProvider
 		
 		userID.setReferenceID(null);
 		SharedUtil.validate(userID, true, true);
-		
-		
-		
 
-		
-			
-		
 		// special case to avoid chicken and egg situation
-		
 		String userIDRef = getAPIDataStore().getIDGenerator().generateID();
 		String globalID = IDGeneratorUtil.UUIDV4.generateID();
 		getAPISecurityManager().associateNVEntityToSubjectUserID(userID, userIDRef);
@@ -299,6 +293,7 @@ public class APIAppManagerProvider
 		userID.setUserID(userIDRef);
 		userID.getUserInfo().setReferenceID(userIDRef);
 		userID.setGlobalID(globalID);
+
 		////////////////////////
 		
 		try
@@ -314,15 +309,18 @@ public class APIAppManagerProvider
 			userIDCredentials.setGlobalID(globalID);
 			userIDCredentials.setUserID(userID.getReferenceID());
 			userIDCredentials.setLastStatusUpdateTimestamp(System.currentTimeMillis());
-			userIDCredentials.setUserStatus(userIDstatus);
+			userIDCredentials.setUserStatus(userIDStatus);
+			userIDCredentials.setCanonicalID(userID.getSubjectID());
 			
 			PasswordDAO passwordDAO = CryptoUtil.hashedPassword(MDType.SHA_512, 0, 8196, password);
 			passwordDAO.setUserID(userID.getReferenceID());
+			passwordDAO.setReferenceID(userID.getReferenceID());
+			passwordDAO.setGlobalID(userID.getGlobalID());
 			userIDCredentials.setPassword(passwordDAO);
 			
 			
 			
-			switch(userIDstatus)
+			switch(userIDStatus)
 			{
 			case ACTIVE:
 				break;
@@ -334,20 +332,13 @@ public class APIAppManagerProvider
 			case PENDING_RESET_PASSWORD:
 				userIDCredentials.setPendingToken(UUID.randomUUID().toString());
 				break;
-
-			
 			}
-			
-			
+
 			getAPIDataStore().insert(userIDCredentials);
-			userIDCredentials.getPassword().setReferenceID(userIDCredentials.getReferenceID());
-			getAPIDataStore().update(userIDCredentials);
+
 			// create the user master key
 			getAPIDataStore().insert(KeyMakerProvider.SINGLETON.createUserIDKey(userID, KeyMakerProvider.SINGLETON.getMasterKey()));
-			
-			// removed for now created during login
-			// MN 2014-12-23
-			// FidusStoreDataManager.SINGLETON.setUpUserAccount(userID, dataStore, (APIDocumentStore<?>) dataStore);
+
 		}
 		catch (Exception e)
 		{
@@ -378,6 +369,7 @@ public class APIAppManagerProvider
 		getAPIDataStore().delete(userID, true);
 		getAPIDataStore().delete(UserIDCredentialsDAO.NVC_USER_ID_CREDENTIALS_DAO,  new QueryMatch<String>(RelationalOperator.EQUAL, userID.getReferenceID(), MetaToken.REFERENCE_ID));
 		getAPIDataStore().delete(EncryptedKeyDAO.NVCE_ENCRYPTED_KEY_DAO,  new QueryMatch<String>(RelationalOperator.EQUAL, userID.getReferenceID(), MetaToken.REFERENCE_ID));
+		getAPIDataStore().delete(AppDeviceDAO.NVC_APP_DEVICE_DAO, new QueryMatch<String>(RelationalOperator.EQUAL, userID.getReferenceID(), MetaToken.USER_ID));
 		
 		// TODO check if a user is logged in and invalidate his current session
 		

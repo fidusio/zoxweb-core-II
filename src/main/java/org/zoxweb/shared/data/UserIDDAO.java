@@ -103,6 +103,7 @@ public class UserIDDAO
 	public void setPrimaryEmail(String email)
 	{
 		setValue(Param.PRIMARY_EMAIL, email);
+		getUserInfo().setCanonicalID(email);
 	}
 	
 	/**
