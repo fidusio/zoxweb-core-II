@@ -89,16 +89,11 @@ public class UserInfoDAOTest {
             creditcardlist.add(card1);
             user1.setListOfCreditCards(creditcardlist);
 
-            ArrayList<NVPair> nvplist = new ArrayList<NVPair>();
-            NVPair nvp1 = new NVPair();
-            nvp1.setName("gender");
-            nvp1.setValue("male");
-            nvplist.add(nvp1);
-            NVPair nvp2 = new NVPair();
-            nvp2.setName("occupation");
-            nvp2.setValue("engineer");
-            nvplist.add(nvp2);
-            user1.setAdditionalInfo(nvplist);
+
+
+            user1.getProperties().add("gender", "male");
+            user1.getProperties().add("occupation", "engineer");
+
 
 
             UserIDDAO user1ID = new UserIDDAO();
@@ -130,7 +125,7 @@ public class UserInfoDAOTest {
             System.out.println(user1.getListOfEmails());
             System.out.println(user1.getListOfAliases());
             System.out.println(user1.getListOfCreditCards());
-            System.out.println(user1.getAdditonalInfo());
+            System.out.println(user1.getProperties());
             System.out.println(user1ID.getPrimaryEmail());
             System.out.println(user1ID.getUserInfo());
 		} catch (Exception e) {

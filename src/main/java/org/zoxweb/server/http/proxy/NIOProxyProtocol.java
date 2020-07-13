@@ -669,6 +669,8 @@ public class NIOProxyProtocol
 					}.init(nios);
 			
 			Runtime.getRuntime().addShutdownHook(new Thread(cleaner));
+
+			log.info("Proxy Started @ port:" + port + " java version:" + System.getProperty("java.version"));
 		}
 		catch(Exception e)
 		{
