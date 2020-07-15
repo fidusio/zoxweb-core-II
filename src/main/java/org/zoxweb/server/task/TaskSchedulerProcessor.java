@@ -382,7 +382,12 @@ public class TaskSchedulerProcessor
 		ret.setName("task_scheduler");
 		ret.add(new NVLong("instance_id", counterID));
 		ret.add(new NVInt("pending_tasks", queue.size()));
-		ret.add("current_wait", Const.TimeInMillis.toString(waitTime()));
+		long currentWaitTime = waitTime();
+		if(currentWaitTime >= 0)
+			ret.add("current_wait", Const.TimeInMillis.toString(waitTime()));
+		else
+			ret.add(new NVLong("current_wait", -1));
+
 		return ret;
 	}
 }

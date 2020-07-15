@@ -38,12 +38,12 @@ public class TaskEvent
 	 * Create a task event
 	 * @param source generating the event
 	 * @param te the implementation that will execute the event
-	 * @param taskExecutorparams the task executor parameters
+	 * @param taskExecutorParams the task executor parameters
 	 */
-	public TaskEvent(Object source, TaskExecutor te, Object... taskExecutorparams) {
+	public TaskEvent(Object source, TaskExecutor te, Object... taskExecutorParams) {
 		super(source);
 		this.te = te;
-		this.params = taskExecutorparams;
+		this.params = taskExecutorParams;
 		
 	}
 	

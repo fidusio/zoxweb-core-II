@@ -15,18 +15,14 @@
  */
 package org.zoxweb.server.task;
 
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.logging.Logger;
 
-import org.zoxweb.server.task.TaskDefault;
-import org.zoxweb.server.task.TaskEvent;
-import org.zoxweb.server.task.TaskExecutor;
-import org.zoxweb.server.task.TaskProcessor;
-import org.zoxweb.server.task.TaskSchedulerProcessor;
+
 import org.zoxweb.shared.util.Const;
 import org.zoxweb.shared.util.Appointment;
 import org.zoxweb.shared.util.AppointmentDefault;
@@ -82,8 +78,8 @@ public class TaskSchedulerProcessorTest {
 	static class TaskExecutorImpl
 		implements TaskExecutor {
 
-		private int index = 0;
-		private static AtomicInteger counter = new AtomicInteger();
+		private long index = 0;
+		private static AtomicLong counter = new AtomicLong();
 
 		TaskExecutorImpl() {
 			index = counter.incrementAndGet();

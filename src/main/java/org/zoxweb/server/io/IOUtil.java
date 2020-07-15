@@ -413,17 +413,18 @@ public class IOUtil
 				os.write(buffer, 0, read);
 				totalCopied+=read;
 			}
+			os.flush();
 		}
 		finally
 		{
 			if (closeIS || is instanceof CloseEnabledInputStream)
 			{
-				close( is);
+				close(is);
 			}
 			
 			if (closeOS || os instanceof CloseEnabledOutputStream)
 			{
-				close( os);
+				close(os);
 			}
 		}
 
