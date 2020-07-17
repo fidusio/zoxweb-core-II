@@ -80,24 +80,9 @@ public class ShiroPermissionDAO
 	
 	public synchronized void setPermissionPattern(String pattern)
 	{
-//		if (isEmbedAppIDEnabled())
-//		{
-//			setValue(NVC_PATTERN, SharedStringUtil.trimOrEmpty(SharedStringUtil.toLowerCase(SharedUtil.toCanonicalID(':', pattern, getDomainID(), getAppID()))));
-//		}
-//		else
-		{
-			setValue(NVC_PATTERN, SharedStringUtil.trimOrEmpty(SharedStringUtil.toLowerCase(pattern)));
-		}
+		setValue(NVC_PATTERN, SharedStringUtil.trimOrEmpty(SharedStringUtil.toLowerCase(pattern)));
 	}
 	
-//	public boolean isEmbedAppIDEnabled()
-//	{
-//		return lookupValue(NVC_EMBED_APP_ID);
-//	}
-//	
-//	public void setEmbedAppIDEnabled(boolean enable)
-//	{
-//		setValue(NVC_EMBED_APP_ID, enable);
-//	}
+
 	
 }

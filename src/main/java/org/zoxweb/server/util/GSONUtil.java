@@ -242,7 +242,19 @@ final public class GSONUtil
 			return new Gson();
 		}
 	}
-	
+
+
+	public static String toJSONSimple(Object obj)
+			throws IOException
+	{
+		if(obj instanceof NVEntity)
+		{
+			return toJSON((NVEntity) obj, true, false, false);
+		}
+
+		return DEFAULT_GSON.toJson(obj);
+	}
+
 	public static String toJSON(NVEntity nve, boolean indent) 
         throws IOException
     {

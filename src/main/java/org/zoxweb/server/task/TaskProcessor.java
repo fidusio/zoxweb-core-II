@@ -18,14 +18,11 @@ package org.zoxweb.server.task;
 import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
 import java.util.logging.Logger;
 
 import org.zoxweb.server.util.ThresholdQueue;
 import org.zoxweb.shared.util.*;
-//import org.zoxweb.shared.util.SimpleQueue;
-import org.zoxweb.server.task.RunnableTask.RunnableTaskContainer;
+
 
 /**
  * The task executor object must be used when multiple worker thread are required to execute tasks in parallel
@@ -404,14 +401,14 @@ public class TaskProcessor
 	public void execute(Runnable command) 
 	{
 		if (command != null)
-			queueTask(new TaskEvent(this, new RunnableTaskContainer(command), (Object[])null));
+			queueTask(new TaskEvent(this, new RunnableTaskContainer(command)));
 	}
 
-	public <T> void execute(Supplier<T> supplier, Consumer<T> consumer)
-	{
-		if(consumer != null)
-			queueTask(new TaskEvent(this, new SupplierConsumerTask<>(), supplier, consumer));
-	}
+//	public <T> void execute(Supplier<T> supplier, Consumer<T> consumer)
+//	{
+//		if(consumer != null)
+//			queueTask(new TaskEvent(this, new SupplierConsumerTask<>(), supplier, consumer));
+//	}
 
 	@Override
 	public NVGenericMap getProperties() {

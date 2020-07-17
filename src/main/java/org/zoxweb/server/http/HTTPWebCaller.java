@@ -5,14 +5,13 @@ import java.util.function.BiConsumer;
 
 import java.util.logging.Logger;
 
-import org.zoxweb.server.http.HTTPCall;
 import org.zoxweb.server.security.SSLCheckDisabler;
-import org.zoxweb.server.task.RunnableTask;
-import org.zoxweb.server.task.TaskEvent;
+
 import org.zoxweb.shared.http.HTTPMessageConfigInterface;
 import org.zoxweb.shared.http.HTTPResponseData;
 
-public class HTTPWebCaller extends RunnableTask
+public class HTTPWebCaller
+		implements Runnable
 {
 	public static AtomicInteger TOTAL_COUNTER = new AtomicInteger();
 	public static AtomicInteger SUCCESS_COUNTER = new AtomicInteger();
@@ -24,15 +23,22 @@ public class HTTPWebCaller extends RunnableTask
 	public final int id = counter.incrementAndGet();
 	private static final transient Logger log = Logger.getLogger(HTTPWebCaller.class.getName());
 	private boolean logError;
+
+	private HTTPMessageConfigInterface hcc;
+	private BiConsumer<HTTPMessageConfigInterface, HTTPResponseData> consumer;
 	
-	
-	public HTTPWebCaller()
+	public HTTPWebCaller(HTTPMessageConfigInterface hcc,
+						 BiConsumer<HTTPMessageConfigInterface, HTTPResponseData> consumer)
 	{
-		this(false);
+		this(hcc, consumer, false);
 	}
 	
-	public HTTPWebCaller(boolean logError)
+	public HTTPWebCaller(HTTPMessageConfigInterface hcc,
+						 BiConsumer<HTTPMessageConfigInterface, HTTPResponseData> consumer,
+						 boolean logError)
 	{
+		this.hcc = hcc;
+		this.consumer = consumer;
 		this.logError = logError;
 	}
 	
@@ -43,10 +49,10 @@ public class HTTPWebCaller extends RunnableTask
 	public void run()
 	{
 		// TODO Auto-generated method stub
-		TaskEvent event = attachedEvent();
-		int index = 0;
-		HTTPMessageConfigInterface hcc = (HTTPMessageConfigInterface) event.getTaskExecutorParameters()[index++];
-		BiConsumer<HTTPMessageConfigInterface, HTTPResponseData> consumer = event.getTaskExecutorParameters().length > index ? (BiConsumer<HTTPMessageConfigInterface, HTTPResponseData>)event.getTaskExecutorParameters()[index++] : null;
+//		TaskEvent event = attachedEvent();
+//		int index = 0;
+//		HTTPMessageConfigInterface hcc = (HTTPMessageConfigInterface) event.getTaskExecutorParameters()[index++];
+//		BiConsumer<HTTPMessageConfigInterface, HTTPResponseData> consumer = event.getTaskExecutorParameters().length > index ? (BiConsumer<HTTPMessageConfigInterface, HTTPResponseData>)event.getTaskExecutorParameters()[index++] : null;
 		try
 		{
 			

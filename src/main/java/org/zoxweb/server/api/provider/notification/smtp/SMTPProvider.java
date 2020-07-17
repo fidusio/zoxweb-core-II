@@ -29,11 +29,8 @@ import javax.mail.internet.MimeMessage;
 
 import org.zoxweb.server.api.APIServiceProviderBase;
 import org.zoxweb.server.http.HTTPUtil;
-import org.zoxweb.server.task.RunnableTask;
-import org.zoxweb.server.task.TaskEvent;
-import org.zoxweb.server.task.TaskExecutor;
+
 import org.zoxweb.server.task.TaskUtil;
-import org.zoxweb.shared.util.AppointmentDefault;
 import org.zoxweb.shared.util.GetName;
 import org.zoxweb.shared.util.GetValue;
 import org.zoxweb.shared.util.NVPair;
@@ -93,16 +90,24 @@ public class SMTPProvider
 	
 	
 	class SMTPSenderTask
-		extends RunnableTask
+		implements Runnable
 	{
+		SMTPProvider smtpProvider;
+		APINotificationMessage notificationMessage;
+
+		SMTPSenderTask(SMTPProvider smtpProvider, APINotificationMessage notificationMessage)
+		{
+			this.smtpProvider = smtpProvider;
+			this.notificationMessage = notificationMessage;
+		}
 
 		public void  run() 
 		{
 			//sendAPIMessageInternal((APIMessage) event.getTaskExecutorParameters()[0]);
-			TaskEvent event = attachedEvent();
-			int index = 0;
-			SMTPProvider smtpProvider =  (SMTPProvider) event.getTaskExecutorParameters()[index++];
-			APINotificationMessage notificationMessage = (APINotificationMessage) event.getTaskExecutorParameters()[index++];
+//			TaskEvent event = attachedEvent();
+//			int index = 0;
+//			SMTPProvider smtpProvider =  (SMTPProvider) event.getTaskExecutorParameters()[index++];
+//			APINotificationMessage notificationMessage = (APINotificationMessage) event.getTaskExecutorParameters()[index++];
 			
 			
 			final String USER_NAME = getAPIConfigInfo().getProperties().getValue(SMTPCreator.Param.USERNAME.getName());
@@ -309,19 +314,20 @@ public class SMTPProvider
 			throw new IllegalArgumentException("Message is not an email type.");
 		}
 
-		TaskExecutor td = new SMTPSenderTask();
-		TaskEvent    te = new TaskEvent(this, td, this, message);
-
+//		TaskExecutor td = new SMTPSenderTask();
+//		TaskEvent    te = new TaskEvent(this, td, this, message);
+		SMTPSenderTask smtpSenderTask = new SMTPSenderTask(this, (APINotificationMessage)message);
 
 		switch(apind)
 		{
 		case NOW:
-			td.executeTask(te);
+//			td.executeTask(te);
 			//return sendAPIMessageInternal(message);
+			smtpSenderTask.run();
 			break;
 			
 		case QUEUED:
-			TaskUtil.getDefaultTaskScheduler().queue(new AppointmentDefault(), te);
+			TaskUtil.getDefaultTaskScheduler().queue(0, smtpSenderTask);
 		default:
 			break;
 		}

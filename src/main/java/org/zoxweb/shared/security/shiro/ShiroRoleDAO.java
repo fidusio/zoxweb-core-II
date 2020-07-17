@@ -115,21 +115,23 @@ public class ShiroRoleDAO
 	}
 	
 	
-//	public void addPermissions(ShiroPermissionDAO ...permissions)
-//	{
-//		for (ShiroPermissionDAO p : permissions)
-//		{
-//			getPermissions().add(p);
-//		}
-//	}
-	public void setPermissions(ArrayValues<NVEntity> values)
+	public synchronized void addPermissions(ShiroPermissionDAO ...permissions)
+	{
+		for (ShiroPermissionDAO p : permissions)
+		{
+			getPermissions().add(p);
+		}
+	}
+	public synchronized void setPermissions(ArrayValues<NVEntity> values)
 	{
 		getPermissions().add(values.values(), true);
 	}
 	
-	public void setPermissions(List<NVEntity> values)
+	public synchronized void setPermissions(List<NVEntity> values)
 	{
 		getPermissions().add(values.toArray(new NVEntity[0]), true);
 	}
+
+
 	
 }

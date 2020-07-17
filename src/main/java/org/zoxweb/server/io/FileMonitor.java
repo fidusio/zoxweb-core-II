@@ -26,7 +26,6 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.logging.Logger;
 
-import org.zoxweb.server.task.RunnableTask;
 import org.zoxweb.shared.util.DaemonController;
 import org.zoxweb.shared.util.SharedUtil;
 import org.zoxweb.shared.data.events.BaseEventObject;
@@ -37,8 +36,8 @@ import org.zoxweb.shared.util.Const.TimeInMillis;
 /**
  *
  */
-public class FileMonitor extends RunnableTask
-	implements DaemonController
+public class FileMonitor
+	implements DaemonController, Runnable
 {
 	@SuppressWarnings("unused")
 	private static final transient Logger log = Logger.getLogger(FileMonitor.class.getName());

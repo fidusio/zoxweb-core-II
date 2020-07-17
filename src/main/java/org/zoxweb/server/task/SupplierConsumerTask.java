@@ -4,20 +4,28 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class SupplierConsumerTask<T>
-    implements TaskExecutor
+    implements Runnable
 {
-    public SupplierConsumerTask(){}
+    private final Supplier<T> supplier;
+    private final Consumer<T> consumer;
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public void executeTask(TaskEvent event) {
-        Supplier<T> s = (Supplier<T>) event.getTaskExecutorParameters()[0];
-        Consumer<T> c = (Consumer<T>) event.getTaskExecutorParameters()[1];
-        c.accept(s.get());
+
+
+    public SupplierConsumerTask(Consumer<T> consumer)
+    {
+        this(null, consumer);
+    }
+
+    public SupplierConsumerTask(Supplier<T> supplier, Consumer<T> consumer)
+    {
+        this.supplier = supplier;
+        this.consumer = consumer;
     }
 
     @Override
-    public void finishTask(TaskEvent event) {
-
+    public void run()
+    {
+        consumer.accept(supplier != null ? supplier.get() : null);
     }
+
 }

@@ -1,13 +1,13 @@
-package org.zoxweb.server.util;
+package org.zoxweb.server.task;
 
 import java.util.function.Supplier;
 
-public abstract class RunSupplier<T>
+public abstract class SupplierTask<T>
 implements Runnable, Supplier<T>
 {
 
     private final T param;
-    public RunSupplier(T param)
+    public SupplierTask(T param)
     {
         this.param = param;
     }

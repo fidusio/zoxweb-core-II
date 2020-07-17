@@ -1,5 +1,6 @@
 package org.zoxweb.server.flow;
 
+import org.zoxweb.server.task.SupplierConsumerTask;
 import org.zoxweb.server.task.TaskSchedulerProcessor;
 
 import java.util.concurrent.atomic.AtomicLong;
@@ -22,7 +23,7 @@ public abstract class DefaultFlowProcessor<F>
     public void publish(FlowEvent<F> event)
     {
         event.setSequence(sequence.getAndIncrement());
-        tsp.queue(0, event, this);
+        tsp.queue(0, new SupplierConsumerTask(event, this));
     }
 
 

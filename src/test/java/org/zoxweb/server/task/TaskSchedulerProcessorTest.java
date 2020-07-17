@@ -228,7 +228,7 @@ public class TaskSchedulerProcessorTest {
 //		});
 
 
-		TaskUtil.getSimpleTaskScheduler().queue(0, new Supplier<String>()
+		TaskUtil.getSimpleTaskScheduler().queue(0, new SupplierConsumerTask(new Supplier<String>()
 				{
 					String str;
 					Supplier<String> init(String str)
@@ -238,13 +238,13 @@ public class TaskSchedulerProcessorTest {
 					}
 					public String get(){
 					return str;
-				}}.init("Kara"),
+				}}.init("toto"),
 				new Consumer<String>() {
 				@Override
 				public void accept(String s) {
 					log.info(Thread.currentThread() + " " + s);
 				}
-		}
+		})
 		);
 
 
