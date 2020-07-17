@@ -27,6 +27,7 @@ import java.util.Date;
 import org.zoxweb.server.io.IOUtil;
 import org.zoxweb.shared.data.RuntimeResultDAO;
 import org.zoxweb.shared.data.VMInfoDAO;
+import org.zoxweb.shared.util.Const;
 import org.zoxweb.shared.util.Const.JavaClassVersion;
 import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
@@ -139,18 +140,26 @@ public class RuntimeUtil
 		IOUtil.writeToFile(f, command.getBytes());
 		return runAndFinish(f.getCanonicalPath());
 	}
-	
-    public static VMInfoDAO vmSnapshot()
+
+
+	public static VMInfoDAO vmSnapshot()
+	{
+		return vmSnapshot(null);
+	}
+    public static VMInfoDAO vmSnapshot(Const.SizeInBytes sib)
     {
 		Runtime rt = Runtime.getRuntime();
 		VMInfoDAO ret = new VMInfoDAO();
+		if(sib == null)
+			sib = Const.SizeInBytes.B;
+		ret.setName("VMSnapshot");
 		
 		ret.setCoreCount(rt.availableProcessors());
 		ret.setMaxMemory(rt.maxMemory());
 		ret.setFreeMemory(rt.freeMemory());
 		ret.setUsedMemory(rt.totalMemory() - rt.freeMemory());
 		ret.setTotalMemory(rt.totalMemory());
-		ret.setTimeStamp( new Date());
+		ret.setTimeStamp(new Date());
 		return ret;
 	}
 

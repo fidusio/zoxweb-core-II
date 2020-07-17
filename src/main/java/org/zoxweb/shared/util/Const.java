@@ -322,6 +322,16 @@ public class Const {
     public String getName() {
       return name;
     }
+
+    public long convertBytes(long sizeInBytes)
+    {
+      return sizeInBytes/LENGTH;
+    }
+
+    public double convertDoubleBytes(long sizeInBytes)
+    {
+      return (double)sizeInBytes/(double)LENGTH;
+    }
   }
 
   /**

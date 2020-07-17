@@ -74,10 +74,13 @@ public class VMMonitorTask
 		
 		if (log != null)
 		{
-			VMInfoDAO vmid = RuntimeUtil.vmSnapshot();
+			VMInfoDAO vmid = RuntimeUtil.vmSnapshot(sizeInBytes);
 			
-			log.info("Values in:" + sizeInBytes + ", Used mem:"+ (vmid.getUsedMemory()/sizeInBytes.LENGTH) + ", Max-mem:" + (vmid.getMaxMemory()/sizeInBytes.LENGTH) +
-					 ", Free-mem:"+ (vmid.getFreeMemory()/sizeInBytes.LENGTH) + ", Total-mem:" + (vmid.getTotalMemory()/sizeInBytes.LENGTH));
+			log.info("Values in:" + sizeInBytes +
+					 ", Used mem:"+ sizeInBytes.convertBytes(vmid.getUsedMemory()) +
+					 ", Max-mem:" + sizeInBytes.convertBytes(vmid.getMaxMemory()) +
+					 ", Free-mem:"+ sizeInBytes.convertBytes(vmid.getFreeMemory()) +
+					 ", Total-mem:" + sizeInBytes.convertBytes(vmid.getTotalMemory()));
 		}
 	}
 
