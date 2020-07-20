@@ -16,15 +16,11 @@
 package org.zoxweb.server.util;
 
 
-import org.zoxweb.shared.security.IPBlockerConfig;
-import org.zoxweb.shared.util.MetaToken;
+import org.zoxweb.shared.annotation.ParamProp;
 import org.zoxweb.shared.util.SharedUtil;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.lang.reflect.Parameter;
+import java.lang.reflect.*;
 import java.util.*;
 
 
@@ -357,6 +353,46 @@ public class ReflectionUtil
 				return match;
 		}
 		return null;
+	}
+
+
+	public static boolean hasMethod(Object instance, Method method)
+	{
+		SharedUtil.checkIfNulls("Instance or method can't be null", instance, method);
+		return hasMethod(instance.getClass(), method);
+	}
+
+	public static boolean hasMethod(Class<?> clazz, Method method)
+	{
+		SharedUtil.checkIfNulls("Instance or method can't be null", clazz, method);
+		for(Method m : clazz.getMethods())
+		{
+			if (method == method)
+				return true;
+		}
+		return false;
+	}
+
+
+	public static Object invokeMethod(Object source, ReflectionUtil.MethodAnnotations methodAnnotations, Map<String, Object> incomingData)
+			throws InvocationTargetException, IllegalAccessException
+	{
+		Object result = null;
+		List<Object> parameterValues = new ArrayList<Object>();
+		Parameter[] parameters = methodAnnotations.method.getParameters();
+		Object[] values = new Object[parameters.length];
+
+		for(int i =0; i < values.length; i++)
+		{
+			ParamProp pp = (ParamProp) methodAnnotations.parametersAnnotations.get(parameters[i]);
+			values[i] = incomingData.get(pp.name());
+		}
+
+
+		//log.info("" +  methodAnnotations.method + " " + Arrays.toString(values));
+		result = methodAnnotations.method.invoke(source, values);
+
+		return result;
 	}
 
 }
