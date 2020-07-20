@@ -328,7 +328,7 @@ public class Const {
       return sizeInBytes/LENGTH;
     }
 
-    public double convertDoubleBytes(long sizeInBytes)
+    public double convertBytesDouble(long sizeInBytes)
     {
       return (double)sizeInBytes/(double)LENGTH;
     }

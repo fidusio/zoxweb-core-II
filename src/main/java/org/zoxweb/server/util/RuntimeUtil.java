@@ -155,10 +155,10 @@ public class RuntimeUtil
 		ret.setName("VMSnapshot");
 		
 		ret.setCoreCount(rt.availableProcessors());
-		ret.setMaxMemory(rt.maxMemory());
-		ret.setFreeMemory(rt.freeMemory());
-		ret.setUsedMemory(rt.totalMemory() - rt.freeMemory());
-		ret.setTotalMemory(rt.totalMemory());
+		ret.setMaxMemory(sib.convertBytes(rt.maxMemory()));
+		ret.setFreeMemory(sib.convertBytes(rt.freeMemory()));
+		ret.setUsedMemory(sib.convertBytes(rt.totalMemory() - rt.freeMemory()));
+		ret.setTotalMemory(sib.convertBytes(rt.totalMemory()));
 		ret.setTimeStamp(new Date());
 		return ret;
 	}
