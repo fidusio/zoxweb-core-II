@@ -37,6 +37,7 @@ import org.zoxweb.server.net.security.SecureNetworkTunnel;
 import org.zoxweb.server.security.CryptoUtil;
 import org.zoxweb.server.task.TaskUtil;
 import org.zoxweb.server.util.GSONUtil;
+import org.zoxweb.shared.app.AppCreatorDefault;
 import org.zoxweb.shared.data.ConfigDAO;
 import org.zoxweb.shared.net.InetSocketAddressDAO;
 import org.zoxweb.shared.security.IPBlockerConfig;
@@ -49,12 +50,11 @@ import org.zoxweb.shared.util.*;
  *
  */
 public class NIOConfig
-implements Closeable,
-		   AppCreator<NIOSocket, ConfigDAO>
+extends AppCreatorDefault<NIOSocket, ConfigDAO>
 {
 	public static final String RESOURCE_NAME = "NIOConfig";
 	
-	private ConfigDAO configDAO;
+
 	private static final transient Logger log = Logger.getLogger(NIOConfig.class.getName());
 	private List<Closeable> services = new ArrayList<Closeable>();
 
@@ -77,7 +77,6 @@ implements Closeable,
 	public NIOConfig(ConfigDAO configDAO)
 	{
 		setAppConfig(configDAO);
-		//this.configDAO = parse(configDAO);
 	}
 	
 	
@@ -87,7 +86,7 @@ implements Closeable,
 		NIOSocket ret = new NIOSocket(TaskUtil.getDefaultTaskProcessor());
 		services.add(ret);
 		
-		for (NVEntity nve : configDAO.getContent().values())
+		for (NVEntity nve : getAppConfig().getContent().values())
 		{
 			// create the SSLEngine first
 			// and attachments
@@ -302,6 +301,36 @@ implements Closeable,
 	
 	
 	@SuppressWarnings("resource")
+
+
+	@Override
+	public void close() throws IOException 
+	{
+		// TODO Auto-generated method stub
+		for (Closeable c : services)
+		{
+			IOUtil.close(c);
+		}
+		
+		
+	}
+
+
+//	@Override
+//	public void setAppConfig(ConfigDAO appConfig)
+//	{
+//		// TODO Auto-generated method stub
+//		this.configDAO = parse(appConfig);
+//	}
+//
+//
+//	@Override
+//	public ConfigDAO getAppConfig() {
+//		// TODO Auto-generated method stub
+//		return configDAO;
+//	}
+
+
 	public static void main(String ...args)
 	{
 		try
@@ -327,37 +356,6 @@ implements Closeable,
 			e.printStackTrace();
 		}
 	}
-
-
-	@Override
-	public void close() throws IOException 
-	{
-		// TODO Auto-generated method stub
-		for (Closeable c : services)
-		{
-			IOUtil.close(c);
-		}
-		
-		
-	}
-
-
-	@Override
-	public void setAppConfig(ConfigDAO appConfig) 
-	{
-		// TODO Auto-generated method stub
-		this.configDAO = parse(appConfig);
-	}
-
-
-	@Override
-	public ConfigDAO getAppConfig() {
-		// TODO Auto-generated method stub
-		return configDAO;
-	}
-
-
-	
 
 
 	

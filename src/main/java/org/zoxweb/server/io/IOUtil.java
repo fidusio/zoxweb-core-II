@@ -147,7 +147,8 @@ public class IOUtil
 		File ret = new File(filename);
 		if (!ret.exists() || !ret.isFile())
 		{
-			ret = new File(cl.getResource(filename).getFile());
+			ret = new File(cl.getResource(filename)
+					.getFile());
 		}
 		
 		return ret;

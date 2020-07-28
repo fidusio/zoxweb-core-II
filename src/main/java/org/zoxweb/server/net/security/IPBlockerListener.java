@@ -29,11 +29,12 @@ import org.zoxweb.server.io.IOUtil;
 import org.zoxweb.server.task.TaskSchedulerProcessor;
 import org.zoxweb.server.task.TaskUtil;
 import org.zoxweb.server.util.RuntimeUtil;
+import org.zoxweb.shared.app.AppCreatorDefault;
 import org.zoxweb.shared.data.events.*;
 import org.zoxweb.shared.net.InetSocketAddressDAO;
 import org.zoxweb.shared.security.IPBlockerConfig;
 import org.zoxweb.shared.util.Const.TimeInMillis;
-import org.zoxweb.shared.util.AppCreator;
+import org.zoxweb.shared.app.AppCreator;
 import org.zoxweb.shared.util.NVPair;
 import org.zoxweb.shared.util.SharedStringUtil;
 import org.zoxweb.shared.util.SharedUtil;
@@ -66,26 +67,12 @@ public class IPBlockerListener
 	
 	
 	public static class Creator
-		implements AppCreator<IPBlockerListener, IPBlockerConfig>
+		extends AppCreatorDefault<IPBlockerListener, IPBlockerConfig>
 	{
-
-		private IPBlockerConfig ipBlockerConfig = null;
 
 		@Override
 		public String getName() {
 			return RESOURCE_NAME;
-		}
-
-		@Override
-		public void setAppConfig(IPBlockerConfig appConfig) {
-			// TODO Auto-generated method stub
-			ipBlockerConfig = appConfig;
-		}
-
-		@Override
-		public IPBlockerConfig getAppConfig() {
-			// TODO Auto-generated method stub
-			return ipBlockerConfig;
 		}
 
 		@SuppressWarnings({"rawtypes", "unchecked"})
@@ -94,9 +81,9 @@ public class IPBlockerListener
 			// TODO Auto-generated method stub
 			EventListenerManager tlm = TaskUtil.getDefaultEventManager();
 			
-			IPBlockerListener ipbl = new IPBlockerListener(ipBlockerConfig, TaskUtil.getDefaultTaskScheduler());
+			IPBlockerListener ipbl = new IPBlockerListener(getAppConfig(), TaskUtil.getDefaultTaskScheduler());
 			tlm.addEventListener(ipbl);
-			ipbl.fileMonitor = new FileMonitor(ipBlockerConfig.getAuthFile(), tlm, true);
+			ipbl.fileMonitor = new FileMonitor(getAppConfig().getAuthFile(), tlm, true);
 			TaskUtil.getDefaultTaskScheduler().queue(TimeInMillis.MINUTE.MILLIS, new Runnable(){
 				public void run()
 				{
@@ -108,7 +95,12 @@ public class IPBlockerListener
 			});
 			return ipbl;
 		}
-		
+
+
+		@Override
+		public void close() {
+
+		}
 	}
 	
 	private static final transient Logger log = Logger.getLogger(IPBlockerListener.class.getName());

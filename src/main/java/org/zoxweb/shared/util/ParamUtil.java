@@ -279,6 +279,13 @@ public class ParamUtil {
                         value = args[index];
                     }
                 }
+                else if(args[index].indexOf('=') != -1)
+                {
+                    // we have name=value
+                    NVPair nvp = SharedUtil.toNVPair(args[index]);
+                    name = nvp.getName();
+                    value = nvp.getValue();
+                }
                 else
                 {
                     value = args[index];
