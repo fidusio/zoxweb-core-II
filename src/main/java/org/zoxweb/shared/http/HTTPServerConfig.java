@@ -18,6 +18,7 @@ implements AppConfig
     APPLICATION_CONFIG_VAR(NVConfigManager.createNVConfig("application_conf_var", "Application Config Variable", "ApplicationConfVar", false, true, String.class)),
     BASE_URI(NVConfigManager.createNVConfig("base_uri", "Base pre uri token", "BaseURI", false, true, String.class)),
     THREAD_POOL_SIZE(NVConfigManager.createNVConfig("thread_pool_size", "Thread pool size", "TreadPoolSize", false, true, int.class)),
+    THREAD_POOL_JAVA_TYPE(NVConfigManager.createNVConfig("thread_pool_java_type", "Thread pool java type", "TreadPoolJavaType", false, true, boolean.class)),
     CONNECTIONS(NVConfigManager.createNVConfigEntity("connections", "Connections configurations", "Connections", false, true, ConnectionConfig.class, ArrayType.GET_NAME_MAP)),
     ENDPOINTS(NVConfigManager.createNVConfigEntity("endpoints", "Endpoints", "Endpoints", false, true, HTTPEndPoint.class, ArrayType.GET_NAME_MAP)),
 
@@ -47,9 +48,6 @@ implements AppConfig
       null,
       false,
       PropertyDAO.NVC_PROPERTY_DAO);
-
-
-  NVEntityGetNameMap con;
 
   public HTTPServerConfig()
   {
@@ -102,6 +100,16 @@ implements AppConfig
       throw new IllegalArgumentException("Invalid pool size " + poolSize);
     }
     setValue(Param.THREAD_POOL_SIZE, poolSize);
+  }
+
+  public boolean isThreadPoolJavaType()
+  {
+    return lookupValue(Param.THREAD_POOL_JAVA_TYPE);
+  }
+
+  public void setThreadPoolJavaType(int javaType)
+  {
+    setValue(Param.THREAD_POOL_JAVA_TYPE, javaType);
   }
 
 

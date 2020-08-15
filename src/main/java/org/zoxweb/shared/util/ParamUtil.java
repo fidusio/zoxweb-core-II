@@ -101,6 +101,65 @@ public class ParamUtil {
            throw new IllegalArgumentException(name + " value not found or no valid");
         }
 
+
+        public float floatValue(int index)
+        {
+            return floatValue(""+index);
+        }
+
+        public float floatValue(String name)
+        {
+            return floatValue(name, null);
+        }
+
+        public float floatValue(String name, Float defaultValue)
+        {
+            List<String> ret = lookup(name);
+            if(ret == null)
+            {
+                if(defaultValue == null)
+                    throw new IllegalArgumentException("Parameter " + name + " not found");
+                return defaultValue;
+            }
+
+            if (ret.size() == 1)
+            {
+                return Float.parseFloat(ret.get(0));
+            }
+
+            throw new IllegalArgumentException(name + " value not found or no valid");
+        }
+
+
+
+        public int hexValue(int index)
+        {
+            return hexValue(""+index);
+        }
+
+        public int hexValue(String name)
+        {
+            return hexValue(name, null);
+        }
+
+        public int hexValue(String name, Integer defaultValue)
+        {
+            List<String> ret = lookup(name);
+            if(ret == null)
+            {
+                if(defaultValue == null)
+                    throw new IllegalArgumentException("Parameter " + name + " not found");
+                return defaultValue;
+            }
+
+            if (ret.size() == 1)
+            {
+                return Integer.parseInt(ret.get(0), 16);
+            }
+
+            throw new IllegalArgumentException(name + " value not found or no valid");
+        }
+
         /**
          * @return the number of parameters without name
          */
@@ -163,7 +222,24 @@ public class ParamUtil {
             throw new IllegalArgumentException(name + " value not found or no valid");
         }
 
+        public <E extends Enum<?>> E enumValue(String name, Enum ...enums)
+        {
+            List<String> ret = lookup(name);
+            if (ret.size() == 1)
+            {
+                return SharedUtil.lookupEnum(ret.get(0), enums);
+            }
+           return null;
+        }
 
+        public boolean parameterExists(String name)
+        {
+            List<String> ret = lookup(name);
+            if(ret != null && ret.size() == 1)
+                return true;
+
+            return false;
+        }
 
         public boolean booleanValue(String name)
         {

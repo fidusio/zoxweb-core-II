@@ -295,11 +295,7 @@ extends AppCreatorDefault<NIOSocket, ConfigDAO>
 	}
 	
 	
-	
-	
-	
-	
-	
+
 	@SuppressWarnings("resource")
 
 
@@ -316,19 +312,13 @@ extends AppCreatorDefault<NIOSocket, ConfigDAO>
 	}
 
 
-//	@Override
-//	public void setAppConfig(ConfigDAO appConfig)
-//	{
-//		// TODO Auto-generated method stub
-//		this.configDAO = parse(appConfig);
-//	}
-//
-//
-//	@Override
-//	public ConfigDAO getAppConfig() {
-//		// TODO Auto-generated method stub
-//		return configDAO;
-//	}
+	@Override
+	public NIOConfig setAppConfig(ConfigDAO appConfig)
+	{
+		// TODO Auto-generated method stub
+		return (NIOConfig) super.setAppConfig(parse(appConfig));
+	}
+
 
 
 	public static void main(String ...args)
