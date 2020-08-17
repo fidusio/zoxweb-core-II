@@ -148,6 +148,20 @@ public class JSONTest {
 			nvsl.setValues("toto", "titi", "tata");
 			nvgm = new NVGenericMap();
 			nvgm.add(nvsl);
+			nvgm.add(new NVInt("i0", 0));
+			nvgm.add(new NVInt("i1", 1));
+			nvgm.add(new NVInt("i-1", -1));
+			nvgm.add(new NVLong("l0", 0));
+			nvgm.add(new NVLong("l1", 1));
+			nvgm.add(new NVLong("l-1", -1));
+
+			nvgm.add(new NVFloat("f0", (float) 0));
+			nvgm.add(new NVFloat("f", (float) 0.9));
+			nvgm.add(new NVFloat("f1", (float) 1));
+			nvgm.add(new NVDouble("d0", (double) 0));
+			nvgm.add(new NVDouble("d", (double) 0.9));
+			nvgm.add(new NVDouble("d1", (double) 1));
+
 			String jsonNVSL = GSONUtil.toJSONGenericMap(nvgm, false, false, false);
 			System.out.println(jsonNVSL);
 			nvsl = (NVStringList) GSONUtil.fromJSONGenericMap(jsonNVSL, null, null).get("tataName");

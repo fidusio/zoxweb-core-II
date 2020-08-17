@@ -914,7 +914,7 @@ final public class GSONUtil
 		else if (gnv instanceof  NVInt || gnv instanceof NVLong || gnv instanceof NVFloat || gnv instanceof NVDouble)
 		{
 			Number value = (Number) gnv.getValue();
-			if (!printNull && value.longValue()==0)
+			if (!printNull && value.doubleValue()==0)
 			{
 				return writer;
 			}
