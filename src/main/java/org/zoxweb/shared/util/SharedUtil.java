@@ -41,7 +41,7 @@ public class SharedUtil
 	 * Checks all the objs if any of them is null it will throws a NullPointerException.
 	 * @param msg to be added to the NullPointerException
 	 * @param objs to be checked
-	 * @throws NullPointerException
+	 * @throws NullPointerException if any of th
 	 */
 	public static void checkIfNulls(String msg, Object... objs)
 		throws NullPointerException
@@ -106,7 +106,7 @@ public class SharedUtil
 		return ret;
 	}
 
-	public static Number[] normilizeNumbers(Number ... numbers)
+	public static Number[] normalizeNumbers(Number ... numbers)
 	{
 		Class<?>[] classPriority =
 				{
@@ -1701,157 +1701,132 @@ public class SharedUtil
 	{
 		checkIfNulls("Class or name can't be null", c, name);
 		c = Const.wrap(c);
-//		if (c.isArray())
-//		{
-//			if (config instanceof NVConfigEntity)
-//			{
-//				NVConfigEntity nvce = (NVConfigEntity) config;
-//				//System.out.println(""+config);
-//
-//				switch (nvce.getArrayType())
-//				{
-//					case GET_NAME_MAP:
-//						return new NVEntityGetNameMap (config.getName());
-//					case LIST:
-//						return new NVEntityReferenceList(config.getName());
-//					case NOT_ARRAY:
-//						break;
-//					case REFERENCE_ID_MAP:
-//						return new NVEntityReferenceIDMap (config.getName());
-//					default:
-//						break;
-//
-//				}
-//
-//				//return new NVEntityReferenceList(config.getName());
-//			}
-
-			// enum must be checked first
-//			if (config.isEnum())
-//			{
-//				return (new NVEnumList(config.getName(), new ArrayList<Enum<?>>()));
-//			}
-//			else if (String[].class.equals(c))
-//			{
-//				if (config.isUnique())
-//				{
-//					return (new NVPairGetNameMap (config.getName(), new LinkedHashMap<GetName, GetNameValue<String>>()));
-//				}
-//
-//				return (new NVPairList (config.getName(), new ArrayList<NVPair>()));
-//			}
-//			else if (Long[].class.equals(c))
-//			{
-//				return (new NVLongList(config.getName(), new ArrayList<Long>()));
-//			}
-//			else if (byte[].class.equals(c))
-//			{
-//				return (new NVBlob(config.getName(), null));
-//			}
-//			else if (Integer[].class.equals(c))
-//			{
-//				return (new NVIntList(config.getName(), new ArrayList<Integer>()));
-//			}
-//			else if (Float[].class.equals(c))
-//			{
-//				return (new NVFloatList( config.getName(), new ArrayList<Float>()));
-//			}
-//			else if (Double[].class.equals( c))
-//			{
-//				return (new NVDoubleList(config.getName(), new ArrayList<Double>()));
-//			}
-//			else if (Date[].class.equals(c))
-//			{
-//				return (new NVLongList( config.getName(), new ArrayList<Long>()));
-//			}
-//			else if (BigDecimal[].class.equals(c))
-//			{
-//				return (new NVBigDecimalList( config.getName(), new ArrayList<BigDecimal>()));
-//			}
-//		}
-//		else
+		NVBase<?> nvbArray = null;
+		if (c.isArray())
 		{
-			// Not array
-//			if (config instanceof NVConfigEntity)
-//			{
-//				return new NVEntityReference(config);
-//			}
+			 //enum must be checked first
+			if (c.getComponentType().isEnum())
+			{
+				nvbArray = new NVEnumList(name, new ArrayList<Enum<?>>());
+			}
+			else if (String[].class.equals(c))
+			{
+				nvbArray = new NVStringList (name);
+			}
+			else if (Long[].class.equals(c))
+			{
+				nvbArray = new NVLongList(name, new ArrayList<Long>());
+			}
+			else if (byte[].class.equals(c))
+			{
+				nvbArray = new NVBlob(name, null);
+			}
+			else if (Integer[].class.equals(c))
+			{
+				nvbArray = new NVIntList(name);
+			}
+			else if (Float[].class.equals(c))
+			{
+				nvbArray =  new NVFloatList( name);
+			}
+			else if (Double[].class.equals( c))
+			{
+				nvbArray = new NVDoubleList(name);
+			}
+			else if (Date[].class.equals(c))
+			{
+				nvbArray = new NVLongList(name);
+			}
+			else if (BigDecimal[].class.equals(c))
+			{
+				nvbArray =  new NVBigDecimalList(name);
+			}
+			else
+				throw new IllegalArgumentException("Unsupported class:" + c);
+		}
+		else
+			return internalClassToNVBase(c, name, value);
 
-			if (c.isEnum())
+		if (value != null) {
+			String[] values = value.split(",");
+			List<Object> arrayValue = (List<Object>) nvbArray.getValue();
+			for (String v : values)
 			{
+				NVBase<?> result = internalClassToNVBase(c.getComponentType(), name, v);
+				arrayValue.add(result.getValue());
+ 			}
 
-//				if ( DynamicEnumMap.class.equals( config.getMetaType()))
-//				{
-//					return new NVDynamicEnum(config.getName(), null, (DynamicEnumMap) config.getValueFilter());
-//				}
-				Enum<?> enumValue = null;
-				if (value != null)
-				{
-					enumValue =  lookupEnum(value, (Enum<?>[])c.getEnumConstants());
-					if(enumValue == null)
-						throw new IllegalArgumentException(value + " is not a valid enum");
-				}
+			return nvbArray;
+		}
 
-				return new NVEnum(name, enumValue);
-			}
-			else if (String.class.equals(c))
-			{
-				NVPair nvp = new NVPair(name, value);
-				return nvp;
-			}
-			else if (Long.class.equals(c))
-			{
-				return new NVLong(name, value != null ? Long.parseLong(value) : 0);
-			}
-			else if (Integer.class.equals(c))
-			{
-				return new NVInt(name, value != null ? Integer.parseInt(value) : 0);
-			}
-			else if (Boolean.class.equals(c))
-			{
-				if(name.equalsIgnoreCase(value)) {
-					return new NVBoolean(name, true);
-				}
+		return null;
 
-				return new NVBoolean(name, value != null ? Const.Bool.lookupValue(value) : false);
-			}
-			else if (Float.class.equals(c))
+
+	}
+
+
+
+	private static NVBase<?> internalClassToNVBase(Class<?> c, String name, String value)
+	{
+		if (c.isEnum())
+		{
+
+			Enum<?> enumValue = null;
+			if (value != null)
 			{
-				return new NVFloat(name, value != null ? Float.parseFloat(value) : 0);
+				enumValue =  lookupEnum(value, (Enum<?>[])c.getEnumConstants());
+				if(enumValue == null)
+					throw new IllegalArgumentException(value + " is not a valid enum");
 			}
-			else if (Double.class.equals(c))
-			{
-				return new NVDouble(name, value != null ? Double.parseDouble(value) : 0);
+
+			return new NVEnum(name, enumValue);
+		}
+		else if (String.class.equals(c))
+		{
+			NVPair nvp = new NVPair(name, value);
+			return nvp;
+		}
+		else if (Long.class.equals(c))
+		{
+			return new NVLong(name, value != null ? Long.parseLong(value) : 0);
+		}
+		else if (Integer.class.equals(c))
+		{
+			return new NVInt(name, value != null ? Integer.parseInt(value) : 0);
+		}
+		else if (Boolean.class.equals(c))
+		{
+			if(name.equalsIgnoreCase(value)) {
+				return new NVBoolean(name, true);
 			}
-			else if (Date.class.equals(c))
-			{
-				return new NVLong(name, 0);
-			}
-			else if (BigDecimal.class.equals(c))
-			{
-				return new NVBigDecimal(name, new BigDecimal(value));
-			}
-			else if (Number.class.equals(c))
-			{
-				return new NVNumber(name, null);
-			}
-//			else if (NVGenericMap.class.equals(c))
-//			{
-//				return new NVGenericMap(name);
-//			}
-//			else if (NVGenericMapList.class.equals(c))
-//			{
-//				return new NVGenericMapList(name);
-//			}
-//			else if (NVStringList.class.equals(c))
-//			{
-//				return new NVStringList(config.getName());
-//			}
+
+			return new NVBoolean(name, value != null ? Const.Bool.lookupValue(value) : false);
+		}
+		else if (Float.class.equals(c))
+		{
+			return new NVFloat(name, value != null ? Float.parseFloat(value) : 0);
+		}
+		else if (Double.class.equals(c))
+		{
+			return new NVDouble(name, value != null ? Double.parseDouble(value) : 0);
+		}
+		else if (Date.class.equals(c))
+		{
+			return new NVLong(name, 0);
+		}
+		else if (BigDecimal.class.equals(c))
+		{
+			return new NVBigDecimal(name, new BigDecimal(value));
+		}
+		else if (Number.class.equals(c))
+		{
+			return new NVNumber(name, null);
 		}
 
 		throw new IllegalArgumentException("Unsupported class:" + c);
 	}
-	
+
+
 	@SuppressWarnings("unchecked")
 	public static <T> T parsePrimitiveValue(GNVType type, Number n)
 	{

@@ -108,15 +108,7 @@ public class Range<T extends Comparable<T>>
         super(NVC_RANGE);
     }
 
-    /**
-     * {@link Range} start and end values
-     */
-    //protected T start, end;
 
-    /**
-     *
-     */
-    //private Inclusive inclusive;
 
     /**
      * Auto switch if start > end
@@ -453,7 +445,7 @@ public class Range<T extends Comparable<T>>
         }
         Number start = SharedUtil.parseNumber(tokens[0]);
         Number end = SharedUtil.parseNumber(tokens[1]);
-        Number[] vals = SharedUtil.normilizeNumbers(start, end);
+        Number[] vals = SharedUtil.normalizeNumbers(start, end);
 
         if(override == null)
             override = vals[0].getClass();

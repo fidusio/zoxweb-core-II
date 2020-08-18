@@ -32,6 +32,9 @@ import java.util.*;
 public class ReflectionUtil
 {
 
+
+
+
 	public static class MethodAnnotations
 	{
 		public final Annotation[] methodAnnotations;
@@ -385,7 +388,18 @@ public class ReflectionUtil
 		for(int i =0; i < values.length; i++)
 		{
 			ParamProp pp = (ParamProp) methodAnnotations.parametersAnnotations.get(parameters[i]);
-			values[i] = incomingData.get(pp.name());
+			Object tempValue = incomingData.get(pp.name());
+			if (tempValue != null && tempValue instanceof List)
+			{
+				List<?> list = (List<?>) tempValue;
+				if(list.size() > 0)
+				{
+					tempValue = ArrayCopier.copy(parameters[i].getType(), list.toArray());
+				}
+				else
+					tempValue = null;
+			}
+			values[i] = tempValue;
 		}
 
 

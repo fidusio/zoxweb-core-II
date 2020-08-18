@@ -16,6 +16,7 @@
 package org.zoxweb.shared.util;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,6 +34,11 @@ public class NVBigDecimalList
 	public NVBigDecimalList()
     {
 		super();
+	}
+
+	public NVBigDecimalList(String name)
+	{
+		this(name, new ArrayList<BigDecimal>());
 	}
 	
 	/**
