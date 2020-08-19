@@ -76,6 +76,7 @@ public class SimpleMessage
 	public SimpleMessage() 
 	{
 		super(NVC_SIMPLE_MESSAGE);
+		setCreationTime(System.currentTimeMillis());
 	}
 
 	public SimpleMessage(String message, int status)
