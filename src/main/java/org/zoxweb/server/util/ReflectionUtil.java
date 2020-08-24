@@ -51,6 +51,8 @@ public class ReflectionUtil
 		{
 			return "ma:" + Arrays.toString(methodAnnotations) + " pa:" + parametersAnnotations;
 		}
+
+
 	}
 
 	public static class AnnotationMap
@@ -322,7 +324,7 @@ public class ReflectionUtil
 		return false;
 	}
 
-	public static boolean isTypeMatchingAnyAnnotation(Class<? extends Annotation> aType, Annotation[] annotations)
+	public static boolean isTypeMatchingAnyAnnotation(Class<? extends Annotation> aType, Annotation... annotations)
 	{
 		for(Annotation a : annotations)
 		{

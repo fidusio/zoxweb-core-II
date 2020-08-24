@@ -1,6 +1,7 @@
 package org.zoxweb.shared.annotation;
 
 import org.zoxweb.shared.util.Const;
+import org.zoxweb.shared.util.GetName;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -10,6 +11,7 @@ import java.lang.annotation.Target;
 @Target({ElementType.FIELD, ElementType.PARAMETER, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ParamProp {
+
     /**
      * Name of the parameter
      * @return name
