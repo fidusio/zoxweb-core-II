@@ -23,6 +23,7 @@ import java.util.Comparator;
  * The appointment interface.
  */
 public interface Appointment
+	extends IsClosed
 {
 	
 	public static final Comparator<Appointment> EQUAL_COMPARATOR = new AppointmentComparator();
@@ -61,5 +62,8 @@ public interface Appointment
 	 * @return
 	 */
 	long getPreciseExpiration();
+
+
+	void close();
 	
 }

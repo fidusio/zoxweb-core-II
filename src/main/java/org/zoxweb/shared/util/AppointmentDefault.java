@@ -27,6 +27,7 @@ public class AppointmentDefault
 	private long delay;
 	private long expiration;
 	private long expirationInMicros;
+	private boolean isClosed = false;
 
 	public AppointmentDefault()
     {
@@ -45,7 +46,7 @@ public class AppointmentDefault
 	
 	public AppointmentDefault(long delayInMillis, long nanoOffset)
 	{
-			setDelayInNanos(delayInMillis, nanoOffset);
+		setDelayInNanos(delayInMillis, nanoOffset);
 	}
 
 	/**
@@ -70,9 +71,11 @@ public class AppointmentDefault
 	 */
 	public synchronized void setDelayInNanos(long delayInMillis, long nanoOffset)
 	{
-	  delay = delayInMillis;
-	  expiration = System.currentTimeMillis() + delay;
-	  expirationInMicros = (expiration*1000) + Math.abs((nanoOffset%1000000)/1000);
+		if(isClosed())
+			throw new IllegalArgumentException("Appointment Closed");
+	  	delay = delayInMillis;
+	  	expiration = System.currentTimeMillis() + delay;
+	  	expirationInMicros = (expiration*1000) + Math.abs((nanoOffset%1000000)/1000);
 	}
 
 	@Override
@@ -110,6 +113,19 @@ public class AppointmentDefault
 	{
 		// TODO Auto-generated method stub
 		return expirationInMicros;
+	}
+
+	/**
+	 * Close
+	 */
+	public synchronized void close()
+	{
+		isClosed = true;
+	}
+
+	public boolean isClosed()
+	{
+		return isClosed;
 	}
 
 }

@@ -23,10 +23,12 @@ import java.util.concurrent.atomic.AtomicLong;
 import org.zoxweb.shared.util.*;
 
 public class TaskSchedulerProcessor
-    implements Runnable, DaemonController, GetNVProperties {
+    implements Runnable, DaemonController, GetNVProperties
+{
 
 	public final class TaskSchedulerAppointment
-			implements Appointment {
+			implements Appointment
+	{
 
 		private Appointment appointment;
 		private TaskEvent taskEvent;
@@ -53,12 +55,14 @@ public class TaskSchedulerProcessor
 		}
 
 		@Override
-		public long getExpirationInMillis() {
+		public long getExpirationInMillis()
+		{
 			return appointment.getExpirationInMillis();
 		}
 
 		@Override
-		public boolean cancel() {
+		public boolean cancel()
+		{
 			return remove(this);
 		}
 
@@ -88,69 +92,20 @@ public class TaskSchedulerProcessor
 			return appointment.hashCode();
 		}
 
-//		@Override
-//		public void run() {
-//
-//		}
-//
-//		@Override
-//		public boolean cancel(boolean mayInterruptIfRunning) {
-//			return false;
-//		}
-//
-//		@Override
-//		public boolean isCancelled() {
-//			return false;
-//		}
-//
-//		@Override
-//		public boolean isDone() {
-//			return false;
-//		}
-//
-//		@Override
-//		public Object get() throws InterruptedException, ExecutionException {
-//			return  taskEvent.getExecutionResult();
-//		}
-//
-//		@Override
-//		public Object get(long timeout, TimeUnit unit)
-//				throws InterruptedException, ExecutionException, TimeoutException {
-//			return null;
-//		}
-//
-//
-//		public boolean isPeriodic() {
-//			return false;
-//		}
-//
-//		public long getDelay(TimeUnit unit) {
-//			switch(unit)
-//			{
-//
-//				case NANOSECONDS:
-//					return getExpirationInMillis();
-//				case MICROSECONDS:
-//					return TimeUnit.NANOSECONDS.toMicros(getExpirationInMillis());
-//				case MILLISECONDS:
-//					return TimeUnit.NANOSECONDS.toMillis(getExpirationInMillis());
-//				case SECONDS:
-//					return TimeUnit.NANOSECONDS.toSeconds(getExpirationInMillis());
-//				case MINUTES:
-//					return TimeUnit.NANOSECONDS.toMinutes(getExpirationInMillis());
-//				case HOURS:
-//					return TimeUnit.NANOSECONDS.toHours(getExpirationInMillis());
-//				case DAYS:
-//					return TimeUnit.NANOSECONDS.toDays (getExpirationInMillis());
-//				default:
-//					throw new IllegalArgumentException(unit + " not supported");
-//			}
-//		}
+		public synchronized void close()
+		{
+			if(!appointment.isClosed())
+			{
+				cancel();
+				appointment.close();
+			}
+		}
 
+		public boolean isClosed()
+		{
+			return appointment.isClosed();
+		}
 
-//		public int compareTo(Delayed o) {
-//			return 0;
-//		}
 	}
 	
 	private TaskProcessor taskProcessor = null;
@@ -251,6 +206,14 @@ public class TaskSchedulerProcessor
         
         return null;
     }
+
+	public Appointment queue(Appointment appointment, Runnable command)
+	{
+		if (command != null)
+			return queue(new TaskSchedulerAppointment(appointment, new TaskEvent(this, new RunnableTaskContainer(command))));
+
+		return null;
+	}
 //	public <T> Appointment queue(long delayInMillis, Supplier<T> supplier, Consumer<T> consumer)
 //	{
 //		if (supplier != null && consumer != null)
