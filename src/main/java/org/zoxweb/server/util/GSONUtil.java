@@ -1037,6 +1037,20 @@ final public class GSONUtil
 		
 		return writer;
 	}
+
+
+
+
+	public static NVGenericMap fromJSONGenericMap(byte[] data)
+	{
+		return fromJSONGenericMap(data, null, Base64Type.URL);
+	}
+
+	public static NVGenericMap fromJSONGenericMap(byte[] data, NVConfigEntity nvce, Base64Type btype)
+	{
+		return fromJSONGenericMap(SharedStringUtil.toString(data), nvce, btype);
+	}
+
 	
 	public static NVGenericMap fromJSONGenericMap(String json, NVConfigEntity nvce, Base64Type btype)
 	{
