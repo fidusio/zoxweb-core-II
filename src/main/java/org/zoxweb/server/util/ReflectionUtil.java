@@ -411,4 +411,24 @@ public class ReflectionUtil
 		return result;
 	}
 
+	public static <T> T createBean(String className)
+			throws
+			ClassNotFoundException,
+			NoSuchMethodException,
+			IllegalAccessException,
+			InvocationTargetException,
+			InstantiationException
+	{
+		return createBean(Class.forName(className));
+	}
+	public static <T> T createBean(Class clazz)
+			throws
+			NoSuchMethodException,
+			IllegalAccessException,
+			InvocationTargetException,
+			InstantiationException
+	{
+		return (T)clazz.getDeclaredConstructor().newInstance();
+	}
+
 }
