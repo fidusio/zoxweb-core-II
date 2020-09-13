@@ -100,7 +100,7 @@ public class JWTPayload
 	@Override
 	public String getDomainID() 
 	{
-		return nvgm.getValue(Param.DOMAIN_ID);
+		return nvgm.getValue((GetName)Param.DOMAIN_ID);
 	}
 
 	public String getName()
@@ -122,7 +122,7 @@ public class JWTPayload
 
 	public String getAppID() 
 	{
-		return nvgm.getValue(Param.APP_ID);
+		return nvgm.getValue((GetName)Param.APP_ID);
 	}
 
 	public void setAppID(String appID) 
@@ -138,7 +138,7 @@ public class JWTPayload
 
 	public String getSubjectID() 
 	{
-		return nvgm.getValue(Param.SUB);
+		return nvgm.getValue((GetName)Param.SUB);
 	}
 
 	public void setSubjectID(String sub) 
@@ -179,7 +179,7 @@ public class JWTPayload
 
 	public String getAudience() 
 	{
-		return nvgm.getValue(Param.AUD);
+		return nvgm.getValue((GetName)Param.AUD);
 	}
 
 	public void setAudience(String aud) 
@@ -189,7 +189,7 @@ public class JWTPayload
 
 	public String getIssuer()
 	{
-		return nvgm.getValue(Param.ISS);
+		return nvgm.getValue((GetName)Param.ISS);
 	}
 
 	public void setIssuer(String iss)
@@ -202,7 +202,7 @@ public class JWTPayload
      */
 	public long getExpirationTime() 
 	{
-		return nvgm.getValue(Param.EXP);
+		return nvgm.getValue((GetName)Param.EXP);
 	}
 
 	/**
@@ -224,7 +224,7 @@ public class JWTPayload
      */
 	public long getNotBefore() 
 	{
-		return nvgm.getValue(Param.NBF);
+		return nvgm.getValue((GetName)Param.NBF);
 	}
 
 	public void setNotBefore(long nbf) 
@@ -242,7 +242,7 @@ public class JWTPayload
 	 */
 	public long getIssuedAt() 
 	{
-		return nvgm.getValue(Param.IAT);
+		return nvgm.getValue((GetName)Param.IAT);
 	}
 
 	/**
@@ -262,7 +262,7 @@ public class JWTPayload
 
 	public String getJWTID() 
 	{
-		return nvgm.getValue(Param.JTI);
+		return nvgm.getValue((GetName)Param.JTI);
 	}
 
 	public void setJWTID(String jti) 

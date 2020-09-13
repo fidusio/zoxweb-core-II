@@ -94,7 +94,7 @@ public class ScheduleConfigDAO
 	}
 	public String getURL()
 	{
-		return getProperties().getValue(PropParam.URL);
+		return getProperties().getValue((GetName)PropParam.URL);
 	}
 	
 	public void setURL(String url)
@@ -108,7 +108,7 @@ public class ScheduleConfigDAO
 	
 	public String[] getOnCommands()
 	{
-		List<String> nvsl = getProperties().getValue(PropParam.ON_COMMANDS);
+		List<String> nvsl = getProperties().getValue((GetName)PropParam.ON_COMMANDS);
 		return nvsl.toArray(new String[nvsl.size()]);
 	}
 	
@@ -120,7 +120,7 @@ public class ScheduleConfigDAO
 	
 	public String[] getOffCommands()
 	{
-		List<String> nvsl = getProperties().getValue(PropParam.OFF_COMMANDS);
+		List<String> nvsl = getProperties().getValue((GetName)PropParam.OFF_COMMANDS);
 		return nvsl.toArray(new String[nvsl.size()]);
 	}
 	
@@ -136,7 +136,7 @@ public class ScheduleConfigDAO
 	
 	public boolean isEnabled() 
 	{
-		NVBoolean enabled = (NVBoolean) getProperties().get(PropParam.ENABLED);
+		NVBoolean enabled = (NVBoolean) getProperties().get((GetName)PropParam.ENABLED);
 		if(enabled != null)
 		{
 			return enabled.getValue();

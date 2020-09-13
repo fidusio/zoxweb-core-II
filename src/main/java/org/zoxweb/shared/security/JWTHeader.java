@@ -84,7 +84,7 @@ implements GetNVProperties
 	
 	public JWTAlgorithm getJWTAlgorithm()
 	{
-		return JWTAlgorithm.valueOf((String)nvgm.getValue(Param.ALG));
+		return JWTAlgorithm.valueOf((String)nvgm.getValue((GetName)Param.ALG));
 	}
 	
 	public void setJWTAlgorithm(JWTAlgorithm type)
@@ -95,7 +95,7 @@ implements GetNVProperties
 	
 	public String getTokenType()
 	{
-		return nvgm.getValue(Param.TYP);
+		return nvgm.getValue((GetName)Param.TYP);
 	}
 	
 	public void setTokenType(String type)
@@ -106,7 +106,7 @@ implements GetNVProperties
 	
 	public String getContentType()
 	{
-		return nvgm.getValue(Param.CTY);
+		return nvgm.getValue((GetName)Param.CTY);
 	}
 	
 	public void setContentType(String contentType)
@@ -117,7 +117,7 @@ implements GetNVProperties
 
 	public String getKeyID()
 	{
-		return nvgm.getValue(Param.KID);
+		return nvgm.getValue((GetName)Param.KID);
 	}
 
 	public void setKeyID(String keyID)

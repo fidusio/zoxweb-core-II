@@ -93,7 +93,7 @@ public class NIConfigDAO
   
   public String getNetmask()
   {
-    return getProperties().getValue(Param.NETMASK);
+    return getProperties().getValue((GetName)Param.NETMASK);
   }
   
   public void setNetmask(String netmask) 
@@ -103,7 +103,7 @@ public class NIConfigDAO
   
   public String getGateway()
   {
-    return getProperties().getValue(Param.GATEWAY);
+    return getProperties().getValue((GetName)Param.GATEWAY);
   }
   
   public void setGateway(String gateway) 
@@ -113,7 +113,7 @@ public class NIConfigDAO
   
   public String getDNSServers()
   {
-    return getProperties().getValue(Param.DNS_SERVERS);
+    return getProperties().getValue((GetName)Param.DNS_SERVERS);
   }
   
   public void setDNSServers(String dnsServers) 
@@ -123,7 +123,7 @@ public class NIConfigDAO
   
   public String getNetwork()
   {
-    return getProperties().getValue(Param.NETWORK);
+    return getProperties().getValue((GetName)Param.NETWORK);
   }
   
   public void setNetwork(String network) 
@@ -133,7 +133,7 @@ public class NIConfigDAO
   
   public String getUsername()
   {
-    return getProperties().getValue(Param.USERNAME);
+    return getProperties().getValue((GetName)Param.USERNAME);
   }
   
   public void setUsername(String username) 
@@ -143,7 +143,7 @@ public class NIConfigDAO
   
   public String getPassword()
   {
-    return getProperties().getValue(Param.PASSWORD);
+    return getProperties().getValue((GetName)Param.PASSWORD);
   }
   
   public void setPassword(String password) 
@@ -153,7 +153,7 @@ public class NIConfigDAO
   
   public String getWPAConfig()
   {
-    return getProperties().getValue(Param.WPA_CONF);
+    return getProperties().getValue((GetName)Param.WPA_CONF);
   }
   
   public void setWPACondfig(String wpaConfig) 

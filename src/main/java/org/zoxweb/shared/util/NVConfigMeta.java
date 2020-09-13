@@ -88,7 +88,7 @@ public class NVConfigMeta
 		{
 			for(String filter : filters)
 			{
-				((NVStringList)metaData.get(Param.FILTERS)).getValue().add(filter);
+				((NVStringList)metaData.get((GetName)Param.FILTERS)).getValue().add(filter);
 			}
 		}
 		
@@ -101,12 +101,12 @@ public class NVConfigMeta
 	
 	public String getName()
 	{
-		return metaData.getValue(Param.NAME);
+		return metaData.getValue((GetName)Param.NAME);
 	}
 	
 	public String getDisplayName()
 	{
-		String ret = metaData.getValue(Param.DISPLAY_NAME);
+		String ret = metaData.getValue((GetName)Param.DISPLAY_NAME);
 		if (ret == null)
 			ret = getName();
 		
@@ -115,37 +115,37 @@ public class NVConfigMeta
 	
 	public String getDescription()
 	{
-		return metaData.getValue(Param.DESCRIPTION);
+		return metaData.getValue((GetName)Param.DESCRIPTION);
 	}
 	
 	public String getMetaType()
 	{
-		return metaData.getValue(Param.META_TYPE);
+		return metaData.getValue((GetName)Param.META_TYPE);
 	}
 	
 	public String[] getFilters()
 	{
-		NVStringList ret = (NVStringList) metaData.get(Param.FILTERS);
+		NVStringList ret = (NVStringList) metaData.get((GetName)Param.FILTERS);
 		return ret.getValue().toArray(new String[0]);
 	}
 	
 	public boolean isHidden()
 	{
-		return metaData.getValue(Param.IS_HIDDEN);
+		return metaData.getValue((GetName)Param.IS_HIDDEN);
 	}
 	
 	public boolean isMandatory()
 	{
-		return metaData.getValue(Param.IS_MANDATORY);
+		return metaData.getValue((GetName)Param.IS_MANDATORY);
 	}
 	
 	public boolean isVisible()
 	{
-		return metaData.getValue(Param.IS_VISIBLE);
+		return metaData.getValue((GetName)Param.IS_VISIBLE);
 	}
 	public MetaAction[] getActions()
 	{
-		List<String> actions = metaData.getValue((Param.ACTIONS));
+		List<String> actions = metaData.getValue(((GetName)Param.ACTIONS));
 		if (actions.size() == 0)
 		{
 			return null;
@@ -164,14 +164,14 @@ public class NVConfigMeta
 	
 	public NVConfigMeta addAction(MetaAction ma)
 	{
-		List<String> actions = metaData.getValue((Param.ACTIONS));
+		List<String> actions = metaData.getValue((GetName)Param.ACTIONS);
 		actions.add(ma.name());
 		
 		return this;
 	}
 	public void setActions(MetaAction ...setActions)
 	{
-		List<String> actions = metaData.getValue((Param.ACTIONS));
+		List<String> actions = metaData.getValue((GetName)Param.ACTIONS);
 		actions.clear();
 		for (MetaAction ma : setActions)
 		{
@@ -181,7 +181,7 @@ public class NVConfigMeta
 	
 	public <V> V getDefaultValue()
 	{
-		return metaData.getValue(Param.DEFAULT_VALUE);
+		return metaData.getValue((GetName)Param.DEFAULT_VALUE);
 	}
 	
 	public NVGenericMap getMetaConfigInfo()

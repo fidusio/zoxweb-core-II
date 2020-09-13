@@ -76,7 +76,7 @@ implements Runnable, DaemonController
 		public static DatagramRelay toDatagramRelay(NVGenericMap config)
 			throws IOException
 		{
-			return new DatagramRelay(config.getValue(PORT), (String)config.getValue(REMOTE_HOST), config.getValue(REMOTE_PORT), config.getValue(PACKET_SIZE));
+			return new DatagramRelay(config.getValue((GetName)PORT), (String)config.getValue((GetName)REMOTE_HOST), config.getValue((GetName)REMOTE_PORT), config.getValue((GetName)PACKET_SIZE));
 		}
 		
 	}
