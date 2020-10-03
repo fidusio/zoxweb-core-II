@@ -35,7 +35,7 @@ public class ThresholdQueue<O>
 {
 
 	private int threshold;
-	private boolean threasholdEnabled = false;
+	private boolean thresholdEnabled = false;
 
 
 	public ThresholdQueue(int highMark)
@@ -73,9 +73,9 @@ public class ThresholdQueue<O>
 	public synchronized O dequeue()
     {
 		O ret = int_dequeue();
-		if (threasholdEnabled && size <= threshold)
+		if (thresholdEnabled && size <= threshold)
 		{
-			threasholdEnabled = false;
+			thresholdEnabled = false;
 			notifyAll();
 		}
 		return ret;
@@ -92,11 +92,11 @@ public class ThresholdQueue<O>
     {
 		if(toQueue == null)
 			throw new NullPointerException("Can't queue a null object");
-		if (threasholdEnabled && toQueue != null)
+		if (thresholdEnabled && toQueue != null)
 		{
 			try
             {
-				while (threasholdEnabled)
+				while (thresholdEnabled)
 					wait(300);
 			} 
 			catch (InterruptedException e) 
@@ -109,7 +109,7 @@ public class ThresholdQueue<O>
 
 		if (size == array.length)
 		{
-			threasholdEnabled = true;
+			thresholdEnabled = true;
 		}
 		return true;
 
@@ -123,7 +123,7 @@ public class ThresholdQueue<O>
 	public String toString()
     {
 	  
-	  return SharedUtil.toCanonicalID(',', size(), array.length, threshold, threasholdEnabled);
+	  return SharedUtil.toCanonicalID(',', size(), array.length, threshold, thresholdEnabled);
 	
 	}
 

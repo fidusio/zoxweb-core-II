@@ -43,6 +43,7 @@ public class TaskProcessor
 	private ThresholdQueue<TaskEvent>  tasksQueue;
 
 
+
 	/**
 	 * This is the worker thread queue is used by the TaskProcessor by dequeuing it and waiting for the queue
 	 * to be queued after each the ExecutorThread terminate a task
@@ -239,7 +240,7 @@ public class TaskProcessor
 	 * @param task to be queued, null tasks are ignored
 	 * @throws IllegalArgumentException if the TaskProcessor is terminated
 	 */
-	public  void queueTask(TaskEvent task)
+	public void queueTask(TaskEvent task)
 		throws IllegalArgumentException
 	{	
 		if( !live)
@@ -346,6 +347,11 @@ public class TaskProcessor
 	public int pendingTasks()
 	{
 		return tasksQueue.size();
+	}
+
+	public long totalQueued()
+	{
+		return tasksQueue.totalQueued();
 	}
 	public String toString()
 	{
