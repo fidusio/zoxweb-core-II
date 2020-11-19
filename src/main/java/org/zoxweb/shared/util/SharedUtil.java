@@ -2058,6 +2058,18 @@ public class SharedUtil
 			
 		return false;
 	}
+
+	/**
+	 * Check if an array is empty meaning null or length = 0
+	 * @param array
+	 * @return
+	 */
+	public static boolean isEmpty(Object[] array)
+	{
+		if (array != null && array.length != 0)
+			return false;
+		return true;
+	}
 	
 	/**
 	 * 
