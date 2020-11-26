@@ -36,8 +36,6 @@ public class AppConfigDAO
         implements GetNVConfig
     {
         APP_ID(NVConfigManager.createNVConfigEntity("app_id", "App ID", "AppID", true, false, AppIDDAO.NVC_APP_ID_DAO, NVConfigEntity.ArrayType.NOT_ARRAY)),
-        //PROPERTIES(NVConfigManager.createNVConfigEntity("properties", "Properties", "Properties", false, true, NVEntity[].class, NVConfigEntity.ArrayType.GET_NAME_MAP)),
-
         ;
 
         private final NVConfig nvc;
@@ -68,7 +66,6 @@ public class AppConfigDAO
             PropertyDAO.NVC_PROPERTY_DAO
     );
 
-
     public AppConfigDAO()
     {
         super(NVC_APP_CONFIG_DAO);
@@ -87,25 +84,4 @@ public class AppConfigDAO
     public void setAppIDDAO(AppIDDAO appID) {
         setValue(Param.APP_ID, appID);
     }
-
-//    @SuppressWarnings("unchecked")
-//    public ArrayValues<NVEntity> getProperties()
-//    {
-//        return (ArrayValues<NVEntity>) lookup(Param.PROPERTIES);
-//    }
-//
-//    @SuppressWarnings("unchecked")
-//    public void setProperties(ArrayValues<NVEntity> values)
-//    {
-//        ArrayValues<NVEntity> properties = (ArrayValues<NVEntity>) lookup(Param.PROPERTIES);
-//        properties.add(values.values(), true);
-//    }
-//
-//    @SuppressWarnings("unchecked")
-//    public void setProperties(List<NVEntity> values)
-//    {
-//        ArrayValues<NVEntity> properties = (ArrayValues<NVEntity>) lookup(Param.PROPERTIES);
-//        properties.add(values.toArray(new NVEntity[0]), true);
-//    }
-
 }
