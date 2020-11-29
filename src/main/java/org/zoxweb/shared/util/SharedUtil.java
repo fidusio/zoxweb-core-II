@@ -476,7 +476,7 @@ public class SharedUtil
 	 * @param value
 	 * @return matching enum
 	 */
-	public static Enum<?> enumValue(Class<?> enumClass, String value)
+	public static <E extends Enum<?>> E enumValue(Class<?> enumClass, String value)
     {
 		if (value != null)
 		{
