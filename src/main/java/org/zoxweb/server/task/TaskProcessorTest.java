@@ -25,7 +25,7 @@ public class TaskProcessorTest
   private int counter = 0;
 
   public void run() {
-    ai.addAndGet(1);
+    ai.incrementAndGet();
     inc();
   }
 

@@ -349,7 +349,7 @@ public enum FilterType
 			}
 			else
             {
-			    throw new IllegalArgumentException("Invalid email");
+			    throw new IllegalArgumentException("Invalid email: " + in);
 			}
 		}
 
