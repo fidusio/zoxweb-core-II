@@ -91,7 +91,6 @@
         <artifactId>exec-maven-plugin</artifactId>
         <version>${exec-maven.version}</version>
         <configuration>
-          <mainClass>org.zoxweb.server.task.TaskProcessorTest</mainClass>
         </configuration>
       </plugin>
 
