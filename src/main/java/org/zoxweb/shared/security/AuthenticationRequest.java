@@ -44,7 +44,7 @@ public class AuthenticationRequest
 		implements GetNVConfig
 	{
 		
-		ACCESS_CODE(NVConfigManager.createNVConfig("access_code", "The Acces Code", "AccessCode", false, true, false, String.class, FilterType.ENCRYPT)),
+		ACCESS_CODE(NVConfigManager.createNVConfig("access_code", "The Access Code", "AccessCode", false, true, false, String.class, FilterType.ENCRYPT)),
 		//SYSTEM_ID(NVConfigManager.createNVConfig("system_id", "The Acces Code", "SystemID", false, true, false, String.class, null)),	
 		;
 		
@@ -61,7 +61,7 @@ public class AuthenticationRequest
 		}
 	}
 	
-	public static final NVConfigEntity NVC_AUTHENTICATON_REQUEST = new NVConfigEntityLocal("authentication_request", 
+	public static final NVConfigEntity NVC_AUTHENTICATION_REQUEST = new NVConfigEntityLocal("authentication_request",
 																						   null, 
 																						   "AuthenticationRequest", 
 																						   true, 
@@ -72,7 +72,7 @@ public class AuthenticationRequest
 																						   SharedUtil.extractNVConfigs(Params.values()), 
 																						   null, 
 																						   false, 
-																						   AuthenticationBase.NVC_AUTHENTICATON_BASE);
+																						   AuthenticationBase.NVC_AUTHENTICATION_BASE);
 	
 	
 	
@@ -80,7 +80,7 @@ public class AuthenticationRequest
 	
 	public AuthenticationRequest()
 	{
-		super(NVC_AUTHENTICATON_REQUEST);
+		super(NVC_AUTHENTICATION_REQUEST);
 	}
 
 	public String getAccessCode()

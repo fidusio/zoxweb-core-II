@@ -13,6 +13,7 @@ public class ResourceManager
 		DATA_STORE("DataStore"),
 		API_APP_MANAGER("APIAppManager"),
 		JWT_CACHE("JWTCache"),
+		AUTH_TOKEN("AuthToken"),
 		
 		;
 

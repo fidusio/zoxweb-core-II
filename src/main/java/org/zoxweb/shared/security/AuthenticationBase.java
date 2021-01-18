@@ -45,8 +45,8 @@ public class AuthenticationBase
 	public enum Params
 		implements GetNVConfig
 	{
-		CALLER_ID(NVConfigManager.createNVConfig("caller_id", "The caller id", "caller_id", false, true, false, String.class, null)),
-		SYSTEM_ID(NVConfigManager.createNVConfig("system_id", "The Acces Code", "SystemID", false, true, false, String.class, null)),	
+		CALLER_ID(NVConfigManager.createNVConfig("caller_id", "The caller id", "CallerID", false, true, false, String.class, null)),
+		SYSTEM_ID(NVConfigManager.createNVConfig("system_id", "The System Identifier", "SystemID", false, true, false, String.class, null)),
 		;
 		
 		private final NVConfig cType;
@@ -62,7 +62,7 @@ public class AuthenticationBase
 		}
 	}
 	
-	public static final NVConfigEntity NVC_AUTHENTICATON_BASE = new NVConfigEntityLocal("authentication_base", 
+	public static final NVConfigEntity NVC_AUTHENTICATION_BASE = new NVConfigEntityLocal("authentication_base",
 																						   null, 
 																						   "AuthenticationBase", 
 																						   true, 
@@ -82,7 +82,7 @@ public class AuthenticationBase
 	 */
 	public AuthenticationBase()
 	{
-		super(NVC_AUTHENTICATON_BASE);
+		super(NVC_AUTHENTICATION_BASE);
 	}
 	
 	

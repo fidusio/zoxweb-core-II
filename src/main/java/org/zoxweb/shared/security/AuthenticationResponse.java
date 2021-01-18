@@ -53,7 +53,7 @@ public class AuthenticationResponse
 		}
 	}
 	
-	public static final NVConfigEntity NVC_AUTHENTICATON_REQUEST = new NVConfigEntityLocal("authentication_response", 
+	public static final NVConfigEntity NVC_AUTHENTICATION_REQUEST = new NVConfigEntityLocal("authentication_response",
 																						   null, 
 																						   "AuthenticationResponse", 
 																						   true, 
@@ -64,7 +64,7 @@ public class AuthenticationResponse
 																						   SharedUtil.extractNVConfigs(Params.values()), 
 																						   null, 
 																						   false, 
-																						   AuthenticationBase.NVC_AUTHENTICATON_BASE
+																						   AuthenticationBase.NVC_AUTHENTICATION_BASE
 																						   );
 	
 	
@@ -74,7 +74,7 @@ public class AuthenticationResponse
 	 */
 	public AuthenticationResponse()
 	{
-		super(NVC_AUTHENTICATON_REQUEST);
+		super(NVC_AUTHENTICATION_REQUEST);
 	}
 
 	
