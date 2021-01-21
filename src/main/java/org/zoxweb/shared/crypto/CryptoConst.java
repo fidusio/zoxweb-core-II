@@ -122,7 +122,7 @@ public final class CryptoConst
 		SHA512_RSA("SHA512withRSA"),
 		SHA256_EC("SHA256withECDSA"),
 		SHA384_EC("SHA384withECDSA"),
-    SHA512_EC("SHA512withECDSA"),
+    	SHA512_EC("SHA512withECDSA"),
 		
 		;
 		private final String name;
