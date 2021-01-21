@@ -232,7 +232,37 @@ public class ZWDataFactory
 			{
 				return AssociationDAO.NVC_ASSOCIATION_DAO;
 			}
-		},	
+		},
+		BILLING_ACCOUNT_DAO(BillingAccountDAO.class.getName())
+		{
+			@SuppressWarnings("unchecked")
+			@Override
+			public BillingAccountDAO newInstance()
+			{
+				return new BillingAccountDAO();
+			}
+
+			@Override
+			public NVConfigEntity getNVConfigEntity()
+			{
+				return BillingAccountDAO.NVC_BILLING_ACCOUNT_DAO;
+			}
+		},
+		BASIC_AUTH_TOKEN(BasicAuthToken.class.getName())
+		{
+			@SuppressWarnings("unchecked")
+			@Override
+			public BasicAuthToken newInstance()
+			{
+				return new BasicAuthToken();
+			}
+
+			@Override
+			public NVConfigEntity getNVConfigEntity()
+			{
+				return BasicAuthToken.NVC_BASIC_AUTH_TOKEN;
+			}
+		},
 		CONFIG_DAO(ConfigDAO.class.getName())
 		{
 			@SuppressWarnings("unchecked")
@@ -940,21 +970,7 @@ public class ZWDataFactory
 				return FinancialTransactionDAO.NVC_FINANCIAL_TRANSACTION_DAO;
 			}
 		},
-		BILLING_ACCOUNT_DAO(BillingAccountDAO.class.getName())
-		{
-			@SuppressWarnings("unchecked")
-			@Override
-			public BillingAccountDAO newInstance()
-			{
-				return new BillingAccountDAO();
-			}
 
-			@Override
-			public NVConfigEntity getNVConfigEntity() 
-			{
-				return BillingAccountDAO.NVC_BILLING_ACCOUNT_DAO;
-			}
-		},
 		SCAN_RESULT_DAO(ScanResultDAO.class.getName())
 		{
 			@SuppressWarnings("unchecked")
