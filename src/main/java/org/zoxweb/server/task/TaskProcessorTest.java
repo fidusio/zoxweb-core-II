@@ -16,21 +16,36 @@
 package org.zoxweb.server.task;
 
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 import org.zoxweb.shared.util.Const;
 
 public class TaskProcessorTest
     implements Runnable {
 
   private AtomicInteger ai = new AtomicInteger();
+  private Lock lock = new ReentrantLock();
   private int counter = 0;
 
   public void run() {
     ai.incrementAndGet();
-    inc();
+    lockInc();
   }
 
-  private synchronized void inc() {
+  public synchronized void inc() {
     counter++;
+  }
+  public  void lockInc()
+  {
+    try {
+      lock.lock();
+      counter++;
+    }
+    finally {
+      lock.unlock();
+    }
+
   }
 
   public static long count(int countTo)
@@ -49,6 +64,10 @@ public class TaskProcessorTest
   }
 
   private static void runTest(TaskProcessor tp, TaskProcessorTest td, int numberOfTasks) {
+    td.lock.lock();
+    td.lock.unlock();
+    td.lock.lock();
+    td.lock.unlock();
     long delta = System.currentTimeMillis();
 
     for (int i = 0; i < numberOfTasks; i++) {
