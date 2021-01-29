@@ -42,7 +42,7 @@ public class UserIDCredentialsDAO
    *
    * @author mzebib
    */
-  public enum UserCredentials
+  public enum Param
       implements GetNVConfig {
 
     //USER_ID_DAO(NVConfigManager.createNVConfigEntity("user_id_dao", "User ID data access object.", "UserIDDAO", true, true, UserIDDAO.NVC_USER_ID_DAO)),
@@ -65,7 +65,7 @@ public class UserIDCredentialsDAO
 
     private final NVConfig nvc;
 
-    UserCredentials(NVConfig nvc) {
+    Param(NVConfig nvc) {
       this.nvc = nvc;
     }
 
@@ -87,7 +87,7 @@ public class UserIDCredentialsDAO
       false,
       false,
       UserIDCredentialsDAO.class,
-      SharedUtil.extractNVConfigs(UserCredentials.values()),
+      SharedUtil.extractNVConfigs(Param.values()),
       null,
       false,
       SetNameDescriptionDAO.NVC_NAME_DESCRIPTION_DAO
@@ -106,14 +106,14 @@ public class UserIDCredentialsDAO
    * @return UserStatus
    */
   public SecurityConsts.UserStatus getUserStatus() {
-    return lookupValue(UserCredentials.USER_STATUS);
+    return lookupValue(Param.USER_STATUS);
   }
 
   /**
    * Sets the user status.
    */
   public void setUserStatus(SecurityConsts.UserStatus status) {
-    setValue(UserCredentials.USER_STATUS, status);
+    setValue(Param.USER_STATUS, status);
   }
 
   /**
@@ -122,14 +122,14 @@ public class UserIDCredentialsDAO
    * @return in millis last status update
    */
   public long getLastStatusUpdateTimestamp() {
-    return lookupValue(UserCredentials.LAST_STATUS_UPDATE_TIMESTAMP);
+    return lookupValue(Param.LAST_STATUS_UPDATE_TIMESTAMP);
   }
 
   /**
    * Sets the time stamp for the last status update.
    */
   public void setLastStatusUpdateTimestamp(long timestamp) {
-    setValue(UserCredentials.LAST_STATUS_UPDATE_TIMESTAMP, timestamp);
+    setValue(Param.LAST_STATUS_UPDATE_TIMESTAMP, timestamp);
   }
 
   /**
@@ -138,14 +138,14 @@ public class UserIDCredentialsDAO
    * @return the pending token
    */
   public String getPendingToken() {
-    return lookupValue(UserCredentials.PENDING_TOKEN);
+    return lookupValue(Param.PENDING_TOKEN);
   }
 
   /**
    * Sets the pending token.
    */
   public void setPendingToken(String token) {
-    setValue(UserCredentials.PENDING_TOKEN, token);
+    setValue(Param.PENDING_TOKEN, token);
   }
 
 
@@ -155,14 +155,14 @@ public class UserIDCredentialsDAO
    * @return pending pin
    */
   public String getPendingPin() {
-    return lookupValue(UserCredentials.PENDING_PIN);
+    return lookupValue(Param.PENDING_PIN);
   }
 
   /**
    * Sets the pending pin.
    */
   public void setPendingPin(String pin) {
-    setValue(UserCredentials.PENDING_PIN, pin);
+    setValue(Param.PENDING_PIN, pin);
   }
 
   /**
@@ -171,24 +171,24 @@ public class UserIDCredentialsDAO
    * @return password dao
    */
   public PasswordDAO getPassword() {
-    return lookupValue(UserCredentials.PASSWORD);
+    return lookupValue(Param.PASSWORD);
   }
 
   /**
    * Sets the password.
    */
   public void setPassword(PasswordDAO password) {
-    setValue(UserCredentials.PASSWORD, password);
+    setValue(Param.PASSWORD, password);
   }
 
   @Override
   public String getCanonicalID() {
-    return lookupValue(UserCredentials.CANONICAL_ID);
+    return lookupValue(Param.CANONICAL_ID);
   }
 
   @Override
   public void setCanonicalID(String canonicalID) {
-    setValue(UserCredentials.CANONICAL_ID, canonicalID);
+    setValue(Param.CANONICAL_ID, canonicalID);
   }
 
   @Override

@@ -38,7 +38,7 @@ public class PasswordDAO
 	private enum Param
         implements GetNVConfig
     {
-		HASH_INTERATION(NVConfigManager.createNVConfig("hash_iteration", "Hash interration", "HashIteration", false, true, Integer.class)),
+		HASH_ITERATION(NVConfigManager.createNVConfig("hash_iteration", "Hash interration", "HashIteration", false, true, Integer.class)),
 		SALT(NVConfigManager.createNVConfig("salt", "The password salt", "Salt", false, true, byte[].class)),
 		PASSWORD(NVConfigManager.createNVConfig("password", "The password", "Password", false, true, byte[].class)),
 
@@ -91,7 +91,7 @@ public class PasswordDAO
 
 	public synchronized int getHashIteration()
     {
-		return lookupValue(Param.HASH_INTERATION);
+		return lookupValue(Param.HASH_ITERATION);
 	}
 
 	public synchronized void setHashIteration(int salt_iteration)
@@ -101,7 +101,7 @@ public class PasswordDAO
 			throw new IllegalArgumentException("Invalid iteration value:" + salt_iteration);
 		}
 
-		setValue(Param.HASH_INTERATION, salt_iteration);
+		setValue(Param.HASH_ITERATION, salt_iteration);
 	}
 
 	public synchronized byte[] getSalt()
