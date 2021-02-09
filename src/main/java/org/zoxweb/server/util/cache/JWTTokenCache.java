@@ -72,16 +72,19 @@ implements KVMapStore<String, JWT>
 	
 	public boolean map(JWTToken jwtToken)
 	{
-		return map(jwtToken.getJWT().getHash(), jwtToken.getJWT());
+		return put(jwtToken.getJWT().getHash(), jwtToken.getJWT());
 	}
 	
 	public boolean map(JWT jwt)
 	{
-		return map(jwt.getHash(), jwt);
+		return put(jwt.getHash(), jwt);
 	}
 
+
+
+
 	@Override
-	public boolean map(String jwtHash, JWT jwt)
+	public boolean put(String jwtHash, JWT jwt)
 		throws SecurityException
 	{
 		
@@ -99,14 +102,14 @@ implements KVMapStore<String, JWT>
 		try
 		{
 		    lock.lock();
-			if (cache.lookup(jwtHash) != null)
+			if (cache.get(jwtHash) != null)
 			{
 				// otp replay
 				throw new SecurityException("Token already used, replay attack.");
 			}
 			
 			// register the token
-			ret = cache.map(jwtHash, jwt);
+			ret = cache.put(jwtHash, jwt);
 			
 			tsp.queue(this, expirationPeriod + delta, cct, jwtHash);
 			
@@ -121,9 +124,9 @@ implements KVMapStore<String, JWT>
 	}
 
 	@Override
-	public JWT lookup(String jwtHash) {
+	public JWT get(String jwtHash) {
 		// TODO Auto-generated method stub
-		return cache.lookup(jwtHash);
+		return cache.get(jwtHash);
 	}
 
 	@Override
@@ -166,6 +169,11 @@ implements KVMapStore<String, JWT>
 	public int size() {
 		// TODO Auto-generated method stub
 		return cache.size();
+	}
+
+	@Override
+	public long dataSize() {
+		return 0;
 	}
 
 

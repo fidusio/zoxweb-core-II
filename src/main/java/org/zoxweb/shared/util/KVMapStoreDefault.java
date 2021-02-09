@@ -4,6 +4,7 @@ package org.zoxweb.shared.util;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class KVMapStoreDefault<K,V>
 implements KVMapStore<K,V>
@@ -11,33 +12,52 @@ implements KVMapStore<K,V>
 
 	protected final Map<K, V> mapCache;
 	protected final Set<K> exclusionFilter;
+	protected final DataSizeReader<V> sizeReader;
+	protected final AtomicLong dataSize = new AtomicLong();
 	
 	
-	public KVMapStoreDefault(Map<K,V> map, Set<K> eFliter)
+	public KVMapStoreDefault(Map<K,V> map, Set<K> eFilter)
 	{
-		SharedUtil.checkIfNulls("Values can't be null", map, eFliter);
-		this.mapCache = map;
-		this.exclusionFilter = eFliter;
+		this(map, eFilter, null);
 	}
-	
-	
+
+	public KVMapStoreDefault(Map<K,V> map, Set<K> eFilter, DataSizeReader<V> sizeReader)
+	{
+		SharedUtil.checkIfNulls("Values can't be null", map, eFilter);
+		this.mapCache = map;
+		this.exclusionFilter = eFilter;
+		this.sizeReader = sizeReader;
+	}
+
 	@Override
-	public synchronized boolean map(K key, V value) 
+	public synchronized boolean put(K key, V value)
 	{
 		if (key != null && value != null)
 		{
 			if (!exclusionFilter.contains(key))
 			{
-				mapCache.put(key, value);
-				return true;	
+
+				V oldValue = mapCache.put(key, value);
+				if(sizeReader != null) {
+					long toSubtract = sizeReader.size(oldValue);
+					long toAdd = sizeReader.size(value);
+					dataSize.getAndAdd(toAdd - toSubtract);
+				}
+				return true;
 			}
 		}
-		
+
 		return false;
 	}
+	
+//	@Override
+//	public  boolean map(K key, V value)
+//	{
+//		return put(key, value);
+//	}
 
 	@Override
-	public synchronized V lookup(K key) {
+	public synchronized V get(K key) {
 		// TODO Auto-generated method stub
 		return mapCache.get(key);
 	}
@@ -45,13 +65,20 @@ implements KVMapStore<K,V>
 	@Override
 	public synchronized boolean remove(K key) {
 		// TODO Auto-generated method stub
-		return (mapCache.remove(key) != null);
+		V oldValue = mapCache.remove(key);
+		if(sizeReader != null) {
+			long toSubtract = sizeReader.size(oldValue);
+
+			dataSize.getAndAdd(-toSubtract);
+		}
+		return (oldValue != null);
 	}
 
 	@Override
 	public synchronized void clear(boolean all) {
 		// TODO Auto-generated method stub
 		mapCache.clear();
+		dataSize.set(0);
 		if (all)
 			exclusionFilter.clear();
 		
@@ -92,8 +119,15 @@ implements KVMapStore<K,V>
 	}
 
 	@Override
+	public long dataSize() {
+		return dataSize.get();
+	}
+
+	@Override
 	public long defaultExpirationPeriod() {
 		return 0;
 	}
+
+
 
 }

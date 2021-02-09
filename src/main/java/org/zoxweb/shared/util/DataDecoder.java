@@ -24,6 +24,6 @@ public interface DataDecoder<DI,DO>
 	extends Codec
 {
 
-	public DO decode(DI input);
+	 DO decode(DI input);
 
 }

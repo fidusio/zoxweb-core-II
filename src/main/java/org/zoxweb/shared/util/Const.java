@@ -332,6 +332,27 @@ public class Const {
     {
       return (double)sizeInBytes/(double)LENGTH;
     }
+
+    public static String toString(long bytes)
+    {
+      SizeInBytes sibs[] = values();
+      for (int i = sibs.length -1; i >= 0; i--)
+      {
+        if (sibs[i].convertBytes(bytes) > 0)
+        {
+          String result = "" + sibs[i].convertBytesDouble(bytes);
+          int index = result.indexOf(".");
+          if(result.length() > index + 2)
+          {
+            result = result.substring(0, index+3);
+          }
+
+
+          return  result + "/" + sibs[i].getName();
+        }
+      }
+      return "0";
+    }
   }
 
   /**
@@ -347,6 +368,9 @@ public class Const {
     HOUR,
     DAY,
   }
+
+
+
 
   public enum FilenameSep {
     SLASH('/'),

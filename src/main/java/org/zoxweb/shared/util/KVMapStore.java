@@ -19,10 +19,12 @@ import java.util.Iterator;
 
 public interface KVMapStore<K,V>
 {
-	
-	boolean map(K key, V value);
 
-	V lookup(K key);
+
+	boolean put(K key, V value);
+	//boolean map(K key, V value);
+
+	V get(K key);
 
 	boolean remove(K key);
 	
@@ -34,8 +36,18 @@ public interface KVMapStore<K,V>
 	Iterator<K> keys();
 	
 	void addExclusion(K exclusion);
-	
+
+	/**
+	 * Return the count og object stored by the key value store
+	 * @return
+	 */
 	int size();
+
+	/**
+	 * If enabled, return in bytes of amount values stored
+	 * @return
+	 */
+	long dataSize();
 
 	long defaultExpirationPeriod();
 	
