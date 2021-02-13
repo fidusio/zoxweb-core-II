@@ -271,7 +271,7 @@ final public class GSONUtil
 	public static List<NVEntity> fromJSONArray(String json, Base64Type b64Type)
 	{
 		List<NVEntity> ret = new ArrayList<NVEntity>();
-		JsonElement je = new JsonParser().parse(json);
+		JsonElement je =  JsonParser.parseString(json);
 		
 		if (je instanceof JsonArray)
 		{
@@ -290,7 +290,7 @@ final public class GSONUtil
 	public static List<NVGenericMap> fromJSONGenericMapArray(String json, Base64Type b64Type)
 	{
 		List<NVGenericMap> ret = new ArrayList<NVGenericMap>();
-		JsonElement je = new JsonParser().parse(json);
+		JsonElement je =  JsonParser.parseString(json);
 		if (je instanceof JsonArray)
 		{
 			JsonArray ja = (JsonArray) je;
@@ -402,7 +402,7 @@ final public class GSONUtil
 	
 	public static QueryRequest fromQueryRequest(String json)
     {
-		JsonElement je = new JsonParser().parse(json);
+		JsonElement je = JsonParser.parseString(json);
 		QueryRequest ret = null;
 
 		if (je instanceof JsonObject)
@@ -534,7 +534,7 @@ final public class GSONUtil
 		
 		for (int i = 0; i < attributes.size(); i++)
 		{
-			NVConfig nvc = attributes.get( i);
+			NVConfig nvc = attributes.get(i);
 			//Class<?> type = nvc.getMetaType();
 			
 			if (!printNull)
@@ -756,14 +756,14 @@ final public class GSONUtil
 				}
 				else if (nvc.getMetaTypeBase() == BigDecimal.class)
 				{
-					if ((BigDecimal) nve.lookupValue(nvc) != null)
+					if (nve.lookupValue(nvc) != null)
 					{
 						writer.name(nvc.getName()).value((BigDecimal) nve.lookupValue(nvc));
 					}
 				}
 				else if (nvc.getMetaTypeBase() == Number.class)
 				{
-					if ((Number) nve.lookupValue(nvc) != null)
+					if (nve.lookupValue(nvc) != null)
 					{
 						writer.name(nvc.getName()).value((Number) nve.lookupValue(nvc));
 					}
@@ -1054,7 +1054,7 @@ final public class GSONUtil
 	
 	public static NVGenericMap fromJSONGenericMap(String json, NVConfigEntity nvce, Base64Type btype)
 	{
-		JsonElement je = new JsonParser().parse(json);
+		JsonElement je = JsonParser.parseString(json);
 		
 		if (je instanceof JsonObject)
 		{
@@ -1440,7 +1440,7 @@ final public class GSONUtil
     {
 		Map<String, Object> ret = new LinkedHashMap<String, Object>();
 		
-		JsonElement je = new JsonParser().parse(json);
+		JsonElement je = JsonParser.parseString(json);
 		
 		log.log(Level.FINE, "JSONElement created from json (String): " + je);
 		
@@ -1618,7 +1618,7 @@ final public class GSONUtil
 	public static <V extends NVEntity> V fromJSON(Reader json, Class<? extends NVEntity> clazz, Base64Type b64Type) 
         throws AccessException, APIException
     {
-        JsonElement je = new JsonParser().parse(json);
+        JsonElement je = JsonParser.parseReader(json);
         
         if (je instanceof JsonObject)
         {
@@ -2070,7 +2070,7 @@ final public class GSONUtil
 	public static List<NVEntity> fromJSONValues(String json, Base64Type b64Type) 
         throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException
     {
-		JsonElement je = new JsonParser().parse(json);
+		JsonElement je = JsonParser.parseString(json);
 		
 		if (je instanceof JsonObject)
 		{
@@ -2121,7 +2121,7 @@ final public class GSONUtil
     {
 		DynamicEnumMap ret = new DynamicEnumMap();
 	
-		JsonElement je = new JsonParser().parse(json);
+		JsonElement je = JsonParser.parseString(json);
 
 		if (je instanceof JsonObject)
 		{
@@ -2243,7 +2243,7 @@ final public class GSONUtil
 	public static List<DynamicEnumMap> fromJSONDynamicEnumMapList(String json)
         throws IOException, InstantiationException, IllegalAccessException, ClassNotFoundException
     {
-		JsonElement je = new JsonParser().parse(json);
+		JsonElement je = JsonParser.parseString(json);
 		
 		if (je instanceof JsonObject)
 		{
