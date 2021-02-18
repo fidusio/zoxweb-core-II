@@ -11,6 +11,7 @@ public class ResourceManager
 	{
 		API_SECURITY_MANAGER("APISecurityManager"),
 		DATA_STORE("DataStore"),
+		REALM_STORE("RealmStore"),
 		API_APP_MANAGER("APIAppManager"),
 		JWT_CACHE("JWTCache"),
 		AUTH_TOKEN("AuthToken"),

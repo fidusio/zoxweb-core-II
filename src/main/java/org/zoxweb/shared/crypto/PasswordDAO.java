@@ -16,6 +16,7 @@
 package org.zoxweb.shared.crypto;
 
 import org.zoxweb.shared.crypto.CryptoConst.MDType;
+import org.zoxweb.shared.data.PropertyDAO;
 import org.zoxweb.shared.data.TimeStampDAO;
 import org.zoxweb.shared.util.GetNVConfig;
 import org.zoxweb.shared.util.NVConfig;
@@ -31,7 +32,7 @@ import org.zoxweb.shared.util.SharedUtil;
  */
 @SuppressWarnings("serial")
 public class PasswordDAO
-    extends TimeStampDAO
+    extends PropertyDAO
     implements CryptoDAO
 {
 	
@@ -58,7 +59,7 @@ public class PasswordDAO
 		}	
 	}
 
-	public final static NVConfigEntity NVCE_PASSWORD_DAO = new NVConfigEntityLocal("password_dao", null, "PasswordDAO", false, true, false, false, PasswordDAO.class, SharedUtil.extractNVConfigs(Param.values()), null, false, TimeStampDAO.NVC_TIME_STAMP_DAO);
+	public final static NVConfigEntity NVCE_PASSWORD_DAO = new NVConfigEntityLocal("password_dao", null, "PasswordDAO", false, true, false, false, PasswordDAO.class, SharedUtil.extractNVConfigs(Param.values()), null, false, PropertyDAO.NVC_PROPERTY_DAO);
 
     /**
      * The default constructor.

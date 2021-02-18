@@ -41,6 +41,17 @@ public interface ShiroRealmStore
         throws NullPointerException, IllegalArgumentException, AccessException;
 
 	/**
+	 * Add a subject
+	 * @param subject
+	 * @return ShiroSubjectDAO
+	 * @throws NullPointerException
+	 * @throws IllegalArgumentException
+	 * @throws AccessException
+	 */
+	SubjectIDDAO addSubject(SubjectIDDAO subject)
+			throws NullPointerException, IllegalArgumentException, AccessException;
+
+	/**
 	 * Delete a subject
 	 * @param subject
 	 * @param withRoles
@@ -274,6 +285,10 @@ public interface ShiroRealmStore
 	 */
 	PasswordDAO getSubjectPassword(String domainID, String userID) throws NullPointerException, IllegalArgumentException, AccessException;
 
+	PasswordDAO setSubjectPassword(SubjectIDDAO subject, PasswordDAO passwd) throws NullPointerException, IllegalArgumentException, AccessException;
+	PasswordDAO setSubjectPassword(String subject, PasswordDAO passwd) throws NullPointerException, IllegalArgumentException, AccessException;
+	PasswordDAO setSubjectPassword(SubjectIDDAO subject, String passwd) throws NullPointerException, IllegalArgumentException, AccessException;
+	PasswordDAO setSubjectPassword(String subject, String passwd) throws NullPointerException, IllegalArgumentException, AccessException;
 	/**
 	 * Get the user roles
 	 * @param domainID
