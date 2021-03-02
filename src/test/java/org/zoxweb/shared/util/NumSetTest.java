@@ -51,4 +51,12 @@ public class NumSetTest {
       System.out.println(uuid + ", " + uuidStr.length() + ", " + str + ", " + str.length());
     }
   }
+
+  @Test
+  public void parseInt()
+  {
+    System.out.println(SharedUtil.parseInt("25"));
+    System.out.println(SharedUtil.parseInt("0xff"));
+
+  }
 }

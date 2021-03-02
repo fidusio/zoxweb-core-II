@@ -106,6 +106,28 @@ public class SharedUtil
 		return ret;
 	}
 
+
+	public static int parseInt(String strInt) throws NumberFormatException
+	{
+		try
+		{
+			return Integer.parseInt(strInt);
+		}
+		catch(NumberFormatException e){}
+
+		int index = -1;
+		if((index = strInt.indexOf("x")) != -1)
+		{
+			strInt = strInt.substring(index+1);
+		}
+		else if((index = strInt.indexOf("X")) != -1)
+		{
+			strInt = strInt.substring(index+1);
+		}
+
+		return Integer.parseInt(strInt, 16);
+	}
+
 	public static Number[] normalizeNumbers(Number ... numbers)
 	{
 		Class<?>[] classPriority =
