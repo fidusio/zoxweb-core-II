@@ -57,6 +57,5 @@ public class NumSetTest {
   {
     System.out.println(SharedUtil.parseInt("25"));
     System.out.println(SharedUtil.parseInt("0xff"));
-
   }
 }

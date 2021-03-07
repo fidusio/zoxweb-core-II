@@ -893,6 +893,25 @@ public final class SharedStringUtil
 
 		return ret.toString();
 	}
+
+	public static String formatStringToByteArray(String str, boolean hex)
+	{
+		byte data[] = getBytes(str);
+		StringBuilder sb = new StringBuilder();
+		sb.append("{");
+		for(byte b : data)
+		{
+			if(sb.length() > 1)
+				sb.append(',');
+			if(hex)
+				byteToHex(sb, "0x", b);
+			else
+				sb.append(b);
+		}
+		sb.append("}");
+
+		return sb.toString();
+	}
 	
 	public static String formatStringValues(String sep, GetName... gns)
     {
