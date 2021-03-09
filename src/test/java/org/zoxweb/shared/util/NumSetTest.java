@@ -58,4 +58,17 @@ public class NumSetTest {
     System.out.println(SharedUtil.parseInt("25"));
     System.out.println(SharedUtil.parseInt("0xff"));
   }
+
+  @Test
+  public void testIntToBytes()
+  {
+    int toSend = Integer.MAX_VALUE;
+    byte[] array = {(byte) ((toSend >> 24) & 0xff), (byte) ((toSend >> 16) & 0xff), (byte) ((toSend >> 8) & 0xff), (byte) ((toSend) & 0xff)};
+    System.out.println(SharedStringUtil.bytesToHex(array));
+    System.out.println((byte) ((toSend >> 24) & 0xff));
+    System.out.println((byte) ((toSend >> 16) & 0xff));
+    System.out.println((byte) ((toSend >> 8) & 0xff));
+    System.out.println((byte) ((toSend >> 0) & 0xff));
+    System.out.println(BytesValue.INT.toValue(array) + " " + BytesValue.INT.toValue(array).equals(toSend));
+  }
 }
