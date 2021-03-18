@@ -71,4 +71,36 @@ public class NumSetTest {
     System.out.println((byte) ((toSend >> 0) & 0xff));
     System.out.println(BytesValue.INT.toValue(array) + " " + BytesValue.INT.toValue(array).equals(toSend));
   }
+
+
+  @Test
+  public void testShortToBytes()
+  {
+    short toSend = Short.MAX_VALUE;
+    byte[] array = {(byte) ((toSend >> 8) & 0xff), (byte) ((toSend) & 0xff)};
+    System.out.println(SharedStringUtil.bytesToHex(array));
+    System.out.println((byte) ((toSend >> 8) & 0xff));
+    System.out.println((byte) ((toSend >> 0) & 0xff));
+    System.out.println(BytesValue.SHORT.toValue(array) + " " + BytesValue.SHORT.toValue(array).equals(toSend));
+  }
+
+  @Test
+  public void testLongToBytes()
+  {
+    long toSend = Long.MAX_VALUE;
+    byte[] array = {
+            (byte) ((toSend >> 56) & 0xff), (byte) ((toSend >> 48) & 0xff), (byte) ((toSend >> 40) & 0xff), (byte) ((toSend>>32) & 0xff),
+            (byte) ((toSend >> 24) & 0xff), (byte) ((toSend >> 16) & 0xff), (byte) ((toSend >> 8) & 0xff), (byte) ((toSend) & 0xff)
+    };
+    System.out.println(SharedStringUtil.bytesToHex(array));
+    System.out.println((byte) ((toSend >> 56) & 0xff));
+    System.out.println((byte) ((toSend >> 48) & 0xff));
+    System.out.println((byte) ((toSend >> 40) & 0xff));
+    System.out.println((byte) ((toSend >> 32) & 0xff));
+    System.out.println((byte) ((toSend >> 24) & 0xff));
+    System.out.println((byte) ((toSend >> 16) & 0xff));
+    System.out.println((byte) ((toSend >> 8) & 0xff));
+    System.out.println((byte) ((toSend >> 0) & 0xff));
+    System.out.println(BytesValue.LONG.toValue(array) + " " + BytesValue.LONG.toValue(array).equals(toSend));
+  }
 }

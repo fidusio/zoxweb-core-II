@@ -98,7 +98,7 @@ public interface BytesValue<V>
 
 			for (int i = offset; i < length; i++)
 			{
-				value = (value << 8) + (buffer[i] & 0xff);
+				value = (value << 8) | (buffer[i] & 0xff);
 			}
 
 			return (short)value;
@@ -211,7 +211,7 @@ public interface BytesValue<V>
 
 			for (int i = offset; i < length; i++)
 			{
-				value = (value << 8) + (bytes[i] & 0xff);
+				value = (value << 8) | (bytes[i] & 0xff);
 			}
 
 			return value;
