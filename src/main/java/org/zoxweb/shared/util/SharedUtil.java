@@ -128,6 +128,28 @@ public class SharedUtil
 		return Integer.parseInt(strInt, 16);
 	}
 
+
+	public static short parseShort(String strInt) throws NumberFormatException
+	{
+		try
+		{
+			return Short.parseShort(strInt);
+		}
+		catch(NumberFormatException e){}
+
+		int index = -1;
+		if((index = strInt.indexOf("x")) != -1)
+		{
+			strInt = strInt.substring(index+1);
+		}
+		else if((index = strInt.indexOf("X")) != -1)
+		{
+			strInt = strInt.substring(index+1);
+		}
+
+		return Short.parseShort(strInt, 16);
+	}
+
 	public static Number[] normalizeNumbers(Number ... numbers)
 	{
 		Class<?>[] classPriority =
