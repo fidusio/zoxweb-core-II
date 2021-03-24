@@ -116,16 +116,31 @@ public class SharedUtil
 		catch(NumberFormatException e){}
 
 		int index = -1;
-		if((index = strInt.indexOf("x")) != -1)
-		{
-			strInt = strInt.substring(index+1);
-		}
-		else if((index = strInt.indexOf("X")) != -1)
+		if((index = strInt.indexOf("x")) != -1 || (index = strInt.indexOf("X")) != -1)
 		{
 			strInt = strInt.substring(index+1);
 		}
 
 		return Integer.parseInt(strInt, 16);
+	}
+
+
+
+	public static long parseLong(String strInt) throws NumberFormatException
+	{
+		try
+		{
+			return Long.parseLong(strInt);
+		}
+		catch(NumberFormatException e){}
+
+		int index = -1;
+		if((index = strInt.indexOf("x")) != -1 || (index = strInt.indexOf("X")) != -1)
+		{
+			strInt = strInt.substring(index+1);
+		}
+
+		return Long.parseLong(strInt, 16);
 	}
 
 
@@ -138,11 +153,7 @@ public class SharedUtil
 		catch(NumberFormatException e){}
 
 		int index = -1;
-		if((index = strInt.indexOf("x")) != -1)
-		{
-			strInt = strInt.substring(index+1);
-		}
-		else if((index = strInt.indexOf("X")) != -1)
+		if((index = strInt.indexOf("x")) != -1 || (index = strInt.indexOf("X")) != -1)
 		{
 			strInt = strInt.substring(index+1);
 		}
