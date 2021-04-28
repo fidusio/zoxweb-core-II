@@ -23,8 +23,8 @@ public interface BytesValue<V>
 {
     /**
      *
-     * @param v
-     * @return
+     * @param v to be converted
+     * @return byte array
      */
 	byte[] toBytes(V v);
 	
@@ -390,5 +390,38 @@ public interface BytesValue<V>
 		}
 
 	};
-		
+
+	public static final BytesValue<String> STRING = new BytesValue<String>()
+	{
+
+
+		@Override
+		public byte[] toBytes(String s) {
+			return SharedStringUtil.getBytes(s);
+		}
+
+		@Override
+		public byte[] toBytes(byte[] retBuffer, int retStartIndex, String... v) {
+			for (String str : v)
+			{
+				byte toAdd[] = toBytes(str);
+				for(int i = 0; i < toAdd.length; i++)
+				{
+					retBuffer[i+retStartIndex] = toAdd[i];
+				}
+				retStartIndex += toAdd.length;
+			}
+			return retBuffer;
+		}
+
+		@Override
+		public String toValue(byte[] bytes) {
+			return SharedStringUtil.toString(bytes);
+		}
+
+		@Override
+		public String toValue(byte[] bytes, int offset, int length) {
+			return SharedStringUtil.toString(bytes, offset, length);
+		}
+	};
 }

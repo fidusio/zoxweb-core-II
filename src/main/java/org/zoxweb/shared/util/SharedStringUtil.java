@@ -541,15 +541,31 @@ public final class SharedStringUtil
 	public static String toString(byte array[])
         throws NullPointerException, IllegalArgumentException
     {
+    	return toString(array, 0, array.length);
+	}
+
+
+	/**
+	 * Return the String based on the byte array  using encoding UTF-8.
+	 * @param array
+	 * @param offset
+	 * @param length
+	 * @return the String based on the byte array  using encoding UTF-8.
+	 * @throws NullPointerException
+	 * @throws IllegalArgumentException
+	 */
+	public static String toString(byte array[], int offset, int length)
+			throws NullPointerException, IllegalArgumentException
+	{
 
 		SharedUtil.checkIfNulls("Null String", array);
 
 		try
-        {
-			return new String(array, UTF_8);
+		{
+			return new String(array, offset, length, UTF_8);
 		}
 		catch (UnsupportedEncodingException e)
-        {
+		{
 			e.printStackTrace();
 			throw new IllegalArgumentException(e.getMessage());
 		}
