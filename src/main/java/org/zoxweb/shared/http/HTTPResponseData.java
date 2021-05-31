@@ -40,16 +40,37 @@ public class HTTPResponseData
 	
 
 	private Map<String, List<String>> responseHeaders;
-	
-	
+
+	/**
+	 * Default constructor
+	 */
 	public HTTPResponseData()
 	{	
 	}
-	
+
+	/**
+	 *
+	 * @deprecated
+	 * @param data response data.
+	 * @param stat response status.
+	 * @param rh response headers.
+	 *
+	 */
 	public HTTPResponseData(final byte[] data, final int stat, Map<String, List<String>> rh)
 	{
-		setData(data);
+		this(stat, data, rh);
+	}
+
+	/**
+	 * Main constructor
+	 * @param stat response status.
+	 * @param data response data.
+	 * @param rh response headers.
+	 */
+	public HTTPResponseData(final int stat, final byte[] data, Map<String, List<String>> rh)
+	{
 		setStatus(stat);
+		setData(data);
 		setResponseHeaders(rh);
 	}
 
@@ -57,8 +78,8 @@ public class HTTPResponseData
 		return status;
 	}
 
-	public void setStatus(int satus) {
-		this.status = satus;
+	public void setStatus(int status) {
+		this.status = status;
 	}
 
 	public byte[] getData() {

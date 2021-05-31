@@ -44,14 +44,13 @@ import org.zoxweb.shared.util.SharedUtil;
 
 public class HTTPCall 
 {
-	private HTTPMessageConfigInterface hcc;
-	private String urlOverride;
-	private ReplacementFilter uriFilter;
+	private final HTTPMessageConfigInterface hcc;
+	private final String urlOverride;
+	private final ReplacementFilter uriFilter;
 	
 	private SSLSocketProp ssp;
-	private OutputStream osBypass;
-	private CloseEnabledInputStream contentAsIS;
-	//private boolean embedParamsInURI;
+	private final OutputStream osBypass;
+	private final CloseEnabledInputStream contentAsIS;
 
 	static
 	{
@@ -61,7 +60,7 @@ public class HTTPCall
 		}
 		catch(Exception e)
 		{
-			e.fillInStackTrace();
+			e.printStackTrace();
 		}
 	}
 	
@@ -99,18 +98,7 @@ public class HTTPCall
 			this.ssp = SSLCheckDisabler.SINGLETON;
 		}
 	}
-	
-	
-//	public HTTPCall( HTTPCallConfig params, String urlOverride, URIFilter uriFilter, SSLSocketProp ssp, InputStream isContent, boolean embedParamsInURI)
-//	{
-//		SharedUtil.checkIfNulls("HTTPActionParameters can't be null", params);
-//		this.hcc = params;
-//		this.urlOverride = urlOverride;
-//		this.uriFilter = uriFilter;
-//		this.ssp = ssp;
-//		this.isContent = isContent;
-//		this.embedParamsInURI = embedParamsInURI;
-//	}
+
 
 	public boolean isSecure()
 	{
@@ -126,7 +114,7 @@ public class HTTPCall
 	 * [Please state the purpose for this class or method because it will help the team for future maintenance ...].
 	 * 
 	 * @return HTTPResponseData
-	 * @throws IOException
+	 * @throws IOException in case of error
 	 */
 	public HTTPResponseData sendRequest() throws IOException
 	{
@@ -146,7 +134,7 @@ public class HTTPCall
 		
 		if (encodedContentParams.length() > 0)
 		{
-			switch( hcc.getMethod())
+			switch(hcc.getMethod())
 			{
 			
 			case POST:
@@ -229,7 +217,7 @@ public class HTTPCall
 			// set the request headers
 			if (reqHeaders != null)
 			{
-				for ( GetNameValue<String> nvp : reqHeaders.values())
+				for (GetNameValue<String> nvp : reqHeaders.values())
 				{
 					con.setRequestProperty( nvp.getName(), nvp.getValue());
 				}
@@ -256,19 +244,7 @@ public class HTTPCall
 			{
 				con.setRequestProperty(authorizationHeader.getName(), authorizationHeader.getValue());
 			}
-			
-			
-//			if (!SharedStringUtil.isEmpty(url.getUserInfo()))
-//			{
-//				GetNameValue<String> gnvAutho = HTTPAuthentication.BASIC.toHeaderParamater(url.getUserInfo(), null);
-//				con.setRequestProperty(gnvAutho.getName(), gnvAutho.getValue());
-//			}
-//			else if (!SharedStringUtil.isEmpty(hcc.getUser()) && !SharedStringUtil.isEmpty(hcc.getPassword()))
-//			{
-//				con.setRequestProperty(HTTPHeaderName.AUTHORIZATION.getName(), HTTPAuthentication.BASIC + " " + new String(SharedBase64.encode(SharedUtil.toCanonicalID(':', hcc.getUser(), hcc.getPassword()).getBytes(SharedStringUtil.UTF_8))));
-//			}
-			
-			
+
 			
 			// write the payload if it is a post
 			if (!embedPostPutParamsInURI)
@@ -322,7 +298,7 @@ public class HTTPCall
 			{
 				ret  = IOUtil.inputStreamToByteArray(isError, false);
 				respHeaders = con.getHeaderFields();
-				HTTPResponseData rd = new HTTPResponseData(ret.toByteArray(), status, respHeaders);
+				HTTPResponseData rd = new HTTPResponseData(status, ret.toByteArray(), respHeaders);
 				throw new HTTPCallException(con.getResponseMessage(),  rd);
 			}
 			
@@ -349,7 +325,7 @@ public class HTTPCall
 					
 					if (contentAsIS != null)
 					{
-						throw new HTTPCallException("Can not forward with ContentAsIS set",  new HTTPResponseData(null, status, con.getHeaderFields()));
+						throw new HTTPCallException("Can not forward with ContentAsIS set",  new HTTPResponseData(status, null, con.getHeaderFields()));
 					}
 					HTTPCall hccRedirect = new HTTPCall(hcc, ssp, urlOverride, uriFilter, osBypass, contentAsIS);
 					return hccRedirect.sendRequest();
@@ -397,7 +373,7 @@ public class HTTPCall
 		}
 		
 		
-		return new HTTPResponseData( ret != null ? ret.toByteArray() : null, status, respHeaders);
+		return new HTTPResponseData( status, ret != null ? ret.toByteArray() : null, respHeaders);
 	}
 	
 	
@@ -423,35 +399,5 @@ public class HTTPCall
 		
 		return ret;
 	}
-	
-	
-	
-	
-//	public String fullyEncondedURL() throws IOException
-//	{
-//		
-//		String encodedContentParams = HTTPUtil.formatParameters(hcc.getParameters(), hcc.getCharset());
-//		
-//		String urlURI = fullURL();
-//		
-//		if ( encodedContentParams.length() > 0)
-//		{
-//			switch( hcc.getMethod())
-//			{
-//			case GET:
-//			case POST:
-//			case DELETE:
-//			case PATCH:
-//				// if we have a GET
-//				urlURI += "?" + encodedContentParams;
-//				break;
-//				default:	
-//			}
-//		}
-//		
-//		return urlURI;
-//		
-//	}
-	
-	
+
 }
