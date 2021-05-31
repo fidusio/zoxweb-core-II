@@ -575,7 +575,7 @@ public class HTTPUtil
 	
 	public static String parseURI(String url)
 	{
-		int index = url.indexOf(ProtocolDelimiter.COLON_PATH_ABEMPTY.getValue());
+		int index = url.indexOf(ProtocolDelimiter.COLON_PATH.getValue());
 		int hostStart;
 		if (index == -1)
 		{
@@ -583,7 +583,7 @@ public class HTTPUtil
 		}
 		else
 		{
-			hostStart = index + ProtocolDelimiter.COLON_PATH_ABEMPTY.getValue().getBytes().length;
+			hostStart = index + ProtocolDelimiter.COLON_PATH.getValue().getBytes().length;
 		}
 		int hostEnd;
 		index = url.indexOf('/', hostStart);
@@ -608,7 +608,7 @@ public class HTTPUtil
 	}
 	public static InetSocketAddressDAO parseHost(String url, int defaultPort)
 	{
-		int index = url.indexOf(ProtocolDelimiter.COLON_PATH_ABEMPTY.getValue());
+		int index = url.indexOf(ProtocolDelimiter.COLON_PATH.getValue());
 		int hostStart;
 		if (index == -1)
 		{
@@ -616,7 +616,7 @@ public class HTTPUtil
 		}
 		else
 		{
-			hostStart = index + ProtocolDelimiter.COLON_PATH_ABEMPTY.getValue().getBytes().length;
+			hostStart = index + ProtocolDelimiter.COLON_PATH.getValue().getBytes().length;
 		}
 		
 		// check if there is a user:password@

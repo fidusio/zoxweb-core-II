@@ -24,7 +24,7 @@ public enum ProtocolDelimiter
     implements GetNameValue<String>
 {
 	COLON(":"),
-	COLON_PATH_ABEMPTY("://"),
+	COLON_PATH("://"),
 	CRLF("\r\n"),
 	CRLFCRLF("\r\n\r\n"),
 	DOUBLE_QUOTE("\""),
