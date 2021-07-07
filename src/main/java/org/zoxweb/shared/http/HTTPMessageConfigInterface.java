@@ -267,7 +267,7 @@ extends ReferenceID<String>, SetName, SetDescription
 	 * 
 	 * @return HTTPAuthentication
 	 */
-	HTTPAuthentication getAuthentitcation();
+	HTTPAuthentication getAuthentication();
 	
 	void setAuthentication(HTTPAuthentication httpAuthentication);
 	

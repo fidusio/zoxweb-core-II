@@ -178,7 +178,7 @@ public class HTTPMessageConfig
 
 	/**
 	 * Set the action parameters list
-	 * @param params
+	 * @param params list of parameters and string nv pairs
 	 */
 	@SuppressWarnings("unchecked")
 	public synchronized void setParameters(List<GetNameValue<String>> params) 
@@ -246,20 +246,8 @@ public class HTTPMessageConfig
 	
 	public void setMethod(String method) 
 	{
-	
-		System.out.println(method);
 		HTTPMethod httpMethod = SharedUtil.lookupEnum(method, HTTPMethod.values());
 		setMethod(httpMethod);
-		
-//		for (HTTPMethod m : HTTPMethod.values())
-//		{
-//			if (m.getName().equalsIgnoreCase(method))
-//			{
-//				setMethod(m);
-//				break;
-//			}
-//		}
-		
 	}
 	
 	/**
@@ -404,7 +392,7 @@ public class HTTPMessageConfig
 				+ getReadTimeout() + ", getCharset()=" + getCharset()
 				+ ", getProxyAddress()=" + getProxyAddress() + ", getUser()="
 				+ getUser() + ", getPassword()=" + getPassword()
-				+ ", getAuthentitcation()=" + getAuthentitcation() + "]";
+				+ ", getAuthentication()=" + getAuthentication() + "]";
 	}
 
 
@@ -465,7 +453,7 @@ public class HTTPMessageConfig
 
 	public void setReadTimeout(int readTimeout) 
 	{
-		if ( readTimeout < 0)
+		if (readTimeout < 0)
 		{
 			readTimeout = 0;
 		}
@@ -561,10 +549,10 @@ public class HTTPMessageConfig
 
 
 	/**
-	 * @see org.zoxweb.shared.http.HTTPMessageConfigInterface#getAuthentitcation()
+	 * @see org.zoxweb.shared.http.HTTPMessageConfigInterface#getAuthentication()
 	 */
 	@Override
-	public HTTPAuthentication getAuthentitcation() {
+	public HTTPAuthentication getAuthentication() {
 		
 		return lookupValue(Params.AUTHENTICATION);
 	}

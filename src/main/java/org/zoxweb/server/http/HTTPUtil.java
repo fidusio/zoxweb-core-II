@@ -710,7 +710,7 @@ public class HTTPUtil
 	}
 
 	
-	public static String extractRequestCookie(HTTPResponseData rd, int version)
+	public static String extractRequestCookie(HTTPResponseData rd)
 	{
 		List<String> cookies = SharedUtil.lookupMap(rd.getResponseHeaders(), "Set-Cookie", true);
 
@@ -741,7 +741,7 @@ public class HTTPUtil
 		return null;
 	}
 	
-	public static GetNameValue<String> extractHeaderCookie(HTTPResponseData rd, int version)
+	public static GetNameValue<String> extractHeaderCookie(HTTPResponseData rd)
 	{
 		List<String> cookies = SharedUtil.lookupMap(rd.getResponseHeaders(), "Set-Cookie", true);
 
@@ -874,7 +874,7 @@ public class HTTPUtil
 			
 			
 			// extract cookie if it exists
-			String reqCookie = extractRequestCookie(rd,cookieVersion);
+			String reqCookie = extractRequestCookie(rd);
 			
 			//ArrayList<GetNameValue<String>> params = new ArrayList<GetNameValue<String>>();
 			HTTPMessageConfig ret = new HTTPMessageConfig();
